@@ -30,16 +30,31 @@ def main():
     sch = D._pd(D.nfl.load_schedules(list(range(start - 4, current + 1))))
     elo_pre, _ = elo.compute(sch)
 
-    out, prev = [], None
+    def optional(fn, s, label):
+        try:
+            df = D._pd(fn([s]))
+            return df if len(df) else None
+        except Exception as e:  # noqa: BLE001
+            log.info(f"  no {label} for {s}: {str(e)[:80]}")
+            return None
+
+    out, prev, prev_snaps = [], None, None
     for s in range(start, last + 1):
         log.info(f"season {s}")
         cur = D.load_pbp_season(s)
         prev = prev if prev is not None else D.load_pbp_season(s - 1)
         pbp = pd.concat([prev, cur], ignore_index=True)
-        rows = history_rows(pbp, sch, elo_pre, [s])
-        log.info(f"  {len(rows)} games")
+        inj = optional(D.nfl.load_injuries, s, "injury reports")
+        snaps_cur = optional(D.nfl.load_snap_counts, s, "snap counts")
+        if prev_snaps is None:
+            prev_snaps = optional(D.nfl.load_snap_counts, s - 1, "snap counts")
+        snaps = pd.concat([x for x in (prev_snaps, snaps_cur) if x is not None], ignore_index=True) \
+            if (prev_snaps is not None or snaps_cur is not None) else None
+        rows = history_rows(pbp, sch, elo_pre, [s], injuries=inj, snaps=snaps)
+        cov = rows["inj_known"].mean() if len(rows) else 0
+        log.info(f"  {len(rows)} games, injury data on {cov:.0%}")
         out.append(rows)
-        prev = cur
+        prev, prev_snaps = cur, snaps_cur
 
     df = pd.concat(out, ignore_index=True)
     path = ROOT / "data" / "training_rows.csv"

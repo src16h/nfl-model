@@ -1,4 +1,6 @@
-# The Board: NFL prediction model (v2)
+# The Board: NFL prediction model (v3)
+
+**v3 adds:** a market-anchored engine that picks leans, win rate by edge size, and real historical injury reports in training.
 
 **v2 adds:** a 14-season deep backtest, a machine-learning ensemble, Elo, live weather, travel and body clock, pass rush vs protection, key-number (3 and 7) odds, correlated player simulations, and a Props tab. See **UPGRADE-TO-V2.md** if you're upgrading.
 
@@ -122,9 +124,11 @@ Everything lives in `nflmodel/config.py` with plain-English notes. The useful on
 
 | Setting | Default | What it does |
 |---|---|---|
-| `MARKET_WEIGHT` | 0.0 | Set 0.3 to 0.5 to blend in the Vegas line. More accurate scores and player projections, but fewer independent leans |
-| `LEAN_SPREAD_EDGE` | 2.0 | Points of disagreement needed to flag a spread lean |
-| `LEAN_TOTAL_EDGE` | 3.0 | Same, for totals |
+| `LEAN_ENGINE` | anchored | Which engine picks leans: `anchored` (starts from Vegas) or `independent` (football data only) |
+| `ANCHOR_LEAN_SPREAD` | 1.0 | Anchored engine: points off the Vegas spread needed to flag a lean |
+| `ANCHOR_LEAN_TOTAL` | 1.5 | Same, for totals |
+| `LEAN_SPREAD_EDGE` | 2.0 | Football-only engine: spread lean threshold |
+| `LEAN_TOTAL_EDGE` | 3.0 | Football-only engine: total lean threshold |
 | `RECENCY_DECAY` | 0.92 | Lower = recent games matter even more |
 
 ## Known limits

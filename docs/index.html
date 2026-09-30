@@ -55,6 +55,9 @@ h2{font:700 26px/1.1 var(--cond);margin:28px 0 10px}
 .cell{padding:8px 12px;font-size:14px;color:var(--muted)}
 .cell strong{display:block;font:600 19px var(--cond);color:var(--ink);font-variant-numeric:tabular-nums}
 .cell .flag{color:var(--turf);font-weight:600}
+.cell small{display:block;font-size:12px;color:var(--muted)}
+.cmp td:first-child{font-weight:600}
+.bk td{text-align:right}
 .gfoot{background:var(--panel2);padding:8px 14px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
 .gfoot .qb{color:var(--ink)}
 .gfoot .inj{color:var(--warn)}
@@ -186,7 +189,8 @@ function renderGames() {
   });
   leans.sort((a, b) => b.e - a.e);
   const TOP = 6;
-  let h = `<h2>This week's leans</h2><p class="hint">Biggest gaps between the model and Vegas (${n(D.settings.lean_spread,0)}+ pts on spreads, ${n(D.settings.lean_total,0)}+ on totals). A lean is a starting point for your own research, not a sure thing.</p>`;
+  const eng = D.settings.lean_engine === "anchored" ? "the market-anchored engine (starts from Vegas, looks for where Vegas tends to miss)" : "the football-only engine";
+  let h = `<h2>This week's leans</h2><p class="hint">Picked by ${eng}. Flags spreads ${n(D.settings.lean_spread,1)}+ pts and totals ${n(D.settings.lean_total,1)}+ pts off the Vegas number. Check the edge-size table on Track record before trusting any of these.</p>`;
   if (leans.length) {
     h += `<div class="leans">${leans.slice(0, TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div>`;
     if (leans.length > TOP) h += `<div class="leans" id="moreLeans" hidden>${leans.slice(TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div><button class="more" id="moreBtn" aria-expanded="false">Show ${leans.length - TOP} more leans</button>`;
@@ -202,16 +206,15 @@ function renderGames() {
     h += `<article class="game">
       <div class="grow"><div class="tm">${esc(g.away)}</div><div class="score">${n(g.proj_away)}</div>
         <div class="cell">Win chance<strong>${n(wpA,0)}%</strong></div>
-        <div class="cell">Model line<strong>${esc(g.model_line || "–")}</strong></div>
+        <div class="cell">Model line<strong>${esc(g.final_line || g.model_line || "–")}</strong>${g.final_line && g.final_line !== g.model_line ? `<small>Football-only: ${esc(g.model_line)}</small>` : ""}</div>
         <div class="cell">Vegas line<strong>${esc(g.market_line || "not posted")}</strong>${spreadFlag}</div></div>
       <div class="grow"><div class="tm">${esc(g.home)}</div><div class="score">${n(g.proj_home)}</div>
         <div class="cell">Win chance<strong>${n(g.win_prob_home,0)}%</strong></div>
-        <div class="cell">Model total<strong>${n(g.total)}</strong></div>
+        <div class="cell">Model total<strong>${n(g.total)}</strong>${g.indep_total != null && Math.abs(g.indep_total - g.total) >= 0.1 ? `<small>Football-only: ${n(g.indep_total)}</small>` : ""}</div>
         <div class="cell">Vegas total<strong>${g.market_total == null ? "not posted" : n(g.market_total)}</strong>${totFlag}</div></div>
       <div class="gfoot">${st}<span class="qb">QBs: ${esc(g.qb_away)} / ${esc(g.qb_home)}</span>
         ${g.weather ? `<span>${esc(g.weather)}</span>` : ""}
-        ${(g.why_margin || []).length ? `<span class="why"><b>Why this line:</b> ${g.why_margin.map(w => `${esc(w.factor)} ${w.pts > 0 ? "favors " + esc(g.home) : "favors " + esc(g.away)} ${n(Math.abs(w.pts))}`).join(", ")}</span>` : ""}
-        ${(g.why_total || []).length ? `<span class="why"><b>Why this total:</b> ${g.why_total.map(w => `${esc(w.factor)} ${sgn(w.pts)}`).join(", ")}</span>` : ""}
+        ${whyLine(g)}
         ${(g.notes || []).map(x => `<span>${esc(x)}</span>`).join("")}
         ${inj.length ? `<span class="inj">Key injuries: ${esc(inj.join(", "))}</span>` : ""}</div>
     </article>`;
@@ -219,6 +222,16 @@ function renderGames() {
   $("#games").innerHTML = h;
   const mb = $("#moreBtn");
   if (mb) mb.onclick = () => { const m = $("#moreLeans"); m.hidden = !m.hidden; mb.setAttribute("aria-expanded", !m.hidden); mb.textContent = m.hidden ? `Show ${m.children.length} more leans` : "Show fewer"; };
+}
+
+function whyLine(g) {
+  const fav = w => w.pts > 0 ? esc(g.home) : esc(g.away);
+  let h = "";
+  if ((g.why_edge || []).length) h += `<span class="why"><b>Why we differ from Vegas:</b> ${g.why_edge.map(w => `${esc(w.factor)} (${fav(w)} +${n(Math.abs(w.pts))})`).join(", ")}</span>`;
+  else if ((g.why_margin || []).length) h += `<span class="why"><b>Why this line:</b> ${g.why_margin.map(w => `${esc(w.factor)} (${fav(w)} +${n(Math.abs(w.pts))})`).join(", ")}</span>`;
+  const t = (g.why_edge_total || []).length ? g.why_edge_total : (g.why_total || []);
+  if (t.length) h += `<span class="why"><b>${(g.why_edge_total || []).length ? "Why our total differs" : "Why this total"}:</b> ${t.map(w => `${esc(w.factor)} ${sgn(w.pts)}`).join(", ")}</span>`;
+  return h;
 }
 
 const PCOLS = [
@@ -310,18 +323,24 @@ function renderRecord() {
     <div class="stat"><strong>${rec(L.straight_up)}</strong><span>Winners picked${pct(L.straight_up)}</span></div>
     <div class="stat"><strong>${n(L.model_mae)} / ${n(L.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas (lower wins)</span></div>
   </div>`;
+  const AB = M.anchored_backtest;
   if (DB && DB.overall) {
-    const O = DB.overall;
-    h += `<h2>Deep backtest</h2><p class="hint">Walk-forward test: each season predicted by a model trained only on earlier seasons. ${O.games} games. This is the honest measure of the model.</p>
-    <div class="stats">
-      <div class="stat"><strong>${rec(O.ats_leans)}</strong><span>Spread leans${pct(O.ats_leans)}</span></div>
-      <div class="stat"><strong>${rec(O.totals_leans)}</strong><span>Total leans${pct(O.totals_leans)}</span></div>
-      <div class="stat"><strong>${rec(O.ats_all)}</strong><span>Every game vs spread${pct(O.ats_all)}</span></div>
-      <div class="stat"><strong>${n(O.model_mae)} / ${n(O.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas</span></div>
-      <div class="stat"><strong>${n(O.model_mae_total)} / ${n(O.vegas_mae_total)}</strong><span>Avg miss on total, model / Vegas</span></div>
-    </div>
-    <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
-    ${DB.by_season.map(r => `<tr><td>${r.season}</td><td>${r.games}</td><td>${rec(r.ats_leans)}${pct(r.ats_leans)}</td><td>${rec(r.totals_leans)}${pct(r.totals_leans)}</td><td>${rec(r.ats_all)}${pct(r.ats_all)}</td><td>${n(r.model_mae)}</td><td>${n(r.vegas_mae)}</td></tr>`).join("")}
+    const row = (name, R) => R && R.overall ? `<tr><td>${name}</td><td>${rec(R.overall.ats_leans)}${pct(R.overall.ats_leans)}</td><td>${rec(R.overall.totals_leans)}${pct(R.overall.totals_leans)}</td><td>${rec(R.overall.ats_all)}${pct(R.overall.ats_all)}</td><td>${n(R.overall.model_mae)} / ${n(R.overall.vegas_mae)}</td><td>${n(R.lean_spread,1)} / ${n(R.lean_total,1)}</td></tr>` : "";
+    h += `<h2>Deep backtest: the two engines</h2><p class="hint">Walk-forward: each season predicted by models trained only on earlier seasons. ${DB.overall.games} games. Break-even is 52.4%. Normal luck swings results about ±3% at this sample size, so only trust gaps bigger than that.</p>
+    <div class="tablewrap"><table class="cmp"><thead><tr><th scope="col">Engine</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All games vs spread</th><th scope="col">Avg miss, model / Vegas</th><th scope="col">Lean at (pts)</th></tr></thead><tbody>
+    ${row("Football-only", DB)}${row("Market-anchored", AB)}</tbody></table></div>`;
+    const bucketTable = (title, hint, R, key) => R ? `<h2>${title}</h2><p class="hint">${hint}</p><div class="tablewrap"><table class="bk"><thead><tr><th scope="col">Gap vs Vegas (pts)</th>${R[key].map(x => `<th scope="col">${esc(x.range)}</th>`).join("")}</tr></thead><tbody>
+      <tr><td style="text-align:left">Record</td>${R[key].map(x => `<td>${rec(x.record)}</td>`).join("")}</tr>
+      <tr><td style="text-align:left">Win rate</td>${R[key].map(x => { const t = x.record[0] + x.record[1]; const p = t ? 100 * x.record[0] / t : null; return `<td class="${p == null ? "" : p >= 52.4 ? "pos-t" : "neg-t"}">${p == null ? "–" : p.toFixed(1) + "%"}</td>`; }).join("")}</tr></tbody></table></div>` : "";
+    const bh = "A real edge shows up as win rates that climb as the gap grows. Green clears 52.4%. Flat or random-looking rows mean the gaps are mostly noise.";
+    h += bucketTable("Edge size: market-anchored spreads", bh, AB, "spread_buckets");
+    h += bucketTable("Edge size: market-anchored totals", bh, AB, "total_buckets");
+    h += bucketTable("Edge size: football-only spreads", bh, DB, "spread_buckets");
+    h += bucketTable("Edge size: football-only totals", bh, DB, "total_buckets");
+    const LB = (D.settings.lean_engine === "anchored" && AB) ? AB : DB;
+    h += `<h2>By season (${LB === AB ? "market-anchored" : "football-only"})</h2>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
+    ${LB.by_season.map(r => `<tr><td>${r.season}</td><td>${r.games}</td><td>${rec(r.ats_leans)}${pct(r.ats_leans)}</td><td>${rec(r.totals_leans)}${pct(r.totals_leans)}</td><td>${rec(r.ats_all)}${pct(r.ats_all)}</td><td>${n(r.model_mae)}</td><td>${n(r.vegas_mae)}</td></tr>`).join("")}
     </tbody></table></div>`;
   } else if (B.games) {
     h += `<h2>Backtest</h2><p class="hint">${B.games} recent games. Run the "Train model" workflow once to unlock the deep, multi-season backtest.</p>
@@ -334,8 +353,10 @@ function renderRecord() {
   if ((M.weights_margin || []).length) {
     h += `<h2>What the model learned</h2><p class="hint">Points of spread moved by a typical swing (one standard deviation) in each factor. Learned from ${M.history_games} games (${(M.seasons || [])[0]} to now). Machine-learning share: ${n((DB?.gbm_share_margin || 0) * 100, 0)}% for spreads, ${n((DB?.gbm_share_total || 0) * 100, 0)}% for totals.</p>
     <div class="stats">${M.weights_margin.slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;
+    if ((M.weights_edge || []).length) h += `<h2>Where Vegas tends to miss</h2><p class="hint">What the market-anchored engine learned: points of disagreement with the Vegas line per typical swing in each factor. Small numbers are expected. Vegas is sharp.</p>
+    <div class="stats">${M.weights_edge.filter(w => w.factor !== "Vegas line").slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;
   }
-  h += `<h2>Model settings this week</h2><p class="hint">Engine: ${esc(M.engine || "–")}. Coverage matchups ${D.scheme_enabled ? "on" : "off (data not published)"}. Vegas blend ${n((D.settings||{}).market_weight*100,0)}%.${M.deep_history ? "" : " Deep history not built yet: run the Train model workflow."}</p>
+  h += `<h2>Model settings this week</h2><p class="hint">Engine: ${esc(M.engine || "–")}. Leans from: ${M.lean_engine === "anchored" ? "market-anchored" : "football-only"}. Injury reports in training: ${n(M.injury_coverage,0)}% of games${M.injuries_learned ? " (learned)" : " (using default values)"}. Coverage matchups ${D.scheme_enabled ? "on" : "off (data not published)"}.${M.deep_history ? "" : " Deep history not built yet: run the Train model workflow."}</p>
   <h2>Data sources</h2><div class="chips">${Object.entries(D.data_status || {}).map(([k, v]) => `<span class="chip ${v.ok ? "ok" : "bad"}" title="${esc(v.note)}">${esc(k.replaceAll("_", " "))}</span>`).join("")}</div>
   <p class="hint" style="margin-top:10px">A red source means that feed was unavailable this run. The model keeps working without it and fills the gap with defaults.</p>`;
   $("#record").innerHTML = h;

@@ -18,7 +18,7 @@ from nflmodel import data as D
 from nflmodel.ratings import build_context, ratings_table
 from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulate, KeyNumbers)
 from nflmodel import elo, stack
-from nflmodel.features import game_row, history_rows
+from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
 from nflmodel.propsim import load_props, evaluate_props
@@ -77,7 +77,7 @@ def line_text(team, spread_for_team):
     return f"{team} {'PK' if abs(v) < 0.25 else f'{v:+.1f}'}"
 
 
-def load_history_rows(pbp, sch, elo_pre, season, week):
+def load_history_rows(pbp, sch, elo_pre, season, week, injuries=None, snaps=None):
     """Deep history from the trainer (data/training_rows.csv) + recent games built fresh."""
     path = ROOT / "data" / "training_rows.csv"
     hist = pd.read_csv(path) if path.exists() else pd.DataFrame()
@@ -85,7 +85,8 @@ def load_history_rows(pbp, sch, elo_pre, season, week):
     fresh_seasons = [s for s in (season - 1, season) if s not in have or s == season]
     hist = hist[~hist["season"].isin(fresh_seasons)] if len(hist) else hist
     log.info(f"history file: {len(hist)} games; building fresh rows for {fresh_seasons}")
-    fresh = history_rows(pbp, sch, elo_pre, fresh_seasons, max_week_in_last=week)
+    fresh = history_rows(pbp, sch, elo_pre, fresh_seasons, max_week_in_last=week,
+                         injuries=injuries, snaps=snaps)
     return pd.concat([hist, fresh], ignore_index=True), len(hist) > 0
 
 
@@ -98,8 +99,10 @@ def build_games(bundle, season, week, now):
     log.info("building ratings")
     ctx = build_context(bundle.pbp, sch, season, week)
     elo_pre, _ = elo.compute(sch)
-    rows, deep = load_history_rows(bundle.pbp, sch, elo_pre, season, week)
+    rows, deep = load_history_rows(bundle.pbp, sch, elo_pre, season, week,
+                                   bundle.injuries, bundle.snaps)
     ens = stack.build(rows)
+    inj_learned = ens is not None and ens["injury_coverage"] >= 0.3
     cal = fit_calibration(rows) if ens is None else None
     report = backtest_report(rows[rows["season"] >= season - 1].copy()) if len(rows) else {"games": 0}
     keynum = KeyNumbers(sch)
@@ -121,46 +124,58 @@ def build_games(bundle, season, week, now):
     for i, (_, g) in enumerate(todo.iterrows()):
         h, a = g["home_team"], g["away_team"]
         wx = None if is_indoor(g) else forecast(h, g["ko"])
+        ih, ia = injpts.get(h, NO_INJ), injpts.get(a, NO_INJ)
         feat = game_row(ctx, g, elo_pre, qual, qw, starters=(qbs[h]["adj"], qbs[a]["adj"]),
-                        weather=wx or {})
+                        weather=wx or {}, inj=(ih, ia))
         fdf = pd.DataFrame([feat])
-        drivers_m, drivers_t = [], []
-        if ens is not None:
-            mfin, mlin = ens["margin"].predict(fdf)
-            tfin, tlin = ens["total"].predict(fdf)
-            margin, total = float(mfin[0]), float(tfin[0])
-            drivers_m = ens["margin"].drivers(feat, margin, float(mlin[0]))
-            drivers_t = ens["total"].drivers(feat, total, float(tlin[0]))
-        else:
-            margin, total = apply_cal(feat["raw_margin"], feat["raw_total"], feat["hf"], feat["rest"], cal)
-            margin += feat["qb_diff"]
-            total += feat["qb_sum"]
-
-        # things the history can't learn from (injury reports, coverage data)
-        db_h = feat["plays_home"] * ctx.lg_pass_rate
-        db_a = feat["plays_away"] * ctx.lg_pass_rate
-        ih, ia = injpts.get(h, {"off": 0, "def": 0, "list": []}), injpts.get(a, {"off": 0, "def": 0, "list": []})
-        adj_h = -ih["off"] + ia["def"] + scheme.points(h, a, db_h)
-        adj_a = -ia["off"] + ih["def"] + scheme.points(a, h, db_a)
-        margin += adj_h - adj_a
-        total += adj_h + adj_a
-
         sl = pd.to_numeric(g.get("spread_line"), errors="coerce")
         tl = pd.to_numeric(g.get("total_line"), errors="coerce")
-        if C.MARKET_WEIGHT > 0:
-            if np.isfinite(sl):
-                margin = (1 - C.MARKET_WEIGHT) * margin + C.MARKET_WEIGHT * sl
-            if np.isfinite(tl):
-                total = (1 - C.MARKET_WEIGHT) * total + C.MARKET_WEIGHT * tl
+        has_lines = bool(np.isfinite(sl) and np.isfinite(tl))
+
+        # --- engine 1: independent (football data only) ---
+        why_m, why_t, why_edge, why_edge_t = [], [], [], []
+        if ens is not None:
+            mfin, mlin = ens["ind_margin"].predict(fdf)
+            tfin, tlin = ens["ind_total"].predict(fdf)
+            ind_m, ind_t = float(mfin[0]), float(tfin[0])
+            why_m = ens["ind_margin"].drivers(feat, ind_m, float(mlin[0]))
+            why_t = ens["ind_total"].drivers(feat, ind_t, float(tlin[0]))
+        else:
+            ind_m, ind_t = apply_cal(feat["raw_margin"], feat["raw_total"], feat["hf"], feat["rest"], cal)
+            ind_m += feat["qb_diff"]
+            ind_t += feat["qb_sum"]
+
+        # things history can't teach: coverage data always; injuries only if not learned
+        dh, da, _ = injury_effects(ih, ia) if not inj_learned else (0.0, 0.0, 0)
+        sch_h = scheme.points(h, a, feat["plays_home"] * ctx.lg_pass_rate)
+        sch_a = scheme.points(a, h, feat["plays_away"] * ctx.lg_pass_rate)
+        extra_m, extra_t = (dh + sch_h) - (da + sch_a), (dh + sch_h) + (da + sch_a)
+        ind_m, ind_t = ind_m + extra_m, ind_t + extra_t
+
+        # --- engine 2: anchored (starts from the Vegas line) ---
+        anc_m = anc_t = None
+        if ens is not None and ens.get("anchored") and has_lines:
+            fdf["spread_line"], fdf["total_line"] = sl, tl
+            afin, alin = ens["anc_margin"].predict(fdf)
+            tfin2, tlin2 = ens["anc_total"].predict(fdf)
+            anc_m, anc_t = float(afin[0]) + extra_m, float(tfin2[0]) + extra_t
+            why_edge = ens["anc_margin"].drivers(feat, float(afin[0]), float(alin[0]))
+            why_edge_t = ens["anc_total"].drivers(feat, float(tfin2[0]), float(tlin2[0]))
+
+        use_anchor = anc_m is not None and C.LEAN_ENGINE == "anchored"
+        margin, total = (anc_m, anc_t) if anc_m is not None else (ind_m, ind_t)
+        lean_m, lean_t_pred = (anc_m, anc_t) if use_anchor else (ind_m, ind_t)
+        th_s, th_t = stack.lean_thresholds("anchored" if use_anchor else "independent")
+
         ph, pa = (total + margin) / 2, (total - margin) / 2
         slv = sl if np.isfinite(sl) else None
         tlv = tl if np.isfinite(tl) else None
         sim = keynum.probs(margin, total, slv, tlv) or simulate(ph, pa, slv, tlv, seed=i)
 
-        e_sp = margin - sl if np.isfinite(sl) else None
-        e_to = total - tl if np.isfinite(tl) else None
-        lean_side = (h if e_sp > 0 else a) if e_sp is not None and abs(e_sp) >= C.LEAN_SPREAD_EDGE else None
-        lean_total = ("Over" if e_to > 0 else "Under") if e_to is not None and abs(e_to) >= C.LEAN_TOTAL_EDGE else None
+        e_sp = lean_m - sl if np.isfinite(sl) else None
+        e_to = lean_t_pred - tl if np.isfinite(tl) else None
+        lean_side = (h if e_sp > 0 else a) if e_sp is not None and abs(e_sp) >= th_s else None
+        lean_total = ("Over" if e_to > 0 else "Under") if e_to is not None and abs(e_to) >= th_t else None
 
         notes = []
         for team in (a, h):
@@ -181,7 +196,10 @@ def build_games(bundle, season, week, now):
             "margin": fnum(margin), "total": fnum(total),
             "win_prob_home": fnum(sim["win_home"] * 100, 0),
             "margin_range": [fnum(sim["margin_p10"], 0), fnum(sim["margin_p90"], 0)],
-            "model_line": line_text(h, margin),
+            "model_line": line_text(h, ind_m),
+            "final_line": line_text(h, margin),
+            "lean_engine": "anchored" if use_anchor else "independent",
+            "indep_margin": fnum(ind_m), "indep_total": fnum(ind_t),
             "market_line": line_text(h, sl) if np.isfinite(sl) else None,
             "market_spread": fnum(sl), "market_total": fnum(tl),
             "edge_spread": fnum(e_sp), "edge_total": fnum(e_to),
@@ -190,8 +208,10 @@ def build_games(bundle, season, week, now):
             "over_prob": fnum(sim.get("over", np.nan) * 100, 0),
             "qb_home": qbs[h]["name"], "qb_away": qbs[a]["name"],
             "weather": weather,
-            "why_margin": [{"factor": f, "pts": fnum(v)} for f, v in drivers_m],
-            "why_total": [{"factor": f, "pts": fnum(v)} for f, v in drivers_t],
+            "why_margin": [{"factor": f, "pts": fnum(v)} for f, v in why_m],
+            "why_total": [{"factor": f, "pts": fnum(v)} for f, v in why_t],
+            "why_edge": [{"factor": f, "pts": fnum(v)} for f, v in why_edge],
+            "why_edge_total": [{"factor": f, "pts": fnum(v)} for f, v in why_edge_t],
             "injuries_home": ih["list"], "injuries_away": ia["list"],
             "notes": notes,
         }
@@ -207,13 +227,18 @@ def build_games(bundle, season, week, now):
                  for t in ratings_table(ctx)]
     props = evaluate_props(load_props(ROOT / "data" / "props.csv"), players, sims)
     model_info = {
-        "engine": "ensemble" if ens is not None else "simple calibration",
+        "engine": "two engines" if ens is not None else "simple calibration",
+        "lean_engine": C.LEAN_ENGINE if (ens is not None and ens.get("anchored")) else "independent",
         "history_games": int(rows["actual_margin"].notna().sum()) if len(rows) else 0,
         "deep_history": deep,
         "seasons": ens["seasons"] if ens else [],
-        "deep_backtest": ens["report"] if ens else None,
-        "weights_margin": ens["margin"].weights() if ens else [],
-        "weights_total": ens["total"].weights() if ens else [],
+        "injury_coverage": fnum(ens["injury_coverage"] * 100, 0) if ens else 0,
+        "injuries_learned": inj_learned,
+        "deep_backtest": ens["report_independent"] if ens else None,
+        "anchored_backtest": ens["report_anchored"] if ens else None,
+        "weights_margin": ens["ind_margin"].weights() if ens else [],
+        "weights_total": ens["ind_total"].weights() if ens else [],
+        "weights_edge": ens["anc_margin"].weights() if ens and ens.get("anchored") else [],
         "calibration": {k: fnum(v, 3) for k, v in cal.items()} if cal else None,
     }
     return wk, games, players, teams_tbl, model_info, report, scheme.ok, props
@@ -302,8 +327,9 @@ def main():
         "games": all_games, "players": all_players, "teams": teams_tbl,
         "backtest": {k: (fnum(v, 2) if isinstance(v, float) else v) for k, v in report.items()},
         "live_record": grade(season, bundle.schedules),
-        "settings": {"market_weight": C.MARKET_WEIGHT, "lean_spread": C.LEAN_SPREAD_EDGE,
-                     "lean_total": C.LEAN_TOTAL_EDGE},
+        "settings": {"lean_engine": model_info["lean_engine"],
+                     "lean_spread": C.ANCHOR_LEAN_SPREAD if model_info["lean_engine"] == "anchored" else C.LEAN_SPREAD_EDGE,
+                     "lean_total": C.ANCHOR_LEAN_TOTAL if model_info["lean_engine"] == "anchored" else C.LEAN_TOTAL_EDGE},
     })
     (OUT / "latest.json").write_text(json.dumps(clean_json(payload), indent=1, default=str, allow_nan=False))
     log.info(f"wrote {len(games)} games, {len(players)} player projections for week {week}")

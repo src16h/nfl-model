@@ -104,3 +104,10 @@ PLAYER_SIMS = 10000          # simulated games per team for player stats
 K_REC = 8.0                  # lower = more week-to-week swing in who gets the yards
 K_RUSH = 10.0
 PROP_EDGE = 0.04             # flag a prop when the model differs from the book by 4%+
+
+# ---------------------------------------------------------------
+# v3: MARKET-ANCHORED ENGINE
+# ---------------------------------------------------------------
+LEAN_ENGINE = "anchored"     # "anchored" (starts from Vegas) or "independent" (football data only)
+ANCHOR_LEAN_SPREAD = 1.0     # anchored engine: flag a spread lean at this many points from Vegas
+ANCHOR_LEAN_TOTAL = 1.5      # anchored engine: same, for totals

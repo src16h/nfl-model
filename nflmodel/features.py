@@ -16,8 +16,12 @@ from .util import before
 log = logging.getLogger("nflmodel")
 
 MARGIN_FEATS = ["raw_margin", "hf", "elo_diff", "qb_diff", "rest", "tz_shift",
-                "west_early", "dist", "div_x_margin", "prime_hf", "pressure_diff"]
-TOTAL_FEATS = ["raw_total", "plays_total", "dome", "wind10", "cold", "prime", "div", "qb_sum"]
+                "west_early", "dist", "div_x_margin", "prime_hf", "pressure_diff", "inj_margin"]
+TOTAL_FEATS = ["raw_total", "plays_total", "dome", "wind10", "cold", "prime", "div", "qb_sum", "inj_total"]
+# market-anchored versions also see the Vegas number
+ANCHOR_MARGIN_FEATS = MARGIN_FEATS + ["spread_line"]
+ANCHOR_TOTAL_FEATS = TOTAL_FEATS + ["total_line"]
+NO_INJ = {"off": 0.0, "def": 0.0, "list": []}
 LABELS = {
     "raw_margin": "Team strength (EPA ratings)", "hf": "Home field", "elo_diff": "Elo history",
     "qb_diff": "QB situation", "rest": "Rest", "tz_shift": "Travel east/west",
@@ -26,7 +30,8 @@ LABELS = {
     "pressure_diff": "Pass rush vs protection",
     "raw_total": "Offense/defense quality", "plays_total": "Pace", "dome": "Indoors",
     "wind10": "Wind", "cold": "Cold", "prime": "Primetime", "div": "Division game",
-    "qb_sum": "QB changes",
+    "qb_sum": "QB changes", "inj_margin": "Injuries (non-QB)", "inj_total": "Injuries (non-QB)",
+    "spread_line": "Vegas line", "total_line": "Vegas total",
 }
 
 
@@ -43,7 +48,15 @@ def label(feat, value):
     return LABELS.get(feat, feat)
 
 
-def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None) -> dict:
+def injury_effects(ih: dict, ia: dict) -> tuple[float, float, float]:
+    """Points each side loses to non-QB injuries -> (home change, away change)."""
+    dh = -ih["off"] + ia["def"]
+    da = -ia["off"] + ih["def"]
+    return dh, da, 1.0 if (ih["off"] or ih["def"] or ia["off"] or ia["def"]) else 0.0
+
+
+def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None,
+             inj=None) -> dict:
     """starters: (home_qb_pid, away_qb_pid) or None to use schedule / incumbent.
     weather: dict with temp/wind or None to use schedule columns."""
     h, a = g["home_team"], g["away_team"]
@@ -72,6 +85,8 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None) -> di
         wf = weather_features(g.get("temp"), g.get("wind"), indoor)
     else:
         wf = weather_features(weather.get("temp"), weather.get("wind"), indoor)
+    ih, ia = inj if inj is not None else (NO_INJ, NO_INJ)
+    dh, da, _ = injury_effects(ih, ia)
     div = float(g.get("div_game") == 1 or g.get("div_game") is True)
     prime = float(ko >= 19)
 
@@ -84,6 +99,7 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None) -> di
         "hf": float(hf), "rest": rest, "elo_diff": elo_pre.get(g["game_id"], 0.0),
         "qb_home": qb_h, "qb_away": qb_a, "qb_diff": qb_h - qb_a, "qb_sum": qb_h + qb_a,
         "pressure_diff": (home_rush - away_rush) * 100,
+        "inj_margin": dh - da, "inj_total": dh + da, "inj_known": float(inj is not None),
         "div": div, "prime": prime, "prime_hf": prime * hf, "div_x_margin": div * r["raw_margin"],
         **tr, **wf,
         "spread_line": pd.to_numeric(g.get("spread_line"), errors="coerce"),
@@ -95,8 +111,15 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None) -> di
     return row
 
 
-def history_rows(pbp, schedules, elo_pre, seasons, max_week_in_last=None) -> pd.DataFrame:
-    """Walk-forward rows: each game built only from data before it."""
+def history_rows(pbp, schedules, elo_pre, seasons, max_week_in_last=None,
+                 injuries=None, snaps=None) -> pd.DataFrame:
+    """Walk-forward rows: each game built only from data before it.
+    If injury reports are given, each week's non-QB injuries become features too."""
+    from . import usage as U
+    from .availability import injury_table, load_overrides
+    from .adjust import starters_from_snaps, injury_points
+
+    empty_ov = pd.DataFrame(columns=["team", "player", "status", "note", "nname"])
     sch = schedules[schedules["home_score"].notna() & schedules["season"].isin(seasons)]
     rows = []
     for (s, wk), games in sch.groupby(["season", "week"]):
@@ -112,6 +135,18 @@ def history_rows(pbp, schedules, elo_pre, seasons, max_week_in_last=None) -> pd.
         except Exception as e:  # noqa: BLE001
             log.warning(f"history {s} wk{wk} skipped: {str(e)[:100]}")
             continue
+        injpts = None
+        if injuries is not None and len(injuries) and (injuries["season"] == s).any():
+            try:
+                inj = injury_table(injuries, None, empty_ov, int(s), int(wk))
+                if len(inj):
+                    use = U.build(pbp, int(s), int(wk))["usage"]
+                    injpts = injury_points(inj, use, starters_from_snaps(snaps, int(s), int(wk)))
+            except Exception as e:  # noqa: BLE001
+                log.warning(f"injuries {s} wk{wk} skipped: {str(e)[:100]}")
         for _, g in games.iterrows():
-            rows.append(game_row(ctx, g, elo_pre, qual, qw))
+            inj = None
+            if injpts is not None:
+                inj = (injpts.get(g["home_team"], NO_INJ), injpts.get(g["away_team"], NO_INJ))
+            rows.append(game_row(ctx, g, elo_pre, qual, qw, inj=inj))
     return pd.DataFrame(rows)
