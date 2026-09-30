@@ -1,0 +1,89 @@
+"""
+Every tunable number in the model lives here.
+Safe to edit. Each setting has a plain-English note.
+"""
+import os
+
+# Force a season/week (leave blank for automatic detection)
+SEASON = int(os.environ["SEASON"]) if os.environ.get("SEASON") else None
+WEEK = int(os.environ["WEEK"]) if os.environ.get("WEEK") else None
+
+# ---------------------------------------------------------------
+# TEAM RATINGS (built from every offensive play, EPA based)
+# ---------------------------------------------------------------
+RIDGE_ALPHA_ALL = 300.0      # higher = ratings pulled harder toward average
+RIDGE_ALPHA_SPLIT = 220.0    # same, for the separate pass and rush ratings
+RECENCY_DECAY = 0.92         # each week back counts 92% as much as the next
+PRIOR_SEASON_BASE = 0.60     # weight of last season's plays in week 1
+PRIOR_SEASON_FADE = 0.85     # that weight shrinks by 15% each new week
+GARBAGE_TIME_WEIGHT = 0.35   # plays when win prob is under 10% or over 90%
+SPLIT_BLEND = 0.5            # 0.5 = half pass/rush matchup model, half overall model
+
+# ---------------------------------------------------------------
+# GAME MODEL
+# ---------------------------------------------------------------
+DEFAULT_HFA = 1.5            # home field advantage in points (auto-calibrated)
+REST_POINTS_PER_DAY = 0.12   # extra rest vs opponent, points per day
+REST_CAP = 1.2
+TEAM_SCORE_SD = 9.6          # randomness of one team's score in simulations
+N_SIMS = 20000               # simulated games per matchup
+MARKET_WEIGHT = 0.0          # 0 = pure model. 0.5 = half model, half Vegas line
+LEAN_SPREAD_EDGE = 2.0       # flag a spread lean when model differs by this many points
+LEAN_TOTAL_EDGE = 3.0        # flag a total lean at this many points
+TD_PER_POINT = 0.105         # offensive touchdowns per point scored (league norm)
+LEAGUE_PASS_TD_SHARE = 0.60  # share of offensive TDs that are passing TDs
+
+# ---------------------------------------------------------------
+# QUARTERBACKS
+# ---------------------------------------------------------------
+QB_PRIOR_EPA = -0.05         # typical QB EPA per dropback before we have data
+QB_PRIOR_K = 200             # dropbacks before a QB's own numbers dominate
+QB_REPLACEMENT_EPA = -0.14   # unknown / emergency QB
+QB_POINTS_SCALE = 0.80       # how much of the QB EPA gap turns into points
+QB_ADJ_CAP = 10.0            # biggest QB swing allowed, in points
+
+# ---------------------------------------------------------------
+# NON-QB INJURIES (points lost when a regular starter is out)
+# ---------------------------------------------------------------
+STATUS_WEIGHT = {"OUT": 1.0, "IR": 1.0, "DOUBTFUL": 0.85, "QUESTIONABLE": 0.25}
+POSITION_VALUE = {
+    "OT": 0.50, "OG": 0.35, "C": 0.35,
+    "EDGE": 0.55, "DT": 0.35, "LB": 0.30, "CB": 0.50, "S": 0.35,
+}
+WR_TE_VALUE_PER_TARGET_SHARE = 3.5   # 25% target share WR = about 0.9 points
+RB_VALUE_CARRY = 1.0
+RB_VALUE_TARGET = 2.0
+SKILL_VALUE_CAP = 1.3
+INJURY_CAP_PER_SIDE = 4.0    # max combined non-QB injury hit, offense or defense
+STARTER_SNAP_PCT = 0.60      # snap share that counts as a regular starter
+
+# ---------------------------------------------------------------
+# SCHEME MATCHUPS (man vs zone, used only if data is available)
+# ---------------------------------------------------------------
+SCHEME_SHRINK_K = 150        # dropbacks before a team's man/zone split is trusted
+SCHEME_CAP = 1.5             # max points from scheme matchup
+
+# ---------------------------------------------------------------
+# PLAYER PROJECTIONS
+# ---------------------------------------------------------------
+USAGE_DECAY = 0.85           # recent games matter more for roles
+GAME_SCRIPT_PASS_RATE = 0.006  # pass rate drops 0.6% per point a team is favored
+TARGETS_PER_ATTEMPT = 0.93
+MIN_TARGET_SHARE = 0.05      # show receivers above this share
+MIN_CARRY_SHARE = 0.08       # show runners above this share
+
+# Shrinkage priors: (league average, sample size needed to trust player)
+PRIORS = {
+    "catch_rate": {"WR": (0.63, 40), "TE": (0.70, 40), "RB": (0.77, 40)},
+    "yds_per_target": {"WR": (8.2, 60), "TE": (7.3, 60), "RB": (5.8, 60)},
+    "ypc": {"RB": (4.3, 80), "QB": (4.8, 40), "WR": (6.5, 20), "TE": (4.0, 20)},
+    "qb_cmp": (0.65, 150),
+    "qb_ypa": (7.0, 200),
+    "qb_int": (0.024, 300),
+    "qb_scramble_rate": (0.035, 150),
+    "qb_scramble_ypa": (7.0, 30),
+}
+DEF_SHRINK_K = 250           # plays before a defense's allowed stats are trusted
+
+# Spread of outcomes for yardage ranges (coefficient of variation)
+PASS_YDS_CV = 0.27

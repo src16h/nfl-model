@@ -1,0 +1,17 @@
+# ============================================================
+# MANUAL OVERRIDES (edit this file in your browser on GitHub)
+# One row per player. Lines starting with # are ignored.
+#
+# status options:
+#   OUT            player will not play
+#   DOUBTFUL       very unlikely to play
+#   QUESTIONABLE   might play
+#   ACTIVE         ignore any injury listing, he is playing
+#   STARTING_QB    force this QB as the team's starter
+#
+# team uses standard abbreviations (KC, BUF, LA for Rams, LAC, etc.)
+# Examples (remove the # to use one):
+# KC,Patrick Mahomes,ACTIVE,cleared Friday
+# NYJ,Tyrod Taylor,STARTING_QB,starter benched
+# ============================================================
+team,player,status,note

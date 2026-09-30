@@ -1,0 +1,55 @@
+name: Weekly NFL model
+
+on:
+  schedule:
+    - cron: "0 12 * * 2"   # Tuesday 8am ET: full rebuild after Monday night
+    - cron: "0 18 * * 4"   # Thursday 2pm ET: first injury reports
+    - cron: "0 15 * * 6"   # Saturday 11am ET: final injury designations
+    - cron: "0 14 * * 0"   # Sunday 10am ET: last update before kickoff
+  workflow_dispatch:        # adds a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-model
+  cancel-in-progress: false
+
+jobs:
+  run-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check project files
+        run: |
+          missing=""
+          for f in run_weekly.py requirements.txt nflmodel/config.py docs/index.html data/overrides.csv; do
+            [ -f "$f" ] || missing="$missing $f"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Project files not found at the top of the repository. Missing:$missing. Re-upload the items INSIDE the unzipped nfl-model folder (not the folder itself)."
+            echo "---- Files GitHub can see ----"
+            find . -maxdepth 3 -not -path './.git*' | sort
+            exit 1
+          fi
+          echo "All project files found."
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run model
+        run: python run_weekly.py
+
+      - name: Save results
+        run: |
+          git config user.name "nfl-model-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/data
+          git diff --staged --quiet || git commit -m "Model update $(date -u +'%Y-%m-%d %H:%M')"
+          git push
