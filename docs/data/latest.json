@@ -1,0 +1,7236 @@
+{
+ "generated_at": "2026-09-30T19:58:00.722040+00:00",
+ "season": 2026,
+ "week": 4,
+ "data_status": {
+  "play_by_play": {
+   "ok": true,
+   "rows": 106574,
+   "note": ""
+  },
+  "schedules": {
+   "ok": true,
+   "rows": 842,
+   "note": ""
+  },
+  "rosters": {
+   "ok": true,
+   "rows": 57428,
+   "note": ""
+  },
+  "injuries": {
+   "ok": true,
+   "rows": 744,
+   "note": ""
+  },
+  "snap_counts": {
+   "ok": true,
+   "rows": 31101,
+   "note": ""
+  },
+  "coverage_schemes": {
+   "ok": true,
+   "rows": 45184,
+   "note": "2026: Season must be between 2016 and 2025"
+  }
+ },
+ "calibration": {
+  "hfa": 2.016,
+  "m_scale": 0.927,
+  "t_shift": -0.39,
+  "t_scale": 0.783,
+  "t_center": 46.21,
+  "n": 285.0
+ },
+ "scheme_enabled": true,
+ "games": [
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-01T20:15:00-04:00",
+   "away": "PIT",
+   "home": "CLE",
+   "neutral": false,
+   "proj_home": 19.6,
+   "proj_away": 18.4,
+   "margin": 1.3,
+   "total": 38.0,
+   "win_prob_home": 53.0,
+   "margin_range": [
+    -16.0,
+    18.0
+   ],
+   "model_line": "CLE -1.3",
+   "market_line": "CLE +2.5",
+   "market_spread": -2.5,
+   "market_total": 38.5,
+   "edge_spread": 3.8,
+   "edge_total": -0.5,
+   "lean_side": "CLE",
+   "lean_total": null,
+   "cover_prob_home": 61.0,
+   "over_prob": 49.0,
+   "qb_home": "Deshaun Watson",
+   "qb_away": "Aaron Rodgers",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.2,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T09:30:00-04:00",
+   "away": "IND",
+   "home": "WAS",
+   "neutral": true,
+   "proj_home": 24.6,
+   "proj_away": 26.0,
+   "margin": -1.4,
+   "total": 50.6,
+   "win_prob_home": 46.0,
+   "margin_range": [
+    -19.0,
+    16.0
+   ],
+   "model_line": "WAS +1.4",
+   "market_line": "WAS +3.5",
+   "market_spread": -3.5,
+   "market_total": 47.5,
+   "edge_spread": 2.1,
+   "edge_total": 3.1,
+   "lean_side": "WAS",
+   "lean_total": "Over",
+   "cover_prob_home": 56.0,
+   "over_prob": 59.0,
+   "qb_home": "Jayden Daniels",
+   "qb_away": "Daniel Jones",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.5,
+    "qb_away": 0.0,
+    "inj_home_off": -0.1,
+    "inj_away_off": -0.3,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [
+    {
+     "name": "Alec Pierce",
+     "pos": "WR",
+     "status": "IR",
+     "pts": 0.32
+    }
+   ],
+   "notes": [
+    "WAS QB: Jayden Daniels instead of Marcus Mariota (+0.5 pts)"
+   ]
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "TEN",
+   "home": "BAL",
+   "neutral": false,
+   "proj_home": 28.2,
+   "proj_away": 17.4,
+   "margin": 10.8,
+   "total": 45.6,
+   "win_prob_home": 79.0,
+   "margin_range": [
+    -7.0,
+    28.0
+   ],
+   "model_line": "BAL -10.8",
+   "market_line": "BAL -11.5",
+   "market_spread": 11.5,
+   "market_total": 43.5,
+   "edge_spread": -0.7,
+   "edge_total": 2.1,
+   "lean_side": null,
+   "lean_total": null,
+   "cover_prob_home": 48.0,
+   "over_prob": 56.0,
+   "qb_home": "Lamar Jackson",
+   "qb_away": "Cam Ward",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.1,
+    "inj_away_off": -0.3,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [
+    {
+     "name": "Fernando Carmona",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "NE",
+   "home": "BUF",
+   "neutral": false,
+   "proj_home": 25.6,
+   "proj_away": 22.9,
+   "margin": 2.7,
+   "total": 48.4,
+   "win_prob_home": 58.0,
+   "margin_range": [
+    -15.0,
+    20.0
+   ],
+   "model_line": "BUF -2.7",
+   "market_line": "BUF -6.5",
+   "market_spread": 6.5,
+   "market_total": 48.5,
+   "edge_spread": -3.8,
+   "edge_total": -0.1,
+   "lean_side": "NE",
+   "lean_total": null,
+   "cover_prob_home": 39.0,
+   "over_prob": 50.0,
+   "qb_home": "Josh Allen",
+   "qb_away": "Drake Maye",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.1,
+    "inj_away_off": -0.1,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "NYJ",
+   "home": "CHI",
+   "neutral": false,
+   "proj_home": 29.0,
+   "proj_away": 18.9,
+   "margin": 10.1,
+   "total": 48.0,
+   "win_prob_home": 77.0,
+   "margin_range": [
+    -7.0,
+    28.0
+   ],
+   "model_line": "CHI -10.1",
+   "market_line": "CHI -3.5",
+   "market_spread": 3.5,
+   "market_total": 42.5,
+   "edge_spread": 6.6,
+   "edge_total": 5.5,
+   "lean_side": "CHI",
+   "lean_total": "Over",
+   "cover_prob_home": 69.0,
+   "over_prob": 66.0,
+   "qb_home": "Caleb Williams",
+   "qb_away": "Geno Smith",
+   "adj": {
+    "rest": -0.1,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.0,
+    "inj_away_off": -0.1,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "JAX",
+   "home": "CIN",
+   "neutral": false,
+   "proj_home": 22.0,
+   "proj_away": 25.6,
+   "margin": -3.6,
+   "total": 47.6,
+   "win_prob_home": 40.0,
+   "margin_range": [
+    -21.0,
+    14.0
+   ],
+   "model_line": "CIN +3.6",
+   "market_line": "CIN -2.5",
+   "market_spread": 2.5,
+   "market_total": 51.5,
+   "edge_spread": -6.1,
+   "edge_total": -3.9,
+   "lean_side": "JAX",
+   "lean_total": "Under",
+   "cover_prob_home": 33.0,
+   "over_prob": 40.0,
+   "qb_home": "Joe Burrow",
+   "qb_away": "Trevor Lawrence",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.2,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.3,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Jalen Davis",
+     "pos": "S",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "DAL",
+   "home": "HOU",
+   "neutral": false,
+   "proj_home": 26.7,
+   "proj_away": 22.0,
+   "margin": 4.7,
+   "total": 48.8,
+   "win_prob_home": 64.0,
+   "margin_range": [
+    -13.0,
+    22.0
+   ],
+   "model_line": "HOU -4.7",
+   "market_line": "HOU -2.5",
+   "market_spread": 2.5,
+   "market_total": 48.5,
+   "edge_spread": 2.2,
+   "edge_total": 0.3,
+   "lean_side": "HOU",
+   "lean_total": null,
+   "cover_prob_home": 56.0,
+   "over_prob": 51.0,
+   "qb_home": "C.J. Stroud",
+   "qb_away": "Dak Prescott",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.3,
+    "inj_away_off": -0.1,
+    "inj_home_def": -0.3,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Henry To'oTo'o",
+     "pos": "LB",
+     "status": "IR",
+     "pts": 0.3
+    },
+    {
+     "name": "Jayden Higgins",
+     "pos": "WR",
+     "status": "IR",
+     "pts": 0.25
+    }
+   ],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "ARI",
+   "home": "NYG",
+   "neutral": false,
+   "proj_home": 22.6,
+   "proj_away": 23.2,
+   "margin": -0.6,
+   "total": 45.9,
+   "win_prob_home": 48.0,
+   "margin_range": [
+    -18.0,
+    17.0
+   ],
+   "model_line": "NYG +0.6",
+   "market_line": "NYG +2.5",
+   "market_spread": -2.5,
+   "market_total": 44.5,
+   "edge_spread": 1.9,
+   "edge_total": 1.4,
+   "lean_side": null,
+   "lean_total": null,
+   "cover_prob_home": 56.0,
+   "over_prob": 53.0,
+   "qb_home": "Jameis Winston",
+   "qb_away": "Jacoby Brissett",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": -3.5,
+    "qb_away": 0.0,
+    "inj_home_off": -0.1,
+    "inj_away_off": -0.1,
+    "inj_home_def": -0.3,
+    "inj_away_def": -0.3
+   },
+   "injuries_home": [
+    {
+     "name": "Brian Burns",
+     "pos": "LB",
+     "status": "IR",
+     "pts": 0.3
+    }
+   ],
+   "injuries_away": [
+    {
+     "name": "Will Johnson",
+     "pos": "S",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "notes": [
+    "NYG QB: Jameis Winston instead of Jaxson Dart (-3.5 pts)"
+   ]
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "LA",
+   "home": "PHI",
+   "neutral": false,
+   "proj_home": 20.7,
+   "proj_away": 23.9,
+   "margin": -3.2,
+   "total": 44.6,
+   "win_prob_home": 41.0,
+   "margin_range": [
+    -20.0,
+    14.0
+   ],
+   "model_line": "PHI +3.2",
+   "market_line": "PHI +3.0",
+   "market_spread": -3.0,
+   "market_total": 43.5,
+   "edge_spread": -0.2,
+   "edge_total": 1.1,
+   "lean_side": null,
+   "lean_total": null,
+   "cover_prob_home": 50.0,
+   "over_prob": 53.0,
+   "qb_home": "Jalen Hurts",
+   "qb_away": "Matthew Stafford",
+   "adj": {
+    "rest": -0.1,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.4,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.3
+   },
+   "injuries_home": [
+    {
+     "name": "Landon Dickerson",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "injuries_away": [
+    {
+     "name": "Myles Garrett",
+     "pos": "LB",
+     "status": "IR",
+     "pts": 0.3
+    }
+   ],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T13:00:00-04:00",
+   "away": "GB",
+   "home": "TB",
+   "neutral": false,
+   "proj_home": 23.1,
+   "proj_away": 22.8,
+   "margin": 0.3,
+   "total": 45.8,
+   "win_prob_home": 50.0,
+   "margin_range": [
+    -17.0,
+    18.0
+   ],
+   "model_line": "TB -0.3",
+   "market_line": "TB +3.5",
+   "market_spread": -3.5,
+   "market_total": 39.5,
+   "edge_spread": 3.8,
+   "edge_total": 6.3,
+   "lean_side": "TB",
+   "lean_total": "Over",
+   "cover_prob_home": 60.0,
+   "over_prob": 68.0,
+   "qb_home": "Baker Mayfield",
+   "qb_away": "Jordan Love",
+   "adj": {
+    "rest": -0.4,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.0,
+    "inj_away_off": -0.5,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [
+    {
+     "name": "Josh Jacobs",
+     "pos": "RB",
+     "status": "IR",
+     "pts": 0.42
+    }
+   ],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T16:05:00-04:00",
+   "away": "MIA",
+   "home": "MIN",
+   "neutral": false,
+   "proj_home": 22.2,
+   "proj_away": 16.3,
+   "margin": 5.9,
+   "total": 38.4,
+   "win_prob_home": 66.0,
+   "margin_range": [
+    -12.0,
+    23.0
+   ],
+   "model_line": "MIN -5.9",
+   "market_line": "MIN -10.5",
+   "market_spread": 10.5,
+   "market_total": 38.5,
+   "edge_spread": -4.6,
+   "edge_total": -0.1,
+   "lean_side": "MIA",
+   "lean_total": null,
+   "cover_prob_home": 36.0,
+   "over_prob": 50.0,
+   "qb_home": "Kyler Murray",
+   "qb_away": "Malik Willis",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": -1.1,
+    "qb_away": 1.0,
+    "inj_home_off": -0.6,
+    "inj_away_off": -0.8,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Jordan Mason",
+     "pos": "RB",
+     "status": "IR",
+     "pts": 0.3
+    }
+   ],
+   "injuries_away": [
+    {
+     "name": "De'Von Achane",
+     "pos": "RB",
+     "status": "IR",
+     "pts": 0.84
+    }
+   ],
+   "notes": [
+    "MIA QB: Malik Willis instead of Tua Tagovailoa (+1.0 pts)",
+    "MIN QB: Kyler Murray instead of Carson Wentz (-1.1 pts)"
+   ]
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T16:25:00-04:00",
+   "away": "KC",
+   "home": "LV",
+   "neutral": false,
+   "proj_home": 22.3,
+   "proj_away": 22.8,
+   "margin": -0.5,
+   "total": 45.1,
+   "win_prob_home": 49.0,
+   "margin_range": [
+    -18.0,
+    17.0
+   ],
+   "model_line": "LV +0.5",
+   "market_line": "LV +4.5",
+   "market_spread": -4.5,
+   "market_total": 47.5,
+   "edge_spread": 4.0,
+   "edge_total": -2.4,
+   "lean_side": "LV",
+   "lean_total": null,
+   "cover_prob_home": 61.0,
+   "over_prob": 43.0,
+   "qb_home": "Kirk Cousins",
+   "qb_away": "Patrick Mahomes",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 1.4,
+    "qb_away": 0.0,
+    "inj_home_off": -0.3,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [],
+   "injuries_away": [],
+   "notes": [
+    "LV QB: Kirk Cousins instead of Geno Smith (+1.4 pts)"
+   ]
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T16:25:00-04:00",
+   "away": "LAC",
+   "home": "SEA",
+   "neutral": false,
+   "proj_home": 22.9,
+   "proj_away": 14.5,
+   "margin": 8.4,
+   "total": 37.4,
+   "win_prob_home": 73.0,
+   "margin_range": [
+    -9.0,
+    25.0
+   ],
+   "model_line": "SEA -8.4",
+   "market_line": "SEA -7.0",
+   "market_spread": 7.0,
+   "market_total": 42.5,
+   "edge_spread": 1.4,
+   "edge_total": -5.1,
+   "lean_side": null,
+   "lean_total": "Under",
+   "cover_prob_home": 54.0,
+   "over_prob": 36.0,
+   "qb_home": "Sam Darnold",
+   "qb_away": "Justin Herbert",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.6,
+    "inj_away_off": -0.2,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Anthony Bradford",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T16:25:00-04:00",
+   "away": "DEN",
+   "home": "SF",
+   "neutral": false,
+   "proj_home": 25.7,
+   "proj_away": 22.8,
+   "margin": 2.8,
+   "total": 48.5,
+   "win_prob_home": 58.0,
+   "margin_range": [
+    -15.0,
+    20.0
+   ],
+   "model_line": "SF -2.8",
+   "market_line": "SF -3.0",
+   "market_spread": 3.0,
+   "market_total": 47.5,
+   "edge_spread": -0.2,
+   "edge_total": 1.0,
+   "lean_side": null,
+   "lean_total": null,
+   "cover_prob_home": 50.0,
+   "over_prob": 53.0,
+   "qb_home": "Brock Purdy",
+   "qb_away": "Bo Nix",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.7,
+    "inj_away_off": -0.1,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Demarcus Robinson",
+     "pos": "WR",
+     "status": "IR",
+     "pts": 0.28
+    }
+   ],
+   "injuries_away": [],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-04T20:20:00-04:00",
+   "away": "DET",
+   "home": "CAR",
+   "neutral": false,
+   "proj_home": 24.6,
+   "proj_away": 24.5,
+   "margin": 0.1,
+   "total": 49.1,
+   "win_prob_home": 51.0,
+   "margin_range": [
+    -17.0,
+    18.0
+   ],
+   "model_line": "CAR PK",
+   "market_line": "CAR +3.5",
+   "market_spread": -3.5,
+   "market_total": 51.5,
+   "edge_spread": 3.6,
+   "edge_total": -2.4,
+   "lean_side": "CAR",
+   "lean_total": null,
+   "cover_prob_home": 61.0,
+   "over_prob": 43.0,
+   "qb_home": "Bryce Young",
+   "qb_away": "Jared Goff",
+   "adj": {
+    "rest": 0.0,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.1,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.3
+   },
+   "injuries_home": [],
+   "injuries_away": [
+    {
+     "name": "Avonte Maddox",
+     "pos": "S",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "notes": []
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "week": 4,
+   "state": "upcoming",
+   "kickoff": "2026-10-05T20:15:00-04:00",
+   "away": "ATL",
+   "home": "NO",
+   "neutral": false,
+   "proj_home": 20.6,
+   "proj_away": 20.6,
+   "margin": 0.0,
+   "total": 41.2,
+   "win_prob_home": 50.0,
+   "margin_range": [
+    -17.0,
+    17.0
+   ],
+   "model_line": "NO PK",
+   "market_line": "NO -2.5",
+   "market_spread": 2.5,
+   "market_total": 47.5,
+   "edge_spread": -2.5,
+   "edge_total": -6.3,
+   "lean_side": "ATL",
+   "lean_total": "Under",
+   "cover_prob_home": 43.0,
+   "over_prob": 32.0,
+   "qb_home": "Tyler Shough",
+   "qb_away": "Michael Penix Jr.",
+   "adj": {
+    "rest": -0.4,
+    "qb_home": 0.0,
+    "qb_away": 0.0,
+    "inj_home_off": -0.5,
+    "inj_away_off": -0.0,
+    "inj_home_def": -0.0,
+    "inj_away_def": -0.0
+   },
+   "injuries_home": [
+    {
+     "name": "Kelvin Banks Jr.",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
+   "injuries_away": [],
+   "notes": []
+  }
+ ],
+ "players": [
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0036407",
+   "name": "Jerry Jeudy",
+   "pos": "WR",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 6.7,
+   "td_prob": 15.0,
+   "targets": 4.5,
+   "rec": 2.5,
+   "rec_yds": 33.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    68.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0040466",
+   "name": "Raheim Sanders",
+   "pos": "RB",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 4.7,
+   "td_prob": 11.0,
+   "carries": 2.3,
+   "rush_yds": 10.0,
+   "rush_yds_med": 8.0,
+   "rush_yds_range": [
+    2.0,
+    21.0
+   ],
+   "rush_td": 0.06,
+   "targets": 2.1,
+   "rec": 1.7,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0040663",
+   "name": "Harold Fannin Jr.",
+   "pos": "TE",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 14.2,
+   "td_prob": 34.0,
+   "targets": 7.9,
+   "rec": 5.8,
+   "rec_yds": 59.0,
+   "rec_yds_med": 49.0,
+   "rec_yds_range": [
+    15.0,
+    115.0
+   ],
+   "rec_td": 0.4
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0040782",
+   "name": "Isaiah Bond",
+   "pos": "WR",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 2.9,
+   "td_prob": 6.0,
+   "targets": 1.6,
+   "rec": 0.9,
+   "rec_yds": 14.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    30.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0040784",
+   "name": "Quinshon Judkins",
+   "pos": "RB",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 15.3,
+   "td_prob": 45.0,
+   "carries": 18.5,
+   "rush_yds": 70.0,
+   "rush_yds_med": 63.0,
+   "rush_yds_range": [
+    26.0,
+    124.0
+   ],
+   "rush_td": 0.45,
+   "targets": 3.3,
+   "rec": 2.7,
+   "rec_yds": 20.0,
+   "rec_yds_med": 15.0,
+   "rec_yds_range": [
+    3.0,
+    42.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0041037",
+   "name": "Denzel Boston",
+   "pos": "WR",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 7.1,
+   "td_prob": 24.0,
+   "targets": 3.3,
+   "rec": 2.1,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.28
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0041547",
+   "name": "KC Concepcion",
+   "pos": "WR",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 7.9,
+   "td_prob": 20.0,
+   "targets": 4.4,
+   "rec": 2.9,
+   "rec_yds": 34.0,
+   "rec_yds_med": 27.0,
+   "rec_yds_range": [
+    7.0,
+    70.0
+   ],
+   "rec_td": 0.22
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0033537",
+   "name": "Deshaun Watson",
+   "pos": "QB",
+   "team": "CLE",
+   "opp": "PIT",
+   "status": "",
+   "fpts": 16.1,
+   "td_prob": 7.0,
+   "pass_att": 31.4,
+   "pass_cmp": 20.1,
+   "pass_yds": 219.0,
+   "pass_yds_med": 214.0,
+   "pass_yds_range": [
+    148.0,
+    298.0
+   ],
+   "pass_td": 1.44,
+   "pass_int": 0.67,
+   "carries": 4.1,
+   "rush_yds": 25.0,
+   "rush_yds_med": 20.0,
+   "rush_yds_range": [
+    6.0,
+    49.0
+   ],
+   "rush_td": 0.07
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0035640",
+   "name": "DK Metcalf",
+   "pos": "WR",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 13.7,
+   "td_prob": 29.0,
+   "targets": 8.9,
+   "rec": 5.1,
+   "rec_yds": 65.0,
+   "rec_yds_med": 55.0,
+   "rec_yds_range": [
+    18.0,
+    125.0
+   ],
+   "rec_td": 0.33
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0036139",
+   "name": "Rico Dowdle",
+   "pos": "RB",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 3.8,
+   "td_prob": 9.0,
+   "carries": 2.9,
+   "rush_yds": 13.0,
+   "rush_yds_med": 10.0,
+   "rush_yds_range": [
+    3.0,
+    27.0
+   ],
+   "rush_td": 0.07,
+   "targets": 1.5,
+   "rec": 1.1,
+   "rec_yds": 8.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    18.0
+   ],
+   "rec_td": 0.03
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0036252",
+   "name": "Michael Pittman",
+   "pos": "WR",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 2.8,
+   "td_prob": 4.0,
+   "targets": 1.9,
+   "rec": 1.2,
+   "rec_yds": 14.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    30.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0036894",
+   "name": "Pat Freiermuth",
+   "pos": "TE",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 9.6,
+   "td_prob": 23.0,
+   "carries": 0.5,
+   "rush_yds": 2.0,
+   "rush_yds_med": 2.0,
+   "rush_yds_range": [
+    0.0,
+    4.0
+   ],
+   "rush_td": 0.01,
+   "targets": 5.3,
+   "rec": 3.9,
+   "rec_yds": 40.0,
+   "rec_yds_med": 32.0,
+   "rec_yds_range": [
+    8.0,
+    81.0
+   ],
+   "rec_td": 0.26
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0037228",
+   "name": "Jaylen Warren",
+   "pos": "RB",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 19.9,
+   "td_prob": 54.0,
+   "carries": 18.3,
+   "rush_yds": 87.0,
+   "rush_yds_med": 80.0,
+   "rush_yds_range": [
+    38.0,
+    145.0
+   ],
+   "rush_td": 0.52,
+   "targets": 4.6,
+   "rec": 3.7,
+   "rec_yds": 28.0,
+   "rec_yds_med": 22.0,
+   "rec_yds_range": [
+    5.0,
+    59.0
+   ],
+   "rec_td": 0.26
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0038558",
+   "name": "Darnell Washington",
+   "pos": "TE",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 6.0,
+   "td_prob": 13.0,
+   "targets": 3.6,
+   "rec": 2.5,
+   "rec_yds": 27.0,
+   "rec_yds_med": 21.0,
+   "rec_yds_range": [
+    5.0,
+    57.0
+   ],
+   "rec_td": 0.13
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0039739",
+   "name": "Roman Wilson",
+   "pos": "WR",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 6.5,
+   "td_prob": 9.0,
+   "targets": 4.4,
+   "rec": 2.7,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.09
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0041489",
+   "name": "Germie Bernard",
+   "pos": "WR",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 2.8,
+   "td_prob": 5.0,
+   "targets": 1.9,
+   "rec": 1.1,
+   "rec_yds": 14.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    30.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_PIT_CLE",
+   "pid": "00-0023459",
+   "name": "Aaron Rodgers",
+   "pos": "QB",
+   "team": "PIT",
+   "opp": "CLE",
+   "status": "",
+   "fpts": 13.9,
+   "td_prob": 0.0,
+   "pass_att": 35.4,
+   "pass_cmp": 22.0,
+   "pass_yds": 235.0,
+   "pass_yds_med": 229.0,
+   "pass_yds_range": [
+    158.0,
+    319.0
+   ],
+   "pass_td": 1.28,
+   "pass_int": 0.68,
+   "carries": 0.9,
+   "rush_yds": 6.0,
+   "rush_yds_med": 5.0,
+   "rush_yds_range": [
+    1.0,
+    13.0
+   ],
+   "rush_td": 0.0
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0031588",
+   "name": "Stefon Diggs",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 10.8,
+   "td_prob": 28.0,
+   "targets": 5.7,
+   "rec": 4.1,
+   "rec_yds": 48.0,
+   "rec_yds_med": 39.0,
+   "rec_yds_range": [
+    11.0,
+    96.0
+   ],
+   "rec_td": 0.33
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0035659",
+   "name": "Terry McLaurin",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 14.3,
+   "td_prob": 31.0,
+   "targets": 8.4,
+   "rec": 5.0,
+   "rec_yds": 71.0,
+   "rec_yds_med": 61.0,
+   "rec_yds_range": [
+    21.0,
+    134.0
+   ],
+   "rec_td": 0.37
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0036626",
+   "name": "Dyami Brown",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 3.4,
+   "td_prob": 10.0,
+   "targets": 2.1,
+   "rec": 1.2,
+   "rec_yds": 15.0,
+   "rec_yds_med": 11.0,
+   "rec_yds_range": [
+    2.0,
+    33.0
+   ],
+   "rec_td": 0.11
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0036628",
+   "name": "John Bates",
+   "pos": "TE",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 3.6,
+   "td_prob": 15.0,
+   "targets": 1.9,
+   "rec": 1.3,
+   "rec_yds": 14.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0037256",
+   "name": "Rachaad White",
+   "pos": "RB",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 7.0,
+   "td_prob": 29.0,
+   "carries": 5.2,
+   "rush_yds": 23.0,
+   "rush_yds_med": 18.0,
+   "rush_yds_range": [
+    5.0,
+    45.0
+   ],
+   "rush_td": 0.18,
+   "targets": 1.9,
+   "rec": 1.6,
+   "rec_yds": 11.0,
+   "rec_yds_med": 8.0,
+   "rec_yds_range": [
+    2.0,
+    23.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0037742",
+   "name": "Treylon Burks",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 3.7,
+   "td_prob": 15.0,
+   "targets": 2.0,
+   "rec": 1.2,
+   "rec_yds": 15.0,
+   "rec_yds_med": 11.0,
+   "rec_yds_range": [
+    2.0,
+    33.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0040164",
+   "name": "Jaylin Lane",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 2.7,
+   "td_prob": 5.0,
+   "targets": 1.6,
+   "rec": 1.0,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0040242",
+   "name": "Jacory Croskey-Merritt",
+   "pos": "RB",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 12.9,
+   "td_prob": 45.0,
+   "carries": 18.4,
+   "rush_yds": 76.0,
+   "rush_yds_med": 69.0,
+   "rush_yds_range": [
+    30.0,
+    132.0
+   ],
+   "rush_td": 0.55,
+   "targets": 1.3,
+   "rec": 1.0,
+   "rec_yds": 7.0,
+   "rec_yds_med": 5.0,
+   "rec_yds_range": [
+    1.0,
+    16.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0041040",
+   "name": "Antonio Williams",
+   "pos": "WR",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 4.8,
+   "td_prob": 15.0,
+   "targets": 2.5,
+   "rec": 1.7,
+   "rec_yds": 21.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    4.0,
+    46.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0039910",
+   "name": "Jayden Daniels",
+   "pos": "QB",
+   "team": "WAS",
+   "opp": "IND",
+   "status": "",
+   "fpts": 19.1,
+   "td_prob": 9.0,
+   "pass_att": 33.3,
+   "pass_cmp": 20.6,
+   "pass_yds": 241.0,
+   "pass_yds_med": 236.0,
+   "pass_yds_range": [
+    163.0,
+    328.0
+   ],
+   "pass_td": 1.67,
+   "pass_int": 0.64,
+   "carries": 5.3,
+   "rush_yds": 35.0,
+   "rush_yds_med": 29.0,
+   "rush_yds_range": [
+    9.0,
+    68.0
+   ],
+   "rush_td": 0.09
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0030279",
+   "name": "Keenan Allen",
+   "pos": "WR",
+   "team": "IND",
+   "opp": "WAS",
+   "status": "",
+   "fpts": 7.8,
+   "td_prob": 19.0,
+   "targets": 4.5,
+   "rec": 3.0,
+   "rec_yds": 35.0,
+   "rec_yds_med": 28.0,
+   "rec_yds_range": [
+    7.0,
+    72.0
+   ],
+   "rec_td": 0.21
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0036223",
+   "name": "Jonathan Taylor",
+   "pos": "RB",
+   "team": "IND",
+   "opp": "WAS",
+   "status": "",
+   "fpts": 23.9,
+   "td_prob": 71.0,
+   "carries": 20.8,
+   "rush_yds": 96.0,
+   "rush_yds_med": 90.0,
+   "rush_yds_range": [
+    45.0,
+    156.0
+   ],
+   "rush_td": 1.05,
+   "targets": 4.5,
+   "rec": 3.8,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0038997",
+   "name": "Josh Downs",
+   "pos": "WR",
+   "team": "IND",
+   "opp": "WAS",
+   "status": "",
+   "fpts": 17.2,
+   "td_prob": 38.0,
+   "targets": 9.5,
+   "rec": 6.3,
+   "rec_yds": 80.0,
+   "rec_yds_med": 70.0,
+   "rec_yds_range": [
+    26.0,
+    147.0
+   ],
+   "rec_td": 0.48
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0040128",
+   "name": "Tyler Warren",
+   "pos": "TE",
+   "team": "IND",
+   "opp": "WAS",
+   "status": "",
+   "fpts": 17.6,
+   "td_prob": 38.0,
+   "carries": 0.6,
+   "rush_yds": 2.0,
+   "rush_yds_med": 2.0,
+   "rush_yds_range": [
+    0.0,
+    4.0
+   ],
+   "rush_td": 0.03,
+   "targets": 9.6,
+   "rec": 7.1,
+   "rec_yds": 75.0,
+   "rec_yds_med": 64.0,
+   "rec_yds_range": [
+    23.0,
+    140.0
+   ],
+   "rec_td": 0.45
+  },
+  {
+   "game_id": "2026_04_IND_WAS",
+   "pid": "00-0035710",
+   "name": "Daniel Jones",
+   "pos": "QB",
+   "team": "IND",
+   "opp": "WAS",
+   "status": "",
+   "fpts": 16.3,
+   "td_prob": 6.0,
+   "pass_att": 34.2,
+   "pass_cmp": 22.7,
+   "pass_yds": 254.0,
+   "pass_yds_med": 248.0,
+   "pass_yds_range": [
+    171.0,
+    346.0
+   ],
+   "pass_td": 1.48,
+   "pass_int": 0.81,
+   "carries": 2.7,
+   "rush_yds": 15.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    31.0
+   ],
+   "rush_td": 0.06
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0032764",
+   "name": "Derrick Henry",
+   "pos": "RB",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 21.9,
+   "td_prob": 72.0,
+   "carries": 25.0,
+   "rush_yds": 116.0,
+   "rush_yds_med": 108.0,
+   "rush_yds_range": [
+    56.0,
+    186.0
+   ],
+   "rush_td": 1.19,
+   "targets": 1.9,
+   "rec": 1.5,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    27.0
+   ],
+   "rec_td": 0.08
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0034753",
+   "name": "Mark Andrews",
+   "pos": "TE",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 10.9,
+   "td_prob": 30.0,
+   "targets": 5.8,
+   "rec": 4.3,
+   "rec_yds": 43.0,
+   "rec_yds_med": 35.0,
+   "rec_yds_range": [
+    9.0,
+    88.0
+   ],
+   "rec_td": 0.35
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0034975",
+   "name": "Justice Hill",
+   "pos": "RB",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 3.7,
+   "td_prob": 11.0,
+   "carries": 2.9,
+   "rush_yds": 12.0,
+   "rush_yds_med": 10.0,
+   "rush_yds_range": [
+    2.0,
+    25.0
+   ],
+   "rush_td": 0.08,
+   "targets": 1.2,
+   "rec": 1.0,
+   "rec_yds": 8.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    17.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0036550",
+   "name": "Rashod Bateman",
+   "pos": "WR",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 7.3,
+   "td_prob": 26.0,
+   "targets": 3.7,
+   "rec": 2.3,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.3
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0039064",
+   "name": "Zay Flowers",
+   "pos": "WR",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 15.0,
+   "td_prob": 35.0,
+   "carries": 0.6,
+   "rush_yds": 4.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    9.0
+   ],
+   "rush_td": 0.02,
+   "targets": 6.5,
+   "rec": 4.8,
+   "rec_yds": 72.0,
+   "rec_yds_med": 62.0,
+   "rec_yds_range": [
+    22.0,
+    136.0
+   ],
+   "rec_td": 0.41
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0034796",
+   "name": "Lamar Jackson",
+   "pos": "QB",
+   "team": "BAL",
+   "opp": "TEN",
+   "status": "",
+   "fpts": 16.7,
+   "td_prob": 15.0,
+   "pass_att": 25.2,
+   "pass_cmp": 16.9,
+   "pass_yds": 205.0,
+   "pass_yds_med": 200.0,
+   "pass_yds_range": [
+    138.0,
+    278.0
+   ],
+   "pass_td": 1.48,
+   "pass_int": 0.56,
+   "carries": 4.4,
+   "rush_yds": 27.0,
+   "rush_yds_med": 22.0,
+   "rush_yds_range": [
+    6.0,
+    53.0
+   ],
+   "rush_td": 0.17
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0034837",
+   "name": "Calvin Ridley",
+   "pos": "WR",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 3.2,
+   "td_prob": 5.0,
+   "targets": 2.1,
+   "rec": 1.2,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    36.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0035261",
+   "name": "Tony Pollard",
+   "pos": "RB",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 14.0,
+   "td_prob": 39.0,
+   "carries": 15.2,
+   "rush_yds": 67.0,
+   "rush_yds_med": 60.0,
+   "rush_yds_range": [
+    24.0,
+    119.0
+   ],
+   "rush_td": 0.43,
+   "targets": 3.3,
+   "rec": 2.6,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    37.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0038117",
+   "name": "Wan'Dale Robinson",
+   "pos": "WR",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 7.3,
+   "td_prob": 17.0,
+   "targets": 4.5,
+   "rec": 3.0,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0039032",
+   "name": "Tyjae Spears",
+   "pos": "RB",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 7.3,
+   "td_prob": 18.0,
+   "carries": 4.7,
+   "rush_yds": 19.0,
+   "rush_yds_med": 16.0,
+   "rush_yds_range": [
+    4.0,
+    39.0
+   ],
+   "rush_td": 0.11,
+   "targets": 3.0,
+   "rec": 2.5,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    36.0
+   ],
+   "rec_td": 0.09
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0040170",
+   "name": "Elic Ayomanor",
+   "pos": "WR",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 8.7,
+   "td_prob": 25.0,
+   "targets": 5.7,
+   "rec": 3.0,
+   "rec_yds": 40.0,
+   "rec_yds_med": 32.0,
+   "rec_yds_range": [
+    8.0,
+    82.0
+   ],
+   "rec_td": 0.29
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0040584",
+   "name": "Gunnar Helm",
+   "pos": "TE",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 6.9,
+   "td_prob": 18.0,
+   "targets": 4.1,
+   "rec": 3.0,
+   "rec_yds": 27.0,
+   "rec_yds_med": 21.0,
+   "rec_yds_range": [
+    5.0,
+    57.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0040705",
+   "name": "Chimere Dike",
+   "pos": "WR",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 5.7,
+   "td_prob": 12.0,
+   "targets": 3.6,
+   "rec": 2.3,
+   "rec_yds": 24.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    52.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0041438",
+   "name": "Carnell Tate",
+   "pos": "WR",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 8.2,
+   "td_prob": 13.0,
+   "targets": 5.3,
+   "rec": 3.4,
+   "rec_yds": 40.0,
+   "rec_yds_med": 32.0,
+   "rec_yds_range": [
+    8.0,
+    81.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_TEN_BAL",
+   "pid": "00-0040676",
+   "name": "Cam Ward",
+   "pos": "QB",
+   "team": "TEN",
+   "opp": "BAL",
+   "status": "",
+   "fpts": 14.2,
+   "td_prob": 6.0,
+   "pass_att": 35.3,
+   "pass_cmp": 22.0,
+   "pass_yds": 223.0,
+   "pass_yds_med": 217.0,
+   "pass_yds_range": [
+    150.0,
+    302.0
+   ],
+   "pass_td": 1.16,
+   "pass_int": 0.61,
+   "carries": 2.6,
+   "rush_yds": 14.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    30.0
+   ],
+   "rush_td": 0.06
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0034827",
+   "name": "DJ Moore",
+   "pos": "WR",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 6.4,
+   "td_prob": 17.0,
+   "targets": 3.7,
+   "rec": 2.3,
+   "rec_yds": 29.0,
+   "rec_yds_med": 23.0,
+   "rec_yds_range": [
+    5.0,
+    61.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0035537",
+   "name": "Ty Johnson",
+   "pos": "RB",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 4.2,
+   "td_prob": 14.0,
+   "carries": 1.3,
+   "rush_yds": 5.0,
+   "rush_yds_med": 4.0,
+   "rush_yds_range": [
+    1.0,
+    11.0
+   ],
+   "rush_td": 0.08,
+   "targets": 2.0,
+   "rec": 1.6,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    27.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0035689",
+   "name": "Dawson Knox",
+   "pos": "TE",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 5.1,
+   "td_prob": 16.0,
+   "targets": 2.7,
+   "rec": 2.0,
+   "rec_yds": 19.0,
+   "rec_yds_med": 15.0,
+   "rec_yds_range": [
+    3.0,
+    42.0
+   ],
+   "rec_td": 0.17
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0036988",
+   "name": "Josh Palmer",
+   "pos": "WR",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 2.9,
+   "td_prob": 6.0,
+   "targets": 1.7,
+   "rec": 1.0,
+   "rec_yds": 14.0,
+   "rec_yds_med": 11.0,
+   "rec_yds_range": [
+    2.0,
+    31.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0037248",
+   "name": "James Cook",
+   "pos": "RB",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 18.5,
+   "td_prob": 59.0,
+   "carries": 19.1,
+   "rush_yds": 96.0,
+   "rush_yds_med": 89.0,
+   "rush_yds_range": [
+    45.0,
+    156.0
+   ],
+   "rush_td": 0.75,
+   "targets": 2.8,
+   "rec": 2.1,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    34.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0037261",
+   "name": "Khalil Shakir",
+   "pos": "WR",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 11.7,
+   "td_prob": 34.0,
+   "targets": 6.4,
+   "rec": 4.5,
+   "rec_yds": 46.0,
+   "rec_yds_med": 38.0,
+   "rec_yds_range": [
+    10.0,
+    93.0
+   ],
+   "rec_td": 0.42
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0038933",
+   "name": "Dalton Kincaid",
+   "pos": "TE",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 8.6,
+   "td_prob": 18.0,
+   "targets": 4.4,
+   "rec": 3.3,
+   "rec_yds": 41.0,
+   "rec_yds_med": 33.0,
+   "rec_yds_range": [
+    9.0,
+    84.0
+   ],
+   "rec_td": 0.19
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0039901",
+   "name": "Keon Coleman",
+   "pos": "WR",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 5.6,
+   "td_prob": 17.0,
+   "targets": 3.1,
+   "rec": 2.0,
+   "rec_yds": 24.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    51.0
+   ],
+   "rec_td": 0.19
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0034857",
+   "name": "Josh Allen",
+   "pos": "QB",
+   "team": "BUF",
+   "opp": "NE",
+   "status": "",
+   "fpts": 19.1,
+   "td_prob": 26.0,
+   "pass_att": 30.7,
+   "pass_cmp": 20.0,
+   "pass_yds": 214.0,
+   "pass_yds_med": 208.0,
+   "pass_yds_range": [
+    144.0,
+    290.0
+   ],
+   "pass_td": 1.5,
+   "pass_int": 0.71,
+   "carries": 7.0,
+   "rush_yds": 39.0,
+   "rush_yds_med": 33.0,
+   "rush_yds_range": [
+    11.0,
+    74.0
+   ],
+   "rush_td": 0.29
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0033090",
+   "name": "Hunter Henry",
+   "pos": "TE",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 11.5,
+   "td_prob": 31.0,
+   "targets": 6.2,
+   "rec": 4.3,
+   "rec_yds": 50.0,
+   "rec_yds_med": 41.0,
+   "rec_yds_range": [
+    12.0,
+    100.0
+   ],
+   "rec_td": 0.37
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0033555",
+   "name": "Mack Hollins",
+   "pos": "WR",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 11.9,
+   "td_prob": 29.0,
+   "targets": 6.3,
+   "rec": 4.3,
+   "rec_yds": 56.0,
+   "rec_yds_med": 46.0,
+   "rec_yds_range": [
+    14.0,
+    110.0
+   ],
+   "rec_td": 0.34
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0036875",
+   "name": "Rhamondre Stevenson",
+   "pos": "RB",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 14.7,
+   "td_prob": 43.0,
+   "carries": 10.0,
+   "rush_yds": 44.0,
+   "rush_yds_med": 38.0,
+   "rush_yds_range": [
+    13.0,
+    84.0
+   ],
+   "rush_td": 0.37,
+   "targets": 4.7,
+   "rec": 3.8,
+   "rec_yds": 32.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    67.0
+   ],
+   "rec_td": 0.19
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0037816",
+   "name": "Romeo Doubs",
+   "pos": "WR",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 4.1,
+   "td_prob": 11.0,
+   "targets": 2.2,
+   "rec": 1.4,
+   "rec_yds": 20.0,
+   "rec_yds_med": 15.0,
+   "rec_yds_range": [
+    3.0,
+    43.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0038621",
+   "name": "DeMario Douglas",
+   "pos": "WR",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 9.0,
+   "td_prob": 19.0,
+   "targets": 5.3,
+   "rec": 3.3,
+   "rec_yds": 44.0,
+   "rec_yds_med": 35.0,
+   "rec_yds_range": [
+    10.0,
+    88.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0040131",
+   "name": "Kyle Williams",
+   "pos": "WR",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 2.7,
+   "td_prob": 4.0,
+   "targets": 1.7,
+   "rec": 1.0,
+   "rec_yds": 14.0,
+   "rec_yds_med": 11.0,
+   "rec_yds_range": [
+    2.0,
+    31.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0040734",
+   "name": "TreVeyon Henderson",
+   "pos": "RB",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 10.4,
+   "td_prob": 38.0,
+   "carries": 9.5,
+   "rush_yds": 44.0,
+   "rush_yds_med": 38.0,
+   "rush_yds_range": [
+    13.0,
+    85.0
+   ],
+   "rush_td": 0.39,
+   "targets": 2.2,
+   "rec": 1.8,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    28.0
+   ],
+   "rec_td": 0.09
+  },
+  {
+   "game_id": "2026_04_NE_BUF",
+   "pid": "00-0039851",
+   "name": "Drake Maye",
+   "pos": "QB",
+   "team": "NE",
+   "opp": "BUF",
+   "status": "",
+   "fpts": 17.8,
+   "td_prob": 10.0,
+   "pass_att": 32.9,
+   "pass_cmp": 21.2,
+   "pass_yds": 244.0,
+   "pass_yds_med": 238.0,
+   "pass_yds_range": [
+    164.0,
+    331.0
+   ],
+   "pass_td": 1.5,
+   "pass_int": 0.9,
+   "carries": 4.7,
+   "rush_yds": 31.0,
+   "rush_yds_med": 26.0,
+   "rush_yds_range": [
+    8.0,
+    61.0
+   ],
+   "rush_td": 0.1
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0032464",
+   "name": "Kalif Raymond",
+   "pos": "WR",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 7.1,
+   "td_prob": 20.0,
+   "targets": 3.6,
+   "rec": 2.6,
+   "rec_yds": 31.0,
+   "rec_yds_med": 24.0,
+   "rec_yds_range": [
+    6.0,
+    65.0
+   ],
+   "rec_td": 0.22
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0036275",
+   "name": "D'Andre Swift",
+   "pos": "RB",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 17.6,
+   "td_prob": 55.0,
+   "carries": 18.4,
+   "rush_yds": 87.0,
+   "rush_yds_med": 79.0,
+   "rush_yds_range": [
+    37.0,
+    145.0
+   ],
+   "rush_td": 0.67,
+   "targets": 3.0,
+   "rec": 2.3,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    39.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0036290",
+   "name": "Cole Kmet",
+   "pos": "TE",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 3.9,
+   "td_prob": 12.0,
+   "targets": 2.4,
+   "rec": 1.5,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    36.0
+   ],
+   "rec_td": 0.13
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0039919",
+   "name": "Rome Odunze",
+   "pos": "WR",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 25.0,
+   "targets": 5.1,
+   "rec": 2.8,
+   "rec_yds": 40.0,
+   "rec_yds_med": 32.0,
+   "rec_yds_range": [
+    9.0,
+    83.0
+   ],
+   "rec_td": 0.29
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0040126",
+   "name": "Colston Loveland",
+   "pos": "TE",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 9.8,
+   "td_prob": 32.0,
+   "targets": 5.3,
+   "rec": 3.5,
+   "rec_yds": 40.0,
+   "rec_yds_med": 32.0,
+   "rec_yds_range": [
+    8.0,
+    81.0
+   ],
+   "rec_td": 0.38
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0040236",
+   "name": "Kyle Monangai",
+   "pos": "RB",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 10.8,
+   "td_prob": 41.0,
+   "carries": 11.2,
+   "rush_yds": 52.0,
+   "rush_yds_med": 45.0,
+   "rush_yds_range": [
+    16.0,
+    97.0
+   ],
+   "rush_td": 0.41,
+   "targets": 1.8,
+   "rec": 1.3,
+   "rec_yds": 11.0,
+   "rec_yds_med": 8.0,
+   "rec_yds_range": [
+    2.0,
+    23.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0040735",
+   "name": "Luther Burden III",
+   "pos": "WR",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 12.8,
+   "td_prob": 39.0,
+   "carries": 0.7,
+   "rush_yds": 4.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    9.0
+   ],
+   "rush_td": 0.03,
+   "targets": 6.3,
+   "rec": 4.2,
+   "rec_yds": 52.0,
+   "rec_yds_med": 43.0,
+   "rec_yds_range": [
+    13.0,
+    103.0
+   ],
+   "rec_td": 0.47
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0039918",
+   "name": "Caleb Williams",
+   "pos": "QB",
+   "team": "CHI",
+   "opp": "NYJ",
+   "status": "",
+   "fpts": 18.0,
+   "td_prob": 8.0,
+   "pass_att": 31.2,
+   "pass_cmp": 19.1,
+   "pass_yds": 220.0,
+   "pass_yds_med": 214.0,
+   "pass_yds_range": [
+    148.0,
+    298.0
+   ],
+   "pass_td": 1.86,
+   "pass_int": 0.64,
+   "carries": 3.9,
+   "rush_yds": 25.0,
+   "rush_yds_med": 20.0,
+   "rush_yds_range": [
+    6.0,
+    50.0
+   ],
+   "rush_td": 0.08
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0037740",
+   "name": "Garrett Wilson",
+   "pos": "WR",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 14.2,
+   "td_prob": 24.0,
+   "targets": 8.4,
+   "rec": 5.6,
+   "rec_yds": 69.0,
+   "rec_yds_med": 59.0,
+   "rec_yds_range": [
+    20.0,
+    131.0
+   ],
+   "rec_td": 0.28
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0037805",
+   "name": "Jeremy Ruckert",
+   "pos": "TE",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 4.7,
+   "td_prob": 12.0,
+   "targets": 2.6,
+   "rec": 2.0,
+   "rec_yds": 19.0,
+   "rec_yds_med": 15.0,
+   "rec_yds_range": [
+    3.0,
+    41.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0038120",
+   "name": "Breece Hall",
+   "pos": "RB",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 17.1,
+   "td_prob": 47.0,
+   "carries": 15.9,
+   "rush_yds": 69.0,
+   "rush_yds_med": 62.0,
+   "rush_yds_range": [
+    26.0,
+    122.0
+   ],
+   "rush_td": 0.51,
+   "targets": 4.2,
+   "rec": 3.4,
+   "rec_yds": 29.0,
+   "rec_yds_med": 23.0,
+   "rec_yds_range": [
+    5.0,
+    62.0
+   ],
+   "rec_td": 0.13
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0039451",
+   "name": "Isaiah Williams",
+   "pos": "WR",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 5.2,
+   "td_prob": 8.0,
+   "targets": 3.0,
+   "rec": 2.1,
+   "rec_yds": 23.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    50.0
+   ],
+   "rec_td": 0.08
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0039794",
+   "name": "Braelon Allen",
+   "pos": "RB",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 5.4,
+   "td_prob": 28.0,
+   "carries": 3.6,
+   "rush_yds": 15.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    32.0
+   ],
+   "rush_td": 0.16,
+   "targets": 1.4,
+   "rec": 1.1,
+   "rec_yds": 8.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    18.0
+   ],
+   "rec_td": 0.17
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0039890",
+   "name": "Adonai Mitchell",
+   "pos": "WR",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 9.0,
+   "td_prob": 19.0,
+   "targets": 5.7,
+   "rec": 3.2,
+   "rec_yds": 45.0,
+   "rec_yds_med": 36.0,
+   "rec_yds_range": [
+    10.0,
+    91.0
+   ],
+   "rec_td": 0.21
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0040736",
+   "name": "Mason Taylor",
+   "pos": "TE",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 4.3,
+   "td_prob": 9.0,
+   "targets": 2.7,
+   "rec": 1.9,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    40.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0041032",
+   "name": "Kenyon Sadiq",
+   "pos": "TE",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 5.1,
+   "td_prob": 7.0,
+   "targets": 2.9,
+   "rec": 2.2,
+   "rec_yds": 24.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    51.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_NYJ_CHI",
+   "pid": "00-0030565",
+   "name": "Geno Smith",
+   "pos": "QB",
+   "team": "NYJ",
+   "opp": "CHI",
+   "status": "",
+   "fpts": 14.2,
+   "td_prob": 1.0,
+   "pass_att": 35.0,
+   "pass_cmp": 22.6,
+   "pass_yds": 247.0,
+   "pass_yds_med": 241.0,
+   "pass_yds_range": [
+    166.0,
+    335.0
+   ],
+   "pass_td": 1.22,
+   "pass_int": 0.9,
+   "carries": 2.0,
+   "rush_yds": 12.0,
+   "rush_yds_med": 10.0,
+   "rush_yds_range": [
+    2.0,
+    25.0
+   ],
+   "rush_td": 0.01
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0033526",
+   "name": "Samaje Perine",
+   "pos": "RB",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 5.9,
+   "td_prob": 20.0,
+   "carries": 4.4,
+   "rush_yds": 18.0,
+   "rush_yds_med": 14.0,
+   "rush_yds_range": [
+    4.0,
+    37.0
+   ],
+   "rush_td": 0.17,
+   "targets": 2.1,
+   "rec": 1.6,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    26.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0034829",
+   "name": "Mike Gesicki",
+   "pos": "TE",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 5.3,
+   "td_prob": 17.0,
+   "targets": 2.8,
+   "rec": 2.0,
+   "rec_yds": 22.0,
+   "rec_yds_med": 17.0,
+   "rec_yds_range": [
+    4.0,
+    47.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0036410",
+   "name": "Tee Higgins",
+   "pos": "WR",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 13.3,
+   "td_prob": 30.0,
+   "targets": 7.4,
+   "rec": 4.6,
+   "rec_yds": 66.0,
+   "rec_yds_med": 56.0,
+   "rec_yds_range": [
+    18.0,
+    126.0
+   ],
+   "rec_td": 0.36
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0036900",
+   "name": "Ja'Marr Chase",
+   "pos": "WR",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 20.4,
+   "td_prob": 47.0,
+   "targets": 11.3,
+   "rec": 7.8,
+   "rec_yds": 88.0,
+   "rec_yds_med": 78.0,
+   "rec_yds_range": [
+    31.0,
+    159.0
+   ],
+   "rec_td": 0.63
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0038597",
+   "name": "Chase Brown",
+   "pos": "RB",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 16.7,
+   "td_prob": 48.0,
+   "carries": 15.7,
+   "rush_yds": 64.0,
+   "rush_yds_med": 57.0,
+   "rush_yds_range": [
+    23.0,
+    115.0
+   ],
+   "rush_td": 0.44,
+   "targets": 5.0,
+   "rec": 4.0,
+   "rec_yds": 25.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    53.0
+   ],
+   "rec_td": 0.21
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0036442",
+   "name": "Joe Burrow",
+   "pos": "QB",
+   "team": "CIN",
+   "opp": "JAX",
+   "status": "",
+   "fpts": 16.6,
+   "td_prob": 3.0,
+   "pass_att": 36.9,
+   "pass_cmp": 24.1,
+   "pass_yds": 256.0,
+   "pass_yds_med": 250.0,
+   "pass_yds_range": [
+    172.0,
+    347.0
+   ],
+   "pass_td": 1.67,
+   "pass_int": 0.74,
+   "carries": 1.6,
+   "rush_yds": 10.0,
+   "rush_yds_med": 8.0,
+   "rush_yds_range": [
+    2.0,
+    20.0
+   ],
+   "rush_td": 0.03
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0034960",
+   "name": "Jakobi Meyers",
+   "pos": "WR",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 8.9,
+   "td_prob": 24.0,
+   "targets": 4.6,
+   "rec": 3.2,
+   "rec_yds": 39.0,
+   "rec_yds_med": 31.0,
+   "rec_yds_range": [
+    8.0,
+    80.0
+   ],
+   "rec_td": 0.27
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0038606",
+   "name": "Parker Washington",
+   "pos": "WR",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 16.9,
+   "td_prob": 37.0,
+   "targets": 9.1,
+   "rec": 5.7,
+   "rec_yds": 81.0,
+   "rec_yds_med": 71.0,
+   "rec_yds_range": [
+    27.0,
+    150.0
+   ],
+   "rec_td": 0.46
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0038611",
+   "name": "Chris Rodriguez Jr.",
+   "pos": "RB",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 3.5,
+   "td_prob": 18.0,
+   "carries": 4.9,
+   "rush_yds": 23.0,
+   "rush_yds_med": 18.0,
+   "rush_yds_range": [
+    5.0,
+    45.0
+   ],
+   "rush_td": 0.2
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0038935",
+   "name": "Brenton Strange",
+   "pos": "TE",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 24.0,
+   "targets": 4.5,
+   "rec": 3.3,
+   "rec_yds": 36.0,
+   "rec_yds_med": 29.0,
+   "rec_yds_range": [
+    7.0,
+    74.0
+   ],
+   "rec_td": 0.28
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0039893",
+   "name": "Brian Thomas Jr.",
+   "pos": "WR",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 10.0,
+   "td_prob": 21.0,
+   "targets": 6.0,
+   "rec": 3.5,
+   "rec_yds": 50.0,
+   "rec_yds_med": 41.0,
+   "rec_yds_range": [
+    12.0,
+    99.0
+   ],
+   "rec_td": 0.22
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0040719",
+   "name": "Bhayshul Tuten",
+   "pos": "RB",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 12.3,
+   "td_prob": 46.0,
+   "carries": 13.6,
+   "rush_yds": 64.0,
+   "rush_yds_med": 56.0,
+   "rush_yds_range": [
+    22.0,
+    114.0
+   ],
+   "rush_td": 0.5,
+   "targets": 1.7,
+   "rec": 1.3,
+   "rec_yds": 10.0,
+   "rec_yds_med": 7.0,
+   "rec_yds_range": [
+    1.0,
+    22.0
+   ],
+   "rec_td": 0.11
+  },
+  {
+   "game_id": "2026_04_JAX_CIN",
+   "pid": "00-0036971",
+   "name": "Trevor Lawrence",
+   "pos": "QB",
+   "team": "JAX",
+   "opp": "CIN",
+   "status": "",
+   "fpts": 18.8,
+   "td_prob": 13.0,
+   "pass_att": 33.2,
+   "pass_cmp": 20.4,
+   "pass_yds": 250.0,
+   "pass_yds_med": 244.0,
+   "pass_yds_range": [
+    169.0,
+    340.0
+   ],
+   "pass_td": 1.76,
+   "pass_int": 0.79,
+   "carries": 4.8,
+   "rush_yds": 26.0,
+   "rush_yds_med": 21.0,
+   "rush_yds_range": [
+    6.0,
+    51.0
+   ],
+   "rush_td": 0.13
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0034383",
+   "name": "Dalton Schultz",
+   "pos": "TE",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 13.4,
+   "td_prob": 29.0,
+   "targets": 7.2,
+   "rec": 5.7,
+   "rec_yds": 56.0,
+   "rec_yds_med": 47.0,
+   "rec_yds_range": [
+    14.0,
+    111.0
+   ],
+   "rec_td": 0.34
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0034981",
+   "name": "Foster Moreau",
+   "pos": "TE",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 3.4,
+   "td_prob": 14.0,
+   "targets": 1.7,
+   "rec": 1.2,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    27.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0035685",
+   "name": "David Montgomery",
+   "pos": "RB",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 34.0,
+   "carries": 9.1,
+   "rush_yds": 40.0,
+   "rush_yds_med": 34.0,
+   "rush_yds_range": [
+    11.0,
+    77.0
+   ],
+   "rush_td": 0.34,
+   "targets": 1.4,
+   "rec": 1.2,
+   "rec_yds": 9.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    19.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0036554",
+   "name": "Nico Collins",
+   "pos": "WR",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 11.3,
+   "td_prob": 30.0,
+   "targets": 5.8,
+   "rec": 3.7,
+   "rec_yds": 52.0,
+   "rec_yds_med": 43.0,
+   "rec_yds_range": [
+    13.0,
+    104.0
+   ],
+   "rec_td": 0.35
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0038618",
+   "name": "Xavier Hutchinson",
+   "pos": "WR",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 10.7,
+   "td_prob": 22.0,
+   "carries": 0.7,
+   "rush_yds": 4.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    9.0
+   ],
+   "rush_td": 0.01,
+   "targets": 6.5,
+   "rec": 3.8,
+   "rec_yds": 49.0,
+   "rec_yds_med": 40.0,
+   "rec_yds_range": [
+    11.0,
+    98.0
+   ],
+   "rec_td": 0.24
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0038728",
+   "name": "Jared Wayne",
+   "pos": "WR",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 3.8,
+   "td_prob": 9.0,
+   "targets": 2.3,
+   "rec": 1.4,
+   "rec_yds": 19.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    40.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0040138",
+   "name": "Jaylin Noel",
+   "pos": "WR",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 5.1,
+   "td_prob": 11.0,
+   "carries": 0.8,
+   "rush_yds": 5.0,
+   "rush_yds_med": 4.0,
+   "rush_yds_range": [
+    1.0,
+    11.0
+   ],
+   "rush_td": 0.02,
+   "targets": 2.5,
+   "rec": 1.7,
+   "rec_yds": 22.0,
+   "rec_yds_med": 17.0,
+   "rec_yds_range": [
+    4.0,
+    48.0
+   ],
+   "rec_td": 0.09
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0040583",
+   "name": "Woody Marks",
+   "pos": "RB",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 14.5,
+   "td_prob": 54.0,
+   "carries": 15.3,
+   "rush_yds": 61.0,
+   "rush_yds_med": 54.0,
+   "rush_yds_range": [
+    21.0,
+    111.0
+   ],
+   "rush_td": 0.55,
+   "targets": 2.7,
+   "rec": 2.1,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    34.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0039163",
+   "name": "C.J. Stroud",
+   "pos": "QB",
+   "team": "HOU",
+   "opp": "DAL",
+   "status": "",
+   "fpts": 17.9,
+   "td_prob": 3.0,
+   "pass_att": 35.4,
+   "pass_cmp": 22.8,
+   "pass_yds": 260.0,
+   "pass_yds_med": 253.0,
+   "pass_yds_range": [
+    175.0,
+    352.0
+   ],
+   "pass_td": 1.76,
+   "pass_int": 0.73,
+   "carries": 2.8,
+   "rush_yds": 17.0,
+   "rush_yds_med": 14.0,
+   "rush_yds_range": [
+    4.0,
+    35.0
+   ],
+   "rush_td": 0.03
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0036358",
+   "name": "CeeDee Lamb",
+   "pos": "WR",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 14.5,
+   "td_prob": 27.0,
+   "targets": 7.9,
+   "rec": 5.3,
+   "rec_yds": 72.0,
+   "rec_yds_med": 62.0,
+   "rec_yds_range": [
+    22.0,
+    136.0
+   ],
+   "rec_td": 0.32
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0036997",
+   "name": "Javonte Williams",
+   "pos": "RB",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 15.9,
+   "td_prob": 55.0,
+   "carries": 17.1,
+   "rush_yds": 72.0,
+   "rush_yds_med": 64.0,
+   "rush_yds_range": [
+    27.0,
+    126.0
+   ],
+   "rush_td": 0.64,
+   "targets": 3.3,
+   "rec": 2.4,
+   "rec_yds": 15.0,
+   "rec_yds_med": 11.0,
+   "rec_yds_range": [
+    2.0,
+    33.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0037247",
+   "name": "George Pickens",
+   "pos": "WR",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 15.9,
+   "td_prob": 29.0,
+   "targets": 8.9,
+   "rec": 5.9,
+   "rec_yds": 79.0,
+   "rec_yds_med": 69.0,
+   "rec_yds_range": [
+    25.0,
+    146.0
+   ],
+   "rec_td": 0.35
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0038041",
+   "name": "Jake Ferguson",
+   "pos": "TE",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 8.8,
+   "td_prob": 24.0,
+   "targets": 5.0,
+   "rec": 3.9,
+   "rec_yds": 32.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    68.0
+   ],
+   "rec_td": 0.28
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0039410",
+   "name": "Ryan Flournoy",
+   "pos": "WR",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 7.9,
+   "td_prob": 20.0,
+   "targets": 4.7,
+   "rec": 3.0,
+   "rec_yds": 35.0,
+   "rec_yds_med": 28.0,
+   "rec_yds_range": [
+    7.0,
+    73.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_DAL_HOU",
+   "pid": "00-0033077",
+   "name": "Dak Prescott",
+   "pos": "QB",
+   "team": "DAL",
+   "opp": "HOU",
+   "status": "",
+   "fpts": 16.9,
+   "td_prob": 2.0,
+   "pass_att": 36.9,
+   "pass_cmp": 23.7,
+   "pass_yds": 268.0,
+   "pass_yds_med": 262.0,
+   "pass_yds_range": [
+    181.0,
+    364.0
+   ],
+   "pass_td": 1.49,
+   "pass_int": 0.68,
+   "carries": 2.3,
+   "rush_yds": 14.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    30.0
+   ],
+   "rush_td": 0.02
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0035250",
+   "name": "Devin Singletary",
+   "pos": "RB",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 6.4,
+   "td_prob": 25.0,
+   "carries": 5.6,
+   "rush_yds": 23.0,
+   "rush_yds_med": 19.0,
+   "rush_yds_range": [
+    5.0,
+    46.0
+   ],
+   "rush_td": 0.18,
+   "targets": 1.6,
+   "rec": 1.3,
+   "rec_yds": 11.0,
+   "rec_yds_med": 8.0,
+   "rec_yds_range": [
+    2.0,
+    23.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0036309",
+   "name": "Darnell Mooney",
+   "pos": "WR",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 3.9,
+   "td_prob": 6.0,
+   "targets": 2.4,
+   "rec": 1.3,
+   "rec_yds": 20.0,
+   "rec_yds_med": 15.0,
+   "rec_yds_range": [
+    3.0,
+    43.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0036893",
+   "name": "Najee Harris",
+   "pos": "RB",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 1.9,
+   "td_prob": 11.0,
+   "carries": 2.6,
+   "rush_yds": 12.0,
+   "rush_yds_med": 9.0,
+   "rush_yds_range": [
+    2.0,
+    24.0
+   ],
+   "rush_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0037838",
+   "name": "Isaiah Likely",
+   "pos": "TE",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 9.6,
+   "td_prob": 26.0,
+   "targets": 5.2,
+   "rec": 3.7,
+   "rec_yds": 41.0,
+   "rec_yds_med": 33.0,
+   "rec_yds_range": [
+    9.0,
+    83.0
+   ],
+   "rec_td": 0.31
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0039337",
+   "name": "Malik Nabers",
+   "pos": "WR",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 12.6,
+   "td_prob": 32.0,
+   "targets": 7.2,
+   "rec": 4.3,
+   "rec_yds": 59.0,
+   "rec_yds_med": 49.0,
+   "rec_yds_range": [
+    15.0,
+    115.0
+   ],
+   "rec_td": 0.39
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0039384",
+   "name": "Tyrone Tracy Jr.",
+   "pos": "RB",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 8.1,
+   "td_prob": 26.0,
+   "carries": 6.6,
+   "rush_yds": 29.0,
+   "rush_yds_med": 24.0,
+   "rush_yds_range": [
+    7.0,
+    58.0
+   ],
+   "rush_td": 0.19,
+   "targets": 2.4,
+   "rec": 1.8,
+   "rec_yds": 15.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    33.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0039847",
+   "name": "Theo Johnson",
+   "pos": "TE",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 8.3,
+   "td_prob": 22.0,
+   "targets": 4.9,
+   "rec": 3.1,
+   "rec_yds": 37.0,
+   "rec_yds_med": 30.0,
+   "rec_yds_range": [
+    8.0,
+    77.0
+   ],
+   "rec_td": 0.25
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0040715",
+   "name": "Cam Skattebo",
+   "pos": "RB",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 14.2,
+   "td_prob": 44.0,
+   "carries": 12.2,
+   "rush_yds": 51.0,
+   "rush_yds_med": 44.0,
+   "rush_yds_range": [
+    16.0,
+    95.0
+   ],
+   "rush_td": 0.46,
+   "targets": 3.9,
+   "rec": 3.0,
+   "rec_yds": 26.0,
+   "rec_yds_med": 20.0,
+   "rec_yds_range": [
+    5.0,
+    55.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0041042",
+   "name": "Malachi Fields",
+   "pos": "WR",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 4.0,
+   "td_prob": 6.0,
+   "targets": 2.5,
+   "rec": 1.5,
+   "rec_yds": 21.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    4.0,
+    46.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0031503",
+   "name": "Jameis Winston",
+   "pos": "QB",
+   "team": "NYG",
+   "opp": "ARI",
+   "status": "",
+   "fpts": 14.6,
+   "td_prob": 2.0,
+   "pass_att": 32.8,
+   "pass_cmp": 20.3,
+   "pass_yds": 233.0,
+   "pass_yds_med": 228.0,
+   "pass_yds_range": [
+    157.0,
+    317.0
+   ],
+   "pass_td": 1.41,
+   "pass_int": 0.79,
+   "carries": 1.6,
+   "rush_yds": 10.0,
+   "rush_yds_med": 8.0,
+   "rush_yds_range": [
+    2.0,
+    21.0
+   ],
+   "rush_td": 0.02
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0033307",
+   "name": "Kendrick Bourne",
+   "pos": "WR",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 4.9,
+   "td_prob": 12.0,
+   "targets": 2.6,
+   "rec": 1.9,
+   "rec_yds": 23.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    49.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0037157",
+   "name": "Bam Knight",
+   "pos": "RB",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 4.0,
+   "td_prob": 15.0,
+   "carries": 4.2,
+   "rush_yds": 18.0,
+   "rush_yds_med": 15.0,
+   "rush_yds_range": [
+    4.0,
+    37.0
+   ],
+   "rush_td": 0.12,
+   "targets": 0.9,
+   "rec": 0.7,
+   "rec_yds": 5.0,
+   "rec_yds_med": 4.0,
+   "rec_yds_range": [
+    1.0,
+    11.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0037263",
+   "name": "Tyler Allgeier",
+   "pos": "RB",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 6.2,
+   "td_prob": 24.0,
+   "carries": 5.5,
+   "rush_yds": 23.0,
+   "rush_yds_med": 19.0,
+   "rush_yds_range": [
+    5.0,
+    46.0
+   ],
+   "rush_td": 0.18,
+   "targets": 1.6,
+   "rec": 1.3,
+   "rec_yds": 9.0,
+   "rec_yds_med": 7.0,
+   "rec_yds_range": [
+    1.0,
+    19.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0037744",
+   "name": "Trey McBride",
+   "pos": "TE",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 20.2,
+   "td_prob": 47.0,
+   "targets": 11.2,
+   "rec": 8.5,
+   "rec_yds": 79.0,
+   "rec_yds_med": 69.0,
+   "rec_yds_range": [
+    25.0,
+    146.0
+   ],
+   "rec_td": 0.63
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0038559",
+   "name": "Michael Wilson",
+   "pos": "WR",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 16.0,
+   "td_prob": 36.0,
+   "targets": 9.7,
+   "rec": 6.1,
+   "rec_yds": 72.0,
+   "rec_yds_med": 62.0,
+   "rec_yds_range": [
+    22.0,
+    136.0
+   ],
+   "rec_td": 0.44
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0039849",
+   "name": "Marvin Harrison Jr.",
+   "pos": "WR",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 6.1,
+   "td_prob": 11.0,
+   "targets": 3.8,
+   "rec": 2.3,
+   "rec_yds": 31.0,
+   "rec_yds_med": 24.0,
+   "rec_yds_range": [
+    6.0,
+    65.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0041027",
+   "name": "Jeremiyah Love",
+   "pos": "RB",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 11.5,
+   "td_prob": 39.0,
+   "carries": 11.6,
+   "rush_yds": 53.0,
+   "rush_yds_med": 46.0,
+   "rush_yds_range": [
+    17.0,
+    98.0
+   ],
+   "rush_td": 0.35,
+   "targets": 2.4,
+   "rec": 1.9,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    28.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_ARI_NYG",
+   "pid": "00-0033119",
+   "name": "Jacoby Brissett",
+   "pos": "QB",
+   "team": "ARI",
+   "opp": "NYG",
+   "status": "",
+   "fpts": 18.1,
+   "td_prob": 11.0,
+   "pass_att": 37.1,
+   "pass_cmp": 24.4,
+   "pass_yds": 249.0,
+   "pass_yds_med": 243.0,
+   "pass_yds_range": [
+    168.0,
+    338.0
+   ],
+   "pass_td": 1.68,
+   "pass_int": 0.68,
+   "carries": 4.0,
+   "rush_yds": 21.0,
+   "rush_yds_med": 17.0,
+   "rush_yds_range": [
+    5.0,
+    43.0
+   ],
+   "rush_td": 0.11
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0034351",
+   "name": "Dallas Goedert",
+   "pos": "TE",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 8.9,
+   "td_prob": 28.0,
+   "targets": 5.0,
+   "rec": 3.5,
+   "rec_yds": 35.0,
+   "rec_yds_med": 28.0,
+   "rec_yds_range": [
+    7.0,
+    73.0
+   ],
+   "rec_td": 0.32
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0034844",
+   "name": "Saquon Barkley",
+   "pos": "RB",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 14.3,
+   "td_prob": 43.0,
+   "carries": 15.8,
+   "rush_yds": 65.0,
+   "rush_yds_med": 58.0,
+   "rush_yds_range": [
+    23.0,
+    117.0
+   ],
+   "rush_td": 0.43,
+   "targets": 3.7,
+   "rec": 2.6,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    40.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0036912",
+   "name": "DeVonta Smith",
+   "pos": "WR",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 19.1,
+   "td_prob": 36.0,
+   "targets": 11.3,
+   "rec": 7.4,
+   "rec_yds": 91.0,
+   "rec_yds_med": 80.0,
+   "rec_yds_range": [
+    32.0,
+    162.0
+   ],
+   "rec_td": 0.45
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0038393",
+   "name": "Dontayvion Wicks",
+   "pos": "WR",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 6.3,
+   "td_prob": 23.0,
+   "targets": 3.3,
+   "rec": 2.1,
+   "rec_yds": 27.0,
+   "rec_yds_med": 21.0,
+   "rec_yds_range": [
+    5.0,
+    57.0
+   ],
+   "rec_td": 0.26
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0038555",
+   "name": "Tank Bigsby",
+   "pos": "RB",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 4.4,
+   "td_prob": 17.0,
+   "carries": 4.6,
+   "rush_yds": 20.0,
+   "rush_yds_med": 16.0,
+   "rush_yds_range": [
+    4.0,
+    41.0
+   ],
+   "rush_td": 0.15,
+   "targets": 1.0,
+   "rec": 0.7,
+   "rec_yds": 5.0,
+   "rec_yds_med": 4.0,
+   "rec_yds_range": [
+    1.0,
+    12.0
+   ],
+   "rec_td": 0.03
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0039746",
+   "name": "Will Shipley",
+   "pos": "RB",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 3.8,
+   "td_prob": 13.0,
+   "carries": 2.1,
+   "rush_yds": 9.0,
+   "rush_yds_med": 7.0,
+   "rush_yds_range": [
+    2.0,
+    18.0
+   ],
+   "rush_td": 0.09,
+   "targets": 1.6,
+   "rec": 1.2,
+   "rec_yds": 9.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    19.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0040867",
+   "name": "Makai Lemon",
+   "pos": "WR",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 2.9,
+   "td_prob": 4.0,
+   "targets": 1.8,
+   "rec": 1.2,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0036389",
+   "name": "Jalen Hurts",
+   "pos": "QB",
+   "team": "PHI",
+   "opp": "LA",
+   "status": "",
+   "fpts": 16.2,
+   "td_prob": 11.0,
+   "pass_att": 32.5,
+   "pass_cmp": 20.2,
+   "pass_yds": 216.0,
+   "pass_yds_med": 211.0,
+   "pass_yds_range": [
+    146.0,
+    294.0
+   ],
+   "pass_td": 1.38,
+   "pass_int": 0.66,
+   "carries": 5.0,
+   "rush_yds": 27.0,
+   "rush_yds_med": 22.0,
+   "rush_yds_range": [
+    6.0,
+    53.0
+   ],
+   "rush_td": 0.11
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0031381",
+   "name": "Davante Adams",
+   "pos": "WR",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 13.5,
+   "td_prob": 32.0,
+   "targets": 8.1,
+   "rec": 4.4,
+   "rec_yds": 67.0,
+   "rec_yds_med": 57.0,
+   "rec_yds_range": [
+    19.0,
+    128.0
+   ],
+   "rec_td": 0.39
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0033110",
+   "name": "Tyler Higbee",
+   "pos": "TE",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 6.0,
+   "td_prob": 18.0,
+   "targets": 3.3,
+   "rec": 2.3,
+   "rec_yds": 25.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    53.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0036244",
+   "name": "Colby Parkinson",
+   "pos": "TE",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 5.5,
+   "td_prob": 20.0,
+   "targets": 2.9,
+   "rec": 2.0,
+   "rec_yds": 21.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    4.0,
+    46.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0037840",
+   "name": "Kyren Williams",
+   "pos": "RB",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 16.4,
+   "td_prob": 49.0,
+   "carries": 15.1,
+   "rush_yds": 71.0,
+   "rush_yds_med": 63.0,
+   "rush_yds_range": [
+    26.0,
+    124.0
+   ],
+   "rush_td": 0.48,
+   "targets": 3.8,
+   "rec": 2.9,
+   "rec_yds": 23.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    50.0
+   ],
+   "rec_td": 0.19
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0039075",
+   "name": "Puka Nacua",
+   "pos": "WR",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 13.9,
+   "td_prob": 28.0,
+   "carries": 0.5,
+   "rush_yds": 4.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    8.0
+   ],
+   "rush_td": 0.02,
+   "targets": 7.2,
+   "rec": 5.0,
+   "rec_yds": 67.0,
+   "rec_yds_med": 57.0,
+   "rec_yds_range": [
+    19.0,
+    127.0
+   ],
+   "rec_td": 0.3
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0039738",
+   "name": "Blake Corum",
+   "pos": "RB",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 7.8,
+   "td_prob": 24.0,
+   "carries": 9.3,
+   "rush_yds": 44.0,
+   "rush_yds_med": 38.0,
+   "rush_yds_range": [
+    13.0,
+    84.0
+   ],
+   "rush_td": 0.2,
+   "targets": 1.4,
+   "rec": 1.0,
+   "rec_yds": 8.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    17.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0040590",
+   "name": "Konata Mumpfield",
+   "pos": "WR",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 4.5,
+   "td_prob": 13.0,
+   "targets": 2.8,
+   "rec": 1.5,
+   "rec_yds": 21.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    4.0,
+    45.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0040737",
+   "name": "Terrance Ferguson",
+   "pos": "TE",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 3.6,
+   "td_prob": 9.0,
+   "targets": 2.4,
+   "rec": 1.4,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    37.0
+   ],
+   "rec_td": 0.09
+  },
+  {
+   "game_id": "2026_04_LA_PHI",
+   "pid": "00-0026498",
+   "name": "Matthew Stafford",
+   "pos": "QB",
+   "team": "LA",
+   "opp": "PHI",
+   "status": "",
+   "fpts": 17.7,
+   "td_prob": 3.0,
+   "pass_att": 38.5,
+   "pass_cmp": 23.1,
+   "pass_yds": 280.0,
+   "pass_yds_med": 274.0,
+   "pass_yds_range": [
+    189.0,
+    381.0
+   ],
+   "pass_td": 1.77,
+   "pass_int": 0.76,
+   "carries": 1.3,
+   "rush_yds": 7.0,
+   "rush_yds_med": 6.0,
+   "rush_yds_range": [
+    1.0,
+    15.0
+   ],
+   "rush_td": 0.03
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0033921",
+   "name": "Chris Godwin Jr.",
+   "pos": "WR",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 7.6,
+   "td_prob": 16.0,
+   "carries": 0.5,
+   "rush_yds": 3.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    7.0
+   ],
+   "rush_td": 0.01,
+   "targets": 4.2,
+   "rec": 2.9,
+   "rec_yds": 33.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    69.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0036919",
+   "name": "Kenny Gainwell",
+   "pos": "RB",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 5.2,
+   "td_prob": 19.0,
+   "carries": 2.2,
+   "rush_yds": 10.0,
+   "rush_yds_med": 8.0,
+   "rush_yds_range": [
+    2.0,
+    20.0
+   ],
+   "rush_td": 0.07,
+   "targets": 2.2,
+   "rec": 1.8,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    26.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038129",
+   "name": "Cade Otton",
+   "pos": "TE",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 10.1,
+   "td_prob": 20.0,
+   "targets": 6.2,
+   "rec": 4.4,
+   "rec_yds": 44.0,
+   "rec_yds_med": 35.0,
+   "rec_yds_range": [
+    10.0,
+    89.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038951",
+   "name": "Sean Tucker",
+   "pos": "RB",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 3.3,
+   "td_prob": 19.0,
+   "carries": 3.8,
+   "rush_yds": 16.0,
+   "rush_yds_med": 13.0,
+   "rush_yds_range": [
+    3.0,
+    32.0
+   ],
+   "rush_td": 0.19
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0039361",
+   "name": "Bucky Irving",
+   "pos": "RB",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 18.0,
+   "td_prob": 55.0,
+   "carries": 19.0,
+   "rush_yds": 75.0,
+   "rush_yds_med": 68.0,
+   "rush_yds_range": [
+    30.0,
+    131.0
+   ],
+   "rush_td": 0.49,
+   "targets": 4.0,
+   "rec": 3.4,
+   "rec_yds": 24.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    51.0
+   ],
+   "rec_td": 0.31
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0040129",
+   "name": "Emeka Egbuka",
+   "pos": "WR",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 13.9,
+   "td_prob": 32.0,
+   "targets": 8.5,
+   "rec": 4.9,
+   "rec_yds": 64.0,
+   "rec_yds_med": 54.0,
+   "rec_yds_range": [
+    18.0,
+    124.0
+   ],
+   "rec_td": 0.38
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0040237",
+   "name": "Tez Johnson",
+   "pos": "WR",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 5.1,
+   "td_prob": 15.0,
+   "carries": 0.5,
+   "rush_yds": 3.0,
+   "rush_yds_med": 2.0,
+   "rush_yds_range": [
+    1.0,
+    6.0
+   ],
+   "rush_td": 0.02,
+   "targets": 2.7,
+   "rec": 1.7,
+   "rec_yds": 21.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    4.0,
+    46.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0041048",
+   "name": "Ted Hurst III",
+   "pos": "WR",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 4.2,
+   "td_prob": 13.0,
+   "targets": 2.3,
+   "rec": 1.4,
+   "rec_yds": 19.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    41.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0034855",
+   "name": "Baker Mayfield",
+   "pos": "QB",
+   "team": "TB",
+   "opp": "GB",
+   "status": "",
+   "fpts": 16.5,
+   "td_prob": 4.0,
+   "pass_att": 34.5,
+   "pass_cmp": 21.7,
+   "pass_yds": 231.0,
+   "pass_yds_med": 226.0,
+   "pass_yds_range": [
+    156.0,
+    314.0
+   ],
+   "pass_td": 1.59,
+   "pass_int": 0.75,
+   "carries": 2.9,
+   "rush_yds": 21.0,
+   "rush_yds_med": 17.0,
+   "rush_yds_range": [
+    5.0,
+    42.0
+   ],
+   "rush_td": 0.04
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038090",
+   "name": "Skyy Moore",
+   "pos": "WR",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 3.8,
+   "td_prob": 13.0,
+   "targets": 2.1,
+   "rec": 1.3,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    3.0,
+    35.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038124",
+   "name": "Christian Watson",
+   "pos": "WR",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 16.5,
+   "td_prob": 45.0,
+   "targets": 8.2,
+   "rec": 5.3,
+   "rec_yds": 76.0,
+   "rec_yds_med": 66.0,
+   "rec_yds_range": [
+    24.0,
+    142.0
+   ],
+   "rec_td": 0.59
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038685",
+   "name": "Chris Brooks",
+   "pos": "RB",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 6.1,
+   "td_prob": 25.0,
+   "carries": 6.3,
+   "rush_yds": 26.0,
+   "rush_yds_med": 21.0,
+   "rush_yds_range": [
+    6.0,
+    51.0
+   ],
+   "rush_td": 0.22,
+   "targets": 1.4,
+   "rec": 1.1,
+   "rec_yds": 8.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    17.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0038996",
+   "name": "Tucker Kraft",
+   "pos": "TE",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 8.7,
+   "td_prob": 21.0,
+   "targets": 4.8,
+   "rec": 3.4,
+   "rec_yds": 39.0,
+   "rec_yds_med": 31.0,
+   "rec_yds_range": [
+    8.0,
+    81.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0039146",
+   "name": "Jayden Reed",
+   "pos": "WR",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 4.7,
+   "td_prob": 14.0,
+   "targets": 2.4,
+   "rec": 1.6,
+   "rec_yds": 19.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    40.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0039811",
+   "name": "MarShawn Lloyd",
+   "pos": "RB",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 7.9,
+   "td_prob": 34.0,
+   "carries": 9.6,
+   "rush_yds": 37.0,
+   "rush_yds_med": 31.0,
+   "rush_yds_range": [
+    10.0,
+    71.0
+   ],
+   "rush_td": 0.32,
+   "targets": 1.3,
+   "rec": 1.0,
+   "rec_yds": 7.0,
+   "rec_yds_med": 5.0,
+   "rec_yds_range": [
+    1.0,
+    16.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0040142",
+   "name": "Kaleb Johnson",
+   "pos": "RB",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 3.1,
+   "td_prob": 9.0,
+   "carries": 5.7,
+   "rush_yds": 21.0,
+   "rush_yds_med": 17.0,
+   "rush_yds_range": [
+    5.0,
+    43.0
+   ],
+   "rush_td": 0.08
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0040667",
+   "name": "Matthew Golden",
+   "pos": "WR",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 12.8,
+   "td_prob": 27.0,
+   "carries": 0.6,
+   "rush_yds": 3.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    7.0
+   ],
+   "rush_td": 0.02,
+   "targets": 7.1,
+   "rec": 4.5,
+   "rec_yds": 61.0,
+   "rec_yds_med": 51.0,
+   "rec_yds_range": [
+    16.0,
+    118.0
+   ],
+   "rec_td": 0.3
+  },
+  {
+   "game_id": "2026_04_GB_TB",
+   "pid": "00-0036264",
+   "name": "Jordan Love",
+   "pos": "QB",
+   "team": "GB",
+   "opp": "TB",
+   "status": "",
+   "fpts": 17.1,
+   "td_prob": 5.0,
+   "pass_att": 32.3,
+   "pass_cmp": 20.1,
+   "pass_yds": 245.0,
+   "pass_yds_med": 239.0,
+   "pass_yds_range": [
+    165.0,
+    333.0
+   ],
+   "pass_td": 1.67,
+   "pass_int": 0.58,
+   "carries": 2.5,
+   "rush_yds": 14.0,
+   "rush_yds_med": 11.0,
+   "rush_yds_range": [
+    3.0,
+    29.0
+   ],
+   "rush_td": 0.05
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0033293",
+   "name": "Aaron Jones",
+   "pos": "RB",
+   "team": "MIN",
+   "opp": "MIA",
+   "status": "",
+   "fpts": 20.1,
+   "td_prob": 63.0,
+   "carries": 23.3,
+   "rush_yds": 97.0,
+   "rush_yds_med": 91.0,
+   "rush_yds_range": [
+    46.0,
+    157.0
+   ],
+   "rush_td": 0.85,
+   "targets": 3.2,
+   "rec": 2.6,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    39.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0035229",
+   "name": "T.J. Hockenson",
+   "pos": "TE",
+   "team": "MIN",
+   "opp": "MIA",
+   "status": "",
+   "fpts": 9.2,
+   "td_prob": 28.0,
+   "targets": 4.7,
+   "rec": 3.9,
+   "rec_yds": 34.0,
+   "rec_yds_med": 27.0,
+   "rec_yds_range": [
+    7.0,
+    71.0
+   ],
+   "rec_td": 0.31
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0036322",
+   "name": "Justin Jefferson",
+   "pos": "WR",
+   "team": "MIN",
+   "opp": "MIA",
+   "status": "",
+   "fpts": 16.5,
+   "td_prob": 44.0,
+   "targets": 8.5,
+   "rec": 5.9,
+   "rec_yds": 71.0,
+   "rec_yds_med": 60.0,
+   "rec_yds_range": [
+    21.0,
+    134.0
+   ],
+   "rec_td": 0.58
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0038994",
+   "name": "Jordan Addison",
+   "pos": "WR",
+   "team": "MIN",
+   "opp": "MIA",
+   "status": "",
+   "fpts": 11.5,
+   "td_prob": 28.0,
+   "targets": 6.5,
+   "rec": 4.1,
+   "rec_yds": 54.0,
+   "rec_yds_med": 44.0,
+   "rec_yds_range": [
+    13.0,
+    106.0
+   ],
+   "rec_td": 0.33
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0035228",
+   "name": "Kyler Murray",
+   "pos": "QB",
+   "team": "MIN",
+   "opp": "MIA",
+   "status": "",
+   "fpts": 13.5,
+   "td_prob": 0.0,
+   "pass_att": 27.0,
+   "pass_cmp": 18.0,
+   "pass_yds": 193.0,
+   "pass_yds_med": 188.0,
+   "pass_yds_range": [
+    130.0,
+    262.0
+   ],
+   "pass_td": 1.43,
+   "pass_int": 0.69,
+   "carries": 1.9,
+   "rush_yds": 14.0,
+   "rush_yds_med": 11.0,
+   "rush_yds_range": [
+    3.0,
+    29.0
+   ],
+   "rush_td": 0.0
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0037252",
+   "name": "Greg Dulcich",
+   "pos": "TE",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 11.5,
+   "td_prob": 30.0,
+   "targets": 6.2,
+   "rec": 4.4,
+   "rec_yds": 50.0,
+   "rec_yds_med": 41.0,
+   "rec_yds_range": [
+    12.0,
+    100.0
+   ],
+   "rec_td": 0.34
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0039874",
+   "name": "Jaylen Wright",
+   "pos": "RB",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 3.8,
+   "td_prob": 17.0,
+   "carries": 5.4,
+   "rush_yds": 21.0,
+   "rush_yds_med": 17.0,
+   "rush_yds_range": [
+    5.0,
+    43.0
+   ],
+   "rush_td": 0.18
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0039880",
+   "name": "Malik Washington",
+   "pos": "WR",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 18.3,
+   "td_prob": 37.0,
+   "carries": 2.5,
+   "rush_yds": 14.0,
+   "rush_yds_med": 11.0,
+   "rush_yds_range": [
+    3.0,
+    29.0
+   ],
+   "rush_td": 0.07,
+   "targets": 10.7,
+   "rec": 6.6,
+   "rec_yds": 75.0,
+   "rec_yds_med": 65.0,
+   "rec_yds_range": [
+    23.0,
+    141.0
+   ],
+   "rec_td": 0.39
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0040198",
+   "name": "Ollie Gordon II",
+   "pos": "RB",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 9.4,
+   "td_prob": 35.0,
+   "carries": 13.3,
+   "rush_yds": 45.0,
+   "rush_yds_med": 38.0,
+   "rush_yds_range": [
+    13.0,
+    85.0
+   ],
+   "rush_td": 0.38,
+   "targets": 1.7,
+   "rec": 1.3,
+   "rec_yds": 10.0,
+   "rec_yds_med": 7.0,
+   "rec_yds_range": [
+    1.0,
+    22.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0041523",
+   "name": "Caleb Douglas",
+   "pos": "WR",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 4.1,
+   "td_prob": 10.0,
+   "targets": 2.3,
+   "rec": 1.4,
+   "rec_yds": 20.0,
+   "rec_yds_med": 16.0,
+   "rec_yds_range": [
+    3.0,
+    44.0
+   ],
+   "rec_td": 0.11
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0041525",
+   "name": "Chris Bell",
+   "pos": "WR",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 6.1,
+   "td_prob": 7.0,
+   "targets": 4.0,
+   "rec": 2.3,
+   "rec_yds": 34.0,
+   "rec_yds_med": 27.0,
+   "rec_yds_range": [
+    7.0,
+    70.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_MIA_MIN",
+   "pid": "00-0038128",
+   "name": "Malik Willis",
+   "pos": "QB",
+   "team": "MIA",
+   "opp": "MIN",
+   "status": "",
+   "fpts": 15.0,
+   "td_prob": 3.0,
+   "pass_att": 31.6,
+   "pass_cmp": 18.8,
+   "pass_yds": 223.0,
+   "pass_yds_med": 217.0,
+   "pass_yds_range": [
+    150.0,
+    302.0
+   ],
+   "pass_td": 1.03,
+   "pass_int": 0.71,
+   "carries": 5.3,
+   "rush_yds": 32.0,
+   "rush_yds_med": 27.0,
+   "rush_yds_range": [
+    8.0,
+    63.0
+   ],
+   "rush_td": 0.03
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0035891",
+   "name": "Cody White",
+   "pos": "WR",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 3.5,
+   "td_prob": 20.0,
+   "targets": 1.6,
+   "rec": 1.0,
+   "rec_yds": 13.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    27.0
+   ],
+   "rec_td": 0.22
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0037291",
+   "name": "Jalen Nailor",
+   "pos": "WR",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 3.6,
+   "td_prob": 10.0,
+   "targets": 2.2,
+   "rec": 1.3,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    36.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0038563",
+   "name": "Tre Tucker",
+   "pos": "WR",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 11.7,
+   "td_prob": 23.0,
+   "targets": 6.9,
+   "rec": 4.4,
+   "rec_yds": 56.0,
+   "rec_yds_med": 46.0,
+   "rec_yds_range": [
+    14.0,
+    110.0
+   ],
+   "rec_td": 0.25
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0039066",
+   "name": "Michael Mayer",
+   "pos": "TE",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 23.0,
+   "targets": 5.0,
+   "rec": 3.6,
+   "rec_yds": 33.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    69.0
+   ],
+   "rec_td": 0.27
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0039338",
+   "name": "Brock Bowers",
+   "pos": "TE",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 12.5,
+   "td_prob": 36.0,
+   "targets": 6.7,
+   "rec": 4.8,
+   "rec_yds": 49.0,
+   "rec_yds_med": 40.0,
+   "rec_yds_range": [
+    12.0,
+    99.0
+   ],
+   "rec_td": 0.44
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0040122",
+   "name": "Ashton Jeanty",
+   "pos": "RB",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 20.8,
+   "td_prob": 61.0,
+   "carries": 19.5,
+   "rush_yds": 69.0,
+   "rush_yds_med": 62.0,
+   "rush_yds_range": [
+    26.0,
+    123.0
+   ],
+   "rush_td": 0.52,
+   "targets": 6.5,
+   "rec": 4.9,
+   "rec_yds": 34.0,
+   "rec_yds_med": 27.0,
+   "rec_yds_range": [
+    7.0,
+    70.0
+   ],
+   "rec_td": 0.41
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0040878",
+   "name": "Mike Washington Jr.",
+   "pos": "RB",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 1.9,
+   "td_prob": 6.0,
+   "carries": 2.7,
+   "rush_yds": 12.0,
+   "rush_yds_med": 10.0,
+   "rush_yds_range": [
+    2.0,
+    25.0
+   ],
+   "rush_td": 0.05
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0029604",
+   "name": "Kirk Cousins",
+   "pos": "QB",
+   "team": "LV",
+   "opp": "KC",
+   "status": "",
+   "fpts": 14.6,
+   "td_prob": 0.0,
+   "pass_att": 33.2,
+   "pass_cmp": 21.4,
+   "pass_yds": 215.0,
+   "pass_yds_med": 210.0,
+   "pass_yds_range": [
+    145.0,
+    292.0
+   ],
+   "pass_td": 1.75,
+   "pass_int": 0.79,
+   "carries": 0.9,
+   "rush_yds": 6.0,
+   "rush_yds_med": 4.0,
+   "rush_yds_range": [
+    1.0,
+    12.0
+   ],
+   "rush_td": 0.0
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0030506",
+   "name": "Travis Kelce",
+   "pos": "TE",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 13.8,
+   "td_prob": 27.0,
+   "targets": 7.7,
+   "rec": 5.6,
+   "rec_yds": 63.0,
+   "rec_yds_med": 54.0,
+   "rec_yds_range": [
+    17.0,
+    123.0
+   ],
+   "rec_td": 0.3
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0036637",
+   "name": "Noah Gray",
+   "pos": "TE",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 4.1,
+   "td_prob": 11.0,
+   "targets": 2.5,
+   "rec": 1.7,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    37.0
+   ],
+   "rec_td": 0.11
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0038104",
+   "name": "Tyquan Thornton",
+   "pos": "WR",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 4.9,
+   "td_prob": 8.0,
+   "targets": 2.8,
+   "rec": 1.7,
+   "rec_yds": 27.0,
+   "rec_yds_med": 21.0,
+   "rec_yds_range": [
+    5.0,
+    56.0
+   ],
+   "rec_td": 0.08
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0038134",
+   "name": "Kenneth Walker III",
+   "pos": "RB",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 18.8,
+   "td_prob": 57.0,
+   "carries": 18.1,
+   "rush_yds": 84.0,
+   "rush_yds_med": 77.0,
+   "rush_yds_range": [
+    35.0,
+    142.0
+   ],
+   "rush_td": 0.61,
+   "targets": 3.8,
+   "rec": 3.0,
+   "rec_yds": 24.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    51.0
+   ],
+   "rec_td": 0.24
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0039067",
+   "name": "Rashee Rice",
+   "pos": "WR",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 13.1,
+   "td_prob": 34.0,
+   "targets": 6.9,
+   "rec": 4.7,
+   "rec_yds": 57.0,
+   "rec_yds_med": 47.0,
+   "rec_yds_range": [
+    14.0,
+    111.0
+   ],
+   "rec_td": 0.4
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0039894",
+   "name": "Xavier Worthy",
+   "pos": "WR",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 9.8,
+   "td_prob": 26.0,
+   "carries": 0.5,
+   "rush_yds": 3.0,
+   "rush_yds_med": 3.0,
+   "rush_yds_range": [
+    1.0,
+    7.0
+   ],
+   "rush_td": 0.01,
+   "targets": 5.6,
+   "rec": 3.5,
+   "rec_yds": 42.0,
+   "rec_yds_med": 33.0,
+   "rec_yds_range": [
+    9.0,
+    85.0
+   ],
+   "rec_td": 0.29
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0041013",
+   "name": "Emmett Johnson",
+   "pos": "RB",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 2.6,
+   "td_prob": 7.0,
+   "carries": 3.2,
+   "rush_yds": 13.0,
+   "rush_yds_med": 10.0,
+   "rush_yds_range": [
+    3.0,
+    27.0
+   ],
+   "rush_td": 0.06,
+   "targets": 0.6,
+   "rec": 0.5,
+   "rec_yds": 4.0,
+   "rec_yds_med": 3.0,
+   "rec_yds_range": [
+    0.0,
+    8.0
+   ],
+   "rec_td": 0.01
+  },
+  {
+   "game_id": "2026_04_KC_LV",
+   "pid": "00-0033873",
+   "name": "Patrick Mahomes",
+   "pos": "QB",
+   "team": "KC",
+   "opp": "LV",
+   "status": "",
+   "fpts": 17.5,
+   "td_prob": 1.0,
+   "pass_att": 35.6,
+   "pass_cmp": 23.0,
+   "pass_yds": 254.0,
+   "pass_yds_med": 248.0,
+   "pass_yds_range": [
+    171.0,
+    344.0
+   ],
+   "pass_td": 1.64,
+   "pass_int": 0.8,
+   "carries": 3.1,
+   "rush_yds": 22.0,
+   "rush_yds_med": 18.0,
+   "rush_yds_range": [
+    5.0,
+    45.0
+   ],
+   "rush_td": 0.01
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0033908",
+   "name": "Cooper Kupp",
+   "pos": "WR",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 7.7,
+   "td_prob": 20.0,
+   "targets": 4.2,
+   "rec": 2.8,
+   "rec_yds": 36.0,
+   "rec_yds_med": 28.0,
+   "rec_yds_range": [
+    7.0,
+    74.0
+   ],
+   "rec_td": 0.22
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0037545",
+   "name": "Rashid Shaheed",
+   "pos": "WR",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 5.3,
+   "td_prob": 11.0,
+   "carries": 0.9,
+   "rush_yds": 6.0,
+   "rush_yds_med": 4.0,
+   "rush_yds_range": [
+    1.0,
+    12.0
+   ],
+   "rush_td": 0.02,
+   "targets": 2.9,
+   "rec": 1.8,
+   "rec_yds": 23.0,
+   "rec_yds_med": 17.0,
+   "rec_yds_range": [
+    4.0,
+    48.0
+   ],
+   "rec_td": 0.1
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0038543",
+   "name": "Jaxon Smith-Njigba",
+   "pos": "WR",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 22.2,
+   "td_prob": 47.0,
+   "targets": 10.5,
+   "rec": 7.5,
+   "rec_yds": 107.0,
+   "rec_yds_med": 97.0,
+   "rec_yds_range": [
+    42.0,
+    186.0
+   ],
+   "rec_td": 0.63
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0038797",
+   "name": "Emanuel Wilson",
+   "pos": "RB",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 5.9,
+   "td_prob": 29.0,
+   "carries": 9.6,
+   "rush_yds": 38.0,
+   "rush_yds_med": 32.0,
+   "rush_yds_range": [
+    10.0,
+    73.0
+   ],
+   "rush_td": 0.33
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0039299",
+   "name": "George Holani",
+   "pos": "RB",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 5.9,
+   "td_prob": 24.0,
+   "carries": 5.6,
+   "rush_yds": 22.0,
+   "rush_yds_med": 18.0,
+   "rush_yds_range": [
+    5.0,
+    44.0
+   ],
+   "rush_td": 0.2,
+   "targets": 1.5,
+   "rec": 1.2,
+   "rec_yds": 9.0,
+   "rec_yds_med": 7.0,
+   "rec_yds_range": [
+    1.0,
+    20.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0039793",
+   "name": "AJ Barner",
+   "pos": "TE",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 29.0,
+   "carries": 0.8,
+   "rush_yds": 3.0,
+   "rush_yds_med": 2.0,
+   "rush_yds_range": [
+    0.0,
+    5.0
+   ],
+   "rush_td": 0.03,
+   "targets": 4.1,
+   "rec": 3.0,
+   "rec_yds": 31.0,
+   "rec_yds_med": 25.0,
+   "rec_yds_range": [
+    6.0,
+    66.0
+   ],
+   "rec_td": 0.32
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0041512",
+   "name": "Jadarian Price",
+   "pos": "RB",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 7.6,
+   "td_prob": 23.0,
+   "carries": 10.5,
+   "rush_yds": 44.0,
+   "rush_yds_med": 38.0,
+   "rush_yds_range": [
+    13.0,
+    84.0
+   ],
+   "rush_td": 0.23,
+   "targets": 1.2,
+   "rec": 0.9,
+   "rec_yds": 7.0,
+   "rec_yds_med": 5.0,
+   "rec_yds_range": [
+    1.0,
+    15.0
+   ],
+   "rec_td": 0.03
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0034869",
+   "name": "Sam Darnold",
+   "pos": "QB",
+   "team": "SEA",
+   "opp": "LAC",
+   "status": "",
+   "fpts": 15.2,
+   "td_prob": 1.0,
+   "pass_att": 29.8,
+   "pass_cmp": 19.3,
+   "pass_yds": 236.0,
+   "pass_yds_med": 230.0,
+   "pass_yds_range": [
+    159.0,
+    320.0
+   ],
+   "pass_td": 1.58,
+   "pass_int": 0.76,
+   "carries": 1.6,
+   "rush_yds": 9.0,
+   "rush_yds_med": 7.0,
+   "rush_yds_range": [
+    2.0,
+    19.0
+   ],
+   "rush_td": 0.01
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0038454",
+   "name": "Keaton Mitchell",
+   "pos": "RB",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 3.7,
+   "td_prob": 11.0,
+   "carries": 3.3,
+   "rush_yds": 15.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    30.0
+   ],
+   "rush_td": 0.07,
+   "targets": 1.1,
+   "rec": 0.9,
+   "rec_yds": 6.0,
+   "rec_yds_med": 4.0,
+   "rec_yds_range": [
+    1.0,
+    13.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0038544",
+   "name": "Quentin Johnston",
+   "pos": "WR",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 10.6,
+   "td_prob": 17.0,
+   "targets": 7.3,
+   "rec": 4.2,
+   "rec_yds": 51.0,
+   "rec_yds_med": 42.0,
+   "rec_yds_range": [
+    12.0,
+    102.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0039391",
+   "name": "Kimani Vidal",
+   "pos": "RB",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 5.0,
+   "td_prob": 15.0,
+   "carries": 5.1,
+   "rush_yds": 19.0,
+   "rush_yds_med": 16.0,
+   "rush_yds_range": [
+    4.0,
+    39.0
+   ],
+   "rush_td": 0.12,
+   "targets": 1.6,
+   "rec": 1.2,
+   "rec_yds": 9.0,
+   "rec_yds_med": 6.0,
+   "rec_yds_range": [
+    1.0,
+    19.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0039915",
+   "name": "Ladd McConkey",
+   "pos": "WR",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 11.7,
+   "td_prob": 20.0,
+   "targets": 7.3,
+   "rec": 4.8,
+   "rec_yds": 55.0,
+   "rec_yds_med": 46.0,
+   "rec_yds_range": [
+    14.0,
+    109.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0040189",
+   "name": "Oronde Gadsden II",
+   "pos": "TE",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 7.4,
+   "td_prob": 16.0,
+   "targets": 4.4,
+   "rec": 3.1,
+   "rec_yds": 33.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    68.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0040666",
+   "name": "Omarion Hampton",
+   "pos": "RB",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 10.3,
+   "td_prob": 30.0,
+   "carries": 13.4,
+   "rush_yds": 52.0,
+   "rush_yds_med": 45.0,
+   "rush_yds_range": [
+    16.0,
+    96.0
+   ],
+   "rush_td": 0.31,
+   "targets": 2.2,
+   "rec": 1.8,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    26.0
+   ],
+   "rec_td": 0.05
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0040727",
+   "name": "Tre Harris",
+   "pos": "WR",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 8.2,
+   "td_prob": 16.0,
+   "targets": 5.0,
+   "rec": 3.3,
+   "rec_yds": 38.0,
+   "rec_yds_med": 30.0,
+   "rec_yds_range": [
+    8.0,
+    78.0
+   ],
+   "rec_td": 0.17
+  },
+  {
+   "game_id": "2026_04_LAC_SEA",
+   "pid": "00-0036355",
+   "name": "Justin Herbert",
+   "pos": "QB",
+   "team": "LAC",
+   "opp": "SEA",
+   "status": "",
+   "fpts": 14.1,
+   "td_prob": 4.0,
+   "pass_att": 34.8,
+   "pass_cmp": 21.7,
+   "pass_yds": 225.0,
+   "pass_yds_med": 220.0,
+   "pass_yds_range": [
+    152.0,
+    306.0
+   ],
+   "pass_td": 0.99,
+   "pass_int": 0.93,
+   "carries": 4.5,
+   "rush_yds": 28.0,
+   "rush_yds_med": 23.0,
+   "rush_yds_range": [
+    7.0,
+    56.0
+   ],
+   "rush_td": 0.04
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0029892",
+   "name": "Kyle Juszczyk",
+   "pos": "RB",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 4.8,
+   "td_prob": 19.0,
+   "targets": 2.6,
+   "rec": 1.9,
+   "rec_yds": 17.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    36.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0031408",
+   "name": "Mike Evans",
+   "pos": "WR",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 7.3,
+   "td_prob": 19.0,
+   "targets": 4.3,
+   "rec": 2.4,
+   "rec_yds": 36.0,
+   "rec_yds_med": 28.0,
+   "rec_yds_range": [
+    7.0,
+    74.0
+   ],
+   "rec_td": 0.21
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0033280",
+   "name": "Christian McCaffrey",
+   "pos": "RB",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 31.3,
+   "td_prob": 73.0,
+   "carries": 18.8,
+   "rush_yds": 76.0,
+   "rush_yds_med": 69.0,
+   "rush_yds_range": [
+    30.0,
+    132.0
+   ],
+   "rush_td": 0.64,
+   "targets": 11.4,
+   "rec": 8.4,
+   "rec_yds": 74.0,
+   "rec_yds_med": 64.0,
+   "rec_yds_range": [
+    23.0,
+    139.0
+   ],
+   "rec_td": 0.67
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0033288",
+   "name": "George Kittle",
+   "pos": "TE",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 14.4,
+   "td_prob": 38.0,
+   "targets": 7.4,
+   "rec": 5.3,
+   "rec_yds": 62.0,
+   "rec_yds_med": 52.0,
+   "rec_yds_range": [
+    17.0,
+    121.0
+   ],
+   "rec_td": 0.47
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0035719",
+   "name": "Deebo Samuel Sr.",
+   "pos": "WR",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 5.1,
+   "td_prob": 17.0,
+   "carries": 1.0,
+   "rush_yds": 6.0,
+   "rush_yds_med": 5.0,
+   "rush_yds_range": [
+    1.0,
+    12.0
+   ],
+   "rush_td": 0.02,
+   "targets": 2.3,
+   "rec": 1.5,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    39.0
+   ],
+   "rec_td": 0.17
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0036887",
+   "name": "Luke Farrell",
+   "pos": "TE",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 2.8,
+   "td_prob": 8.0,
+   "targets": 1.7,
+   "rec": 1.1,
+   "rec_yds": 12.0,
+   "rec_yds_med": 9.0,
+   "rec_yds_range": [
+    2.0,
+    26.0
+   ],
+   "rec_td": 0.08
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0041052",
+   "name": "Kaelon Black",
+   "pos": "RB",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 3.4,
+   "td_prob": 13.0,
+   "carries": 4.0,
+   "rush_yds": 17.0,
+   "rush_yds_med": 14.0,
+   "rush_yds_range": [
+    4.0,
+    35.0
+   ],
+   "rush_td": 0.12,
+   "targets": 0.6,
+   "rec": 0.4,
+   "rec_yds": 4.0,
+   "rec_yds_med": 3.0,
+   "rec_yds_range": [
+    0.0,
+    8.0
+   ],
+   "rec_td": 0.02
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0037834",
+   "name": "Brock Purdy",
+   "pos": "QB",
+   "team": "SF",
+   "opp": "DEN",
+   "status": "",
+   "fpts": 17.5,
+   "td_prob": 3.0,
+   "pass_att": 34.5,
+   "pass_cmp": 22.1,
+   "pass_yds": 238.0,
+   "pass_yds_med": 232.0,
+   "pass_yds_range": [
+    160.0,
+    323.0
+   ],
+   "pass_td": 1.88,
+   "pass_int": 0.94,
+   "carries": 3.2,
+   "rush_yds": 22.0,
+   "rush_yds_med": 18.0,
+   "rush_yds_range": [
+    5.0,
+    44.0
+   ],
+   "rush_td": 0.03
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0033881",
+   "name": "Evan Engram",
+   "pos": "TE",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 5.8,
+   "td_prob": 14.0,
+   "targets": 3.7,
+   "rec": 2.5,
+   "rec_yds": 24.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    50.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0034348",
+   "name": "Courtland Sutton",
+   "pos": "WR",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 12.0,
+   "td_prob": 30.0,
+   "targets": 7.3,
+   "rec": 4.5,
+   "rec_yds": 54.0,
+   "rec_yds_med": 45.0,
+   "rec_yds_range": [
+    13.0,
+    107.0
+   ],
+   "rec_td": 0.36
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0036158",
+   "name": "J.K. Dobbins",
+   "pos": "RB",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 8.7,
+   "td_prob": 35.0,
+   "carries": 11.3,
+   "rush_yds": 51.0,
+   "rush_yds_med": 44.0,
+   "rush_yds_range": [
+    16.0,
+    94.0
+   ],
+   "rush_td": 0.41,
+   "targets": 0.8,
+   "rec": 0.7,
+   "rec_yds": 4.0,
+   "rec_yds_med": 3.0,
+   "rec_yds_range": [
+    1.0,
+    9.0
+   ],
+   "rec_td": 0.02
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0036613",
+   "name": "Jaylen Waddle",
+   "pos": "WR",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 7.0,
+   "td_prob": 14.0,
+   "targets": 4.1,
+   "rec": 2.6,
+   "rec_yds": 33.0,
+   "rec_yds_med": 26.0,
+   "rec_yds_range": [
+    6.0,
+    69.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0038976",
+   "name": "Marvin Mims Jr.",
+   "pos": "WR",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 3.7,
+   "td_prob": 7.0,
+   "targets": 2.1,
+   "rec": 1.5,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    34.0
+   ],
+   "rec_td": 0.06
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0039868",
+   "name": "Troy Franklin",
+   "pos": "WR",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 6.5,
+   "td_prob": 17.0,
+   "targets": 3.9,
+   "rec": 2.5,
+   "rec_yds": 28.0,
+   "rec_yds_med": 22.0,
+   "rec_yds_range": [
+    5.0,
+    59.0
+   ],
+   "rec_td": 0.18
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0040134",
+   "name": "Pat Bryant",
+   "pos": "WR",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 6.1,
+   "td_prob": 16.0,
+   "targets": 3.4,
+   "rec": 2.3,
+   "rec_yds": 26.0,
+   "rec_yds_med": 20.0,
+   "rec_yds_range": [
+    5.0,
+    56.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0040730",
+   "name": "RJ Harvey",
+   "pos": "RB",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 11.4,
+   "td_prob": 35.0,
+   "carries": 6.7,
+   "rush_yds": 26.0,
+   "rush_yds_med": 22.0,
+   "rush_yds_range": [
+    6.0,
+    52.0
+   ],
+   "rush_td": 0.23,
+   "targets": 4.5,
+   "rec": 3.7,
+   "rec_yds": 25.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    54.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_DEN_SF",
+   "pid": "00-0039732",
+   "name": "Bo Nix",
+   "pos": "QB",
+   "team": "DEN",
+   "opp": "SF",
+   "status": "",
+   "fpts": 17.6,
+   "td_prob": 14.0,
+   "pass_att": 37.8,
+   "pass_cmp": 24.1,
+   "pass_yds": 245.0,
+   "pass_yds_med": 239.0,
+   "pass_yds_range": [
+    165.0,
+    333.0
+   ],
+   "pass_td": 1.56,
+   "pass_int": 0.83,
+   "carries": 4.4,
+   "rush_yds": 23.0,
+   "rush_yds_med": 19.0,
+   "rush_yds_range": [
+    5.0,
+    46.0
+   ],
+   "rush_td": 0.14
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0031610",
+   "name": "Darren Waller",
+   "pos": "TE",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 5.0,
+   "td_prob": 12.0,
+   "targets": 2.8,
+   "rec": 2.0,
+   "rec_yds": 22.0,
+   "rec_yds_med": 17.0,
+   "rec_yds_range": [
+    4.0,
+    46.0
+   ],
+   "rec_td": 0.13
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0036265",
+   "name": "AJ Dillon",
+   "pos": "RB",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 1.8,
+   "td_prob": 4.0,
+   "carries": 2.7,
+   "rush_yds": 12.0,
+   "rush_yds_med": 9.0,
+   "rush_yds_range": [
+    2.0,
+    24.0
+   ],
+   "rush_td": 0.04
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0036555",
+   "name": "Chuba Hubbard",
+   "pos": "RB",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 19.1,
+   "td_prob": 57.0,
+   "carries": 23.2,
+   "rush_yds": 98.0,
+   "rush_yds_med": 91.0,
+   "rush_yds_range": [
+    47.0,
+    158.0
+   ],
+   "rush_td": 0.65,
+   "targets": 3.1,
+   "rec": 2.4,
+   "rec_yds": 18.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    40.0
+   ],
+   "rec_td": 0.19
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0037005",
+   "name": "Tommy Tremble",
+   "pos": "TE",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 6.1,
+   "td_prob": 16.0,
+   "targets": 3.6,
+   "rec": 2.5,
+   "rec_yds": 25.0,
+   "rec_yds_med": 19.0,
+   "rec_yds_range": [
+    4.0,
+    54.0
+   ],
+   "rec_td": 0.17
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0038840",
+   "name": "Brycen Tremayne",
+   "pos": "WR",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 3.5,
+   "td_prob": 7.0,
+   "targets": 2.0,
+   "rec": 1.3,
+   "rec_yds": 18.0,
+   "rec_yds_med": 13.0,
+   "rec_yds_range": [
+    3.0,
+    38.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0039342",
+   "name": "Xavier Legette",
+   "pos": "WR",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 5.3,
+   "td_prob": 18.0,
+   "targets": 3.2,
+   "rec": 1.8,
+   "rec_yds": 23.0,
+   "rec_yds_med": 18.0,
+   "rec_yds_range": [
+    4.0,
+    49.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0039491",
+   "name": "Jalen Coker",
+   "pos": "WR",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 11.7,
+   "td_prob": 29.0,
+   "targets": 6.0,
+   "rec": 4.3,
+   "rec_yds": 53.0,
+   "rec_yds_med": 44.0,
+   "rec_yds_range": [
+    13.0,
+    106.0
+   ],
+   "rec_td": 0.34
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0040124",
+   "name": "Tetairoa McMillan",
+   "pos": "WR",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 14.3,
+   "td_prob": 37.0,
+   "targets": 8.1,
+   "rec": 4.8,
+   "rec_yds": 68.0,
+   "rec_yds_med": 58.0,
+   "rec_yds_range": [
+    19.0,
+    129.0
+   ],
+   "rec_td": 0.47
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0040187",
+   "name": "Mitchell Evans",
+   "pos": "TE",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 4.0,
+   "td_prob": 15.0,
+   "targets": 2.1,
+   "rec": 1.5,
+   "rec_yds": 15.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    33.0
+   ],
+   "rec_td": 0.16
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0039150",
+   "name": "Bryce Young",
+   "pos": "QB",
+   "team": "CAR",
+   "opp": "DET",
+   "status": "",
+   "fpts": 17.9,
+   "td_prob": 1.0,
+   "pass_att": 35.6,
+   "pass_cmp": 22.4,
+   "pass_yds": 259.0,
+   "pass_yds_med": 253.0,
+   "pass_yds_range": [
+    174.0,
+    352.0
+   ],
+   "pass_td": 1.88,
+   "pass_int": 0.8,
+   "carries": 2.3,
+   "rush_yds": 15.0,
+   "rush_yds_med": 12.0,
+   "rush_yds_range": [
+    3.0,
+    31.0
+   ],
+   "rush_td": 0.01
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0036963",
+   "name": "Amon-Ra St. Brown",
+   "pos": "WR",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 20.7,
+   "td_prob": 47.0,
+   "targets": 11.5,
+   "rec": 7.8,
+   "rec_yds": 91.0,
+   "rec_yds_med": 81.0,
+   "rec_yds_range": [
+    33.0,
+    162.0
+   ],
+   "rec_td": 0.63
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0037240",
+   "name": "Jameson Williams",
+   "pos": "WR",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 10.9,
+   "td_prob": 19.0,
+   "targets": 6.1,
+   "rec": 3.9,
+   "rec_yds": 56.0,
+   "rec_yds_med": 47.0,
+   "rec_yds_range": [
+    14.0,
+    110.0
+   ],
+   "rec_td": 0.2
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0039065",
+   "name": "Sam LaPorta",
+   "pos": "TE",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 8.5,
+   "td_prob": 21.0,
+   "targets": 4.6,
+   "rec": 3.5,
+   "rec_yds": 37.0,
+   "rec_yds_med": 29.0,
+   "rec_yds_range": [
+    7.0,
+    76.0
+   ],
+   "rec_td": 0.23
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0039139",
+   "name": "Jahmyr Gibbs",
+   "pos": "RB",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 29.7,
+   "td_prob": 71.0,
+   "carries": 24.4,
+   "rush_yds": 122.0,
+   "rush_yds_med": 114.0,
+   "rush_yds_range": [
+    59.0,
+    195.0
+   ],
+   "rush_td": 0.87,
+   "targets": 6.9,
+   "rec": 5.7,
+   "rec_yds": 44.0,
+   "rec_yds_med": 36.0,
+   "rec_yds_range": [
+    10.0,
+    89.0
+   ],
+   "rec_td": 0.36
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0040669",
+   "name": "Isaac TeSlaa",
+   "pos": "WR",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 4.1,
+   "td_prob": 13.0,
+   "targets": 2.2,
+   "rec": 1.4,
+   "rec_yds": 19.0,
+   "rec_yds_med": 14.0,
+   "rec_yds_range": [
+    3.0,
+    41.0
+   ],
+   "rec_td": 0.14
+  },
+  {
+   "game_id": "2026_04_DET_CAR",
+   "pid": "00-0033106",
+   "name": "Jared Goff",
+   "pos": "QB",
+   "team": "DET",
+   "opp": "CAR",
+   "status": "",
+   "fpts": 16.7,
+   "td_prob": 2.0,
+   "pass_att": 35.9,
+   "pass_cmp": 23.7,
+   "pass_yds": 260.0,
+   "pass_yds_med": 254.0,
+   "pass_yds_range": [
+    175.0,
+    354.0
+   ],
+   "pass_td": 1.62,
+   "pass_int": 0.57,
+   "carries": 1.5,
+   "rush_yds": 9.0,
+   "rush_yds_med": 7.0,
+   "rush_yds_range": [
+    2.0,
+    18.0
+   ],
+   "rush_td": 0.02
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0033906",
+   "name": "Alvin Kamara",
+   "pos": "RB",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 9.0,
+   "td_prob": 27.0,
+   "carries": 9.8,
+   "rush_yds": 37.0,
+   "rush_yds_med": 31.0,
+   "rush_yds_range": [
+    10.0,
+    71.0
+   ],
+   "rush_td": 0.2,
+   "targets": 2.6,
+   "rec": 2.1,
+   "rec_yds": 14.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.12
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0035644",
+   "name": "Noah Fant",
+   "pos": "TE",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 4.2,
+   "td_prob": 14.0,
+   "targets": 2.3,
+   "rec": 1.7,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    34.0
+   ],
+   "rec_td": 0.15
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0036040",
+   "name": "Juwan Johnson",
+   "pos": "TE",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 11.9,
+   "td_prob": 29.0,
+   "targets": 6.4,
+   "rec": 4.7,
+   "rec_yds": 51.0,
+   "rec_yds_med": 42.0,
+   "rec_yds_range": [
+    12.0,
+    102.0
+   ],
+   "rec_td": 0.35
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0036973",
+   "name": "Travis Etienne",
+   "pos": "RB",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 7.8,
+   "td_prob": 24.0,
+   "carries": 8.4,
+   "rush_yds": 35.0,
+   "rush_yds_med": 29.0,
+   "rush_yds_range": [
+    9.0,
+    68.0
+   ],
+   "rush_td": 0.19,
+   "targets": 2.1,
+   "rec": 1.5,
+   "rec_yds": 11.0,
+   "rec_yds_med": 8.0,
+   "rec_yds_range": [
+    2.0,
+    25.0
+   ],
+   "rec_td": 0.08
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0037239",
+   "name": "Chris Olave",
+   "pos": "WR",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 20.0,
+   "td_prob": 38.0,
+   "targets": 11.7,
+   "rec": 7.6,
+   "rec_yds": 95.0,
+   "rec_yds_med": 85.0,
+   "rec_yds_range": [
+    36.0,
+    168.0
+   ],
+   "rec_td": 0.48
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0038551",
+   "name": "Kendre Miller",
+   "pos": "RB",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 3.6,
+   "td_prob": 9.0,
+   "carries": 4.6,
+   "rush_yds": 19.0,
+   "rush_yds_med": 15.0,
+   "rush_yds_range": [
+    4.0,
+    38.0
+   ],
+   "rush_td": 0.08,
+   "targets": 0.9,
+   "rec": 0.7,
+   "rec_yds": 5.0,
+   "rec_yds_med": 4.0,
+   "rec_yds_range": [
+    1.0,
+    11.0
+   ],
+   "rec_td": 0.02
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0039424",
+   "name": "Devaughn Vele",
+   "pos": "WR",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 9.8,
+   "td_prob": 23.0,
+   "targets": 5.9,
+   "rec": 3.7,
+   "rec_yds": 46.0,
+   "rec_yds_med": 37.0,
+   "rec_yds_range": [
+    10.0,
+    92.0
+   ],
+   "rec_td": 0.26
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0041067",
+   "name": "Bryce Lance",
+   "pos": "WR",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 2.7,
+   "td_prob": 6.0,
+   "targets": 1.7,
+   "rec": 1.0,
+   "rec_yds": 13.0,
+   "rec_yds_med": 10.0,
+   "rec_yds_range": [
+    2.0,
+    29.0
+   ],
+   "rec_td": 0.07
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0040743",
+   "name": "Tyler Shough",
+   "pos": "QB",
+   "team": "NO",
+   "opp": "ATL",
+   "status": "",
+   "fpts": 18.0,
+   "td_prob": 12.0,
+   "pass_att": 36.7,
+   "pass_cmp": 23.4,
+   "pass_yds": 254.0,
+   "pass_yds_med": 248.0,
+   "pass_yds_range": [
+    171.0,
+    345.0
+   ],
+   "pass_td": 1.53,
+   "pass_int": 0.8,
+   "carries": 4.8,
+   "rush_yds": 25.0,
+   "rush_yds_med": 21.0,
+   "rush_yds_range": [
+    6.0,
+    50.0
+   ],
+   "rush_td": 0.13
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0036970",
+   "name": "Kyle Pitts",
+   "pos": "TE",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 11.2,
+   "td_prob": 25.0,
+   "targets": 6.6,
+   "rec": 4.7,
+   "rec_yds": 48.0,
+   "rec_yds_med": 39.0,
+   "rec_yds_range": [
+    11.0,
+    97.0
+   ],
+   "rec_td": 0.28
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0037238",
+   "name": "Drake London",
+   "pos": "WR",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 16.1,
+   "td_prob": 30.0,
+   "targets": 9.0,
+   "rec": 5.7,
+   "rec_yds": 80.0,
+   "rec_yds_med": 69.0,
+   "rec_yds_range": [
+    26.0,
+    147.0
+   ],
+   "rec_td": 0.35
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0037741",
+   "name": "Jahan Dotson",
+   "pos": "WR",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 3.0,
+   "td_prob": 4.0,
+   "targets": 2.1,
+   "rec": 1.2,
+   "rec_yds": 16.0,
+   "rec_yds_med": 12.0,
+   "rec_yds_range": [
+    2.0,
+    34.0
+   ],
+   "rec_td": 0.04
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0037746",
+   "name": "Brian Robinson",
+   "pos": "RB",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 2.9,
+   "td_prob": 10.0,
+   "carries": 4.8,
+   "rush_yds": 21.0,
+   "rush_yds_med": 17.0,
+   "rush_yds_range": [
+    5.0,
+    41.0
+   ],
+   "rush_td": 0.1
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0038542",
+   "name": "Bijan Robinson",
+   "pos": "RB",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 30.5,
+   "td_prob": 69.0,
+   "carries": 22.9,
+   "rush_yds": 113.0,
+   "rush_yds_med": 105.0,
+   "rush_yds_range": [
+    55.0,
+    181.0
+   ],
+   "rush_td": 0.88,
+   "targets": 8.3,
+   "rec": 6.4,
+   "rec_yds": 57.0,
+   "rec_yds_med": 47.0,
+   "rec_yds_range": [
+    15.0,
+    112.0
+   ],
+   "rec_td": 0.3
+  },
+  {
+   "game_id": "2026_04_ATL_NO",
+   "pid": "00-0039917",
+   "name": "Michael Penix Jr.",
+   "pos": "QB",
+   "team": "ATL",
+   "opp": "NO",
+   "status": "",
+   "fpts": 13.6,
+   "td_prob": 0.0,
+   "pass_att": 32.8,
+   "pass_cmp": 20.9,
+   "pass_yds": 232.0,
+   "pass_yds_med": 226.0,
+   "pass_yds_range": [
+    156.0,
+    315.0
+   ],
+   "pass_td": 1.18,
+   "pass_int": 0.67,
+   "carries": 1.4,
+   "rush_yds": 9.0,
+   "rush_yds_med": 7.0,
+   "rush_yds_range": [
+    2.0,
+    19.0
+   ],
+   "rush_td": 0.0
+  }
+ ],
+ "teams": [
+  {
+   "team": "LA",
+   "net": 6.46,
+   "off": 4.18,
+   "def": 2.29,
+   "off_pass": 2.62,
+   "off_rush": 0.9,
+   "def_pass": 1.95,
+   "def_rush": 0.06,
+   "pace": 66.04,
+   "proe": 2.6
+  },
+  {
+   "team": "SEA",
+   "net": 6.16,
+   "off": 0.71,
+   "def": 5.46,
+   "off_pass": 2.1,
+   "off_rush": -0.96,
+   "def_pass": 2.44,
+   "def_rush": 2.17,
+   "pace": 62.49,
+   "proe": -2.45
+  },
+  {
+   "team": "JAX",
+   "net": 5.54,
+   "off": 2.81,
+   "def": 2.73,
+   "off_pass": 1.37,
+   "off_rush": 0.9,
+   "def_pass": 2.41,
+   "def_rush": 0.13,
+   "pace": 62.8,
+   "proe": 1.23
+  },
+  {
+   "team": "BUF",
+   "net": 4.85,
+   "off": 5.67,
+   "def": -0.81,
+   "off_pass": 3.48,
+   "off_rush": 1.48,
+   "def_pass": 0.95,
+   "def_rush": -1.32,
+   "pace": 64.37,
+   "proe": -2.01
+  },
+  {
+   "team": "NE",
+   "net": 4.18,
+   "off": 1.05,
+   "def": 3.13,
+   "off_pass": 1.28,
+   "off_rush": -0.38,
+   "def_pass": 2.94,
+   "def_rush": -0.08,
+   "pace": 62.73,
+   "proe": 1.13
+  },
+  {
+   "team": "SF",
+   "net": 4.1,
+   "off": 5.7,
+   "def": -1.59,
+   "off_pass": 4.33,
+   "off_rush": 0.67,
+   "def_pass": -1.19,
+   "def_rush": -0.31,
+   "pace": 61.29,
+   "proe": 1.21
+  },
+  {
+   "team": "KC",
+   "net": 2.89,
+   "off": 2.39,
+   "def": 0.49,
+   "off_pass": 0.98,
+   "off_rush": 0.88,
+   "def_pass": 0.04,
+   "def_rush": 0.34,
+   "pace": 64.22,
+   "proe": 2.53
+  },
+  {
+   "team": "CHI",
+   "net": 2.53,
+   "off": 3.15,
+   "def": -0.62,
+   "off_pass": 2.44,
+   "off_rush": 0.36,
+   "def_pass": 0.36,
+   "def_rush": -0.77,
+   "pace": 68.05,
+   "proe": -2.44
+  },
+  {
+   "team": "BAL",
+   "net": 2.49,
+   "off": 2.68,
+   "def": -0.2,
+   "off_pass": 1.89,
+   "off_rush": 0.85,
+   "def_pass": -0.24,
+   "def_rush": 0.16,
+   "pace": 60.88,
+   "proe": -5.97
+  },
+  {
+   "team": "DEN",
+   "net": 2.2,
+   "off": 0.17,
+   "def": 2.04,
+   "off_pass": -0.2,
+   "off_rush": 0.16,
+   "def_pass": 2.61,
+   "def_rush": -0.65,
+   "pace": 63.06,
+   "proe": 1.77
+  },
+  {
+   "team": "MIN",
+   "net": 1.21,
+   "off": -4.7,
+   "def": 5.92,
+   "off_pass": -3.62,
+   "off_rush": -0.4,
+   "def_pass": 3.73,
+   "def_rush": 1.19,
+   "pace": 59.28,
+   "proe": -2.41
+  },
+  {
+   "team": "HOU",
+   "net": 1.21,
+   "off": -2.65,
+   "def": 3.86,
+   "off_pass": -0.95,
+   "off_rush": -1.27,
+   "def_pass": 1.9,
+   "def_rush": 1.27,
+   "pace": 67.1,
+   "proe": -0.61
+  },
+  {
+   "team": "DET",
+   "net": 0.44,
+   "off": 2.14,
+   "def": -1.71,
+   "off_pass": 1.86,
+   "off_rush": 0.18,
+   "def_pass": -0.52,
+   "def_rush": -0.68,
+   "pace": 65.05,
+   "proe": -2.35
+  },
+  {
+   "team": "PHI",
+   "net": 0.34,
+   "off": -1.22,
+   "def": 1.56,
+   "off_pass": -1.49,
+   "off_rush": 0.43,
+   "def_pass": 1.11,
+   "def_rush": 0.18,
+   "pace": 61.73,
+   "proe": -3.7
+  },
+  {
+   "team": "CIN",
+   "net": 0.14,
+   "off": 1.8,
+   "def": -1.66,
+   "off_pass": 0.4,
+   "off_rush": 0.83,
+   "def_pass": -0.64,
+   "def_rush": -0.55,
+   "pace": 63.0,
+   "proe": 2.62
+  },
+  {
+   "team": "IND",
+   "net": -0.33,
+   "off": 1.49,
+   "def": -1.82,
+   "off_pass": -0.34,
+   "off_rush": 1.31,
+   "def_pass": -1.54,
+   "def_rush": -0.06,
+   "pace": 62.83,
+   "proe": 0.4
+  },
+  {
+   "team": "GB",
+   "net": -0.54,
+   "off": 1.95,
+   "def": -2.49,
+   "off_pass": 3.19,
+   "off_rush": -1.3,
+   "def_pass": -2.06,
+   "def_rush": -0.25,
+   "pace": 62.5,
+   "proe": -1.9
+  },
+  {
+   "team": "LAC",
+   "net": -1.28,
+   "off": -3.4,
+   "def": 2.12,
+   "off_pass": -1.93,
+   "off_rush": -0.98,
+   "def_pass": 1.27,
+   "def_rush": 0.46,
+   "pace": 64.6,
+   "proe": -2.53
+  },
+  {
+   "team": "PIT",
+   "net": -1.3,
+   "off": -1.81,
+   "def": 0.51,
+   "off_pass": -2.47,
+   "off_rush": 0.65,
+   "def_pass": 1.18,
+   "def_rush": -0.59,
+   "pace": 62.25,
+   "proe": 1.64
+  },
+  {
+   "team": "ATL",
+   "net": -1.32,
+   "off": -2.44,
+   "def": 1.12,
+   "off_pass": -2.79,
+   "off_rush": 0.59,
+   "def_pass": 0.93,
+   "def_rush": 0.27,
+   "pace": 63.93,
+   "proe": -4.48
+  },
+  {
+   "team": "LV",
+   "net": -1.42,
+   "off": -3.25,
+   "def": 1.83,
+   "off_pass": -1.07,
+   "off_rush": -1.52,
+   "def_pass": 0.55,
+   "def_rush": 0.83,
+   "pace": 60.93,
+   "proe": -0.2
+  },
+  {
+   "team": "CAR",
+   "net": -1.58,
+   "off": -0.44,
+   "def": -1.15,
+   "off_pass": -0.06,
+   "off_rush": -0.33,
+   "def_pass": -0.77,
+   "def_rush": -0.3,
+   "pace": 63.69,
+   "proe": -0.59
+  },
+  {
+   "team": "NO",
+   "net": -1.89,
+   "off": -1.77,
+   "def": -0.13,
+   "off_pass": -1.45,
+   "off_rush": -0.24,
+   "def_pass": -0.41,
+   "def_rush": 0.17,
+   "pace": 67.49,
+   "proe": -0.51
+  },
+  {
+   "team": "DAL",
+   "net": -2.11,
+   "off": 4.12,
+   "def": -6.23,
+   "off_pass": 3.11,
+   "off_rush": 0.38,
+   "def_pass": -4.77,
+   "def_rush": -0.82,
+   "pace": 65.36,
+   "proe": 1.28
+  },
+  {
+   "team": "NYG",
+   "net": -2.36,
+   "off": -0.69,
+   "def": -1.67,
+   "off_pass": -0.12,
+   "off_rush": -0.1,
+   "def_pass": -0.23,
+   "def_rush": -1.02,
+   "pace": 64.51,
+   "proe": -4.97
+  },
+  {
+   "team": "CLE",
+   "net": -2.49,
+   "off": -5.22,
+   "def": 2.73,
+   "off_pass": -3.2,
+   "off_rush": -1.25,
+   "def_pass": 3.1,
+   "def_rush": -0.55,
+   "pace": 61.59,
+   "proe": -0.12
+  },
+  {
+   "team": "ARI",
+   "net": -2.82,
+   "off": 0.3,
+   "def": -3.11,
+   "off_pass": 0.26,
+   "off_rush": -0.39,
+   "def_pass": -3.41,
+   "def_rush": 0.32,
+   "pace": 66.17,
+   "proe": 2.35
+  },
+  {
+   "team": "TB",
+   "net": -2.98,
+   "off": -3.15,
+   "def": 0.17,
+   "off_pass": -3.13,
+   "off_rush": 0.14,
+   "def_pass": -0.67,
+   "def_rush": 0.94,
+   "pace": 64.5,
+   "proe": -1.34
+  },
+  {
+   "team": "WAS",
+   "net": -3.08,
+   "off": 0.38,
+   "def": -3.45,
+   "off_pass": 0.32,
+   "off_rush": 0.03,
+   "def_pass": -2.76,
+   "def_rush": -0.03,
+   "pace": 63.6,
+   "proe": -1.94
+  },
+  {
+   "team": "MIA",
+   "net": -5.12,
+   "off": -1.28,
+   "def": -3.84,
+   "off_pass": -0.66,
+   "off_rush": -0.24,
+   "def_pass": -3.54,
+   "def_rush": -0.18,
+   "pace": 60.6,
+   "proe": -2.61
+  },
+  {
+   "team": "NYJ",
+   "net": -6.54,
+   "off": -3.76,
+   "def": -2.78,
+   "off_pass": -1.93,
+   "off_rush": -1.16,
+   "def_pass": -2.4,
+   "def_rush": -0.11,
+   "pace": 63.19,
+   "proe": -2.64
+  },
+  {
+   "team": "TEN",
+   "net": -7.6,
+   "off": -4.91,
+   "def": -2.69,
+   "off_pass": -4.24,
+   "off_rush": -0.23,
+   "def_pass": -2.33,
+   "def_rush": -0.21,
+   "pace": 60.3,
+   "proe": -3.81
+  }
+ ],
+ "backtest": {
+  "games": 285,
+  "seasons": [
+   2025,
+   2026
+  ],
+  "model_mae_margin": 10.52,
+  "vegas_mae_margin": 10.0,
+  "model_mae_total": 10.51,
+  "vegas_mae_total": 10.25,
+  "straight_up_pct": 0.63,
+  "ats_all": [
+   138,
+   144
+  ],
+  "ats_leans": [
+   70,
+   74
+  ],
+  "totals_leans": [
+   60,
+   55
+  ]
+ },
+ "live_record": {
+  "straight_up": [
+   0,
+   0
+  ],
+  "ats_all": [
+   0,
+   0
+  ],
+  "ats_leans": [
+   0,
+   0
+  ],
+  "totals_leans": [
+   0,
+   0
+  ],
+  "model_mae": null,
+  "vegas_mae": null
+ },
+ "settings": {
+  "market_weight": 0.0,
+  "lean_spread": 2.0,
+  "lean_total": 3.0
+ }
+}
