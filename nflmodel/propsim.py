@@ -174,6 +174,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
         edge = p_over - book_over
         side = "Over" if edge >= C.PROP_EDGE else ("Under" if edge <= -C.PROP_EDGE else None)
         row.update({"team": p["team"], "opp": p["opp"], "pos": p["pos"], "game_id": p["game_id"],
+                    "pid": p["pid"], "stat_key": stat,
                     "median": None if stat == "anytime_td" else fnum(np.median(arr), 1), "model_over": fnum(p_over * 100, 1),
                     "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side})
         out.append(row)

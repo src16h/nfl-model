@@ -41,7 +41,7 @@ h2{font:700 26px/1.1 var(--cond);margin:28px 0 10px}
 
 /* leans strip */
 .leans{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.lean{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--led);padding:8px 12px;border-radius:4px;font-size:15px}
+.lean{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--muted);padding:8px 12px;border-radius:4px;font-size:15px}
 .lean b{font:700 19px var(--cond)}
 .lean span{color:var(--muted)}
 .more{font:600 16px var(--cond);background:none;border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:6px 12px;cursor:pointer}
@@ -108,6 +108,11 @@ tr.detail td{background:var(--panel2);text-align:left;color:var(--muted);font-si
 td.lean-o{color:var(--turf);font-weight:600}
 td.lean-u{color:var(--led);font-weight:600}
 td.err{color:var(--muted);font-style:italic}
+.v-above,.stat strong.v-above{color:var(--turf)}.v-below,.stat strong.v-below{color:var(--warn)}.v-unclear,.stat strong.v-unclear{color:var(--muted)}
+.gap{color:var(--muted);font-size:13px;font-weight:500;display:block}
+.hist{width:100%;color:var(--muted)}
+.hist b{color:var(--ink);font-weight:600}
+h3{font:700 20px/1.1 var(--cond);margin:22px 0 8px}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -176,6 +181,18 @@ function render() {
   renderGames(); initPlayers(); renderPlayers(); renderProps(); renderTeams(); renderRecord();
 }
 
+function realityPanel() {
+  const R = D.model && D.model.reality;
+  if (!R || !R.spread) return "";
+  const card = (label, x) => x && x.n ? `<div class="stat"><strong class="v-${x.verdict}">${n(x.pct)}%</strong><span>${label} gaps of ${n(x.at,1)}+ pts: ${x.record[0]}-${x.record[1]}. Likely range ${n(x.ci_lo,0)} to ${n(x.ci_hi,0)}%. ${esc(x.note)}.</span></div>` : "";
+  return `<h2>Reality check</h2><p class="hint">How the model's flagged gaps did in the backtest (${R.games} games, each season predicted using only earlier seasons). Break-even is 52.4%. <b>Until the likely range sits fully above 52.4%, treat every gap below as something to research, not something to bet.</b></p><div class="stats">${card("Spread", R.spread)}${card("Total", R.total)}</div>`;
+}
+
+function histLine(g) {
+  const one = (what, h) => h ? `<span class="hist"><b>${what} history:</b> gaps of ${esc(h.range)} pts hit ${n(h.pct)}% in the backtest (${h.record[0]}-${h.record[1]}, likely range ${n(h.ci_lo,0)} to ${n(h.ci_hi,0)}%). <span class="v-${h.verdict}">${esc(h.note)}.</span></span>` : "";
+  return (g.lean_side ? one("Spread", g.hist_spread) : "") + (g.lean_total ? one("Total", g.hist_total) : "");
+}
+
 function renderGames() {
   const leans = [];
   const line = v => v == null ? "–" : (Math.abs(v) < 0.25 ? "PK" : (v > 0 ? "+" : "") + v.toFixed(1));
@@ -183,25 +200,25 @@ function renderGames() {
     if (g.state !== "upcoming") return;
     if (g.lean_side) {
       const home = g.lean_side === g.home, vegas = home ? -g.market_spread : g.market_spread, model = home ? -g.margin : g.margin;
-      leans.push({e: Math.abs(g.edge_spread), html: `<b>${esc(g.lean_side)} ${line(vegas)}</b> <span>Model has ${esc(g.lean_side)} ${line(model)}. Edge ${n(Math.abs(g.edge_spread))} pts.</span>`});
+      leans.push({e: Math.abs(g.edge_spread), html: `<b>${esc(g.lean_side)} ${line(vegas)}</b> <span>Model has ${esc(g.lean_side)} ${line(model)}. Gap ${n(Math.abs(g.edge_spread))} pts.${g.hist_spread ? ` Backtest at this size: ${n(g.hist_spread.pct)}% (${g.hist_spread.n} games).` : ""}</span>`});
     }
-    if (g.lean_total) leans.push({e: Math.abs(g.edge_total), html: `<b>${esc(g.lean_total)} ${n(g.market_total)}</b> <span>${esc(g.away)} at ${esc(g.home)}. Model total ${n(g.total)}.</span>`});
+    if (g.lean_total) leans.push({e: Math.abs(g.edge_total), html: `<b>${esc(g.lean_total)} ${n(g.market_total)}</b> <span>${esc(g.away)} at ${esc(g.home)}. Model total ${n(g.total)}. Gap ${n(Math.abs(g.edge_total))} pts.${g.hist_total ? ` Backtest at this size: ${n(g.hist_total.pct)}% (${g.hist_total.n} games).` : ""}</span>`});
   });
   leans.sort((a, b) => b.e - a.e);
   const TOP = 6;
-  const eng = D.settings.lean_engine === "anchored" ? "the market-anchored engine (starts from Vegas, looks for where Vegas tends to miss)" : "the football-only engine";
-  let h = `<h2>This week's leans</h2><p class="hint">Picked by ${eng}. Flags spreads ${n(D.settings.lean_spread,1)}+ pts and totals ${n(D.settings.lean_total,1)}+ pts off the Vegas number. Check the edge-size table on Track record before trusting any of these.</p>`;
+  const eng = D.settings.lean_engine === "anchored" ? "market-anchored model" : "football-only model";
+  let h = realityPanel() + `<h2>Biggest gaps vs Vegas</h2><p class="hint">Games where our ${eng} differs from Vegas by ${n(D.settings.lean_spread,1)}+ pts on spreads or ${n(D.settings.lean_total,1)}+ on totals. A gap is not a bet. Each one shows how gaps of that size actually did in the backtest.</p>`;
   if (leans.length) {
     h += `<div class="leans">${leans.slice(0, TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div>`;
-    if (leans.length > TOP) h += `<div class="leans" id="moreLeans" hidden>${leans.slice(TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div><button class="more" id="moreBtn" aria-expanded="false">Show ${leans.length - TOP} more leans</button>`;
-  } else h += `<p class="hint">No leans this week. The model mostly agrees with Vegas.</p>`;
+    if (leans.length > TOP) h += `<div class="leans" id="moreLeans" hidden>${leans.slice(TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div><button class="more" id="moreBtn" aria-expanded="false">Show ${leans.length - TOP} more gaps</button>`;
+  } else h += `<p class="hint">No gaps this week. The model mostly agrees with Vegas.</p>`;
   h += `<h2>All games</h2>`;
   for (const g of D.games) {
     const ko = g.kickoff ? new Date(g.kickoff).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
     const st = g.state === "final" ? `<span class="state final">Final ${g.final_away}–${g.final_home}</span>` : g.state === "locked" ? `<span class="state">Locked at kickoff</span>` : `<span class="state">${esc(ko)}${g.neutral ? ", neutral site" : ""}</span>`;
     const wpA = g.win_prob_home == null ? null : 100 - g.win_prob_home;
-    const spreadFlag = g.lean_side ? ` <span class="flag">Lean ${esc(g.lean_side)}</span>` : "";
-    const totFlag = g.lean_total ? ` <span class="flag">Lean ${esc(g.lean_total)}</span>` : "";
+    const spreadFlag = g.lean_side ? `<span class="gap">Gap: ${esc(g.lean_side)} by ${n(Math.abs(g.edge_spread))} pts</span>` : "";
+    const totFlag = g.lean_total ? `<span class="gap">Gap: ${esc(g.lean_total)} by ${n(Math.abs(g.edge_total))} pts</span>` : "";
     const inj = [...(g.injuries_away || []).map(x => `${g.away} ${x.name} (${x.pos}, ${x.status.toLowerCase()})`), ...(g.injuries_home || []).map(x => `${g.home} ${x.name} (${x.pos}, ${x.status.toLowerCase()})`)];
     h += `<article class="game">
       <div class="grow"><div class="tm">${esc(g.away)}</div><div class="score">${n(g.proj_away)}</div>
@@ -215,13 +232,14 @@ function renderGames() {
       <div class="gfoot">${st}<span class="qb">QBs: ${esc(g.qb_away)} / ${esc(g.qb_home)}</span>
         ${g.weather ? `<span>${esc(g.weather)}</span>` : ""}
         ${whyLine(g)}
+        ${histLine(g)}
         ${(g.notes || []).map(x => `<span>${esc(x)}</span>`).join("")}
         ${inj.length ? `<span class="inj">Key injuries: ${esc(inj.join(", "))}</span>` : ""}</div>
     </article>`;
   }
   $("#games").innerHTML = h;
   const mb = $("#moreBtn");
-  if (mb) mb.onclick = () => { const m = $("#moreLeans"); m.hidden = !m.hidden; mb.setAttribute("aria-expanded", !m.hidden); mb.textContent = m.hidden ? `Show ${m.children.length} more leans` : "Show fewer"; };
+  if (mb) mb.onclick = () => { const m = $("#moreLeans"); m.hidden = !m.hidden; mb.setAttribute("aria-expanded", !m.hidden); mb.textContent = m.hidden ? `Show ${m.children.length} more gaps` : "Show fewer"; };
 }
 
 function whyLine(g) {
@@ -294,7 +312,7 @@ function renderTeams() {
 
 function renderProps() {
   const P = D.props || {props: [], pairs: []};
-  let h = `<h2>Your prop lines</h2><p class="hint">Add lines from your sportsbook to <b>data/props.csv</b> on GitHub (instructions are inside the file), then re-run the model. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig.</p>`;
+  let h = `<h2>Your prop lines</h2><p class="hint">Add lines from your sportsbook to <b>data/props.csv</b> on GitHub (instructions are inside the file). Clear last week's rows first, your results stay saved. Then re-run the model. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig.</p>`;
   if (!P.props.length) {
     h += `<div class="msg">No props entered yet. Open data/props.csv in your GitHub repository, click the pencil icon, add rows like <b>Patrick Mahomes,KC,pass_yds,262.5,-115,-105</b>, commit, then run the workflow.</div>`;
   } else {
@@ -308,17 +326,51 @@ function renderProps() {
   }
   h += `<h2>Same-game pairs</h2><p class="hint">Leans on the same team that tend to hit together. "Lift" is how much more often both hit than if they were unrelated. Sportsbooks price some of this into parlays, so treat it as research.</p>`;
   h += (P.pairs || []).length ? `<div class="pairs">${P.pairs.map(x => `<div class="pair"><b>${esc(x.legs[0])}</b> + <b>${esc(x.legs[1])}</b><br><span>Both hit ${n(x.joint)}% of sims vs ${n(x.if_independent)}% if unrelated (+${n(x.lift,0)}% lift)</span></div>`).join("")}</div>` : `<p class="hint">No correlated pairs among this week's leans.</p>`;
+  h += propRecord();
   $("#props").innerHTML = h;
+}
+
+function lineCheck() {
+  const Ln = D.lines;
+  let h = `<h2>Line movement check</h2><p class="hint">Every run saves the Vegas line next to our numbers. After each game we compare the <b>first line we saw</b> to the <b>final line</b> in the free data. If lines keep moving toward our side, the market later agreed with us. This is the quickest skill test and needs far fewer games than win rate. Positive numbers are good.</p>`;
+  if (!Ln || Ln.error) return h + `<div class="msg">Not available this run${Ln && Ln.error ? ": " + esc(Ln.error) : ""}.</div>`;
+  if (!Ln.graded) return h + `<div class="msg">Collecting data. ${Ln.tracked || 0} games tracked so far. Results appear after those games finish, so the first real check takes about a week.</div>`;
+  const card = (label, b) => {
+    if (!b.measurable) return `<div class="stat"><strong class="v-unclear">Can't measure</strong><span>${label}: only ${n(b.pct_moved,0)}% of ${b.n} finished games had a different final line. The free feed may not update lines before kickoff. A paid odds source would be needed for this test.</span></div>`;
+    const a = b.all, f = b.flag;
+    return `<div class="stat"><strong>${sgn(a.avg,2)}</strong><span>${label}: average line move toward (+) or away (-) from our side, in points, for games where we had a 0.5+ pt gap (${a.n} games). Toward ${a.toward}, away ${a.away}.</span></div>` +
+      (f.n ? `<div class="stat"><strong>${sgn(f.avg,2)}</strong><span>${label}, flagged gaps only (${f.n} games). Toward ${f.toward}, away ${f.away}.</span></div>` : "");
+  };
+  return h + `<div class="stats">${card("Spread", Ln.spread)}${card("Total", Ln.total)}</div><p class="hint" style="margin-top:10px">${Ln.graded} finished games checked. A real edge shows up as a positive average that stays positive over 100+ games.</p>`;
+}
+
+function propRecord() {
+  const R = D.prop_record;
+  let h = `<h2>Prop record (graded automatically)</h2><p class="hint">Every prop you enter is saved with the model's odds, then graded from play-by-play after the game. Deleting old rows from props.csv is safe, your results stay saved. Missing odds count as -110. Play-by-play can differ from official stats by a yard or two, and players with no recorded plays are voided.</p>`;
+  if (!R || R.error) return h + `<div class="msg">Not available this run${R && R.error ? ": " + esc(R.error) : ""}.</div>`;
+  if (!R.logged) return h + `<div class="msg">Nothing tracked yet. Add lines to data/props.csv and run the model before kickoff. Results show up after the games are final.</div>`;
+  const L = R.leans || {}, M = R.model_side || {}, B = R.brier;
+  h += `<div class="stats">
+    <div class="stat"><strong class="v-${L.verdict || "unclear"}">${L.n ? rec([L.w, L.l]) : "–"}</strong><span>Flagged props (4%+ gap)${L.n ? `. ${n(L.pct)}% wins, likely range ${n(L.ci_lo,0)} to ${n(L.ci_hi,0)}%. ${esc(L.note)}.` : ". None graded yet."}</span></div>
+    <div class="stat"><strong class="${(L.units || 0) >= 0 ? "v-above" : "v-below"}">${sgn(L.units,2)}u</strong><span>Flat 1-unit bets on flagged props${L.roi != null ? `. ROI ${sgn(L.roi,1)}%` : ""}</span></div>
+    <div class="stat"><strong>${M.n ? n(M.pct) + "%" : "–"}</strong><span>Model's favored side on every graded prop (${M.n || 0})</span></div>
+    ${B ? `<div class="stat"><strong class="${B.model < B.book ? "v-above" : "v-below"}">${n(B.model,3)} vs ${n(B.book,3)}</strong><span>Forecast error, model vs sportsbook (lower wins, ${B.n} props). Beating the book here is the best sign of skill.</span></div>` : ""}
+    <div class="stat"><strong>${R.graded}</strong><span>Graded. ${R.pending} waiting for games, ${R.voided} voided.</span></div></div>`;
+  const rows = (arr, key) => arr.filter(x => x.n || x.push).map(x => `<tr><td>${esc(x[key])}</td><td>${x.w}-${x.l}${x.push ? "-" + x.push : ""}</td><td>${x.n ? n(x.pct) + "%" : "–"}</td><td>${x.n ? n(x.ci_lo,0) + " to " + n(x.ci_hi,0) + "%" : "–"}</td><td>${sgn(x.units,2)}u</td></tr>`).join("");
+  const tbl = (title, arr, key, col) => { const r = rows(arr || [], key); return r ? `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th scope="col">${col}</th><th scope="col">Record</th><th scope="col">Win rate</th><th scope="col">Likely range</th><th scope="col">Units</th></tr></thead><tbody>${r}</tbody></table></div>` : ""; };
+  h += tbl("By prop type", R.by_stat, "stat", "Prop") + tbl("By side", R.by_side, "side", "Side") + tbl("By size of gap", R.by_edge, "range", "Gap vs book");
+  if ((R.recent || []).length) h += `<h3>Recent results</h3><div class="tablewrap"><table><thead><tr><th scope="col">Player</th><th scope="col">Wk</th><th scope="col">Prop</th><th scope="col">Line</th><th scope="col">Our lean</th><th scope="col">Model over %</th><th scope="col">Book over %</th><th scope="col">Actual</th><th scope="col">Result</th></tr></thead><tbody>${R.recent.map(r => `<tr><td><span class="pname">${esc(r.player)}</span><span class="pos">${esc(r.team)}</span></td><td>${r.week}</td><td>${esc(r.stat)}</td><td>${esc(r.line ?? "–")}</td><td>${esc(r.lean || "none")}</td><td>${n(r.model_over)}%</td><td>${n(r.book_over)}%</td><td>${r.actual == null ? "–" : n(r.actual)}</td><td class="${r.result === "win" ? "lean-o" : r.result === "loss" ? "neg-t" : ""}">${esc(r.result || r.outcome)}</td></tr>`).join("")}</tbody></table></div>`;
+  return h;
 }
 
 function rec(r) { if (!r || !(r[0] + r[1])) return "–"; return `${r[0]}–${r[1]}`; }
 function pct(r) { if (!r || !(r[0] + r[1])) return ""; return ` (${(100 * r[0] / (r[0] + r[1])).toFixed(1)}%)`; }
 function renderRecord() {
   const L = D.live_record || {}, B = D.backtest || {}, M = D.model || {}, DB = M.deep_backtest;
-  let h = `<h2>This season, published picks</h2><p class="hint">Graded against the Vegas line saved at the time of each pick. Beating 52.4% against the spread is the break-even point at standard odds.</p>
+  let h = `<h2>This season: gaps flagged on the dashboard</h2><p class="hint">Graded against the Vegas line saved at the time of each pick. Beating 52.4% against the spread is the break-even point at standard odds.</p>
   <div class="stats">
-    <div class="stat"><strong>${rec(L.ats_leans)}</strong><span>Spread leans${pct(L.ats_leans)}</span></div>
-    <div class="stat"><strong>${rec(L.totals_leans)}</strong><span>Total leans${pct(L.totals_leans)}</span></div>
+    <div class="stat"><strong>${rec(L.ats_leans)}</strong><span>Spread gaps${pct(L.ats_leans)}</span></div>
+    <div class="stat"><strong>${rec(L.totals_leans)}</strong><span>Total gaps${pct(L.totals_leans)}</span></div>
     <div class="stat"><strong>${rec(L.ats_all)}</strong><span>Every game vs spread${pct(L.ats_all)}</span></div>
     <div class="stat"><strong>${rec(L.straight_up)}</strong><span>Winners picked${pct(L.straight_up)}</span></div>
     <div class="stat"><strong>${n(L.model_mae)} / ${n(L.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas (lower wins)</span></div>
@@ -327,29 +379,31 @@ function renderRecord() {
   if (DB && DB.overall) {
     const row = (name, R) => R && R.overall ? `<tr><td>${name}</td><td>${rec(R.overall.ats_leans)}${pct(R.overall.ats_leans)}</td><td>${rec(R.overall.totals_leans)}${pct(R.overall.totals_leans)}</td><td>${rec(R.overall.ats_all)}${pct(R.overall.ats_all)}</td><td>${n(R.overall.model_mae)} / ${n(R.overall.vegas_mae)}</td><td>${n(R.lean_spread,1)} / ${n(R.lean_total,1)}</td></tr>` : "";
     h += `<h2>Deep backtest: the two engines</h2><p class="hint">Walk-forward: each season predicted by models trained only on earlier seasons. ${DB.overall.games} games. Break-even is 52.4%. Normal luck swings results about ±3% at this sample size, so only trust gaps bigger than that.</p>
-    <div class="tablewrap"><table class="cmp"><thead><tr><th scope="col">Engine</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All games vs spread</th><th scope="col">Avg miss, model / Vegas</th><th scope="col">Lean at (pts)</th></tr></thead><tbody>
+    <div class="tablewrap"><table class="cmp"><thead><tr><th scope="col">Engine</th><th scope="col">Spread gaps</th><th scope="col">Total gaps</th><th scope="col">All games vs spread</th><th scope="col">Avg miss, model / Vegas</th><th scope="col">Lean at (pts)</th></tr></thead><tbody>
     ${row("Football-only", DB)}${row("Market-anchored", AB)}</tbody></table></div>`;
     const bucketTable = (title, hint, R, key) => R ? `<h2>${title}</h2><p class="hint">${hint}</p><div class="tablewrap"><table class="bk"><thead><tr><th scope="col">Gap vs Vegas (pts)</th>${R[key].map(x => `<th scope="col">${esc(x.range)}</th>`).join("")}</tr></thead><tbody>
       <tr><td style="text-align:left">Record</td>${R[key].map(x => `<td>${rec(x.record)}</td>`).join("")}</tr>
-      <tr><td style="text-align:left">Win rate</td>${R[key].map(x => { const t = x.record[0] + x.record[1]; const p = t ? 100 * x.record[0] / t : null; return `<td class="${p == null ? "" : p >= 52.4 ? "pos-t" : "neg-t"}">${p == null ? "–" : p.toFixed(1) + "%"}</td>`; }).join("")}</tr></tbody></table></div>` : "";
-    const bh = "A real edge shows up as win rates that climb as the gap grows. Green clears 52.4%. Flat or random-looking rows mean the gaps are mostly noise.";
+      <tr><td style="text-align:left">Win rate</td>${R[key].map(x => `<td class="${x.n ? "v-" + x.verdict : ""}">${x.n ? n(x.pct) + "%" : "–"}</td>`).join("")}</tr>
+      <tr><td style="text-align:left">Likely range</td>${R[key].map(x => `<td>${x.n ? n(x.ci_lo,0) + " to " + n(x.ci_hi,0) + "%" : "–"}</td>`).join("")}</tr></tbody></table></div>` : "";
+    const bh = "Green: even the low end of the likely range beats break-even (52.4%), so luck is an unlikely explanation. Red: the whole range is below break-even. Gray: can't tell from luck. A real edge also climbs as the gap grows. Wide ranges mean small samples.";
     h += bucketTable("Edge size: market-anchored spreads", bh, AB, "spread_buckets");
     h += bucketTable("Edge size: market-anchored totals", bh, AB, "total_buckets");
     h += bucketTable("Edge size: football-only spreads", bh, DB, "spread_buckets");
     h += bucketTable("Edge size: football-only totals", bh, DB, "total_buckets");
     const LB = (D.settings.lean_engine === "anchored" && AB) ? AB : DB;
     h += `<h2>By season (${LB === AB ? "market-anchored" : "football-only"})</h2>
-    <div class="tablewrap"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread gaps</th><th scope="col">Total gaps</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
     ${LB.by_season.map(r => `<tr><td>${r.season}</td><td>${r.games}</td><td>${rec(r.ats_leans)}${pct(r.ats_leans)}</td><td>${rec(r.totals_leans)}${pct(r.totals_leans)}</td><td>${rec(r.ats_all)}${pct(r.ats_all)}</td><td>${n(r.model_mae)}</td><td>${n(r.vegas_mae)}</td></tr>`).join("")}
     </tbody></table></div>`;
   } else if (B.games) {
     h += `<h2>Backtest</h2><p class="hint">${B.games} recent games. Run the "Train model" workflow once to unlock the deep, multi-season backtest.</p>
     <div class="stats">
-      <div class="stat"><strong>${rec(B.ats_leans)}</strong><span>Spread leans${pct(B.ats_leans)}</span></div>
-      <div class="stat"><strong>${rec(B.totals_leans)}</strong><span>Total leans${pct(B.totals_leans)}</span></div>
+      <div class="stat"><strong>${rec(B.ats_leans)}</strong><span>Spread gaps${pct(B.ats_leans)}</span></div>
+      <div class="stat"><strong>${rec(B.totals_leans)}</strong><span>Total gaps${pct(B.totals_leans)}</span></div>
       <div class="stat"><strong>${n(B.model_mae_margin)} / ${n(B.vegas_mae_margin)}</strong><span>Avg miss on margin, model / Vegas</span></div>
     </div>`;
   }
+  h += lineCheck();
   if ((M.weights_margin || []).length) {
     h += `<h2>What the model learned</h2><p class="hint">Points of spread moved by a typical swing (one standard deviation) in each factor. Learned from ${M.history_games} games (${(M.seasons || [])[0]} to now). Machine-learning share: ${n((DB?.gbm_share_margin || 0) * 100, 0)}% for spreads, ${n((DB?.gbm_share_total || 0) * 100, 0)}% for totals.</p>
     <div class="stats">${M.weights_margin.slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;

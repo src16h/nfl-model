@@ -101,3 +101,54 @@ def fnum(x, nd=1):
         return round(float(x), nd)
     except (TypeError, ValueError):
         return None
+
+
+# ---------------------------------------------------------------------
+# Honest-stats helpers
+# ---------------------------------------------------------------------
+BREAK_EVEN = 0.524   # win rate needed at standard -110 odds
+
+
+def clean_json(o):
+    """Browsers can't read NaN in JSON, so turn it into null."""
+    if isinstance(o, dict):
+        return {k: clean_json(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [clean_json(v) for v in o]
+    if isinstance(o, (float, np.floating)):
+        return None if not np.isfinite(o) else float(o)
+    if isinstance(o, (np.integer,)):
+        return int(o)
+    if isinstance(o, (np.bool_,)):
+        return bool(o)
+    return o
+
+
+def wilson(w, n, z=1.96):
+    """95% range for a win rate. Wide range = small sample = could be luck."""
+    if n <= 0:
+        return 0.0, 1.0
+    p = w / n
+    d = 1 + z * z / n
+    c = p + z * z / (2 * n)
+    m = z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
+    return float((c - m) / d), float((c + m) / d)
+
+
+def record_stats(w, l):
+    """Win rate + 95% range + a plain-English verdict. None if no games."""
+    n = int(w + l)
+    if n == 0:
+        return None
+    lo, hi = wilson(w, n)
+    pct = w / n
+    if lo > BREAK_EVEN:
+        v, note = "above", "Clear edge, even the low end beats break-even"
+    elif hi < BREAK_EVEN:
+        v, note = "below", "Below break-even, would lose money"
+    elif pct >= BREAK_EVEN:
+        v, note = "unclear", "Above break-even, but could be luck"
+    else:
+        v, note = "unclear", "Can't tell apart from a coin flip"
+    return {"n": n, "pct": round(100 * pct, 1), "ci_lo": round(100 * lo, 1),
+            "ci_hi": round(100 * hi, 1), "verdict": v, "note": note}

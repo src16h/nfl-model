@@ -22,7 +22,8 @@ from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
 from nflmodel.propsim import load_props, evaluate_props
-from nflmodel.util import before
+from nflmodel.util import before, clean_json
+from nflmodel import tracker
 from nflmodel import usage as U
 from nflmodel.availability import current_roster, load_overrides, injury_table, recently_out_ids
 from nflmodel.qb import expected_qbs
@@ -36,19 +37,6 @@ HIST = OUT / "history"
 ET = ZoneInfo("America/New_York")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nflmodel")
-
-
-def clean_json(o):
-    """Browsers can't read NaN in JSON, so turn it into null."""
-    if isinstance(o, dict):
-        return {k: clean_json(v) for k, v in o.items()}
-    if isinstance(o, (list, tuple)):
-        return [clean_json(v) for v in o]
-    if isinstance(o, (float, np.floating)):
-        return None if not np.isfinite(o) else float(o)
-    if isinstance(o, np.integer):
-        return int(o)
-    return o
 
 
 def guess_season(now: datetime) -> int:
@@ -176,6 +164,9 @@ def build_games(bundle, season, week, now):
         e_to = lean_t_pred - tl if np.isfinite(tl) else None
         lean_side = (h if e_sp > 0 else a) if e_sp is not None and abs(e_sp) >= th_s else None
         lean_total = ("Over" if e_to > 0 else "Under") if e_to is not None and abs(e_to) >= th_t else None
+        rep = (ens["report_anchored"] if use_anchor else ens["report_independent"]) if ens is not None else None
+        hist_s = stack.lookup_bucket(rep, "spread_buckets", e_sp)
+        hist_t = stack.lookup_bucket(rep, "total_buckets", e_to)
 
         notes = []
         for team in (a, h):
@@ -212,6 +203,7 @@ def build_games(bundle, season, week, now):
             "why_total": [{"factor": f, "pts": fnum(v)} for f, v in why_t],
             "why_edge": [{"factor": f, "pts": fnum(v)} for f, v in why_edge],
             "why_edge_total": [{"factor": f, "pts": fnum(v)} for f, v in why_edge_t],
+            "hist_spread": hist_s, "hist_total": hist_t,
             "injuries_home": ih["list"], "injuries_away": ia["list"],
             "notes": notes,
         }
@@ -225,7 +217,12 @@ def build_games(bundle, season, week, now):
 
     teams_tbl = [{k: (fnum(v, 2) if isinstance(v, (float, np.floating)) else v) for k, v in t.items()}
                  for t in ratings_table(ctx)]
-    props = evaluate_props(load_props(ROOT / "data" / "props.csv"), players, sims)
+    props_df, stale = tracker.filter_stale(load_props(ROOT / "data" / "props.csv"),
+                                           OUT / "props_log.json", week)
+    props = evaluate_props(props_df, players, sims)
+    for r, why in stale:
+        props["props"].append({"player": r.get("player"), "stat": r.get("stat"), "line": tracker._s(r.get("line")) or None,
+                               "error": f"old line skipped ({why}). Delete it, or put this week's number in the week column"})
     model_info = {
         "engine": "two engines" if ens is not None else "simple calibration",
         "lean_engine": C.LEAN_ENGINE if (ens is not None and ens.get("anchored")) else "independent",
@@ -241,6 +238,9 @@ def build_games(bundle, season, week, now):
         "weights_edge": ens["anc_margin"].weights() if ens and ens.get("anchored") else [],
         "calibration": {k: fnum(v, 3) for k, v in cal.items()} if cal else None,
     }
+    lean_rep = (ens["report_anchored"] if (ens is not None and ens.get("anchored") and C.LEAN_ENGINE == "anchored")
+                else (ens["report_independent"] if ens is not None else None))
+    model_info["reality"] = stack.reality(lean_rep)
     return wk, games, players, teams_tbl, model_info, report, scheme.ok, props
 
 
@@ -285,6 +285,29 @@ def grade(season, sch) -> dict:
             "vegas_mae": fnum(np.mean(err_v)) if err_v else None}
 
 
+def season_last_week(sch, season):
+    w = sch.loc[sch["season"] == season, "week"]
+    return int(w.max()) if len(w) else 0
+
+
+def run_tracking(bundle, games, prop_rows, season, week, now):
+    """Save lines + props, grade what finished. Never allowed to break the run."""
+    res = {}
+    try:
+        tracker.update_line_log(OUT / "line_log.json", games, now)
+        res["lines"] = tracker.grade_lines(OUT / "line_log.json", bundle.schedules)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"line tracker skipped: {e}")
+        res["lines"] = {"error": str(e)[:160]}
+    try:
+        tracker.update_props_log(OUT / "props_log.json", prop_rows, season, week, now)
+        res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"prop tracker skipped: {e}")
+        res["prop_record"] = {"error": str(e)[:160]}
+    return res
+
+
 def main():
     now = datetime.now(timezone.utc)
     if os.environ.get("NOW"):  # testing / replaying a past week
@@ -300,7 +323,8 @@ def main():
                "data_status": bundle.status}
     if week is None:
         payload["message"] = "No upcoming games found. The season may be over."
-        (OUT / "latest.json").write_text(json.dumps(payload, indent=1))
+        payload.update(run_tracking(bundle, [], [], season, season_last_week(bundle.schedules, season), now))
+        (OUT / "latest.json").write_text(json.dumps(clean_json(payload), indent=1, allow_nan=False))
         log.info("no upcoming games")
         return
 
@@ -320,6 +344,7 @@ def main():
     hpath.write_text(json.dumps(clean_json({"season": season, "week": week, "games": all_games,
                                             "players": all_players}), indent=1, allow_nan=False))
 
+    payload.update(run_tracking(bundle, games, props["props"], season, week, now))
     payload.update({
         "model": model_info,
         "props": props,

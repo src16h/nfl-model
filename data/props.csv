@@ -1,7 +1,11 @@
 # ============================================================
 # PROP LINES (edit this file in your browser on GitHub)
 # Copy lines from your sportsbook. One prop per row.
-# Lines starting with # are ignored. Odds are optional.
+# Lines starting with # are ignored. Odds and week are optional.
+#
+# EACH WEEK: delete last week's rows, then add new ones.
+# Your results are saved automatically, so deleting rows is safe.
+# If an old row is left in by mistake, the model skips it and tells you.
 #
 # stat options:
 #   pass_yds, pass_tds, completions, interceptions,
@@ -9,8 +13,12 @@
 #   anytime_td (line not needed), fpts
 #
 # team is optional (helps if two players share a name)
-# Example (remove the # to use):
+# week is optional. Only needed if the exact same line AND odds
+# show up two weeks in a row (put the week number to confirm it).
+#
+# Examples (remove the # to use):
 # Patrick Mahomes,KC,pass_yds,262.5,-115,-105
 # Travis Kelce,KC,rec_yds,58.5,-110,-110
+# Travis Kelce,KC,rec_yds,58.5,-110,-110,7
 # ============================================================
-player,team,stat,line,over_odds,under_odds
+player,team,stat,line,over_odds,under_odds,week

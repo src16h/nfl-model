@@ -1,4 +1,13 @@
-# The Board: NFL prediction model (v3)
+# The Board: NFL prediction model (v4)
+
+**v4 adds (the honesty update):**
+- **Reality check** on the Games tab: how flagged gaps actually did in the backtest, with a "likely range" so luck isn't mistaken for skill
+- Green "Lean" labels are gone. Games show neutral **Gap** labels plus the backtest history for gaps that size
+- **Line movement check**: saves every Vegas line, then compares the first line we saw to the final line. The best quick skill test
+- **Prop tracker**: every prop you enter is saved and graded automatically after the game (record, units, and model vs sportsbook forecast accuracy)
+- **Stale-line guard**: old prop lines left in the file can't sneak into a new week
+
+**v3 adds:** a market-anchored engine, win rate by edge size, and real historical injury reports in training.
 
 **v3 adds:** a market-anchored engine that picks leans, win rate by edge size, and real historical injury reports in training.
 
@@ -85,7 +94,13 @@ The model runs by itself:
 
 Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old lines each week.
 
-**Props:** edit `data/props.csv` the same way, adding lines from your sportsbook such as `Patrick Mahomes,KC,pass_yds,262.5,-115,-105`. The Props tab shows the model's chance, the book's chance (vig removed), and correlated same-game pairs.
+**Props (every week):**
+1. Thursday or Saturday, open `data/props.csv`, click the pencil, **delete last week's rows**, and add new ones such as `Patrick Mahomes,KC,pass_yds,262.5,-115,-105`
+2. Commit, then **Actions, Weekly NFL model, Run workflow** (do this before kickoff, the model only logs props for games that haven't started)
+3. The Props tab shows the model's chance, the book's chance (vig removed), and correlated pairs
+4. After the games, the next run grades everything automatically. Your record lives in `docs/data/props_log.json` (never delete it)
+
+**The two tracking files** (`docs/data/line_log.json` and `docs/data/props_log.json`) are the model's memory. The robot creates and updates them. If one ever can't be read, a `.corrupt.json` backup is saved next to it.
 
 ---
 
@@ -110,6 +125,14 @@ Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old 
 **Data:** all free from nflverse (play-by-play, schedules and Vegas lines, rosters, injuries, snap counts).
 
 ---
+
+## How to judge the model (read this first)
+
+- **Break-even is 52.4%** against the spread at standard odds. Anything under that loses to the vig.
+- **Always read the "likely range", not just the win rate.** A 57% record over 80 games has a range of roughly 46% to 67%. That's luck territory.
+- **Green means the whole range is above 52.4%.** That's the only color worth acting on.
+- **Line movement is the fast test.** If the market keeps moving toward our side after we'd have picked it, that's a real signal, and it shows up in weeks instead of seasons.
+- **Props can't be backtested for free,** so the prop record builds from today forward. Expect 100+ flagged props before it means anything.
 
 ## Honest expectations
 

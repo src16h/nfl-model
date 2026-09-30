@@ -20,6 +20,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.preprocessing import StandardScaler
 
 from . import config as C
+from .util import record_stats
 from .features import (MARGIN_FEATS, TOTAL_FEATS, ANCHOR_MARGIN_FEATS, ANCHOR_TOTAL_FEATS,
                        LABELS, label)
 
@@ -112,8 +113,30 @@ def edge_buckets(pred, line, act, edges):
     for lo, hi in zip(edges[:-1], edges[1:]):
         sel = (e >= lo) & (e < hi) & np.isfinite(line)
         r = _rec([_hit(p, l, a) for p, l, a in zip(pred[sel], line[sel], act[sel])])
-        out.append({"range": f"{lo:g}+" if hi >= 99 else f"{lo:g} to {hi:g}", "record": r})
+        out.append({"range": f"{lo:g}+" if hi >= 99 else f"{lo:g} to {hi:g}", "lo": lo, "hi": hi,
+                    "record": r, **(record_stats(r[0], r[1]) or {"n": 0})})
     return out
+
+
+def lookup_bucket(report, key, gap):
+    """How did gaps of this size do in the backtest? (for each game card)"""
+    if not report or gap is None:
+        return None
+    g = abs(gap)
+    for b in report.get(key, []):
+        if b["lo"] <= g < b["hi"] and b.get("n"):
+            return {k: b.get(k) for k in ("range", "record", "n", "pct", "ci_lo", "ci_hi", "verdict", "note")}
+    return None
+
+
+def reality(report):
+    """Headline honesty check for the dashboard: flagged gaps, all seasons."""
+    if not report:
+        return None
+    o = report["overall"]
+    return {"engine": report["engine"], "games": o["games"],
+            "spread": {**(record_stats(*o["ats_leans"]) or {"n": 0}), "record": o["ats_leans"], "at": report["lean_spread"]},
+            "total": {**(record_stats(*o["totals_leans"]) or {"n": 0}), "record": o["totals_leans"], "at": report["lean_total"]}}
 
 
 def _season_report(d, s, lean_s, lean_t):
