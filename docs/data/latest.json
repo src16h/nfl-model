@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-30T20:56:04.853238+00:00",
+ "generated_at": "2026-09-30T21:28:01.142746+00:00",
  "season": 2026,
  "week": 4,
  "data_status": {
@@ -33,6 +33,117 @@
    "rows": 45184,
    "note": "2026: Season must be between 2016 and 2025"
   }
+ },
+ "lines": {
+  "tracked": 16,
+  "spread": {
+   "n": 0,
+   "moved": 0,
+   "pct_moved": null,
+   "measurable": false,
+   "all": {
+    "n": 0,
+    "avg": null,
+    "toward": 0,
+    "away": 0
+   },
+   "flag": {
+    "n": 0,
+    "avg": null,
+    "toward": 0,
+    "away": 0
+   }
+  },
+  "total": {
+   "n": 0,
+   "moved": 0,
+   "pct_moved": null,
+   "measurable": false,
+   "all": {
+    "n": 0,
+    "avg": null,
+    "toward": 0,
+    "away": 0
+   },
+   "flag": {
+    "n": 0,
+    "avg": null,
+    "toward": 0,
+    "away": 0
+   }
+  },
+  "graded": 0
+ },
+ "prop_record": {
+  "logged": 0,
+  "graded": 0,
+  "pending": 0,
+  "voided": 0,
+  "leans": {
+   "w": 0,
+   "l": 0,
+   "push": 0,
+   "units": 0.0,
+   "roi": null,
+   "n": 0
+  },
+  "by_stat": [],
+  "by_side": [
+   {
+    "side": "Over",
+    "w": 0,
+    "l": 0,
+    "push": 0,
+    "units": 0.0,
+    "roi": null,
+    "n": 0
+   },
+   {
+    "side": "Under",
+    "w": 0,
+    "l": 0,
+    "push": 0,
+    "units": 0.0,
+    "roi": null,
+    "n": 0
+   }
+  ],
+  "by_edge": [
+   {
+    "range": "4 to 7%",
+    "w": 0,
+    "l": 0,
+    "push": 0,
+    "units": 0.0,
+    "roi": null,
+    "n": 0
+   },
+   {
+    "range": "7 to 10%",
+    "w": 0,
+    "l": 0,
+    "push": 0,
+    "units": 0.0,
+    "roi": null,
+    "n": 0
+   },
+   {
+    "range": "10%+",
+    "w": 0,
+    "l": 0,
+    "push": 0,
+    "units": 0.0,
+    "roi": null,
+    "n": 0
+   }
+  ],
+  "model_side": {
+   "w": 0,
+   "l": 0,
+   "n": 0
+  },
+  "brier": null,
+  "recent": []
  },
  "model": {
   "engine": "two engines",
@@ -254,82 +365,170 @@
    "spread_buckets": [
     {
      "range": "0 to 1",
+     "lo": 0,
+     "hi": 1,
      "record": [
       285,
       298
-     ]
+     ],
+     "n": 583,
+     "pct": 48.9,
+     "ci_lo": 44.8,
+     "ci_hi": 52.9,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "1 to 2",
+     "lo": 1,
+     "hi": 2,
      "record": [
       208,
       244
-     ]
+     ],
+     "n": 452,
+     "pct": 46.0,
+     "ci_lo": 41.5,
+     "ci_hi": 50.6,
+     "verdict": "below",
+     "note": "Below break-even, would lose money"
     },
     {
      "range": "2 to 3",
+     "lo": 2,
+     "hi": 3,
      "record": [
       187,
       178
-     ]
+     ],
+     "n": 365,
+     "pct": 51.2,
+     "ci_lo": 46.1,
+     "ci_hi": 56.3,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "3 to 4",
+     "lo": 3,
+     "hi": 4,
      "record": [
       116,
       150
-     ]
+     ],
+     "n": 266,
+     "pct": 43.6,
+     "ci_lo": 37.8,
+     "ci_hi": 49.6,
+     "verdict": "below",
+     "note": "Below break-even, would lose money"
     },
     {
      "range": "4 to 6",
+     "lo": 4,
+     "hi": 6,
      "record": [
       106,
       94
-     ]
+     ],
+     "n": 200,
+     "pct": 53.0,
+     "ci_lo": 46.1,
+     "ci_hi": 59.8,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     },
     {
      "range": "6+",
+     "lo": 6,
+     "hi": 99,
      "record": [
       53,
       43
-     ]
+     ],
+     "n": 96,
+     "pct": 55.2,
+     "ci_lo": 45.3,
+     "ci_hi": 64.8,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     }
    ],
    "total_buckets": [
     {
      "range": "0 to 1.5",
+     "lo": 0,
+     "hi": 1.5,
      "record": [
       398,
       427
-     ]
+     ],
+     "n": 825,
+     "pct": 48.2,
+     "ci_lo": 44.8,
+     "ci_hi": 51.7,
+     "verdict": "below",
+     "note": "Below break-even, would lose money"
     },
     {
      "range": "1.5 to 3",
+     "lo": 1.5,
+     "hi": 3,
      "record": [
       305,
       299
-     ]
+     ],
+     "n": 604,
+     "pct": 50.5,
+     "ci_lo": 46.5,
+     "ci_hi": 54.5,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "3 to 4.5",
+     "lo": 3,
+     "hi": 4.5,
      "record": [
       163,
       165
-     ]
+     ],
+     "n": 328,
+     "pct": 49.7,
+     "ci_lo": 44.3,
+     "ci_hi": 55.1,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "4.5 to 6",
+     "lo": 4.5,
+     "hi": 6,
      "record": [
       78,
       78
-     ]
+     ],
+     "n": 156,
+     "pct": 50.0,
+     "ci_lo": 42.2,
+     "ci_hi": 57.8,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "6+",
+     "lo": 6,
+     "hi": 99,
      "record": [
       39,
       37
-     ]
+     ],
+     "n": 76,
+     "pct": 51.3,
+     "ci_lo": 40.3,
+     "ci_hi": 62.2,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     }
    ],
    "gbm_share_margin": 0.25,
@@ -533,89 +732,180 @@
    "spread_buckets": [
     {
      "range": "0 to 0.5",
+     "lo": 0,
+     "hi": 0.5,
      "record": [
       542,
       559
-     ]
+     ],
+     "n": 1101,
+     "pct": 49.2,
+     "ci_lo": 46.3,
+     "ci_hi": 52.2,
+     "verdict": "below",
+     "note": "Below break-even, would lose money"
     },
     {
      "range": "0.5 to 1",
+     "lo": 0.5,
+     "hi": 1,
      "record": [
       305,
       261
-     ]
+     ],
+     "n": 566,
+     "pct": 53.9,
+     "ci_lo": 49.8,
+     "ci_hi": 58.0,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     },
     {
      "range": "1 to 1.5",
+     "lo": 1,
+     "hi": 1.5,
      "record": [
       99,
       114
-     ]
+     ],
+     "n": 213,
+     "pct": 46.5,
+     "ci_lo": 39.9,
+     "ci_hi": 53.2,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "1.5 to 2",
+     "lo": 1.5,
+     "hi": 2,
      "record": [
       38,
       29
-     ]
+     ],
+     "n": 67,
+     "pct": 56.7,
+     "ci_lo": 44.8,
+     "ci_hi": 67.9,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     },
     {
      "range": "2 to 3",
+     "lo": 2,
+     "hi": 3,
      "record": [
       9,
       6
-     ]
+     ],
+     "n": 15,
+     "pct": 60.0,
+     "ci_lo": 35.7,
+     "ci_hi": 80.2,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     },
     {
      "range": "3+",
+     "lo": 3,
+     "hi": 99,
      "record": [
       0,
       0
-     ]
+     ],
+     "n": 0
     }
    ],
    "total_buckets": [
     {
      "range": "0 to 0.5",
+     "lo": 0,
+     "hi": 0.5,
      "record": [
       570,
       559
-     ]
+     ],
+     "n": 1129,
+     "pct": 50.5,
+     "ci_lo": 47.6,
+     "ci_hi": 53.4,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "0.5 to 1",
+     "lo": 0.5,
+     "hi": 1,
      "record": [
       298,
       264
-     ]
+     ],
+     "n": 562,
+     "pct": 53.0,
+     "ci_lo": 48.9,
+     "ci_hi": 57.1,
+     "verdict": "unclear",
+     "note": "Above break-even, but could be luck"
     },
     {
      "range": "1 to 1.5",
+     "lo": 1,
+     "hi": 1.5,
      "record": [
       104,
       100
-     ]
+     ],
+     "n": 204,
+     "pct": 51.0,
+     "ci_lo": 44.2,
+     "ci_hi": 57.8,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "1.5 to 2",
+     "lo": 1.5,
+     "hi": 2,
      "record": [
       44,
       40
-     ]
+     ],
+     "n": 84,
+     "pct": 52.4,
+     "ci_lo": 41.8,
+     "ci_hi": 62.7,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "2 to 3",
+     "lo": 2,
+     "hi": 3,
      "record": [
       4,
       4
-     ]
+     ],
+     "n": 8,
+     "pct": 50.0,
+     "ci_lo": 21.5,
+     "ci_hi": 78.5,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     },
     {
      "range": "3+",
+     "lo": 3,
+     "hi": 99,
      "record": [
       0,
       2
-     ]
+     ],
+     "n": 2,
+     "pct": 0.0,
+     "ci_lo": 0.0,
+     "ci_hi": 65.8,
+     "verdict": "unclear",
+     "note": "Can't tell apart from a coin flip"
     }
    ],
    "gbm_share_margin": 0.25,
@@ -765,7 +1055,37 @@
     "pts": 0.01
    }
   ],
-  "calibration": null
+  "calibration": null,
+  "reality": {
+   "engine": "anchored",
+   "games": 2008,
+   "spread": {
+    "n": 295,
+    "pct": 49.5,
+    "ci_lo": 43.8,
+    "ci_hi": 55.2,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip",
+    "record": [
+     146,
+     149
+    ],
+    "at": 1.0
+   },
+   "total": {
+    "n": 94,
+    "pct": 51.1,
+    "ci_lo": 41.1,
+    "ci_hi": 60.9,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip",
+    "record": [
+     48,
+     46
+    ],
+    "at": 1.5
+   }
+  }
  },
  "props": {
   "props": [],
@@ -859,6 +1179,32 @@
      "pts": -0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [],
    "injuries_away": [],
    "notes": []
@@ -940,6 +1286,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [],
    "injuries_away": [
     {
@@ -1022,6 +1394,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [],
    "injuries_away": [
     {
@@ -1115,6 +1513,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [],
    "injuries_away": [],
    "notes": []
@@ -1127,10 +1551,10 @@
    "away": "NYJ",
    "home": "CHI",
    "neutral": false,
-   "proj_home": 23.8,
-   "proj_away": 19.5,
+   "proj_home": 24.3,
+   "proj_away": 20.0,
    "margin": 4.3,
-   "total": 43.3,
+   "total": 44.3,
    "win_prob_home": 64.0,
    "margin_range": [
     -9.0,
@@ -1143,13 +1567,13 @@
    "indep_total": 47.2,
    "market_line": "CHI -3.5",
    "market_spread": 3.5,
-   "market_total": 42.5,
+   "market_total": 43.5,
    "edge_spread": 0.8,
    "edge_total": 0.8,
    "lean_side": null,
    "lean_total": null,
    "cover_prob_home": 54.0,
-   "over_prob": 48.0,
+   "over_prob": 50.0,
    "qb_home": "Caleb Williams",
    "qb_away": "Geno Smith",
    "weather": "72\u00b0F, wind 6 mph, 1% rain",
@@ -1197,6 +1621,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [],
    "injuries_away": [],
    "notes": []
@@ -1283,6 +1733,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [
     {
      "name": "Jalen Davis",
@@ -1372,6 +1848,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "1.5 to 2",
+    "record": [
+     44,
+     40
+    ],
+    "n": 84,
+    "pct": 52.4,
+    "ci_lo": 41.8,
+    "ci_hi": 62.7,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [
     {
      "name": "Henry To'oTo'o",
@@ -1479,6 +1981,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [
     {
      "name": "Brian Burns",
@@ -1581,6 +2109,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "1 to 1.5",
+    "record": [
+     99,
+     114
+    ],
+    "n": 213,
+    "pct": 46.5,
+    "ci_lo": 39.9,
+    "ci_hi": 53.2,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [
     {
      "name": "Landon Dickerson",
@@ -1676,6 +2230,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [],
    "injuries_away": [
     {
@@ -1772,6 +2352,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "1 to 1.5",
+    "record": [
+     104,
+     100
+    ],
+    "n": 204,
+    "pct": 51.0,
+    "ci_lo": 44.2,
+    "ci_hi": 57.8,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [
     {
      "name": "Jordan Mason",
@@ -1883,6 +2489,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "1.5 to 2",
+    "record": [
+     44,
+     40
+    ],
+    "n": 84,
+    "pct": 52.4,
+    "ci_lo": 41.8,
+    "ci_hi": 62.7,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [],
    "injuries_away": [],
    "notes": [
@@ -1979,6 +2611,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [
     {
      "name": "Anthony Bradford",
@@ -2023,7 +2681,7 @@
    "over_prob": 50.0,
    "qb_home": "Brock Purdy",
    "qb_away": "Bo Nix",
-   "weather": null,
+   "weather": "92\u00b0F, wind 7 mph, 0% rain",
    "why_margin": [
     {
      "factor": "Pass rush vs protection",
@@ -2068,6 +2726,32 @@
      "pts": 0.2
     }
    ],
+   "hist_spread": {
+    "range": "0.5 to 1",
+    "record": [
+     305,
+     261
+    ],
+    "n": 566,
+    "pct": 53.9,
+    "ci_lo": 49.8,
+    "ci_hi": 58.0,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [
     {
      "name": "Demarcus Robinson",
@@ -2152,6 +2836,32 @@
      "pts": -0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0 to 0.5",
+    "record": [
+     570,
+     559
+    ],
+    "n": 1129,
+    "pct": 50.5,
+    "ci_lo": 47.6,
+    "ci_hi": 53.4,
+    "verdict": "unclear",
+    "note": "Can't tell apart from a coin flip"
+   },
    "injuries_home": [],
    "injuries_away": [
     {
@@ -2244,6 +2954,32 @@
      "pts": -0.2
     }
    ],
+   "hist_spread": {
+    "range": "0 to 0.5",
+    "record": [
+     542,
+     559
+    ],
+    "n": 1101,
+    "pct": 49.2,
+    "ci_lo": 46.3,
+    "ci_hi": 52.2,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
+   },
+   "hist_total": {
+    "range": "0.5 to 1",
+    "record": [
+     298,
+     264
+    ],
+    "n": 562,
+    "pct": 53.0,
+    "ci_lo": 48.9,
+    "ci_hi": 57.1,
+    "verdict": "unclear",
+    "note": "Above break-even, but could be luck"
+   },
    "injuries_home": [
     {
      "name": "Kelvin Banks Jr.",
@@ -4082,11 +4818,11 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 7.2,
-   "td_prob": 16.0,
+   "td_prob": 17.0,
    "fpts_med": 6.0,
    "fpts_range": [
-    1.1,
-    14.7
+    1.2,
+    14.9
    ],
    "targets": 3.8,
    "rec": 2.8,
@@ -4107,20 +4843,20 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 16.4,
-   "td_prob": 47.0,
-   "fpts_med": 15.0,
+   "td_prob": 48.0,
+   "fpts_med": 15.1,
    "fpts_range": [
     7.0,
-    27.0
+    26.9
    ],
    "carries": 17.0,
    "rush_yds": 80.0,
-   "rush_yds_med": 71.0,
+   "rush_yds_med": 72.0,
    "rush_yds_range": [
     37.0,
-    130.0
+    129.0
    ],
-   "rush_td": 0.55,
+   "rush_td": 0.56,
    "targets": 3.2,
    "rec": 2.4,
    "rec_yds": 19.0,
@@ -4141,10 +4877,10 @@
    "status": "",
    "fpts": 4.0,
    "td_prob": 10.0,
-   "fpts_med": 2.6,
+   "fpts_med": 2.7,
    "fpts_range": [
     0.1,
-    9.8
+    9.7
    ],
    "targets": 2.5,
    "rec": 1.6,
@@ -4189,11 +4925,11 @@
    "team": "CHI",
    "opp": "NYJ",
    "status": "",
-   "fpts": 9.8,
-   "td_prob": 27.0,
-   "fpts_med": 8.6,
+   "fpts": 9.9,
+   "td_prob": 28.0,
+   "fpts_med": 8.7,
    "fpts_range": [
-    2.2,
+    2.3,
     19.2
    ],
    "targets": 5.7,
@@ -4204,7 +4940,7 @@
     8.0,
     87.0
    ],
-   "rec_td": 0.31
+   "rec_td": 0.32
   },
   {
    "game_id": "2026_04_NYJ_CHI",
@@ -4215,20 +4951,20 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 10.0,
-   "td_prob": 35.0,
-   "fpts_med": 8.9,
+   "td_prob": 36.0,
+   "fpts_med": 9.0,
    "fpts_range": [
     3.2,
-    18.2
+    18.3
    ],
    "carries": 10.3,
    "rush_yds": 48.0,
    "rush_yds_med": 42.0,
    "rush_yds_range": [
     19.0,
-    85.0
+    86.0
    ],
-   "rush_td": 0.34,
+   "rush_td": 0.35,
    "targets": 1.9,
    "rec": 1.4,
    "rec_yds": 11.0,
@@ -4247,11 +4983,11 @@
    "team": "CHI",
    "opp": "NYJ",
    "status": "",
-   "fpts": 12.8,
-   "td_prob": 33.0,
-   "fpts_med": 11.5,
+   "fpts": 12.9,
+   "td_prob": 34.0,
+   "fpts_med": 11.7,
    "fpts_range": [
-    4.2,
+    4.1,
     22.9
    ],
    "carries": 0.7,
@@ -4270,7 +5006,7 @@
     15.0,
     107.0
    ],
-   "rec_td": 0.38
+   "rec_td": 0.39
   },
   {
    "game_id": "2026_04_NYJ_CHI",
@@ -4280,11 +5016,11 @@
    "team": "CHI",
    "opp": "NYJ",
    "status": "",
-   "fpts": 17.2,
+   "fpts": 17.3,
    "td_prob": 7.0,
-   "fpts_med": 16.4,
+   "fpts_med": 16.5,
    "fpts_range": [
-    8.5,
+    8.8,
     27.0
    ],
    "pass_att": 33.3,
@@ -4295,7 +5031,7 @@
     161.0,
     314.0
    ],
-   "pass_td": 1.52,
+   "pass_td": 1.55,
    "pass_int": 0.68,
    "carries": 4.0,
    "rush_yds": 26.0,
@@ -4314,7 +5050,7 @@
    "team": "NYJ",
    "opp": "CHI",
    "status": "",
-   "fpts": 13.5,
+   "fpts": 13.6,
    "td_prob": 25.0,
    "fpts_med": 12.5,
    "fpts_range": [
@@ -4340,11 +5076,11 @@
    "opp": "CHI",
    "status": "",
    "fpts": 4.5,
-   "td_prob": 13.0,
+   "td_prob": 12.0,
    "fpts_med": 3.1,
    "fpts_range": [
     0.1,
-    11.0
+    10.8
    ],
    "targets": 2.5,
    "rec": 1.9,
@@ -4364,21 +5100,21 @@
    "team": "NYJ",
    "opp": "CHI",
    "status": "",
-   "fpts": 17.5,
-   "td_prob": 47.0,
-   "fpts_med": 16.2,
+   "fpts": 17.6,
+   "td_prob": 48.0,
+   "fpts_med": 16.3,
    "fpts_range": [
-    7.8,
-    28.2
+    7.9,
+    28.3
    ],
    "carries": 17.5,
    "rush_yds": 76.0,
    "rush_yds_med": 69.0,
    "rush_yds_range": [
     38.0,
-    120.0
+    121.0
    ],
-   "rush_td": 0.52,
+   "rush_td": 0.53,
    "targets": 3.9,
    "rec": 3.2,
    "rec_yds": 28.0,
@@ -4398,11 +5134,11 @@
    "opp": "CHI",
    "status": "",
    "fpts": 5.0,
-   "td_prob": 8.0,
-   "fpts_med": 3.6,
+   "td_prob": 9.0,
+   "fpts_med": 3.7,
    "fpts_range": [
-    0.3,
-    11.2
+    0.4,
+    11.3
    ],
    "targets": 2.8,
    "rec": 2.0,
@@ -4412,7 +5148,7 @@
     1.0,
     55.0
    ],
-   "rec_td": 0.08
+   "rec_td": 0.09
   },
   {
    "game_id": "2026_04_NYJ_CHI",
@@ -4422,12 +5158,12 @@
    "team": "NYJ",
    "opp": "CHI",
    "status": "",
-   "fpts": 5.5,
-   "td_prob": 29.0,
-   "fpts_med": 4.0,
+   "fpts": 5.6,
+   "td_prob": 30.0,
+   "fpts_med": 4.1,
    "fpts_range": [
-    0.8,
-    12.3
+    0.7,
+    12.4
    ],
    "carries": 4.0,
    "rush_yds": 17.0,
@@ -4436,7 +5172,7 @@
     3.0,
     35.0
    ],
-   "rush_td": 0.16,
+   "rush_td": 0.17,
    "targets": 1.3,
    "rec": 1.0,
    "rec_yds": 8.0,
@@ -4460,7 +5196,7 @@
    "fpts_med": 7.4,
    "fpts_range": [
     1.9,
-    16.8
+    16.9
    ],
    "targets": 5.4,
    "rec": 3.0,
@@ -4470,7 +5206,7 @@
     8.0,
     87.0
    ],
-   "rec_td": 0.22
+   "rec_td": 0.23
   },
   {
    "game_id": "2026_04_NYJ_CHI",
@@ -4480,12 +5216,12 @@
    "team": "NYJ",
    "opp": "CHI",
    "status": "",
-   "fpts": 4.1,
+   "fpts": 4.2,
    "td_prob": 10.0,
    "fpts_med": 2.7,
    "fpts_range": [
     0.1,
-    10.2
+    10.3
    ],
    "targets": 2.6,
    "rec": 1.8,
@@ -4530,12 +5266,12 @@
    "team": "NYJ",
    "opp": "CHI",
    "status": "",
-   "fpts": 13.8,
+   "fpts": 14.0,
    "td_prob": 1.0,
    "fpts_med": 13.2,
    "fpts_range": [
-    6.4,
-    22.5
+    6.3,
+    22.8
    ],
    "pass_att": 33.1,
    "pass_cmp": 21.4,
@@ -4545,13 +5281,13 @@
     162.0,
     314.0
    ],
-   "pass_td": 1.25,
+   "pass_td": 1.29,
    "pass_int": 0.85,
    "carries": 1.9,
    "rush_yds": 12.0,
    "rush_yds_med": 9.0,
    "rush_yds_range": [
-    3.0,
+    2.0,
     24.0
    ],
    "rush_td": 0.01
