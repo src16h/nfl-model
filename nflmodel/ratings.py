@@ -86,6 +86,9 @@ class Context:
     pass_td_share: pd.Series
     team_db_epa: pd.Series = field(default=None)
     scheme: dict = field(default=None)
+    press_off: pd.Series = field(default=None)   # pressure allowed per dropback
+    press_def: pd.Series = field(default=None)   # pressure generated per dropback
+    lg_press: float = 0.15
 
 
 def _wmean_by(df, key, val, w):
@@ -161,6 +164,14 @@ def build_context(pbp_all: pd.DataFrame, schedules: pd.DataFrame,
     v, ww = _wmean_by(td, "posteam", td["is_pass"].to_numpy(dtype=float), wtd)
     pass_td_share = pd.Series(shrink(v, ww, C.LEAGUE_PASS_TD_SHARE, 12), index=v.index)
 
+    # ---- pass rush vs protection (sack or QB hit per dropback) ----
+    pr_flag = ((db["sack"] == 1) | (db.get("qb_hit", 0) == 1)).astype(float).to_numpy()
+    lg_press = float(np.average(pr_flag, weights=np.maximum(wdb, 1e-9))) if len(db) else 0.15
+    v, ww = _wmean_by(db, "posteam", pr_flag, wdb)
+    press_off = pd.Series(shrink(v, ww, lg_press, 250), index=v.index).reindex(teams).fillna(lg_press)
+    v, ww = _wmean_by(db, "defteam", pr_flag, wdb)
+    press_def = pd.Series(shrink(v, ww, lg_press, 250), index=v.index).reindex(teams).fillna(lg_press)
+
     # ---- team EPA per dropback (baseline for QB changes) ----
     v, ww = _wmean_by(db, "posteam", db["epa"].to_numpy(dtype=float), wdb)
     team_db_epa = (v / ww.replace(0, np.nan)).reindex(teams)
@@ -175,7 +186,8 @@ def build_context(pbp_all: pd.DataFrame, schedules: pd.DataFrame,
     return Context(season, week, teams, r_all, r_pas, r_run, lg_plays, lg_pts, lg_pass_rate,
                    off_pace, def_pace, proe, sack_off, sack_def, lg_sack,
                    fill(def_ypa_mult, 1.0), fill(def_cmp_mult, 1.0), fill(def_ypc_mult, 1.0),
-                   fill(pass_td_share, C.LEAGUE_PASS_TD_SHARE), team_db_epa)
+                   fill(pass_td_share, C.LEAGUE_PASS_TD_SHARE), team_db_epa,
+                   press_off=press_off, press_def=press_def, lg_press=lg_press)
 
 
 def team_pass_rate(ctx: Context, team: str) -> float:

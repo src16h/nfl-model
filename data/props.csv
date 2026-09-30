@@ -1,0 +1,16 @@
+# ============================================================
+# PROP LINES (edit this file in your browser on GitHub)
+# Copy lines from your sportsbook. One prop per row.
+# Lines starting with # are ignored. Odds are optional.
+#
+# stat options:
+#   pass_yds, pass_tds, completions, interceptions,
+#   rush_yds, carries, rec, rec_yds, rush_rec_yds,
+#   anytime_td (line not needed), fpts
+#
+# team is optional (helps if two players share a name)
+# Example (remove the # to use):
+# Patrick Mahomes,KC,pass_yds,262.5,-115,-105
+# Travis Kelce,KC,rec_yds,58.5,-110,-110
+# ============================================================
+player,team,stat,line,over_odds,under_odds

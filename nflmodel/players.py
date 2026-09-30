@@ -7,12 +7,14 @@ x efficiency    (catch rate, yards per target/carry), pulled toward averages
 x opponent      (yards and completion rate the defense allows)
 = projection    then ranges from a skewed (gamma) distribution
 """
+import zlib
 import numpy as np
 import pandas as pd
 from scipy import stats
 
 from . import config as C
 from .util import shrink, fnum
+from .propsim import simulate_team, quantiles
 
 
 def _prior(stat, pos):
@@ -133,10 +135,20 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb) -> list[dict]:
     else:
         team_yds, team_cmp = pass_att * ypa, pass_att * cmp_rate
 
+    sm, sk = C.PRIORS["qb_scramble_ypa"]
+    scr_ypa = float(shrink(qrow.get("scr_yds", 0), qrow.get("scr_n", 0), sm, sk)) if qrow is not None else sm
+
+    # correlated simulations (before the QB row is merged)
+    sims = {}
+    if len(df):
+        seed = zlib.crc32(f"{game['game_id']}{team}".encode())
+        sims = simulate_team(df, qb_pid, pass_tds, rush_tds, pass_att * int_rate,
+                             scrambles, scrambles * scr_ypa, seed=seed)
+        # simulated passing volume follows receivers; keep the mean consistent
+        team_cmp = float(df["rec"].sum())
+
     # the QB row
     if qb_pid is not None:
-        sm, sk = C.PRIORS["qb_scramble_ypa"]
-        scr_ypa = float(shrink(qrow.get("scr_yds", 0), qrow.get("scr_n", 0), sm, sk)) if qrow is not None else sm
         existing = df[df["pid"] == qb_pid] if len(df) else df
         base = existing.iloc[0].to_dict() if len(existing) else {
             "pid": qb_pid, "name": qb.get("name"), "pos": "QB", "team": team, "opp": opp,
@@ -161,28 +173,39 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb) -> list[dict]:
 
     keep = (df["pos"] == "QB") | (df["tgt_share"] >= C.MIN_TARGET_SHARE) | (df["car_share"] >= C.MIN_CARRY_SHARE)
     df = df[keep]
-    return [_finish(r, game["game_id"]) for _, r in df.iterrows()]
+    rows = [_finish(r, game["game_id"], sims.get(r["pid"])) for _, r in df.iterrows()]
+    return rows, {(game["game_id"], pid): v for pid, v in sims.items()}
 
 
-def _finish(r, game_id) -> dict:
+def _rng(sim, key, mean, cv):
+    if sim is not None and key in sim:
+        return quantiles(sim[key])
+    return _gamma_range(mean, cv)
+
+
+def _finish(r, game_id, sim=None) -> dict:
+    tdp = float(sim["anytime_td"].mean()) if sim is not None else r["td_prob"]
     d = {"game_id": game_id, "pid": r["pid"], "name": r["name"], "pos": r["pos"],
          "team": r["team"], "opp": r["opp"], "status": r["status"],
-         "fpts": fnum(r["fpts_ppr"]), "td_prob": fnum(r["td_prob"] * 100, 0)}
+         "fpts": fnum(r["fpts_ppr"]), "td_prob": fnum(tdp * 100, 0)}
+    if sim is not None:
+        med, lo, hi = quantiles(sim["fpts"])
+        d.update({"fpts_med": fnum(med), "fpts_range": [fnum(lo), fnum(hi)]})
     if r["pos"] == "QB":
-        med, lo, hi = _gamma_range(r["pass_yds"], C.PASS_YDS_CV)
+        med, lo, hi = _rng(sim, "pass_yds", r["pass_yds"], C.PASS_YDS_CV)
         d.update({"pass_att": fnum(r["pass_att"]), "pass_cmp": fnum(r["pass_cmp"]),
                   "pass_yds": fnum(r["pass_yds"], 0), "pass_yds_med": fnum(med, 0),
                   "pass_yds_range": [fnum(lo, 0), fnum(hi, 0)],
                   "pass_td": fnum(r["pass_td"], 2), "pass_int": fnum(r["pass_int"], 2)})
     if r["carries"] >= 0.5:
         cv = float(np.clip(0.85 - 0.004 * r["rush_yds"], 0.45, 0.95))
-        med, lo, hi = _gamma_range(r["rush_yds"], cv)
+        med, lo, hi = _rng(sim, "rush_yds", r["rush_yds"], cv)
         d.update({"carries": fnum(r["carries"]), "rush_yds": fnum(r["rush_yds"], 0),
                   "rush_yds_med": fnum(med, 0), "rush_yds_range": [fnum(lo, 0), fnum(hi, 0)],
                   "rush_td": fnum(r["rush_td"], 2)})
     if r["targets"] >= 0.5:
         cv = float(np.clip(0.95 - 0.004 * r["rec_yds"], 0.55, 0.95))
-        med, lo, hi = _gamma_range(r["rec_yds"], cv)
+        med, lo, hi = _rng(sim, "rec_yds", r["rec_yds"], cv)
         d.update({"targets": fnum(r["targets"]), "rec": fnum(r["rec"]),
                   "rec_yds": fnum(r["rec_yds"], 0), "rec_yds_med": fnum(med, 0),
                   "rec_yds_range": [fnum(lo, 0), fnum(hi, 0)], "rec_td": fnum(r["rec_td"], 2)})

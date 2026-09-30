@@ -97,6 +97,14 @@ tr.detail td{background:var(--panel2);text-align:left;color:var(--muted);font-si
 .chip{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px}
 .chip.ok::before{content:"● ";color:var(--turf)}
 .chip.bad::before{content:"● ";color:var(--warn)}
+.why{width:100%;color:var(--muted)}
+.why b{color:var(--ink);font-weight:600}
+.pairs{display:grid;gap:8px;margin-top:8px}
+.pair{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--turf);border-radius:4px;padding:8px 12px;font-size:15px}
+.pair span{color:var(--muted)}
+td.lean-o{color:var(--turf);font-weight:600}
+td.lean-u{color:var(--led);font-weight:600}
+td.err{color:var(--muted);font-style:italic}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -110,6 +118,7 @@ tr.detail td{background:var(--panel2);text-align:left;color:var(--muted);font-si
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="games" aria-selected="true">Games</button>
     <button role="tab" data-tab="players" aria-selected="false">Player projections</button>
+    <button role="tab" data-tab="props" aria-selected="false">Props</button>
     <button role="tab" data-tab="teams" aria-selected="false">Power ratings</button>
     <button role="tab" data-tab="record" aria-selected="false">Track record</button>
   </nav>
@@ -128,6 +137,7 @@ tr.detail td{background:var(--panel2);text-align:left;color:var(--muted);font-si
     </div>
     <div class="tablewrap"><table id="ptable"></table></div>
   </section>
+  <section id="props" role="tabpanel" hidden></section>
   <section id="teams" role="tabpanel" hidden>
     <p class="hint">Points per game better (+) or worse (−) than an average team, adjusted for opponents. Net = offense + defense.</p>
     <div class="tablewrap"><table id="ttable"></table></div>
@@ -160,7 +170,7 @@ function render() {
   $("#sub").textContent = D.week ? `${D.season} season, week ${D.week}` : `${D.season} season`;
   $("#updated").textContent = "Updated " + when.toLocaleString([], {weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit"});
   if (!D.games) { $("#games").innerHTML = `<div class="msg">${esc(D.message || "No games to show.")}</div>`; renderRecord(); return; }
-  renderGames(); initPlayers(); renderPlayers(); renderTeams(); renderRecord();
+  renderGames(); initPlayers(); renderPlayers(); renderProps(); renderTeams(); renderRecord();
 }
 
 function renderGames() {
@@ -199,6 +209,9 @@ function renderGames() {
         <div class="cell">Model total<strong>${n(g.total)}</strong></div>
         <div class="cell">Vegas total<strong>${g.market_total == null ? "not posted" : n(g.market_total)}</strong>${totFlag}</div></div>
       <div class="gfoot">${st}<span class="qb">QBs: ${esc(g.qb_away)} / ${esc(g.qb_home)}</span>
+        ${g.weather ? `<span>${esc(g.weather)}</span>` : ""}
+        ${(g.why_margin || []).length ? `<span class="why"><b>Why this line:</b> ${g.why_margin.map(w => `${esc(w.factor)} ${w.pts > 0 ? "favors " + esc(g.home) : "favors " + esc(g.away)} ${n(Math.abs(w.pts))}`).join(", ")}</span>` : ""}
+        ${(g.why_total || []).length ? `<span class="why"><b>Why this total:</b> ${g.why_total.map(w => `${esc(w.factor)} ${sgn(w.pts)}`).join(", ")}</span>` : ""}
         ${(g.notes || []).map(x => `<span>${esc(x)}</span>`).join("")}
         ${inj.length ? `<span class="inj">Key injuries: ${esc(inj.join(", "))}</span>` : ""}</div>
     </article>`;
@@ -240,6 +253,7 @@ function renderPlayers() {
       if (p.pass_yds != null) parts.push(`Passing yards: median <b>${n(p.pass_yds_med,0)}</b>, likely range ${n(p.pass_yds_range[0],0)} to ${n(p.pass_yds_range[1],0)}. Completions ${n(p.pass_cmp)} of ${n(p.pass_att)}.`);
       if (p.rush_yds != null) parts.push(`Rushing yards: median <b>${n(p.rush_yds_med,0)}</b>, likely range ${n(p.rush_yds_range[0],0)} to ${n(p.rush_yds_range[1],0)}. Rush TDs ${n(p.rush_td,2)}.`);
       if (p.rec_yds != null) parts.push(`Receiving yards: median <b>${n(p.rec_yds_med,0)}</b>, likely range ${n(p.rec_yds_range[0],0)} to ${n(p.rec_yds_range[1],0)}. Rec TDs ${n(p.rec_td,2)}.`);
+      if (p.fpts_med != null) parts.push(`PPR points: median <b>${n(p.fpts_med)}</b>, likely range ${n(p.fpts_range[0])} to ${n(p.fpts_range[1])}.`);
       h += `<tr class="detail"><td colspan="${PCOLS.length}">${parts.join("<br>")}<br>Range covers 80% of simulated outcomes. For props, compare the line to the median, not the average.</td></tr>`;
     }
   }
@@ -265,10 +279,29 @@ function renderTeams() {
   tb.querySelectorAll("th").forEach(th => th.onclick = () => { const c = th.dataset.k; tState.dir = tState.sort === c ? -tState.dir : (c === "team" ? 1 : -1); tState.sort = c; renderTeams(); });
 }
 
+function renderProps() {
+  const P = D.props || {props: [], pairs: []};
+  let h = `<h2>Your prop lines</h2><p class="hint">Add lines from your sportsbook to <b>data/props.csv</b> on GitHub (instructions are inside the file), then re-run the model. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig.</p>`;
+  if (!P.props.length) {
+    h += `<div class="msg">No props entered yet. Open data/props.csv in your GitHub repository, click the pencil icon, add rows like <b>Patrick Mahomes,KC,pass_yds,262.5,-115,-105</b>, commit, then run the workflow.</div>`;
+  } else {
+    h += `<div class="tablewrap"><table><thead><tr><th scope="col">Player</th><th scope="col">Prop</th><th scope="col">Line</th><th scope="col">Model median</th><th scope="col">Model over %</th><th scope="col">Book over %</th><th scope="col">Edge</th><th scope="col">Lean</th></tr></thead><tbody>`;
+    for (const p of P.props) {
+      if (p.error) { h += `<tr><td>${esc(p.player)}</td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "")}</td><td class="err" colspan="5">${esc(p.error)}</td></tr>`; continue; }
+      const cls = p.lean === "Over" ? "lean-o" : p.lean === "Under" ? "lean-u" : "";
+      h += `<tr><td><span class="pname">${esc(p.player)}</span><span class="pos">${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}</span></td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "–")}</td><td>${n(p.median)}</td><td>${n(p.model_over)}%</td><td>${n(p.book_over)}%</td><td>${sgn(p.edge)}%</td><td class="${cls}">${esc(p.lean || "")}</td></tr>`;
+    }
+    h += `</tbody></table></div>`;
+  }
+  h += `<h2>Same-game pairs</h2><p class="hint">Leans on the same team that tend to hit together. "Lift" is how much more often both hit than if they were unrelated. Sportsbooks price some of this into parlays, so treat it as research.</p>`;
+  h += (P.pairs || []).length ? `<div class="pairs">${P.pairs.map(x => `<div class="pair"><b>${esc(x.legs[0])}</b> + <b>${esc(x.legs[1])}</b><br><span>Both hit ${n(x.joint)}% of sims vs ${n(x.if_independent)}% if unrelated (+${n(x.lift,0)}% lift)</span></div>`).join("")}</div>` : `<p class="hint">No correlated pairs among this week's leans.</p>`;
+  $("#props").innerHTML = h;
+}
+
 function rec(r) { if (!r || !(r[0] + r[1])) return "–"; return `${r[0]}–${r[1]}`; }
 function pct(r) { if (!r || !(r[0] + r[1])) return ""; return ` (${(100 * r[0] / (r[0] + r[1])).toFixed(1)}%)`; }
 function renderRecord() {
-  const L = D.live_record || {}, B = D.backtest || {}, C = D.calibration || {};
+  const L = D.live_record || {}, B = D.backtest || {}, M = D.model || {}, DB = M.deep_backtest;
   let h = `<h2>This season, published picks</h2><p class="hint">Graded against the Vegas line saved at the time of each pick. Beating 52.4% against the spread is the break-even point at standard odds.</p>
   <div class="stats">
     <div class="stat"><strong>${rec(L.ats_leans)}</strong><span>Spread leans${pct(L.ats_leans)}</span></div>
@@ -277,17 +310,32 @@ function renderRecord() {
     <div class="stat"><strong>${rec(L.straight_up)}</strong><span>Winners picked${pct(L.straight_up)}</span></div>
     <div class="stat"><strong>${n(L.model_mae)} / ${n(L.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas (lower wins)</span></div>
   </div>`;
-  if (B.games) {
-    h += `<h2>Backtest</h2><p class="hint">${B.games} past games (${(B.seasons || []).join(", ")}), each predicted using only data available before kickoff.</p>
+  if (DB && DB.overall) {
+    const O = DB.overall;
+    h += `<h2>Deep backtest</h2><p class="hint">Walk-forward test: each season predicted by a model trained only on earlier seasons. ${O.games} games. This is the honest measure of the model.</p>
+    <div class="stats">
+      <div class="stat"><strong>${rec(O.ats_leans)}</strong><span>Spread leans${pct(O.ats_leans)}</span></div>
+      <div class="stat"><strong>${rec(O.totals_leans)}</strong><span>Total leans${pct(O.totals_leans)}</span></div>
+      <div class="stat"><strong>${rec(O.ats_all)}</strong><span>Every game vs spread${pct(O.ats_all)}</span></div>
+      <div class="stat"><strong>${n(O.model_mae)} / ${n(O.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas</span></div>
+      <div class="stat"><strong>${n(O.model_mae_total)} / ${n(O.vegas_mae_total)}</strong><span>Avg miss on total, model / Vegas</span></div>
+    </div>
+    <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread leans</th><th scope="col">Total leans</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
+    ${DB.by_season.map(r => `<tr><td>${r.season}</td><td>${r.games}</td><td>${rec(r.ats_leans)}${pct(r.ats_leans)}</td><td>${rec(r.totals_leans)}${pct(r.totals_leans)}</td><td>${rec(r.ats_all)}${pct(r.ats_all)}</td><td>${n(r.model_mae)}</td><td>${n(r.vegas_mae)}</td></tr>`).join("")}
+    </tbody></table></div>`;
+  } else if (B.games) {
+    h += `<h2>Backtest</h2><p class="hint">${B.games} recent games. Run the "Train model" workflow once to unlock the deep, multi-season backtest.</p>
     <div class="stats">
       <div class="stat"><strong>${rec(B.ats_leans)}</strong><span>Spread leans${pct(B.ats_leans)}</span></div>
       <div class="stat"><strong>${rec(B.totals_leans)}</strong><span>Total leans${pct(B.totals_leans)}</span></div>
       <div class="stat"><strong>${n(B.model_mae_margin)} / ${n(B.vegas_mae_margin)}</strong><span>Avg miss on margin, model / Vegas</span></div>
-      <div class="stat"><strong>${n(B.model_mae_total)} / ${n(B.vegas_mae_total)}</strong><span>Avg miss on total, model / Vegas</span></div>
-      <div class="stat"><strong>${B.straight_up_pct == null ? "–" : (100 * B.straight_up_pct).toFixed(1) + "%"}</strong><span>Winners picked</span></div>
     </div>`;
   }
-  h += `<h2>Model settings this week</h2><p class="hint">Home field ${n(C.hfa,2)} pts. Margin scale ${n(C.m_scale,2)}. Total shift ${sgn(C.t_shift,1)}. Coverage matchups ${D.scheme_enabled ? "on" : "off (data not published)"}. Vegas blend ${n((D.settings||{}).market_weight*100,0)}%</p>
+  if ((M.weights_margin || []).length) {
+    h += `<h2>What the model learned</h2><p class="hint">Points of spread moved by a typical swing (one standard deviation) in each factor. Learned from ${M.history_games} games (${(M.seasons || [])[0]} to now). Machine-learning share: ${n((DB?.gbm_share_margin || 0) * 100, 0)}% for spreads, ${n((DB?.gbm_share_total || 0) * 100, 0)}% for totals.</p>
+    <div class="stats">${M.weights_margin.slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;
+  }
+  h += `<h2>Model settings this week</h2><p class="hint">Engine: ${esc(M.engine || "–")}. Coverage matchups ${D.scheme_enabled ? "on" : "off (data not published)"}. Vegas blend ${n((D.settings||{}).market_weight*100,0)}%.${M.deep_history ? "" : " Deep history not built yet: run the Train model workflow."}</p>
   <h2>Data sources</h2><div class="chips">${Object.entries(D.data_status || {}).map(([k, v]) => `<span class="chip ${v.ok ? "ok" : "bad"}" title="${esc(v.note)}">${esc(k.replaceAll("_", " "))}</span>`).join("")}</div>
   <p class="hint" style="margin-top:10px">A red source means that feed was unavailable this run. The model keeps working without it and fills the gap with defaults.</p>`;
   $("#record").innerHTML = h;

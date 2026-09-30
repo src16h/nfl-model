@@ -177,3 +177,47 @@ def simulate(mu_home, mu_away, spread_line=None, total_line=None, seed=0):
         dec = t != total_line
         out["over"] = float((t[dec] > total_line).mean()) if dec.any() else 0.5
     return out
+
+
+# ---------------------------------------------------------------------
+# Key numbers: probabilities from real NFL final scores
+# ---------------------------------------------------------------------
+class KeyNumbers:
+    """NFL margins pile up on 3 and 7. Instead of a smooth curve, we look at
+    real games that Vegas priced close to our projection and count outcomes."""
+
+    def __init__(self, schedules):
+        s = schedules[schedules["home_score"].notna() & (schedules["season"] >= C.KEYNUM_SINCE)]
+        s = s.dropna(subset=["spread_line", "total_line"])
+        self.L = s["spread_line"].to_numpy(float)
+        self.M = (s["home_score"] - s["away_score"]).to_numpy(float)
+        self.TL = s["total_line"].to_numpy(float)
+        self.T = (s["home_score"] + s["away_score"]).to_numpy(float)
+        self.ok = len(s) >= 500
+        log.info(f"key numbers: {len(s)} games, {'on' if self.ok else 'off'}")
+
+    def _near(self, arr_line, arr_out, x):
+        for win in (1.0, 1.5, 2.5, 3.5):
+            sel = np.abs(arr_line - x) <= win
+            if sel.sum() >= C.KEYNUM_MIN_GAMES:
+                # shift by the small gap so the center matches our number exactly
+                return np.round(arr_out[sel] + (x - arr_line[sel]))
+        return None
+
+    def probs(self, margin, total, spread_line=None, total_line=None):
+        if not self.ok:
+            return None
+        m = self._near(self.L, self.M, margin)
+        t = self._near(self.TL, self.T, total)
+        if m is None or t is None:
+            return None
+        out = {"win_home": float((m > 0).mean() + 0.5 * (m == 0).mean()),
+               "margin_p10": float(np.percentile(m, 10)), "margin_p90": float(np.percentile(m, 90))}
+        if spread_line is not None and np.isfinite(spread_line):
+            dec = m != spread_line
+            out["cover_home"] = float((m[dec] > spread_line).mean())
+            out["push"] = float((~dec).mean())
+        if total_line is not None and np.isfinite(total_line):
+            dec = t != total_line
+            out["over"] = float((t[dec] > total_line).mean())
+        return out

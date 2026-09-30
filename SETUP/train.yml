@@ -1,0 +1,39 @@
+name: Train model (deep history)
+
+on:
+  schedule:
+    - cron: "0 9 1 3,8 *"   # March 1 and August 1 (after each season, before the next)
+  workflow_dispatch:         # adds a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-model
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Build deep history
+        run: python train_history.py
+
+      - name: Save history
+        run: |
+          git config user.name "nfl-model-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/training_rows.csv
+          git diff --staged --quiet || git commit -m "Deep history rebuilt $(date -u +'%Y-%m-%d')"
+          git pull --rebase
+          git push

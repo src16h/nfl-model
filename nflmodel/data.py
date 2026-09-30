@@ -20,7 +20,7 @@ PBP_COLS = [
     "down", "qtr", "half_seconds_remaining", "yardline_100", "yards_gained",
     "passer_player_id", "passer_player_name", "rusher_player_id", "rusher_player_name",
     "receiver_player_id", "receiver_player_name", "touchdown", "pass_touchdown",
-    "rush_touchdown", "td_team", "xpass", "air_yards", "two_point_attempt",
+    "rush_touchdown", "td_team", "xpass", "air_yards", "two_point_attempt", "qb_hit",
 ]
 
 
@@ -69,6 +69,28 @@ def _per_season(fn, seasons, cols=None):
     return out, "; ".join(errors)
 
 
+FLAG_COLS = ["pass", "rush", "qb_dropback", "qb_scramble", "sack", "pass_attempt",
+             "complete_pass", "interception", "touchdown", "pass_touchdown",
+             "rush_touchdown", "two_point_attempt", "qb_hit"]
+
+
+def clean_pbp(df):
+    for c in FLAG_COLS:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0)
+    if "qb_hit" not in df.columns:
+        df["qb_hit"] = 0
+    df["season"] = df["season"].astype(int)
+    df["week"] = df["week"].astype(int)
+    return df
+
+
+def load_pbp_season(season: int):
+    """One season of play-by-play (used by the history builder)."""
+    df = _pd(_select(nfl.load_pbp([season]), PBP_COLS))
+    return clean_pbp(df)
+
+
 def load_all(season: int) -> Bundle:
     if nfl is None:
         raise RuntimeError("nflreadpy is not installed")
@@ -79,16 +101,11 @@ def load_all(season: int) -> Bundle:
     b.mark("play_by_play", b.pbp is not None, 0 if b.pbp is None else len(b.pbp), err)
     if b.pbp is None:
         raise RuntimeError("Play-by-play data unavailable: " + err)
-    for c in ["pass", "rush", "qb_dropback", "qb_scramble", "sack", "pass_attempt",
-              "complete_pass", "interception", "touchdown", "pass_touchdown",
-              "rush_touchdown", "two_point_attempt"]:
-        if c in b.pbp.columns:
-            b.pbp[c] = pd.to_numeric(b.pbp[c], errors="coerce").fillna(0)
-    b.pbp["season"] = b.pbp["season"].astype(int)
-    b.pbp["week"] = b.pbp["week"].astype(int)
+    b.pbp = clean_pbp(b.pbp)
 
     try:
-        b.schedules = _pd(nfl.load_schedules(seasons))
+        from . import config as C
+        b.schedules = _pd(nfl.load_schedules(list(range(C.TRAIN_START_SEASON - 4, season + 1))))
         b.mark("schedules", True, len(b.schedules))
     except Exception as e:  # noqa: BLE001
         b.mark("schedules", False, 0, str(e))

@@ -14,7 +14,35 @@ import numpy as np
 import pandas as pd
 
 from . import config as C
-from .util import shrink
+from .util import shrink, play_weights
+
+
+def qb_weeks_fast(pbp_before: pd.DataFrame, season: int, week: int) -> pd.DataFrame:
+    """Dropbacks and EPA per QB per team-week, straight from play-by-play."""
+    p = pbp_before[(pbp_before["qb_dropback"] == 1) & pbp_before["posteam"].notna()]
+    pid = np.where(p["qb_scramble"] == 1, p["rusher_player_id"], p["passer_player_id"])
+    d = pd.DataFrame({"season": p["season"].to_numpy(), "week": p["week"].to_numpy(),
+                      "posteam": p["posteam"].to_numpy(), "pid": pid,
+                      "epa": p["epa"].fillna(0).to_numpy()}).dropna(subset=["pid"])
+    qw = d.groupby(["season", "week", "posteam", "pid"]).agg(
+        dropbacks=("epa", "size"), epa=("epa", "sum")).reset_index()
+    qw["rw"] = play_weights(qw, season, week, garbage=False)
+    return qw
+
+
+def incumbent(qw: pd.DataFrame, team: str):
+    """The QB the team ratings are mostly built on."""
+    tw = qw[qw["posteam"] == team]
+    s = (tw["dropbacks"] * tw["rw"]).groupby(tw["pid"]).sum()
+    return s.idxmax() if len(s) and s.max() > 0 else None
+
+
+def adj_value(qual: pd.DataFrame, expected, inc, dropbacks: float) -> float:
+    if expected is None or expected == inc:
+        return 0.0
+    q = lambda pid: float(qual.loc[pid, "epa_db"]) if pid is not None and pid in qual.index else C.QB_REPLACEMENT_EPA
+    v = (q(expected) - q(inc)) * dropbacks * C.QB_POINTS_SCALE
+    return float(np.clip(v, -C.QB_ADJ_CAP, C.QB_ADJ_CAP))
 
 
 def qb_quality(qb_weeks: pd.DataFrame, season: int) -> pd.DataFrame:
@@ -95,17 +123,11 @@ def expected_qbs(teams, u: dict, roster, inj_table, overrides, recent_out, seaso
         if expected is None and not why:
             why = "no known QB available"
 
-        # incumbent = QB the ratings are built on (most recency-weighted dropbacks)
-        tw2 = tw.assign(wd=tw["dropbacks"] * tw["rw"])
-        inc_s = tw2.groupby("pid")["wd"].sum()
-        incumbent = inc_s.idxmax() if len(inc_s) and inc_s.max() > 0 else expected
-
+        inc = incumbent(qw, team)
+        inc = expected if inc is None else inc
         dropbacks = ctx.lg_plays * ctx.lg_pass_rate if ctx is not None else 36.0
-        adj = 0.0
-        if expected != incumbent:
-            adj = (quality(expected) - quality(incumbent)) * dropbacks * C.QB_POINTS_SCALE
-            adj = float(np.clip(adj, -C.QB_ADJ_CAP, C.QB_ADJ_CAP))
+        adj = adj_value(qual, expected, inc, dropbacks)
         out[team] = {"pid": expected, "name": nm(expected), "why": why,
-                     "incumbent": nm(incumbent), "adj": adj,
+                     "incumbent": nm(inc), "adj": adj,
                      "epa_db": quality(expected)}
     return out

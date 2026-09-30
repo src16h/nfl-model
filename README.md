@@ -1,4 +1,6 @@
-# The Board: NFL prediction model
+# The Board: NFL prediction model (v2)
+
+**v2 adds:** a 14-season deep backtest, a machine-learning ensemble, Elo, live weather, travel and body clock, pass rush vs protection, key-number (3 and 7) odds, correlated player simulations, and a Props tab. See **UPGRADE-TO-V2.md** if you're upgrading.
 
 A Vegas-style NFL model that updates itself 4 times a week and publishes a private-link dashboard with:
 
@@ -56,6 +58,13 @@ Bookmark it. On your phone, use "Add to Home Screen".
 
 ---
 
+## One more workflow: Train model (deep history)
+
+The weekly model learns from a deep history file that a second workflow builds.
+- Add it the same way as step 4, but name the file `.github/workflows/train.yml` and copy from `SETUP/train.yml`
+- Run it once from the Actions tab (takes 10 to 40 minutes)
+- It re-runs itself every March 1 and August 1
+
 ## Your weekly routine (optional, 2 minutes)
 
 The model runs by itself:
@@ -73,6 +82,8 @@ The model runs by itself:
 3. Commit, then run the workflow again from the Actions tab
 
 Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old lines each week.
+
+**Props:** edit `data/props.csv` the same way, adding lines from your sportsbook such as `Patrick Mahomes,KC,pass_yds,262.5,-115,-105`. The Props tab shows the model's chance, the book's chance (vig removed), and correlated same-game pairs.
 
 ---
 

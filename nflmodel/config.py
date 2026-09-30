@@ -87,3 +87,20 @@ DEF_SHRINK_K = 250           # plays before a defense's allowed stats are truste
 
 # Spread of outcomes for yardage ranges (coefficient of variation)
 PASS_YDS_CV = 0.27
+
+# ---------------------------------------------------------------
+# v2: HISTORY, ML ENSEMBLE, WEATHER, PROPS
+# ---------------------------------------------------------------
+TRAIN_START_SEASON = int(os.environ.get("TRAIN_START", 2012))  # first season in the deep backtest
+TRAIN_RECENCY = 0.88         # each older season counts 88% as much when training
+MIN_TRAIN_ROWS = 300         # below this, fall back to simple calibration
+GBM_BLEND_OPTIONS = [0.0, 0.25, 0.5]   # share of the machine-learning model, picked by backtest
+WALK_FORWARD_SEASONS = 8     # seasons graded in the deep backtest report
+
+KEYNUM_SINCE = 2015          # games used for real score patterns (after the extra-point rule change)
+KEYNUM_MIN_GAMES = 80
+
+PLAYER_SIMS = 10000          # simulated games per team for player stats
+K_REC = 8.0                  # lower = more week-to-week swing in who gets the yards
+K_RUSH = 10.0
+PROP_EDGE = 0.04             # flag a prop when the model differs from the book by 4%+
