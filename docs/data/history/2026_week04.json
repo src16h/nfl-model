@@ -655,7 +655,7 @@
    "over_prob": 67.0,
    "qb_home": "Baker Mayfield",
    "qb_away": "Jordan Love",
-   "weather": "92\u00b0F, wind 8 mph, 3% rain",
+   "weather": null,
    "why_margin": [
     {
      "factor": "Elo history",
@@ -1029,7 +1029,7 @@
    "over_prob": 41.0,
    "qb_home": "Bryce Young",
    "qb_away": "Jared Goff",
-   "weather": null,
+   "weather": "66\u00b0F, wind 7 mph, 56% rain",
    "why_margin": [
     {
      "factor": "Elo history",
