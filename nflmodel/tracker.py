@@ -69,14 +69,15 @@ def update_line_log(path, games, now):
         if rec.get("final"):
             continue
         anchored = g.get("lean_engine") == "anchored"
-        snap = {"ts": ts, "spread": sp, "total": to, "m": g.get("margin"), "t": g.get("total"),
+        snap = {"ts": ts, "src": g.get("line_src") or "feed", "spread": sp, "total": to,
+                "m": g.get("margin"), "t": g.get("total"),
                 "edge_s": g.get("edge_spread"), "edge_t": g.get("edge_total"),
                 "engine": g.get("lean_engine"),
                 "th_s": C.ANCHOR_LEAN_SPREAD if anchored else C.LEAN_SPREAD_EDGE,
                 "th_t": C.ANCHOR_LEAN_TOTAL if anchored else C.LEAN_TOTAL_EDGE}
         rec["last_seen"] = ts
         last = rec["snaps"][-1] if rec["snaps"] else None
-        if last and all(last.get(k) == snap[k] for k in ("spread", "total", "m", "t")):
+        if last and all(last.get(k) == snap[k] for k in ("src", "spread", "total", "m", "t")):
             continue
         snaps = rec["snaps"] + [snap]
         if len(snaps) > MAX_SNAPS:          # always keep the very first one
@@ -115,8 +116,15 @@ def line_summary(lg):
             fin = rec.get("final")
             if not fin or not rec.get("snaps"):
                 continue
-            first = rec["snaps"][0]
-            a, b, gap = first.get(lk), fin.get(lk), first.get(ek)
+            snaps = rec["snaps"]
+            ref = snaps[-1].get("src", "feed")                  # the source we last saw before kickoff
+            same = [x for x in snaps if x.get("src", "feed") == ref and x.get(lk) is not None]
+            if not same:
+                continue
+            first = same[0]
+            a, gap = first.get(lk), first.get(ek)
+            # live lines: our last saved live line is the closing proxy. Free feed: its final line.
+            b = same[-1].get(lk) if ref.startswith("live") else fin.get(lk)
             if a is None or b is None:
                 continue
             clv = float(np.sign(gap) * (b - a)) if gap else 0.0
@@ -141,6 +149,14 @@ def line_summary(lg):
 # ---------------------------------------------------------------------
 # PROPS
 # ---------------------------------------------------------------------
+def _float(v):
+    try:
+        x = float(v)
+        return x if np.isfinite(x) else None
+    except (TypeError, ValueError):
+        return None
+
+
 def _s(v):
     return "" if v is None or (isinstance(v, float) and np.isnan(v)) else str(v).strip()
 
@@ -181,17 +197,26 @@ def filter_stale(props: pd.DataFrame, path, week: int):
 
 
 def update_props_log(path, rows, season, week, now):
-    """Save every prop the model evaluated (pre-kickoff games only reach here)."""
+    """Save every prop the model evaluated (pre-kickoff games only reach here).
+    One record per player per prop type: if the line moves before kickoff, the record
+    follows it, so nothing is counted twice. The first line we saw is remembered."""
     lg = _load(path, {"props": {}})
     lg.setdefault("props", {})
     ts = now.isoformat(timespec="minutes")
+    index = {(v.get("game_id"), v.get("pid"), v.get("stat")): k for k, v in lg["props"].items()}
     for r in rows:
         if r.get("error") or r.get("model_over") is None or not r.get("pid"):
             continue
-        key = f"{r['game_id']}|{r['pid']}|{r['stat_key']}|{r.get('line')}"
-        old = lg["props"].get(key)
-        if old and old.get("result"):
-            continue  # graded results are final
+        trio = (r["game_id"], r["pid"], r["stat_key"])
+        old = None
+        if trio in index:
+            old = lg["props"].get(index[trio])
+            if old and old.get("result"):
+                continue  # graded results are final
+            lg["props"].pop(index[trio], None)
+        key = f"{r['game_id']}|{r['pid']}|{r['stat_key']}"
+        first_line = old.get("first_line", old.get("line")) if old else r.get("line")
+        first_lean = (old.get("first_lean", old.get("lean")) if old else r.get("lean"))
         lg["props"][key] = {
             "key": key, "season": season, "week": week, "game_id": r["game_id"], "pid": r["pid"],
             "player": r["player"], "team": r.get("team"), "opp": r.get("opp"), "pos": r.get("pos"),
@@ -199,7 +224,10 @@ def update_props_log(path, rows, season, week, now):
             "over_odds": r.get("over_odds"), "under_odds": r.get("under_odds"),
             "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
             "lean": r.get("lean"), "median": r.get("median"),
+            "source": r.get("source") or "manual", "book": r.get("book"),
+            "first_line": first_line, "first_lean": first_lean,
             "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None}
+        index[trio] = key
     _save(path, lg)
 
 
@@ -330,6 +358,23 @@ def prop_summary(lg):
         out["brier"] = {"n": len(both), "model": fnum(np.mean((m - y) ** 2), 4), "book": fnum(np.mean((b - y) ** 2), 4)}
     else:
         out["brier"] = None
+
+    # did prop lines move after our first look? (only possible when lines get refreshed)
+    mv = {"n": 0, "moved": 0, "toward": 0, "away": 0}
+    for r in props:
+        a, b = _float(r.get("first_line")), _float(r.get("line"))
+        if a is None or b is None or r.get("stat") == "anytime_td":
+            continue
+        mv["n"] += 1
+        if b != a:
+            mv["moved"] += 1
+            fl = r.get("first_lean")
+            if fl in ("Over", "Under"):
+                good = (b > a) if fl == "Over" else (b < a)
+                mv["toward" if good else "away"] += 1
+    out["line_moves"] = mv
+    out["sources"] = {"auto": sum(1 for r in graded if str(r.get("source", "")).startswith("auto")),
+                      "manual": sum(1 for r in graded if not str(r.get("source", "")).startswith("auto"))}
 
     recent = sorted(graded, key=lambda r: r["result"]["graded_at"], reverse=True)[:40]
     out["recent"] = [{"player": r["player"], "team": r["team"], "week": r["week"], "stat": r["stat"],

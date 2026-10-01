@@ -143,9 +143,13 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
         cands = by_name.get(norm_name(r["player"]), [])
         if "team" in r and isinstance(r.get("team"), str) and r["team"].strip():
             cands = [c for c in cands if c["team"] == r["team"].strip().upper()] or cands
+        hint = r.get("game_id")
+        if isinstance(hint, str) and hint:              # auto-loaded lines know their game
+            cands = [c for c in cands if c["game_id"] == hint] or cands
         clean = lambda v: None if v is None or (isinstance(v, float) and np.isnan(v)) or str(v).strip() == "" else str(v).strip()
         row = {"player": r["player"], "stat": r["stat"], "line": clean(r.get("line")),
-               "over_odds": clean(r.get("over_odds")), "under_odds": clean(r.get("under_odds"))}
+               "over_odds": clean(r.get("over_odds")), "under_odds": clean(r.get("under_odds")),
+               "source": clean(r.get("source")) or "manual", "book": clean(r.get("book"))}
         if stat is None or not cands:
             row["error"] = "stat not recognized" if stat is None else "player not in this week's projections"
             out.append(row)

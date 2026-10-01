@@ -111,3 +111,20 @@ PROP_EDGE = 0.04             # flag a prop when the model differs from the book 
 LEAN_ENGINE = "anchored"     # "anchored" (starts from Vegas) or "independent" (football data only)
 ANCHOR_LEAN_SPREAD = 1.0     # anchored engine: flag a spread lean at this many points from Vegas
 ANCHOR_LEAN_TOTAL = 1.5      # anchored engine: same, for totals
+
+# ---------------------------------------------------------------
+# v5: LIVE ODDS (The Odds API). Turns on when the ODDS_API_KEY secret exists.
+# ---------------------------------------------------------------
+ODDS_GAME_LINES_ON = True    # live spreads/totals on every run (about 2 credits)
+ODDS_PROPS_ON = True         # live player props (about 1 credit per market per game)
+# Which sportsbook to trust first. Each line uses the first book on this list that has it.
+ODDS_BOOKS = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "betrivers",
+              "fanatics", "hardrockbet", "bovada"]
+# Which prop types to load. Each one costs about 1 credit per game. Add more from
+# nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
+ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
+                     "player_receptions", "player_anytime_td"]
+ODDS_HOURS_AHEAD = 48        # only load props for games starting within this many hours
+ODDS_REFRESH_HOURS = 30      # don't reload a game's props more often than this (saves credits)
+ODDS_MAX_CREDITS_PER_RUN = 100   # hard stop for one run
+ODDS_CREDIT_RESERVE = 25     # never spend the last credits of your month

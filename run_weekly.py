@@ -21,7 +21,9 @@ from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
-from nflmodel.propsim import load_props, evaluate_props
+from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES
+from nflmodel import oddsapi
+from nflmodel.util import norm_name
 from nflmodel.util import before, clean_json
 from nflmodel import tracker
 from nflmodel import usage as U
@@ -82,7 +84,33 @@ def build_games(bundle, season, week, now):
     sch = bundle.schedules
     wk = sch[(sch["season"] == season) & (sch["week"] == week)].copy()
     wk["ko"] = wk.apply(kickoff, axis=1)
-    todo = wk[wk["home_score"].isna() & wk["ko"].map(lambda k: k is None or k > now)]
+    todo = wk[wk["home_score"].isna() & wk["ko"].map(lambda k: k is None or k > now)].copy()
+
+    # optional live odds (only active when the ODDS_API_KEY secret exists; never stops the run)
+    try:
+        odds = oddsapi.pull(todo, now, OUT / "odds_cache.json")
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"live odds skipped: {str(e)[:120]}")
+        odds = {"game_lines": {}, "props_df": pd.DataFrame(),
+                "status": {"enabled": True, "ok": False, "message": "Live odds hit an unexpected problem and were skipped.",
+                           "credits_remaining": None, "credits_used": None, "spent_this_run": 0}}
+    line_meta = {}
+    try:
+        for c in ("spread_line", "total_line"):              # whole-number columns can't hold 47.5
+            todo[c] = pd.to_numeric(todo[c], errors="coerce").astype(float)
+        for gid, L in odds["game_lines"].items():
+            m = todo["game_id"] == gid
+            if L.get("spread_line") is not None:
+                todo.loc[m, "spread_line"] = float(L["spread_line"])
+            if L.get("total_line") is not None:
+                todo.loc[m, "total_line"] = float(L["total_line"])
+            line_meta[gid] = {"src": f"live:{L['book']}", "book": L["book_title"]}
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"live lines not applied, using the free feed: {str(e)[:120]}")
+        line_meta = {}
+    if odds["status"].get("enabled"):
+        bundle.status["live_odds"] = {"ok": bool(odds["status"].get("ok")), "rows": int(odds["status"].get("prop_rows") or 0),
+                                      "note": odds["status"].get("message", "")}
 
     log.info("building ratings")
     ctx = build_context(bundle.pbp, sch, season, week)
@@ -204,6 +232,8 @@ def build_games(bundle, season, week, now):
             "why_edge": [{"factor": f, "pts": fnum(v)} for f, v in why_edge],
             "why_edge_total": [{"factor": f, "pts": fnum(v)} for f, v in why_edge_t],
             "hist_spread": hist_s, "hist_total": hist_t,
+            "line_src": line_meta.get(g["game_id"], {}).get("src", "feed"),
+            "line_book": line_meta.get(g["game_id"], {}).get("book"),
             "injuries_home": ih["list"], "injuries_away": ia["list"],
             "notes": notes,
         }
@@ -219,6 +249,14 @@ def build_games(bundle, season, week, now):
                  for t in ratings_table(ctx)]
     props_df, stale = tracker.filter_stale(load_props(ROOT / "data" / "props.csv"),
                                            OUT / "props_log.json", week)
+    auto = odds["props_df"]
+    if len(auto):
+        known = {(p["game_id"], norm_name(p["name"])) for p in players}      # only players we project
+        auto = auto[[(r["game_id"], norm_name(r["player"])) in known for _, r in auto.iterrows()]]
+        manual_keys = {(norm_name(r.get("player")), STAT_ALIASES.get(str(r.get("stat")).strip().lower()))
+                       for _, r in props_df.iterrows()} if len(props_df) else set()
+        auto = auto[[(norm_name(r["player"]), r["stat"]) not in manual_keys for _, r in auto.iterrows()]]  # your rows win
+        props_df = pd.concat([props_df, auto], ignore_index=True) if len(props_df) else auto.reset_index(drop=True)
     props = evaluate_props(props_df, players, sims)
     for r, why in stale:
         props["props"].append({"player": r.get("player"), "stat": r.get("stat"), "line": tracker._s(r.get("line")) or None,
@@ -241,6 +279,7 @@ def build_games(bundle, season, week, now):
     lean_rep = (ens["report_anchored"] if (ens is not None and ens.get("anchored") and C.LEAN_ENGINE == "anchored")
                 else (ens["report_independent"] if ens is not None else None))
     model_info["reality"] = stack.reality(lean_rep)
+    model_info["odds"] = odds["status"]
     return wk, games, players, teams_tbl, model_info, report, scheme.ok, props
 
 

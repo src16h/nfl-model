@@ -224,7 +224,7 @@ function renderGames() {
       <div class="grow"><div class="tm">${esc(g.away)}</div><div class="score">${n(g.proj_away)}</div>
         <div class="cell">Win chance<strong>${n(wpA,0)}%</strong></div>
         <div class="cell">Model line<strong>${esc(g.final_line || g.model_line || "–")}</strong>${g.final_line && g.final_line !== g.model_line ? `<small>Football-only: ${esc(g.model_line)}</small>` : ""}</div>
-        <div class="cell">Vegas line<strong>${esc(g.market_line || "not posted")}</strong>${spreadFlag}</div></div>
+        <div class="cell">Vegas line<strong>${esc(g.market_line || "not posted")}</strong>${g.line_book ? `<small>${esc(g.line_book)}, live</small>` : ""}${spreadFlag}</div></div>
       <div class="grow"><div class="tm">${esc(g.home)}</div><div class="score">${n(g.proj_home)}</div>
         <div class="cell">Win chance<strong>${n(g.win_prob_home,0)}%</strong></div>
         <div class="cell">Model total<strong>${n(g.total)}</strong>${g.indep_total != null && Math.abs(g.indep_total - g.total) >= 0.1 ? `<small>Football-only: ${n(g.indep_total)}</small>` : ""}</div>
@@ -310,24 +310,49 @@ function renderTeams() {
   tb.querySelectorAll("th").forEach(th => th.onclick = () => { const c = th.dataset.k; tState.dir = tState.sort === c ? -tState.dir : (c === "team" ? 1 : -1); tState.sort = c; renderTeams(); });
 }
 
+const propUI = {flagged: null, q: "", showAll: false};
+
+function oddsBanner() {
+  const O = D.model && D.model.odds;
+  if (!O) return "";
+  if (!O.enabled) return `<div class="msg" style="margin-bottom:12px"><b>Automatic lines are off.</b> ${esc(O.message)} You can still type props into data/props.csv.</div>`;
+  const left = O.credits_remaining != null ? ` Credits left this month: <b>${O.credits_remaining}</b> (this run used ${O.spent_this_run || 0}).` : "";
+  const cls = O.ok ? "" : "v-below";
+  return `<div class="msg" style="margin-bottom:12px"><b class="${cls}">${O.ok ? "Automatic lines are on." : "Automatic lines hit a problem."}</b> ${esc(O.message)}${left}${O.note ? " Note: " + esc(O.note) + "." : ""}</div>`;
+}
+
 function renderProps() {
   const P = D.props || {props: [], pairs: []};
-  let h = `<h2>Your prop lines</h2><p class="hint">Add lines from your sportsbook to <b>data/props.csv</b> on GitHub (instructions are inside the file). Clear last week's rows first, your results stay saved. Then re-run the model. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig.</p>`;
-  if (!P.props.length) {
-    h += `<div class="msg">No props entered yet. Open data/props.csv in your GitHub repository, click the pencil icon, add rows like <b>Patrick Mahomes,KC,pass_yds,262.5,-115,-105</b>, commit, then run the workflow.</div>`;
+  const all = P.props || [];
+  const good = all.filter(p => !p.error), bad = all.filter(p => p.error);
+  if (propUI.flagged === null) propUI.flagged = good.length > 40;
+  let h = `<h2>Prop lines</h2>` + oddsBanner() + `<p class="hint">Lines load automatically when an Odds API key is set up, and anything you type into <b>data/props.csv</b> takes priority. Clear old manual rows each week, your results stay saved. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig. <b>Be skeptical of very large gaps (15%+).</b> They usually mean the model is missing something, like an injury or a role change, not that the book is wrong. <b>The prop record further down shows whether these leans actually win.</b></p>`;
+  if (!all.length) {
+    h += `<div class="msg">No prop lines yet. Props usually post Wednesday or Thursday. With automatic lines on, run the model then. Otherwise add rows to data/props.csv.</div>`;
   } else {
+    const leans = good.filter(p => p.lean).length;
+    h += `<div class="controls"><div class="seg" id="propSeg" role="group" aria-label="Filter props"><button data-v="flagged" aria-pressed="${propUI.flagged}">Flagged only (${leans})</button><button data-v="all" aria-pressed="${!propUI.flagged}">All (${good.length})</button></div><input type="search" id="propQ" placeholder="Search player or prop" aria-label="Search props" value="${esc(propUI.q)}"></div>`;
+    let rows = good.filter(p => (!propUI.flagged || p.lean) && (!propUI.q || (p.player + " " + p.stat + " " + p.team).toLowerCase().includes(propUI.q)));
+    rows.sort((a, b) => Math.abs(b.edge ?? 0) - Math.abs(a.edge ?? 0));
+    const total = rows.length, LIMIT = 60;
+    if (!propUI.showAll) rows = rows.slice(0, LIMIT);
     h += `<div class="tablewrap"><table><thead><tr><th scope="col">Player</th><th scope="col">Prop</th><th scope="col">Line</th><th scope="col">Model median</th><th scope="col">Model over %</th><th scope="col">Book over %</th><th scope="col">Edge</th><th scope="col">Lean</th></tr></thead><tbody>`;
-    for (const p of P.props) {
-      if (p.error) { h += `<tr><td>${esc(p.player)}</td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "")}</td><td class="err" colspan="5">${esc(p.error)}</td></tr>`; continue; }
+    for (const p of rows) {
       const cls = p.lean === "Over" ? "lean-o" : p.lean === "Under" ? "lean-u" : "";
-      h += `<tr><td><span class="pname">${esc(p.player)}</span><span class="pos">${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}</span></td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "–")}</td><td>${n(p.median)}</td><td>${n(p.model_over)}%</td><td>${n(p.book_over)}%</td><td>${sgn(p.edge)}%</td><td class="${cls}">${esc(p.lean || "")}</td></tr>`;
+      const src = p.book ? ` ${esc(p.book)}` : (p.source === "manual" ? " you" : "");
+      h += `<tr><td><span class="pname">${esc(p.player)}</span><span class="pos">${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}${src ? ", " + src.trim() : ""}</span></td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "–")}</td><td>${p.median == null ? "–" : n(p.median)}</td><td>${n(p.model_over)}%</td><td>${n(p.book_over)}%</td><td>${sgn(p.edge)}%</td><td class="${cls}">${esc(p.lean || "")}</td></tr>`;
     }
     h += `</tbody></table></div>`;
+    if (total > rows.length) h += `<p class="hint" style="margin-top:8px">Showing the ${rows.length} biggest gaps of ${total}. <button class="more" id="propMore">Show all ${total}</button></p>`;
+    if (bad.length) h += `<h3>Skipped rows (${bad.length})</h3><div class="tablewrap"><table><tbody>${bad.map(p => `<tr><td>${esc(p.player)}</td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "")}</td><td class="err">${esc(p.error)}</td></tr>`).join("")}</tbody></table></div>`;
   }
   h += `<h2>Same-game pairs</h2><p class="hint">Leans on the same team that tend to hit together. "Lift" is how much more often both hit than if they were unrelated. Sportsbooks price some of this into parlays, so treat it as research.</p>`;
   h += (P.pairs || []).length ? `<div class="pairs">${P.pairs.map(x => `<div class="pair"><b>${esc(x.legs[0])}</b> + <b>${esc(x.legs[1])}</b><br><span>Both hit ${n(x.joint)}% of sims vs ${n(x.if_independent)}% if unrelated (+${n(x.lift,0)}% lift)</span></div>`).join("")}</div>` : `<p class="hint">No correlated pairs among this week's leans.</p>`;
   h += propRecord();
   $("#props").innerHTML = h;
+  document.querySelectorAll("#propSeg button").forEach(b => b.onclick = () => { propUI.flagged = b.dataset.v === "flagged"; propUI.showAll = false; renderProps(); });
+  const q = $("#propQ"); if (q) q.oninput = e => { propUI.q = e.target.value.toLowerCase(); propUI.showAll = false; const pos = e.target.selectionStart; renderProps(); const nq = $("#propQ"); nq.focus(); nq.setSelectionRange(pos, pos); };
+  const mb = $("#propMore"); if (mb) mb.onclick = () => { propUI.showAll = true; renderProps(); };
 }
 
 function lineCheck() {
@@ -355,7 +380,8 @@ function propRecord() {
     <div class="stat"><strong class="${(L.units || 0) >= 0 ? "v-above" : "v-below"}">${sgn(L.units,2)}u</strong><span>Flat 1-unit bets on flagged props${L.roi != null ? `. ROI ${sgn(L.roi,1)}%` : ""}</span></div>
     <div class="stat"><strong>${M.n ? n(M.pct) + "%" : "–"}</strong><span>Model's favored side on every graded prop (${M.n || 0})</span></div>
     ${B ? `<div class="stat"><strong class="${B.model < B.book ? "v-above" : "v-below"}">${n(B.model,3)} vs ${n(B.book,3)}</strong><span>Forecast error, model vs sportsbook (lower wins, ${B.n} props). Beating the book here is the best sign of skill.</span></div>` : ""}
-    <div class="stat"><strong>${R.graded}</strong><span>Graded. ${R.pending} waiting for games, ${R.voided} voided.</span></div></div>`;
+    <div class="stat"><strong>${R.graded}</strong><span>Graded${R.sources ? ` (${R.sources.auto} auto-loaded, ${R.sources.manual} typed)` : ""}. ${R.pending} waiting for games, ${R.voided} voided.</span></div>
+    ${R.line_moves && R.line_moves.n ? `<div class="stat"><strong class="v-unclear">${R.line_moves.moved} of ${R.line_moves.n}</strong><span>Prop lines that moved after our first look${R.line_moves.moved ? `. Moved toward our side ${R.line_moves.toward}, away ${R.line_moves.away}.` : ". Props are loaded once per game to save credits, so movement shows up only if you refresh them more often."}</span></div>` : ""}</div>`;
   const rows = (arr, key) => arr.filter(x => x.n || x.push).map(x => `<tr><td>${esc(x[key])}</td><td>${x.w}-${x.l}${x.push ? "-" + x.push : ""}</td><td>${x.n ? n(x.pct) + "%" : "–"}</td><td>${x.n ? n(x.ci_lo,0) + " to " + n(x.ci_hi,0) + "%" : "–"}</td><td>${sgn(x.units,2)}u</td></tr>`).join("");
   const tbl = (title, arr, key, col) => { const r = rows(arr || [], key); return r ? `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th scope="col">${col}</th><th scope="col">Record</th><th scope="col">Win rate</th><th scope="col">Likely range</th><th scope="col">Units</th></tr></thead><tbody>${r}</tbody></table></div>` : ""; };
   h += tbl("By prop type", R.by_stat, "stat", "Prop") + tbl("By side", R.by_side, "side", "Side") + tbl("By size of gap", R.by_edge, "range", "Gap vs book");

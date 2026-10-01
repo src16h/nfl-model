@@ -1,6 +1,8 @@
 # ============================================================
-# PROP LINES (edit this file in your browser on GitHub)
-# Copy lines from your sportsbook. One prop per row.
+# MANUAL PROP LINES (optional)
+# If automatic lines are set up (Odds API key), you don't need this file at all.
+# Anything typed here takes priority over the automatic line for the same player and prop.
+# Edit in your browser on GitHub. One prop per row.
 # Lines starting with # are ignored. Odds and week are optional.
 #
 # EACH WEEK: delete last week's rows, then add new ones.

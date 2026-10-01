@@ -1,4 +1,6 @@
-# The Board: NFL prediction model (v4)
+# The Board: NFL prediction model (v5)
+
+**v5 adds automatic lines (optional):** with a free Odds API key, the model loads live spreads, totals, and player props by itself, logs them, and grades them after the games. No typing. Setup is in **UPGRADE-TO-V5.md**. Without a key, everything works as before.
 
 **v4 adds (the honesty update):**
 - **Reality check** on the Games tab: how flagged gaps actually did in the backtest, with a "likely range" so luck isn't mistaken for skill
@@ -94,7 +96,16 @@ The model runs by itself:
 
 Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old lines each week.
 
-**Props (every week):**
+**Automatic lines (optional):**
+1. Get a free key at the-odds-api.com
+2. GitHub, Settings, Secrets and variables, Actions, New repository secret. Name: `ODDS_API_KEY`. Paste the key.
+3. Make sure `.github/workflows/weekly.yml` matches `SETUP/weekly.yml` (it passes the key to the model)
+4. Run the weekly workflow. The Props tab banner shows whether it's working and how many credits you have left.
+- Props load for games starting within 48 hours, once per game (saves credits), from DraftKings first. Change books, markets, and credit limits in `nflmodel/config.py` (the `ODDS_` settings).
+- Typing a line into `data/props.csv` still works and wins over the automatic one for that player and prop.
+- If anything goes wrong (bad key, out of credits, no internet), the model falls back to the free data feed and keeps running.
+
+**Props (manual, optional):**
 1. Thursday or Saturday, open `data/props.csv`, click the pencil, **delete last week's rows**, and add new ones such as `Patrick Mahomes,KC,pass_yds,262.5,-115,-105`
 2. Commit, then **Actions, Weekly NFL model, Run workflow** (do this before kickoff, the model only logs props for games that haven't started)
 3. The Props tab shows the model's chance, the book's chance (vig removed), and correlated pairs
