@@ -101,7 +101,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -4.5,
+    "total": 46.5,
+    "margin": -17.0,
+    "points": 43.0
+   },
    "last_seen": "2026-10-03T18:54+00:00"
   },
   "2026_04_TEN_BAL": {
@@ -549,7 +554,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   },
   "2026_04_KC_LV": {
    "game_id": "2026_04_KC_LV",
@@ -599,7 +604,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   },
   "2026_04_LAC_SEA": {
    "game_id": "2026_04_LAC_SEA",
@@ -649,7 +654,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   },
   "2026_04_DEN_SF": {
    "game_id": "2026_04_DEN_SF",
@@ -696,10 +701,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-04T19:11+00:00",
+     "src": "live:draftkings",
+     "spread": 3.0,
+     "total": 48.5,
+     "m": 2.2,
+     "t": 48.9,
+     "edge_s": -0.8,
+     "edge_t": 0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   },
   "2026_04_DET_CAR": {
    "game_id": "2026_04_DET_CAR",
@@ -758,10 +776,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-04T19:11+00:00",
+     "src": "live:draftkings",
+     "spread": -3.5,
+     "total": 51.5,
+     "m": -3.7,
+     "t": 50.7,
+     "edge_s": -0.2,
+     "edge_t": -0.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   },
   "2026_04_ATL_NO": {
    "game_id": "2026_04_ATL_NO",
@@ -808,10 +839,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-04T19:11+00:00",
+     "src": "live:draftkings",
+     "spread": 1.5,
+     "total": 47.5,
+     "m": 1.2,
+     "t": 48.0,
+     "edge_s": -0.3,
+     "edge_t": 0.5,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-03T18:54+00:00"
+   "last_seen": "2026-10-04T19:11+00:00"
   }
  }
 }
