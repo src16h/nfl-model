@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-07T03:04:05.977391+00:00",
+ "generated_at": "2026-10-07T12:32:12.042489+00:00",
  "season": 2026,
  "week": 5,
  "data_status": {
@@ -15,12 +15,12 @@
   },
   "rosters": {
    "ok": true,
-   "rows": 59853,
+   "rows": 59877,
    "note": ""
   },
   "injuries": {
    "ok": true,
-   "rows": 1052,
+   "rows": 1071,
    "note": ""
   },
   "snap_counts": {
@@ -2176,8 +2176,8 @@
    "enabled": true,
    "ok": true,
    "message": "Live odds on: 15 games with live lines, 0 prop lines (0 games fetched, 0 reused from earlier).",
-   "credits_remaining": 409,
-   "credits_used": 91,
+   "credits_remaining": 407,
+   "credits_used": 93,
    "spent_this_run": 2,
    "lines": 15,
    "games_fetched": 0,
@@ -2185,8 +2185,8 @@
    "prop_rows": 0,
    "book": null,
    "note": null,
-   "at": "2026-10-07T03:04+00:00",
-   "lines_at": "2026-10-07T03:04+00:00"
+   "at": "2026-10-07T12:32+00:00",
+   "lines_at": "2026-10-07T12:32+00:00"
   }
  },
  "props": {
@@ -2322,7 +2322,7 @@
    "home": "JAX",
    "neutral": false,
    "proj_home": 25.5,
-   "proj_away": 17.8,
+   "proj_away": 17.7,
    "margin": 7.8,
    "total": 43.3,
    "win_prob_home": 74.0,
@@ -2330,11 +2330,11 @@
     -7.0,
     25.0
    ],
-   "model_line": "JAX -6.2",
+   "model_line": "JAX -6.5",
    "final_line": "JAX -7.8",
    "lean_engine": "anchored",
-   "indep_margin": 6.2,
-   "indep_total": 43.1,
+   "indep_margin": 6.5,
+   "indep_total": 43.0,
    "market_line": "JAX -7.0",
    "market_spread": 7.0,
    "market_total": 42.5,
@@ -2348,7 +2348,7 @@
    "over_prob": 49.0,
    "qb_home": "Trevor Lawrence",
    "qb_away": "Jalen Hurts",
-   "weather": "81\u00b0F, wind 8 mph, 26% rain",
+   "weather": "82\u00b0F, wind 7 mph, 28% rain",
    "why_margin": [
     {
      "factor": "Team strength (EPA ratings)",
@@ -2360,7 +2360,7 @@
     },
     {
      "factor": "Injuries (non-QB)",
-     "pts": 0.5
+     "pts": 0.8
     }
    ],
    "why_total": [
@@ -2381,6 +2381,10 @@
     {
      "factor": "Machine-learning patterns",
      "pts": 0.3
+    },
+    {
+     "factor": "Injuries (non-QB)",
+     "pts": 0.2
     }
    ],
    "why_edge_total": [],
@@ -2419,6 +2423,12 @@
      "pos": "OG",
      "status": "IR",
      "pts": 0.35
+    },
+    {
+     "name": "Tank Bigsby",
+     "pos": "RB",
+     "status": "IR",
+     "pts": 0.3
     }
    ],
    "notes": []
@@ -2432,9 +2442,9 @@
    "home": "MIA",
    "neutral": false,
    "proj_home": 17.8,
-   "proj_away": 25.0,
+   "proj_away": 25.1,
    "margin": -7.3,
-   "total": 42.8,
+   "total": 42.9,
    "win_prob_home": 19.0,
    "margin_range": [
     -25.0,
@@ -2444,12 +2454,12 @@
    "final_line": "MIA +7.3",
    "lean_engine": "anchored",
    "indep_margin": -2.9,
-   "indep_total": 44.1,
+   "indep_total": 44.9,
    "market_line": "MIA +7.0",
    "market_spread": -7.0,
    "market_total": 42.5,
    "edge_spread": -0.3,
-   "edge_total": 0.3,
+   "edge_total": 0.4,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
@@ -2458,7 +2468,7 @@
    "over_prob": 47.0,
    "qb_home": "Malik Willis",
    "qb_away": "Joe Burrow",
-   "weather": "90\u00b0F, wind 13 mph, 9% rain",
+   "weather": "91\u00b0F, wind 12 mph, 9% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -2483,10 +2493,6 @@
      "pts": 1.5
     },
     {
-     "factor": "Wind",
-     "pts": -0.5
-    },
-    {
      "factor": "Outdoors",
      "pts": -0.5
     }
@@ -2497,12 +2503,7 @@
      "pts": -0.4
     }
    ],
-   "why_edge_total": [
-    {
-     "factor": "Wind",
-     "pts": -0.2
-    }
-   ],
+   "why_edge_total": [],
    "hist_spread": {
     "range": "0 to 0.5",
     "record": [
@@ -2557,10 +2558,10 @@
    "away": "LV",
    "home": "NE",
    "neutral": false,
-   "proj_home": 25.0,
-   "proj_away": 21.2,
+   "proj_home": 25.1,
+   "proj_away": 21.3,
    "margin": 3.8,
-   "total": 46.1,
+   "total": 46.4,
    "win_prob_home": 62.0,
    "margin_range": [
     -10.0,
@@ -2570,12 +2571,12 @@
    "final_line": "NE -3.8",
    "lean_engine": "anchored",
    "indep_margin": 7.8,
-   "indep_total": 41.8,
+   "indep_total": 43.3,
    "market_line": "NE -3.5",
    "market_spread": 3.5,
    "market_total": 45.5,
    "edge_spread": 0.3,
-   "edge_total": 0.6,
+   "edge_total": 0.9,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
@@ -2584,7 +2585,7 @@
    "over_prob": 51.0,
    "qb_home": "Drake Maye",
    "qb_away": "Kirk Cousins",
-   "weather": "71\u00b0F, wind 13 mph, 3% rain",
+   "weather": "64\u00b0F, wind 9 mph, 2% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -2617,8 +2618,8 @@
      "pts": -0.5
     },
     {
-     "factor": "Wind",
-     "pts": -0.5
+     "factor": "Machine-learning patterns",
+     "pts": 0.4
     }
    ],
    "why_edge": [
@@ -2631,12 +2632,7 @@
      "pts": -0.2
     }
    ],
-   "why_edge_total": [
-    {
-     "factor": "Wind",
-     "pts": -0.2
-    }
-   ],
+   "why_edge_total": [],
    "hist_spread": {
     "range": "0 to 0.5",
     "record": [
@@ -2686,11 +2682,11 @@
     -17.0,
     18.0
    ],
-   "model_line": "NO +6.0",
+   "model_line": "NO +5.5",
    "final_line": "NO +1.7",
    "lean_engine": "anchored",
-   "indep_margin": -6.0,
-   "indep_total": 42.5,
+   "indep_margin": -5.5,
+   "indep_total": 42.6,
    "market_line": "NO +1.5",
    "market_spread": -1.5,
    "market_total": 42.5,
@@ -2730,7 +2726,7 @@
     },
     {
      "factor": "Machine-learning patterns",
-     "pts": 0.3
+     "pts": 0.6
     }
    ],
    "why_edge": [],
@@ -2786,7 +2782,14 @@
      "pts": 0.28
     }
    ],
-   "injuries_away": [],
+   "injuries_away": [
+    {
+     "name": "Donovan Jackson",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    }
+   ],
    "notes": []
   },
   {
@@ -2824,7 +2827,7 @@
    "over_prob": 57.0,
    "qb_home": "Geno Smith",
    "qb_away": "Deshaun Watson",
-   "weather": "70\u00b0F, wind 10 mph, 8% rain",
+   "weather": "60\u00b0F, wind 7 mph, 24% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -2931,7 +2934,7 @@
    "over_prob": 52.0,
    "qb_home": "Aaron Rodgers",
    "qb_away": "Daniel Jones",
-   "weather": "60\u00b0F, wind 9 mph, 52% rain",
+   "weather": "62\u00b0F, wind 7 mph, 54% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -3036,7 +3039,7 @@
    "over_prob": 52.0,
    "qb_home": "Cam Ward",
    "qb_away": "C.J. Stroud",
-   "weather": "69\u00b0F, wind 8 mph, 53% rain",
+   "weather": "70\u00b0F, wind 10 mph, 48% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -3144,11 +3147,11 @@
     -9.0,
     21.0
    ],
-   "model_line": "WAS -2.8",
+   "model_line": "WAS -2.7",
    "final_line": "WAS -4.3",
    "lean_engine": "anchored",
-   "indep_margin": 2.8,
-   "indep_total": 42.7,
+   "indep_margin": 2.7,
+   "indep_total": 42.6,
    "market_line": "WAS -3.5",
    "market_spread": 3.5,
    "market_total": 43.5,
@@ -3162,7 +3165,7 @@
    "over_prob": 46.0,
    "qb_home": "Marcus Mariota",
    "qb_away": "Jameis Winston",
-   "weather": "63\u00b0F, wind 8 mph, 47% rain",
+   "weather": "64\u00b0F, wind 6 mph, 50% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -3255,34 +3258,34 @@
    "away": "CHI",
    "home": "GB",
    "neutral": false,
-   "proj_home": 21.4,
-   "proj_away": 23.8,
+   "proj_home": 21.5,
+   "proj_away": 24.0,
    "margin": -2.5,
-   "total": 45.2,
-   "win_prob_home": 43.0,
+   "total": 45.5,
+   "win_prob_home": 41.0,
    "margin_range": [
-    -19.0,
+    -21.0,
     17.0
    ],
-   "model_line": "GB +1.8",
+   "model_line": "GB +2.2",
    "final_line": "GB +2.5",
    "lean_engine": "anchored",
-   "indep_margin": -1.8,
-   "indep_total": 44.9,
+   "indep_margin": -2.2,
+   "indep_total": 45.9,
    "market_line": "GB +3.0",
    "market_spread": -3.0,
    "market_total": 45.5,
    "edge_spread": 0.5,
-   "edge_total": -0.3,
+   "edge_total": -0.0,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
    "play_total": null,
-   "cover_prob_home": 55.0,
+   "cover_prob_home": 52.0,
    "over_prob": 48.0,
    "qb_home": "Jordan Love",
    "qb_away": "Caleb Williams",
-   "weather": "78\u00b0F, wind 19 mph, 1% rain",
+   "weather": "74\u00b0F, wind 16 mph, 1% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -3291,6 +3294,10 @@
     {
      "factor": "Team strength (EPA ratings)",
      "pts": -1.1
+    },
+    {
+     "factor": "Injuries (non-QB)",
+     "pts": -0.6
     },
     {
      "factor": "Pass rush vs protection",
@@ -3304,14 +3311,14 @@
     },
     {
      "factor": "Wind",
-     "pts": -2.1
+     "pts": -1.2
     },
     {
      "factor": "Outdoors",
      "pts": -0.5
     },
     {
-     "factor": "Division game",
+     "factor": "Machine-learning patterns",
      "pts": -0.5
     }
    ],
@@ -3324,21 +3331,21 @@
    "why_edge_total": [
     {
      "factor": "Wind",
-     "pts": -0.7
+     "pts": -0.4
     }
    ],
    "hist_spread": {
-    "range": "0.5 to 1",
+    "range": "0 to 0.5",
     "record": [
-     305,
-     265
+     545,
+     564
     ],
-    "n": 570,
-    "pct": 53.5,
-    "ci_lo": 49.4,
-    "ci_hi": 57.6,
-    "verdict": "unclear",
-    "note": "Above break-even, but could be luck"
+    "n": 1109,
+    "pct": 49.1,
+    "ci_lo": 46.2,
+    "ci_hi": 52.1,
+    "verdict": "below",
+    "note": "Below break-even, would lose money"
    },
    "hist_total": {
     "range": "0 to 0.5",
@@ -3361,6 +3368,12 @@
      "pos": "RB",
      "status": "IR",
      "pts": 0.34
+    },
+    {
+     "name": "Edgerrin Cooper",
+     "pos": "LB",
+     "status": "IR",
+     "pts": 0.3
     }
    ],
    "injuries_away": [
@@ -3497,30 +3510,30 @@
    "away": "DET",
    "home": "ARI",
    "neutral": false,
-   "proj_home": 25.6,
-   "proj_away": 30.0,
-   "margin": -4.4,
+   "proj_home": 25.1,
+   "proj_away": 30.5,
+   "margin": -5.5,
    "total": 55.6,
-   "win_prob_home": 38.0,
+   "win_prob_home": 28.0,
    "margin_range": [
-    -20.0,
-    10.0
+    -21.0,
+    7.0
    ],
-   "model_line": "ARI +2.4",
-   "final_line": "ARI +4.4",
+   "model_line": "ARI +2.9",
+   "final_line": "ARI +5.5",
    "lean_engine": "anchored",
-   "indep_margin": -2.4,
-   "indep_total": 54.5,
-   "market_line": "ARI +4.5",
-   "market_spread": -4.5,
+   "indep_margin": -2.9,
+   "indep_total": 53.9,
+   "market_line": "ARI +5.5",
+   "market_spread": -5.5,
    "market_total": 54.5,
-   "edge_spread": 0.1,
+   "edge_spread": 0.0,
    "edge_total": 1.1,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
    "play_total": null,
-   "cover_prob_home": 51.0,
+   "cover_prob_home": 49.0,
    "over_prob": 54.0,
    "qb_home": "Jacoby Brissett",
    "qb_away": "Jared Goff",
@@ -3539,8 +3552,8 @@
      "pts": 0.5
     },
     {
-     "factor": "Pass rush vs protection",
-     "pts": -0.3
+     "factor": "Injuries (non-QB)",
+     "pts": -0.4
     }
    ],
    "why_total": [
@@ -3551,10 +3564,6 @@
     {
      "factor": "Indoors",
      "pts": 1.4
-    },
-    {
-     "factor": "Machine-learning patterns",
-     "pts": 0.7
     },
     {
      "factor": "Pace",
@@ -3602,6 +3611,12 @@
    "line_src": "live:draftkings",
    "line_book": "DraftKings",
    "injuries_home": [
+    {
+     "name": "Paris Johnson Jr.",
+     "pos": "OG",
+     "status": "IR",
+     "pts": 0.35
+    },
     {
      "name": "Will Johnson",
      "pos": "S",
@@ -4453,7 +4468,7 @@
    "fpts_med": 13.0,
    "fpts_range": [
     5.1,
-    24.4
+    24.5
    ],
    "carries": 0.6,
    "rush_yds": 3.0,
@@ -4539,7 +4554,7 @@
    ],
    "targets": 5.5,
    "rec": 3.1,
-   "rec_yds": 42.0,
+   "rec_yds": 41.0,
    "rec_yds_med": 32.0,
    "rec_yds_range": [
     8.0,
@@ -4590,9 +4605,9 @@
    "status": "",
    "fpts": 17.6,
    "td_prob": 10.0,
-   "fpts_med": 16.6,
+   "fpts_med": 16.7,
    "fpts_range": [
-    8.5,
+    8.6,
     27.5
    ],
    "pass_att": 33.1,
@@ -4622,22 +4637,22 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 7.6,
+   "fpts": 7.9,
    "td_prob": 21.0,
-   "fpts_med": 6.5,
+   "fpts_med": 6.6,
    "fpts_range": [
     1.2,
-    15.6
+    16.2
    ],
-   "targets": 4.2,
-   "rec": 3.1,
-   "rec_yds": 31.0,
-   "rec_yds_med": 22.0,
+   "targets": 4.4,
+   "rec": 3.2,
+   "rec_yds": 32.0,
+   "rec_yds_med": 24.0,
    "rec_yds_range": [
     4.0,
-    69.0
+    71.0
    ],
-   "rec_td": 0.23
+   "rec_td": 0.24
   },
   {
    "game_id": "2026_05_PHI_JAX",
@@ -4647,28 +4662,28 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 11.4,
-   "td_prob": 32.0,
-   "fpts_med": 10.3,
+   "fpts": 13.7,
+   "td_prob": 38.0,
+   "fpts_med": 12.5,
    "fpts_range": [
-    4.2,
-    20.1
+    5.6,
+    23.4
    ],
-   "carries": 12.2,
-   "rush_yds": 48.0,
-   "rush_yds_med": 43.0,
+   "carries": 16.1,
+   "rush_yds": 64.0,
+   "rush_yds_med": 58.0,
    "rush_yds_range": [
-    22.0,
-    80.0
+    32.0,
+    102.0
    ],
-   "rush_td": 0.28,
-   "targets": 3.4,
-   "rec": 2.5,
+   "rush_td": 0.37,
+   "targets": 3.5,
+   "rec": 2.6,
    "rec_yds": 18.0,
    "rec_yds_med": 10.0,
    "rec_yds_range": [
     1.0,
-    45.0
+    46.0
    ],
    "rec_td": 0.11
   },
@@ -4680,22 +4695,22 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 16.5,
-   "td_prob": 27.0,
-   "fpts_med": 15.5,
+   "fpts": 17.1,
+   "td_prob": 28.0,
+   "fpts_med": 15.9,
    "fpts_range": [
-    6.7,
-    27.5
+    7.2,
+    28.2
    ],
-   "targets": 9.5,
-   "rec": 6.5,
-   "rec_yds": 81.0,
-   "rec_yds_med": 71.0,
+   "targets": 9.9,
+   "rec": 6.8,
+   "rec_yds": 83.0,
+   "rec_yds_med": 74.0,
    "rec_yds_range": [
-    29.0,
-    141.0
+    31.0,
+    145.0
    ],
-   "rec_td": 0.33
+   "rec_td": 0.34
   },
   {
    "game_id": "2026_05_PHI_JAX",
@@ -4705,55 +4720,22 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 7.5,
-   "td_prob": 19.0,
-   "fpts_med": 6.4,
+   "fpts": 7.8,
+   "td_prob": 20.0,
+   "fpts_med": 6.6,
    "fpts_range": [
-    1.2,
-    15.5
+    1.4,
+    15.8
    ],
-   "targets": 4.2,
-   "rec": 2.7,
-   "rec_yds": 35.0,
-   "rec_yds_med": 26.0,
+   "targets": 4.4,
+   "rec": 2.8,
+   "rec_yds": 36.0,
+   "rec_yds_med": 27.0,
    "rec_yds_range": [
-    5.0,
-    76.0
+    6.0,
+    77.0
    ],
    "rec_td": 0.22
-  },
-  {
-   "game_id": "2026_05_PHI_JAX",
-   "pid": "00-0038555",
-   "name": "Tank Bigsby",
-   "pos": "RB",
-   "team": "PHI",
-   "opp": "JAX",
-   "status": "",
-   "fpts": 5.0,
-   "td_prob": 17.0,
-   "fpts_med": 3.6,
-   "fpts_range": [
-    1.1,
-    10.5
-   ],
-   "carries": 5.7,
-   "rush_yds": 24.0,
-   "rush_yds_med": 20.0,
-   "rush_yds_range": [
-    7.0,
-    45.0
-   ],
-   "rush_td": 0.15,
-   "targets": 1.1,
-   "rec": 0.9,
-   "rec_yds": 6.0,
-   "rec_yds_med": 1.0,
-   "rec_yds_range": [
-    0.0,
-    19.0
-   ],
-   "rec_td": 0.03
   },
   {
    "game_id": "2026_05_PHI_JAX",
@@ -4763,28 +4745,28 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 3.8,
-   "td_prob": 11.0,
-   "fpts_med": 2.4,
+   "fpts": 4.3,
+   "td_prob": 14.0,
+   "fpts_med": 2.9,
    "fpts_range": [
-    0.3,
-    9.2
+    0.5,
+    10.0
    ],
-   "carries": 2.3,
-   "rush_yds": 9.0,
-   "rush_yds_med": 6.0,
+   "carries": 3.0,
+   "rush_yds": 12.0,
+   "rush_yds_med": 8.0,
    "rush_yds_range": [
-    1.0,
-    21.0
+    2.0,
+    25.0
    ],
-   "rush_td": 0.08,
+   "rush_td": 0.11,
    "targets": 1.7,
    "rec": 1.3,
    "rec_yds": 9.0,
-   "rec_yds_med": 2.0,
+   "rec_yds_med": 3.0,
    "rec_yds_range": [
     0.0,
-    27.0
+    28.0
    ],
    "rec_td": 0.04
   },
@@ -4796,20 +4778,20 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 5.0,
-   "td_prob": 18.0,
-   "fpts_med": 3.6,
+   "fpts": 5.2,
+   "td_prob": 17.0,
+   "fpts_med": 3.9,
    "fpts_range": [
     0.2,
-    11.6
+    11.8
    ],
-   "targets": 2.7,
-   "rec": 1.7,
-   "rec_yds": 21.0,
-   "rec_yds_med": 13.0,
+   "targets": 2.8,
+   "rec": 1.8,
+   "rec_yds": 22.0,
+   "rec_yds_med": 14.0,
    "rec_yds_range": [
     1.0,
-    51.0
+    54.0
    ],
    "rec_td": 0.19
   },
@@ -4821,22 +4803,22 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 5.0,
+   "fpts": 5.2,
    "td_prob": 7.0,
-   "fpts_med": 3.8,
+   "fpts_med": 3.9,
    "fpts_range": [
-    0.3,
-    11.4
+    0.4,
+    11.6
    ],
-   "targets": 3.3,
-   "rec": 2.1,
-   "rec_yds": 24.0,
+   "targets": 3.4,
+   "rec": 2.2,
+   "rec_yds": 25.0,
    "rec_yds_med": 16.0,
    "rec_yds_range": [
     2.0,
-    59.0
+    58.0
    ],
-   "rec_td": 0.06
+   "rec_td": 0.07
   },
   {
    "game_id": "2026_05_PHI_JAX",
@@ -4846,16 +4828,16 @@
    "team": "PHI",
    "opp": "JAX",
    "status": "",
-   "fpts": 16.3,
-   "td_prob": 10.0,
-   "fpts_med": 15.6,
+   "fpts": 16.8,
+   "td_prob": 14.0,
+   "fpts_med": 16.0,
    "fpts_range": [
-    8.4,
-    25.1
+    8.7,
+    25.7
    ],
-   "pass_att": 33.4,
+   "pass_att": 33.5,
    "pass_cmp": 21.4,
-   "pass_yds": 233.0,
+   "pass_yds": 234.0,
    "pass_yds_med": 225.0,
    "pass_yds_range": [
     161.0,
@@ -4863,14 +4845,14 @@
    ],
    "pass_td": 1.23,
    "pass_int": 0.65,
-   "carries": 5.0,
-   "rush_yds": 27.0,
-   "rush_yds_med": 23.0,
+   "carries": 5.8,
+   "rush_yds": 30.0,
+   "rush_yds_med": 26.0,
    "rush_yds_range": [
-    8.0,
-    50.0
+    10.0,
+    53.0
    ],
-   "rush_td": 0.11
+   "rush_td": 0.15
   },
   {
    "game_id": "2026_05_CIN_MIA",
@@ -4880,12 +4862,12 @@
    "team": "MIA",
    "opp": "CIN",
    "status": "",
-   "fpts": 9.1,
+   "fpts": 9.2,
    "td_prob": 26.0,
    "fpts_med": 8.0,
    "fpts_range": [
-    1.9,
-    18.1
+    2.0,
+    17.9
    ],
    "targets": 4.6,
    "rec": 3.4,
@@ -4895,7 +4877,7 @@
     7.0,
     82.0
    ],
-   "rec_td": 0.29
+   "rec_td": 0.3
   },
   {
    "game_id": "2026_05_CIN_MIA",
@@ -4906,10 +4888,10 @@
    "opp": "CIN",
    "status": "",
    "fpts": 4.0,
-   "td_prob": 18.0,
-   "fpts_med": 2.7,
+   "td_prob": 17.0,
+   "fpts_med": 2.6,
    "fpts_range": [
-    0.8,
+    0.9,
     8.8
    ],
    "carries": 5.5,
@@ -4931,17 +4913,17 @@
    "status": "",
    "fpts": 18.5,
    "td_prob": 37.0,
-   "fpts_med": 17.3,
+   "fpts_med": 17.5,
    "fpts_range": [
     8.4,
-    29.9
+    30.0
    ],
    "carries": 2.4,
    "rush_yds": 15.0,
    "rush_yds_med": 11.0,
    "rush_yds_range": [
     3.0,
-    31.0
+    32.0
    ],
    "rush_td": 0.11,
    "targets": 9.8,
@@ -4964,9 +4946,9 @@
    "status": "",
    "fpts": 11.2,
    "td_prob": 39.0,
-   "fpts_med": 10.0,
+   "fpts_med": 9.9,
    "fpts_range": [
-    4.0,
+    3.9,
     19.8
    ],
    "carries": 12.2,
@@ -4974,7 +4956,7 @@
    "rush_yds_med": 47.0,
    "rush_yds_range": [
     24.0,
-    87.0
+    86.0
    ],
    "rush_td": 0.45,
    "targets": 2.1,
@@ -4996,7 +4978,7 @@
    "opp": "CIN",
    "status": "",
    "fpts": 3.3,
-   "td_prob": 8.0,
+   "td_prob": 9.0,
    "fpts_med": 1.9,
    "fpts_range": [
     0.1,
@@ -5022,10 +5004,10 @@
    "status": "",
    "fpts": 6.4,
    "td_prob": 8.0,
-   "fpts_med": 5.3,
+   "fpts_med": 5.4,
    "fpts_range": [
     1.1,
-    13.3
+    13.2
    ],
    "targets": 4.1,
    "rec": 2.4,
@@ -5047,7 +5029,7 @@
    "status": "",
    "fpts": 4.3,
    "td_prob": 12.0,
-   "fpts_med": 3.0,
+   "fpts_med": 2.9,
    "fpts_range": [
     0.2,
     10.1
@@ -5072,10 +5054,10 @@
    "status": "",
    "fpts": 15.2,
    "td_prob": 3.0,
-   "fpts_med": 14.3,
+   "fpts_med": 14.4,
    "fpts_range": [
-    7.9,
-    23.4
+    8.0,
+    23.5
    ],
    "pass_att": 30.2,
    "pass_cmp": 18.9,
@@ -5092,7 +5074,7 @@
    "rush_yds_med": 25.0,
    "rush_yds_range": [
     9.0,
-    55.0
+    54.0
    ],
    "rush_td": 0.03
   },
@@ -5139,10 +5121,10 @@
    "status": "",
    "fpts": 5.7,
    "td_prob": 20.0,
-   "fpts_med": 4.3,
+   "fpts_med": 4.2,
    "fpts_range": [
     0.2,
-    13.0
+    12.9
    ],
    "targets": 2.7,
    "rec": 2.1,
@@ -5163,11 +5145,11 @@
    "opp": "MIA",
    "status": "",
    "fpts": 15.3,
-   "td_prob": 33.0,
-   "fpts_med": 14.1,
+   "td_prob": 34.0,
+   "fpts_med": 14.2,
    "fpts_range": [
     5.5,
-    26.3
+    26.4
    ],
    "targets": 7.8,
    "rec": 5.4,
@@ -5187,12 +5169,12 @@
    "team": "CIN",
    "opp": "MIA",
    "status": "",
-   "fpts": 16.0,
-   "td_prob": 40.0,
+   "fpts": 16.1,
+   "td_prob": 39.0,
    "fpts_med": 14.9,
    "fpts_range": [
     5.6,
-    28.0
+    28.2
    ],
    "targets": 8.1,
    "rec": 6.1,
@@ -5217,7 +5199,7 @@
    "fpts_med": 18.3,
    "fpts_range": [
     8.7,
-    32.2
+    32.0
    ],
    "carries": 18.2,
    "rush_yds": 77.0,
@@ -5250,7 +5232,7 @@
    "fpts_med": 1.9,
    "fpts_range": [
     0.0,
-    9.0
+    8.9
    ],
    "targets": 1.6,
    "rec": 1.0,
@@ -5295,7 +5277,7 @@
    "team": "CIN",
    "opp": "MIA",
    "status": "",
-   "fpts": 17.6,
+   "fpts": 17.7,
    "td_prob": 6.0,
    "fpts_med": 16.7,
    "fpts_range": [
@@ -5310,7 +5292,7 @@
     178.0,
     347.0
    ],
-   "pass_td": 1.84,
+   "pass_td": 1.85,
    "pass_int": 0.75,
    "carries": 1.9,
    "rush_yds": 11.0,
@@ -5331,7 +5313,7 @@
    "status": "",
    "fpts": 10.1,
    "td_prob": 26.0,
-   "fpts_med": 9.0,
+   "fpts_med": 8.9,
    "fpts_range": [
     2.4,
     19.6
@@ -5384,7 +5366,7 @@
    "fpts_med": 14.4,
    "fpts_range": [
     6.2,
-    26.4
+    26.2
    ],
    "carries": 11.5,
    "rush_yds": 50.0,
@@ -5413,11 +5395,11 @@
    "opp": "LV",
    "status": "",
    "fpts": 7.5,
-   "td_prob": 27.0,
-   "fpts_med": 6.4,
+   "td_prob": 26.0,
+   "fpts_med": 6.5,
    "fpts_range": [
-    1.1,
-    15.6
+    1.2,
+    15.5
    ],
    "targets": 3.7,
    "rec": 2.4,
@@ -5438,8 +5420,8 @@
    "opp": "LV",
    "status": "",
    "fpts": 7.9,
-   "td_prob": 20.0,
-   "fpts_med": 6.7,
+   "td_prob": 21.0,
+   "fpts_med": 6.8,
    "fpts_range": [
     1.4,
     16.1
@@ -5452,7 +5434,7 @@
     6.0,
     79.0
    ],
-   "rec_td": 0.22
+   "rec_td": 0.23
   },
   {
    "game_id": "2026_05_LV_NE",
@@ -5463,7 +5445,7 @@
    "opp": "LV",
    "status": "",
    "fpts": 2.6,
-   "td_prob": 5.0,
+   "td_prob": 4.0,
    "fpts_med": 1.4,
    "fpts_range": [
     0.0,
@@ -5492,7 +5474,7 @@
    "fpts_med": 9.6,
    "fpts_range": [
     3.6,
-    19.5
+    19.3
    ],
    "carries": 11.2,
    "rush_yds": 51.0,
@@ -5501,7 +5483,7 @@
     22.0,
     86.0
    ],
-   "rush_td": 0.4,
+   "rush_td": 0.41,
    "targets": 2.0,
    "rec": 1.6,
    "rec_yds": 12.0,
@@ -5522,9 +5504,9 @@
    "status": "",
    "fpts": 18.7,
    "td_prob": 12.0,
-   "fpts_med": 18.1,
+   "fpts_med": 18.0,
    "fpts_range": [
-    9.7,
+    9.6,
     29.3
    ],
    "pass_att": 32.0,
@@ -5535,7 +5517,7 @@
     168.0,
     326.0
    ],
-   "pass_td": 1.67,
+   "pass_td": 1.68,
    "pass_int": 0.87,
    "carries": 4.9,
    "rush_yds": 32.0,
@@ -5583,8 +5565,8 @@
    "td_prob": 20.0,
    "fpts_med": 9.8,
    "fpts_range": [
-    3.2,
-    19.7
+    3.3,
+    19.8
    ],
    "targets": 6.7,
    "rec": 4.2,
@@ -5605,8 +5587,8 @@
    "opp": "NE",
    "status": "",
    "fpts": 9.6,
-   "td_prob": 23.0,
-   "fpts_med": 8.6,
+   "td_prob": 22.0,
+   "fpts_med": 8.5,
    "fpts_range": [
     2.1,
     18.7
@@ -5654,12 +5636,12 @@
    "team": "LV",
    "opp": "NE",
    "status": "",
-   "fpts": 19.3,
+   "fpts": 19.4,
    "td_prob": 57.0,
-   "fpts_med": 18.1,
+   "fpts_med": 18.2,
    "fpts_range": [
     8.8,
-    31.4
+    31.5
    ],
    "carries": 17.6,
    "rush_yds": 66.0,
@@ -5692,7 +5674,7 @@
    "fpts_med": 2.1,
    "fpts_range": [
     0.6,
-    7.5
+    7.6
    ],
    "carries": 3.9,
    "rush_yds": 17.0,
@@ -5725,7 +5707,7 @@
    "fpts_med": 13.7,
    "fpts_range": [
     6.2,
-    24.1
+    23.9
    ],
    "pass_att": 34.7,
    "pass_cmp": 22.0,
@@ -5735,7 +5717,7 @@
     153.0,
     299.0
    ],
-   "pass_td": 1.68,
+   "pass_td": 1.69,
    "pass_int": 0.81,
    "carries": 0.8,
    "rush_yds": 5.0,
@@ -5755,8 +5737,8 @@
    "opp": "MIN",
    "status": "",
    "fpts": 11.7,
-   "td_prob": 36.0,
-   "fpts_med": 10.3,
+   "td_prob": 37.0,
+   "fpts_med": 10.4,
    "fpts_range": [
     3.9,
     21.2
@@ -5766,7 +5748,7 @@
    "rush_yds_med": 41.0,
    "rush_yds_range": [
     20.0,
-    77.0
+    78.0
    ],
    "rush_td": 0.35,
    "targets": 3.4,
@@ -5842,7 +5824,7 @@
    "fpts_med": 17.4,
    "fpts_range": [
     8.1,
-    30.6
+    30.5
    ],
    "targets": 11.2,
    "rec": 7.1,
@@ -5867,14 +5849,14 @@
    "fpts_med": 3.9,
    "fpts_range": [
     1.3,
-    10.8
+    10.9
    ],
    "carries": 7.0,
    "rush_yds": 27.0,
    "rush_yds_med": 23.0,
    "rush_yds_range": [
     9.0,
-    49.0
+    50.0
    ],
    "rush_td": 0.14,
    "targets": 1.1,
@@ -5897,7 +5879,7 @@
    "status": "",
    "fpts": 9.6,
    "td_prob": 24.0,
-   "fpts_med": 8.2,
+   "fpts_med": 8.4,
    "fpts_range": [
     2.1,
     18.6
@@ -5925,7 +5907,7 @@
    "fpts_med": 2.2,
    "fpts_range": [
     0.1,
-    9.2
+    9.3
    ],
    "targets": 2.3,
    "rec": 1.3,
@@ -5947,18 +5929,18 @@
    "status": "",
    "fpts": 17.9,
    "td_prob": 15.0,
-   "fpts_med": 17.1,
+   "fpts_med": 17.3,
    "fpts_range": [
-    9.4,
-    27.8
+    9.3,
+    28.0
    ],
    "pass_att": 36.0,
-   "pass_cmp": 22.2,
+   "pass_cmp": 22.1,
    "pass_yds": 246.0,
    "pass_yds_med": 237.0,
    "pass_yds_range": [
     170.0,
-    334.0
+    333.0
    ],
    "pass_td": 1.48,
    "pass_int": 0.73,
@@ -5966,7 +5948,7 @@
    "rush_yds": 27.0,
    "rush_yds_med": 23.0,
    "rush_yds_range": [
-    9.0,
+    10.0,
     47.0
    ],
    "rush_td": 0.17
@@ -5980,18 +5962,18 @@
    "opp": "NO",
    "status": "",
    "fpts": 22.2,
-   "td_prob": 66.0,
+   "td_prob": 67.0,
    "fpts_med": 20.7,
    "fpts_range": [
-    10.8,
-    35.0
+    10.7,
+    34.9
    ],
    "carries": 22.1,
    "rush_yds": 96.0,
    "rush_yds_med": 88.0,
    "rush_yds_range": [
     52.0,
-    149.0
+    148.0
    ],
    "rush_td": 0.86,
    "targets": 4.5,
@@ -6013,11 +5995,11 @@
    "opp": "NO",
    "status": "",
    "fpts": 12.6,
-   "td_prob": 35.0,
+   "td_prob": 34.0,
    "fpts_med": 11.5,
    "fpts_range": [
     3.9,
-    22.8
+    22.7
    ],
    "targets": 6.6,
    "rec": 5.3,
@@ -6025,7 +6007,7 @@
    "rec_yds_med": 39.0,
    "rec_yds_range": [
     13.0,
-    91.0
+    92.0
    ],
    "rec_td": 0.41
   },
@@ -6041,8 +6023,8 @@
    "td_prob": 34.0,
    "fpts_med": 11.1,
    "fpts_range": [
-    3.9,
-    22.1
+    3.8,
+    22.0
    ],
    "targets": 6.7,
    "rec": 4.4,
@@ -6067,7 +6049,7 @@
    "fpts_med": 10.1,
    "fpts_range": [
     3.7,
-    20.1
+    20.0
    ],
    "targets": 6.7,
    "rec": 3.9,
@@ -6088,11 +6070,11 @@
    "opp": "NO",
    "status": "",
    "fpts": 14.2,
-   "td_prob": 0.0,
+   "td_prob": 1.0,
    "fpts_med": 13.5,
    "fpts_range": [
     6.5,
-    23.1
+    23.2
    ],
    "pass_att": 29.9,
    "pass_cmp": 19.2,
@@ -7006,9 +6988,9 @@
    "status": "",
    "fpts": 14.5,
    "td_prob": 5.0,
-   "fpts_med": 13.8,
+   "fpts_med": 13.7,
    "fpts_range": [
-    7.1,
+    7.0,
     22.9
    ],
    "pass_att": 35.5,
@@ -7554,22 +7536,22 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 11.0,
-   "td_prob": 27.0,
-   "fpts_med": 9.7,
+   "fpts": 11.4,
+   "td_prob": 28.0,
+   "fpts_med": 10.2,
    "fpts_range": [
-    3.0,
-    20.6
+    3.3,
+    20.7
    ],
-   "targets": 6.0,
-   "rec": 4.3,
-   "rec_yds": 47.0,
-   "rec_yds_med": 39.0,
+   "targets": 6.2,
+   "rec": 4.5,
+   "rec_yds": 49.0,
+   "rec_yds_med": 41.0,
    "rec_yds_range": [
-    11.0,
-    92.0
+    12.0,
+    95.0
    ],
-   "rec_td": 0.33
+   "rec_td": 0.34
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7579,22 +7561,22 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 10.3,
-   "td_prob": 26.0,
-   "fpts_med": 9.3,
+   "fpts": 10.7,
+   "td_prob": 27.0,
+   "fpts_med": 9.6,
    "fpts_range": [
-    2.9,
-    19.3
+    3.1,
+    19.9
    ],
-   "targets": 6.0,
-   "rec": 3.6,
-   "rec_yds": 49.0,
-   "rec_yds_med": 41.0,
+   "targets": 6.3,
+   "rec": 3.8,
+   "rec_yds": 51.0,
+   "rec_yds_med": 43.0,
    "rec_yds_range": [
-    12.0,
-    95.0
+    13.0,
+    99.0
    ],
-   "rec_td": 0.3
+   "rec_td": 0.31
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7604,22 +7586,22 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 3.6,
-   "td_prob": 10.0,
-   "fpts_med": 2.3,
+   "fpts": 3.8,
+   "td_prob": 11.0,
+   "fpts_med": 2.4,
    "fpts_range": [
     0.1,
-    9.1
+    9.4
    ],
-   "targets": 2.2,
-   "rec": 1.3,
-   "rec_yds": 16.0,
+   "targets": 2.3,
+   "rec": 1.4,
+   "rec_yds": 17.0,
    "rec_yds_med": 9.0,
    "rec_yds_range": [
-    0.0,
-    43.0
+    1.0,
+    45.0
    ],
-   "rec_td": 0.11
+   "rec_td": 0.12
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7629,28 +7611,28 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 5.8,
+   "fpts": 5.9,
    "td_prob": 25.0,
-   "fpts_med": 4.4,
+   "fpts_med": 4.5,
    "fpts_range": [
     1.0,
-    12.1
+    12.5
    ],
    "carries": 4.5,
    "rush_yds": 21.0,
-   "rush_yds_med": 17.0,
+   "rush_yds_med": 16.0,
    "rush_yds_range": [
     4.0,
-    43.0
+    44.0
    ],
    "rush_td": 0.15,
    "targets": 1.4,
    "rec": 1.2,
-   "rec_yds": 7.0,
-   "rec_yds_med": 1.0,
+   "rec_yds": 8.0,
+   "rec_yds_med": 2.0,
    "rec_yds_range": [
     0.0,
-    21.0
+    23.0
    ],
    "rec_td": 0.14
   },
@@ -7662,11 +7644,11 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 3.5,
+   "fpts": 3.6,
    "td_prob": 14.0,
-   "fpts_med": 1.9,
+   "fpts_med": 2.2,
    "fpts_range": [
-    0.0,
+    0.1,
     8.9
    ],
    "targets": 1.9,
@@ -7677,7 +7659,7 @@
     0.0,
     39.0
    ],
-   "rec_td": 0.15
+   "rec_td": 0.16
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7687,22 +7669,22 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 2.5,
+   "fpts": 2.6,
    "td_prob": 4.0,
-   "fpts_med": 1.2,
+   "fpts_med": 1.3,
    "fpts_range": [
     0.0,
-    7.0
+    7.3
    ],
-   "targets": 1.6,
-   "rec": 1.1,
+   "targets": 1.7,
+   "rec": 1.2,
    "rec_yds": 11.0,
    "rec_yds_med": 4.0,
    "rec_yds_range": [
     0.0,
-    30.0
+    33.0
    ],
-   "rec_td": 0.04
+   "rec_td": 0.05
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7712,15 +7694,15 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 14.4,
+   "fpts": 14.5,
    "td_prob": 47.0,
-   "fpts_med": 12.9,
+   "fpts_med": 13.0,
    "fpts_range": [
-    5.8,
+    5.9,
     24.3
    ],
    "carries": 18.5,
-   "rush_yds": 82.0,
+   "rush_yds": 83.0,
    "rush_yds_med": 73.0,
    "rush_yds_range": [
     40.0,
@@ -7729,13 +7711,13 @@
    "rush_td": 0.53,
    "targets": 1.7,
    "rec": 1.3,
-   "rec_yds": 9.0,
+   "rec_yds": 10.0,
    "rec_yds_med": 3.0,
    "rec_yds_range": [
     0.0,
-    27.0
+    28.0
    ],
-   "rec_td": 0.12
+   "rec_td": 0.13
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -7745,17 +7727,17 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 6.2,
-   "td_prob": 18.0,
-   "fpts_med": 5.1,
+   "fpts": 6.4,
+   "td_prob": 16.0,
+   "fpts_med": 5.2,
    "fpts_range": [
     0.7,
-    13.4
+    13.6
    ],
-   "targets": 3.6,
-   "rec": 2.3,
-   "rec_yds": 27.0,
-   "rec_yds_med": 19.0,
+   "targets": 3.8,
+   "rec": 2.4,
+   "rec_yds": 29.0,
+   "rec_yds_med": 20.0,
    "rec_yds_range": [
     3.0,
     63.0
@@ -7772,18 +7754,18 @@
    "status": "",
    "fpts": 16.2,
    "td_prob": 4.0,
-   "fpts_med": 15.4,
+   "fpts_med": 15.3,
    "fpts_range": [
-    7.7,
-    25.8
+    7.8,
+    25.7
    ],
    "pass_att": 31.7,
-   "pass_cmp": 19.9,
+   "pass_cmp": 20.0,
    "pass_yds": 218.0,
-   "pass_yds_med": 212.0,
+   "pass_yds_med": 211.0,
    "pass_yds_range": [
     153.0,
-    295.0
+    296.0
    ],
    "pass_td": 1.67,
    "pass_int": 0.74,
@@ -7791,7 +7773,7 @@
    "rush_yds": 20.0,
    "rush_yds_med": 17.0,
    "rush_yds_range": [
-    5.0,
+    6.0,
     39.0
    ],
    "rush_td": 0.04
@@ -7805,11 +7787,11 @@
    "opp": "WAS",
    "status": "",
    "fpts": 4.3,
-   "td_prob": 15.0,
-   "fpts_med": 2.9,
+   "td_prob": 16.0,
+   "fpts_med": 3.0,
    "fpts_range": [
     0.6,
-    9.8
+    9.6
    ],
    "carries": 4.1,
    "rush_yds": 16.0,
@@ -7937,7 +7919,7 @@
    "opp": "WAS",
    "status": "",
    "fpts": 5.7,
-   "td_prob": 16.0,
+   "td_prob": 17.0,
    "fpts_med": 4.3,
    "fpts_range": [
     1.2,
@@ -7996,10 +7978,10 @@
    "status": "",
    "fpts": 12.2,
    "td_prob": 35.0,
-   "fpts_med": 11.0,
+   "fpts_med": 10.9,
    "fpts_range": [
     4.5,
-    21.3
+    21.5
    ],
    "carries": 12.8,
    "rush_yds": 51.0,
@@ -8056,7 +8038,7 @@
    "td_prob": 1.0,
    "fpts_med": 13.4,
    "fpts_range": [
-    6.4,
+    6.3,
     23.2
    ],
    "pass_att": 34.1,
@@ -8571,18 +8553,18 @@
    "status": "",
    "fpts": 4.2,
    "td_prob": 9.0,
-   "fpts_med": 2.6,
+   "fpts_med": 2.7,
    "fpts_range": [
     0.1,
-    10.2
+    10.7
    ],
-   "targets": 2.2,
+   "targets": 2.3,
    "rec": 1.6,
    "rec_yds": 20.0,
-   "rec_yds_med": 10.0,
+   "rec_yds_med": 11.0,
    "rec_yds_range": [
-    0.0,
-    53.0
+    1.0,
+    54.0
    ],
    "rec_td": 0.1
   },
@@ -8595,27 +8577,27 @@
    "opp": "DET",
    "status": "",
    "fpts": 3.1,
-   "td_prob": 12.0,
+   "td_prob": 13.0,
    "fpts_med": 1.7,
    "fpts_range": [
     0.3,
-    7.6
+    7.7
    ],
-   "carries": 3.0,
-   "rush_yds": 13.0,
+   "carries": 2.9,
+   "rush_yds": 12.0,
    "rush_yds_med": 9.0,
    "rush_yds_range": [
     2.0,
-    28.0
+    27.0
    ],
    "rush_td": 0.1,
-   "targets": 0.7,
+   "targets": 0.8,
    "rec": 0.6,
    "rec_yds": 4.0,
    "rec_yds_med": 0.0,
    "rec_yds_range": [
     0.0,
-    11.0
+    14.0
    ],
    "rec_td": 0.03
   },
@@ -8632,23 +8614,23 @@
    "fpts_med": 5.9,
    "fpts_range": [
     1.5,
-    14.7
+    14.6
    ],
-   "carries": 6.4,
-   "rush_yds": 26.0,
+   "carries": 6.3,
+   "rush_yds": 25.0,
    "rush_yds_med": 21.0,
    "rush_yds_range": [
-    7.0,
+    8.0,
     48.0
    ],
    "rush_td": 0.24,
-   "targets": 1.8,
+   "targets": 1.9,
    "rec": 1.6,
-   "rec_yds": 10.0,
+   "rec_yds": 11.0,
    "rec_yds_med": 3.0,
    "rec_yds_range": [
     0.0,
-    32.0
+    31.0
    ],
    "rec_td": 0.09
   },
@@ -8660,22 +8642,22 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 21.7,
-   "td_prob": 46.0,
-   "fpts_med": 20.5,
+   "fpts": 22.1,
+   "td_prob": 45.0,
+   "fpts_med": 20.6,
    "fpts_range": [
-    9.1,
-    36.3
+    9.3,
+    36.9
    ],
-   "targets": 12.3,
-   "rec": 9.3,
-   "rec_yds": 87.0,
+   "targets": 12.6,
+   "rec": 9.5,
+   "rec_yds": 89.0,
    "rec_yds_med": 79.0,
    "rec_yds_range": [
-    30.0,
-    160.0
+    31.0,
+    164.0
    ],
-   "rec_td": 0.61
+   "rec_td": 0.6
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -8685,22 +8667,22 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 19.2,
+   "fpts": 19.5,
    "td_prob": 42.0,
-   "fpts_med": 17.7,
+   "fpts_med": 18.3,
    "fpts_range": [
-    7.7,
-    32.2
+    8.0,
+    32.8
    ],
-   "targets": 11.3,
-   "rec": 7.1,
-   "rec_yds": 88.0,
-   "rec_yds_med": 77.0,
+   "targets": 11.5,
+   "rec": 7.2,
+   "rec_yds": 90.0,
+   "rec_yds_med": 79.0,
    "rec_yds_range": [
     31.0,
-    159.0
+    161.0
    ],
-   "rec_td": 0.56
+   "rec_td": 0.55
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -8710,9 +8692,9 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 3.5,
+   "fpts": 3.6,
    "td_prob": 9.0,
-   "fpts_med": 2.0,
+   "fpts_med": 1.9,
    "fpts_range": [
     0.0,
     9.4
@@ -8723,7 +8705,7 @@
    "rec_yds_med": 6.0,
    "rec_yds_range": [
     0.0,
-    42.0
+    41.0
    ],
    "rec_td": 0.09
   },
@@ -8735,20 +8717,20 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 7.0,
-   "td_prob": 17.0,
-   "fpts_med": 5.8,
+   "fpts": 7.1,
+   "td_prob": 18.0,
+   "fpts_med": 6.1,
    "fpts_range": [
-    0.8,
-    15.0
+    0.9,
+    15.1
    ],
-   "targets": 4.2,
-   "rec": 2.4,
+   "targets": 4.3,
+   "rec": 2.5,
    "rec_yds": 35.0,
-   "rec_yds_med": 24.0,
+   "rec_yds_med": 26.0,
    "rec_yds_range": [
     4.0,
-    80.0
+    81.0
    ],
    "rec_td": 0.19
   },
@@ -8760,24 +8742,24 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 11.7,
-   "td_prob": 39.0,
+   "fpts": 11.6,
+   "td_prob": 40.0,
    "fpts_med": 10.4,
    "fpts_range": [
     4.1,
     20.7
    ],
-   "carries": 12.6,
-   "rush_yds": 55.0,
-   "rush_yds_med": 49.0,
+   "carries": 12.4,
+   "rush_yds": 54.0,
+   "rush_yds_med": 48.0,
    "rush_yds_range": [
     25.0,
-    89.0
+    88.0
    ],
-   "rush_td": 0.39,
+   "rush_td": 0.38,
    "targets": 2.3,
-   "rec": 1.8,
-   "rec_yds": 12.0,
+   "rec": 1.9,
+   "rec_yds": 13.0,
    "rec_yds_med": 4.0,
    "rec_yds_range": [
     0.0,
@@ -8793,22 +8775,22 @@
    "team": "ARI",
    "opp": "DET",
    "status": "",
-   "fpts": 19.6,
-   "td_prob": 13.0,
+   "fpts": 19.5,
+   "td_prob": 12.0,
    "fpts_med": 18.8,
    "fpts_range": [
-    10.1,
-    30.7
+    10.0,
+    30.6
    ],
-   "pass_att": 40.3,
-   "pass_cmp": 26.4,
-   "pass_yds": 278.0,
-   "pass_yds_med": 270.0,
+   "pass_att": 40.7,
+   "pass_cmp": 26.6,
+   "pass_yds": 281.0,
+   "pass_yds_med": 272.0,
    "pass_yds_range": [
-    191.0,
-    380.0
+    194.0,
+    381.0
    ],
-   "pass_td": 1.82,
+   "pass_td": 1.79,
    "pass_int": 0.87,
    "carries": 4.1,
    "rush_yds": 21.0,
@@ -8827,22 +8809,22 @@
    "team": "DET",
    "opp": "ARI",
    "status": "",
-   "fpts": 19.3,
-   "td_prob": 48.0,
-   "fpts_med": 18.0,
+   "fpts": 19.2,
+   "td_prob": 49.0,
+   "fpts_med": 17.9,
    "fpts_range": [
     7.8,
     32.4
    ],
-   "targets": 9.8,
-   "rec": 6.7,
-   "rec_yds": 84.0,
+   "targets": 9.7,
+   "rec": 6.6,
+   "rec_yds": 83.0,
    "rec_yds_med": 74.0,
    "rec_yds_range": [
-    29.0,
-    152.0
+    28.0,
+    150.0
    ],
-   "rec_td": 0.68
+   "rec_td": 0.69
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -8852,20 +8834,20 @@
    "team": "DET",
    "opp": "ARI",
    "status": "",
-   "fpts": 11.7,
-   "td_prob": 24.0,
-   "fpts_med": 10.4,
+   "fpts": 11.6,
+   "td_prob": 25.0,
+   "fpts_med": 10.3,
    "fpts_range": [
-    3.2,
-    21.6
+    3.3,
+    21.3
    ],
-   "targets": 5.9,
+   "targets": 5.8,
    "rec": 3.8,
-   "rec_yds": 61.0,
+   "rec_yds": 60.0,
    "rec_yds_med": 50.0,
    "rec_yds_range": [
     15.0,
-    118.0
+    117.0
    ],
    "rec_td": 0.27
   },
@@ -8877,22 +8859,22 @@
    "team": "DET",
    "opp": "ARI",
    "status": "",
-   "fpts": 10.2,
+   "fpts": 10.1,
    "td_prob": 28.0,
-   "fpts_med": 8.8,
+   "fpts_med": 8.7,
    "fpts_range": [
     2.1,
-    19.6
+    19.7
    ],
    "targets": 5.0,
-   "rec": 3.8,
+   "rec": 3.7,
    "rec_yds": 43.0,
-   "rec_yds_med": 33.0,
+   "rec_yds_med": 32.0,
    "rec_yds_range": [
     7.0,
-    91.0
+    90.0
    ],
-   "rec_td": 0.34
+   "rec_td": 0.35
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -8902,30 +8884,30 @@
    "team": "DET",
    "opp": "ARI",
    "status": "",
-   "fpts": 30.5,
-   "td_prob": 76.0,
-   "fpts_med": 28.9,
+   "fpts": 30.7,
+   "td_prob": 77.0,
+   "fpts_med": 29.1,
    "fpts_range": [
-    15.9,
-    46.4
+    16.3,
+    46.6
    ],
-   "carries": 25.8,
-   "rush_yds": 122.0,
-   "rush_yds_med": 112.0,
+   "carries": 26.2,
+   "rush_yds": 124.0,
+   "rush_yds_med": 114.0,
    "rush_yds_range": [
-    66.0,
-    188.0
+    67.0,
+    190.0
    ],
-   "rush_td": 1.11,
+   "rush_td": 1.13,
    "targets": 6.1,
    "rec": 5.0,
    "rec_yds": 41.0,
    "rec_yds_med": 31.0,
    "rec_yds_range": [
-    7.0,
-    89.0
+    6.0,
+    88.0
    ],
-   "rec_td": 0.41
+   "rec_td": 0.42
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -8936,11 +8918,11 @@
    "opp": "ARI",
    "status": "",
    "fpts": 5.1,
-   "td_prob": 16.0,
-   "fpts_med": 3.8,
+   "td_prob": 17.0,
+   "fpts_med": 3.7,
    "fpts_range": [
     0.2,
-    11.8
+    11.9
    ],
    "targets": 2.6,
    "rec": 1.6,
@@ -8948,7 +8930,7 @@
    "rec_yds_med": 15.0,
    "rec_yds_range": [
     1.0,
-    61.0
+    60.0
    ],
    "rec_td": 0.18
   },
@@ -8962,27 +8944,27 @@
    "status": "",
    "fpts": 18.5,
    "td_prob": 2.0,
-   "fpts_med": 17.6,
+   "fpts_med": 17.7,
    "fpts_range": [
     9.4,
-    29.4
+    28.9
    ],
-   "pass_att": 34.0,
-   "pass_cmp": 22.5,
-   "pass_yds": 270.0,
-   "pass_yds_med": 260.0,
+   "pass_att": 33.6,
+   "pass_cmp": 22.3,
+   "pass_yds": 267.0,
+   "pass_yds_med": 257.0,
    "pass_yds_range": [
-    187.0,
-    365.0
+    185.0,
+    360.0
    ],
-   "pass_td": 1.96,
+   "pass_td": 2.0,
    "pass_int": 0.5,
    "carries": 1.3,
    "rush_yds": 7.0,
    "rush_yds_med": 5.0,
    "rush_yds_range": [
     1.0,
-    16.0
+    15.0
    ],
    "rush_td": 0.02
   },
@@ -8999,7 +8981,7 @@
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
-    9.7
+    9.8
    ],
    "targets": 2.2,
    "rec": 1.3,
@@ -9020,11 +9002,11 @@
    "opp": "CHI",
    "status": "",
    "fpts": 14.5,
-   "td_prob": 39.0,
+   "td_prob": 38.0,
    "fpts_med": 13.3,
    "fpts_range": [
-    5.1,
-    25.1
+    5.0,
+    25.4
    ],
    "targets": 7.3,
    "rec": 4.6,
@@ -9034,7 +9016,7 @@
     22.0,
     128.0
    ],
-   "rec_td": 0.48
+   "rec_td": 0.49
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -9046,10 +9028,10 @@
    "status": "",
    "fpts": 5.6,
    "td_prob": 20.0,
-   "fpts_med": 4.1,
+   "fpts_med": 4.2,
    "fpts_range": [
     1.2,
-    11.6
+    11.5
    ],
    "carries": 5.3,
    "rush_yds": 24.0,
@@ -9079,7 +9061,7 @@
    "status": "",
    "fpts": 10.8,
    "td_prob": 31.0,
-   "fpts_med": 9.6,
+   "fpts_med": 9.5,
    "fpts_range": [
     2.7,
     20.2
@@ -9092,7 +9074,7 @@
     9.0,
     92.0
    ],
-   "rec_td": 0.34
+   "rec_td": 0.35
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -9103,18 +9085,18 @@
    "opp": "CHI",
    "status": "",
    "fpts": 8.9,
-   "td_prob": 32.0,
-   "fpts_med": 7.7,
+   "td_prob": 33.0,
+   "fpts_med": 7.9,
    "fpts_range": [
     2.5,
-    16.6
+    16.9
    ],
    "carries": 8.4,
    "rush_yds": 34.0,
    "rush_yds_med": 29.0,
    "rush_yds_range": [
     13.0,
-    59.0
+    60.0
    ],
    "rush_td": 0.26,
    "targets": 2.3,
@@ -9160,11 +9142,11 @@
    "opp": "CHI",
    "status": "",
    "fpts": 13.0,
-   "td_prob": 27.0,
-   "fpts_med": 11.8,
+   "td_prob": 28.0,
+   "fpts_med": 11.9,
    "fpts_range": [
-    4.5,
-    22.8
+    4.6,
+    22.9
    ],
    "carries": 0.7,
    "rush_yds": 5.0,
@@ -9194,10 +9176,10 @@
    "status": "",
    "fpts": 16.4,
    "td_prob": 3.0,
-   "fpts_med": 15.5,
+   "fpts_med": 15.6,
    "fpts_range": [
     8.2,
-    25.8
+    26.1
    ],
    "pass_att": 31.8,
    "pass_cmp": 19.1,
@@ -9207,13 +9189,13 @@
     165.0,
     325.0
    ],
-   "pass_td": 1.61,
+   "pass_td": 1.62,
    "pass_int": 0.59,
    "carries": 2.3,
    "rush_yds": 13.0,
    "rush_yds_med": 11.0,
    "rush_yds_range": [
-    4.0,
+    3.0,
     26.0
    ],
    "rush_td": 0.03
@@ -9231,7 +9213,7 @@
    "fpts_med": 6.0,
    "fpts_range": [
     1.0,
-    14.9
+    15.0
    ],
    "targets": 3.8,
    "rec": 2.8,
@@ -9239,7 +9221,7 @@
    "rec_yds_med": 23.0,
    "rec_yds_range": [
     4.0,
-    73.0
+    72.0
    ],
    "rec_td": 0.18
   },
@@ -9252,11 +9234,11 @@
    "opp": "GB",
    "status": "",
    "fpts": 16.1,
-   "td_prob": 47.0,
+   "td_prob": 48.0,
    "fpts_med": 14.9,
    "fpts_range": [
     6.6,
-    27.0
+    27.1
    ],
    "carries": 16.6,
    "rush_yds": 77.0,
@@ -9265,7 +9247,7 @@
     35.0,
     127.0
    ],
-   "rush_td": 0.55,
+   "rush_td": 0.56,
    "targets": 3.3,
    "rec": 2.5,
    "rec_yds": 20.0,
@@ -9289,7 +9271,7 @@
    "fpts_med": 2.7,
    "fpts_range": [
     0.1,
-    10.2
+    10.3
    ],
    "targets": 2.7,
    "rec": 1.7,
@@ -9311,7 +9293,7 @@
    "status": "",
    "fpts": 9.8,
    "td_prob": 19.0,
-   "fpts_med": 8.6,
+   "fpts_med": 8.7,
    "fpts_range": [
     2.5,
     18.6
@@ -9324,7 +9306,7 @@
     12.0,
     100.0
    ],
-   "rec_td": 0.21
+   "rec_td": 0.22
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -9335,21 +9317,21 @@
    "opp": "GB",
    "status": "",
    "fpts": 11.8,
-   "td_prob": 31.0,
-   "fpts_med": 10.6,
+   "td_prob": 32.0,
+   "fpts_med": 10.7,
    "fpts_range": [
     3.2,
-    22.3
+    22.2
    ],
    "targets": 7.0,
    "rec": 4.5,
    "rec_yds": 50.0,
-   "rec_yds_med": 42.0,
+   "rec_yds_med": 41.0,
    "rec_yds_range": [
     11.0,
     101.0
    ],
-   "rec_td": 0.37
+   "rec_td": 0.38
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -9359,19 +9341,19 @@
    "team": "CHI",
    "opp": "GB",
    "status": "",
-   "fpts": 11.2,
-   "td_prob": 40.0,
-   "fpts_med": 10.1,
+   "fpts": 11.3,
+   "td_prob": 39.0,
+   "fpts_med": 10.0,
    "fpts_range": [
     3.8,
-    20.2
+    20.1
    ],
    "carries": 12.7,
    "rush_yds": 59.0,
    "rush_yds_med": 51.0,
    "rush_yds_range": [
     24.0,
-    100.0
+    101.0
    ],
    "rush_td": 0.43,
    "targets": 1.8,
@@ -9393,11 +9375,11 @@
    "opp": "GB",
    "status": "",
    "fpts": 12.5,
-   "td_prob": 29.0,
+   "td_prob": 28.0,
    "fpts_med": 11.4,
    "fpts_range": [
     3.8,
-    22.6
+    22.8
    ],
    "carries": 0.6,
    "rush_yds": 4.0,
@@ -9425,11 +9407,11 @@
    "team": "CHI",
    "opp": "GB",
    "status": "",
-   "fpts": 17.2,
-   "td_prob": 5.0,
+   "fpts": 17.3,
+   "td_prob": 6.0,
    "fpts_med": 16.5,
    "fpts_range": [
-    8.9,
+    8.7,
     26.8
    ],
    "pass_att": 35.8,
@@ -9440,14 +9422,14 @@
     172.0,
     336.0
    ],
-   "pass_td": 1.43,
+   "pass_td": 1.44,
    "pass_int": 0.73,
    "carries": 3.9,
    "rush_yds": 26.0,
    "rush_yds_med": 21.0,
    "rush_yds_range": [
     6.0,
-    51.0
+    52.0
    ],
    "rush_td": 0.05
   },
