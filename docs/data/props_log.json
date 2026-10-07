@@ -31,7 +31,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0040784|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0040784|anytime_td",
@@ -64,7 +65,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0035640|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0035640|anytime_td",
@@ -97,7 +99,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0041037|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0041037|anytime_td",
@@ -128,9 +131,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-03T18:54+00:00"
-   }
+    "profit": 0.312,
+    "graded_at": "2026-10-03T18:54+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0040663|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0040663|anytime_td",
@@ -163,7 +168,8 @@
     "lean_result": "win",
     "profit": 2.85,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0041547|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0041547|anytime_td",
@@ -196,7 +202,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0033537|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0033537|anytime_td",
@@ -227,9 +234,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-03T18:54+00:00"
-   }
+    "profit": 0.215,
+    "graded_at": "2026-10-03T18:54+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0036252|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0036252|anytime_td",
@@ -260,9 +269,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-03T18:54+00:00"
-   }
+    "profit": 0.209,
+    "graded_at": "2026-10-03T18:54+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0036894|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0036894|anytime_td",
@@ -295,7 +306,8 @@
     "lean_result": "win",
     "profit": 4.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0039739|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0039739|anytime_td",
@@ -328,7 +340,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0038558|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0038558|anytime_td",
@@ -361,7 +374,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0040466|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0040466|anytime_td",
@@ -394,7 +408,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0036407|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0036407|anytime_td",
@@ -427,7 +442,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0041489|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0041489|anytime_td",
@@ -460,7 +476,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0023459|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0023459|anytime_td",
@@ -491,9 +508,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-03T18:54+00:00"
-   }
+    "profit": 0.022,
+    "graded_at": "2026-10-03T18:54+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0040782|anytime_td": {
    "key": "2026_04_PIT_CLE|00-0040782|anytime_td",
@@ -526,7 +545,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0023459|pass_yds": {
    "key": "2026_04_PIT_CLE|00-0023459|pass_yds",
@@ -559,7 +579,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_PIT_CLE|00-0033537|pass_yds": {
    "key": "2026_04_PIT_CLE|00-0033537|pass_yds",
@@ -592,7 +613,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0035640|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0035640|rec_yds",
@@ -625,7 +647,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0040663|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0040663|rec_yds",
@@ -658,7 +681,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0041037|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0041037|rec_yds",
@@ -691,7 +715,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0041547|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0041547|rec_yds",
@@ -724,7 +749,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0036252|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0036252|rec_yds",
@@ -757,7 +783,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0036894|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0036894|rec_yds",
@@ -790,7 +817,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0037228|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0037228|rec_yds",
@@ -823,7 +851,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0039739|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0039739|rec_yds",
@@ -856,7 +885,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0038558|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0038558|rec_yds",
@@ -889,7 +919,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0036407|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0036407|rec_yds",
@@ -922,7 +953,8 @@
     "lean_result": "win",
     "profit": 0.855,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0040466|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0040466|rec_yds",
@@ -955,7 +987,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0040784|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0040784|rec_yds",
@@ -988,7 +1021,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0041489|rec_yds": {
    "key": "2026_04_PIT_CLE|00-0041489|rec_yds",
@@ -1021,7 +1055,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0040663|rec": {
    "key": "2026_04_PIT_CLE|00-0040663|rec",
@@ -1054,7 +1089,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0041547|rec": {
    "key": "2026_04_PIT_CLE|00-0041547|rec",
@@ -1087,7 +1123,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0035640|rec": {
    "key": "2026_04_PIT_CLE|00-0035640|rec",
@@ -1120,7 +1157,8 @@
     "lean_result": "win",
     "profit": 0.725,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0037228|rec": {
    "key": "2026_04_PIT_CLE|00-0037228|rec",
@@ -1153,7 +1191,8 @@
     "lean_result": "win",
     "profit": 1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0036894|rec": {
    "key": "2026_04_PIT_CLE|00-0036894|rec",
@@ -1186,7 +1225,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_PIT_CLE|00-0041037|rec": {
    "key": "2026_04_PIT_CLE|00-0041037|rec",
@@ -1219,7 +1259,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0036252|rec": {
    "key": "2026_04_PIT_CLE|00-0036252|rec",
@@ -1252,7 +1293,8 @@
     "lean_result": "win",
     "profit": 0.581,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0039739|rec": {
    "key": "2026_04_PIT_CLE|00-0039739|rec",
@@ -1285,7 +1327,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0040784|rec": {
    "key": "2026_04_PIT_CLE|00-0040784|rec",
@@ -1318,7 +1361,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0040466|rec": {
    "key": "2026_04_PIT_CLE|00-0040466|rec",
@@ -1351,7 +1395,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0038558|rec": {
    "key": "2026_04_PIT_CLE|00-0038558|rec",
@@ -1384,7 +1429,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0036407|rec": {
    "key": "2026_04_PIT_CLE|00-0036407|rec",
@@ -1417,7 +1463,8 @@
     "lean_result": "win",
     "profit": 1.16,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0041489|rec": {
    "key": "2026_04_PIT_CLE|00-0041489|rec",
@@ -1450,7 +1497,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0037228|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0037228|rush_yds",
@@ -1483,7 +1531,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_PIT_CLE|00-0040784|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0040784|rush_yds",
@@ -1516,7 +1565,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_PIT_CLE|00-0033537|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0033537|rush_yds",
@@ -1549,7 +1599,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0040466|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0040466|rush_yds",
@@ -1582,7 +1633,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_PIT_CLE|00-0023459|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0023459|rush_yds",
@@ -1615,7 +1667,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_PIT_CLE|00-0041547|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0041547|rush_yds",
@@ -1648,7 +1701,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-03T18:54+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0036223|anytime_td": {
    "key": "2026_04_IND_WAS|00-0036223|anytime_td",
@@ -1681,7 +1735,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0040242|anytime_td": {
    "key": "2026_04_IND_WAS|00-0040242|anytime_td",
@@ -1714,7 +1769,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0040128|anytime_td": {
    "key": "2026_04_IND_WAS|00-0040128|anytime_td",
@@ -1747,7 +1803,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0038997|anytime_td": {
    "key": "2026_04_IND_WAS|00-0038997|anytime_td",
@@ -1780,7 +1837,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0031588|anytime_td": {
    "key": "2026_04_IND_WAS|00-0031588|anytime_td",
@@ -1811,9 +1869,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.439,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0035710|anytime_td": {
    "key": "2026_04_IND_WAS|00-0035710|anytime_td",
@@ -1846,7 +1906,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0032268|anytime_td": {
    "key": "2026_04_IND_WAS|00-0032268|anytime_td",
@@ -1877,9 +1938,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.196,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0041040|anytime_td": {
    "key": "2026_04_IND_WAS|00-0041040|anytime_td",
@@ -1912,7 +1975,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0037742|anytime_td": {
    "key": "2026_04_IND_WAS|00-0037742|anytime_td",
@@ -1945,7 +2009,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0036626|anytime_td": {
    "key": "2026_04_IND_WAS|00-0036626|anytime_td",
@@ -1978,7 +2043,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0040164|anytime_td": {
    "key": "2026_04_IND_WAS|00-0040164|anytime_td",
@@ -2011,7 +2077,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0036628|anytime_td": {
    "key": "2026_04_IND_WAS|00-0036628|anytime_td",
@@ -2044,7 +2111,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0035710|pass_yds": {
    "key": "2026_04_IND_WAS|00-0035710|pass_yds",
@@ -2077,7 +2145,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0032268|pass_yds": {
    "key": "2026_04_IND_WAS|00-0032268|pass_yds",
@@ -2110,7 +2179,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0038997|rec_yds": {
    "key": "2026_04_IND_WAS|00-0038997|rec_yds",
@@ -2143,7 +2213,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0040128|rec_yds": {
    "key": "2026_04_IND_WAS|00-0040128|rec_yds",
@@ -2176,7 +2247,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0036223|rec_yds": {
    "key": "2026_04_IND_WAS|00-0036223|rec_yds",
@@ -2209,7 +2281,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0038997|rec": {
    "key": "2026_04_IND_WAS|00-0038997|rec",
@@ -2242,7 +2315,8 @@
     "lean_result": "win",
     "profit": 1.11,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0040128|rec": {
    "key": "2026_04_IND_WAS|00-0040128|rec",
@@ -2275,7 +2349,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0036223|rec": {
    "key": "2026_04_IND_WAS|00-0036223|rec",
@@ -2308,7 +2383,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0036223|rush_yds": {
    "key": "2026_04_IND_WAS|00-0036223|rush_yds",
@@ -2341,7 +2417,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0040242|rush_yds": {
    "key": "2026_04_IND_WAS|00-0040242|rush_yds",
@@ -2374,7 +2451,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0032268|rush_yds": {
    "key": "2026_04_IND_WAS|00-0032268|rush_yds",
@@ -2407,7 +2485,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0035710|rush_yds": {
    "key": "2026_04_IND_WAS|00-0035710|rush_yds",
@@ -2440,7 +2519,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0037742|rec_yds": {
    "key": "2026_04_IND_WAS|00-0037742|rec_yds",
@@ -2473,7 +2553,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0037742|rec": {
    "key": "2026_04_IND_WAS|00-0037742|rec",
@@ -2506,7 +2587,8 @@
     "lean_result": "win",
     "profit": 1.12,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0040242|rec_yds": {
    "key": "2026_04_IND_WAS|00-0040242|rec_yds",
@@ -2539,7 +2621,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_IND_WAS|00-0036626|rec_yds": {
    "key": "2026_04_IND_WAS|00-0036626|rec_yds",
@@ -2572,7 +2655,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_IND_WAS|00-0031588|rec": {
    "key": "2026_04_IND_WAS|00-0031588|rec",
@@ -2605,7 +2689,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_IND_WAS|00-0040242|rec": {
    "key": "2026_04_IND_WAS|00-0040242|rec",
@@ -2638,7 +2723,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_IND_WAS|00-0036626|rec": {
    "key": "2026_04_IND_WAS|00-0036626|rec",
@@ -2671,7 +2757,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0032764|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0032764|anytime_td",
@@ -2704,7 +2791,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0039064|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0039064|anytime_td",
@@ -2737,7 +2825,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0034753|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0034753|anytime_td",
@@ -2770,7 +2859,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0035261|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0035261|anytime_td",
@@ -2803,7 +2893,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0034796|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0034796|anytime_td",
@@ -2834,9 +2925,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.35,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0036550|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0036550|anytime_td",
@@ -2869,7 +2962,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0041438|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0041438|anytime_td",
@@ -2900,9 +2994,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.23,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0038117|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0038117|anytime_td",
@@ -2935,7 +3031,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0034975|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0034975|anytime_td",
@@ -2966,9 +3063,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0039032|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0039032|anytime_td",
@@ -3001,7 +3100,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040584|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0040584|anytime_td",
@@ -3034,7 +3134,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040676|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0040676|anytime_td",
@@ -3065,9 +3166,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.103,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0040170|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0040170|anytime_td",
@@ -3100,7 +3203,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0034837|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0034837|anytime_td",
@@ -3133,7 +3237,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040705|anytime_td": {
    "key": "2026_04_TEN_BAL|00-0040705|anytime_td",
@@ -3166,7 +3271,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0034796|pass_yds": {
    "key": "2026_04_TEN_BAL|00-0034796|pass_yds",
@@ -3199,7 +3305,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0040676|pass_yds": {
    "key": "2026_04_TEN_BAL|00-0040676|pass_yds",
@@ -3232,7 +3339,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0039064|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0039064|rec_yds",
@@ -3265,7 +3373,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0041438|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0041438|rec_yds",
@@ -3298,7 +3407,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0034753|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0034753|rec_yds",
@@ -3331,7 +3441,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_TEN_BAL|00-0038117|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0038117|rec_yds",
@@ -3364,7 +3475,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0036550|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0036550|rec_yds",
@@ -3397,7 +3509,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040170|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0040170|rec_yds",
@@ -3430,7 +3543,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0040584|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0040584|rec_yds",
@@ -3463,7 +3577,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0039032|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0039032|rec_yds",
@@ -3496,7 +3611,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0034975|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0034975|rec_yds",
@@ -3529,7 +3645,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0035261|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0035261|rec_yds",
@@ -3562,7 +3679,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0034837|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0034837|rec_yds",
@@ -3595,7 +3713,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_TEN_BAL|00-0032764|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0032764|rec_yds",
@@ -3628,7 +3747,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_TEN_BAL|00-0039064|rec": {
    "key": "2026_04_TEN_BAL|00-0039064|rec",
@@ -3661,7 +3781,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0041438|rec": {
    "key": "2026_04_TEN_BAL|00-0041438|rec",
@@ -3694,7 +3815,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0038117|rec": {
    "key": "2026_04_TEN_BAL|00-0038117|rec",
@@ -3727,7 +3849,8 @@
     "lean_result": "win",
     "profit": 1.27,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0034753|rec": {
    "key": "2026_04_TEN_BAL|00-0034753|rec",
@@ -3760,7 +3883,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040584|rec": {
    "key": "2026_04_TEN_BAL|00-0040584|rec",
@@ -3793,7 +3917,8 @@
     "lean_result": "win",
     "profit": 1.09,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_TEN_BAL|00-0036550|rec": {
    "key": "2026_04_TEN_BAL|00-0036550|rec",
@@ -3826,7 +3951,8 @@
     "lean_result": "win",
     "profit": 0.658,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_TEN_BAL|00-0039032|rec": {
    "key": "2026_04_TEN_BAL|00-0039032|rec",
@@ -3859,7 +3985,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0035261|rec": {
    "key": "2026_04_TEN_BAL|00-0035261|rec",
@@ -3892,7 +4019,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040170|rec": {
    "key": "2026_04_TEN_BAL|00-0040170|rec",
@@ -3925,7 +4053,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0034975|rec": {
    "key": "2026_04_TEN_BAL|00-0034975|rec",
@@ -3958,7 +4087,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0032764|rec": {
    "key": "2026_04_TEN_BAL|00-0032764|rec",
@@ -3991,7 +4121,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0034837|rec": {
    "key": "2026_04_TEN_BAL|00-0034837|rec",
@@ -4024,7 +4155,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0032764|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0032764|rush_yds",
@@ -4057,7 +4189,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_TEN_BAL|00-0035261|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0035261|rush_yds",
@@ -4090,7 +4223,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0034796|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0034796|rush_yds",
@@ -4123,7 +4257,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0034975|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0034975|rush_yds",
@@ -4156,7 +4291,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_TEN_BAL|00-0039032|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0039032|rush_yds",
@@ -4189,7 +4325,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_TEN_BAL|00-0040676|rush_yds": {
    "key": "2026_04_TEN_BAL|00-0040676|rush_yds",
@@ -4222,7 +4359,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0037248|anytime_td": {
    "key": "2026_04_NE_BUF|00-0037248|anytime_td",
@@ -4255,7 +4393,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0034857|anytime_td": {
    "key": "2026_04_NE_BUF|00-0034857|anytime_td",
@@ -4288,7 +4427,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0036875|anytime_td": {
    "key": "2026_04_NE_BUF|00-0036875|anytime_td",
@@ -4321,7 +4461,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0034827|anytime_td": {
    "key": "2026_04_NE_BUF|00-0034827|anytime_td",
@@ -4352,9 +4493,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.543,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0038933|anytime_td": {
    "key": "2026_04_NE_BUF|00-0038933|anytime_td",
@@ -4385,9 +4528,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.527,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0040734|anytime_td": {
    "key": "2026_04_NE_BUF|00-0040734|anytime_td",
@@ -4420,7 +4565,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0037261|anytime_td": {
    "key": "2026_04_NE_BUF|00-0037261|anytime_td",
@@ -4453,7 +4599,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0033090|anytime_td": {
    "key": "2026_04_NE_BUF|00-0033090|anytime_td",
@@ -4486,7 +4633,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0033555|anytime_td": {
    "key": "2026_04_NE_BUF|00-0033555|anytime_td",
@@ -4519,7 +4667,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0037816|anytime_td": {
    "key": "2026_04_NE_BUF|00-0037816|anytime_td",
@@ -4552,7 +4701,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0039901|anytime_td": {
    "key": "2026_04_NE_BUF|00-0039901|anytime_td",
@@ -4585,7 +4735,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0038621|anytime_td": {
    "key": "2026_04_NE_BUF|00-0038621|anytime_td",
@@ -4618,7 +4769,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0039851|anytime_td": {
    "key": "2026_04_NE_BUF|00-0039851|anytime_td",
@@ -4649,9 +4801,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.155,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0035537|anytime_td": {
    "key": "2026_04_NE_BUF|00-0035537|anytime_td",
@@ -4684,7 +4838,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0035689|anytime_td": {
    "key": "2026_04_NE_BUF|00-0035689|anytime_td",
@@ -4717,7 +4872,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0040131|anytime_td": {
    "key": "2026_04_NE_BUF|00-0040131|anytime_td",
@@ -4748,9 +4904,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.093,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0034857|pass_yds": {
    "key": "2026_04_NE_BUF|00-0034857|pass_yds",
@@ -4783,7 +4941,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0039851|pass_yds": {
    "key": "2026_04_NE_BUF|00-0039851|pass_yds",
@@ -4816,7 +4975,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0038933|rec_yds": {
    "key": "2026_04_NE_BUF|00-0038933|rec_yds",
@@ -4849,7 +5009,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0034827|rec_yds": {
    "key": "2026_04_NE_BUF|00-0034827|rec_yds",
@@ -4882,7 +5043,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0033555|rec_yds": {
    "key": "2026_04_NE_BUF|00-0033555|rec_yds",
@@ -4915,7 +5077,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0037816|rec_yds": {
    "key": "2026_04_NE_BUF|00-0037816|rec_yds",
@@ -4948,7 +5111,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0037261|rec_yds": {
    "key": "2026_04_NE_BUF|00-0037261|rec_yds",
@@ -4981,7 +5145,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0033090|rec_yds": {
    "key": "2026_04_NE_BUF|00-0033090|rec_yds",
@@ -5014,7 +5179,8 @@
     "lean_result": "win",
     "profit": 0.926,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0038621|rec_yds": {
    "key": "2026_04_NE_BUF|00-0038621|rec_yds",
@@ -5047,7 +5213,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0036875|rec_yds": {
    "key": "2026_04_NE_BUF|00-0036875|rec_yds",
@@ -5080,7 +5247,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0039901|rec_yds": {
    "key": "2026_04_NE_BUF|00-0039901|rec_yds",
@@ -5113,7 +5281,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0035537|rec_yds": {
    "key": "2026_04_NE_BUF|00-0035537|rec_yds",
@@ -5146,7 +5315,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0040131|rec_yds": {
    "key": "2026_04_NE_BUF|00-0040131|rec_yds",
@@ -5179,7 +5349,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0035689|rec_yds": {
    "key": "2026_04_NE_BUF|00-0035689|rec_yds",
@@ -5212,7 +5383,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0037248|rec_yds": {
    "key": "2026_04_NE_BUF|00-0037248|rec_yds",
@@ -5245,7 +5417,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0040734|rec_yds": {
    "key": "2026_04_NE_BUF|00-0040734|rec_yds",
@@ -5278,7 +5451,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0038933|rec": {
    "key": "2026_04_NE_BUF|00-0038933|rec",
@@ -5311,7 +5485,8 @@
     "lean_result": "win",
     "profit": 0.769,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0034827|rec": {
    "key": "2026_04_NE_BUF|00-0034827|rec",
@@ -5344,7 +5519,8 @@
     "lean_result": "win",
     "profit": 0.595,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0037261|rec": {
    "key": "2026_04_NE_BUF|00-0037261|rec",
@@ -5377,7 +5553,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0033555|rec": {
    "key": "2026_04_NE_BUF|00-0033555|rec",
@@ -5410,7 +5587,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0033090|rec": {
    "key": "2026_04_NE_BUF|00-0033090|rec",
@@ -5443,7 +5621,8 @@
     "lean_result": "win",
     "profit": 1.14,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0037816|rec": {
    "key": "2026_04_NE_BUF|00-0037816|rec",
@@ -5476,7 +5655,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0038621|rec": {
    "key": "2026_04_NE_BUF|00-0038621|rec",
@@ -5509,7 +5689,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0036875|rec": {
    "key": "2026_04_NE_BUF|00-0036875|rec",
@@ -5542,7 +5723,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0035537|rec": {
    "key": "2026_04_NE_BUF|00-0035537|rec",
@@ -5575,7 +5757,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0037248|rec": {
    "key": "2026_04_NE_BUF|00-0037248|rec",
@@ -5608,7 +5791,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0039901|rec": {
    "key": "2026_04_NE_BUF|00-0039901|rec",
@@ -5641,7 +5825,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0035689|rec": {
    "key": "2026_04_NE_BUF|00-0035689|rec",
@@ -5674,7 +5859,8 @@
     "lean_result": "win",
     "profit": 1.35,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0040734|rec": {
    "key": "2026_04_NE_BUF|00-0040734|rec",
@@ -5707,7 +5893,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0040131|rec": {
    "key": "2026_04_NE_BUF|00-0040131|rec",
@@ -5740,7 +5927,8 @@
     "lean_result": "win",
     "profit": 1.72,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NE_BUF|00-0037248|rush_yds": {
    "key": "2026_04_NE_BUF|00-0037248|rush_yds",
@@ -5773,7 +5961,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0040734|rush_yds": {
    "key": "2026_04_NE_BUF|00-0040734|rush_yds",
@@ -5806,7 +5995,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0036875|rush_yds": {
    "key": "2026_04_NE_BUF|00-0036875|rush_yds",
@@ -5839,7 +6029,8 @@
     "lean_result": "win",
     "profit": 0.926,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NE_BUF|00-0034857|rush_yds": {
    "key": "2026_04_NE_BUF|00-0034857|rush_yds",
@@ -5872,7 +6063,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NE_BUF|00-0039851|rush_yds": {
    "key": "2026_04_NE_BUF|00-0039851|rush_yds",
@@ -5905,7 +6097,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NE_BUF|00-0035537|rush_yds": {
    "key": "2026_04_NE_BUF|00-0035537|rush_yds",
@@ -5938,7 +6131,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0036275|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0036275|anytime_td",
@@ -5971,7 +6165,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039794|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0039794|anytime_td",
@@ -6004,7 +6199,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0037740|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0037740|anytime_td",
@@ -6037,7 +6233,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0040236|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0040236|anytime_td",
@@ -6070,7 +6267,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0041032|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0041032|anytime_td",
@@ -6101,9 +6299,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.357,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040735|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0040735|anytime_td",
@@ -6136,7 +6336,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0040126|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0040126|anytime_td",
@@ -6169,7 +6370,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039798|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0039798|anytime_td",
@@ -6202,7 +6404,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039919|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0039919|anytime_td",
@@ -6235,7 +6438,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0032464|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0032464|anytime_td",
@@ -6266,9 +6470,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.23,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039451|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0039451|anytime_td",
@@ -6301,7 +6507,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0036290|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0036290|anytime_td",
@@ -6332,9 +6539,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.129,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0037805|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0037805|anytime_td",
@@ -6367,7 +6576,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0030565|anytime_td": {
    "key": "2026_04_NYJ_CHI|00-0030565|anytime_td",
@@ -6398,9 +6608,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.064,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0030565|pass_yds": {
    "key": "2026_04_NYJ_CHI|00-0030565|pass_yds",
@@ -6433,7 +6645,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0037740|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0037740|rec_yds",
@@ -6466,7 +6679,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040735|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0040735|rec_yds",
@@ -6499,7 +6713,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0041032|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0041032|rec_yds",
@@ -6532,7 +6747,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040126|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0040126|rec_yds",
@@ -6565,7 +6781,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039919|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0039919|rec_yds",
@@ -6598,7 +6815,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NYJ_CHI|00-0032464|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0032464|rec_yds",
@@ -6631,7 +6849,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039451|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0039451|rec_yds",
@@ -6664,7 +6883,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NYJ_CHI|00-0036275|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0036275|rec_yds",
@@ -6697,7 +6917,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NYJ_CHI|00-0039794|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0039794|rec_yds",
@@ -6730,7 +6951,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0036290|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0036290|rec_yds",
@@ -6763,7 +6985,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039798|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0039798|rec_yds",
@@ -6796,7 +7019,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040236|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0040236|rec_yds",
@@ -6829,7 +7053,8 @@
     "lean_result": "win",
     "profit": 0.943,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NYJ_CHI|00-0037740|rec": {
    "key": "2026_04_NYJ_CHI|00-0037740|rec",
@@ -6862,7 +7087,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040735|rec": {
    "key": "2026_04_NYJ_CHI|00-0040735|rec",
@@ -6895,7 +7121,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0041032|rec": {
    "key": "2026_04_NYJ_CHI|00-0041032|rec",
@@ -6928,7 +7155,8 @@
     "lean_result": "win",
     "profit": 0.641,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0040126|rec": {
    "key": "2026_04_NYJ_CHI|00-0040126|rec",
@@ -6961,7 +7189,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0032464|rec": {
    "key": "2026_04_NYJ_CHI|00-0032464|rec",
@@ -6994,7 +7223,8 @@
     "lean_result": "win",
     "profit": 0.704,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039451|rec": {
    "key": "2026_04_NYJ_CHI|00-0039451|rec",
@@ -7027,7 +7257,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039919|rec": {
    "key": "2026_04_NYJ_CHI|00-0039919|rec",
@@ -7060,7 +7291,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0036275|rec": {
    "key": "2026_04_NYJ_CHI|00-0036275|rec",
@@ -7093,7 +7325,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0039794|rec": {
    "key": "2026_04_NYJ_CHI|00-0039794|rec",
@@ -7126,7 +7359,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0039798|rec": {
    "key": "2026_04_NYJ_CHI|00-0039798|rec",
@@ -7159,7 +7393,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_NYJ_CHI|00-0036290|rec": {
    "key": "2026_04_NYJ_CHI|00-0036290|rec",
@@ -7192,7 +7427,8 @@
     "lean_result": "win",
     "profit": 1.54,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_NYJ_CHI|00-0040236|rec": {
    "key": "2026_04_NYJ_CHI|00-0040236|rec",
@@ -7225,7 +7461,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0036275|rush_yds": {
    "key": "2026_04_NYJ_CHI|00-0036275|rush_yds",
@@ -7258,7 +7495,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039794|rush_yds": {
    "key": "2026_04_NYJ_CHI|00-0039794|rush_yds",
@@ -7291,7 +7529,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0040236|rush_yds": {
    "key": "2026_04_NYJ_CHI|00-0040236|rush_yds",
@@ -7324,7 +7563,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_NYJ_CHI|00-0039798|rush_yds": {
    "key": "2026_04_NYJ_CHI|00-0039798|rush_yds",
@@ -7357,7 +7597,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_NYJ_CHI|00-0030565|rush_yds": {
    "key": "2026_04_NYJ_CHI|00-0030565|rush_yds",
@@ -7390,7 +7631,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038597|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0038597|anytime_td",
@@ -7421,9 +7663,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.315,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0036900|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0036900|anytime_td",
@@ -7456,7 +7700,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0040719|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0040719|anytime_td",
@@ -7487,9 +7732,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.852,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0036410|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0036410|anytime_td",
@@ -7520,9 +7767,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.653,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038606|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0038606|anytime_td",
@@ -7553,9 +7802,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.629,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0034960|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0034960|anytime_td",
@@ -7586,9 +7837,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.34,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038935|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0038935|anytime_td",
@@ -7621,7 +7874,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0038611|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0038611|anytime_td",
@@ -7654,7 +7908,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0034829|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0034829|anytime_td",
@@ -7687,7 +7942,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0039893|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0039893|anytime_td",
@@ -7720,7 +7976,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0036971|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0036971|anytime_td",
@@ -7751,9 +8008,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.23,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0033526|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0033526|anytime_td",
@@ -7786,7 +8045,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0036442|anytime_td": {
    "key": "2026_04_JAX_CIN|00-0036442|anytime_td",
@@ -7819,7 +8079,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0036442|pass_yds": {
    "key": "2026_04_JAX_CIN|00-0036442|pass_yds",
@@ -7852,7 +8113,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0036971|pass_yds": {
    "key": "2026_04_JAX_CIN|00-0036971|pass_yds",
@@ -7885,7 +8147,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0036900|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0036900|rec_yds",
@@ -7918,7 +8181,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0038606|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0038606|rec_yds",
@@ -7951,7 +8215,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0036410|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0036410|rec_yds",
@@ -7984,7 +8249,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0034960|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0034960|rec_yds",
@@ -8017,7 +8283,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038935|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0038935|rec_yds",
@@ -8050,7 +8317,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0034829|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0034829|rec_yds",
@@ -8083,7 +8351,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0039893|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0039893|rec_yds",
@@ -8116,7 +8385,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0038597|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0038597|rec_yds",
@@ -8149,7 +8419,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0040719|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0040719|rec_yds",
@@ -8182,7 +8453,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0033526|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0033526|rec_yds",
@@ -8215,7 +8487,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0036900|rec": {
    "key": "2026_04_JAX_CIN|00-0036900|rec",
@@ -8248,7 +8521,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0038606|rec": {
    "key": "2026_04_JAX_CIN|00-0038606|rec",
@@ -8281,7 +8555,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0036410|rec": {
    "key": "2026_04_JAX_CIN|00-0036410|rec",
@@ -8314,7 +8589,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0034960|rec": {
    "key": "2026_04_JAX_CIN|00-0034960|rec",
@@ -8347,7 +8623,8 @@
     "lean_result": "win",
     "profit": 1.01,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038935|rec": {
    "key": "2026_04_JAX_CIN|00-0038935|rec",
@@ -8380,7 +8657,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0038597|rec": {
    "key": "2026_04_JAX_CIN|00-0038597|rec",
@@ -8413,7 +8691,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0034829|rec": {
    "key": "2026_04_JAX_CIN|00-0034829|rec",
@@ -8446,7 +8725,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0039893|rec": {
    "key": "2026_04_JAX_CIN|00-0039893|rec",
@@ -8479,7 +8759,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0040719|rec": {
    "key": "2026_04_JAX_CIN|00-0040719|rec",
@@ -8512,7 +8793,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0033526|rec": {
    "key": "2026_04_JAX_CIN|00-0033526|rec",
@@ -8545,7 +8827,8 @@
     "lean_result": "win",
     "profit": 0.8,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0038597|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0038597|rush_yds",
@@ -8578,7 +8861,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0040719|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0040719|rush_yds",
@@ -8611,7 +8895,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_JAX_CIN|00-0038611|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0038611|rush_yds",
@@ -8644,7 +8929,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_JAX_CIN|00-0033526|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0033526|rush_yds",
@@ -8677,7 +8963,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_JAX_CIN|00-0036971|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0036971|rush_yds",
@@ -8710,7 +8997,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_JAX_CIN|00-0036442|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0036442|rush_yds",
@@ -8743,7 +9031,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DAL_HOU|00-0035685|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0035685|anytime_td",
@@ -8774,9 +9063,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.232,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0036997|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0036997|anytime_td",
@@ -8809,7 +9100,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0036358|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0036358|anytime_td",
@@ -8842,7 +9134,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0036554|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0036554|anytime_td",
@@ -8875,7 +9168,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0037247|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0037247|anytime_td",
@@ -8906,9 +9200,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.493,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0040583|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0040583|anytime_td",
@@ -8941,7 +9237,8 @@
     "lean_result": "win",
     "profit": 2.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0034383|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0034383|anytime_td",
@@ -8974,7 +9271,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0038041|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0038041|anytime_td",
@@ -9007,7 +9305,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0039410|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0039410|anytime_td",
@@ -9040,7 +9339,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0038618|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0038618|anytime_td",
@@ -9073,7 +9373,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0039163|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0039163|anytime_td",
@@ -9104,9 +9405,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.129,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0040138|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0040138|anytime_td",
@@ -9139,7 +9442,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0033077|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0033077|anytime_td",
@@ -9170,9 +9474,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.093,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0034981|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0034981|anytime_td",
@@ -9205,7 +9511,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0038728|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0038728|anytime_td",
@@ -9238,7 +9545,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0033077|pass_yds": {
    "key": "2026_04_DAL_HOU|00-0033077|pass_yds",
@@ -9271,7 +9579,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0039163|pass_yds": {
    "key": "2026_04_DAL_HOU|00-0039163|pass_yds",
@@ -9304,7 +9613,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DAL_HOU|00-0036358|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0036358|rec_yds",
@@ -9337,7 +9647,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0036554|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0036554|rec_yds",
@@ -9370,7 +9681,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0037247|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0037247|rec_yds",
@@ -9403,7 +9715,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0034383|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0034383|rec_yds",
@@ -9436,7 +9749,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0039410|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0039410|rec_yds",
@@ -9469,7 +9783,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0038618|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0038618|rec_yds",
@@ -9502,7 +9817,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0038041|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0038041|rec_yds",
@@ -9535,7 +9851,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0036997|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0036997|rec_yds",
@@ -9568,7 +9885,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0040138|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0040138|rec_yds",
@@ -9601,7 +9919,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0035685|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0035685|rec_yds",
@@ -9634,7 +9953,8 @@
     "lean_result": "win",
     "profit": 0.935,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0040583|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0040583|rec_yds",
@@ -9667,7 +9987,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0034981|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0034981|rec_yds",
@@ -9700,7 +10021,8 @@
     "lean_result": "win",
     "profit": 0.862,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0036358|rec": {
    "key": "2026_04_DAL_HOU|00-0036358|rec",
@@ -9733,7 +10055,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0036554|rec": {
    "key": "2026_04_DAL_HOU|00-0036554|rec",
@@ -9766,7 +10089,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0037247|rec": {
    "key": "2026_04_DAL_HOU|00-0037247|rec",
@@ -9799,7 +10123,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DAL_HOU|00-0034383|rec": {
    "key": "2026_04_DAL_HOU|00-0034383|rec",
@@ -9832,7 +10157,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0038041|rec": {
    "key": "2026_04_DAL_HOU|00-0038041|rec",
@@ -9865,7 +10191,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DAL_HOU|00-0039410|rec": {
    "key": "2026_04_DAL_HOU|00-0039410|rec",
@@ -9898,7 +10225,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0038618|rec": {
    "key": "2026_04_DAL_HOU|00-0038618|rec",
@@ -9931,7 +10259,8 @@
     "lean_result": "win",
     "profit": 0.84,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0036997|rec": {
    "key": "2026_04_DAL_HOU|00-0036997|rec",
@@ -9964,7 +10293,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0040583|rec": {
    "key": "2026_04_DAL_HOU|00-0040583|rec",
@@ -9997,7 +10327,8 @@
     "lean_result": "win",
     "profit": 1.16,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0035685|rec": {
    "key": "2026_04_DAL_HOU|00-0035685|rec",
@@ -10030,7 +10361,8 @@
     "lean_result": "win",
     "profit": 1.03,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0040138|rec": {
    "key": "2026_04_DAL_HOU|00-0040138|rec",
@@ -10063,7 +10395,8 @@
     "lean_result": "win",
     "profit": 1.51,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DAL_HOU|00-0034981|rec": {
    "key": "2026_04_DAL_HOU|00-0034981|rec",
@@ -10096,7 +10429,8 @@
     "lean_result": "win",
     "profit": 0.461,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DAL_HOU|00-0036997|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0036997|rush_yds",
@@ -10129,7 +10463,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0035685|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0035685|rush_yds",
@@ -10162,7 +10497,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0040583|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0040583|rush_yds",
@@ -10195,7 +10531,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DAL_HOU|00-0039163|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0039163|rush_yds",
@@ -10228,7 +10565,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DAL_HOU|00-0033077|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0033077|rush_yds",
@@ -10261,7 +10599,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0040715|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0040715|anytime_td",
@@ -10292,9 +10631,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.273,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0041027|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0041027|anytime_td",
@@ -10325,9 +10666,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.188,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0037744|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0037744|anytime_td",
@@ -10360,7 +10703,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0039337|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0039337|anytime_td",
@@ -10393,7 +10737,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0038559|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0038559|anytime_td",
@@ -10426,7 +10771,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0037838|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0037838|anytime_td",
@@ -10459,7 +10805,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0037263|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0037263|anytime_td",
@@ -10492,7 +10839,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0036893|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0036893|anytime_td",
@@ -10523,9 +10871,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.23,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0039849|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0039849|anytime_td",
@@ -10558,7 +10908,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0041042|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0041042|anytime_td",
@@ -10591,7 +10942,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0033119|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0033119|anytime_td",
@@ -10622,9 +10974,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0033307|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0033307|anytime_td",
@@ -10657,7 +11011,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0036309|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0036309|anytime_td",
@@ -10688,9 +11043,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.103,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0031503|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0031503|anytime_td",
@@ -10721,9 +11078,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.07,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0039847|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0039847|anytime_td",
@@ -10756,7 +11115,8 @@
     "lean_result": "win",
     "profit": 8.5,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0039384|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0039384|anytime_td",
@@ -10789,7 +11149,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0035250|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0035250|anytime_td",
@@ -10822,7 +11183,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0033119|pass_yds": {
    "key": "2026_04_ARI_NYG|00-0033119|pass_yds",
@@ -10855,7 +11217,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0031503|pass_yds": {
    "key": "2026_04_ARI_NYG|00-0031503|pass_yds",
@@ -10888,7 +11251,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0037744|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0037744|rec_yds",
@@ -10921,7 +11285,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_ARI_NYG|00-0038559|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0038559|rec_yds",
@@ -10954,7 +11319,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0039337|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0039337|rec_yds",
@@ -10987,7 +11353,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0037838|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0037838|rec_yds",
@@ -11020,7 +11387,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0039849|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0039849|rec_yds",
@@ -11053,7 +11421,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0041042|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0041042|rec_yds",
@@ -11086,7 +11455,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0033307|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0033307|rec_yds",
@@ -11119,7 +11489,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0036309|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0036309|rec_yds",
@@ -11152,7 +11523,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0041027|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0041027|rec_yds",
@@ -11185,7 +11557,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0040715|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0040715|rec_yds",
@@ -11218,7 +11591,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0039847|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0039847|rec_yds",
@@ -11251,7 +11625,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0037744|rec": {
    "key": "2026_04_ARI_NYG|00-0037744|rec",
@@ -11284,7 +11659,8 @@
     "lean_result": "win",
     "profit": 0.719,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0038559|rec": {
    "key": "2026_04_ARI_NYG|00-0038559|rec",
@@ -11317,7 +11693,8 @@
     "lean_result": "win",
     "profit": 0.645,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_ARI_NYG|00-0039337|rec": {
    "key": "2026_04_ARI_NYG|00-0039337|rec",
@@ -11350,7 +11727,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0037838|rec": {
    "key": "2026_04_ARI_NYG|00-0037838|rec",
@@ -11383,7 +11761,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0041027|rec": {
    "key": "2026_04_ARI_NYG|00-0041027|rec",
@@ -11416,7 +11795,8 @@
     "lean_result": "win",
     "profit": 1.3,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0040715|rec": {
    "key": "2026_04_ARI_NYG|00-0040715|rec",
@@ -11449,7 +11829,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0039849|rec": {
    "key": "2026_04_ARI_NYG|00-0039849|rec",
@@ -11482,7 +11863,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0033307|rec": {
    "key": "2026_04_ARI_NYG|00-0033307|rec",
@@ -11515,7 +11897,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0041042|rec": {
    "key": "2026_04_ARI_NYG|00-0041042|rec",
@@ -11548,7 +11931,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0036309|rec": {
    "key": "2026_04_ARI_NYG|00-0036309|rec",
@@ -11581,7 +11965,8 @@
     "lean_result": "win",
     "profit": 1.07,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0039847|rec": {
    "key": "2026_04_ARI_NYG|00-0039847|rec",
@@ -11614,7 +11999,8 @@
     "lean_result": "win",
     "profit": 0.433,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0041027|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0041027|rush_yds",
@@ -11647,7 +12033,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0040715|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0040715|rush_yds",
@@ -11680,7 +12067,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0036893|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0036893|rush_yds",
@@ -11713,7 +12101,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0037263|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0037263|rush_yds",
@@ -11746,7 +12135,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ARI_NYG|00-0033119|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0033119|rush_yds",
@@ -11779,7 +12169,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ARI_NYG|00-0031503|rush_yds": {
    "key": "2026_04_ARI_NYG|00-0031503|rush_yds",
@@ -11812,7 +12203,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ARI_NYG|00-0037157|anytime_td": {
    "key": "2026_04_ARI_NYG|00-0037157|anytime_td",
@@ -11845,7 +12237,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0037840|anytime_td": {
    "key": "2026_04_LA_PHI|00-0037840|anytime_td",
@@ -11878,7 +12271,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0034844|anytime_td": {
    "key": "2026_04_LA_PHI|00-0034844|anytime_td",
@@ -11911,7 +12305,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0031381|anytime_td": {
    "key": "2026_04_LA_PHI|00-0031381|anytime_td",
@@ -11942,9 +12337,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.739,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0039075|anytime_td": {
    "key": "2026_04_LA_PHI|00-0039075|anytime_td",
@@ -11977,7 +12374,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0036389|anytime_td": {
    "key": "2026_04_LA_PHI|00-0036389|anytime_td",
@@ -12008,9 +12406,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.508,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0038393|anytime_td": {
    "key": "2026_04_LA_PHI|00-0038393|anytime_td",
@@ -12043,7 +12443,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0039738|anytime_td": {
    "key": "2026_04_LA_PHI|00-0039738|anytime_td",
@@ -12076,7 +12477,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0033110|anytime_td": {
    "key": "2026_04_LA_PHI|00-0033110|anytime_td",
@@ -12107,9 +12509,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.271,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0036244|anytime_td": {
    "key": "2026_04_LA_PHI|00-0036244|anytime_td",
@@ -12142,7 +12546,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0040867|anytime_td": {
    "key": "2026_04_LA_PHI|00-0040867|anytime_td",
@@ -12173,9 +12578,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.23,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0040590|anytime_td": {
    "key": "2026_04_LA_PHI|00-0040590|anytime_td",
@@ -12208,7 +12615,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0040024|anytime_td": {
    "key": "2026_04_LA_PHI|00-0040024|anytime_td",
@@ -12241,7 +12649,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0038555|anytime_td": {
    "key": "2026_04_LA_PHI|00-0038555|anytime_td",
@@ -12274,7 +12683,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0033246|anytime_td": {
    "key": "2026_04_LA_PHI|00-0033246|anytime_td",
@@ -12307,7 +12717,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0039746|anytime_td": {
    "key": "2026_04_LA_PHI|00-0039746|anytime_td",
@@ -12340,7 +12751,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0026498|anytime_td": {
    "key": "2026_04_LA_PHI|00-0026498|anytime_td",
@@ -12373,7 +12785,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0026498|pass_yds": {
    "key": "2026_04_LA_PHI|00-0026498|pass_yds",
@@ -12406,7 +12819,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0036389|pass_yds": {
    "key": "2026_04_LA_PHI|00-0036389|pass_yds",
@@ -12439,7 +12853,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0031381|rec_yds": {
    "key": "2026_04_LA_PHI|00-0031381|rec_yds",
@@ -12472,7 +12887,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LA_PHI|00-0039075|rec_yds": {
    "key": "2026_04_LA_PHI|00-0039075|rec_yds",
@@ -12505,7 +12921,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LA_PHI|00-0038393|rec_yds": {
    "key": "2026_04_LA_PHI|00-0038393|rec_yds",
@@ -12538,7 +12955,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0040867|rec_yds": {
    "key": "2026_04_LA_PHI|00-0040867|rec_yds",
@@ -12571,7 +12989,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0040024|rec_yds": {
    "key": "2026_04_LA_PHI|00-0040024|rec_yds",
@@ -12604,7 +13023,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0034844|rec_yds": {
    "key": "2026_04_LA_PHI|00-0034844|rec_yds",
@@ -12637,7 +13057,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0037840|rec_yds": {
    "key": "2026_04_LA_PHI|00-0037840|rec_yds",
@@ -12670,7 +13091,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LA_PHI|00-0033246|rec_yds": {
    "key": "2026_04_LA_PHI|00-0033246|rec_yds",
@@ -12703,7 +13125,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0039075|rec": {
    "key": "2026_04_LA_PHI|00-0039075|rec",
@@ -12736,7 +13159,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0031381|rec": {
    "key": "2026_04_LA_PHI|00-0031381|rec",
@@ -12769,7 +13193,8 @@
     "lean_result": "win",
     "profit": 1.09,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0038393|rec": {
    "key": "2026_04_LA_PHI|00-0038393|rec",
@@ -12802,7 +13227,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0040867|rec": {
    "key": "2026_04_LA_PHI|00-0040867|rec",
@@ -12835,7 +13261,8 @@
     "lean_result": "win",
     "profit": 0.971,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0034844|rec": {
    "key": "2026_04_LA_PHI|00-0034844|rec",
@@ -12868,7 +13295,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0037840|rec": {
    "key": "2026_04_LA_PHI|00-0037840|rec",
@@ -12901,7 +13329,8 @@
     "lean_result": "win",
     "profit": 1.32,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0040024|rec": {
    "key": "2026_04_LA_PHI|00-0040024|rec",
@@ -12934,7 +13363,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0033246|rec": {
    "key": "2026_04_LA_PHI|00-0033246|rec",
@@ -12967,7 +13397,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0034844|rush_yds": {
    "key": "2026_04_LA_PHI|00-0034844|rush_yds",
@@ -13000,7 +13431,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0037840|rush_yds": {
    "key": "2026_04_LA_PHI|00-0037840|rush_yds",
@@ -13033,7 +13465,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0039738|rush_yds": {
    "key": "2026_04_LA_PHI|00-0039738|rush_yds",
@@ -13066,7 +13499,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LA_PHI|00-0036389|rush_yds": {
    "key": "2026_04_LA_PHI|00-0036389|rush_yds",
@@ -13099,7 +13533,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LA_PHI|00-0038555|rush_yds": {
    "key": "2026_04_LA_PHI|00-0038555|rush_yds",
@@ -13132,7 +13567,8 @@
     "lean_result": "win",
     "profit": 0.962,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0026498|rush_yds": {
    "key": "2026_04_LA_PHI|00-0026498|rush_yds",
@@ -13165,7 +13601,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LA_PHI|00-0038555|rec": {
    "key": "2026_04_LA_PHI|00-0038555|rec",
@@ -13198,7 +13635,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0039361|anytime_td": {
    "key": "2026_04_GB_TB|00-0039361|anytime_td",
@@ -13231,7 +13669,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0038124|anytime_td": {
    "key": "2026_04_GB_TB|00-0038124|anytime_td",
@@ -13264,7 +13703,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040667|anytime_td": {
    "key": "2026_04_GB_TB|00-0040667|anytime_td",
@@ -13297,7 +13737,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0038996|anytime_td": {
    "key": "2026_04_GB_TB|00-0038996|anytime_td",
@@ -13330,7 +13771,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040142|anytime_td": {
    "key": "2026_04_GB_TB|00-0040142|anytime_td",
@@ -13361,9 +13803,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.319,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0040129|anytime_td": {
    "key": "2026_04_GB_TB|00-0040129|anytime_td",
@@ -13396,7 +13840,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0039811|anytime_td": {
    "key": "2026_04_GB_TB|00-0039811|anytime_td",
@@ -13429,7 +13874,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0041251|anytime_td": {
    "key": "2026_04_GB_TB|00-0041251|anytime_td",
@@ -13460,9 +13906,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.215,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0033921|anytime_td": {
    "key": "2026_04_GB_TB|00-0033921|anytime_td",
@@ -13493,9 +13941,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0041048|anytime_td": {
    "key": "2026_04_GB_TB|00-0041048|anytime_td",
@@ -13526,9 +13976,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0038090|anytime_td": {
    "key": "2026_04_GB_TB|00-0038090|anytime_td",
@@ -13561,7 +14013,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0036919|anytime_td": {
    "key": "2026_04_GB_TB|00-0036919|anytime_td",
@@ -13594,7 +14047,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0038129|anytime_td": {
    "key": "2026_04_GB_TB|00-0038129|anytime_td",
@@ -13627,7 +14081,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0036264|anytime_td": {
    "key": "2026_04_GB_TB|00-0036264|anytime_td",
@@ -13658,9 +14113,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.093,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040237|anytime_td": {
    "key": "2026_04_GB_TB|00-0040237|anytime_td",
@@ -13693,7 +14150,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0038685|anytime_td": {
    "key": "2026_04_GB_TB|00-0038685|anytime_td",
@@ -13726,7 +14184,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0038951|anytime_td": {
    "key": "2026_04_GB_TB|00-0038951|anytime_td",
@@ -13759,7 +14218,8 @@
     "lean_result": "win",
     "profit": 12.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0036264|pass_yds": {
    "key": "2026_04_GB_TB|00-0036264|pass_yds",
@@ -13792,7 +14252,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_GB_TB|00-0041251|pass_yds": {
    "key": "2026_04_GB_TB|00-0041251|pass_yds",
@@ -13825,7 +14286,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0038124|rec_yds": {
    "key": "2026_04_GB_TB|00-0038124|rec_yds",
@@ -13858,7 +14320,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_GB_TB|00-0040667|rec_yds": {
    "key": "2026_04_GB_TB|00-0040667|rec_yds",
@@ -13891,7 +14354,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0038996|rec_yds": {
    "key": "2026_04_GB_TB|00-0038996|rec_yds",
@@ -13924,7 +14388,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040129|rec_yds": {
    "key": "2026_04_GB_TB|00-0040129|rec_yds",
@@ -13957,7 +14422,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0033921|rec_yds": {
    "key": "2026_04_GB_TB|00-0033921|rec_yds",
@@ -13990,7 +14456,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0038129|rec_yds": {
    "key": "2026_04_GB_TB|00-0038129|rec_yds",
@@ -14023,7 +14490,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0041048|rec_yds": {
    "key": "2026_04_GB_TB|00-0041048|rec_yds",
@@ -14056,7 +14524,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0038090|rec_yds": {
    "key": "2026_04_GB_TB|00-0038090|rec_yds",
@@ -14089,7 +14558,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0039361|rec_yds": {
    "key": "2026_04_GB_TB|00-0039361|rec_yds",
@@ -14122,7 +14592,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0036919|rec_yds": {
    "key": "2026_04_GB_TB|00-0036919|rec_yds",
@@ -14155,7 +14626,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040237|rec_yds": {
    "key": "2026_04_GB_TB|00-0040237|rec_yds",
@@ -14188,7 +14660,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0039811|rec_yds": {
    "key": "2026_04_GB_TB|00-0039811|rec_yds",
@@ -14221,7 +14694,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0038124|rec": {
    "key": "2026_04_GB_TB|00-0038124|rec",
@@ -14254,7 +14728,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_GB_TB|00-0040667|rec": {
    "key": "2026_04_GB_TB|00-0040667|rec",
@@ -14287,7 +14762,8 @@
     "lean_result": "win",
     "profit": 0.99,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_GB_TB|00-0038996|rec": {
    "key": "2026_04_GB_TB|00-0038996|rec",
@@ -14320,7 +14796,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040129|rec": {
    "key": "2026_04_GB_TB|00-0040129|rec",
@@ -14353,7 +14830,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0038129|rec": {
    "key": "2026_04_GB_TB|00-0038129|rec",
@@ -14386,7 +14864,8 @@
     "lean_result": "win",
     "profit": 0.617,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0033921|rec": {
    "key": "2026_04_GB_TB|00-0033921|rec",
@@ -14419,7 +14898,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_GB_TB|00-0039361|rec": {
    "key": "2026_04_GB_TB|00-0039361|rec",
@@ -14452,7 +14932,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_GB_TB|00-0036919|rec": {
    "key": "2026_04_GB_TB|00-0036919|rec",
@@ -14485,7 +14966,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0041048|rec": {
    "key": "2026_04_GB_TB|00-0041048|rec",
@@ -14518,7 +15000,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0038090|rec": {
    "key": "2026_04_GB_TB|00-0038090|rec",
@@ -14551,7 +15034,8 @@
     "lean_result": "win",
     "profit": 1.06,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0039811|rec": {
    "key": "2026_04_GB_TB|00-0039811|rec",
@@ -14584,7 +15068,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0040237|rec": {
    "key": "2026_04_GB_TB|00-0040237|rec",
@@ -14617,7 +15102,8 @@
     "lean_result": "win",
     "profit": 1.79,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_GB_TB|00-0039361|rush_yds": {
    "key": "2026_04_GB_TB|00-0039361|rush_yds",
@@ -14650,7 +15136,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0041251|rush_yds": {
    "key": "2026_04_GB_TB|00-0041251|rush_yds",
@@ -14683,7 +15170,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0040142|rush_yds": {
    "key": "2026_04_GB_TB|00-0040142|rush_yds",
@@ -14716,7 +15204,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0039811|rush_yds": {
    "key": "2026_04_GB_TB|00-0039811|rush_yds",
@@ -14749,7 +15238,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0036919|rush_yds": {
    "key": "2026_04_GB_TB|00-0036919|rush_yds",
@@ -14782,7 +15272,8 @@
     "lean_result": "win",
     "profit": 0.833,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_GB_TB|00-0036264|rush_yds": {
    "key": "2026_04_GB_TB|00-0036264|rush_yds",
@@ -14815,7 +15306,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0033293|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0033293|anytime_td",
@@ -14848,7 +15340,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0038994|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0038994|anytime_td",
@@ -14881,7 +15374,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_MIA_MIN|00-0035229|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0035229|anytime_td",
@@ -14914,7 +15408,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0040198|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0040198|anytime_td",
@@ -14947,7 +15442,8 @@
     "lean_result": "win",
     "profit": 2.75,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0039874|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0039874|anytime_td",
@@ -14978,9 +15474,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.222,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0035228|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0035228|anytime_td",
@@ -15011,9 +15509,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.215,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0039880|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0039880|anytime_td",
@@ -15046,7 +15546,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0038128|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0038128|anytime_td",
@@ -15077,9 +15578,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.19,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0037252|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0037252|anytime_td",
@@ -15112,7 +15615,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0041525|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0041525|anytime_td",
@@ -15143,9 +15647,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.103,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0041529|anytime_td": {
    "key": "2026_04_MIA_MIN|00-0041529|anytime_td",
@@ -15176,9 +15682,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.054,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0035228|pass_yds": {
    "key": "2026_04_MIA_MIN|00-0035228|pass_yds",
@@ -15211,7 +15719,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0038128|pass_yds": {
    "key": "2026_04_MIA_MIN|00-0038128|pass_yds",
@@ -15244,7 +15753,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0038994|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0038994|rec_yds",
@@ -15277,7 +15787,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0039880|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0039880|rec_yds",
@@ -15310,7 +15821,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0035229|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0035229|rec_yds",
@@ -15343,7 +15855,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_MIA_MIN|00-0041525|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0041525|rec_yds",
@@ -15376,7 +15889,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_MIA_MIN|00-0037252|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0037252|rec_yds",
@@ -15409,7 +15923,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0033293|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0033293|rec_yds",
@@ -15442,7 +15957,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_MIA_MIN|00-0041529|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0041529|rec_yds",
@@ -15475,7 +15991,8 @@
     "lean_result": "win",
     "profit": 0.926,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0040198|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0040198|rec_yds",
@@ -15508,7 +16025,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0039874|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0039874|rec_yds",
@@ -15541,7 +16059,8 @@
     "lean_result": "win",
     "profit": 0.826,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0038994|rec": {
    "key": "2026_04_MIA_MIN|00-0038994|rec",
@@ -15574,7 +16093,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0039880|rec": {
    "key": "2026_04_MIA_MIN|00-0039880|rec",
@@ -15607,7 +16127,8 @@
     "lean_result": "win",
     "profit": 1.02,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0035229|rec": {
    "key": "2026_04_MIA_MIN|00-0035229|rec",
@@ -15640,7 +16161,8 @@
     "lean_result": "win",
     "profit": 1.2,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0033293|rec": {
    "key": "2026_04_MIA_MIN|00-0033293|rec",
@@ -15673,7 +16195,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_MIA_MIN|00-0037252|rec": {
    "key": "2026_04_MIA_MIN|00-0037252|rec",
@@ -15706,7 +16229,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0041525|rec": {
    "key": "2026_04_MIA_MIN|00-0041525|rec",
@@ -15739,7 +16263,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_MIA_MIN|00-0041529|rec": {
    "key": "2026_04_MIA_MIN|00-0041529|rec",
@@ -15772,7 +16297,8 @@
     "lean_result": "win",
     "profit": 1.02,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0040198|rec": {
    "key": "2026_04_MIA_MIN|00-0040198|rec",
@@ -15805,7 +16331,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_MIA_MIN|00-0039874|rec": {
    "key": "2026_04_MIA_MIN|00-0039874|rec",
@@ -15838,7 +16365,8 @@
     "lean_result": "win",
     "profit": 0.439,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0033293|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0033293|rush_yds",
@@ -15871,7 +16399,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0038128|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0038128|rush_yds",
@@ -15904,7 +16433,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_MIA_MIN|00-0039874|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0039874|rush_yds",
@@ -15937,7 +16467,8 @@
     "lean_result": "win",
     "profit": 0.935,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0040198|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0040198|rush_yds",
@@ -15970,7 +16501,8 @@
     "lean_result": "win",
     "profit": 0.935,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0035228|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0035228|rush_yds",
@@ -16003,7 +16535,8 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_MIA_MIN|00-0039880|rush_yds": {
    "key": "2026_04_MIA_MIN|00-0039880|rush_yds",
@@ -16036,7 +16569,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0038134|anytime_td": {
    "key": "2026_04_KC_LV|00-0038134|anytime_td",
@@ -16069,7 +16603,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0040122|anytime_td": {
    "key": "2026_04_KC_LV|00-0040122|anytime_td",
@@ -16102,7 +16637,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0039067|anytime_td": {
    "key": "2026_04_KC_LV|00-0039067|anytime_td",
@@ -16135,7 +16671,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0039338|anytime_td": {
    "key": "2026_04_KC_LV|00-0039338|anytime_td",
@@ -16168,7 +16705,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0030506|anytime_td": {
    "key": "2026_04_KC_LV|00-0030506|anytime_td",
@@ -16199,9 +16737,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.527,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0039894|anytime_td": {
    "key": "2026_04_KC_LV|00-0039894|anytime_td",
@@ -16234,7 +16774,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0038563|anytime_td": {
    "key": "2026_04_KC_LV|00-0038563|anytime_td",
@@ -16267,7 +16808,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0039066|anytime_td": {
    "key": "2026_04_KC_LV|00-0039066|anytime_td",
@@ -16300,7 +16842,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0033873|anytime_td": {
    "key": "2026_04_KC_LV|00-0033873|anytime_td",
@@ -16331,9 +16874,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.176,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0037291|anytime_td": {
    "key": "2026_04_KC_LV|00-0037291|anytime_td",
@@ -16366,7 +16911,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0038104|anytime_td": {
    "key": "2026_04_KC_LV|00-0038104|anytime_td",
@@ -16399,7 +16945,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0041013|anytime_td": {
    "key": "2026_04_KC_LV|00-0041013|anytime_td",
@@ -16430,9 +16977,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.155,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0040878|anytime_td": {
    "key": "2026_04_KC_LV|00-0040878|anytime_td",
@@ -16463,9 +17012,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0035891|anytime_td": {
    "key": "2026_04_KC_LV|00-0035891|anytime_td",
@@ -16498,7 +17049,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0036637|anytime_td": {
    "key": "2026_04_KC_LV|00-0036637|anytime_td",
@@ -16531,7 +17083,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0029604|anytime_td": {
    "key": "2026_04_KC_LV|00-0029604|anytime_td",
@@ -16562,9 +17115,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.022,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0033873|pass_yds": {
    "key": "2026_04_KC_LV|00-0033873|pass_yds",
@@ -16597,7 +17152,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0029604|pass_yds": {
    "key": "2026_04_KC_LV|00-0029604|pass_yds",
@@ -16630,7 +17186,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0039338|rec_yds": {
    "key": "2026_04_KC_LV|00-0039338|rec_yds",
@@ -16663,7 +17220,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039067|rec_yds": {
    "key": "2026_04_KC_LV|00-0039067|rec_yds",
@@ -16696,7 +17254,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0030506|rec_yds": {
    "key": "2026_04_KC_LV|00-0030506|rec_yds",
@@ -16729,7 +17288,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0038563|rec_yds": {
    "key": "2026_04_KC_LV|00-0038563|rec_yds",
@@ -16762,7 +17322,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039894|rec_yds": {
    "key": "2026_04_KC_LV|00-0039894|rec_yds",
@@ -16795,7 +17356,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_KC_LV|00-0039066|rec_yds": {
    "key": "2026_04_KC_LV|00-0039066|rec_yds",
@@ -16828,7 +17390,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_KC_LV|00-0038134|rec_yds": {
    "key": "2026_04_KC_LV|00-0038134|rec_yds",
@@ -16861,7 +17424,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0038104|rec_yds": {
    "key": "2026_04_KC_LV|00-0038104|rec_yds",
@@ -16894,7 +17458,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0040122|rec_yds": {
    "key": "2026_04_KC_LV|00-0040122|rec_yds",
@@ -16927,7 +17492,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0037291|rec_yds": {
    "key": "2026_04_KC_LV|00-0037291|rec_yds",
@@ -16960,7 +17526,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0035891|rec_yds": {
    "key": "2026_04_KC_LV|00-0035891|rec_yds",
@@ -16993,7 +17560,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0036637|rec_yds": {
    "key": "2026_04_KC_LV|00-0036637|rec_yds",
@@ -17026,7 +17594,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0041013|rec_yds": {
    "key": "2026_04_KC_LV|00-0041013|rec_yds",
@@ -17059,7 +17628,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039338|rec": {
    "key": "2026_04_KC_LV|00-0039338|rec",
@@ -17092,7 +17662,8 @@
     "lean_result": "win",
     "profit": 1.14,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039067|rec": {
    "key": "2026_04_KC_LV|00-0039067|rec",
@@ -17125,7 +17696,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0030506|rec": {
    "key": "2026_04_KC_LV|00-0030506|rec",
@@ -17158,7 +17730,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0040122|rec": {
    "key": "2026_04_KC_LV|00-0040122|rec",
@@ -17191,7 +17764,8 @@
     "lean_result": "win",
     "profit": 1.22,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0038563|rec": {
    "key": "2026_04_KC_LV|00-0038563|rec",
@@ -17224,7 +17798,8 @@
     "lean_result": "win",
     "profit": 1.32,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039894|rec": {
    "key": "2026_04_KC_LV|00-0039894|rec",
@@ -17257,7 +17832,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0038134|rec": {
    "key": "2026_04_KC_LV|00-0038134|rec",
@@ -17290,7 +17866,8 @@
     "lean_result": "win",
     "profit": 1.36,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0039066|rec": {
    "key": "2026_04_KC_LV|00-0039066|rec",
@@ -17323,7 +17900,8 @@
     "lean_result": "win",
     "profit": 0.781,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0037291|rec": {
    "key": "2026_04_KC_LV|00-0037291|rec",
@@ -17356,7 +17934,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0038104|rec": {
    "key": "2026_04_KC_LV|00-0038104|rec",
@@ -17389,7 +17968,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_KC_LV|00-0036637|rec": {
    "key": "2026_04_KC_LV|00-0036637|rec",
@@ -17422,7 +18002,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0041013|rec": {
    "key": "2026_04_KC_LV|00-0041013|rec",
@@ -17455,7 +18036,8 @@
     "lean_result": "win",
     "profit": 0.483,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0035891|rec": {
    "key": "2026_04_KC_LV|00-0035891|rec",
@@ -17488,7 +18070,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0038134|rush_yds": {
    "key": "2026_04_KC_LV|00-0038134|rush_yds",
@@ -17521,7 +18104,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_KC_LV|00-0040122|rush_yds": {
    "key": "2026_04_KC_LV|00-0040122|rush_yds",
@@ -17554,7 +18138,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0040878|rush_yds": {
    "key": "2026_04_KC_LV|00-0040878|rush_yds",
@@ -17587,7 +18172,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0033873|rush_yds": {
    "key": "2026_04_KC_LV|00-0033873|rush_yds",
@@ -17620,7 +18206,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_KC_LV|00-0041013|rush_yds": {
    "key": "2026_04_KC_LV|00-0041013|rush_yds",
@@ -17653,7 +18240,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_KC_LV|00-0029604|rush_yds": {
    "key": "2026_04_KC_LV|00-0029604|rush_yds",
@@ -17686,7 +18274,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0038543|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0038543|anytime_td",
@@ -17717,9 +18306,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.066,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0040666|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0040666|anytime_td",
@@ -17752,7 +18343,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0038797|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0038797|anytime_td",
@@ -17785,7 +18377,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0039299|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0039299|anytime_td",
@@ -17816,9 +18409,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.582,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039793|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0039793|anytime_td",
@@ -17851,7 +18446,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039915|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0039915|anytime_td",
@@ -17884,7 +18480,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0033908|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0033908|anytime_td",
@@ -17917,7 +18514,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0037545|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0037545|anytime_td",
@@ -17950,7 +18548,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0038544|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0038544|anytime_td",
@@ -17983,7 +18582,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0040189|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0040189|anytime_td",
@@ -18016,7 +18616,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0038454|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0038454|anytime_td",
@@ -18047,9 +18648,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.166,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0040727|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0040727|anytime_td",
@@ -18082,7 +18685,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0036355|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0036355|anytime_td",
@@ -18113,9 +18717,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.115,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0034869|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0034869|anytime_td",
@@ -18146,9 +18752,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.054,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039391|anytime_td": {
    "key": "2026_04_LAC_SEA|00-0039391|anytime_td",
@@ -18181,7 +18789,8 @@
     "lean_result": "win",
     "profit": 15.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0034869|pass_yds": {
    "key": "2026_04_LAC_SEA|00-0034869|pass_yds",
@@ -18214,7 +18823,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0036355|pass_yds": {
    "key": "2026_04_LAC_SEA|00-0036355|pass_yds",
@@ -18247,7 +18857,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0038543|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0038543|rec_yds",
@@ -18280,7 +18891,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039915|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0039915|rec_yds",
@@ -18313,7 +18925,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0040727|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0040727|rec_yds",
@@ -18346,7 +18959,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LAC_SEA|00-0038544|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0038544|rec_yds",
@@ -18379,7 +18993,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039793|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0039793|rec_yds",
@@ -18412,7 +19027,8 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0040189|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0040189|rec_yds",
@@ -18445,7 +19061,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0033908|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0033908|rec_yds",
@@ -18478,7 +19095,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LAC_SEA|00-0037545|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0037545|rec_yds",
@@ -18511,7 +19129,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0038454|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0038454|rec_yds",
@@ -18544,7 +19163,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0039299|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0039299|rec_yds",
@@ -18577,7 +19197,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0040666|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0040666|rec_yds",
@@ -18610,7 +19231,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0038543|rec": {
    "key": "2026_04_LAC_SEA|00-0038543|rec",
@@ -18643,7 +19265,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LAC_SEA|00-0039915|rec": {
    "key": "2026_04_LAC_SEA|00-0039915|rec",
@@ -18676,7 +19299,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LAC_SEA|00-0040727|rec": {
    "key": "2026_04_LAC_SEA|00-0040727|rec",
@@ -18709,7 +19333,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0039793|rec": {
    "key": "2026_04_LAC_SEA|00-0039793|rec",
@@ -18742,7 +19367,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0038544|rec": {
    "key": "2026_04_LAC_SEA|00-0038544|rec",
@@ -18775,7 +19401,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0040189|rec": {
    "key": "2026_04_LAC_SEA|00-0040189|rec",
@@ -18808,7 +19435,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0033908|rec": {
    "key": "2026_04_LAC_SEA|00-0033908|rec",
@@ -18841,7 +19469,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0037545|rec": {
    "key": "2026_04_LAC_SEA|00-0037545|rec",
@@ -18874,7 +19503,8 @@
     "lean_result": "win",
     "profit": 0.532,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_LAC_SEA|00-0039299|rec": {
    "key": "2026_04_LAC_SEA|00-0039299|rec",
@@ -18907,7 +19537,8 @@
     "lean_result": "win",
     "profit": 1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0038454|rec": {
    "key": "2026_04_LAC_SEA|00-0038454|rec",
@@ -18940,7 +19571,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0040666|rec": {
    "key": "2026_04_LAC_SEA|00-0040666|rec",
@@ -18973,7 +19605,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0038797|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0038797|rush_yds",
@@ -19006,7 +19639,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0040666|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0040666|rush_yds",
@@ -19039,7 +19673,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_LAC_SEA|00-0036355|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0036355|rush_yds",
@@ -19072,7 +19707,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_LAC_SEA|00-0038454|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0038454|rush_yds",
@@ -19105,7 +19741,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_LAC_SEA|00-0034869|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0034869|rush_yds",
@@ -19138,7 +19775,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0033280|anytime_td": {
    "key": "2026_04_DEN_SF|00-0033280|anytime_td",
@@ -19171,7 +19809,8 @@
     "lean_result": "win",
     "profit": 0.513,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0036158|anytime_td": {
    "key": "2026_04_DEN_SF|00-0036158|anytime_td",
@@ -19202,9 +19841,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.739,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0031408|anytime_td": {
    "key": "2026_04_DEN_SF|00-0031408|anytime_td",
@@ -19235,9 +19876,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.562,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0035719|anytime_td": {
    "key": "2026_04_DEN_SF|00-0035719|anytime_td",
@@ -19270,7 +19913,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0033288|anytime_td": {
    "key": "2026_04_DEN_SF|00-0033288|anytime_td",
@@ -19303,7 +19947,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0036613|anytime_td": {
    "key": "2026_04_DEN_SF|00-0036613|anytime_td",
@@ -19336,7 +19981,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0034348|anytime_td": {
    "key": "2026_04_DEN_SF|00-0034348|anytime_td",
@@ -19369,7 +20015,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0040730|anytime_td": {
    "key": "2026_04_DEN_SF|00-0040730|anytime_td",
@@ -19402,7 +20049,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0041052|anytime_td": {
    "key": "2026_04_DEN_SF|00-0041052|anytime_td",
@@ -19433,9 +20081,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.256,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0037834|anytime_td": {
    "key": "2026_04_DEN_SF|00-0037834|anytime_td",
@@ -19466,9 +20116,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.247,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0040134|anytime_td": {
    "key": "2026_04_DEN_SF|00-0040134|anytime_td",
@@ -19499,9 +20151,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.222,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0039732|anytime_td": {
    "key": "2026_04_DEN_SF|00-0039732|anytime_td",
@@ -19532,9 +20186,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.215,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0033881|anytime_td": {
    "key": "2026_04_DEN_SF|00-0033881|anytime_td",
@@ -19567,7 +20223,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0029892|anytime_td": {
    "key": "2026_04_DEN_SF|00-0029892|anytime_td",
@@ -19600,7 +20257,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0036887|anytime_td": {
    "key": "2026_04_DEN_SF|00-0036887|anytime_td",
@@ -19633,7 +20291,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0039868|anytime_td": {
    "key": "2026_04_DEN_SF|00-0039868|anytime_td",
@@ -19666,7 +20325,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0038976|anytime_td": {
    "key": "2026_04_DEN_SF|00-0038976|anytime_td",
@@ -19699,7 +20359,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0037085|anytime_td": {
    "key": "2026_04_DEN_SF|00-0037085|anytime_td",
@@ -19732,7 +20393,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0037834|pass_yds": {
    "key": "2026_04_DEN_SF|00-0037834|pass_yds",
@@ -19765,7 +20427,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0039732|pass_yds": {
    "key": "2026_04_DEN_SF|00-0039732|pass_yds",
@@ -19798,7 +20461,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DEN_SF|00-0033288|rec_yds": {
    "key": "2026_04_DEN_SF|00-0033288|rec_yds",
@@ -19831,7 +20495,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0036613|rec_yds": {
    "key": "2026_04_DEN_SF|00-0036613|rec_yds",
@@ -19864,7 +20529,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0033280|rec_yds": {
    "key": "2026_04_DEN_SF|00-0033280|rec_yds",
@@ -19897,7 +20563,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0034348|rec_yds": {
    "key": "2026_04_DEN_SF|00-0034348|rec_yds",
@@ -19930,7 +20597,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0040134|rec_yds": {
    "key": "2026_04_DEN_SF|00-0040134|rec_yds",
@@ -19963,7 +20631,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0040730|rec_yds": {
    "key": "2026_04_DEN_SF|00-0040730|rec_yds",
@@ -19996,7 +20665,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0033881|rec_yds": {
    "key": "2026_04_DEN_SF|00-0033881|rec_yds",
@@ -20029,7 +20699,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0029892|rec_yds": {
    "key": "2026_04_DEN_SF|00-0029892|rec_yds",
@@ -20062,7 +20733,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0039868|rec_yds": {
    "key": "2026_04_DEN_SF|00-0039868|rec_yds",
@@ -20095,7 +20767,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0033288|rec": {
    "key": "2026_04_DEN_SF|00-0033288|rec",
@@ -20128,7 +20801,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0033280|rec": {
    "key": "2026_04_DEN_SF|00-0033280|rec",
@@ -20161,7 +20835,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0036613|rec": {
    "key": "2026_04_DEN_SF|00-0036613|rec",
@@ -20194,7 +20869,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0040730|rec": {
    "key": "2026_04_DEN_SF|00-0040730|rec",
@@ -20227,7 +20903,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DEN_SF|00-0034348|rec": {
    "key": "2026_04_DEN_SF|00-0034348|rec",
@@ -20260,7 +20937,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0033881|rec": {
    "key": "2026_04_DEN_SF|00-0033881|rec",
@@ -20293,7 +20971,8 @@
     "lean_result": "win",
     "profit": 0.714,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DEN_SF|00-0040134|rec": {
    "key": "2026_04_DEN_SF|00-0040134|rec",
@@ -20326,7 +21005,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0029892|rec": {
    "key": "2026_04_DEN_SF|00-0029892|rec",
@@ -20359,7 +21039,8 @@
     "lean_result": "win",
     "profit": 1.64,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0039868|rec": {
    "key": "2026_04_DEN_SF|00-0039868|rec",
@@ -20392,7 +21073,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0033280|rush_yds": {
    "key": "2026_04_DEN_SF|00-0033280|rush_yds",
@@ -20425,7 +21107,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0036158|rush_yds": {
    "key": "2026_04_DEN_SF|00-0036158|rush_yds",
@@ -20458,7 +21141,8 @@
     "lean_result": "win",
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0041052|rush_yds": {
    "key": "2026_04_DEN_SF|00-0041052|rush_yds",
@@ -20491,7 +21175,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DEN_SF|00-0037834|rush_yds": {
    "key": "2026_04_DEN_SF|00-0037834|rush_yds",
@@ -20524,7 +21209,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DEN_SF|00-0039732|rush_yds": {
    "key": "2026_04_DEN_SF|00-0039732|rush_yds",
@@ -20557,7 +21243,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DEN_SF|00-0040730|rush_yds": {
    "key": "2026_04_DEN_SF|00-0040730|rush_yds",
@@ -20590,7 +21277,8 @@
     "lean_result": "win",
     "profit": 0.943,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0039139|anytime_td": {
    "key": "2026_04_DET_CAR|00-0039139|anytime_td",
@@ -20623,7 +21311,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0036555|anytime_td": {
    "key": "2026_04_DET_CAR|00-0036555|anytime_td",
@@ -20656,7 +21345,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0036963|anytime_td": {
    "key": "2026_04_DET_CAR|00-0036963|anytime_td",
@@ -20687,9 +21377,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 1.066,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0040124|anytime_td": {
    "key": "2026_04_DET_CAR|00-0040124|anytime_td",
@@ -20722,7 +21414,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0039491|anytime_td": {
    "key": "2026_04_DET_CAR|00-0039491|anytime_td",
@@ -20755,7 +21448,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0039065|anytime_td": {
    "key": "2026_04_DET_CAR|00-0039065|anytime_td",
@@ -20788,7 +21482,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0037240|anytime_td": {
    "key": "2026_04_DET_CAR|00-0037240|anytime_td",
@@ -20819,9 +21514,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.427,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0031610|anytime_td": {
    "key": "2026_04_DET_CAR|00-0031610|anytime_td",
@@ -20852,9 +21549,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.333,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0039150|anytime_td": {
    "key": "2026_04_DET_CAR|00-0039150|anytime_td",
@@ -20885,9 +21584,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.155,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0040669|anytime_td": {
    "key": "2026_04_DET_CAR|00-0040669|anytime_td",
@@ -20920,7 +21621,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0037005|anytime_td": {
    "key": "2026_04_DET_CAR|00-0037005|anytime_td",
@@ -20953,7 +21655,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0038840|anytime_td": {
    "key": "2026_04_DET_CAR|00-0038840|anytime_td",
@@ -20984,9 +21687,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.093,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0036265|anytime_td": {
    "key": "2026_04_DET_CAR|00-0036265|anytime_td",
@@ -21017,9 +21722,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.085,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0040187|anytime_td": {
    "key": "2026_04_DET_CAR|00-0040187|anytime_td",
@@ -21052,7 +21759,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0033106|anytime_td": {
    "key": "2026_04_DET_CAR|00-0033106|anytime_td",
@@ -21083,9 +21791,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.038,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0033106|pass_yds": {
    "key": "2026_04_DET_CAR|00-0033106|pass_yds",
@@ -21118,7 +21828,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0039150|pass_yds": {
    "key": "2026_04_DET_CAR|00-0039150|pass_yds",
@@ -21151,7 +21862,8 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0036963|rec_yds": {
    "key": "2026_04_DET_CAR|00-0036963|rec_yds",
@@ -21184,7 +21896,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0040124|rec_yds": {
    "key": "2026_04_DET_CAR|00-0040124|rec_yds",
@@ -21217,7 +21930,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DET_CAR|00-0039491|rec_yds": {
    "key": "2026_04_DET_CAR|00-0039491|rec_yds",
@@ -21250,7 +21964,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0037240|rec_yds": {
    "key": "2026_04_DET_CAR|00-0037240|rec_yds",
@@ -21283,7 +21998,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0039065|rec_yds": {
    "key": "2026_04_DET_CAR|00-0039065|rec_yds",
@@ -21316,7 +22032,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0039139|rec_yds": {
    "key": "2026_04_DET_CAR|00-0039139|rec_yds",
@@ -21349,7 +22066,8 @@
     "lean_result": "win",
     "profit": 0.862,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_DET_CAR|00-0031610|rec_yds": {
    "key": "2026_04_DET_CAR|00-0031610|rec_yds",
@@ -21382,7 +22100,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0036555|rec_yds": {
    "key": "2026_04_DET_CAR|00-0036555|rec_yds",
@@ -21415,7 +22134,8 @@
     "lean_result": "win",
     "profit": 0.862,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0040669|rec_yds": {
    "key": "2026_04_DET_CAR|00-0040669|rec_yds",
@@ -21448,7 +22168,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0037005|rec_yds": {
    "key": "2026_04_DET_CAR|00-0037005|rec_yds",
@@ -21481,7 +22202,8 @@
     "lean_result": "win",
     "profit": 0.855,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0036963|rec": {
    "key": "2026_04_DET_CAR|00-0036963|rec",
@@ -21514,7 +22236,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0040124|rec": {
    "key": "2026_04_DET_CAR|00-0040124|rec",
@@ -21547,7 +22270,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0039139|rec": {
    "key": "2026_04_DET_CAR|00-0039139|rec",
@@ -21580,7 +22304,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0039491|rec": {
    "key": "2026_04_DET_CAR|00-0039491|rec",
@@ -21613,7 +22338,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0039065|rec": {
    "key": "2026_04_DET_CAR|00-0039065|rec",
@@ -21646,7 +22372,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0037240|rec": {
    "key": "2026_04_DET_CAR|00-0037240|rec",
@@ -21679,7 +22406,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0031610|rec": {
    "key": "2026_04_DET_CAR|00-0031610|rec",
@@ -21712,7 +22440,8 @@
     "lean_result": "win",
     "profit": 0.599,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0036555|rec": {
    "key": "2026_04_DET_CAR|00-0036555|rec",
@@ -21745,7 +22474,8 @@
     "lean_result": "win",
     "profit": 1.29,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0037005|rec": {
    "key": "2026_04_DET_CAR|00-0037005|rec",
@@ -21778,7 +22508,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0040669|rec": {
    "key": "2026_04_DET_CAR|00-0040669|rec",
@@ -21811,7 +22542,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_DET_CAR|00-0039139|rush_yds": {
    "key": "2026_04_DET_CAR|00-0039139|rush_yds",
@@ -21844,7 +22576,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0036555|rush_yds": {
    "key": "2026_04_DET_CAR|00-0036555|rush_yds",
@@ -21877,7 +22610,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0036265|rush_yds": {
    "key": "2026_04_DET_CAR|00-0036265|rush_yds",
@@ -21910,7 +22644,8 @@
     "lean_result": "win",
     "profit": 0.943,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_DET_CAR|00-0039150|rush_yds": {
    "key": "2026_04_DET_CAR|00-0039150|rush_yds",
@@ -21943,7 +22678,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_DET_CAR|00-0033106|rush_yds": {
    "key": "2026_04_DET_CAR|00-0033106|rush_yds",
@@ -21976,7 +22712,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0038542|anytime_td": {
    "key": "2026_04_ATL_NO|00-0038542|anytime_td",
@@ -22009,7 +22746,8 @@
     "lean_result": "win",
     "profit": 0.513,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0037238|anytime_td": {
    "key": "2026_04_ATL_NO|00-0037238|anytime_td",
@@ -22040,9 +22778,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.739,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0037239|anytime_td": {
    "key": "2026_04_ATL_NO|00-0037239|anytime_td",
@@ -22075,7 +22815,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0033906|anytime_td": {
    "key": "2026_04_ATL_NO|00-0033906|anytime_td",
@@ -22108,7 +22849,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0039424|anytime_td": {
    "key": "2026_04_ATL_NO|00-0039424|anytime_td",
@@ -22141,7 +22883,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0040743|anytime_td": {
    "key": "2026_04_ATL_NO|00-0040743|anytime_td",
@@ -22172,9 +22915,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.34,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0036040|anytime_td": {
    "key": "2026_04_ATL_NO|00-0036040|anytime_td",
@@ -22207,7 +22952,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0038551|anytime_td": {
    "key": "2026_04_ATL_NO|00-0038551|anytime_td",
@@ -22238,9 +22984,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.294,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0036970|anytime_td": {
    "key": "2026_04_ATL_NO|00-0036970|anytime_td",
@@ -22273,7 +23021,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0037746|anytime_td": {
    "key": "2026_04_ATL_NO|00-0037746|anytime_td",
@@ -22306,7 +23055,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0037741|anytime_td": {
    "key": "2026_04_ATL_NO|00-0037741|anytime_td",
@@ -22339,7 +23089,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0041067|anytime_td": {
    "key": "2026_04_ATL_NO|00-0041067|anytime_td",
@@ -22370,9 +23121,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.145,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0035644|anytime_td": {
    "key": "2026_04_ATL_NO|00-0035644|anytime_td",
@@ -22405,7 +23158,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0039917|anytime_td": {
    "key": "2026_04_ATL_NO|00-0039917|anytime_td",
@@ -22436,9 +23190,11 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-06T12:05+00:00"
-   }
+    "profit": 0.064,
+    "graded_at": "2026-10-06T12:05+00:00",
+    "est_price": true
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0040743|pass_yds": {
    "key": "2026_04_ATL_NO|00-0040743|pass_yds",
@@ -22471,7 +23227,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0039917|pass_yds": {
    "key": "2026_04_ATL_NO|00-0039917|pass_yds",
@@ -22504,7 +23261,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0037239|rec_yds": {
    "key": "2026_04_ATL_NO|00-0037239|rec_yds",
@@ -22537,7 +23295,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0037238|rec_yds": {
    "key": "2026_04_ATL_NO|00-0037238|rec_yds",
@@ -22570,7 +23329,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_ATL_NO|00-0039424|rec_yds": {
    "key": "2026_04_ATL_NO|00-0039424|rec_yds",
@@ -22603,7 +23363,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0036040|rec_yds": {
    "key": "2026_04_ATL_NO|00-0036040|rec_yds",
@@ -22636,7 +23397,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0038542|rec_yds": {
    "key": "2026_04_ATL_NO|00-0038542|rec_yds",
@@ -22669,7 +23431,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0036970|rec_yds": {
    "key": "2026_04_ATL_NO|00-0036970|rec_yds",
@@ -22702,7 +23465,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0037741|rec_yds": {
    "key": "2026_04_ATL_NO|00-0037741|rec_yds",
@@ -22735,7 +23499,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0035644|rec_yds": {
    "key": "2026_04_ATL_NO|00-0035644|rec_yds",
@@ -22768,7 +23533,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0033906|rec_yds": {
    "key": "2026_04_ATL_NO|00-0033906|rec_yds",
@@ -22801,7 +23567,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0037239|rec": {
    "key": "2026_04_ATL_NO|00-0037239|rec",
@@ -22834,7 +23601,8 @@
     "lean_result": null,
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": null
   },
   "2026_04_ATL_NO|00-0037238|rec": {
    "key": "2026_04_ATL_NO|00-0037238|rec",
@@ -22867,7 +23635,8 @@
     "lean_result": "win",
     "profit": 1.16,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "play"
   },
   "2026_04_ATL_NO|00-0038542|rec": {
    "key": "2026_04_ATL_NO|00-0038542|rec",
@@ -22900,7 +23669,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0039424|rec": {
    "key": "2026_04_ATL_NO|00-0039424|rec",
@@ -22933,7 +23703,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0036040|rec": {
    "key": "2026_04_ATL_NO|00-0036040|rec",
@@ -22966,7 +23737,8 @@
     "lean_result": "win",
     "profit": 0.87,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0033906|rec": {
    "key": "2026_04_ATL_NO|00-0033906|rec",
@@ -22999,7 +23771,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0036970|rec": {
    "key": "2026_04_ATL_NO|00-0036970|rec",
@@ -23032,7 +23805,8 @@
     "lean_result": "win",
     "profit": 0.73,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0035644|rec": {
    "key": "2026_04_ATL_NO|00-0035644|rec",
@@ -23065,7 +23839,8 @@
     "lean_result": "void",
     "profit": 0.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0037741|rec": {
    "key": "2026_04_ATL_NO|00-0037741|rec",
@@ -23098,7 +23873,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0038542|rush_yds": {
    "key": "2026_04_ATL_NO|00-0038542|rush_yds",
@@ -23131,7 +23907,8 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0033906|rush_yds": {
    "key": "2026_04_ATL_NO|00-0033906|rush_yds",
@@ -23164,7 +23941,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0037746|rush_yds": {
    "key": "2026_04_ATL_NO|00-0037746|rush_yds",
@@ -23197,7 +23975,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0038551|rush_yds": {
    "key": "2026_04_ATL_NO|00-0038551|rush_yds",
@@ -23230,7 +24009,8 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   },
   "2026_04_ATL_NO|00-0040743|rush_yds": {
    "key": "2026_04_ATL_NO|00-0040743|rush_yds",
@@ -23263,7 +24043,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "too_big"
   },
   "2026_04_ATL_NO|00-0039917|rush_yds": {
    "key": "2026_04_ATL_NO|00-0039917|rush_yds",
@@ -23296,7 +24077,8 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
-   }
+   },
+   "tier": "watch"
   }
  }
 }
