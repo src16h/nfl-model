@@ -1,112 +1,812 @@
 {
- "games": {},
+ "games": {
+  "2026_05_TB_DAL": {
+   "fetched_at": "2026-10-07T22:18+00:00",
+   "event_id": "259b5df9aa0d10257f56de78523495e0",
+   "rows": [
+    {
+     "player": "Javonte Williams",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "-230",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "CeeDee Lamb",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "-110",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Pickens",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+120",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bucky Irving",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+190",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jake Ferguson",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+235",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emeka Egbuka",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+265",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jalon Daniels",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+285",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ryan Flournoy",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+290",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Sean Tucker",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+370",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Chris Godwin",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+475",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dallas Cowboys D/ST",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dak Prescott",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Kenny Gainwell",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ted Hurst III",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cade Otton",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+550",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tyler Goodson",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+650",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tampa Bay Buccaneers D/ST",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+700",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tez Johnson",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+750",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "KaVontae Turpin",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+800",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Hunter Luepke",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1000",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emari Demercado",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1000",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Luke Schoonmaker",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1100",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Brevyn Spann-Ford",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1100",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Kameron Johnson",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1900",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jonathan Mingo",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2200",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Camden Brown",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2200",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Payne Durham",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+3000",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ko Kieft",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+3000",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bauer Sharp",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+3500",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dak Prescott",
+     "team": "",
+     "stat": "pass_yds",
+     "line": "265.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jalon Daniels",
+     "team": "",
+     "stat": "pass_yds",
+     "line": "181.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "CeeDee Lamb",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "80.5",
+     "over_odds": "-113",
+     "under_odds": "-111",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Pickens",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "61.5",
+     "over_odds": "-114",
+     "under_odds": "-110",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emeka Egbuka",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "34.5",
+     "over_odds": "-109",
+     "under_odds": "-115",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ryan Flournoy",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "31.5",
+     "over_odds": "-115",
+     "under_odds": "-109",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Chris Godwin",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "29.5",
+     "over_odds": "-112",
+     "under_odds": "-112",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cade Otton",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "28.5",
+     "over_odds": "-113",
+     "under_odds": "-111",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jake Ferguson",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "27.5",
+     "over_odds": "-116",
+     "under_odds": "-108",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ted Hurst III",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "20.5",
+     "over_odds": "-112",
+     "under_odds": "-112",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Javonte Williams",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "15.5",
+     "over_odds": "-114",
+     "under_odds": "-110",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tez Johnson",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "13.5",
+     "over_odds": "-108",
+     "under_odds": "-116",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bucky Irving",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "12.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Kenny Gainwell",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "10.5",
+     "over_odds": "-107",
+     "under_odds": "-117",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "CeeDee Lamb",
+     "team": "",
+     "stat": "rec",
+     "line": "6.5",
+     "over_odds": "+107",
+     "under_odds": "-136",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Pickens",
+     "team": "",
+     "stat": "rec",
+     "line": "4.5",
+     "over_odds": "-113",
+     "under_odds": "-113",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Chris Godwin",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "-116",
+     "under_odds": "-110",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jake Ferguson",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "-109",
+     "under_odds": "-117",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cade Otton",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "+102",
+     "under_odds": "-130",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ryan Flournoy",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "+125",
+     "under_odds": "-160",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emeka Egbuka",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "+136",
+     "under_odds": "-175",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Javonte Williams",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "-129",
+     "under_odds": "+102",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bucky Irving",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "+123",
+     "under_odds": "-157",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Kenny Gainwell",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "-165",
+     "under_odds": "+129",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Ted Hurst III",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "-152",
+     "under_odds": "+119",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tez Johnson",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "+132",
+     "under_odds": "-169",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Javonte Williams",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "73.5",
+     "over_odds": "-114",
+     "under_odds": "-110",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bucky Irving",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "51.5",
+     "over_odds": "-115",
+     "under_odds": "-109",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jalon Daniels",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "46.5",
+     "over_odds": "-110",
+     "under_odds": "-114",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tyler Goodson",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "16.5",
+     "over_odds": "-110",
+     "under_odds": "-115",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Kenny Gainwell",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "11.5",
+     "over_odds": "-113",
+     "under_odds": "-111",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dak Prescott",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "9.5",
+     "over_odds": "-116",
+     "under_odds": "-108",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dallas Cowboys Defense",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+450",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Tampa Bay Buccaneers Defense",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+800",
+     "under_odds": "",
+     "game_id": "2026_05_TB_DAL",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    }
+   ]
+  }
+ },
  "lines": {
-  "fetched_at": "2026-10-07T12:32+00:00",
+  "fetched_at": "2026-10-07T22:18+00:00",
   "data": {
    "2026_05_TB_DAL": {
     "spread_line": 8.5,
     "total_line": 47.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_PHI_JAX": {
     "spread_line": 7.0,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_CHI_GB": {
-    "spread_line": -3.0,
+    "spread_line": -2.5,
     "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_CIN_MIA": {
-    "spread_line": -7.0,
+    "spread_line": -6.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_CLE_NYJ": {
-    "spread_line": 2.5,
+    "spread_line": 1.5,
     "total_line": 39.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_HOU_TEN": {
     "spread_line": -7.5,
     "total_line": 37.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_IND_PIT": {
     "spread_line": 2.5,
     "total_line": 44.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_LV_NE": {
     "spread_line": 3.5,
     "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_MIN_NO": {
     "spread_line": -1.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_NYG_WAS": {
     "spread_line": 3.5,
-    "total_line": 43.5,
+    "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_DEN_LAC": {
     "spread_line": -3.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_DET_ARI": {
     "spread_line": -5.5,
     "total_line": 54.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_SF_SEA": {
     "spread_line": 2.5,
-    "total_line": 46.5,
+    "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_BAL_ATL": {
     "spread_line": 3.5,
     "total_line": 43.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    },
    "2026_05_BUF_LA": {
     "spread_line": 3.0,
     "total_line": 54.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T12:31:22Z"
+    "updated": "2026-10-07T22:17:40Z"
    }
   }
  }
