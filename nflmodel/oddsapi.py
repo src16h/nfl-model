@@ -282,6 +282,22 @@ def _load_cache(path):
         return {"games": {}}
 
 
+def _save_cache(path, cache):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_text(json.dumps(clean_json(cache), indent=1, allow_nan=False))
+
+
+def _lines_due(ent: dict, todo: pd.DataFrame, now: datetime) -> bool:
+    """Spreads and totals: refresh every few hours, faster when a game is close."""
+    try:
+        age = now - datetime.fromisoformat(ent["fetched_at"])
+    except (KeyError, TypeError, ValueError):
+        return True
+    soon = any(ko is not None and pd.notna(ko) and now < ko <= now + timedelta(hours=12) for ko in todo["ko"])
+    gap = C.ODDS_LINES_GAMEDAY_HOURS if soon else C.ODDS_LINES_EVERY_HOURS
+    return age >= timedelta(hours=gap)
+
+
 def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: datetime, cache_path):
     """Fetch props for games kicking off soon (once per refresh window), reuse the cache otherwise."""
     markets = list(C.ODDS_PROP_MARKETS)
@@ -358,13 +374,33 @@ def pull(todo: pd.DataFrame, now: datetime, cache_path) -> dict:
         if not matched:
             notes.append("no upcoming games found in the odds feed yet")
         if C.ODDS_GAME_LINES_ON:
-            try:
-                out["game_lines"] = fetch_game_lines(client, todo)
-                status["lines"] = len(out["game_lines"])
-            except OddsFatal:
-                raise
-            except OddsError as e:
-                notes.append(f"live spreads and totals skipped ({e})")
+            cache = _load_cache(cache_path)
+            ent = cache.get("lines") or {}
+            ids = set(todo["game_id"])
+            cached_lines = {k: v for k, v in (ent.get("data") or {}).items() if k in ids}
+            due, why_not = _lines_due(ent, todo, now), None
+            if due and client.remaining is not None and client.remaining < getattr(C, "ODDS_LINES_FLOOR", 0):
+                due, why_not = False, f"saving credits for props ({client.remaining} left)"
+            if due:
+                try:
+                    fresh = fetch_game_lines(client, todo)
+                    cache["lines"] = {"fetched_at": now.isoformat(timespec="minutes"), "data": fresh}
+                    _save_cache(cache_path, cache)
+                    out["game_lines"] = fresh
+                    status["lines_at"] = cache["lines"]["fetched_at"]
+                except OddsFatal:
+                    raise
+                except OddsError as e:
+                    notes.append(f"live spreads and totals skipped ({e})")
+                    out["game_lines"] = cached_lines
+                    status["lines_at"] = ent.get("fetched_at")
+            else:
+                out["game_lines"] = cached_lines
+                status["lines_at"] = ent.get("fetched_at")
+                status["lines_reused"] = True
+                if why_not:
+                    notes.append(f"live lines not refreshed, {why_not}")
+            status["lines"] = len(out["game_lines"])
         if C.ODDS_PROPS_ON and matched:
             rows, info = fetch_all_props(client, todo, matched, now, cache_path)
             status.update(games_fetched=info["fetched"], games_cached=info["cached"])
@@ -382,7 +418,7 @@ def pull(todo: pd.DataFrame, now: datetime, cache_path) -> dict:
         books = pd.Series([r["book"] for r in rows]).value_counts()
         status["book"] = books.index[0]
     if status["ok"]:
-        bits = [f"{status['lines']} games with live lines"] if C.ODDS_GAME_LINES_ON else []
+        bits = [f"{status['lines']} games with live lines" + (" (reused from the last pull)" if status.get("lines_reused") else "")] if C.ODDS_GAME_LINES_ON else []
         if C.ODDS_PROPS_ON:
             bits.append(f"{status['prop_rows']} prop lines ({status['games_fetched']} games fetched, "
                         f"{status['games_cached']} reused from earlier)")

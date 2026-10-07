@@ -3,151 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Board · NFL model</title>
+<title>The Board: NFL model</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏈</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --board:#0F1B2D; --panel:#15263E; --panel2:#1B2F4B; --line:#27405F;
-  --ink:#EAF0F6; --muted:#93A6BF; --led:#FFB547; --led-dim:#7A5A2A; --turf:#43C47F; --warn:#FF7A6B;
-  --cond:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
-  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#101C2B; --surface:#172638; --raised:#1E3147; --line:#2B4058; --line-soft:#223549;
+  --ink:#ECF1F7; --muted:#91A4BA; --accent:#F2B544; --accent-ink:#1E1503; --win:#4CC38A; --loss:#EF6F61;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --r:10px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
 }
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
-    --board:#EEF2F6; --panel:#FFFFFF; --panel2:#F5F7FA; --line:#D3DBE5;
-    --ink:#0F1B2D; --muted:#586A82; --led:#A95F00; --led-dim:#E9C995; --turf:#17804A; --warn:#C2412F;
+    --bg:#F2F4F7; --surface:#FFFFFF; --raised:#F6F8FA; --line:#DCE2E9; --line-soft:#E8ECF1;
+    --ink:#13202F; --muted:#5A6A7E; --accent:#A86A00; --accent-ink:#FFFFFF; --win:#157F4C; --loss:#C2412F;
+    color-scheme:light;
   }
 }
+:root[data-theme="light"]{
+  --bg:#F2F4F7; --surface:#FFFFFF; --raised:#F6F8FA; --line:#DCE2E9; --line-soft:#E8ECF1;
+  --ink:#13202F; --muted:#5A6A7E; --accent:#A86A00; --accent-ink:#FFFFFF; --win:#157F4C; --loss:#C2412F;
+  color-scheme:light;
+}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--board);color:var(--ink);font:16px/1.5 var(--body);-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 64px}
-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}
-h1{font:700 44px/1 var(--cond);margin:0;letter-spacing:.5px}
-h1 small{display:block;font:500 17px/1.3 var(--body);color:var(--muted);letter-spacing:0;margin-top:6px}
-.updated{color:var(--muted);font-size:14px;text-align:right}
-nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
-nav button{font:600 18px var(--cond);background:none;border:0;color:var(--muted);padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
-nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--led)}
-button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--led);outline-offset:2px}
-h2{font:700 26px/1.1 var(--cond);margin:28px 0 10px}
-.hint{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:70ch}
-.msg{background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:6px}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 72px}
+.num,.cond{font-stretch:75%}
 
-/* leans strip */
-.leans{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.lean{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--muted);padding:8px 12px;border-radius:4px;font-size:15px}
-.lean b{font:700 19px var(--cond)}
-.lean span{color:var(--muted)}
-.more{font:600 16px var(--cond);background:none;border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:6px 12px;cursor:pointer}
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 10px}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand h1{margin:0;font:800 30px/1 var(--font);font-stretch:75%;letter-spacing:.2px}
+.brand span{color:var(--muted);font-size:15px}
+.fresh{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--win)}
+.fresh.stale .dot{background:var(--loss)}
+.fresh.stale{color:var(--loss)}
 
-/* the board */
-.game{background:var(--panel);border:1px solid var(--line);border-radius:6px;margin-bottom:10px;overflow:hidden}
-.grow{display:grid;grid-template-columns:76px 96px 1fr 1fr 1fr;align-items:center}
-.grow + .grow{border-top:1px dashed var(--line)}
-.tm{font:700 26px var(--cond);padding:10px 0 10px 14px}
-.score{font:700 38px/1 var(--cond);color:var(--led);font-variant-numeric:tabular-nums;text-shadow:0 0 18px color-mix(in srgb,var(--led) 35%,transparent)}
-.cell{padding:8px 12px;font-size:14px;color:var(--muted)}
-.cell strong{display:block;font:600 19px var(--cond);color:var(--ink);font-variant-numeric:tabular-nums}
-.cell .flag{color:var(--turf);font-weight:600}
-.cell small{display:block;font-size:12px;color:var(--muted)}
-.cmp td:first-child{font-weight:600}
-.bk td{text-align:right}
-.gfoot{background:var(--panel2);padding:8px 14px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
-.gfoot .qb{color:var(--ink)}
-.gfoot .inj{color:var(--warn)}
-.state{font:600 15px var(--cond);color:var(--muted)}
-.final{color:var(--ink)}
-@media (max-width:720px){
-  .grow{grid-template-columns:64px 80px 1fr 1fr}
-  .grow .cell:nth-child(5){grid-column:1/-1;border-top:1px dotted var(--line);padding-left:14px}
-  .score{font-size:32px}
+/* tabs */
+nav{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:0 -16px 24px;padding:0 16px;padding-top:env(safe-area-inset-top,0px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{font:600 16px var(--font);background:none;border:0;color:var(--muted);padding:12px 12px 11px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+h2{font:700 24px/1.15 var(--font);font-stretch:80%;margin:36px 0 6px}
+h2:first-child{margin-top:4px}
+h3{font:700 18px/1.2 var(--font);margin:26px 0 8px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 14px;max-width:68ch}
+.sub b{color:var(--ink);font-weight:600}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:18px;color:var(--muted)}
+.empty b{color:var(--ink)}
+
+/* play tickets: the one loud element */
+.tickets{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr))}
+.ticket{position:relative;display:grid;grid-template-columns:1fr auto;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--r)}
+.t-main{padding:14px 16px 12px}
+.t-kind{font-size:13px;color:var(--muted)}
+.t-kind b{color:var(--accent);font-weight:700}
+.t-pick{font:800 30px/1.05 var(--font);font-stretch:72%;margin:4px 0 2px;letter-spacing:.2px}
+.t-pick small{font:600 18px var(--font);font-stretch:85%;color:var(--muted);margin-left:6px}
+.t-who{font-size:15px}
+.t-who span{color:var(--muted)}
+.t-meta{font-size:13px;color:var(--muted);margin-top:4px}
+.t-meta b{color:var(--ink);font-weight:600}
+.t-side{position:relative;border-left:2px dashed var(--line);padding:12px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;text-align:right;min-width:112px}
+.t-side::before,.t-side::after{content:"";position:absolute;left:-9px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+.t-side::before{top:-9px;clip-path:inset(50% 0 0 0)}
+.t-side::after{bottom:-9px;clip-path:inset(0 0 50% 0)}
+.t-gap{font:800 28px/1 var(--font);font-stretch:72%;color:var(--accent)}
+.t-gap small{font-size:15px;font-weight:600}
+.t-gl{font-size:12px;color:var(--muted);margin-top:3px}
+@media (max-width:560px){
+  .t-main{padding:12px 12px 10px 14px}
+  .t-side{min-width:78px;padding:10px 12px}
+  .t-pick{font-size:26px}
+  .t-gap{font-size:24px}
+}
+.rules{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;font-size:14px;color:var(--muted)}
+.rules b{color:var(--ink);font-weight:600}
+
+/* collapsibles */
+details.fold{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-top:12px}
+details.fold>summary{cursor:pointer;list-style:none;padding:13px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin-right:4px;flex:none}
+details.fold[open]>summary::after{transform:rotate(-135deg)}
+details.fold>summary span{color:var(--muted);font-weight:400;font-size:14px;margin-left:auto}
+.fold-body{padding:0 16px 16px}
+.fold-body>.sub:first-child{margin-top:0}
+
+/* game rows */
+.games{display:grid;gap:8px}
+details.game{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.game>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(150px,1.4fr) repeat(4,minmax(70px,1fr));align-items:center;gap:8px;padding:12px 16px}
+details.game>summary::-webkit-details-marker{display:none}
+.mu{display:grid;gap:2px}
+.mu .row{display:flex;align-items:baseline;gap:10px}
+.mu .tm{font:700 20px/1.1 var(--font);font-stretch:75%;width:44px}
+.mu .pts{font:700 20px/1.1 var(--font);font-stretch:75%;color:var(--muted)}
+.mu .row.fav .pts{color:var(--ink)}
+.mu .when{font-size:13px;color:var(--muted);margin-top:2px}
+.kv{font-size:12px;color:var(--muted);line-height:1.3}
+.kv strong{display:block;font:600 17px/1.25 var(--font);font-stretch:85%;color:var(--ink)}
+.kv strong.hl{color:var(--accent)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 7px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);margin-left:6px;vertical-align:2px}
+.tag.watch{border-color:var(--line);color:var(--muted)}
+.final{color:var(--ink);font-weight:600}
+.g-body{border-top:1px solid var(--line-soft);padding:12px 16px 14px;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.g-body b{color:var(--ink);font-weight:600}
+.g-body .inj{color:var(--loss)}
+@media (max-width:640px){
+  details.game>summary{grid-template-columns:1fr 1fr;row-gap:10px}
+  .mu{grid-column:1/-1}
 }
 
+/* lists of props */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+input[type=search],select{font:500 15px var(--font);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-width:0}
+input[type=search]{flex:1 1 220px;max-width:340px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:600 14px var(--font);background:var(--surface);color:var(--muted);border:0;padding:9px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.plist{display:grid;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.prow{display:grid;grid-template-columns:minmax(150px,1.6fr) 1.1fr 1fr .8fr .8fr;gap:8px;align-items:center;padding:10px 14px;border-top:1px solid var(--line-soft)}
+.prow:first-child{border-top:0}
+.prow.head{font-size:13px;color:var(--muted);background:var(--raised);padding-top:8px;padding-bottom:8px}
+.prow .pl{font-weight:600}
+.prow .pl span{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.prow .pick{font:700 17px var(--font);font-stretch:85%}
+.prow .pick.over{color:var(--win)} .prow .pick.under{color:var(--accent)}
+.prow .r{text-align:right}
+.prow .gapv{font:700 17px var(--font);font-stretch:85%}
+.dim{color:var(--muted)}
+@media (max-width:640px){
+  .prow{grid-template-columns:1fr auto;row-gap:2px}
+  .prow.head{display:none}
+  .prow .c-prop{grid-column:1}
+  .prow .c-pick{grid-column:2;text-align:right;grid-row:1}
+  .prow .c-mb{grid-column:1/-1;font-size:13px;color:var(--muted);text-align:left}
+  .prow .c-mb::before{content:"Model / book "}
+  .prow .c-gap{grid-column:2;grid-row:2}
+}
+.more{font:600 14px var(--font);background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;margin-top:10px}
+
+/* stat strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.st{padding:14px 16px;border-left:1px solid var(--line-soft)}
+.st:first-child{border-left:0}
+.st strong{display:block;font:800 26px/1.1 var(--font);font-stretch:75%}
+.st span{font-size:13px;color:var(--muted)}
+.v-above{color:var(--win)!important}.v-below{color:var(--loss)!important}.v-unclear{color:var(--ink)}
+.up{color:var(--win)}.down{color:var(--loss)}
+
 /* tables */
-.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;align-items:center}
-select,input[type=search]{font:500 15px var(--body);background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px 10px}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.seg button{font:600 15px var(--cond);background:var(--panel);color:var(--muted);border:0;padding:8px 12px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--led);color:#1A1204}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
-table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
-th{font:600 15px var(--cond);color:var(--muted);text-align:right;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none;background:var(--panel2);position:sticky;top:0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{font:600 13px var(--font);color:var(--muted);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--raised);position:sticky;top:0}
+th.sort{cursor:pointer;user-select:none}
+th.sorted{color:var(--accent)}
 th:first-child,td:first-child{text-align:left}
-th.sorted{color:var(--led)}
-td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
 tr.p{cursor:pointer}
-tr.p:hover td{background:var(--panel2)}
-tr.detail td{background:var(--panel2);text-align:left;color:var(--muted);font-size:14px;white-space:normal}
+tr.p:hover td{background:var(--raised)}
+tr.detail td{background:var(--raised);text-align:left;color:var(--muted);font-size:14px;white-space:normal;line-height:1.6}
+tr.detail b{color:var(--ink)}
+tr.small td{color:var(--muted)}
 .pname{font-weight:600}
 .pos{color:var(--muted);font-size:13px;margin-left:6px}
-.qtag{color:var(--warn);font-weight:600;margin-left:6px;font-size:13px}
-.bar{display:inline-block;height:8px;border-radius:2px;background:var(--led);vertical-align:middle}
-.bar.neg{background:var(--warn)}
-.neg-t{color:var(--warn)}.pos-t{color:var(--turf)}
-
-/* record */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
-.stat strong{display:block;font:700 30px/1.1 var(--cond);color:var(--led);font-variant-numeric:tabular-nums}
-.stat span{color:var(--muted);font-size:14px}
+.qtag{color:var(--loss);font-weight:600;margin-left:6px;font-size:13px}
+.bar{display:inline-block;height:6px;border-radius:3px;background:var(--win);vertical-align:middle;margin-right:6px}
+.bar.neg{background:var(--loss)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px}
-.chip.ok::before{content:"● ";color:var(--turf)}
-.chip.bad::before{content:"● ";color:var(--warn)}
-.why{width:100%;color:var(--muted)}
-.why b{color:var(--ink);font-weight:600}
-.pairs{display:grid;gap:8px;margin-top:8px}
-.pair{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--turf);border-radius:4px;padding:8px 12px;font-size:15px}
-.pair span{color:var(--muted)}
-td.lean-o{color:var(--turf);font-weight:600}
-td.lean-u{color:var(--led);font-weight:600}
-td.err{color:var(--muted);font-style:italic}
-.v-above,.stat strong.v-above{color:var(--turf)}.v-below,.stat strong.v-below{color:var(--warn)}.v-unclear,.stat strong.v-unclear{color:var(--muted)}
-.gap{color:var(--muted);font-size:13px;font-weight:500;display:block}
-.hist{width:100%;color:var(--muted)}
-.hist b{color:var(--ink);font-weight:600}
-h3{font:700 20px/1.1 var(--cond);margin:22px 0 8px}
+.chip::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:var(--win)}
+.chip.bad::before{background:var(--loss)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
 [hidden]{display:none!important}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1 id="title">The Board<small id="sub">Loading the latest model run…</small></h1>
-    <div class="updated" id="updated"></div>
-  </header>
+  <div class="top">
+    <div class="brand"><h1>The Board</h1><span id="sub">Loading</span></div>
+    <div class="fresh" id="fresh" title=""><i class="dot"></i><span id="freshTxt">…</span></div>
+  </div>
   <nav role="tablist" aria-label="Sections">
     <button role="tab" data-tab="games" aria-selected="true">Games</button>
-    <button role="tab" data-tab="players" aria-selected="false">Player projections</button>
     <button role="tab" data-tab="props" aria-selected="false">Props</button>
-    <button role="tab" data-tab="teams" aria-selected="false">Power ratings</button>
-    <button role="tab" data-tab="record" aria-selected="false">Track record</button>
+    <button role="tab" data-tab="players" aria-selected="false">Players</button>
+    <button role="tab" data-tab="teams" aria-selected="false">Teams</button>
+    <button role="tab" data-tab="record" aria-selected="false">Record</button>
   </nav>
 
   <section id="games" role="tabpanel"></section>
+  <section id="props" role="tabpanel" hidden></section>
   <section id="players" role="tabpanel" hidden>
-    <p class="hint">Average projections. Tap a row for the median (compare this to prop lines) and a realistic range. Q = questionable.</p>
+    <h2>Player projections</h2>
+    <p class="sub">Average projection per player. Tap a row for the median and a realistic range. For props, compare the line to the median.</p>
     <div class="controls">
       <select id="fTeam" aria-label="Team"><option value="">All teams</option></select>
       <div class="seg" id="fPos" role="group" aria-label="Position">
-        <button aria-pressed="true" data-v="">All</button><button aria-pressed="false" data-v="QB">QB</button>
-        <button aria-pressed="false" data-v="RB">RB</button><button aria-pressed="false" data-v="WR">WR</button>
-        <button aria-pressed="false" data-v="TE">TE</button>
+        <button aria-pressed="true" data-v="">All</button><button aria-pressed="false" data-v="QB">QB</button><button aria-pressed="false" data-v="RB">RB</button><button aria-pressed="false" data-v="WR">WR</button><button aria-pressed="false" data-v="TE">TE</button>
       </div>
       <input type="search" id="fName" placeholder="Search player" aria-label="Search player">
     </div>
     <div class="tablewrap"><table id="ptable"></table></div>
   </section>
-  <section id="props" role="tabpanel" hidden></section>
   <section id="teams" role="tabpanel" hidden>
-    <p class="hint">Points per game better (+) or worse (−) than an average team, adjusted for opponents. Net = offense + defense.</p>
+    <h2>Power ratings</h2>
+    <p class="sub">Points per game better (+) or worse (−) than an average team, adjusted for opponents. Net is offense plus defense.</p>
     <div class="tablewrap"><table id="ttable"></table></div>
   </section>
   <section id="record" role="tabpanel" hidden></section>
@@ -156,111 +229,212 @@ h3{font:700 20px/1.1 var(--cond);margin:22px 0 8px}
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const n = (v, d = 1) => v == null ? "–" : Number(v).toFixed(d);
-const sgn = (v, d = 1) => v == null ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
-let D = null, pState = {sort: "fpts", dir: -1, pos: "", team: "", q: "", open: null}, tState = {sort: "net", dir: -1};
+const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
+const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
+const LABELS = {pass_yds:"Passing yards", pass_td:"Passing TDs", pass_cmp:"Completions", pass_att:"Pass attempts", pass_int:"Interceptions",
+  rush_yds:"Rushing yards", carries:"Rush attempts", rec:"Receptions", rec_yds:"Receiving yards", rush_rec_yds:"Rush + rec yards",
+  anytime_td:"Anytime TD", fpts:"Fantasy points"};
+const label = k => LABELS[String(k || "").toLowerCase()] || String(k || "").replaceAll("_", " ").replace(/^./, c => c.toUpperCase());
+const rec = r => !r || !(r[0] + r[1]) ? "0–0" : `${r[0]}–${r[1]}`;
+const pctOf = r => !r || !(r[0] + r[1]) ? null : 100 * r[0] / (r[0] + r[1]);
+const kickoff = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+const units = u => u == null ? "–" : `${u >= 0 ? "+" : ""}${Number(u).toFixed(2)}u`;
+const uc = u => u == null ? "" : (u >= 0 ? "up" : "down");
+let D = null, pState = {sort: "fpts", dir: -1, pos: "", team: "", q: ""}, openP = null, tState = {sort: "net", dir: -1};
+const propUI = {q: "", all: {watch: false, too_big: false}};
 
 document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-selected", x === b));
   document.querySelectorAll("[role=tabpanel]").forEach(s => s.hidden = s.id !== b.dataset.tab);
+  history.replaceState(null, "", "#tab-" + b.dataset.tab);
 }));
+function tabFromHash() {
+  const t = location.hash.replace("#tab-", "").replace("#", "");
+  const b = t && document.querySelector(`nav button[data-tab="${t}"]`);
+  if (b && b.getAttribute("aria-selected") !== "true") b.click();
+}
+tabFromHash();
+window.addEventListener("hashchange", tabFromHash);
 
-fetch("data/latest.json?ts=" + Date.now()).then(r => {
-  if (!r.ok) throw new Error("No results file yet");
-  return r.json();
-}).then(d => { D = d; render(); }).catch(() => {
-  $("#sub").textContent = "No results yet";
-  $("#games").innerHTML = `<div class="msg">The model has not run yet. On GitHub, open the Actions tab, pick "Weekly NFL model", and press Run workflow. Results appear here about 5 minutes later.</div>`;
-});
+function load(first) {
+  fetch("data/latest.json?ts=" + Date.now()).then(r => { if (!r.ok) throw new Error("none"); return r.json(); })
+    .then(d => { const changed = !D || d.generated_at !== D.generated_at; D = d; if (changed) render(); freshness(); })
+    .catch(() => { if (first) { $("#sub").textContent = "No results yet"; $("#games").innerHTML = `<div class="empty">The model hasn't run yet. On GitHub open <b>Actions</b>, pick <b>Weekly NFL model</b>, and press <b>Run workflow</b>. Results show up here a few minutes later.</div>`; } });
+}
+load(true);
+setInterval(() => load(false), 10 * 60 * 1000);   // pick up new runs while the page is open
+setInterval(freshness, 60 * 1000);
+
+function freshness() {
+  if (!D) return;
+  const t = new Date(D.generated_at), mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+  const txt = mins < 1 ? "just now" : mins < 60 ? `${mins} min ago` : mins < 48 * 60 ? `${Math.round(mins / 60)} hr ago` : `${Math.round(mins / 1440)} days ago`;
+  $("#freshTxt").textContent = "Updated " + txt;
+  $("#fresh").title = t.toLocaleString();
+  $("#fresh").classList.toggle("stale", mins > 14 * 60);
+}
 
 function render() {
-  const when = new Date(D.generated_at);
   $("#sub").textContent = D.week ? `${D.season} season, week ${D.week}` : `${D.season} season`;
-  $("#updated").textContent = "Updated " + when.toLocaleString([], {weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit"});
-  if (!D.games) { $("#games").innerHTML = `<div class="msg">${esc(D.message || "No games to show.")}</div>`; renderRecord(); return; }
-  renderGames(); initPlayers(); renderPlayers(); renderProps(); renderTeams(); renderRecord();
+  if (!D.games) { $("#games").innerHTML = `<div class="empty">${esc(D.message || "No games to show.")}</div>`; renderRecord(); return; }
+  renderGames(); renderProps(); initPlayers(); renderPlayers(); renderTeams(); renderRecord();
 }
 
-function realityPanel() {
-  const R = D.model && D.model.reality;
-  if (!R || !R.spread) return "";
-  const card = (label, x) => x && x.n ? `<div class="stat"><strong class="v-${x.verdict}">${n(x.pct)}%</strong><span>${label} gaps of ${n(x.at,1)}+ pts: ${x.record[0]}-${x.record[1]}. Likely range ${n(x.ci_lo,0)} to ${n(x.ci_hi,0)}%. ${esc(x.note)}.</span></div>` : "";
-  return `<h2>Reality check</h2><p class="hint">How the model's flagged gaps did in the backtest (${R.games} games, each season predicted using only earlier seasons). Break-even is 52.4%. <b>Until the likely range sits fully above 52.4%, treat every gap below as something to research, not something to bet.</b></p><div class="stats">${card("Spread", R.spread)}${card("Total", R.total)}</div>`;
+/* ---------------- Games ---------------- */
+function ticket(p) {
+  const kind = p.kind === "prop" ? `<b>Prop</b> · ${esc(p.label || "")}` : `<b>${p.kind === "spread" ? "Spread" : "Total"}</b>`;
+  const who = p.kind === "prop" ? `${esc(p.player)} <span>${esc(p.pos || "")} ${esc(p.matchup)}</span>` : `${esc(p.matchup)}`;
+  const odds = p.odds ? `<small>${esc(p.odds)}</small>` : "";
+  const meta = [];
+  if (p.kind === "spread" && p.cover_prob != null) meta.push(`Cover chance <b>${n(p.cover_prob, 0)}%</b>`);
+  if (p.median != null) meta.push(`Median <b>${n(p.median)}</b>`);
+  meta.push(esc(p.detail));
+  if (p.book) meta.push(esc(p.book));
+  return `<article class="ticket">
+    <div class="t-main"><div class="t-kind">${kind} · ${esc(kickoff(p.kickoff))}</div>
+      <div class="t-pick">${esc(p.pick)}${odds}</div><div class="t-who">${who}</div><div class="t-meta">${meta.join(" · ")}</div></div>
+    <div class="t-side"><div class="t-gap">${n(p.gap)}<small>${p.gap_unit === "%" ? "%" : " pts"}</small></div><div class="t-gl">gap vs book</div></div></article>`;
 }
 
-function histLine(g) {
-  const one = (what, h) => h ? `<span class="hist"><b>${what} history:</b> gaps of ${esc(h.range)} pts hit ${n(h.pct)}% in the backtest (${h.record[0]}-${h.record[1]}, likely range ${n(h.ci_lo,0)} to ${n(h.ci_hi,0)}%). <span class="v-${h.verdict}">${esc(h.note)}.</span></span>` : "";
-  return (g.lean_side ? one("Spread", g.hist_spread) : "") + (g.lean_total ? one("Total", g.hist_total) : "");
+function playsRecordLine() {
+  const R = D.plays_record || {}, pr = R.props;
+  const bits = [];
+  if (pr && pr.n) bits.push(`Prop plays <b>${pr.w}–${pr.l}</b> <span class="${uc(pr.units)}">${units(pr.units)}</span>`);
+  else bits.push(`Prop plays <b>0–0</b>`);
+  bits.push(`Spread plays <b>${rec(R.spreads)}</b>`);
+  return bits.join(" &nbsp; ");
 }
 
 function renderGames() {
-  const leans = [];
-  const line = v => v == null ? "–" : (Math.abs(v) < 0.25 ? "PK" : (v > 0 ? "+" : "") + v.toFixed(1));
+  const plays = D.plays || [], rules = D.plays_rules || {};
+  let h = `<h2>This week's plays</h2><p class="sub">What the model would bet right now, at flat 1 unit each. Lines and odds are from the last update, so check your book before betting.</p>`;
+  const TOP = 10;
+  h += plays.length ? `<div class="tickets">${plays.slice(0, TOP).map(ticket).join("")}</div>` +
+    (plays.length > TOP ? `<div class="tickets" id="morePlays" hidden style="margin-top:12px">${plays.slice(TOP).map(ticket).join("")}</div><button class="more" id="morePlaysBtn" aria-expanded="false">Show ${plays.length - TOP} more plays</button>` : "")
+    : `<div class="empty"><b>No plays right now.</b> Nothing passes the rules below yet. Prop lines usually post Wednesday to Saturday, and plays appear after the next update.</div>`;
+  const pp = rules.prop_play || [4, 7];
+  const sb = rules.spread_backtest;
+  h += `<div class="rules"><span>${playsRecordLine()}</span>
+    <span><b>Prop plays:</b> ${pp[0]} to ${pp[1]}% gap, ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}</span>
+    ${rules.spread_gap != null ? `<span><b>Spread plays:</b> ${n(rules.spread_gap)}+ pt gap${sb && sb.n ? ` (backtest ${rec(sb.record)}, ${n(sb.pct)}%)` : " (rare: the backtest had none this large)"}</span>` : ""}</div>`;
+
+  // watch list: game leans that are not plays
+  const watch = [];
   D.games.forEach(g => {
     if (g.state !== "upcoming") return;
-    if (g.lean_side) {
-      const home = g.lean_side === g.home, vegas = home ? -g.market_spread : g.market_spread, model = home ? -g.margin : g.margin;
-      leans.push({e: Math.abs(g.edge_spread), html: `<b>${esc(g.lean_side)} ${line(vegas)}</b> <span>Model has ${esc(g.lean_side)} ${line(model)}. Gap ${n(Math.abs(g.edge_spread))} pts.${g.hist_spread ? ` Backtest at this size: ${n(g.hist_spread.pct)}% (${g.hist_spread.n} games).` : ""}</span>`});
-    }
-    if (g.lean_total) leans.push({e: Math.abs(g.edge_total), html: `<b>${esc(g.lean_total)} ${n(g.market_total)}</b> <span>${esc(g.away)} at ${esc(g.home)}. Model total ${n(g.total)}. Gap ${n(Math.abs(g.edge_total))} pts.${g.hist_total ? ` Backtest at this size: ${n(g.hist_total.pct)}% (${g.hist_total.n} games).` : ""}</span>`});
+    if (g.lean_side && !g.play_spread) { const home = g.lean_side === g.home; watch.push(`<tr><td>${esc(g.away)} at ${esc(g.home)}</td><td>${esc(g.lean_side)} ${fmtLine(home ? -g.market_spread : g.market_spread)}</td><td>${n(Math.abs(g.edge_spread))} pts</td><td>Spread</td></tr>`); }
+    if (g.lean_total && !g.play_total) watch.push(`<tr><td>${esc(g.away)} at ${esc(g.home)}</td><td>${esc(g.lean_total)} ${n(g.market_total)}</td><td>${n(Math.abs(g.edge_total))} pts</td><td>Total</td></tr>`);
   });
-  leans.sort((a, b) => b.e - a.e);
-  const TOP = 6;
-  const eng = D.settings.lean_engine === "anchored" ? "market-anchored model" : "football-only model";
-  let h = realityPanel() + `<h2>Biggest gaps vs Vegas</h2><p class="hint">Games where our ${eng} differs from Vegas by ${n(D.settings.lean_spread,1)}+ pts on spreads or ${n(D.settings.lean_total,1)}+ on totals. A gap is not a bet. Each one shows how gaps of that size actually did in the backtest.</p>`;
-  if (leans.length) {
-    h += `<div class="leans">${leans.slice(0, TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div>`;
-    if (leans.length > TOP) h += `<div class="leans" id="moreLeans" hidden>${leans.slice(TOP).map(l => `<div class="lean">${l.html}</div>`).join("")}</div><button class="more" id="moreBtn" aria-expanded="false">Show ${leans.length - TOP} more gaps</button>`;
-  } else h += `<p class="hint">No gaps this week. The model mostly agrees with Vegas.</p>`;
-  h += `<h2>All games</h2>`;
-  for (const g of D.games) {
-    const ko = g.kickoff ? new Date(g.kickoff).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
-    const st = g.state === "final" ? `<span class="state final">Final ${g.final_away}–${g.final_home}</span>` : g.state === "locked" ? `<span class="state">Locked at kickoff</span>` : `<span class="state">${esc(ko)}${g.neutral ? ", neutral site" : ""}</span>`;
-    const wpA = g.win_prob_home == null ? null : 100 - g.win_prob_home;
-    const spreadFlag = g.lean_side ? `<span class="gap">Gap: ${esc(g.lean_side)} by ${n(Math.abs(g.edge_spread))} pts</span>` : "";
-    const totFlag = g.lean_total ? `<span class="gap">Gap: ${esc(g.lean_total)} by ${n(Math.abs(g.edge_total))} pts</span>` : "";
-    const inj = [...(g.injuries_away || []).map(x => `${g.away} ${x.name} (${x.pos}, ${x.status.toLowerCase()})`), ...(g.injuries_home || []).map(x => `${g.home} ${x.name} (${x.pos}, ${x.status.toLowerCase()})`)];
-    h += `<article class="game">
-      <div class="grow"><div class="tm">${esc(g.away)}</div><div class="score">${n(g.proj_away)}</div>
-        <div class="cell">Win chance<strong>${n(wpA,0)}%</strong></div>
-        <div class="cell">Model line<strong>${esc(g.final_line || g.model_line || "–")}</strong>${g.final_line && g.final_line !== g.model_line ? `<small>Football-only: ${esc(g.model_line)}</small>` : ""}</div>
-        <div class="cell">Vegas line<strong>${esc(g.market_line || "not posted")}</strong>${g.line_book ? `<small>${esc(g.line_book)}, live</small>` : ""}${spreadFlag}</div></div>
-      <div class="grow"><div class="tm">${esc(g.home)}</div><div class="score">${n(g.proj_home)}</div>
-        <div class="cell">Win chance<strong>${n(g.win_prob_home,0)}%</strong></div>
-        <div class="cell">Model total<strong>${n(g.total)}</strong>${g.indep_total != null && Math.abs(g.indep_total - g.total) >= 0.1 ? `<small>Football-only: ${n(g.indep_total)}</small>` : ""}</div>
-        <div class="cell">Vegas total<strong>${g.market_total == null ? "not posted" : n(g.market_total)}</strong>${totFlag}</div></div>
-      <div class="gfoot">${st}<span class="qb">QBs: ${esc(g.qb_away)} / ${esc(g.qb_home)}</span>
-        ${g.weather ? `<span>${esc(g.weather)}</span>` : ""}
-        ${whyLine(g)}
-        ${histLine(g)}
-        ${(g.notes || []).map(x => `<span>${esc(x)}</span>`).join("")}
-        ${inj.length ? `<span class="inj">Key injuries: ${esc(inj.join(", "))}</span>` : ""}</div>
-    </article>`;
-  }
-  $("#games").innerHTML = h;
-  const mb = $("#moreBtn");
-  if (mb) mb.onclick = () => { const m = $("#moreLeans"); m.hidden = !m.hidden; mb.setAttribute("aria-expanded", !m.hidden); mb.textContent = m.hidden ? `Show ${m.children.length} more gaps` : "Show fewer"; };
+  h += `<details class="fold"><summary>Watch list <span>${watch.length} game ${watch.length === 1 ? "lean" : "leans"}</span></summary><div class="fold-body">
+    <p class="sub">Smaller gaps vs Vegas (${n(D.settings?.lean_spread)}+ pts on spreads, ${n(D.settings?.lean_total)}+ on totals). Not plays: in the backtest, gaps this size won about half the time.</p>
+    ${watch.length ? `<div class="tablewrap"><table><thead><tr><th>Game</th><th>Side</th><th>Gap</th><th>Type</th></tr></thead><tbody>${watch.join("")}</tbody></table></div>` : `<p class="sub">None this week. The model agrees with Vegas on every game.</p>`}</div></details>`;
+
+  h += `<h2>All games</h2><p class="sub">Projected score, model line vs Vegas, and win chance. Tap a game for the reasons, injuries, and weather.</p><div class="games">`;
+  for (const g of D.games) h += gameRow(g);
+  $("#games").innerHTML = h + `</div>`;
+  const mb = $("#morePlaysBtn");
+  if (mb) mb.onclick = () => { const m = $("#morePlays"); m.hidden = !m.hidden; mb.setAttribute("aria-expanded", !m.hidden); mb.textContent = m.hidden ? `Show ${m.children.length} more plays` : "Show fewer"; };
 }
 
-function whyLine(g) {
+function fmtLine(v) { return v == null || isNaN(v) ? "–" : (Math.abs(v) < 0.25 ? "PK" : (v > 0 ? "+" : "") + Number(v).toFixed(1)); }
+
+function gameRow(g) {
+  const st = g.state === "final" ? `<span class="final">Final ${g.final_away}–${g.final_home}</span>` : g.state === "locked" ? "Locked at kickoff" : `${esc(kickoff(g.kickoff))}${g.neutral ? ", neutral site" : ""}`;
+  const favHome = (g.margin ?? 0) > 0;
+  const wpA = g.win_prob_home == null ? null : 100 - g.win_prob_home;
+  const playTag = g.play_spread || g.play_total ? `<span class="tag">Play</span>` : (g.lean_side || g.lean_total) && g.state === "upcoming" ? `<span class="tag watch">Watch</span>` : "";
+  const inj = [...(g.injuries_away || []).map(x => `${g.away} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`), ...(g.injuries_home || []).map(x => `${g.home} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`)];
+  const why = whyLines(g);
+  return `<details class="game"><summary>
+    <div class="mu"><div class="row ${favHome ? "" : "fav"}"><span class="tm">${esc(g.away)}</span><span class="pts">${n(g.proj_away)}</span></div>
+      <div class="row ${favHome ? "fav" : ""}"><span class="tm">${esc(g.home)}</span><span class="pts">${n(g.proj_home)}</span></div>
+      <div class="when">${st}${playTag}</div></div>
+    <div class="kv">Model line<strong class="${g.play_spread ? "hl" : ""}">${esc(g.final_line || g.model_line || "–")}</strong></div>
+    <div class="kv">Vegas line<strong>${esc(g.market_line || "Not posted")}</strong></div>
+    <div class="kv">Total, model / Vegas<strong>${n(g.total)} / ${g.market_total == null ? "–" : n(g.market_total)}</strong></div>
+    <div class="kv">Win chance<strong>${esc(favHome ? g.home : g.away)} ${n(favHome ? g.win_prob_home : wpA, 0)}%</strong></div>
+  </summary><div class="g-body">
+    <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
+    ${why}
+    ${(g.notes || []).map(x => `<div>${esc(x)}</div>`).join("")}
+    ${inj.length ? `<div class="inj"><b>Key injuries:</b> ${esc(inj.join(", "))}</div>` : ""}
+    ${g.final_line && g.model_line && g.final_line !== g.model_line ? `<div>Football-only model (no Vegas input): ${esc(g.model_line)}, total ${n(g.indep_total)}</div>` : ""}
+  </div></details>`;
+}
+
+function whyLines(g) {
   const fav = w => w.pts > 0 ? esc(g.home) : esc(g.away);
   let h = "";
-  if ((g.why_edge || []).length) h += `<span class="why"><b>Why we differ from Vegas:</b> ${g.why_edge.map(w => `${esc(w.factor)} (${fav(w)} +${n(Math.abs(w.pts))})`).join(", ")}</span>`;
-  else if ((g.why_margin || []).length) h += `<span class="why"><b>Why this line:</b> ${g.why_margin.map(w => `${esc(w.factor)} (${fav(w)} +${n(Math.abs(w.pts))})`).join(", ")}</span>`;
+  const m = (g.why_edge || []).length ? g.why_edge : (g.why_margin || []);
+  if (m.length) h += `<div><b>${(g.why_edge || []).length ? "Why we differ from Vegas" : "What drives the line"}:</b> ${m.map(w => `${esc(w.factor)} (${fav(w)} +${n(Math.abs(w.pts))})`).join(", ")}</div>`;
   const t = (g.why_edge_total || []).length ? g.why_edge_total : (g.why_total || []);
-  if (t.length) h += `<span class="why"><b>${(g.why_edge_total || []).length ? "Why our total differs" : "Why this total"}:</b> ${t.map(w => `${esc(w.factor)} ${sgn(w.pts)}`).join(", ")}</span>`;
+  if (t.length) h += `<div><b>${(g.why_edge_total || []).length ? "Why our total differs" : "What drives the total"}:</b> ${t.map(w => `${esc(w.factor)} ${sgn(w.pts)}`).join(", ")}</div>`;
   return h;
 }
 
-const PCOLS = [
-  ["name", "Player"], ["opp", "Opp"], ["pass_yds", "Pass yds"], ["pass_td", "Pass TD"], ["pass_int", "INT"],
+/* ---------------- Props ---------------- */
+function oddsLine() {
+  const O = D.model && D.model.odds;
+  if (!O) return "";
+  if (!O.enabled) return `<p class="sub"><b>Automatic lines are off.</b> Add an Odds API key, or type props into data/props.csv.</p>`;
+  const left = O.credits_remaining != null ? ` ${O.credits_remaining} odds credits left this month.` : "";
+  return `<p class="sub">${O.ok ? "" : `<b class="v-below">Odds problem.</b> `}${esc(O.message)}${left}${O.note ? " " + esc(O.note) + "." : ""}</p>`;
+}
+
+function propRows(rows, limitKey) {
+  if (!rows.length) return `<p class="sub">None right now.</p>`;
+  const LIMIT = 40, showAll = !limitKey || propUI.all[limitKey];
+  const list = showAll ? rows : rows.slice(0, LIMIT);
+  let h = `<div class="plist"><div class="prow head"><div>Player</div><div>Prop</div><div>Pick</div><div class="r">Model / book</div><div class="r">Gap</div></div>`;
+  for (const p of list) {
+    const isOver = p.lean === "Over", mo = isOver ? p.model_over : 100 - p.model_over, bo = isOver ? p.book_over : 100 - p.book_over;
+    const odds = isOver ? p.over_odds : p.under_odds;
+    const pick = p.stat_key === "anytime_td" || p.stat === "anytime_td" ? (isOver ? "Yes" : "No") : `${p.lean} ${esc(p.line)}`;
+    h += `<div class="prow"><div class="pl">${esc(p.player)}<span>${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}</span></div>
+      <div class="c-prop">${esc(p.label || label(p.stat_key || p.stat))}${p.median != null ? `<span class="dim" style="display:block;font-size:13px">Median ${n(p.median)}</span>` : ""}</div>
+      <div class="c-pick pick ${isOver ? "over" : "under"}">${pick}${odds ? ` <span class="dim" style="font-weight:500">${esc(odds)}</span>` : ""}</div>
+      <div class="c-mb r">${n(mo, 0)}% / ${n(bo, 0)}%</div><div class="c-gap r gapv">${n(Math.abs(p.edge))}%</div></div>`;
+  }
+  h += `</div>`;
+  if (!showAll && rows.length > LIMIT) h += `<button class="more" data-all="${limitKey}">Show all ${rows.length}</button>`;
+  return h;
+}
+
+function renderProps() {
+  const P = D.props || {props: [], pairs: []}, rules = D.plays_rules || {};
+  const good = (P.props || []).filter(p => !p.error), bad = (P.props || []).filter(p => p.error);
+  const q = propUI.q;
+  const match = p => !q || `${p.player} ${p.team} ${p.opp} ${p.label || label(p.stat)}`.toLowerCase().includes(q);
+  const by = t => good.filter(p => p.tier === t && match(p)).sort((a, b) => Math.abs(a.edge) - Math.abs(b.edge));
+  const plays = by("play").sort((a, b) => Math.abs(b.edge) - Math.abs(a.edge)), watch = by("watch"), big = by("too_big");
+  const pp = rules.prop_play || [4, 7], wm = rules.prop_watch_max || 15;
+  let h = `<h2>Prop plays</h2>${oddsLine()}`;
+  if (!good.length) {
+    h += `<div class="empty"><b>No prop lines yet.</b> Books post props midweek, and the model loads them about a day before each game.</div>`;
+  } else {
+    h += `<div class="controls"><input type="search" id="propQ" placeholder="Search player, team, or prop" aria-label="Search props" value="${esc(q)}"></div>`;
+    h += `<p class="sub">Gap of ${pp[0]} to ${pp[1]}% between the model and the book, on ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}. These also show on the Games tab.</p>`;
+    h += propRows(plays);
+    h += `<details class="fold"${q && watch.length ? " open" : ""}><summary>Watch <span>${watch.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${pp[1]} to ${wm}%, plus Anytime TD picks at any gap up to ${wm}%. Not plays. They're graded so we can see if they earn a promotion.</p>${propRows(watch, "watch")}</div></details>`;
+    h += `<details class="fold"${q && big.length ? " open" : ""}><summary>Too big to trust <span>${big.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${wm}%+. These usually mean the model is missing something, like an injury, a role change, or a stale line. Still graded in the background.</p>${propRows(big, "too_big")}</div></details>`;
+    const pairs = P.pairs || [];
+    if (pairs.length) h += `<details class="fold"><summary>Same-game pairs <span>${pairs.length}</span></summary><div class="fold-body"><p class="sub">Prop plays on the same team that tend to hit together. Lift is how much more often both hit than if they were unrelated. Books price some of this into parlays, so treat it as research.</p><div class="tablewrap"><table><thead><tr><th>Legs</th><th>Both hit</th><th>If unrelated</th><th>Lift</th></tr></thead><tbody>${pairs.map(x => `<tr><td>${esc(x.legs[0])} + ${esc(x.legs[1])}</td><td>${n(x.joint)}%</td><td>${n(x.if_independent)}%</td><td>+${n(x.lift, 0)}%</td></tr>`).join("")}</tbody></table></div></div></details>`;
+    if (bad.length) h += `<details class="fold"><summary>Rows the model skipped <span>${bad.length}</span></summary><div class="fold-body"><div class="tablewrap"><table><tbody>${bad.map(p => `<tr><td>${esc(p.player)}</td><td>${esc(label(p.stat))}</td><td>${esc(p.line ?? "")}</td><td style="text-align:left;white-space:normal">${esc(p.error)}</td></tr>`).join("")}</tbody></table></div></div></details>`;
+  }
+  $("#props").innerHTML = h;
+  const s = $("#propQ");
+  if (s) s.oninput = e => { propUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderProps(); const ns = $("#propQ"); ns.focus(); ns.setSelectionRange(pos, pos); };
+  document.querySelectorAll("#props [data-all]").forEach(b => b.onclick = () => { propUI.all[b.dataset.all] = true; renderProps(); });
+}
+
+/* ---------------- Players ---------------- */
+const PCOLS = [["name", "Player"], ["opp", "Opp"], ["pass_yds", "Pass yds"], ["pass_td", "Pass TD"], ["pass_int", "INT"],
   ["carries", "Carries"], ["rush_yds", "Rush yds"], ["targets", "Targets"], ["rec", "Rec"], ["rec_yds", "Rec yds"],
   ["td_prob", "Any TD %"], ["fpts", "PPR pts"]];
 const DIGITS = {pass_yds: 0, rush_yds: 0, rec_yds: 0, td_prob: 0, pass_td: 1, pass_int: 1};
-
 function initPlayers() {
   const teams = [...new Set(D.players.map(p => p.team))].sort();
-  $("#fTeam").innerHTML = `<option value="">All teams</option>` + teams.map(t => `<option>${esc(t)}</option>`).join("");
+  $("#fTeam").innerHTML = `<option value="">All teams</option>` + teams.map(t => `<option ${t === pState.team ? "selected" : ""}>${esc(t)}</option>`).join("");
   $("#fTeam").onchange = e => { pState.team = e.target.value; renderPlayers(); };
   $("#fName").oninput = e => { pState.q = e.target.value.toLowerCase(); renderPlayers(); };
   document.querySelectorAll("#fPos button").forEach(b => b.onclick = () => {
@@ -268,178 +442,117 @@ function initPlayers() {
     pState.pos = b.dataset.v; renderPlayers();
   });
 }
-
 function renderPlayers() {
   let rows = D.players.filter(p => (!pState.pos || p.pos === pState.pos) && (!pState.team || p.team === pState.team) && (!pState.q || p.name.toLowerCase().includes(pState.q)));
   const k = pState.sort;
   rows.sort((a, b) => k === "name" || k === "opp" ? pState.dir * String(a[k]).localeCompare(String(b[k])) : pState.dir * ((a[k] ?? -1) - (b[k] ?? -1)));
   rows = rows.slice(0, 250);
-  let h = "<thead><tr>" + PCOLS.map(([c, l]) => `<th data-k="${c}" class="${c === k ? "sorted" : ""}" scope="col">${l}${c === k ? (pState.dir < 0 ? " ▾" : " ▴") : ""}</th>`).join("") + "</tr></thead><tbody>";
+  let h = "<thead><tr>" + PCOLS.map(([c, l]) => `<th data-k="${c}" class="sort ${c === k ? "sorted" : ""}" scope="col">${l}${c === k ? (pState.dir < 0 ? " ▾" : " ▴") : ""}</th>`).join("") + "</tr></thead><tbody>";
   for (const p of rows) {
     const key = p.pid + p.game_id;
     h += `<tr class="p" data-key="${esc(key)}" tabindex="0"><td><span class="pname">${esc(p.name)}</span><span class="pos">${esc(p.pos)} ${esc(p.team)}</span>${p.status ? `<span class="qtag">${esc(p.status)}</span>` : ""}</td>` +
       PCOLS.slice(1).map(([c]) => `<td>${c === "opp" ? esc(p.opp) : n(p[c], DIGITS[c] ?? 1)}</td>`).join("") + "</tr>";
-    if (pState.open === key) {
+    if (openP === key) {
       const parts = [];
-      if (p.pass_yds != null) parts.push(`Passing yards: median <b>${n(p.pass_yds_med,0)}</b>, likely range ${n(p.pass_yds_range[0],0)} to ${n(p.pass_yds_range[1],0)}. Completions ${n(p.pass_cmp)} of ${n(p.pass_att)}.`);
-      if (p.rush_yds != null) parts.push(`Rushing yards: median <b>${n(p.rush_yds_med,0)}</b>, likely range ${n(p.rush_yds_range[0],0)} to ${n(p.rush_yds_range[1],0)}. Rush TDs ${n(p.rush_td,2)}.`);
-      if (p.rec_yds != null) parts.push(`Receiving yards: median <b>${n(p.rec_yds_med,0)}</b>, likely range ${n(p.rec_yds_range[0],0)} to ${n(p.rec_yds_range[1],0)}. Rec TDs ${n(p.rec_td,2)}.`);
-      if (p.fpts_med != null) parts.push(`PPR points: median <b>${n(p.fpts_med)}</b>, likely range ${n(p.fpts_range[0])} to ${n(p.fpts_range[1])}.`);
-      h += `<tr class="detail"><td colspan="${PCOLS.length}">${parts.join("<br>")}<br>Range covers 80% of simulated outcomes. For props, compare the line to the median, not the average.</td></tr>`;
+      if (p.pass_yds != null) parts.push(`Passing yards: median <b>${n(p.pass_yds_med, 0)}</b>, likely ${n(p.pass_yds_range?.[0], 0)} to ${n(p.pass_yds_range?.[1], 0)}`);
+      if (p.rush_yds != null) parts.push(`Rushing yards: median <b>${n(p.rush_yds_med, 0)}</b>, likely ${n(p.rush_yds_range?.[0], 0)} to ${n(p.rush_yds_range?.[1], 0)}`);
+      if (p.rec_yds != null) parts.push(`Receiving yards: median <b>${n(p.rec_yds_med, 0)}</b>, likely ${n(p.rec_yds_range?.[0], 0)} to ${n(p.rec_yds_range?.[1], 0)}`);
+      if (p.fpts_med != null) parts.push(`PPR points: median <b>${n(p.fpts_med)}</b>, likely ${n(p.fpts_range?.[0])} to ${n(p.fpts_range?.[1])}`);
+      h += `<tr class="detail"><td colspan="${PCOLS.length}">${parts.join("<br>")}<br>Ranges cover 80% of simulated games.</td></tr>`;
     }
   }
-  h += "</tbody>";
-  const t = $("#ptable"); t.innerHTML = h;
+  const t = $("#ptable"); t.innerHTML = h + "</tbody>";
   t.querySelectorAll("th").forEach(th => th.onclick = () => { const c = th.dataset.k; pState.dir = pState.sort === c ? -pState.dir : (c === "name" || c === "opp" ? 1 : -1); pState.sort = c; renderPlayers(); });
-  t.querySelectorAll("tr.p").forEach(tr => { const toggle = () => { pState.open = pState.open === tr.dataset.key ? null : tr.dataset.key; renderPlayers(); }; tr.onclick = toggle; tr.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } }; });
+  t.querySelectorAll("tr.p").forEach(tr => { const toggle = () => { openP = openP === tr.dataset.key ? null : tr.dataset.key; renderPlayers(); }; tr.onclick = toggle; tr.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } }; });
 }
 
+/* ---------------- Teams ---------------- */
 const TCOLS = [["team", "Team"], ["net", "Net"], ["off", "Offense"], ["def", "Defense"], ["off_pass", "Pass off"], ["off_rush", "Run off"], ["def_pass", "Pass def"], ["def_rush", "Run def"], ["pace", "Plays/gm"], ["proe", "Pass rate vs expected"]];
 function renderTeams() {
-  const rows = [...D.teams]; const k = tState.sort;
+  const rows = [...D.teams], k = tState.sort;
   rows.sort((a, b) => k === "team" ? tState.dir * a.team.localeCompare(b.team) : tState.dir * (a[k] - b[k]));
   const max = Math.max(...D.teams.map(t => Math.abs(t.net)), 1);
-  let h = "<thead><tr>" + TCOLS.map(([c, l]) => `<th data-k="${c}" class="${c === k ? "sorted" : ""}" scope="col">${l}</th>`).join("") + "</tr></thead><tbody>";
+  let h = "<thead><tr>" + TCOLS.map(([c, l]) => `<th data-k="${c}" class="sort ${c === k ? "sorted" : ""}" scope="col">${l}</th>`).join("") + "</tr></thead><tbody>";
   for (const t of rows) {
-    const w = Math.round(60 * Math.abs(t.net) / max);
-    h += `<tr><td><b>${esc(t.team)}</b></td><td><span class="bar ${t.net < 0 ? "neg" : ""}" style="width:${w}px"></span> ${sgn(t.net)}</td>` +
-      ["off", "def", "off_pass", "off_rush", "def_pass", "def_rush"].map(c => `<td class="${t[c] < 0 ? "neg-t" : "pos-t"}">${sgn(t[c])}</td>`).join("") +
+    h += `<tr><td><b>${esc(t.team)}</b></td><td><span class="bar ${t.net < 0 ? "neg" : ""}" style="width:${Math.round(48 * Math.abs(t.net) / max)}px"></span>${sgn(t.net)}</td>` +
+      ["off", "def", "off_pass", "off_rush", "def_pass", "def_rush"].map(c => `<td class="${t[c] < 0 ? "down" : "up"}">${sgn(t[c])}</td>`).join("") +
       `<td>${n(t.pace)}</td><td>${sgn(t.proe)}%</td></tr>`;
   }
   const tb = $("#ttable"); tb.innerHTML = h + "</tbody>";
   tb.querySelectorAll("th").forEach(th => th.onclick = () => { const c = th.dataset.k; tState.dir = tState.sort === c ? -tState.dir : (c === "team" ? 1 : -1); tState.sort = c; renderTeams(); });
 }
 
-const propUI = {flagged: null, q: "", showAll: false};
-
-function oddsBanner() {
-  const O = D.model && D.model.odds;
-  if (!O) return "";
-  if (!O.enabled) return `<div class="msg" style="margin-bottom:12px"><b>Automatic lines are off.</b> ${esc(O.message)} You can still type props into data/props.csv.</div>`;
-  const left = O.credits_remaining != null ? ` Credits left this month: <b>${O.credits_remaining}</b> (this run used ${O.spent_this_run || 0}).` : "";
-  const cls = O.ok ? "" : "v-below";
-  return `<div class="msg" style="margin-bottom:12px"><b class="${cls}">${O.ok ? "Automatic lines are on." : "Automatic lines hit a problem."}</b> ${esc(O.message)}${left}${O.note ? " Note: " + esc(O.note) + "." : ""}</div>`;
+/* ---------------- Record ---------------- */
+const MIN_N = 30;
+function recTable(title, rows, nameKey, nameCol) {
+  rows = (rows || []).filter(x => x.n || x.push);
+  if (!rows.length) return "";
+  return `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>${nameCol}</th><th>Record</th><th>Win rate</th><th>Likely range</th><th>Units</th></tr></thead><tbody>` +
+    rows.map(x => { const small = x.n < MIN_N; return `<tr class="${small ? "small" : ""}"><td>${esc(typeof nameKey === "function" ? nameKey(x) : x[nameKey])}</td><td>${x.w}–${x.l}${x.push ? "–" + x.push : ""}</td><td class="${small || x.stat === "anytime_td" ? "" : "v-" + x.verdict}">${n(x.pct)}%</td><td>${small ? "too few to judge" : `${n(x.ci_lo, 0)} to ${n(x.ci_hi, 0)}%`}</td><td class="${uc(x.units)}">${units(x.units)}</td></tr>`; }).join("") +
+    `</tbody></table></div>`;
 }
 
-function renderProps() {
-  const P = D.props || {props: [], pairs: []};
-  const all = P.props || [];
-  const good = all.filter(p => !p.error), bad = all.filter(p => p.error);
-  if (propUI.flagged === null) propUI.flagged = good.length > 40;
-  let h = `<h2>Prop lines</h2>` + oddsBanner() + `<p class="hint">Lines load automatically when an Odds API key is set up, and anything you type into <b>data/props.csv</b> takes priority. Clear old manual rows each week, your results stay saved. Each prop is checked against ${"10,000"} simulated games. A lean appears when the model differs from the book by 4%+ after removing the vig. <b>Be skeptical of very large gaps (15%+).</b> They usually mean the model is missing something, like an injury or a role change, not that the book is wrong. <b>The prop record further down shows whether these leans actually win.</b></p>`;
-  if (!all.length) {
-    h += `<div class="msg">No prop lines yet. Props usually post Wednesday or Thursday. With automatic lines on, run the model then. Otherwise add rows to data/props.csv.</div>`;
-  } else {
-    const leans = good.filter(p => p.lean).length;
-    h += `<div class="controls"><div class="seg" id="propSeg" role="group" aria-label="Filter props"><button data-v="flagged" aria-pressed="${propUI.flagged}">Flagged only (${leans})</button><button data-v="all" aria-pressed="${!propUI.flagged}">All (${good.length})</button></div><input type="search" id="propQ" placeholder="Search player or prop" aria-label="Search props" value="${esc(propUI.q)}"></div>`;
-    let rows = good.filter(p => (!propUI.flagged || p.lean) && (!propUI.q || (p.player + " " + p.stat + " " + p.team).toLowerCase().includes(propUI.q)));
-    rows.sort((a, b) => Math.abs(b.edge ?? 0) - Math.abs(a.edge ?? 0));
-    const total = rows.length, LIMIT = 60;
-    if (!propUI.showAll) rows = rows.slice(0, LIMIT);
-    h += `<div class="tablewrap"><table><thead><tr><th scope="col">Player</th><th scope="col">Prop</th><th scope="col">Line</th><th scope="col">Model median</th><th scope="col">Model over %</th><th scope="col">Book over %</th><th scope="col">Edge</th><th scope="col">Lean</th></tr></thead><tbody>`;
-    for (const p of rows) {
-      const cls = p.lean === "Over" ? "lean-o" : p.lean === "Under" ? "lean-u" : "";
-      const src = p.book ? ` ${esc(p.book)}` : (p.source === "manual" ? " you" : "");
-      h += `<tr><td><span class="pname">${esc(p.player)}</span><span class="pos">${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}${src ? ", " + src.trim() : ""}</span></td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "–")}</td><td>${p.median == null ? "–" : n(p.median)}</td><td>${n(p.model_over)}%</td><td>${n(p.book_over)}%</td><td>${sgn(p.edge)}%</td><td class="${cls}">${esc(p.lean || "")}</td></tr>`;
-    }
-    h += `</tbody></table></div>`;
-    if (total > rows.length) h += `<p class="hint" style="margin-top:8px">Showing the ${rows.length} biggest gaps of ${total}. <button class="more" id="propMore">Show all ${total}</button></p>`;
-    if (bad.length) h += `<h3>Skipped rows (${bad.length})</h3><div class="tablewrap"><table><tbody>${bad.map(p => `<tr><td>${esc(p.player)}</td><td>${esc(p.stat)}</td><td>${esc(p.line ?? "")}</td><td class="err">${esc(p.error)}</td></tr>`).join("")}</tbody></table></div>`;
-  }
-  h += `<h2>Same-game pairs</h2><p class="hint">Leans on the same team that tend to hit together. "Lift" is how much more often both hit than if they were unrelated. Sportsbooks price some of this into parlays, so treat it as research.</p>`;
-  h += (P.pairs || []).length ? `<div class="pairs">${P.pairs.map(x => `<div class="pair"><b>${esc(x.legs[0])}</b> + <b>${esc(x.legs[1])}</b><br><span>Both hit ${n(x.joint)}% of sims vs ${n(x.if_independent)}% if unrelated (+${n(x.lift,0)}% lift)</span></div>`).join("")}</div>` : `<p class="hint">No correlated pairs among this week's leans.</p>`;
-  h += propRecord();
-  $("#props").innerHTML = h;
-  document.querySelectorAll("#propSeg button").forEach(b => b.onclick = () => { propUI.flagged = b.dataset.v === "flagged"; propUI.showAll = false; renderProps(); });
-  const q = $("#propQ"); if (q) q.oninput = e => { propUI.q = e.target.value.toLowerCase(); propUI.showAll = false; const pos = e.target.selectionStart; renderProps(); const nq = $("#propQ"); nq.focus(); nq.setSelectionRange(pos, pos); };
-  const mb = $("#propMore"); if (mb) mb.onclick = () => { propUI.showAll = true; renderProps(); };
-}
-
-function lineCheck() {
-  const Ln = D.lines;
-  let h = `<h2>Line movement check</h2><p class="hint">Every run saves the Vegas line next to our numbers. After each game we compare the <b>first line we saw</b> to the <b>final line</b> in the free data. If lines keep moving toward our side, the market later agreed with us. This is the quickest skill test and needs far fewer games than win rate. Positive numbers are good.</p>`;
-  if (!Ln || Ln.error) return h + `<div class="msg">Not available this run${Ln && Ln.error ? ": " + esc(Ln.error) : ""}.</div>`;
-  if (!Ln.graded) return h + `<div class="msg">Collecting data. ${Ln.tracked || 0} games tracked so far. Results appear after those games finish, so the first real check takes about a week.</div>`;
-  const card = (label, b) => {
-    if (!b.measurable) return `<div class="stat"><strong class="v-unclear">Can't measure</strong><span>${label}: only ${n(b.pct_moved,0)}% of ${b.n} finished games had a different final line. The free feed may not update lines before kickoff. A paid odds source would be needed for this test.</span></div>`;
-    const a = b.all, f = b.flag;
-    return `<div class="stat"><strong>${sgn(a.avg,2)}</strong><span>${label}: average line move toward (+) or away (-) from our side, in points, for games where we had a 0.5+ pt gap (${a.n} games). Toward ${a.toward}, away ${a.away}.</span></div>` +
-      (f.n ? `<div class="stat"><strong>${sgn(f.avg,2)}</strong><span>${label}, flagged gaps only (${f.n} games). Toward ${f.toward}, away ${f.away}.</span></div>` : "");
-  };
-  return h + `<div class="stats">${card("Spread", Ln.spread)}${card("Total", Ln.total)}</div><p class="hint" style="margin-top:10px">${Ln.graded} finished games checked. A real edge shows up as a positive average that stays positive over 100+ games.</p>`;
-}
-
-function propRecord() {
-  const R = D.prop_record;
-  let h = `<h2>Prop record (graded automatically)</h2><p class="hint">Every prop you enter is saved with the model's odds, then graded from play-by-play after the game. Deleting old rows from props.csv is safe, your results stay saved. Missing odds count as -110. Play-by-play can differ from official stats by a yard or two, and players with no recorded plays are voided.</p>`;
-  if (!R || R.error) return h + `<div class="msg">Not available this run${R && R.error ? ": " + esc(R.error) : ""}.</div>`;
-  if (!R.logged) return h + `<div class="msg">Nothing tracked yet. Add lines to data/props.csv and run the model before kickoff. Results show up after the games are final.</div>`;
-  const L = R.leans || {}, M = R.model_side || {}, B = R.brier;
-  h += `<div class="stats">
-    <div class="stat"><strong class="v-${L.verdict || "unclear"}">${L.n ? rec([L.w, L.l]) : "–"}</strong><span>Flagged props (4%+ gap)${L.n ? `. ${n(L.pct)}% wins, likely range ${n(L.ci_lo,0)} to ${n(L.ci_hi,0)}%. ${esc(L.note)}.` : ". None graded yet."}</span></div>
-    <div class="stat"><strong class="${(L.units || 0) >= 0 ? "v-above" : "v-below"}">${sgn(L.units,2)}u</strong><span>Flat 1-unit bets on flagged props${L.roi != null ? `. ROI ${sgn(L.roi,1)}%` : ""}</span></div>
-    <div class="stat"><strong>${M.n ? n(M.pct) + "%" : "–"}</strong><span>Model's favored side on every graded prop (${M.n || 0})</span></div>
-    ${B ? `<div class="stat"><strong class="${B.model < B.book ? "v-above" : "v-below"}">${n(B.model,3)} vs ${n(B.book,3)}</strong><span>Forecast error, model vs sportsbook (lower wins, ${B.n} props). Beating the book here is the best sign of skill.</span></div>` : ""}
-    <div class="stat"><strong>${R.graded}</strong><span>Graded${R.sources ? ` (${R.sources.auto} auto-loaded, ${R.sources.manual} typed)` : ""}. ${R.pending} waiting for games, ${R.voided} voided.</span></div>
-    ${R.line_moves && R.line_moves.n ? `<div class="stat"><strong class="v-unclear">${R.line_moves.moved} of ${R.line_moves.n}</strong><span>Prop lines that moved after our first look${R.line_moves.moved ? `. Moved toward our side ${R.line_moves.toward}, away ${R.line_moves.away}.` : ". Props are loaded once per game to save credits, so movement shows up only if you refresh them more often."}</span></div>` : ""}</div>`;
-  const rows = (arr, key) => arr.filter(x => x.n || x.push).map(x => `<tr><td>${esc(x[key])}</td><td>${x.w}-${x.l}${x.push ? "-" + x.push : ""}</td><td>${x.n ? n(x.pct) + "%" : "–"}</td><td>${x.n ? n(x.ci_lo,0) + " to " + n(x.ci_hi,0) + "%" : "–"}</td><td>${sgn(x.units,2)}u</td></tr>`).join("");
-  const tbl = (title, arr, key, col) => { const r = rows(arr || [], key); return r ? `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th scope="col">${col}</th><th scope="col">Record</th><th scope="col">Win rate</th><th scope="col">Likely range</th><th scope="col">Units</th></tr></thead><tbody>${r}</tbody></table></div>` : ""; };
-  h += tbl("By prop type", R.by_stat, "stat", "Prop") + tbl("By side", R.by_side, "side", "Side") + tbl("By size of gap", R.by_edge, "range", "Gap vs book");
-  if ((R.recent || []).length) h += `<h3>Recent results</h3><div class="tablewrap"><table><thead><tr><th scope="col">Player</th><th scope="col">Wk</th><th scope="col">Prop</th><th scope="col">Line</th><th scope="col">Our lean</th><th scope="col">Model over %</th><th scope="col">Book over %</th><th scope="col">Actual</th><th scope="col">Result</th></tr></thead><tbody>${R.recent.map(r => `<tr><td><span class="pname">${esc(r.player)}</span><span class="pos">${esc(r.team)}</span></td><td>${r.week}</td><td>${esc(r.stat)}</td><td>${esc(r.line ?? "–")}</td><td>${esc(r.lean || "none")}</td><td>${n(r.model_over)}%</td><td>${n(r.book_over)}%</td><td>${r.actual == null ? "–" : n(r.actual)}</td><td class="${r.result === "win" ? "lean-o" : r.result === "loss" ? "neg-t" : ""}">${esc(r.result || r.outcome)}</td></tr>`).join("")}</tbody></table></div>`;
-  return h;
-}
-
-function rec(r) { if (!r || !(r[0] + r[1])) return "–"; return `${r[0]}–${r[1]}`; }
-function pct(r) { if (!r || !(r[0] + r[1])) return ""; return ` (${(100 * r[0] / (r[0] + r[1])).toFixed(1)}%)`; }
 function renderRecord() {
-  const L = D.live_record || {}, B = D.backtest || {}, M = D.model || {}, DB = M.deep_backtest;
-  let h = `<h2>This season: gaps flagged on the dashboard</h2><p class="hint">Graded against the Vegas line saved at the time of each pick. Beating 52.4% against the spread is the break-even point at standard odds.</p>
-  <div class="stats">
-    <div class="stat"><strong>${rec(L.ats_leans)}</strong><span>Spread gaps${pct(L.ats_leans)}</span></div>
-    <div class="stat"><strong>${rec(L.totals_leans)}</strong><span>Total gaps${pct(L.totals_leans)}</span></div>
-    <div class="stat"><strong>${rec(L.ats_all)}</strong><span>Every game vs spread${pct(L.ats_all)}</span></div>
-    <div class="stat"><strong>${rec(L.straight_up)}</strong><span>Winners picked${pct(L.straight_up)}</span></div>
-    <div class="stat"><strong>${n(L.model_mae)} / ${n(L.vegas_mae)}</strong><span>Avg miss on margin, model / Vegas (lower wins)</span></div>
+  const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
+  const pp = R.plays || PR.props || {};
+  let h = `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  <div class="strip">
+    <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
+    <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>
+    <div class="st"><strong>${rec(PR.spreads)}</strong><span>Spread plays${pctOf(PR.spreads) != null ? `, ${n(pctOf(PR.spreads))}%` : ""}</span></div>
+    <div class="st"><strong>${(R.weeks || []).length}</strong><span>Weeks of prop results</span></div>
+  </div>
+  <p class="note">${pp.n ? `Likely range ${n(pp.ci_lo, 0)} to ${n(pp.ci_hi, 0)}%. ${esc(pp.note || "")}. ` : ""}Props from the same week share games and injuries, so a single week can run hot or cold together. Judge after 6+ weeks.</p>`;
+
+  if (R && R.logged && !R.error) {
+    const tierName = {play: "Play", watch: "Watch", too_big: "Too big to trust"};
+    h += `<h2>Every flagged prop</h2><p class="sub">All props the model flagged, graded from play-by-play after each game. Rows with fewer than ${MIN_N} picks are grayed out. Anytime TD win rates aren't colored, since those bets pay far from even money, so judge them by units.${R.est_priced ? ` ${R.est_priced} older "No TD" picks had no No price saved, so their payouts use an estimated price instead of -110.` : ""}</p>`;
+    h += recTable("By group", R.by_tier, x => tierName[x.tier] || x.tier, "Group");
+    h += recTable("By prop and side", R.by_type_side, x => `${x.label || label(x.stat)}, ${x.side}`, "Prop");
+    h += recTable("By size of gap", R.by_edge, "range", "Gap vs book");
+    const B = R.brier;
+    if (B) h += `<p class="note">Forecast error on every graded prop, model ${n(B.model, 3)} vs book ${n(B.book, 3)} (${B.n} props, lower wins). ${B.model < B.book ? "The model is beating the book here, a good sign." : "The book is still more accurate overall."}</p>`;
+  }
+
+  h += `<h2>Every game this season</h2><div class="strip">
+    <div class="st"><strong>${rec(L.ats_all)}</strong><span>Model side vs spread${pctOf(L.ats_all) != null ? `, ${n(pctOf(L.ats_all))}%` : ""}</span></div>
+    <div class="st"><strong>${rec(L.straight_up)}</strong><span>Winners picked</span></div>
+    <div class="st"><strong>${n(L.model_mae)} / ${n(L.vegas_mae)}</strong><span>Avg miss in points, model / Vegas</span></div>
+    <div class="st"><strong>${rec(L.ats_leans)}</strong><span>Watch list spreads</span></div>
   </div>`;
-  const AB = M.anchored_backtest;
-  if (DB && DB.overall) {
-    const row = (name, R) => R && R.overall ? `<tr><td>${name}</td><td>${rec(R.overall.ats_leans)}${pct(R.overall.ats_leans)}</td><td>${rec(R.overall.totals_leans)}${pct(R.overall.totals_leans)}</td><td>${rec(R.overall.ats_all)}${pct(R.overall.ats_all)}</td><td>${n(R.overall.model_mae)} / ${n(R.overall.vegas_mae)}</td><td>${n(R.lean_spread,1)} / ${n(R.lean_total,1)}</td></tr>` : "";
-    h += `<h2>Deep backtest: the two engines</h2><p class="hint">Walk-forward: each season predicted by models trained only on earlier seasons. ${DB.overall.games} games. Break-even is 52.4%. Normal luck swings results about ±3% at this sample size, so only trust gaps bigger than that.</p>
-    <div class="tablewrap"><table class="cmp"><thead><tr><th scope="col">Engine</th><th scope="col">Spread gaps</th><th scope="col">Total gaps</th><th scope="col">All games vs spread</th><th scope="col">Avg miss, model / Vegas</th><th scope="col">Lean at (pts)</th></tr></thead><tbody>
-    ${row("Football-only", DB)}${row("Market-anchored", AB)}</tbody></table></div>`;
-    const bucketTable = (title, hint, R, key) => R ? `<h2>${title}</h2><p class="hint">${hint}</p><div class="tablewrap"><table class="bk"><thead><tr><th scope="col">Gap vs Vegas (pts)</th>${R[key].map(x => `<th scope="col">${esc(x.range)}</th>`).join("")}</tr></thead><tbody>
-      <tr><td style="text-align:left">Record</td>${R[key].map(x => `<td>${rec(x.record)}</td>`).join("")}</tr>
-      <tr><td style="text-align:left">Win rate</td>${R[key].map(x => `<td class="${x.n ? "v-" + x.verdict : ""}">${x.n ? n(x.pct) + "%" : "–"}</td>`).join("")}</tr>
-      <tr><td style="text-align:left">Likely range</td>${R[key].map(x => `<td>${x.n ? n(x.ci_lo,0) + " to " + n(x.ci_hi,0) + "%" : "–"}</td>`).join("")}</tr></tbody></table></div>` : "";
-    const bh = "Green: even the low end of the likely range beats break-even (52.4%), so luck is an unlikely explanation. Red: the whole range is below break-even. Gray: can't tell from luck. A real edge also climbs as the gap grows. Wide ranges mean small samples.";
-    h += bucketTable("Edge size: market-anchored spreads", bh, AB, "spread_buckets");
-    h += bucketTable("Edge size: market-anchored totals", bh, AB, "total_buckets");
-    h += bucketTable("Edge size: football-only spreads", bh, DB, "spread_buckets");
-    h += bucketTable("Edge size: football-only totals", bh, DB, "total_buckets");
-    const LB = (D.settings.lean_engine === "anchored" && AB) ? AB : DB;
-    h += `<h2>By season (${LB === AB ? "market-anchored" : "football-only"})</h2>
-    <div class="tablewrap"><table><thead><tr><th scope="col">Season</th><th scope="col">Games</th><th scope="col">Spread gaps</th><th scope="col">Total gaps</th><th scope="col">All vs spread</th><th scope="col">Miss: model</th><th scope="col">Miss: Vegas</th></tr></thead><tbody>
-    ${LB.by_season.map(r => `<tr><td>${r.season}</td><td>${r.games}</td><td>${rec(r.ats_leans)}${pct(r.ats_leans)}</td><td>${rec(r.totals_leans)}${pct(r.totals_leans)}</td><td>${rec(r.ats_all)}${pct(r.ats_all)}</td><td>${n(r.model_mae)}</td><td>${n(r.vegas_mae)}</td></tr>`).join("")}
-    </tbody></table></div>`;
-  } else if (B.games) {
-    h += `<h2>Backtest</h2><p class="hint">${B.games} recent games. Run the "Train model" workflow once to unlock the deep, multi-season backtest.</p>
-    <div class="stats">
-      <div class="stat"><strong>${rec(B.ats_leans)}</strong><span>Spread gaps${pct(B.ats_leans)}</span></div>
-      <div class="stat"><strong>${rec(B.totals_leans)}</strong><span>Total gaps${pct(B.totals_leans)}</span></div>
-      <div class="stat"><strong>${n(B.model_mae_margin)} / ${n(B.vegas_mae_margin)}</strong><span>Avg miss on margin, model / Vegas</span></div>
-    </div>`;
-  }
-  h += lineCheck();
-  if ((M.weights_margin || []).length) {
-    h += `<h2>What the model learned</h2><p class="hint">Points of spread moved by a typical swing (one standard deviation) in each factor. Learned from ${M.history_games} games (${(M.seasons || [])[0]} to now). Machine-learning share: ${n((DB?.gbm_share_margin || 0) * 100, 0)}% for spreads, ${n((DB?.gbm_share_total || 0) * 100, 0)}% for totals.</p>
-    <div class="stats">${M.weights_margin.slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;
-    if ((M.weights_edge || []).length) h += `<h2>Where Vegas tends to miss</h2><p class="hint">What the market-anchored engine learned: points of disagreement with the Vegas line per typical swing in each factor. Small numbers are expected. Vegas is sharp.</p>
-    <div class="stats">${M.weights_edge.filter(w => w.factor !== "Vegas line").slice(0, 8).map(w => `<div class="stat"><strong>${sgn(w.pts)}</strong><span>${esc(w.factor)}</span></div>`).join("")}</div>`;
-  }
-  h += `<h2>Model settings this week</h2><p class="hint">Engine: ${esc(M.engine || "–")}. Leans from: ${M.lean_engine === "anchored" ? "market-anchored" : "football-only"}. Injury reports in training: ${n(M.injury_coverage,0)}% of games${M.injuries_learned ? " (learned)" : " (using default values)"}. Coverage matchups ${D.scheme_enabled ? "on" : "off (data not published)"}.${M.deep_history ? "" : " Deep history not built yet: run the Train model workflow."}</p>
-  <h2>Data sources</h2><div class="chips">${Object.entries(D.data_status || {}).map(([k, v]) => `<span class="chip ${v.ok ? "ok" : "bad"}" title="${esc(v.note)}">${esc(k.replaceAll("_", " "))}</span>`).join("")}</div>
-  <p class="hint" style="margin-top:10px">A red source means that feed was unavailable this run. The model keeps working without it and fills the gap with defaults.</p>`;
+
+  h += `<details class="fold"><summary>Model details <span>backtests, line movement, settings</span></summary><div class="fold-body">${modelDetails(M)}</div></details>`;
   $("#record").innerHTML = h;
+}
+
+function modelDetails(M) {
+  const DB = M.deep_backtest, AB = M.anchored_backtest;
+  let h = "";
+  if (DB && DB.overall) {
+    const p = r => pctOf(r) == null ? "" : ` (${n(pctOf(r))}%)`;
+    const row = (name, R) => R && R.overall ? `<tr><td>${name}</td><td>${rec(R.overall.ats_leans)}${p(R.overall.ats_leans)}</td><td>${rec(R.overall.totals_leans)}${p(R.overall.totals_leans)}</td><td>${rec(R.overall.ats_all)}${p(R.overall.ats_all)}</td><td>${n(R.overall.model_mae)} / ${n(R.overall.vegas_mae)}</td></tr>` : "";
+    h += `<h3>Backtest: the two engines</h3><p class="sub">Each season predicted by models trained only on earlier seasons (${DB.overall.games} games). Luck swings results about ±3% at this size.</p>
+    <div class="tablewrap"><table><thead><tr><th>Engine</th><th>Spread gaps</th><th>Total gaps</th><th>All games vs spread</th><th>Avg miss, model / Vegas</th></tr></thead><tbody>${row("Football-only", DB)}${row("Market-anchored", AB)}</tbody></table></div>`;
+    const bucket = (title, R, key) => R && R[key] ? `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>Gap (pts)</th>${R[key].map(x => `<th>${esc(x.range)}</th>`).join("")}</tr></thead><tbody>
+      <tr><td>Record</td>${R[key].map(x => `<td>${rec(x.record)}</td>`).join("")}</tr>
+      <tr><td>Win rate</td>${R[key].map(x => `<td class="${x.n ? "v-" + x.verdict : ""}">${x.n ? n(x.pct) + "%" : "–"}</td>`).join("")}</tr></tbody></table></div>` : "";
+    h += bucket("Market-anchored spreads by gap", AB, "spread_buckets") + bucket("Market-anchored totals by gap", AB, "total_buckets") + bucket("Football-only spreads by gap", DB, "spread_buckets");
+  }
+  const Ln = D.lines;
+  h += `<h3>Line movement</h3>`;
+  if (!Ln || Ln.error || !Ln.graded) h += `<p class="sub">Collecting data${Ln && Ln.tracked ? ` (${Ln.tracked} games tracked)` : ""}.</p>`;
+  else {
+    const one = (lab, b) => !b || !b.measurable ? `${lab}: can't measure yet` : `${lab}: ${sgn(b.all.avg, 2)} pts toward our side on average (${b.all.n} games, toward ${b.all.toward}, away ${b.all.away})`;
+    h += `<p class="sub">Did Vegas move toward the model after our first look? Positive is good. ${Ln.graded} games checked. ${one("Spreads", Ln.spread)}. ${one("Totals", Ln.total)}. Needs 100+ games to mean much.</p>`;
+  }
+  if ((M.weights_margin || []).length) {
+    h += `<h3>What drives the model</h3><p class="sub">Points of spread moved by a typical swing in each factor, learned from ${M.history_games} games.</p><div class="tablewrap"><table><tbody>${M.weights_margin.slice(0, 8).map(w => `<tr><td>${esc(w.factor)}</td><td>${sgn(w.pts)}</td></tr>`).join("")}</tbody></table></div>`;
+    if ((M.weights_edge || []).length) h += `<h3>Where Vegas tends to miss</h3><p class="sub">Small numbers are expected. Vegas is sharp.</p><div class="tablewrap"><table><tbody>${M.weights_edge.filter(w => w.factor !== "Vegas line").slice(0, 8).map(w => `<tr><td>${esc(w.factor)}</td><td>${sgn(w.pts)}</td></tr>`).join("")}</tbody></table></div>`;
+  }
+  h += `<h3>Settings and data</h3><p class="sub">Engine: ${esc(M.engine || "–")}. Leans from the ${M.lean_engine === "anchored" ? "market-anchored" : "football-only"} engine. Injury reports in training: ${n(M.injury_coverage, 0)}% of games. Coverage matchups ${D.scheme_enabled ? "on" : "off"}.</p>
+  <div class="chips">${Object.entries(D.data_status || {}).map(([k, v]) => `<span class="chip ${v.ok ? "" : "bad"}" title="${esc(v.note)}">${esc(k.replaceAll("_", " "))}</span>`).join("")}</div>
+  <p class="note">A red source was unavailable this run. The model fills the gap with defaults.</p>`;
+  return h;
 }
 </script>
 </body>

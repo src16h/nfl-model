@@ -21,7 +21,7 @@ from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
-from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES
+from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES, stat_label
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
 from nflmodel.util import before, clean_json
@@ -192,6 +192,11 @@ def build_games(bundle, season, week, now):
         e_to = lean_t_pred - tl if np.isfinite(tl) else None
         lean_side = (h if e_sp > 0 else a) if e_sp is not None and abs(e_sp) >= th_s else None
         lean_total = ("Over" if e_to > 0 else "Under") if e_to is not None and abs(e_to) >= th_t else None
+        # Best plays: stricter than a lean, and only from the market-anchored engine
+        play_spread = lean_side if (use_anchor and C.GAME_PLAY_SPREAD is not None and e_sp is not None
+                                    and abs(e_sp) >= C.GAME_PLAY_SPREAD) else None
+        play_total = lean_total if (use_anchor and C.GAME_PLAY_TOTAL is not None and e_to is not None
+                                    and abs(e_to) >= C.GAME_PLAY_TOTAL) else None
         rep = (ens["report_anchored"] if use_anchor else ens["report_independent"]) if ens is not None else None
         hist_s = stack.lookup_bucket(rep, "spread_buckets", e_sp)
         hist_t = stack.lookup_bucket(rep, "total_buckets", e_to)
@@ -223,6 +228,7 @@ def build_games(bundle, season, week, now):
             "market_spread": fnum(sl), "market_total": fnum(tl),
             "edge_spread": fnum(e_sp), "edge_total": fnum(e_to),
             "lean_side": lean_side, "lean_total": lean_total,
+            "play_spread": play_spread, "play_total": play_total,
             "cover_prob_home": fnum(sim.get("cover_home", np.nan) * 100, 0),
             "over_prob": fnum(sim.get("over", np.nan) * 100, 0),
             "qb_home": qbs[h]["name"], "qb_away": qbs[a]["name"],
@@ -283,6 +289,66 @@ def build_games(bundle, season, week, now):
     return wk, games, players, teams_tbl, model_info, report, scheme.ok, props
 
 
+def _team_line(g, team):
+    sl = g.get("market_spread")
+    if sl is None:
+        return None
+    return -sl if team == g["home"] else sl
+
+
+def _fmt_line(v):
+    return "PK" if abs(v) < 0.25 else f"{v:+.1f}"
+
+
+def bucket_record(report, key, lo_min):
+    """Backtest record for every bucket at or above a gap size."""
+    if not report or lo_min is None:
+        return None
+    w = l = 0
+    for b in report.get(key, []):
+        if b.get("lo", 0) >= lo_min - 1e-9 and b.get("record"):
+            w, l = w + b["record"][0], l + b["record"][1]
+    return {"record": [w, l], **(tracker.record_stats(w, l) or {"n": 0})}
+
+
+def _pct_side(over_pct, lean):
+    return round(over_pct if lean == "Over" else 100 - over_pct)
+
+
+def build_plays(games, props, model_info):
+    """The short list: what the model would actually bet right now."""
+    out = []
+    for g in games:
+        if g.get("state") != "upcoming":
+            continue
+        matchup = f"{g['away']} at {g['home']}"
+        if g.get("play_spread"):
+            t = g["play_spread"]
+            vl, ml = _team_line(g, t), (-g["margin"] if t == g["home"] else g["margin"])
+            out.append({"kind": "spread", "kickoff": g.get("kickoff"), "game_id": g["game_id"], "matchup": matchup,
+                        "pick": f"{t} {_fmt_line(vl)}", "detail": f"Model has {t} {_fmt_line(ml)}",
+                        "gap": fnum(abs(g["edge_spread"])), "gap_unit": "pts", "book": g.get("line_book"),
+                        "cover_prob": None if g.get("cover_prob_home") is None else
+                        fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 0)})
+        if g.get("play_total"):
+            out.append({"kind": "total", "kickoff": g.get("kickoff"), "game_id": g["game_id"], "matchup": matchup,
+                        "pick": f"{g['play_total']} {g['market_total']:g}", "detail": f"Model total {g['total']:.1f}",
+                        "gap": fnum(abs(g["edge_total"])), "gap_unit": "pts", "book": g.get("line_book")})
+    ko = {g["game_id"]: g.get("kickoff") for g in games}
+    st = {g["game_id"]: g.get("state") for g in games}
+    for p in props.get("props", []):
+        if p.get("tier") != "play" or st.get(p.get("game_id")) != "upcoming":
+            continue
+        odds = p.get("over_odds") if p["lean"] == "Over" else p.get("under_odds")
+        out.append({"kind": "prop", "kickoff": ko.get(p["game_id"]), "game_id": p["game_id"],
+                    "matchup": f"{p['team']} vs {p['opp']}", "player": p["player"], "pos": p.get("pos"),
+                    "pick": f"{p['lean']} {p['line']}", "label": p.get("label"), "odds": odds,
+                    "detail": f"Model {_pct_side(p['model_over'], p['lean'])}% vs book {_pct_side(p['book_over'], p['lean'])}%",
+                    "gap": fnum(abs(p["edge"])), "gap_unit": "%", "book": p.get("book"), "median": p.get("median")})
+    out.sort(key=lambda x: (x.get("kickoff") or "", x["kind"] != "spread", -(x.get("gap") or 0)))
+    return out
+
+
 def merge_history(path: Path, games, players):
     """Keep predictions for games that already kicked off (locked picks)."""
     old = json.loads(path.read_text()) if path.exists() else {"games": [], "players": []}
@@ -296,6 +362,7 @@ def grade(season, sch) -> dict:
     """Live record of the picks this model actually published."""
     res = sch[(sch["season"] == season) & sch["home_score"].notna()].set_index("game_id")
     su, ats, ats_lean, ou_lean, err_m, err_v = [], [], [], [], [], []
+    ats_play, ou_play = [], []
     for f in sorted(HIST.glob(f"{season}_week*.json")):
         for g in json.loads(f.read_text()).get("games", []):
             if g["game_id"] not in res.index:
@@ -314,12 +381,16 @@ def grade(season, sch) -> dict:
                     ats.append(hit)
                     if g.get("lean_side"):
                         ats_lean.append(hit)
+                    if g.get("play_spread"):
+                        ats_play.append(int((act > sl) == (g["play_spread"] == g["home"])))
             tl = g.get("market_total")
             if tl is not None and g.get("lean_total") and tot != tl:
                 ou_lean.append(int((tot > tl) == (g["lean_total"] == "Over")))
+            if tl is not None and g.get("play_total") and tot != tl:
+                ou_play.append(int((tot > tl) == (g["play_total"] == "Over")))
     rec = lambda x: [int(sum(x)), int(len(x) - sum(x))]
     return {"straight_up": rec(su), "ats_all": rec(ats), "ats_leans": rec(ats_lean),
-            "totals_leans": rec(ou_lean),
+            "totals_leans": rec(ou_lean), "ats_plays": rec(ats_play), "totals_plays": rec(ou_play),
             "model_mae": fnum(np.mean(err_m)) if err_m else None,
             "vegas_mae": fnum(np.mean(err_v)) if err_v else None}
 
@@ -384,13 +455,27 @@ def main():
                                             "players": all_players}), indent=1, allow_nan=False))
 
     payload.update(run_tracking(bundle, games, props["props"], season, week, now))
+    live = grade(season, bundle.schedules)
+    pr = payload.get("prop_record") or {}
+    ab = model_info.get("anchored_backtest")
+    payload["plays"] = build_plays(all_games, props, model_info)
+    payload["plays_record"] = {"spreads": live["ats_plays"], "totals": live["totals_plays"],
+                               "props": pr.get("plays") if isinstance(pr, dict) else None}
+    payload["plays_rules"] = {
+        "prop_play": [round(100 * C.PROP_PLAY_MIN), round(100 * C.PROP_PLAY_MAX)],
+        "prop_watch_max": round(100 * C.PROP_WATCH_MAX),
+        "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS],
+        "spread_gap": C.GAME_PLAY_SPREAD, "total_gap": C.GAME_PLAY_TOTAL,
+        "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
+        "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
+    }
     payload.update({
         "model": model_info,
         "props": props,
         "scheme_enabled": scheme_ok,
         "games": all_games, "players": all_players, "teams": teams_tbl,
         "backtest": {k: (fnum(v, 2) if isinstance(v, float) else v) for k, v in report.items()},
-        "live_record": grade(season, bundle.schedules),
+        "live_record": live,
         "settings": {"lean_engine": model_info["lean_engine"],
                      "lean_spread": C.ANCHOR_LEAN_SPREAD if model_info["lean_engine"] == "anchored" else C.LEAN_SPREAD_EDGE,
                      "lean_total": C.ANCHOR_LEAN_TOTAL if model_info["lean_engine"] == "anchored" else C.LEAN_TOTAL_EDGE},

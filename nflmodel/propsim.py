@@ -120,6 +120,31 @@ def american_to_prob(o):
     return 100 / (o + 100) if o > 0 else -o / (-o + 100)
 
 
+STAT_LABELS = {
+    "pass_yds": "Passing yards", "pass_td": "Passing TDs", "pass_cmp": "Completions", "pass_att": "Pass attempts",
+    "pass_int": "Interceptions", "rush_yds": "Rushing yards", "carries": "Rush attempts", "rec": "Receptions",
+    "rec_yds": "Receiving yards", "rush_rec_yds": "Rush + rec yards", "anytime_td": "Anytime TD",
+    "fpts": "Fantasy points",
+}
+
+
+def stat_label(key) -> str:
+    k = STAT_ALIASES.get(str(key).strip().lower(), str(key).strip().lower())
+    return STAT_LABELS.get(k, str(key).replace("_", " ").capitalize())
+
+
+def prop_tier(stat, edge_pct, lean):
+    """Play (4-7% gap, allowed prop types), Watch (rest up to 15%), Too big (15%+)."""
+    if not lean or edge_pct is None:
+        return None
+    e = abs(float(edge_pct)) / 100
+    if e >= C.PROP_WATCH_MAX:
+        return "too_big"
+    if C.PROP_PLAY_MIN <= e < C.PROP_PLAY_MAX and stat in C.PROP_PLAY_STATS:
+        return "play"
+    return "watch"
+
+
 def load_props(path: Path) -> pd.DataFrame:
     try:
         p = pd.read_csv(path, comment="#", skip_blank_lines=True, dtype=str)
@@ -177,12 +202,16 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
             book_over = 0.5
         edge = p_over - book_over
         side = "Over" if edge >= C.PROP_EDGE else ("Under" if edge <= -C.PROP_EDGE else None)
+        if side == "Under" and stat == "anytime_td" and bu is None and C.TD_NO_NEEDS_PRICE:
+            side = None   # no "No TD" price posted, so there is nothing to bet or grade
+        tier = prop_tier(stat, edge * 100, side)
         row.update({"team": p["team"], "opp": p["opp"], "pos": p["pos"], "game_id": p["game_id"],
                     "pid": p["pid"], "stat_key": stat,
                     "median": None if stat == "anytime_td" else fnum(np.median(arr), 1), "model_over": fnum(p_over * 100, 1),
-                    "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side})
+                    "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
+                    "tier": tier, "label": stat_label(stat)})
         out.append(row)
-        if side:
+        if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))
 
     pairs = []
@@ -195,7 +224,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
             indep = float(ha.mean() * hb.mean())
             leg = lambda x: (f"{x['player']} {'anytime TD' if x['lean'] == 'Over' else 'no TD'}"
                              if STAT_ALIASES.get(str(x['stat']).lower()) == "anytime_td"
-                             else f"{x['player']} {x['lean']} {x['line']} {x['stat']}")
+                             else f"{x['player']} {x['lean']} {x['line']} {stat_label(x['stat']).lower()}")
             pairs.append({"legs": [leg(ra), leg(rb)],
                           "joint": fnum(joint * 100, 1), "if_independent": fnum(indep * 100, 1),
                           "lift": fnum((joint / indep - 1) * 100 if indep > 0 else 0, 0)})

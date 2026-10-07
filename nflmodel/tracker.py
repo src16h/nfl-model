@@ -23,6 +23,7 @@ import pandas as pd
 
 from . import config as C
 from .util import clean_json, fnum, record_stats
+from .propsim import prop_tier, stat_label
 
 log = logging.getLogger("nflmodel")
 MAX_SNAPS = 16
@@ -223,7 +224,7 @@ def update_props_log(path, rows, season, week, now):
             "stat": r["stat_key"], "line": r.get("line"),
             "over_odds": r.get("over_odds"), "under_odds": r.get("under_odds"),
             "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
-            "lean": r.get("lean"), "median": r.get("median"),
+            "lean": r.get("lean"), "tier": r.get("tier"), "median": r.get("median"),
             "source": r.get("source") or "manual", "book": r.get("book"),
             "first_line": first_line, "first_lean": first_lean,
             "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None}
@@ -298,9 +299,34 @@ def _grade_one(r, s, ts):
             "profit": fnum(profit, 3), "graded_at": ts}
 
 
+def _est_no_td_payout(book_over_pct, hold=0.04):
+    """Older 'No TD' picks were saved without a No price. Estimate a realistic one
+    from the Yes price plus a normal sportsbook margin, instead of assuming -110."""
+    p_no = min(0.985, max(0.05, 1 - float(book_over_pct) / 100 + hold))
+    return 1 / p_no - 1
+
+
+def backfill(lg) -> bool:
+    """One-time fixes for records saved by older versions. Returns True if anything changed."""
+    changed = False
+    for r in lg.get("props", {}).values():
+        if "tier" not in r:
+            r["tier"] = prop_tier(r.get("stat"), r.get("edge"), r.get("lean"))
+            changed = True
+        res = r.get("result")
+        if (res and r.get("stat") == "anytime_td" and r.get("lean") == "Under" and not r.get("under_odds")
+                and not res.get("est_price") and res.get("lean_result") == "win" and r.get("book_over") is not None):
+            res["profit"] = fnum(_est_no_td_payout(r["book_over"]), 3)
+            res["est_price"] = True
+            changed = True
+    return changed
+
+
 def grade_props(path, pbp, schedules, now):
     lg = _load(path, {"props": {}})
     props = lg.setdefault("props", {})
+    if backfill(lg):
+        _save(path, lg)
     final_ids = set(schedules.loc[schedules["home_score"].notna(), "game_id"])
     in_pbp = set(pbp["game_id"].unique())
     pending = [r for r in props.values()
@@ -337,11 +363,21 @@ def prop_summary(lg):
 
     bets = [r for r in graded if r.get("lean") and r["result"]["lean_result"] in ("win", "loss", "push")]
     out["leans"] = _rec_block(bets)
-    out["by_stat"] = [{"stat": st, **_rec_block([r for r in bets if r["stat"] == st])}
+    out["by_stat"] = [{"stat": st, "label": stat_label(st), **_rec_block([r for r in bets if r["stat"] == st])}
                       for st in sorted({r["stat"] for r in bets})]
     out["by_side"] = [{"side": sd, **_rec_block([r for r in bets if r["lean"] == sd])} for sd in ("Over", "Under")]
+    lo_p, hi_p, top = (round(100 * x) for x in (C.PROP_PLAY_MIN, C.PROP_PLAY_MAX, C.PROP_WATCH_MAX))
     out["by_edge"] = [{"range": nm, **_rec_block([r for r in bets if lo <= abs(r["edge"] or 0) < hi])}
-                      for nm, lo, hi in (("4 to 7%", 4, 7), ("7 to 10%", 7, 10), ("10%+", 10, 999))]
+                      for nm, lo, hi in ((f"{lo_p} to {hi_p}%", lo_p, hi_p), (f"{hi_p} to {top}%", hi_p, top),
+                                         (f"{top}%+", top, 999))]
+    out["by_tier"] = [{"tier": t, **_rec_block([r for r in bets if r.get("tier") == t])}
+                      for t in ("play", "watch", "too_big")]
+    out["by_type_side"] = [{"stat": st, "label": stat_label(st), "side": sd,
+                            **_rec_block([r for r in bets if r["stat"] == st and r["lean"] == sd])}
+                           for st in sorted({r["stat"] for r in bets}) for sd in ("Over", "Under")]
+    out["plays"] = _rec_block([r for r in bets if r.get("tier") == "play"])
+    out["est_priced"] = sum(1 for r in bets if r["result"].get("est_price"))
+    out["weeks"] = sorted({int(r["week"]) for r in bets if r.get("week") is not None})
 
     # every prop with a result: did the model's favored side hit?
     sided = [r for r in graded if r["result"]["outcome"] in ("Over", "Under") and r.get("model_over") is not None]
@@ -378,6 +414,7 @@ def prop_summary(lg):
 
     recent = sorted(graded, key=lambda r: r["result"]["graded_at"], reverse=True)[:40]
     out["recent"] = [{"player": r["player"], "team": r["team"], "week": r["week"], "stat": r["stat"],
+                      "label": stat_label(r["stat"]), "tier": r.get("tier"),
                       "line": r["line"], "lean": r.get("lean"), "model_over": r["model_over"],
                       "book_over": r["book_over"], "edge": r["edge"], "actual": r["result"]["actual"],
                       "outcome": r["result"]["outcome"], "result": r["result"]["lean_result"],

@@ -2,10 +2,12 @@ name: Weekly NFL model
 
 on:
   schedule:
-    - cron: "0 12 * * 2"   # Tuesday 8am ET: full rebuild after Monday night
-    - cron: "0 18 * * 4"   # Thursday 2pm ET: first injury reports
-    - cron: "0 15 * * 6"   # Saturday 11am ET: final injury designations
-    - cron: "0 14 * * 0"   # Sunday 10am ET: last update before kickoff
+    # Two runs a day. Times are UTC: ET is UTC minus 4 until Nov 1, then minus 5
+    # (after that, runs land an hour earlier in ET). GitHub can start runs 5 to 30 minutes late.
+    - cron: "7 12 * * 1-6"   # Mon to Sat, 8am ET: overnight injury news, grades finished games
+    - cron: "7 22 * * 1-6"   # Mon to Sat, 6pm ET: before Thursday and Monday night games
+    - cron: "45 15 * * 0"    # Sunday 11:45am ET: after inactives, before 1pm kickoffs
+    - cron: "7 23 * * 0"     # Sunday 7pm ET: before the Sunday night game
   workflow_dispatch:        # adds a "Run workflow" button in the Actions tab
 
 permissions:
@@ -39,6 +41,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Install
         run: pip install -r requirements.txt
@@ -53,5 +56,10 @@ jobs:
           git config user.name "nfl-model-bot"
           git config user.email "actions@users.noreply.github.com"
           git add docs/data
-          git diff --staged --quiet || git commit -m "Model update $(date -u +'%Y-%m-%d %H:%M')"
-          git push
+          git diff --staged --quiet && exit 0
+          git commit -m "Model update $(date -u +'%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 5
+          done
+          echo "::error::Could not save results after 3 tries"; exit 1

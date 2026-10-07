@@ -124,7 +124,31 @@ ODDS_BOOKS = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "b
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
                      "player_receptions", "player_anytime_td"]
-ODDS_HOURS_AHEAD = 48        # only load props for games starting within this many hours
-ODDS_REFRESH_HOURS = 30      # don't reload a game's props more often than this (saves credits)
+ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
+ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
 ODDS_MAX_CREDITS_PER_RUN = 100   # hard stop for one run
 ODDS_CREDIT_RESERVE = 25     # never spend the last credits of your month
+
+# ---------------------------------------------------------------
+# v6: BEST PLAYS AND FASTER UPDATES
+# ---------------------------------------------------------------
+# Props are sorted into three groups by the gap between the model and the book:
+#   Play: 4 to 7%      shown on the Games tab and graded as a play
+#   Watch: 7 to 15%    shown on the Props tab, not a play, still graded
+#   Too big: 15%+      hidden behind a toggle, still graded (usually missing info)
+PROP_PLAY_MIN = 0.04
+PROP_PLAY_MAX = 0.07
+PROP_WATCH_MAX = 0.15
+# Prop types allowed to be a Play. Anytime TD stays in Watch until it proves itself.
+PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds", "rec"]
+# A "No TD" pick needs a real No price from the book. Without one it is never flagged.
+TD_NO_NEEDS_PRICE = True
+
+# Game plays use the market-anchored engine. Set to None to switch one off.
+GAME_PLAY_SPREAD = 1.5       # spread gap (points) that makes a spread Play
+GAME_PLAY_TOTAL = None       # totals: off, the backtest shows no edge
+
+# Live game lines are cached between runs so frequent updates don't burn credits.
+ODDS_LINES_EVERY_HOURS = 8       # refresh spreads and totals at most this often (both daily runs)
+ODDS_LINES_GAMEDAY_HOURS = 3     # when a game kicks off within 12 hours
+ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls to save credits for props
