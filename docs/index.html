@@ -625,6 +625,15 @@ dialog.slip::backdrop{background:rgba(20,20,20,.35)}
 
 .home-hero .big span,.bet .bpk small{white-space:nowrap}
 @media (max-width:640px){.home-hero .big span{display:block;margin:8px 0 0;font-size:20px}.bet{grid-template-columns:minmax(0,1fr) auto;padding:12px}.bet .icon{display:none}.panel{padding:18px 16px}}
+
+/* sport switch */
+.sport{display:inline-flex;gap:2px;background:var(--pill);border-radius:999px;padding:3px}
+.sport a{padding:6px 13px;border-radius:999px;font:600 13px var(--sans);color:var(--muted);text-decoration:none;transition:background .15s,color .15s}
+.sport a:hover{color:var(--ink)}
+.sport a[aria-current]{background:var(--garnet);color:var(--on-garnet)}
+.side .brand small{white-space:nowrap}
+
+@media (max-width:900px){.topbar .sport a{padding:5px 10px;font-size:12.5px}.topbar .fresh span{display:none}}
 </style>
 </head>
 <body>
@@ -645,7 +654,9 @@ dialog.slip::backdrop{background:rgba(20,20,20,.35)}
 </svg>
 <div class="app">
   <aside class="side" aria-label="Main">
+    <div style="display:flex;align-items:center;gap:14px">
     <div class="brand"><span class="mark"><svg viewBox="0 0 24 24"><path d="M5 16l4.5-5.5 3.5 3 6-7.5" stroke="#E2B652" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h1>The Board</h1><small id="sub">Loading</small></div></div>
+    <nav class="sport" aria-label="Sport"><a href="./" aria-current="page">NFL</a><a href="nhl/">NHL</a></nav></div>
     <nav class="sidenav" role="tablist" aria-label="Sections">
       <button role="tab" data-tab="home" aria-selected="true"><svg><use href="#i-home"/></svg>Home</button>
       <button role="tab" data-tab="games" aria-selected="false"><svg><use href="#i-games"/></svg>Games</button>
@@ -661,7 +672,8 @@ dialog.slip::backdrop{background:rgba(20,20,20,.35)}
     </div>
   </aside>
   <header class="topbar">
-    <div class="brand"><span class="mark"><svg viewBox="0 0 24 24"><path d="M5 16l4.5-5.5 3.5 3 6-7.5" stroke="#E2B652" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h1>The Board</h1></div>
+    <div style="display:flex;align-items:center;gap:10px"><div class="brand"><span class="mark"><svg viewBox="0 0 24 24"><path d="M5 16l4.5-5.5 3.5 3 6-7.5" stroke="#E2B652" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      <nav class="sport" aria-label="Sport"><a href="./" aria-current="page">NFL</a><a href="nhl/">NHL</a></nav></div>
     <div style="display:flex;align-items:center;gap:10px"><div class="fresh" id="freshM"><i class="dot"></i><span id="freshTxtM">…</span></div>
       <button class="themebtn" id="themeBtnM" type="button" aria-label="Switch theme"><svg><use href="#i-sun"/></svg></button></div>
   </header>

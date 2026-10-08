@@ -1,0 +1,48 @@
+name: Daily NHL model
+
+on:
+  schedule:
+    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
+    - cron: "12 15 * * *"   # 11:12am ET: grades last night, morning lines
+    - cron: "12 21 * * *"   # 5:12pm ET: fresh lines and player props before 7pm puck drops
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nhl-model
+  cancel-in-progress: false
+
+jobs:
+  run-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run model
+        env:
+          ODDS_API_KEY_NHL: ${{ secrets.ODDS_API_KEY_NHL }}   # optional: book lines for puck lines, totals and props
+        run: python run_nhl.py
+
+      - name: Save results
+        run: |
+          git config user.name "nhl-model-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/nhl/data data/nhl
+          git diff --staged --quiet && exit 0
+          git commit -m "NHL update $(date -u +'%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 7
+          done
+          echo "::error::Could not save results after 4 tries"; exit 1
