@@ -30,8 +30,8 @@ PROP_PLAY_MAX = 0.12
 # props
 PROP_STATS = ["sog", "points", "goals", "assists", "saves"]
 ASSIST_SPLIT = (0.08, 0.26)      # share of goals with 0 and 1 assists (rest have 2)
-PLAYER_SOG_CONC = 60.0           # Dirichlet concentration: how evenly team shots spread (lower = streakier)
-SOG_PLAYER_BLEND = 0.5          # team shots: half team model, half the dressed skaters' own shot rates
+PLAYER_SOG_CONC = 300.0          # how evenly team shots spread; fit so 1+ and 2+ shot rates match 2025-26 games
+SOG_PLAYER_BLEND = 0.7          # team shots: mostly the dressed skaters' own shot rates, partly the team model
 TOI_RECENT_WEIGHT = 0.5          # last games' ice time vs season average
 
 # alt-line parlays
