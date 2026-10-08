@@ -206,9 +206,7 @@ SGP_DRAWS = 1000             # simulated games published per matchup for the par
 ALT_PARLAY_ODDS = (100, 125)       # target fair odds range for the whole parlay
 ALT_PARLAY_LEGS = 4                # preferred number of legs (falls back to 3 or 5)
 ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines)
-ALT_LADDERS = {                    # alt lines books commonly offer (X+ means over X - 0.5)
-    "pass_yds": [150, 175, 200, 225, 250, 275, 300],
-    "rush_yds": [25, 40, 50, 60, 70, 80, 100],
-    "rec_yds": [25, 40, 50, 60, 70, 80, 100],
-    "rec": [2, 3, 4, 5, 6, 7],
-}
+ALT_STEP = {"pass_yds": 10, "rush_yds": 5, "rec_yds": 5, "rec": 1}       # alt lines come in these steps (.5 lines)
+ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2}   # how far below the book's main line books go
+ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5}  # skip players books rarely post
+ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5}  # lowest alt line books offer

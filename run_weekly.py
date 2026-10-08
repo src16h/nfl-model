@@ -144,6 +144,7 @@ def build_games(bundle, season, week, now):
     qual = qb_quality(qw, season)
 
     games, players, sims = [], [], {}
+    alt_inputs = []
     for i, (_, g) in enumerate(todo.iterrows()):
         h, a = g["home_team"], g["away_team"]
         wx = None if is_indoor(g) else forecast(h, g["ko"])
@@ -279,6 +280,7 @@ def build_games(bundle, season, week, now):
             players += rws
             sims.update(sm)
             side_sims[side] = ({pid: v for (gid, pid), v in sm.items()}, rws)
+        alt_inputs.append((game, side_sims))
         try:
             write_sgp(game, side_sims, qbs, pnoise)
         except Exception as e:  # noqa: BLE001
@@ -297,6 +299,19 @@ def build_games(bundle, season, week, now):
         auto = auto[[(norm_name(r["player"]), r["stat"]) not in manual_keys for _, r in auto.iterrows()]]  # your rows win
         props_df = pd.concat([props_df, auto], ignore_index=True) if len(props_df) else auto.reset_index(drop=True)
     props = evaluate_props(props_df, players, sims)
+    # alt-line parlays: anchored to the book's main line (or the model's middle number if not posted)
+    main_lines = {}
+    for r in props.get("props", []):
+        try:
+            if r.get("pid") and not r.get("error") and r.get("line") not in (None, ""):
+                main_lines[(r["pid"], r.get("stat_key") or r.get("stat"))] = float(r["line"])
+        except (TypeError, ValueError):
+            pass
+    for game, side_sims in alt_inputs:
+        try:
+            game["alt_parlay"] = build_alt_parlay(game, side_sims, main_lines)
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"alt parlay skipped for {game['game_id']}: {str(e)[:120]}")
     for r, why in stale:
         props["props"].append({"player": r.get("player"), "stat": r.get("stat"), "line": tracker._s(r.get("line")) or None,
                                "error": f"old line skipped ({why}). Delete it, or put this week's number in the week column"})
@@ -414,7 +429,7 @@ ALT_STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "r
 ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions"}
 
 
-def build_alt_parlay(game, side_sims):
+def build_alt_parlay(game, side_sims, main_lines=None):
     """The model's alt-line parlay: 'alt down' legs (70-92% each) from both teams whose
     combined true chance lands at fair odds of +100 to +125. Among the options it picks
     the legs that move together most (they make each other more likely)."""
@@ -433,12 +448,22 @@ def build_alt_parlay(game, side_sims):
                 arr = sims[r["pid"]].get(st)
                 if arr is None:
                     continue
-                for x in C.ALT_LADDERS.get(st, []):
-                    hit = arr >= x
+                book = (main_lines or {}).get((r["pid"], st))
+                main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
+                main = float(np.floor(main) + 0.5)                      # books use .5 lines
+                if main < C.ALT_MIN_MAIN[st]:
+                    continue                                            # role too small for a posted prop
+                step, drop = C.ALT_STEP[st], C.ALT_MAX_DROP[st]
+                for k in range(1, int(drop // step) + 1):               # alt lines below the main, never past the cap
+                    L = main - k * step
+                    if L < C.ALT_MIN_LINE[st]:
+                        break
+                    hit = arr > L
                     p = float(hit.mean())
                     if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1]:
                         cands.append({"pid": r["pid"], "name": r["name"], "team": game[side], "pos": r["pos"], "stat": st,
-                                      "line": x - 0.5, "label": f"{x}+ {ALT_LABEL[st]}", "p": p, "hit": hit})
+                                      "line": L, "label": f"Over {L:g} {ALT_LABEL[st]}", "p": p, "hit": hit,
+                                      "main": main, "main_src": "book" if book is not None else "model"})
     if len(cands) < 3:
         return None
     teams = {game["home"], game["away"]}
@@ -484,7 +509,7 @@ def build_alt_parlay(game, side_sims):
     _, idx, pj, pi = best
     legs = [{"kind": "player", "pid": cands[i]["pid"], "name": cands[i]["name"], "team": cands[i]["team"], "pos": cands[i]["pos"],
              "stat": cands[i]["stat"], "side": "Over", "line": cands[i]["line"], "label": cands[i]["label"],
-             "p": round(cands[i]["p"] * 100, 1)} for i in idx]
+             "main": cands[i]["main"], "main_src": cands[i]["main_src"], "p": round(cands[i]["p"] * 100, 1)} for i in idx]
     legs.sort(key=lambda L: (L["team"] != game["away"], -L["p"]))
     fair = (1 - pj) / pj * 100
     return {"legs": legs, "p": round(pj * 100, 1), "pi": round(pi * 100, 1), "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj)))}
@@ -504,10 +529,7 @@ def write_sgp(game, side_sims, qbs, pnoise):
         lock_combos(game, side_sims, qbs, full)
     except Exception as e:  # noqa: BLE001
         log.warning(f"parlay combos skipped for {game['game_id']}: {str(e)[:120]}")
-    try:
-        game["alt_parlay"] = build_alt_parlay(game, side_sims)
-    except Exception as e:  # noqa: BLE001
-        log.warning(f"alt parlay skipped for {game['game_id']}: {str(e)[:120]}")
+
     for side in ("home", "away"):
         sims, rows = side_sims[side]
         team = game[side]

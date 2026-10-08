@@ -821,7 +821,7 @@ function renderHome() {
 
   // alt-line parlays
   const alts = up.filter(g => g.alt_parlay);
-  if (alts.length) h += `<div class="panel span-12"><h3>Alt-line parlays <button data-go="parlays">Open builder</button></h3><p class="pmuted">One per game at fair odds +100 to +125. Tap one to check your book's price.</p>
+  if (alts.length) h += `<div class="panel span-12"><h3>Alt-line parlays <button data-go="parlays">Open builder</button></h3><p class="pmuted">One per game at fair odds +100 to +125, with alt lines no further than books go below the main line. Tap one to check your book's price.</p>
     <div class="rail">${alts.map(g => `<div class="alt tile" data-altgo="${esc(g.game_id)}"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.fair)}</span></div>
       ${g.alt_parlay.legs.map(Lg => `<div class="l"><b>${esc(Lg.name)}</b> ${esc(Lg.label)}</div>`).join("")}
       <div class="l">${n(g.alt_parlay.p)}% to hit</div></div>`).join("")}</div></div>`;
@@ -1429,11 +1429,11 @@ function renderParlays() {
 const C_SGP_NOTE = "Both teams and the final score in one simulation";
 function altCardsHTML(games) {
   return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, fair odds +100 to +125</span></div>
-    <p class="sub">The model builds one parlay per game from lowered "alt" lines it rates about 70 to 92% each, choosing legs that tend to hit together. Odds shown are fair odds. Your book will usually price these shorter, so tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
+    <p class="sub">The model builds one parlay per game from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Each leg stays within a normal alt range of the book's main line (25 yards for receiving and rushing, 50 for passing, 2 catches), or the model's middle number when the book hasn't posted yet. Odds shown are fair odds. Your book will usually price these shorter, so tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
     <div class="tickets">${games.map(g => { const a = g.alt_parlay;
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
-        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%</span></div>`).join("")}</div>
+        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}${L.main_src === "model" ? " (model)" : ""}` : ""}</span></div>`).join("")}</div>
         <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
         <div class="t-actions"><button class="logbtn" data-altgo="${esc(g.game_id)}">Check my book's price</button></div></div>
         <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`;
