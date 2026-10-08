@@ -24,13 +24,14 @@ ML_PLAY_EDGE = 3.0               # model win chance minus book's no-vig chance, 
 PL_PLAY_EDGE = 3.0
 TOTAL_PLAY_EDGE = 4.0           # scoring drifts during a season, so totals need a bigger gap
 PLAY_MAX_EDGE = 10.0             # bigger gaps usually mean the model is missing news
-PROP_PLAY_MIN = 0.04
-PROP_PLAY_MAX = 0.10
+PROP_PLAY_MIN = 0.07             # after removing the slate-wide gap to the book
+PROP_PLAY_MAX = 0.12
 
 # props
 PROP_STATS = ["sog", "points", "goals", "assists", "saves"]
 ASSIST_SPLIT = (0.08, 0.26)      # share of goals with 0 and 1 assists (rest have 2)
 PLAYER_SOG_CONC = 60.0           # Dirichlet concentration: how evenly team shots spread (lower = streakier)
+SOG_PLAYER_BLEND = 0.5          # team shots: half team model, half the dressed skaters' own shot rates
 TOI_RECENT_WEIGHT = 0.5          # last games' ice time vs season average
 
 # alt-line parlays

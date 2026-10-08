@@ -100,10 +100,14 @@ def run(games, state_path, cache_path, now):
     for g in games:                                       # free fallback: the league's posted moneylines
         if g.get("ml_home") and g.get("ml_away"):
             g["book"] = {"ml_home": g["ml_home"], "ml_away": g["ml_away"], "src": "NHL.com"}
+    cl = Client(key)
     if not key:
         status["note"] = "no NHL odds key, using the league's free moneylines"
-        return {}, status
-    cl = Client(key)
+        for g in games:                                   # lines saved by an earlier keyed run still count
+            rec = (state.get("lines") or {}).get(f"{g['away']}@{g['home']}")
+            if rec:
+                g["book"] = dict(rec, src=rec.get("book"))
+        return _props(cache), status
     try:
         hours = (now - datetime.fromisoformat(state["lines_at"])).total_seconds() / 3600 if state.get("lines_at") else 99
         lines = state.get("lines") or {}
@@ -170,6 +174,10 @@ def run(games, state_path, cache_path, now):
     status.update({"spent": cl.spent, "remaining": state.get("remaining")})
     Path(state_path).write_text(json.dumps(state))
     Path(cache_path).write_text(json.dumps(cache))
+    return _props(cache), status
+
+
+def _props(cache):
     props = {}
     for ck, v in cache.items():
         gid, mkt = ck.split("|")
@@ -177,7 +185,7 @@ def run(games, state_path, cache_path, now):
             if r.get("line") is None:
                 continue
             props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(r, book=v.get("book"))
-    return props, status
+    return props
 
 
 no_vig = _no_vig

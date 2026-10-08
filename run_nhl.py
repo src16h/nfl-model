@@ -306,6 +306,12 @@ def main():
             X.append(f)
         X = pd.DataFrame(X)
         lam, mus = model.predict(X)
+        # shots: blend the team model with what tonight's skaters usually shoot (steadier early in a season)
+        lineups = {t: P.lineup(t, pg, rates, pos) for t in (h, a)}
+        for j, t in enumerate((h, a)):
+            ind = sum(p["e_sog"] for p in lineups[t])
+            if ind > 0:
+                mus[j] = (1 - C.SOG_PLAYER_BLEND) * mus[j] + C.SOG_PLAYER_BLEND * ind
         sim = G.simulate(lam[0], lam[1], mus[0], mus[1], eng=eng, ot_goal_share=model.ot_goal_share, seed=1000 + i, detail=True)
         d = sim["FH"] - sim["FA"]
         game = {"game_id": g["game_id"], "date": g["date_et"], "start": g["start"], "home": h, "away": a,
@@ -322,7 +328,7 @@ def main():
         rng = np.random.default_rng(77 + i)
         info, arrs = {}, {}
         for t, side in ((h, "H"), (a, "A")):
-            sks = P.lineup(t, pg, rates, pos)
+            sks = lineups[t]
             for p in sks:
                 info[p["pid"]] = p
             gk = goalies[t]
@@ -339,6 +345,29 @@ def main():
         game["alt_parlay"] = P.alt_parlay(arrs, info, game, bp)
         games.append(game)
         log.info(f"{a}@{h}: xG {lam[1]:.2f}-{lam[0]:.2f}, home win {game['win_home']}%, goalies {goalies[a]['name']} / {goalies[h]['name']}")
+
+    # market level check: if the model sits above or below the book on almost every prop of a stat,
+    # that is a level problem (league trend, early-season noise), not 40 separate edges. Remove the
+    # slate-wide gap so plays come from players the model rates differently from the rest.
+    level = {}
+    lg_ = lambda x: np.log(np.clip(x, 0.5, 99.5) / (100 - np.clip(x, 0.5, 99.5)))
+    for st in C.PROP_STATS:
+        diffs = [lg_(p["m"][st]["book"]["model_over"]) - lg_(p["m"][st]["book"]["book_over"]) for p in players if p["m"].get(st, {}).get("book")]
+        if len(diffs) >= 12:
+            level[st] = float(np.median(diffs))
+    for p in players:
+        for st, m in p["m"].items():
+            b = m.get("book")
+            if not b or st not in level:
+                continue
+            adj_over = 100 / (1 + np.exp(-(lg_(b["model_over"]) - level[st])))      # same shift on the log-odds scale
+            side = "Over" if adj_over >= b["book_over"] else "Under"
+            edge = (adj_over - b["book_over"]) if side == "Over" else (b["book_over"] - adj_over)
+            b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": side, "edge": r(edge),
+                      "odds": b["over"] if side == "Over" else b["under"],
+                      "play": 100 * C.PROP_PLAY_MIN <= edge <= 100 * C.PROP_PLAY_MAX})
+    level = {k: r(v, 3) for k, v in level.items()}
+    log.info(f"prop level vs book (model minus book, over %): {level}")
 
     # history: one file per day, games locked at puck drop
     by_day = {}
@@ -379,7 +408,7 @@ def main():
 
     # finished/locked games from today's file so the slate stays complete
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
-               "games": games, "players": players, "odds": odds_status, "tracking": track,
+               "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
                "model": {"coefs": model.coefs(), "eng": eng, "eng_check": eng_info, "ot_goal_share": r(model.ot_goal_share, 3),
                          "league": {k: r(v, 2) for k, v in lg.items()}, "train_games": int(len(rows) / 2),
                          "backtest": BACKTEST},
