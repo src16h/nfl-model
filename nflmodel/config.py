@@ -123,7 +123,7 @@ ODDS_BOOKS = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "b
 # Which prop types to load. Each one costs about 1 credit per game. Add more from
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
-                     "player_receptions", "player_anytime_td"]
+                     "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
 ODDS_MAX_CREDITS_PER_RUN = 100   # hard stop for one run

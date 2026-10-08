@@ -185,9 +185,12 @@ def _rng(sim, key, mean, cv):
 
 def _finish(r, game_id, sim=None) -> dict:
     tdp = float(sim["anytime_td"].mean()) if sim is not None else r["td_prob"]
+    lam = r["rush_td"] + r["rec_td"]
+    td2 = float((sim["tds"] >= 2).mean()) if sim is not None and "tds" in sim else 1 - np.exp(-lam) * (1 + lam)
     d = {"game_id": game_id, "pid": r["pid"], "name": r["name"], "pos": r["pos"],
          "team": r["team"], "opp": r["opp"], "status": r["status"],
-         "fpts": fnum(r["fpts_ppr"]), "td_prob": fnum(tdp * 100, 0)}
+         "fpts": fnum(r["fpts_ppr"]), "td_prob": fnum(tdp * 100, 1), "td2_prob": fnum(td2 * 100, 1),
+         "td_exp": fnum(lam, 2)}
     if sim is not None:
         med, lo, hi = quantiles(sim["fpts"])
         d.update({"fpts_med": fnum(med), "fpts_range": [fnum(lo), fnum(hi)]})

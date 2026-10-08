@@ -287,6 +287,8 @@ def _grade_one(r, s, ts):
     key = r["stat"]
     if key == "anytime_td":
         actual, line = (1.0 if (s["rush_td"] + s["rec_td"]) >= 1 else 0.0), 0.5
+    elif key == "tds":
+        actual, line = float(s["rush_td"] + s["rec_td"]), float(r["line"])
     else:
         actual, line = float(s[key]), float(r["line"])
     outcome = "Over" if actual > line else ("Under" if actual < line else "Push")
@@ -395,11 +397,24 @@ def prop_summary(lg):
     else:
         out["brier"] = None
 
+    # touchdown props only: is the model's TD chance more accurate than the book's?
+    out["td_accuracy"] = {}
+    for stat in ("anytime_td", "tds"):
+        tb = [r for r in both if r.get("stat") == stat]
+        if tb:
+            y = np.array([1.0 if r["result"]["outcome"] == "Over" else 0.0 for r in tb])
+            m = np.array([r["model_over"] / 100 for r in tb])
+            b = np.array([r["book_over"] / 100 for r in tb])
+            out["td_accuracy"][stat] = {"n": len(tb), "model": fnum(np.mean((m - y) ** 2), 4),
+                                        "book": fnum(np.mean((b - y) ** 2), 4),
+                                        "model_avg": fnum(m.mean() * 100, 1), "book_avg": fnum(b.mean() * 100, 1),
+                                        "actual": fnum(y.mean() * 100, 1)}
+
     # did prop lines move after our first look? (only possible when lines get refreshed)
     mv = {"n": 0, "moved": 0, "toward": 0, "away": 0}
     for r in props:
         a, b = _float(r.get("first_line")), _float(r.get("line"))
-        if a is None or b is None or r.get("stat") == "anytime_td":
+        if a is None or b is None or r.get("stat") in ("anytime_td", "tds"):
             continue
         mv["n"] += 1
         if b != a:

@@ -89,7 +89,8 @@ def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
     for pid, d in out.items():
         pz = d.get("pass_yds", 0) * 0.04 + d.get("pass_td", 0) * 4 - d.get("pass_int", 0) * 2
         d["fpts"] = pz + d["rush_yds"] * 0.1 + d["rush_td"] * 6 + d["rec"] + d["rec_yds"] * 0.1 + d["rec_td"] * 6
-        d["anytime_td"] = ((d["rush_td"] + d["rec_td"]) >= 1).astype(float)
+        d["tds"] = (d["rush_td"] + d["rec_td"]).astype(float)       # rushing + receiving TDs
+        d["anytime_td"] = (d["tds"] >= 1).astype(float)
         d["rush_rec_yds"] = d["rush_yds"] + d["rec_yds"]
     return out
 
@@ -107,6 +108,7 @@ STAT_ALIASES = {
     "rush_yds": "rush_yds", "rushing_yards": "rush_yds", "carries": "carries", "rush_att": "carries",
     "rec": "rec", "receptions": "rec", "rec_yds": "rec_yds", "receiving_yards": "rec_yds",
     "rush_rec_yds": "rush_rec_yds", "anytime_td": "anytime_td", "fpts": "fpts", "fantasy_points": "fpts",
+    "tds": "tds", "td2": "tds", "two_plus_td": "tds",
 }
 
 
@@ -124,6 +126,7 @@ STAT_LABELS = {
     "pass_yds": "Passing yards", "pass_td": "Passing TDs", "pass_cmp": "Completions", "pass_att": "Pass attempts",
     "pass_int": "Interceptions", "rush_yds": "Rushing yards", "carries": "Rush attempts", "rec": "Receptions",
     "rec_yds": "Receiving yards", "rush_rec_yds": "Rush + rec yards", "anytime_td": "Anytime TD",
+    "tds": "2+ TDs",
     "fpts": "Fantasy points",
 }
 
@@ -202,7 +205,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
             book_over = 0.5
         edge = p_over - book_over
         side = "Over" if edge >= C.PROP_EDGE else ("Under" if edge <= -C.PROP_EDGE else None)
-        if side == "Under" and stat == "anytime_td" and bu is None and C.TD_NO_NEEDS_PRICE:
+        if side == "Under" and stat in ("anytime_td", "tds") and bu is None and C.TD_NO_NEEDS_PRICE:
             side = None   # no "No TD" price posted, so there is nothing to bet or grade
         tier = prop_tier(stat, edge * 100, side)
         row.update({"team": p["team"], "opp": p["opp"], "pos": p["pos"], "game_id": p["game_id"],

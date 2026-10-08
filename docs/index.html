@@ -222,6 +222,37 @@ input[type=search]:focus,select:focus{border-color:var(--gold);outline:none;box-
 .more{font:600 13px var(--sans);background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:var(--r);padding:8px 14px;cursor:pointer;margin-top:10px}
 .more:hover{border-color:var(--garnet-text);color:var(--garnet-text)}
 
+/* ---------- touchdowns ---------- */
+.view-seg{margin:26px 0 4px}
+.tdtable th.grp{text-align:center;border-bottom:1px solid var(--line-soft);color:var(--ink);font-weight:600}
+.tdtable th.grp+th.grp,.tdtable td.gs,.tdtable th.gs{border-left:1px solid var(--line)}
+.tdtable td:first-child,.tdtable th:first-child{position:sticky;left:0;background:var(--surface);z-index:1}
+.tdtable thead th:first-child{background:var(--raised);z-index:2}
+.tdtable tbody tr:hover td:first-child{background:var(--raised)}
+.tdtable .who{display:flex;align-items:center;gap:8px}
+.tdtable .who .badge{min-width:36px;height:20px;font-size:11.5px}
+.tdtable .who span.m{display:block;font-size:12px;color:var(--muted);font-family:var(--sans)}
+.tdtable .pct{font-weight:600}
+.tdtable .edge.pos{color:var(--win);font-weight:600}
+.tdtable .edge.neg{color:var(--faint)}
+.tdtable .na{color:var(--faint)}
+@media (max-width:640px){
+  .tdtable td,.tdtable th{padding:8px 8px}
+  .tdtable .who{gap:6px}
+  .tdtable .who .badge{display:none}
+  .tdtable .who b{font-size:13px}
+}
+.tdbar{display:inline-block;width:46px;height:5px;border-radius:3px;background:var(--line-soft);vertical-align:middle;margin-right:8px;overflow:hidden}
+.tdbar i{display:block;height:100%;background:var(--garnet-text)}
+.gaps{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-bottom:6px}
+.gapcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 16px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center}
+.gapcard .k{font-size:12px;color:var(--muted)}
+.gapcard .p{font:700 19px/1.2 var(--cond)}
+.gapcard .p small{font-weight:500;color:var(--muted);margin-left:6px;font-size:14px}
+.gapcard .e{grid-row:1/span 3;grid-column:2;text-align:right;font:700 24px/1 var(--cond);color:var(--win)}
+.gapcard .e small{display:block;font:500 11.5px var(--sans);color:var(--muted);margin-top:3px}
+.gapcard .w{font-size:12.5px;color:var(--muted)}
+
 /* ---------- stat strip ---------- */
 .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
 .st{padding:14px 18px;border-left:1px solid var(--line-soft)}
@@ -320,7 +351,10 @@ const TEAM = {ARI:"#97233F",ATL:"#A71930",BAL:"#241773",BUF:"#00338D",CAR:"#0085
 const tc = t => TEAM[t] || "#555";
 const badge = t => `<span class="badge" style="--tc:${tc(t)}">${esc(t)}</span>`;
 let D = null, pState = {sort: "fpts", dir: -1, pos: "", team: "", q: ""}, openP = null, tState = {sort: "net", dir: -1};
-const propUI = {q: "", all: {watch: false, too_big: false}};
+const propUI = {q: "", all: {watch: false, too_big: false}, view: "yards"};
+const tdUI = {game: "", pos: "", q: "", sort: "td_prob"};
+const TD_STATS = ["anytime_td", "tds"];
+const isTD = p => TD_STATS.includes(p.stat_key || p.stat);
 
 document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-selected", x === b));
@@ -507,8 +541,17 @@ function propRows(rows, limitKey) {
 }
 
 function renderProps() {
+  const seg = `<div class="seg view-seg" role="group" aria-label="Prop type">
+    <button aria-pressed="${propUI.view === "yards"}" data-view="yards">Yards and catches</button>
+    <button aria-pressed="${propUI.view === "td"}" data-view="td">Touchdowns</button></div>`;
+  $("#props").innerHTML = seg + `<div id="propBody"></div>`;
+  document.querySelectorAll("#props [data-view]").forEach(b => b.onclick = () => { propUI.view = b.dataset.view; renderProps(); });
+  if (propUI.view === "td") renderTD(); else renderYards();
+}
+
+function renderYards() {
   const P = D.props || {props: [], pairs: []}, rules = D.plays_rules || {};
-  const good = (P.props || []).filter(p => !p.error), bad = (P.props || []).filter(p => p.error);
+  const good = (P.props || []).filter(p => !p.error && !isTD(p)), bad = (P.props || []).filter(p => p.error);
   const q = propUI.q;
   const match = p => !q || `${p.player} ${p.team} ${p.opp} ${p.label || label(p.stat)}`.toLowerCase().includes(q);
   const by = t => good.filter(p => p.tier === t && match(p)).sort((a, b) => Math.abs(a.edge) - Math.abs(b.edge));
@@ -527,10 +570,92 @@ function renderProps() {
     if (pairs.length) h += `<details class="fold"><summary>Same-game pairs <span>${pairs.length}</span></summary><div class="fold-body"><p class="sub">Prop plays on the same team that tend to hit together. Lift is how much more often both hit than if they were unrelated. Books price some of this into parlays, so treat it as research.</p><div class="tablewrap"><table><thead><tr><th>Legs</th><th>Both hit</th><th>If unrelated</th><th>Lift</th></tr></thead><tbody>${pairs.map(x => `<tr><td>${esc(x.legs[0])} + ${esc(x.legs[1])}</td><td>${n(x.joint)}%</td><td>${n(x.if_independent)}%</td><td>+${n(x.lift, 0)}%</td></tr>`).join("")}</tbody></table></div></div></details>`;
     if (bad.length) h += `<details class="fold"><summary>Rows the model skipped <span>${bad.length}</span></summary><div class="fold-body"><div class="tablewrap"><table><tbody>${bad.map(p => `<tr><td>${esc(p.player)}</td><td>${esc(label(p.stat))}</td><td>${esc(p.line ?? "")}</td><td style="text-align:left;white-space:normal">${esc(p.error)}</td></tr>`).join("")}</tbody></table></div></div></details>`;
   }
-  $("#props").innerHTML = h;
+  $("#propBody").innerHTML = h;
   const s = $("#propQ");
-  if (s) s.oninput = e => { propUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderProps(); const ns = $("#propQ"); ns.focus(); ns.setSelectionRange(pos, pos); };
-  document.querySelectorAll("#props [data-all]").forEach(b => b.onclick = () => { propUI.all[b.dataset.all] = true; renderProps(); });
+  if (s) s.oninput = e => { propUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderYards(); const ns = $("#propQ"); ns.focus(); ns.setSelectionRange(pos, pos); };
+  document.querySelectorAll("#props [data-all]").forEach(b => b.onclick = () => { propUI.all[b.dataset.all] = true; renderYards(); });
+}
+
+/* ---------------- Touchdowns ---------------- */
+const fairOdds = pct => { if (pct == null || pct <= 0 || pct >= 100) return "–"; const p = pct / 100; return p >= 0.5 ? String(Math.round(-100 * p / (1 - p))) : "+" + Math.round(100 * (1 - p) / p); };
+function tdRows() {
+  const props = (D.props?.props || []).filter(p => !p.error && isTD(p));
+  const key = (pid, stat) => pid + "|" + stat;
+  const pm = {};
+  props.forEach(p => { pm[key(p.pid, p.stat_key || p.stat)] = p; });
+  const games = {};
+  (D.games || []).forEach(g => games[g.game_id] = g);
+  return (D.players || []).filter(p => p.td_prob != null && games[p.game_id] && games[p.game_id].state === "upcoming").map(p => {
+    const a = pm[key(p.pid, "anytime_td")], b = pm[key(p.pid, "tds")];
+    return {...p, kick: games[p.game_id].kickoff, any: a, two: b,
+      td_prob: a?.model_over ?? p.td_prob, td2_prob: b?.model_over ?? p.td2_prob,
+      any_edge: a ? a.edge : null, two_edge: b ? b.edge : null};
+  });
+}
+function renderTD() {
+  const all = tdRows();
+  const gameOpts = [...new Map(all.map(r => [r.game_id, r])).values()].sort((x, y) => String(x.kick).localeCompare(String(y.kick)));
+  let rows = all.filter(r => (!tdUI.game || r.game_id === tdUI.game) && (!tdUI.pos || r.pos === tdUI.pos) &&
+    (!tdUI.q || `${r.name} ${r.team} ${r.opp}`.toLowerCase().includes(tdUI.q)));
+  const k = tdUI.sort;
+  rows.sort((x, y) => (y[k] ?? -99) - (x[k] ?? -99));
+  const priced = all.filter(r => r.any || r.two).length;
+  let h = `<div class="sec-head"><h2>Touchdowns</h2><span class="aside">${priced ? `${priced} players with book odds` : "Book odds load about a day before each game"}</span></div>
+    <p class="sub">The model's chance each player scores (rushing or receiving), and the fair odds that chance is worth. When your book pays more than the fair odds, the bet has value. Gap is model chance minus the book's chance.</p>`;
+
+  // biggest gaps vs book
+  const gaps = [];
+  all.forEach(r => {
+    if (r.any && r.any_edge > 0) gaps.push({r, kind: "Anytime TD", odds: r.any.over_odds, model: r.td_prob, book: r.any.book_over, edge: r.any_edge});
+    if (r.two && r.two_edge > 0) gaps.push({r, kind: "2+ TDs", odds: r.two.over_odds, model: r.td2_prob, book: r.two.book_over, edge: r.two_edge});
+  });
+  const cap = (D.plays_rules || {}).prop_watch_max || 15;
+  const trust = gaps.filter(x => x.edge < cap).sort((x, y) => y.edge - x.edge), wild = gaps.filter(x => x.edge >= cap);
+  if (trust.length || wild.length) {
+    h += `<h3>Biggest gaps vs the book</h3>${trust.length ? `<div class="gaps">${trust.slice(0, 6).map(x => `<div class="gapcard">
+      <span class="k">${esc(x.kind)}</span>
+      <span class="p">${esc(x.r.name)}<small>${esc(x.odds || "")}</small></span>
+      <span class="w">${esc(x.r.pos)} ${esc(x.r.team)} vs ${esc(x.r.opp)}. Model ${n(x.model, 0)}%, book ${n(x.book, 0)}%</span>
+      <span class="e">+${n(x.edge)}%<small>gap</small></span></div>`).join("")}</div>` : `<p class="sub">No gaps under ${cap}% right now.</p>`}
+      ${wild.length ? `<p class="note"><b>Too big to trust (${cap}%+):</b> ${wild.map(x => `${esc(x.r.name)}, ${esc(x.kind)} +${n(x.edge)}%`).join(", ")}. Gaps this large usually mean the model is missing something, like a role change or goal-line back.</p>` : ""}
+      <p class="note">Not Plays. TD bets swing a lot and books take a bigger cut on them, so judge these over many weeks on the Record tab.</p>`;
+  }
+
+  const acc = (D.prop_record || {}).td_accuracy || {};
+  const accLine = (k, name) => { const a = acc[k]; if (!a || !a.n) return ""; const better = a.model < a.book;
+    return `<b>${name}:</b> ${better ? "model more accurate than the book" : "book more accurate than the model"} on ${a.n} graded props. Model averaged ${n(a.model_avg, 0)}%, book ${n(a.book_avg, 0)}%, actual ${n(a.actual, 0)}%. `; };
+  const accTxt = accLine("anytime_td", "Anytime TD") + accLine("tds", "2+ TDs");
+  if (accTxt) h += `<p class="note">${accTxt}Trust the gaps more once the model beats the book here over several weeks.</p>`;
+  h += `<div class="controls" style="margin-top:20px">
+    <select id="tdGame" aria-label="Game"><option value="">All games</option>${gameOpts.map(r => { const g = D.games.find(x => x.game_id === r.game_id); return `<option value="${esc(r.game_id)}" ${tdUI.game === r.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}</option>`; }).join("")}</select>
+    <div class="seg" id="tdPos" role="group" aria-label="Position">${["", "RB", "WR", "TE", "QB"].map(v => `<button aria-pressed="${tdUI.pos === v}" data-v="${v}">${v || "All"}</button>`).join("")}</div>
+    <input type="search" id="tdQ" placeholder="Search player or team" aria-label="Search touchdown board" value="${esc(tdUI.q)}"></div>`;
+  if (!rows.length) { h += `<div class="empty"><b>No players match.</b> Clear the filters to see the full board.</div>`; $("#propBody").innerHTML = h; bindTD(); return; }
+
+  const maxp = Math.max(...rows.map(r => r.td_prob || 0), 1);
+  const small = window.matchMedia("(max-width:640px)").matches;
+  const cell = (pct, prop, edge, bar) => {
+    const book = prop ? `${esc(prop.over_odds || "–")}` : `<span class="na">–</span>`;
+    const e = edge == null ? `<span class="na">–</span>` : `<span class="edge ${edge > 0 ? "pos" : "neg"}">${sgn(edge)}%</span>`;
+    return `<td class="gs pct">${bar && !small ? `<span class="tdbar"><i style="width:${Math.round(100 * (pct || 0) / maxp)}%"></i></span>` : ""}${n(pct, 0)}%</td>${small ? "" : `<td>${fairOdds(pct)}</td>`}<td>${book}</td><td>${e}</td>`;
+  };
+  const th = (key, label) => `<th class="sort ${tdUI.sort === key ? "sorted" : ""}" data-k="${key}">${label}</th>`;
+  h += `<div class="tablewrap"><table class="tdtable"><thead>
+    <tr><th rowspan="2" style="vertical-align:bottom">Player</th><th class="grp" colspan="${small ? 3 : 4}">Anytime TD</th><th class="grp" colspan="${small ? 3 : 4}">2+ TDs</th></tr>
+    <tr>${th("td_prob", "Model")}${small ? "" : "<th>Fair</th>"}<th>Book</th>${th("any_edge", "Gap")}<th class="gs sort ${tdUI.sort === "td2_prob" ? "sorted" : ""}" data-k="td2_prob">Model</th>${small ? "" : "<th>Fair</th>"}<th>Book</th>${th("two_edge", "Gap")}</tr></thead><tbody>
+    ${rows.slice(0, 150).map(r => `<tr><td><div class="who">${badge(r.team)}<div><b>${esc(r.name)}</b>${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} vs ${esc(r.opp)}</span></div></div></td>
+      ${cell(r.td_prob, r.any, r.any_edge, true)}${cell(r.td2_prob, r.two, r.two_edge, false)}</tr>`).join("")}
+    </tbody></table></div>
+    <p class="note">${small ? "Turn your phone sideways for fair odds. " : "Fair odds have no book cut. "}${rows.length > 150 ? `Showing the top 150 of ${rows.length}. ` : ""}Sort by tapping Model or Gap.</p>`;
+  $("#propBody").innerHTML = h;
+  bindTD();
+}
+window.matchMedia("(max-width:640px)").addEventListener("change", () => { if (D && propUI.view === "td") renderTD(); });
+function bindTD() {
+  const g = $("#tdGame"); if (g) g.onchange = e => { tdUI.game = e.target.value; renderTD(); };
+  document.querySelectorAll("#tdPos button").forEach(b => b.onclick = () => { tdUI.pos = b.dataset.v; renderTD(); });
+  const q = $("#tdQ"); if (q) q.oninput = e => { tdUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderTD(); const nq = $("#tdQ"); nq.focus(); nq.setSelectionRange(pos, pos); };
+  document.querySelectorAll(".tdtable th[data-k]").forEach(t => t.onclick = () => { tdUI.sort = t.dataset.k; renderTD(); });
 }
 
 /* ---------------- Players ---------------- */
@@ -594,7 +719,7 @@ function recTable(title, rows, nameKey, nameCol) {
   rows = (rows || []).filter(x => x.n || x.push);
   if (!rows.length) return "";
   return `<h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>${nameCol}</th><th>Record</th><th>Win rate</th><th>Likely range</th><th>Units</th></tr></thead><tbody>` +
-    rows.map(x => { const small = x.n < MIN_N; return `<tr class="${small ? "small" : ""}"><td>${esc(typeof nameKey === "function" ? nameKey(x) : x[nameKey])}</td><td>${x.w}–${x.l}${x.push ? "–" + x.push : ""}</td><td class="${small || x.stat === "anytime_td" ? "" : "v-" + x.verdict}">${n(x.pct)}%</td><td>${small ? "too few to judge" : `${n(x.ci_lo, 0)} to ${n(x.ci_hi, 0)}%`}</td><td class="${uc(x.units)}">${units(x.units)}</td></tr>`; }).join("") +
+    rows.map(x => { const small = x.n < MIN_N; return `<tr class="${small ? "small" : ""}"><td>${esc(typeof nameKey === "function" ? nameKey(x) : x[nameKey])}</td><td>${x.w}–${x.l}${x.push ? "–" + x.push : ""}</td><td class="${small || ["anytime_td", "tds"].includes(x.stat) ? "" : "v-" + x.verdict}">${n(x.pct)}%</td><td>${small ? "too few to judge" : `${n(x.ci_lo, 0)} to ${n(x.ci_hi, 0)}%`}</td><td class="${uc(x.units)}">${units(x.units)}</td></tr>`; }).join("") +
     `</tbody></table></div>`;
 }
 

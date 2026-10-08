@@ -54,6 +54,7 @@ MARKETS = {
     "player_pass_interceptions": "pass_int", "player_rush_yds": "rush_yds", "player_rush_attempts": "carries",
     "player_receptions": "rec", "player_reception_yds": "rec_yds",
     "player_rush_reception_yds": "rush_rec_yds", "player_anytime_td": "anytime_td",
+    "player_tds_over": "tds",
 }
 
 
@@ -273,6 +274,10 @@ def parse_props(ev: dict, game_id: str) -> list:
                     po = 100 / (s["over"] + 100) if s["over"] > 0 else -s["over"] / (-s["over"] + 100)
                     pu = 100 / (s["under"] + 100) if s["under"] > 0 else -s["under"] / (-s["under"] + 100)
                     return abs(po / (po + pu) - 0.5)
+                if stat == "tds":                       # this market is only used for 2+ TDs
+                    options = [o for o in options if abs(o[0] - 1.5) < 1e-6]
+                    if not options:
+                        continue
                 line, sides = min(options, key=evenness)
                 rows[(stat, norm_name(player))] = {
                     "player": player, "team": "", "stat": stat,
