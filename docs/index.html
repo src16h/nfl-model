@@ -822,6 +822,13 @@ function gradeLeg(L, gid, g) {
   return gradeBet({kind: "prop", game_id: gid, pid: L.pid, stat: st, side: L.side, line: L.line, odds: "-110", units: 1}).res;
 }
 function gradeBet(b) {                                   // returns {res: W|L|P|V|O, units, actual}
+  if (b.kind === "teaser") {
+    const rs = (b.legs || []).map(L => { const g = RES?.games?.[L.game_id]; return g ? gradeLeg(L.kind === "spread" ? {...L, team: L.team || L.side} : L, L.game_id, g) : "O"; });
+    if (rs.includes("L")) return {res: "L", units: -b.units, actual: rs.join(" ")};
+    if (rs.includes("O")) return {res: "O"};
+    const res = rs.every(r => r === "W") ? "W" : "P";
+    return {res, units: res === "W" ? b.units * payout(b.odds) : 0, actual: rs.join(" ")};
+  }
   const g = RES?.games?.[b.game_id];
   if (!g) return {res: "O"};
   if (b.kind === "parlay") {
@@ -1536,7 +1543,7 @@ function renderParlays() {
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
     <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
   const alts = up.filter(g => g.alt_parlay);
-  if (alts.length && !PX.gid) h = altCardsHTML(alts) + h;
+  if (!PX.gid) h = (alts.length ? altCardsHTML(alts) : "") + teaserHTML() + h;
   if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
   if (PX.loading) { $("#parlays").innerHTML = h + `<div class="empty">Loading simulated games…</div>`; bindParlays(); return; }
   if (PX.err) { $("#parlays").innerHTML = h + `<div class="empty">${esc(PX.err)}</div>`; bindParlays(); return; }
@@ -1571,6 +1578,77 @@ function renderParlays() {
   bindParlays();
 }
 const C_SGP_NOTE = "Both teams and the final score in one simulation";
+
+/* ---------- 6-point teasers ---------- */
+const TZS = {sel: [], all: false, price: {}};
+try { Object.assign(TZS.price, JSON.parse(localStorage.getItem("board.tzprice") || "{}")); } catch (e) {}
+const tzKey = L => `${L.game_id}|${L.kind}|${L.team || L.side}`;
+const tzAm = p => { if (!(p > 0 && p < 1)) return "–"; const a = p < 0.5 ? Math.round(100 * (1 - p) / p) : -Math.round(100 * p / (1 - p)); return a > 0 ? "+" + a : String(a); };
+function tzPrice(size) { const Z = D.teasers; const v = TZS.price[size] ?? (Z.prices[size] > 0 ? "+" + Z.prices[size] : String(Z.prices[size])); return v; }
+function tzCall(pct, size) {
+  const odds = tzPrice(size), pay = payout(odds);
+  if (!isFinite(pay) || Math.abs(oddsNum(odds)) < 100) return {odds, ev: null, tier: "none"};
+  const ev = (pct / 100 * (pay + 1) - 1) * 100;
+  return {odds, ev, tier: ev > 25 ? "big" : ev >= 5 ? "play" : ev >= 0 ? "watch" : "none"};
+}
+const tzTag = t => `<span class="vt ${t === "play" ? "play" : t === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[t]}</span>`;
+function tzLog(legs, pct, size) {
+  const c = tzCall(pct, size);
+  if (c.tier !== "play" && c.tier !== "watch") return "";
+  return `<span class="stake">${stakeTxt(pct, c.odds)}</span>` + logBtn({kind: "teaser", game_id: legs[0].game_id, side: "", line: null, odds: c.odds, model_pct: pct,
+    legs: legs.map(L => ({kind: L.kind, game_id: L.game_id, team: L.team, side: L.kind === "spread" ? L.team : L.side, line: L.line, text: L.label})),
+    desc: `${size}-team ${D.teasers.points}-point teaser`, sub: legs.map(L => L.label).join(" + ")});
+}
+function teaserHTML() {
+  const Z = D.teasers; if (!Z || !Z.legs || !Z.legs.length) return "";
+  const now = Date.now();
+  const legs = Z.legs.filter(L => !L.kickoff || new Date(L.kickoff).getTime() > now);
+  if (!legs.length) return "";
+  const be2 = Z.breakeven["2"], H = Z.history || {}, W = H.wong || {};
+  const recent = Object.entries(H.wong_by_season || {}).filter(([y]) => +y >= new Date().getFullYear() - 3 && +y < new Date().getFullYear());
+  const rw = recent.reduce((a, [, x]) => [a[0] + x.w, a[1] + x.n], [0, 0]);
+  const card = (b) => { const c = tzCall(b.p, b.size);
+    return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Best ${b.size}-team teaser</b><span>${Z.points} points, legs from different games</span></div>
+      <div style="display:grid;gap:4px;margin:8px 0 2px">${b.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}</span> <span class="dim">${n(L.p, 0)}%</span>${L.wong ? ` <span class="tag">3 and 7</span>` : ""}</div>`).join("")}</div>
+      <div class="t-meta">All legs hit <b>${n(b.p)}%</b>. At ${esc(c.odds)}: ${c.ev == null ? "enter a price" : `expected return <b>${sgn(c.ev)}%</b>`}</div>
+      <div class="t-actions">${tzTag(c.tier)}${tzLog(b.legs, b.p, b.size)}</div></div>
+      <div class="t-side"><div class="t-gap">${esc(tzAm(b.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
+  const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now))[0]).filter(Boolean);
+  // your own teaser
+  const sel = TZS.sel.map(k => legs.find(L => tzKey(L) === k)).filter(Boolean);
+  let mine = `<div class="verdict">Tap up to 4 legs in the table, one per game, to price your own teaser.</div>`;
+  if (sel.length >= 2) {
+    const p = sel.reduce((a, L) => a * L.p / 100, 1) * 100, size = sel.length, c = TZS.price[size] != null || Z.prices[size] != null ? tzCall(p, size) : {odds: null, ev: null, tier: "none"};
+    mine = `<div class="verdict ${c.tier === "play" ? "play" : ""}">${tzTag(c.tier)}<b>${sel.map(L => esc(L.label)).join(" + ")}</b><span>All hit ${n(p)}%, fair ${tzAm(p / 100)}.${c.ev != null ? ` At ${esc(c.odds)}: ${sgn(c.ev)}% expected return.` : ` Enter your ${size}-team price above.`}</span>${tzLog(sel, p, size)}</div>`;
+  }
+  const shown = TZS.all ? legs : legs.slice(0, 12);
+  const rows = shown.map(L => { const k = tzKey(L), on = TZS.sel.includes(k);
+    return `<tr class="p" data-tz="${esc(k)}" aria-pressed="${on}"${on ? ` style="background:var(--gold-soft)"` : ""}><td><b>${esc(L.label)}</b> <span class="pos">was ${esc(L.was)}</span>${L.wong ? ` <span class="tag">3 and 7</span>` : ""}<span class="pos" style="display:block;margin:2px 0 0">${esc(L.matchup)}, ${esc(kickoff(L.kickoff))}</span></td>
+      <td class="${L.p >= be2 ? "gold" : ""}" style="font-weight:600">${n(L.p)}%</td><td>${n(L.p_before)}%</td><td>${L.push ? n(L.push) + "%" : "–"}</td><td>${on ? "✓" : "+"}</td></tr>`; }).join("");
+  const pin = size => `<span class="fld"><label for="tzP${size}">${size}-team price</label><input id="tzP${size}" class="odds" inputmode="decimal" value="${esc(tzPrice(size))}"></span>`;
+  return `<div class="sec-head"><h2>${Z.points}-point teasers</h2><span class="aside">Model only, no extra odds calls</span></div>
+    <p class="sub">Every spread and total moved ${Z.points} points your way, priced from real NFL final scores centered on the model's number, so the pile-ups on 3 and 7 are built in. <b>3 and 7</b> marks classic teaser spots: favorites of 7.5 to 8.5 moved under 3, and underdogs of 1.5 to 3 moved past 7. A 2-team teaser at ${esc(String(Z.prices["2"]))} needs each leg to hit about <b>${n(be2)}%</b>.</p>
+    <div class="strip">
+      <div class="st"><strong>${n(be2)}%</strong><span>Per-leg chance needed, 2 teams at ${esc(String(Z.prices["2"]))}</span></div>
+      <div class="st"><strong>${n(W.pct)}%</strong><span>3-and-7 legs since ${H.since}, ${W.w}–${W.n - W.w} at the closing line</span></div>
+      <div class="st"><strong>${rw[1] ? n(100 * rw[0] / rw[1]) + "%" : "–"}</strong><span>Same legs, last ${recent.length} seasons. Books have caught up</span></div>
+      <div class="st"><strong>${n(H.all?.pct)}%</strong><span>Every ${Z.points}-point side since ${H.since}</span></div></div>
+    <div class="checker" style="margin:16px 0 12px">${pin(2)}${pin(3)}<span class="dim">Your book's teaser prices. Saved on this device.</span></div>
+    ${best.length ? `<div class="tickets">${best.map(card).join("")}</div>` : ""}
+    <h3>Every teaser leg</h3>${mine}
+    <div class="tablewrap" style="margin-top:10px"><table class="tztable"><thead><tr><th>Leg</th><th>Chance now</th><th>Before teasing</th><th>Push</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${legs.length > 12 ? `<button class="more" id="tzAll">${TZS.all ? "Show top 12" : `Show all ${legs.length} legs`}</button>` : ""}
+    <p class="note">Orange chances clear the 2-team break-even. Pushes count as losses in every chance here, so they lean safe. The model picks its best legs from its own numbers, which flatters them a little, so treat edges under 5% as a coin flip with the book. Check the Record tab to see how the model's teasers actually do.</p>`;
+}
+function bindTeasers() {
+  document.querySelectorAll("[data-tz]").forEach(r => r.onclick = () => {
+    const k = r.dataset.tz, gid = k.split("|")[0], i = TZS.sel.indexOf(k);
+    if (i >= 0) TZS.sel.splice(i, 1);
+    else { TZS.sel = TZS.sel.filter(x => x.split("|")[0] !== gid); if (TZS.sel.length < 4) TZS.sel.push(k); }
+    renderParlays(); });
+  const a = $("#tzAll"); if (a) a.onclick = () => { TZS.all = !TZS.all; renderParlays(); };
+  [2, 3].forEach(s => { const el = $("#tzP" + s); if (el) el.onchange = e => { TZS.price[s] = e.target.value.trim(); try { localStorage.setItem("board.tzprice", JSON.stringify(TZS.price)); } catch (er) {} renderParlays(); }; });
+}
 function altCardsHTML(games) {
   return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, fair odds +100 to +125</span></div>
     <p class="sub">The model builds one parlay per game from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Each leg stays within a normal alt range of the book's main line (25 yards for receiving and rushing, 50 for passing, 2 catches), or the model's middle number when the book hasn't posted yet. Odds shown are fair odds. Your book will usually price these shorter, so tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
@@ -1583,6 +1661,7 @@ function altCardsHTML(games) {
         <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`;
 }
 function bindParlays() {
+  bindTeasers();
   document.querySelectorAll("[data-altgo]").forEach(b => b.onclick = () => {
     const g = (D.games || []).find(x => x.game_id === b.dataset.altgo); if (!g || !g.alt_parlay) return;
     PX.form = null; PX.odds = "";
@@ -1763,6 +1842,13 @@ function trackingHTML() {
       <div class="st"><strong>${n(A.legs_actual)}%</strong><span>Single legs hit (model said ${n(A.legs_model)}%, ${A.legs_n} legs)</span></div></div>
       <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Week</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${(A.recent || []).map(r =>
         `<tr><td>${r.week}</td><td>${esc(r.game)}</td><td>${r.legs_hit} of ${r.legs}</td><td><span class="res ${r.hit ? "W" : "L"}">${r.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
+  const TT = T.teasers;
+  if (TT && TT.legs_n) h += `<h3>Model teasers</h3><div class="strip">
+      <div class="st"><strong>${TT.best2.hits}–${TT.best2.n - TT.best2.hits}</strong><span>Best 2-team teaser each week, ${sgn(TT.best2.units, 2)}u at ${esc(String(D.teasers?.prices?.["2"] ?? -120))}</span></div>
+      <div class="st"><strong>${n(TT.legs_actual)}%</strong><span>All teaser legs hit (model said ${n(TT.legs_model)}%, ${TT.legs_n} legs)</span></div>
+      <div class="st"><strong>${TT.wong_actual == null ? "–" : n(TT.wong_actual) + "%"}</strong><span>3-and-7 legs hit this season (${TT.wong_n})</span></div></div>
+      ${(TT.best2.recent || []).length ? `<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Week</th><th>Teaser</th><th>Model chance</th><th>Result</th></tr></thead><tbody>${TT.best2.recent.map(r =>
+        `<tr><td>${r.week}</td><td>${esc(r.legs.join(" + "))}</td><td>${n(r.p)}%</td><td><span class="res ${r.hit ? "W" : "L"}">${r.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>` : ""}`;
   const C = Object.entries(T.combos || {});
   if (C.length) { const ct = T.combo_total || {};
     h += `<h3>Parlay combos</h3><p class="sub">The model locks a standard set of correlated 2-leg parlays for every game at kickoff. If real hit rates land near "Model said" instead of "If unrelated," the correlation engine is earning its keep.</p>

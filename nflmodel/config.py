@@ -210,3 +210,8 @@ ALT_STEP = {"pass_yds": 10, "rush_yds": 5, "rec_yds": 5, "rec": 1}       # alt l
 ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2}   # how far below the book's main line books go
 ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5}  # skip players books rarely post
 ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5}  # lowest alt line books offer
+
+# 6-point teasers (model only, no extra odds calls)
+TEASER_POINTS = 6
+TEASER_PRICES = {2: -120, 3: 160}          # common book prices; the dashboard lets you enter yours
+TEASER_HIST_SINCE = 2018

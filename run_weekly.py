@@ -18,6 +18,7 @@ import pandas as pd
 from nflmodel import config as C
 from nflmodel import data as D
 from nflmodel.ratings import build_context, ratings_table
+from nflmodel import teasers as TZ
 from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulate, KeyNumbers,
                             fit_win_sigma, win_prob, TeamTotals)
 from nflmodel import elo, stack
@@ -270,6 +271,10 @@ def build_games(bundle, season, week, now):
         game["h1"] = {"margin": fnum(h1m), "total": fnum(h1t), "line": line_text(h, h1m),
                       "sd_margin": C.H1_MARGIN_SD, "sd_total": C.H1_TOTAL_SD}
         game["picks"] = P.build(game, game["ml_home"], game["ml_away"])
+        try:
+            game["teaser_legs"] = TZ.game_legs(game, keynum)
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"teaser legs skipped: {e}")
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],
                   proj_home=ph, proj_away=pa, margin=margin)
@@ -804,6 +809,15 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         results = tracker.build_results(bundle.pbp, bundle.schedules, season)
         (OUT / "results.json").write_text(json.dumps(clean_json(results), separators=(",", ":"), allow_nan=False))
         res["tracking"] = clean_json(tracker.model_tracking(HIST, season, results))
+        by_week, kn = {}, KeyNumbers(bundle.schedules)
+        for f in sorted(HIST.glob(f"{season}_week*.json")):
+            d = json.loads(f.read_text())
+            gs = d.get("games", [])
+            for g in gs:                       # weeks saved before teasers existed
+                if "teaser_legs" not in g and g.get("margin") is not None:
+                    g["teaser_legs"] = TZ.game_legs(g, kn)
+            by_week[int(d.get("week") or f.stem.split("week")[-1])] = gs
+        res["tracking"]["teasers"] = clean_json(TZ.tracking(by_week, results.get("games") or {}))
     except Exception as e:  # noqa: BLE001
         log.warning(f"results / tracking skipped: {e}")
     return res
@@ -858,6 +872,10 @@ def main():
     pr = payload.get("prop_record") or {}
     ab = model_info.get("anchored_backtest")
     payload["plays"] = build_plays(all_games, props, model_info)
+    try:
+        payload["teasers"] = clean_json(TZ.board(all_games, bundle.schedules))
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"teaser board skipped: {e}")
     payload["plays_record"] = {"spreads": live["ats_plays"], "totals": live["totals_plays"],
                                "props": pr.get("plays") if isinstance(pr, dict) else None}
     payload["plays_rules"] = {
