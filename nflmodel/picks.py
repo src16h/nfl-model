@@ -56,39 +56,51 @@ def total_pick(edge, market_total, over_prob=None):
             "edge": round(abs(edge), 1), "edge_text": f"{abs(edge):.1f}"}
 
 
-def moneyline_pick(home, away, win_prob_home, ml_home=None, ml_away=None):
-    """win_prob_home is a percent (0-100). With book odds, pick the side where the model's
-    win chance beats the book's fair (no-cut) win chance by the most. Without odds,
-    pick the team the model expects to win."""
+def _curve(margin, sigma):
+    """Win chance from a home margin (same curve the model uses for win chance)."""
+    return 0.5 * (1 + math.erf(margin / (sigma * math.sqrt(2))))
+
+
+def moneyline_pick(home, away, win_prob_home, ml_home=None, ml_away=None,
+                   edge_spread=None, market_spread=None, sigma=11.4, spread_side=None):
+    """Model-only moneyline. The edge is the model's own disagreement with Vegas:
+    win chance from the model's margin minus win chance the Vegas spread implies.
+    Always the same team as the spread pick. Book odds are shown as the price only."""
+    if _ok(edge_spread) and _ok(market_spread):
+        p_model = _curve(market_spread + edge_spread, sigma)      # home win chance, model
+        p_vegas = _curve(market_spread, sigma)                    # home win chance, Vegas spread
+        take_home = (spread_side == home) if spread_side else (p_model >= p_vegas)
+        team = home if take_home else away
+        mp = p_model if take_home else 1 - p_model
+        vp = p_vegas if take_home else 1 - p_vegas
+        edge = max(mp - vp, 0.0) * 100
+        odds = (ml_home if take_home else ml_away) if _ok(ml_home) and _ok(ml_away) else None
+        return {"pick": f"{team} {_fmt_odds(odds)}" if odds else f"{team} ML", "side": team,
+                "odds": _fmt_odds(odds) if odds else None,
+                "edge": round(edge, 1), "edge_text": f"{edge:.1f}%",
+                "model_pct": round(mp * 100), "vegas_pct": round(vp * 100)}
     if not _ok(win_prob_home):
         return None
-    p_home = win_prob_home / 100
-    if _ok(ml_home) and _ok(ml_away) and ml_home != 0 and ml_away != 0:
-        ih, ia = implied(ml_home), implied(ml_away)
-        fair_home = ih / (ih + ia)                     # strip the book's cut
-        e_home = p_home - fair_home
-        take_home = e_home >= 0
-        team, odds = (home, ml_home) if take_home else (away, ml_away)
-        edge = abs(e_home) * 100
-        return {"pick": f"{team} {_fmt_odds(odds)}", "side": team, "odds": _fmt_odds(odds),
-                "edge": round(edge, 1), "edge_text": f"{edge:.1f}%",
-                "model_pct": round((p_home if take_home else 1 - p_home) * 100),
-                "book_pct": round((fair_home if take_home else 1 - fair_home) * 100)}
+    p_home = win_prob_home / 100                                   # no Vegas line yet
     take_home = p_home >= 0.5
     team = home if take_home else away
     pct = round((p_home if take_home else 1 - p_home) * 100)
     return {"pick": f"{team} ML", "side": team, "odds": None, "edge": None,
-            "edge_text": f"{pct}% to win", "model_pct": pct, "book_pct": None}
+            "edge_text": f"{pct}% to win", "model_pct": pct, "vegas_pct": None}
 
 
 def build(g, ml_home=None, ml_away=None):
     """g is a game record as written to latest.json."""
+    sp = spread_pick(g["home"], g["away"], g.get("edge_spread"), g.get("market_spread"),
+                     g.get("cover_prob_home"))
     return {
-        "spread": spread_pick(g["home"], g["away"], g.get("edge_spread"), g.get("market_spread"),
-                              g.get("cover_prob_home")),
+        "spread": sp,
         "total": total_pick(g.get("edge_total"), g.get("market_total"), g.get("over_prob")),
-        "moneyline": moneyline_pick(g["home"], g["away"], g.get("win_prob_home"), ml_home, ml_away),
+        "moneyline": moneyline_pick(g["home"], g["away"], g.get("win_prob_home"), ml_home, ml_away,
+                                    g.get("edge_spread"), g.get("market_spread"),
+                                    g.get("win_sigma") or 11.4, sp["side"] if sp else None),
     }
+
 
 
 # ---------------------------------------------------------------------
@@ -133,7 +145,7 @@ def grade_one(g, home_score, away_score):
 
 EDGE_BINS = {"spread": [(0, 1, "Under 1 pt"), (1, 2, "1 to 2 pts"), (2, 99, "2+ pts")],
              "total": [(0, 1, "Under 1 pt"), (1, 2, "1 to 2 pts"), (2, 99, "2+ pts")],
-             "moneyline": [(0, 2, "Under 2%"), (2, 4, "2 to 4%"), (4, 999, "4%+")]}
+             "moneyline": [(0, 1, "Under 1%"), (1, 3, "1 to 3%"), (3, 999, "3%+")]}
 
 
 def summarize(graded):

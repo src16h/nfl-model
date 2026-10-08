@@ -460,7 +460,7 @@ function gameRow(g) {
     ${picksRow(g)}
   </summary><div class="g-body">
     <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
-    ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows model win chance minus the book's fair win chance${g.picks.moneyline && g.picks.moneyline.book_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs book ${g.picks.moneyline.book_pct}%)` : ""}. Gold means it is also a Play.</div>` : ""}
+    ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows the model's win chance minus the win chance the Vegas spread implies${g.picks.moneyline && g.picks.moneyline.vegas_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs Vegas ${g.picks.moneyline.vegas_pct}%)` : ""}, on the same team as the spread pick. Odds are the price only. Gold means it is also a Play.</div>` : ""}
     ${why}
     ${(g.notes || []).map(x => `<div>${esc(x)}</div>`).join("")}
     ${inj.length ? `<div class="inj"><b>Key injuries:</b> ${esc(inj.join(", "))}</div>` : ""}

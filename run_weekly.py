@@ -259,6 +259,7 @@ def build_games(bundle, season, week, now):
             ml_h = pd.to_numeric(g.get("home_moneyline"), errors="coerce")
             ml_a = pd.to_numeric(g.get("away_moneyline"), errors="coerce")
         game["ml_home"], game["ml_away"] = fnum(ml_h, 0), fnum(ml_a, 0)
+        game["win_sigma"] = round(win_sigma, 2)
         game["picks"] = P.build(game, game["ml_home"], game["ml_away"])
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],
@@ -475,8 +476,8 @@ def main():
             g["state"] = "final" if pd.notna(r["home_score"]) else "locked"
             if pd.notna(r["home_score"]):
                 g["final_home"], g["final_away"] = int(r["home_score"]), int(r["away_score"])
-    for g in all_games:                                  # older saved games: add picks from stored numbers
-        if "picks" not in g:
+    for g in all_games:                                  # older saved games: add or refresh picks
+        if "picks" not in g or "vegas_pct" not in ((g["picks"] or {}).get("moneyline") or {"vegas_pct": 0}):
             g["picks"] = P.build(g, g.get("ml_home"), g.get("ml_away"))
     all_games.sort(key=lambda g: g.get("kickoff") or "")
     hpath.write_text(json.dumps(clean_json({"season": season, "week": week, "games": all_games,
