@@ -24,13 +24,16 @@ def _norm_factor(x):
 
 
 def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
-                  scr_car, scr_yds, seed=0, pass_att=None) -> dict:
+                  scr_car, scr_yds, seed=0, pass_att=None, shocks=None) -> dict:
     """pool: one row per non-QB-scramble player with mean rec, rec_yds, rec_td,
     carries, rush_yds, rush_td. Returns pid -> {stat: array}."""
     N = C.PLAYER_SIMS
     rng = np.random.default_rng(seed)
-    s1 = rng.standard_normal(N)
-    s2 = -0.35 * s1 + np.sqrt(1 - 0.35 ** 2) * rng.standard_normal(N)
+    if shocks is not None:                    # passing / rushing scripts shared with the whole game
+        s1, s2 = shocks
+    else:
+        s1 = rng.standard_normal(N)
+        s2 = -0.35 * s1 + np.sqrt(1 - 0.35 ** 2) * rng.standard_normal(N)
     Fp = np.exp(0.24 * s1 - 0.24 ** 2 / 2)
     Fr = np.exp(0.30 * s2 - 0.30 ** 2 / 2)
     pids = list(pool["pid"])
@@ -250,3 +253,45 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
     pairs = [x for x in pairs if (x["lift"] or 0) >= 3]
     pairs.sort(key=lambda x: -(x["lift"] or 0))
     return {"props": out, "pairs": pairs[:10]}
+
+
+
+# ---------------------------------------------------------------------
+# Same-game parlays: shared game shocks and team points
+# ---------------------------------------------------------------------
+def _unit(x):
+    x = x - x.mean()
+    return x / max(x.std(), 1e-9)
+
+
+def game_shocks(seed, N=None):
+    """Passing and rushing scripts for both teams from one simulated game:
+    shared pace, each team's efficiency, and playing from behind."""
+    N = N or C.PLAYER_SIMS
+    r = np.random.default_rng(seed)
+    g, qh, qa, e1h, e1a, n2h, n2a, nh, na = r.standard_normal((9, N))
+    rr = C.SGP_PASS_RUSH
+    e2h = rr * e1h + np.sqrt(1 - rr * rr) * n2h
+    e2a = rr * e1a + np.sqrt(1 - rr * rr) * n2a
+    s = {"home": (_unit(C.SGP_PACE_PASS * g + C.SGP_OWN_PASS * qh + C.SGP_OPP_PASS * qa + e1h),
+                  _unit(C.SGP_PACE_RUSH * g + C.SGP_OWN_RUSH * qh - C.SGP_OPP_RUSH * qa + e2h)),
+         "away": (_unit(C.SGP_PACE_PASS * g + C.SGP_OWN_PASS * qa + C.SGP_OPP_PASS * qh + e1a),
+                  _unit(C.SGP_PACE_RUSH * g + C.SGP_OWN_RUSH * qa - C.SGP_OPP_RUSH * qh + e2a))}
+    return s, {"home": nh, "away": na}
+
+
+def team_points(team_sims: dict, qb_pid, dist: dict, noise):
+    """Team points for each simulated game: a blend of touchdowns, passing and rushing
+    yards (weights tuned to real games), mapped onto the team's real-score distribution
+    so key numbers like 17, 20 and 24 survive."""
+    if not team_sims or not dist or not dist.get("ge"):
+        return None
+    td = sum(v["rec_td"] + v["rush_td"] for v in team_sims.values())
+    ry = sum(v["rush_yds"] for v in team_sims.values())
+    py = team_sims[qb_pid]["pass_yds"] if qb_pid in team_sims and "pass_yds" in team_sims[qb_pid] else \
+        sum(v["rec_yds"] for v in team_sims.values())
+    score = C.SGP_PTS_TD * _unit(td) + C.SGP_PTS_PASS * _unit(py) + C.SGP_PTS_RUSH * _unit(ry) + noise
+    ge = np.asarray(dist["ge"], float) / 100                      # P(points >= k)
+    cdf = 1 - np.append(ge[1:], 0.0)                              # P(points <= k)
+    u = (np.argsort(np.argsort(score)) + 0.5) / len(score)
+    return np.searchsorted(cdf, u).astype(float)

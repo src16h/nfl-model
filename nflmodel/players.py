@@ -48,7 +48,7 @@ def _pos_of(pid, roster, eff_row):
     return pos, name, None
 
 
-def project_team(team, opp, game, side, ctx, u, roster, inj, qb) -> list[dict]:
+def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None) -> list[dict]:
     """side = 'home' or 'away'. game holds the final projected points and plays."""
     pts = game[f"proj_{side}"]
     margin = game["margin"] if side == "home" else -game["margin"]
@@ -143,7 +143,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb) -> list[dict]:
     if len(df):
         seed = zlib.crc32(f"{game['game_id']}{team}".encode())
         sims = simulate_team(df, qb_pid, pass_tds, rush_tds, pass_att * int_rate,
-                             scrambles, scrambles * scr_ypa, seed=seed, pass_att=pass_att)
+                             scrambles, scrambles * scr_ypa, seed=seed, pass_att=pass_att, shocks=shocks)
         # simulated passing volume follows receivers; keep the mean consistent
         team_cmp = float(df["rec"].sum())
 

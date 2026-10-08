@@ -324,6 +324,20 @@ dialog.slip::backdrop{background:rgba(20,10,12,.45)}
 .takeaways{margin:12px 0 0;padding:14px 18px 14px 34px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--garnet);border-radius:var(--r-lg);display:grid;gap:6px;font-size:14px;max-width:none}
 .takeaways li::marker{color:var(--garnet-text)}
 
+/* ---------- parlays ---------- */
+.legform{display:flex;flex-wrap:wrap;gap:8px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:12px 14px}
+.legform label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.legform select,.legform input{font:600 14px var(--sans);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px;min-width:0}
+.legform input{width:84px;font-family:var(--cond);font-size:15px}
+.legs{display:grid;gap:6px;margin:12px 0}
+.leg{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px}
+.leg .num{font:700 13px var(--cond);color:var(--muted)}
+.leg b{font:700 16px var(--cond)}
+.leg .pc{font:600 15px var(--cond)}
+.pmath{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
+.pmath .st strong.gold{color:var(--gold-text)}
+.warnline{font-size:13px;color:var(--loss);margin-top:8px}
+
 /* ---------- stat strip ---------- */
 .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
 .st{padding:14px 18px;border-left:1px solid var(--line-soft)}
@@ -372,6 +386,7 @@ tr.small td{color:var(--faint)}
       <button role="tab" data-tab="games" aria-selected="true">Games</button>
       <button role="tab" data-tab="props" aria-selected="false">Props</button>
       <button role="tab" data-tab="players" aria-selected="false">Players</button>
+      <button role="tab" data-tab="parlays" aria-selected="false">Parlays</button>
       <button role="tab" data-tab="teams" aria-selected="false">Teams</button>
       <button role="tab" data-tab="record" aria-selected="false">Record</button>
     </nav>
@@ -392,6 +407,7 @@ tr.small td{color:var(--faint)}
     </div>
     <div class="tablewrap"><table id="ptable"></table></div>
   </section>
+  <section id="parlays" role="tabpanel" hidden></section>
   <section id="teams" role="tabpanel" hidden>
     <h2>Power ratings</h2>
     <p class="sub">Points per game better (+) or worse (−) than an average team, adjusted for opponents. Net is offense plus defense.</p>
@@ -463,7 +479,7 @@ function sizing(pPct, odds) {                              // fractional Kelly, 
   return {units: Math.round(dollars / Math.max(SET.unit, 0.01) * 10) / 10, dollars: Math.round(dollars), pct};
 }
 const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})` : `Suggested bet <b>none</b>, no edge at this price`; };
-const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side].join("|");
+const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side, b.legs ? JSON.stringify(b.legs.map(L => [L.kind, L.pid, L.stat, L.team, L.side, L.line])) : ""].join("|");
 const hasBet = b => BETS.some(x => betKey(x) === betKey(b) && x.status !== "deleted");
 const PENDING = {};
 function logBtn(b) {                                      // b: bet template with kind, game_id, side, line, odds, model_pct, desc
@@ -496,9 +512,23 @@ $("#slipSave").onclick = () => {
   BETS.push({...b, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), line, odds, units, placed: new Date().toISOString(), status: "open"});
   lsSet(LS_BETS, BETS); $("#slip").close(); render(); };
 
+function gradeLeg(L, gid, g) {
+  if (L.kind === "spread") return gradeBet({kind: "spread", game_id: gid, side: L.team, line: L.line, odds: "-110", units: 1}).res;
+  if (L.kind === "total") return gradeBet({kind: "total", game_id: gid, side: L.side, line: L.line, odds: "-110", units: 1}).res;
+  if (L.kind === "ml") return gradeBet({kind: "ml", game_id: gid, side: L.team, odds: "-110", units: 1}).res;
+  if (L.kind === "tt") return gradeBet({kind: "prop", stat: "team_total", pid: "TEAM_" + L.team, game_id: gid, side: L.side, line: L.line, odds: "-110", units: 1}).res;
+  const st = L.stat === "td1" || L.stat === "td2" ? "tds" : L.stat;
+  return gradeBet({kind: "prop", game_id: gid, pid: L.pid, stat: st, side: L.side, line: L.line, odds: "-110", units: 1}).res;
+}
 function gradeBet(b) {                                   // returns {res: W|L|P|V|O, units, actual}
   const g = RES?.games?.[b.game_id];
   if (!g) return {res: "O"};
+  if (b.kind === "parlay") {
+    const rs = (b.legs || []).map(L => gradeLeg(L, b.game_id, g));
+    if (rs.includes("O")) return {res: "O"};
+    const res = rs.includes("L") ? "L" : rs.every(r => r === "W") ? "W" : "P";
+    return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0, actual: rs.join(" ")};
+  }
   const homeM = g.h - g.a, tot = g.h + g.a;
   const wl = r => r > 0 ? "W" : r < 0 ? "L" : "P";
   let res, actual;
@@ -555,7 +585,7 @@ function freshness() {
 function render() {
   $("#sub").textContent = D.week ? `Week ${D.week}, ${D.season}` : `${D.season} season`;
   if (!D.games) { $("#games").innerHTML = `<div class="empty">${esc(D.message || "No games to show.")}</div>`; renderRecord(); return; }
-  renderGames(); renderProps(); initPlayers(); renderPlayers(); renderTeams(); renderRecord();
+  renderGames(); renderProps(); renderParlays(); initPlayers(); renderPlayers(); renderTeams(); renderRecord();
 }
 
 /* ---------------- Games ---------------- */
@@ -992,6 +1022,158 @@ function bindFirstHalf() {
     tr.onclick = t; tr.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t(); } }; });
 }
 
+/* ---------------- Parlays (same-game) ---------------- */
+const PX = {gid: "", data: null, legs: [], odds: "", loading: false, err: ""};
+const SGP_STAT = {pass_yds: "Passing yards", pass_cmp: "Completions", pass_att: "Pass attempts", rush_yds: "Rushing yards", carries: "Rush attempts",
+  rec: "Receptions", rec_yds: "Receiving yards", rush_rec_yds: "Rush + rec yards", td1: "Anytime TD", td2: "2+ TDs"};
+function decode(s) {
+  const [t, b] = s.split(":"), bin = atob(b), u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return t === "u1" ? Float64Array.from(u) : Float64Array.from(new Int16Array(u.buffer));
+}
+function loadSGP(gid) {
+  PX.gid = gid; PX.data = null; PX.legs = []; PX.err = ""; PX.loading = true; renderParlays();
+  fetch(`data/sgp/${gid}.json?ts=${Date.now()}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then(j => {
+    const d = {home: j.home, away: j.away, n: j.n, ph: decode(j.pts_home), pa: decode(j.pts_away), players: {}};
+    for (const [pid, v] of Object.entries(j.players)) { const st = {}; for (const [k, s2] of Object.entries(v.s)) st[k] = decode(s2); d.players[pid] = {...v, s: st}; }
+    PX.data = d; PX.loading = false; renderParlays();
+  }).catch(() => { PX.loading = false; PX.err = "Simulated games for this matchup aren't available yet. They're published with each model run."; renderParlays(); });
+}
+function legHits(L) {                                // boolean per simulated game
+  const d = PX.data, n = d.n, out = new Uint8Array(n);
+  for (let i = 0; i < n; i++) {
+    const h = d.ph[i], a = d.pa[i];
+    let ok = false;
+    if (L.kind === "spread") { const m = L.team === d.home ? h - a : a - h; ok = m + L.line > 0; }
+    else if (L.kind === "total") ok = L.side === "Over" ? h + a > L.line : h + a < L.line;
+    else if (L.kind === "ml") ok = L.team === d.home ? h > a : a > h;
+    else if (L.kind === "tt") { const v = L.team === d.home ? h : a; ok = L.side === "Over" ? v > L.line : v < L.line; }
+    else { const arr = d.players[L.pid].s[L.stat === "td1" || L.stat === "td2" ? "tds" : L.stat], v = arr[i]; ok = L.side === "Over" ? v > L.line : v < L.line; }
+    out[i] = ok ? 1 : 0;
+  }
+  return out;
+}
+const legText = L => {
+  const d = PX.data;
+  if (L.kind === "spread") return `${L.team} ${fmtLine(L.line)}`;
+  if (L.kind === "total") return `Game ${L.side.toLowerCase()} ${L.line}`;
+  if (L.kind === "ml") return `${L.team} to win`;
+  if (L.kind === "tt") return `${L.team} team total ${L.side.toLowerCase()} ${L.line}`;
+  const p = d.players[L.pid];
+  if (L.stat === "td1") return `${p.name} anytime TD`;
+  if (L.stat === "td2") return `${p.name} 2+ TDs`;
+  return `${p.name} ${L.side.toLowerCase()} ${L.line} ${SGP_STAT[L.stat].toLowerCase()}`;
+};
+function parlayMath() {
+  const d = PX.data, legs = PX.legs; if (!d || !legs.length) return null;
+  const hits = legs.map(legHits), n = d.n;
+  let all = 0; for (let i = 0; i < n; i++) { let ok = 1; for (const h of hits) ok &= h[i]; all += ok; }
+  const single = hits.map(h => h.reduce((a, v) => a + v, 0) / n);
+  const p = all / n, indep = single.reduce((a, v) => a * v, 1);
+  return {p: p * 100, indep: indep * 100, single: single.map(v => v * 100), se: Math.sqrt(p * (1 - p) / n) * 100, lift: indep > 0 ? (p / indep - 1) * 100 : null};
+}
+function parlayWarn(legs) {
+  const d = PX.data, w = [];
+  const qbOf = t => Object.entries(d.players).find(([, v]) => v.team === t && v.pos === "QB")?.[0];
+  for (const L of legs) {
+    if (L.kind === "player" && L.stat === "pass_yds" && L.side === "Over") {
+      const t = d.players[L.pid].team;
+      if (legs.some(M => (M.kind === "spread" || M.kind === "ml") && M.team === t)) w.push("QB passing yards plus his team covering or winning: the model links these more than real games do (0.17 vs 0.06), so this parlay's chance is likely a bit high.");
+      if (legs.some(M => M.kind === "player" && M.stat === "pass_yds" && M.pid !== L.pid && d.players[M.pid].team !== t)) w.push("Both QBs over: the model links the two passing games more than real games do (0.20 vs 0.06), so this chance is likely a bit high.");
+      if (legs.some(M => M.kind === "tt" && M.team !== t && M.side === "Over")) w.push("QB yards plus the other team scoring: real games link these more than the model (0.21 vs 0.10), so the model is conservative here.");
+    }
+  }
+  return [...new Set(w)];
+}
+function addLegForm() {
+  const d = PX.data, g = (D.games || []).find(x => x.game_id === PX.gid) || {};
+  const plist = Object.entries(d.players).sort((a, b) => a[1].team.localeCompare(b[1].team) || ["QB", "RB", "WR", "TE"].indexOf(a[1].pos) - ["QB", "RB", "WR", "TE"].indexOf(b[1].pos));
+  const k = PX.form = PX.form || {kind: "player"};
+  if (k.kind === "player" && (!k.pid || !d.players[k.pid])) k.pid = plist[0]?.[0];
+  const p = d.players[k.pid];
+  const stats = p ? Object.keys(p.s).filter(x => x !== "tds").concat(p.s.tds ? ["td1", "td2"] : []) : [];
+  if (k.kind === "player" && !stats.includes(k.stat)) k.stat = stats[0];
+  const fair = () => { if (k.kind !== "player" || !p) return null; if (k.stat === "td1") return 0.5; if (k.stat === "td2") return 1.5;
+    const a = Array.from(p.s[k.stat]).sort((x, y) => x - y); return Math.floor(a[Math.floor(a.length / 2)]) + 0.5; };
+  const defLine = k.kind === "spread" ? ((k.team || d.home) === g.home ? -(g.market_spread ?? 0) : (g.market_spread ?? 0)) : k.kind === "total" ? (g.market_total ?? 44.5)
+    : k.kind === "tt" ? (Math.floor((((k.team || d.home) === d.home ? g.proj_home : g.proj_away) ?? 21)) + 0.5) : fair();
+  const sel = (id, opts, val) => `<select id="${id}">${opts.map(([v, l]) => `<option value="${esc(v)}" ${String(val) === String(v) ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>`;
+  const teams = [[d.away, d.away], [d.home, d.home]];
+  let h = `<div class="legform"><label>Bet type${sel("lfKind", [["player", "Player prop"], ["spread", "Spread"], ["total", "Game total"], ["ml", "Moneyline"], ["tt", "Team total"]], k.kind)}</label>`;
+  if (k.kind === "player") {
+    h += `<label>Player${sel("lfPid", plist.map(([pid, v]) => [pid, `${v.name} (${v.team} ${v.pos})`]), k.pid)}</label>
+      <label>Stat${sel("lfStat", stats.map(x => [x, SGP_STAT[x]]), k.stat)}</label>`;
+    if (k.stat !== "td1" && k.stat !== "td2") h += `<label>Side${sel("lfSide", [["Over", "Over"], ["Under", "Under"]], k.side || "Over")}</label><label>Line<input id="lfLine" inputmode="decimal" value="${esc(k.line ?? defLine ?? "")}"></label>`;
+  } else {
+    if (k.kind !== "total") h += `<label>Team${sel("lfTeam", teams, k.team || d.home)}</label>`;
+    if (k.kind === "total" || k.kind === "tt") h += `<label>Side${sel("lfSide", [["Over", "Over"], ["Under", "Under"]], k.side || "Over")}</label>`;
+    if (k.kind !== "ml") h += `<label>Line<input id="lfLine" inputmode="decimal" value="${esc(k.line ?? defLine ?? "")}"></label>`;
+  }
+  return h + `<button class="btn primary" id="lfAdd">Add leg</button></div>`;
+}
+function renderParlays() {
+  const up = (D.games || []).filter(g => g.state === "upcoming");
+  let h = `<div class="sec-head" style="margin-top:26px"><h2>Same-game parlays</h2><span class="aside">${C_SGP_NOTE}</span></div>
+    <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
+    <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
+  if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
+  if (PX.loading) { $("#parlays").innerHTML = h + `<div class="empty">Loading simulated games…</div>`; bindParlays(); return; }
+  if (PX.err) { $("#parlays").innerHTML = h + `<div class="empty">${esc(PX.err)}</div>`; bindParlays(); return; }
+  h += addLegForm();
+  const M = parlayMath();
+  if (PX.legs.length) h += `<div class="legs">${PX.legs.map((L, i) => `<div class="leg"><span class="num">${i + 1}</span><b>${esc(legText(L))}</b><span class="pc">${n(M.single[i], 0)}%</span><button class="xbtn" data-rmleg="${i}" aria-label="Remove leg">×</button></div>`).join("")}</div>`;
+  else h += `<p class="sub" style="margin-top:12px">No legs yet. Add at least 2.</p>`;
+  if (M && PX.legs.length >= 2) {
+    const fair = fairOdds(M.p), odds = PX.odds;
+    h += `<div class="pmath">
+      <div class="st"><strong class="gold">${n(M.p, 1)}%</strong><span>True chance, all legs hit (give or take ${n(M.se * 2, 1)}%)</span></div>
+      <div class="st"><strong>${n(M.indep, 1)}%</strong><span>If the legs were unrelated</span></div>
+      <div class="st"><strong class="${M.lift >= 0 ? "up" : "down"}">${M.lift == null ? "–" : sgn(M.lift, 0) + "%"}</strong><span>${M.lift >= 0 ? "More likely together" : "Less likely together"}</span></div>
+      <div class="st"><strong>${fair}</strong><span>Fair parlay odds</span></div></div>`;
+    const warns = parlayWarn(PX.legs);
+    h += warns.map(w => `<p class="warnline">${esc(w)}</p>`).join("");
+    let verdict = `<div class="verdict">Enter your book's parlay odds to get the model's call.</div>`;
+    if (odds && Math.abs(oddsNum(odds)) >= 100) {
+      const pay = payout(odds), ev = (M.p / 100 * pay - (1 - M.p / 100)) * 100, bookP = 100 / (pay + 1);
+      const pLow = Math.max(M.p - M.se, 0), evLow = (pLow / 100 * pay - (1 - pLow / 100)) * 100;   // cautious end of the simulation noise
+      const tier = ev >= 30 ? "big" : evLow >= 5 ? "play" : evLow >= 0 ? "watch" : "none";
+      const tag = `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[tier]}</span>`;
+      const legsCopy = PX.legs.map(L => ({...L, text: legText(L)}));
+      verdict = `<div class="verdict ${tier === "play" ? "play" : ""}">${tag}<b>${esc(odds)}</b><span>Model ${n(M.p, 1)}% vs book ${n(bookP, 1)}%. Expected return ${sgn(ev)}% per bet.</span>
+        ${tier === "play" || tier === "watch" ? `<span class="stake">${stakeTxt(M.p, odds)}</span>${logBtn({kind: "parlay", game_id: PX.gid, side: "", line: null, odds, model_pct: M.p, legs: legsCopy,
+          desc: `${PX.legs.length}-leg parlay`, sub: legsCopy.map(x => x.text).join(" + ")})}` : ""}</div>`;
+    }
+    h += `<div class="checker" style="margin-top:14px"><span class="fld"><label for="pxOdds">Book's parlay odds</label><input id="pxOdds" class="odds" inputmode="decimal" value="${esc(odds)}" placeholder="+450"></span></div>${verdict}
+      <p class="note">Plays need an expected return of 5% to 30%, even at the cautious end of the simulation's noise. Books build in a bigger cut on parlays, so most parlays land at No play, and that's normal. Above 30% usually means the model is missing something.</p>`;
+  }
+  $("#parlays").innerHTML = h;
+  bindParlays();
+}
+const C_SGP_NOTE = "Both teams and the final score in one simulation";
+function bindParlays() {
+  const g = $("#pxGame"); if (g) g.onchange = e => { PX.form = null; if (e.target.value) loadSGP(e.target.value); else { PX.gid = ""; renderParlays(); } };
+  const k = PX.form;
+  const on = (id, f) => { const el = $("#" + id); if (el) el.onchange = e => { f(e.target.value); renderParlays(); }; };
+  on("lfKind", v => { PX.form = {kind: v}; });
+  on("lfPid", v => { k.pid = v; k.stat = null; k.line = null; });
+  on("lfStat", v => { k.stat = v; k.line = null; });
+  on("lfSide", v => { k.side = v; });
+  on("lfTeam", v => { k.team = v; k.line = null; });
+  const li = $("#lfLine"); if (li) li.oninput = e => { k.line = e.target.value; };
+  const add = $("#lfAdd"); if (add) add.onclick = () => {
+    const d = PX.data, lineEl = $("#lfLine"), line = lineEl ? +lineEl.value : null;
+    if (lineEl && !isFinite(line)) return;
+    const L = {kind: k.kind};
+    if (k.kind === "player") { Object.assign(L, {pid: k.pid, stat: k.stat}); if (k.stat === "td1" || k.stat === "td2") Object.assign(L, {side: "Over", line: k.stat === "td1" ? 0.5 : 1.5}); else Object.assign(L, {side: k.side || "Over", line}); }
+    else if (k.kind === "total") Object.assign(L, {side: k.side || "Over", line});
+    else if (k.kind === "ml") Object.assign(L, {team: k.team || d.home});
+    else Object.assign(L, {team: k.team || d.home, side: k.side || "Over", line});
+    if (PX.legs.length >= 6) return;
+    PX.legs.push(L); PX.form = {kind: k.kind}; renderParlays(); };
+  document.querySelectorAll("[data-rmleg]").forEach(b => b.onclick = () => { PX.legs.splice(+b.dataset.rmleg, 1); renderParlays(); });
+  const o = $("#pxOdds"); if (o) o.oninput = e => { PX.odds = e.target.value.trim(); const pos = e.target.selectionStart; renderParlays(); const no = $("#pxOdds"); no.focus(); no.setSelectionRange(pos, pos); };
+}
+
 /* ---------------- Players ---------------- */
 const PCOLS = [["name", "Player"], ["opp", "Opp"], ["pass_yds", "Pass yds"], ["pass_td", "Pass TD"], ["pass_int", "INT"],
   ["carries", "Carries"], ["rush_yds", "Rush yds"], ["targets", "Targets"], ["rec", "Rec"], ["rec_yds", "Rec yds"],
@@ -1064,7 +1246,7 @@ function myBetsHTML() {
   const w = done.filter(x => x.g.res === "W").length, l = done.filter(x => x.g.res === "L").length, p = done.filter(x => x.g.res === "P").length;
   const u = done.reduce((a, x) => a + x.g.units, 0), risked = done.filter(x => x.g.res !== "P").reduce((a, x) => a + x.b.units, 0);
   const clvs = graded.map(x => x.clv).filter(v => v != null);
-  const kindName = {spread: "Spread", total: "Total", ml: "Moneyline", prop: "Prop", h1spread: "1st half spread", h1total: "1st half total"};
+  const kindName = {spread: "Spread", total: "Total", ml: "Moneyline", prop: "Prop", h1spread: "1st half spread", h1total: "1st half total", parlay: "Parlay"};
   let h = `<div class="sec-head"><h2>My bets</h2><span class="aside">Saved on this device</span></div>
   <p class="sub">Tap <b>I bet this</b> on any pick or Play to log it. Bets grade themselves from final box scores, and spreads and totals also get scored against the closing line.</p>
   <div class="strip">

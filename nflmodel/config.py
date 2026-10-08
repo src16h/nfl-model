@@ -182,3 +182,20 @@ EXTRA_TOTAL_FEATS = ["cpoe_sum", "precip"]                         # better over
 EXTRA_ANCHOR_MARGIN_FEATS = []   # tested sr_diff, cpoe_diff, surface_switch: Vegas already prices them
 EXTRA_ANCHOR_TOTAL_FEATS = ["turf"]
 # Tested and left out (no gain): heat (both engines), sr_sum (hurt the anchored total)
+
+# ------------------------------------------------------------
+# v10: same-game parlays. One simulated game drives both teams' players and the
+# final score. Weights tuned so simulated correlations match 2022-25 games
+# (e.g. WR1 yds vs his QB 0.46, RB1 rush yds vs team margin 0.30, team TDs vs points 0.80).
+# ------------------------------------------------------------
+SGP_PACE_PASS = 0.199        # shared game pace -> both passing scripts
+SGP_PACE_RUSH = 0.197        # shared game pace -> both rushing scripts
+SGP_OWN_PASS = 0.514         # team's own efficiency -> its passing
+SGP_OPP_PASS = 0.302         # opponent's efficiency -> more passing (playing from behind)
+SGP_OWN_RUSH = 0.297         # own efficiency -> more rushing
+SGP_OPP_RUSH = 0.312         # opponent's efficiency -> less rushing
+SGP_PASS_RUSH = -0.35        # passing vs rushing for the same team (they share plays)
+SGP_PTS_TD = 1.465           # team points blend: touchdowns
+SGP_PTS_PASS = 0.484         #                    passing yards
+SGP_PTS_RUSH = 0.551         #                    rushing yards
+SGP_DRAWS = 1000             # simulated games published per matchup for the parlay helper

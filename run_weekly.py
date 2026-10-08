@@ -2,8 +2,10 @@
 Weekly run. GitHub does this automatically on a schedule.
 Output: docs/data/latest.json (the dashboard reads it) + a history file per week.
 """
+import base64
 import json
 import logging
+import zlib
 import os
 import sys
 from datetime import datetime, timezone
@@ -22,7 +24,7 @@ from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
-from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES, stat_label
+from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES, stat_label, game_shocks, team_points
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
 from nflmodel.util import before, clean_json
@@ -270,10 +272,17 @@ def build_games(bundle, season, week, now):
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],
                   proj_home=ph, proj_away=pa, margin=margin)
+        shocks, pnoise = game_shocks(zlib.crc32(f"sgp{g['game_id']}".encode()))
+        side_sims = {}
         for team, opp, side in ((h, a, "home"), (a, h, "away")):
-            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team])
+            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team], shocks=shocks[side])
             players += rws
             sims.update(sm)
+            side_sims[side] = ({pid: v for (gid, pid), v in sm.items()}, rws)
+        try:
+            write_sgp(game, side_sims, qbs, pnoise)
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"parlay draws skipped for {g['game_id']}: {str(e)[:120]}")
 
     teams_tbl = [{k: (fnum(v, 2) if isinstance(v, (float, np.floating)) else v) for k, v in t.items()}
                  for t in ratings_table(ctx)]
@@ -311,6 +320,66 @@ def build_games(bundle, season, week, now):
     model_info["reality"] = stack.reality(lean_rep)
     model_info["odds"] = odds["status"]
     return wk, games, players, teams_tbl, model_info, report, scheme.ok, props
+
+
+SGP_DIR = OUT / "sgp"
+SGP_STATS = {"QB": ["pass_yds", "pass_cmp", "pass_att", "rush_yds", "tds"],
+             "RB": ["rush_yds", "carries", "rec", "rec_yds", "rush_rec_yds", "tds"],
+             "WR": ["rec", "rec_yds", "rush_rec_yds", "tds"], "TE": ["rec", "rec_yds", "tds"]}
+
+
+COUNT_SGP = {"pass_cmp", "pass_att", "carries", "rec", "tds"}
+SGP_KEEP = {"QB": 1, "RB": 2, "WR": 4, "TE": 2}       # players per team books usually offer
+
+
+def _b64(arr, small=False):
+    """Compact draws: counts as 1 byte, yards and points as 2 bytes."""
+    if small:
+        a = np.clip(np.round(np.asarray(arr, float)), 0, 255).astype("u1")
+        return "u1:" + base64.b64encode(a.tobytes()).decode()
+    a = np.clip(np.round(np.asarray(arr, float)), -32768, 32767).astype("<i2")
+    return "i2:" + base64.b64encode(a.tobytes()).decode()
+
+
+def write_sgp(game, side_sims, qbs, pnoise):
+    """Publish SGP_DRAWS simulated games for one matchup (players + final score)."""
+    K = C.SGP_DRAWS
+    out = {"game_id": game["game_id"], "home": game["home"], "away": game["away"], "n": K, "players": {}}
+    for side in ("home", "away"):
+        sims, rows = side_sims[side]
+        team = game[side]
+        pts = team_points(sims, qbs[team].get("pid"), (game.get("team_totals") or {}).get(side), pnoise[side])
+        if pts is None:
+            return
+        out[f"pts_{side}"] = _b64(pts[:K], small=True)
+        ranked = sorted([r for r in rows if r.get("markets") and sims.get(r["pid"]) is not None],
+                        key=lambda r: -(r.get("fpts") or 0))
+        keep, taken = [], {}
+        for r in ranked:
+            if taken.get(r["pos"], 0) < SGP_KEEP.get(r["pos"], 0):
+                taken[r["pos"]] = taken.get(r["pos"], 0) + 1
+                keep.append(r)
+        for r in keep:
+            sm = sims.get(r["pid"])
+            d = dict(sm)
+            d["tds"] = d["rush_td"] + d["rec_td"]
+            d["rush_rec_yds"] = d["rush_yds"] + d["rec_yds"]
+            stats = {s: _b64(d[s][:K], small=s in COUNT_SGP) for s in SGP_STATS.get(r["pos"], []) if s in d}
+            if stats:
+                out["players"][r["pid"]] = {"name": r["name"], "team": team, "pos": r["pos"], "s": stats}
+    # only rewrite when the inputs really changed (keeps the repo from growing every run)
+    sig = json.dumps([round(game.get("proj_home") or 0, 0), round(game.get("proj_away") or 0, 0),
+                      sorted((pid, v["pos"]) for pid, v in out["players"].items())])
+    out["sig"] = zlib.crc32(sig.encode())
+    SGP_DIR.mkdir(parents=True, exist_ok=True)
+    path = SGP_DIR / f"{game['game_id']}.json"
+    if path.exists():
+        try:
+            if json.loads(path.read_text()).get("sig") == out["sig"]:
+                return
+        except Exception:  # noqa: BLE001
+            pass
+    path.write_text(json.dumps(out, separators=(",", ":")))
 
 
 def _team_line(g, team):
@@ -554,6 +623,11 @@ def main():
         return
 
     wk, games, players, teams_tbl, model_info, report, scheme_ok, props = build_games(bundle, season, week, now)
+    if SGP_DIR.exists():                      # parlay draws only for games still to be played
+        live_ids = {g["game_id"] for g in games}
+        for f in SGP_DIR.glob("*.json"):
+            if f.stem not in live_ids:
+                f.unlink()
     hpath = HIST / f"{season}_week{week:02d}.json"
     all_games, all_players = merge_history(hpath, games, players)
 
