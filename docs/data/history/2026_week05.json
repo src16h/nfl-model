@@ -297,6 +297,58 @@
      "vegas_pct": 23
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "DAL",
+     "side": "DAL",
+     "from": -8.5,
+     "line": -2.5,
+     "label": "DAL -2.5",
+     "was": "DAL -8.5",
+     "p": 67.7,
+     "push": 0.0,
+     "p_before": 46.5,
+     "wong": true
+    },
+    {
+     "kind": "spread",
+     "team": "TB",
+     "side": "TB",
+     "from": 8.5,
+     "line": 14.5,
+     "label": "TB +14.5",
+     "was": "TB +8.5",
+     "p": 64.6,
+     "push": 0.0,
+     "p_before": 53.5,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 48.5,
+     "line": 42.5,
+     "label": "Over 42.5",
+     "was": "Over 48.5",
+     "p": 70.3,
+     "push": 0.0,
+     "p_before": 50.3,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 48.5,
+     "line": 54.5,
+     "label": "Under 54.5",
+     "was": "Under 48.5",
+     "p": 66.2,
+     "push": 0.0,
+     "p_before": 49.7,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "DAL QB + WR1 overs",
@@ -982,6 +1034,58 @@
      "vegas_pct": 75
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "JAX",
+     "side": "JAX",
+     "from": -7.5,
+     "line": -1.5,
+     "label": "JAX -1.5",
+     "was": "JAX -7.5",
+     "p": 70.2,
+     "push": 0.0,
+     "p_before": 51.0,
+     "wong": true
+    },
+    {
+     "kind": "spread",
+     "team": "PHI",
+     "side": "PHI",
+     "from": 7.5,
+     "line": 13.5,
+     "label": "PHI +13.5",
+     "was": "PHI +7.5",
+     "p": 62.6,
+     "push": 0.0,
+     "p_before": 49.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 41.5,
+     "line": 35.5,
+     "label": "Over 35.5",
+     "was": "Over 41.5",
+     "p": 68.8,
+     "push": 0.0,
+     "p_before": 48.4,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 41.5,
+     "line": 47.5,
+     "label": "Under 47.5",
+     "was": "Under 41.5",
+     "p": 68.8,
+     "push": 0.0,
+     "p_before": 51.6,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "JAX QB + WR1 overs",
@@ -1527,8 +1631,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 114.0,
-   "ml_away": -135.0,
+   "ml_home": 110.0,
+   "ml_away": -130.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -1668,15 +1772,67 @@
      "edge_text": "0.0"
     },
     "moneyline": {
-     "pick": "GB +114",
+     "pick": "GB +110",
      "side": "GB",
-     "odds": "+114",
+     "odds": "+110",
      "edge": 1.7,
      "edge_text": "1.7%",
      "model_pct": 46,
      "vegas_pct": 45
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "GB",
+     "side": "GB",
+     "from": 1.5,
+     "line": 7.5,
+     "label": "GB +7.5",
+     "was": "GB +1.5",
+     "p": 78.3,
+     "push": 0.0,
+     "p_before": 50.0,
+     "wong": true
+    },
+    {
+     "kind": "spread",
+     "team": "CHI",
+     "side": "CHI",
+     "from": -1.5,
+     "line": 4.5,
+     "label": "CHI +4.5",
+     "was": "CHI -1.5",
+     "p": 68.7,
+     "push": 0.0,
+     "p_before": 50.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 45.5,
+     "line": 39.5,
+     "label": "Over 39.5",
+     "was": "Over 45.5",
+     "p": 66.8,
+     "push": 0.0,
+     "p_before": 48.9,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 45.5,
+     "line": 51.5,
+     "label": "Under 51.5",
+     "was": "Under 45.5",
+     "p": 67.8,
+     "push": 0.0,
+     "p_before": 51.1,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "GB QB + WR1 overs",
@@ -2351,6 +2507,58 @@
      "vegas_pct": 72
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "MIA",
+     "side": "MIA",
+     "from": 6.5,
+     "line": 12.5,
+     "label": "MIA +12.5",
+     "was": "MIA +6.5",
+     "p": 61.8,
+     "push": 0.0,
+     "p_before": 48.8,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "CIN",
+     "side": "CIN",
+     "from": -6.5,
+     "line": -0.5,
+     "label": "CIN -0.5",
+     "was": "CIN -6.5",
+     "p": 78.7,
+     "push": 0.0,
+     "p_before": 51.2,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 42.5,
+     "line": 36.5,
+     "label": "Over 36.5",
+     "was": "Over 42.5",
+     "p": 67.9,
+     "push": 0.0,
+     "p_before": 46.7,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 42.5,
+     "line": 48.5,
+     "label": "Under 48.5",
+     "was": "Under 42.5",
+     "p": 69.0,
+     "push": 0.0,
+     "p_before": 53.3,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "MIA QB + WR1 overs",
@@ -3021,6 +3229,58 @@
      "vegas_pct": 62
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "NE",
+     "side": "NE",
+     "from": -3.5,
+     "line": 2.5,
+     "label": "NE +2.5",
+     "was": "NE -3.5",
+     "p": 69.2,
+     "push": 0.0,
+     "p_before": 50.4,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "LV",
+     "side": "LV",
+     "from": 3.5,
+     "line": 9.5,
+     "label": "LV +9.5",
+     "was": "LV +3.5",
+     "p": 73.1,
+     "push": 0.0,
+     "p_before": 49.6,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 45.5,
+     "line": 39.5,
+     "label": "Over 39.5",
+     "was": "Over 45.5",
+     "p": 71.0,
+     "push": 0.0,
+     "p_before": 51.4,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 45.5,
+     "line": 51.5,
+     "label": "Under 51.5",
+     "was": "Under 45.5",
+     "p": 66.0,
+     "push": 0.0,
+     "p_before": 48.6,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "NE QB + WR1 overs",
@@ -3710,6 +3970,58 @@
      "vegas_pct": 59
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "NO",
+     "side": "NO",
+     "from": 2.5,
+     "line": 8.5,
+     "label": "NO +8.5",
+     "was": "NO +2.5",
+     "p": 71.9,
+     "push": 0.0,
+     "p_before": 48.5,
+     "wong": true
+    },
+    {
+     "kind": "spread",
+     "team": "MIN",
+     "side": "MIN",
+     "from": -2.5,
+     "line": 3.5,
+     "label": "MIN +3.5",
+     "was": "MIN -2.5",
+     "p": 68.0,
+     "push": 0.0,
+     "p_before": 51.5,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 41.5,
+     "line": 35.5,
+     "label": "Over 35.5",
+     "was": "Over 41.5",
+     "p": 71.0,
+     "push": 0.0,
+     "p_before": 52.3,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 41.5,
+     "line": 47.5,
+     "label": "Under 47.5",
+     "was": "Under 41.5",
+     "p": 64.1,
+     "push": 0.0,
+     "p_before": 47.7,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "NO QB + WR1 overs",
@@ -4376,6 +4688,58 @@
      "vegas_pct": 45
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "NYJ",
+     "side": "NYJ",
+     "from": -1.5,
+     "line": 4.5,
+     "label": "NYJ +4.5",
+     "was": "NYJ -1.5",
+     "p": 66.7,
+     "push": 0.0,
+     "p_before": 48.3,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "CLE",
+     "side": "CLE",
+     "from": 1.5,
+     "line": 7.5,
+     "label": "CLE +7.5",
+     "was": "CLE +1.5",
+     "p": 75.6,
+     "push": 0.0,
+     "p_before": 51.7,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 39.5,
+     "line": 33.5,
+     "label": "Over 33.5",
+     "was": "Over 39.5",
+     "p": 74.7,
+     "push": 0.0,
+     "p_before": 56.2,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 39.5,
+     "line": 45.5,
+     "label": "Under 45.5",
+     "was": "Under 39.5",
+     "p": 65.1,
+     "push": 0.0,
+     "p_before": 43.8,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "NYJ QB + WR1 overs",
@@ -5041,6 +5405,58 @@
      "vegas_pct": 59
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "PIT",
+     "side": "PIT",
+     "from": -2.5,
+     "line": 3.5,
+     "label": "PIT +3.5",
+     "was": "PIT -2.5",
+     "p": 68.6,
+     "push": 0.0,
+     "p_before": 50.8,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "IND",
+     "side": "IND",
+     "from": 2.5,
+     "line": 8.5,
+     "label": "IND +8.5",
+     "was": "IND +2.5",
+     "p": 75.0,
+     "push": 0.0,
+     "p_before": 49.2,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 44.5,
+     "line": 38.5,
+     "label": "Over 38.5",
+     "was": "Over 44.5",
+     "p": 67.8,
+     "push": 0.0,
+     "p_before": 49.9,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 44.5,
+     "line": 50.5,
+     "label": "Under 50.5",
+     "was": "Under 44.5",
+     "p": 67.7,
+     "push": 0.0,
+     "p_before": 50.1,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "PIT QB + WR1 overs",
@@ -5704,6 +6120,58 @@
      "vegas_pct": 25
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "TEN",
+     "side": "TEN",
+     "from": 7.5,
+     "line": 13.5,
+     "label": "TEN +13.5",
+     "was": "TEN +7.5",
+     "p": 62.2,
+     "push": 0.0,
+     "p_before": 51.1,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "HOU",
+     "side": "HOU",
+     "from": -7.5,
+     "line": -1.5,
+     "label": "HOU -1.5",
+     "was": "HOU -7.5",
+     "p": 78.3,
+     "push": 0.0,
+     "p_before": 48.9,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 38.5,
+     "line": 32.5,
+     "label": "Over 32.5",
+     "was": "Over 38.5",
+     "p": 71.2,
+     "push": 0.0,
+     "p_before": 54.7,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 38.5,
+     "line": 44.5,
+     "label": "Under 44.5",
+     "was": "Under 38.5",
+     "p": 65.4,
+     "push": 0.0,
+     "p_before": 45.3,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "TEN QB + WR1 overs",
@@ -6376,6 +6844,58 @@
      "vegas_pct": 62
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "WAS",
+     "side": "WAS",
+     "from": -3.5,
+     "line": 2.5,
+     "label": "WAS +2.5",
+     "was": "WAS -3.5",
+     "p": 72.6,
+     "push": 0.0,
+     "p_before": 54.0,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "NYG",
+     "side": "NYG",
+     "from": 3.5,
+     "line": 9.5,
+     "label": "NYG +9.5",
+     "was": "NYG +3.5",
+     "p": 71.8,
+     "push": 0.0,
+     "p_before": 46.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 41.5,
+     "line": 35.5,
+     "label": "Over 35.5",
+     "was": "Over 41.5",
+     "p": 69.9,
+     "push": 0.0,
+     "p_before": 50.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 41.5,
+     "line": 47.5,
+     "label": "Under 47.5",
+     "was": "Under 41.5",
+     "p": 69.4,
+     "push": 0.0,
+     "p_before": 50.0,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "WAS QB + WR1 overs",
@@ -7054,6 +7574,58 @@
      "vegas_pct": 62
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "LAC",
+     "side": "LAC",
+     "from": 3.5,
+     "line": 9.5,
+     "label": "LAC +9.5",
+     "was": "LAC +3.5",
+     "p": 72.1,
+     "push": 0.0,
+     "p_before": 48.6,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "DEN",
+     "side": "DEN",
+     "from": -3.5,
+     "line": 2.5,
+     "label": "DEN +2.5",
+     "was": "DEN -3.5",
+     "p": 68.5,
+     "push": 0.0,
+     "p_before": 51.4,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 41.5,
+     "line": 35.5,
+     "label": "Over 35.5",
+     "was": "Over 41.5",
+     "p": 70.2,
+     "push": 0.0,
+     "p_before": 48.9,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 41.5,
+     "line": 47.5,
+     "label": "Under 47.5",
+     "was": "Under 41.5",
+     "p": 65.5,
+     "push": 0.0,
+     "p_before": 51.1,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "LAC QB + WR1 overs",
@@ -7753,6 +8325,58 @@
      "vegas_pct": 69
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "ARI",
+     "side": "ARI",
+     "from": 5.5,
+     "line": 11.5,
+     "label": "ARI +11.5",
+     "was": "ARI +5.5",
+     "p": 65.1,
+     "push": 0.0,
+     "p_before": 47.4,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "DET",
+     "side": "DET",
+     "from": -5.5,
+     "line": 0.5,
+     "label": "DET +0.5",
+     "was": "DET -5.5",
+     "p": 75.1,
+     "push": 0.0,
+     "p_before": 52.6,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 54.5,
+     "line": 48.5,
+     "label": "Over 48.5",
+     "was": "Over 54.5",
+     "p": 59.1,
+     "push": 0.0,
+     "p_before": 43.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 54.5,
+     "line": 60.5,
+     "label": "Under 60.5",
+     "was": "Under 54.5",
+     "p": 65.6,
+     "push": 0.0,
+     "p_before": 57.0,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "ARI QB + WR1 overs",
@@ -8194,7 +8818,7 @@
    "over_prob": 51.0,
    "qb_home": "Sam Darnold",
    "qb_away": "Brock Purdy",
-   "weather": "58\u00b0F, wind 8 mph, 0% rain",
+   "weather": null,
    "why_margin": [
     {
      "factor": "Elo history",
@@ -8422,6 +9046,58 @@
      "vegas_pct": 60
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "SEA",
+     "side": "SEA",
+     "from": -3.0,
+     "line": 3.0,
+     "label": "SEA +3",
+     "was": "SEA -3",
+     "p": 65.3,
+     "push": 5.9,
+     "p_before": 45.7,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "SF",
+     "side": "SF",
+     "from": 3.0,
+     "line": 9.0,
+     "label": "SF +9",
+     "was": "SF +3",
+     "p": 73.6,
+     "push": 1.7,
+     "p_before": 46.3,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 45.5,
+     "line": 39.5,
+     "label": "Over 39.5",
+     "was": "Over 45.5",
+     "p": 67.1,
+     "push": 0.0,
+     "p_before": 50.9,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 45.5,
+     "line": 51.5,
+     "label": "Under 51.5",
+     "was": "Under 45.5",
+     "p": 67.1,
+     "push": 0.0,
+     "p_before": 49.1,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "SEA QB + WR1 overs",
@@ -9100,6 +9776,58 @@
      "vegas_pct": 60
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "ATL",
+     "side": "ATL",
+     "from": -3.0,
+     "line": 3.0,
+     "label": "ATL +3",
+     "was": "ATL -3",
+     "p": 65.3,
+     "push": 5.9,
+     "p_before": 45.7,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "BAL",
+     "side": "BAL",
+     "from": 3.0,
+     "line": 9.0,
+     "label": "BAL +9",
+     "was": "BAL +3",
+     "p": 73.6,
+     "push": 1.7,
+     "p_before": 46.3,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 43.5,
+     "line": 37.5,
+     "label": "Over 37.5",
+     "was": "Over 43.5",
+     "p": 69.9,
+     "push": 0.0,
+     "p_before": 50.4,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 43.5,
+     "line": 49.5,
+     "label": "Under 49.5",
+     "was": "Under 43.5",
+     "p": 67.0,
+     "push": 0.0,
+     "p_before": 49.6,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "ATL QB + WR1 overs",
@@ -9793,6 +10521,58 @@
      "vegas_pct": 40
     }
    },
+   "teaser_legs": [
+    {
+     "kind": "spread",
+     "team": "LA",
+     "side": "LA",
+     "from": -3.0,
+     "line": 3.0,
+     "label": "LA +3",
+     "was": "LA -3",
+     "p": 60.9,
+     "push": 2.2,
+     "p_before": 40.9,
+     "wong": false
+    },
+    {
+     "kind": "spread",
+     "team": "BUF",
+     "side": "BUF",
+     "from": 3.0,
+     "line": 9.0,
+     "label": "BUF +9",
+     "was": "BUF +3",
+     "p": 77.1,
+     "push": 1.4,
+     "p_before": 57.1,
+     "wong": true
+    },
+    {
+     "kind": "total",
+     "side": "Over",
+     "from": 54.5,
+     "line": 48.5,
+     "label": "Over 48.5",
+     "was": "Over 54.5",
+     "p": 59.1,
+     "push": 0.0,
+     "p_before": 43.0,
+     "wong": false
+    },
+    {
+     "kind": "total",
+     "side": "Under",
+     "from": 54.5,
+     "line": 60.5,
+     "label": "Under 60.5",
+     "was": "Under 54.5",
+     "p": 65.6,
+     "push": 0.0,
+     "p_before": 57.0,
+     "wong": false
+    }
+   ],
    "sgp_combos": [
     {
      "name": "LA QB + WR1 overs",
