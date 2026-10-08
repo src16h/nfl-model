@@ -701,112 +701,112 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-10-07T22:18+00:00",
+  "fetched_at": "2026-10-08T12:32+00:00",
   "data": {
    "2026_05_TB_DAL": {
     "spread_line": 8.5,
     "total_line": 47.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_PHI_JAX": {
     "spread_line": 7.0,
-    "total_line": 42.5,
+    "total_line": 41.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_CHI_GB": {
-    "spread_line": -2.5,
+    "spread_line": -1.5,
     "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_CIN_MIA": {
     "spread_line": -6.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_CLE_NYJ": {
     "spread_line": 1.5,
     "total_line": 39.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_HOU_TEN": {
     "spread_line": -7.5,
-    "total_line": 37.5,
+    "total_line": 38.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_IND_PIT": {
     "spread_line": 2.5,
     "total_line": 44.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_LV_NE": {
     "spread_line": 3.5,
     "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_MIN_NO": {
     "spread_line": -1.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_NYG_WAS": {
     "spread_line": 3.5,
     "total_line": 42.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_DEN_LAC": {
     "spread_line": -3.5,
-    "total_line": 42.5,
+    "total_line": 41.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_DET_ARI": {
     "spread_line": -5.5,
     "total_line": 54.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_SF_SEA": {
-    "spread_line": 2.5,
+    "spread_line": 3.0,
     "total_line": 45.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_BAL_ATL": {
     "spread_line": 3.5,
     "total_line": 43.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    },
    "2026_05_BUF_LA": {
     "spread_line": 3.0,
     "total_line": 54.5,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-07T22:17:40Z"
+    "updated": "2026-10-08T12:31:17Z"
    }
   }
  }
