@@ -255,3 +255,30 @@ def fit_win_sigma(schedules) -> float:
 def win_prob(margin, sigma) -> float:
     from scipy.stats import norm
     return float(norm.cdf(margin / sigma))
+
+
+
+class TeamTotals:
+    """A team's points, using real NFL team scores from games where Vegas implied a
+    similar team total (scores pile up on 17, 20, 24...). Checked on 2022-25 games."""
+
+    def __init__(self, schedules):
+        d = schedules[schedules["home_score"].notna() & (schedules["season"] >= C.KEYNUM_SINCE)]
+        d = d.dropna(subset=["spread_line", "total_line"])
+        self.I = np.concatenate([(d["total_line"] + d["spread_line"]) / 2, (d["total_line"] - d["spread_line"]) / 2]).astype(float)
+        self.P = np.concatenate([d["home_score"], d["away_score"]]).astype(float)
+        self.ok = len(self.I) >= 1000
+
+    def dist(self, x):
+        if not self.ok or x is None or not np.isfinite(x):
+            return None
+        for w in (0.75, 1.0, 1.5, 2.5):
+            sel = np.abs(self.I - x) <= w
+            if sel.sum() >= 150:
+                break
+        else:
+            sel = np.argsort(np.abs(self.I - x))[:150]
+        a = np.clip(np.round(self.P[sel] + (x - self.I[sel])), 0, None)
+        hi = int(np.percentile(a, 99.5)) + 1
+        return {"mean": round(float(a.mean()), 1), "med": round(float(np.median(a)), 1),
+                "ge": [round(float((a >= k).mean()) * 100, 1) for k in range(0, hi + 1)]}

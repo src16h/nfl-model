@@ -321,6 +321,9 @@ dialog.slip::backdrop{background:rgba(20,10,12,.45)}
 .setgrid label{font-size:12.5px;color:var(--muted);display:grid;gap:4px}
 .setgrid input,.setgrid select{font:600 15px var(--cond);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
 
+.takeaways{margin:12px 0 0;padding:14px 18px 14px 34px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--garnet);border-radius:var(--r-lg);display:grid;gap:6px;font-size:14px;max-width:none}
+.takeaways li::marker{color:var(--garnet-text)}
+
 /* ---------- stat strip ---------- */
 .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
 .st{padding:14px 18px;border-left:1px solid var(--line-soft)}
@@ -469,6 +472,8 @@ function logBtn(b) {                                      // b: bet template wit
   return hasBet(b) ? `<button class="logbtn done" disabled>Logged</button>` : `<button class="logbtn" data-log="${id}">I bet this</button>`;
 }
 document.addEventListener("click", ev => {
+  const alt = ev.target.closest("[data-alt]");
+  if (alt) { const [pid, gid, stat] = alt.dataset.alt.split("|"); propUI.view = "more"; mUI.mkt = stat; mUI.game = gid; mUI.q = ""; mUI.open = pid + "|" + gid; renderProps(); window.scrollTo({top: 0}); return; }
   const btn = ev.target.closest("[data-log]"); if (!btn) return;
   ev.preventDefault(); ev.stopPropagation(); openSlip(PENDING[btn.dataset.log]);
 });
@@ -506,6 +511,8 @@ function gradeBet(b) {                                   // returns {res: W|L|P|
     res = b.kind === "h1total" ? wl((ht - b.line) * (b.side === "Over" ? 1 : -1)) : wl((b.side === g.home ? hm : -hm) + b.line);
     actual = `Halftime ${g.h1a}-${g.h1h}`;
   } else {
+    if (b.stat === "team_total") { const t = String(b.pid).replace("TEAM_", ""), v = t === g.home ? g.h : g.a;
+      res = wl((v - b.line) * (b.side === "Over" ? 1 : -1)); const units = res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0; return {res, units, actual: `${v} points`}; }
     const row = RES.players?.[b.game_id]?.[b.pid];
     if (!row) return {res: "V", units: 0, actual: "Did not play"};
     const stat = b.stat === "anytime_td" ? "tds" : b.stat, v = row[RES.cols.indexOf(stat)];
@@ -705,6 +712,7 @@ function propRows(rows, limitKey) {
       <div class="c-prop">${esc(p.label || label(p.stat_key || p.stat))}${p.median != null ? `<span class="dim" style="display:block;font-size:13px">Median ${n(p.median)}</span>` : ""}</div>
       <div class="c-pick pick ${isOver ? "over" : "under"}">${pick}${odds ? ` <span class="dim" style="font-weight:500">${esc(odds)}</span>` : ""}</div>
       <div class="c-mb r">${n(mo, 0)}% / ${n(bo, 0)}%</div><div class="c-gap r gapv">${n(Math.abs(p.edge))}%
+        ${(D.players || []).some(x => x.pid === p.pid && x.game_id === p.game_id && x.markets?.[p.stat_key || p.stat]) ? `<div style="margin-top:4px"><button class="logbtn" data-alt="${esc(p.pid + "|" + p.game_id + "|" + (p.stat_key || p.stat))}">Alt lines</button></div>` : ""}
         ${p.lean ? `<div style="margin-top:4px">${logBtn({kind: "prop", game_id: p.game_id, pid: p.pid, player: p.player, stat: p.stat_key || p.stat, label: p.label, side: p.lean,
           line: (p.stat_key || p.stat) === "anytime_td" ? 0.5 : +p.line, odds: odds || "-110", model_pct: mo, desc: `${p.player} ${p.lean} ${p.line ?? ""}`, sub: `${p.label || ""}, ${p.team} vs ${p.opp}`})}</div>` : ""}</div></div>`;
   }
@@ -836,10 +844,11 @@ function bindTD() {
 }
 
 /* ---------------- More markets (model only) ---------------- */
-const MKTS = [["rush_rec_yds", "Rush + rec yards"], ["pass_cmp", "Completions"], ["pass_att", "Pass attempts"],
+const MKTS = [["team_total", "Team totals"], ["pass_yds", "Passing yards"], ["rush_yds", "Rushing yards"], ["rec_yds", "Receiving yards"], ["rec", "Receptions"],
+  ["rush_rec_yds", "Rush + rec yards"], ["pass_cmp", "Completions"], ["pass_att", "Pass attempts"],
   ["carries", "Rush attempts"], ["q1_pass_yds", "1st quarter pass yards"], ["q1_rec_yds", "1st quarter rec yards"], ["q1_rec", "1st quarter receptions"]];
-const mUI = {mkt: "rush_rec_yds", game: "", q: "", open: null, lines: {}};
-const PGRID = Array.from({length: 49}, (_, i) => (i + 1) * 2 / 100);
+const mUI = {mkt: "team_total", game: "", q: "", open: null, lines: {}};
+const PGRID = Array.from({length: 25}, (_, i) => (2 + 4 * i) / 100);
 function pOver(m, L) {                       // chance the stat finishes above line L
   if (!m) return null;
   if (m.ge) { const k = Math.ceil(L + 1e-9); return k < 0 ? 100 : k >= m.ge.length ? 0 : m.ge[k]; }
@@ -895,12 +904,14 @@ function myPlays(games) {
 
 function renderMore() {
   const games = {}; (D.games || []).forEach(g => games[g.game_id] = g);
-  const all = (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && games[p.game_id] && games[p.game_id].state === "upcoming");
+  const teamRows = () => Object.values(games).filter(g => g.state === "upcoming" && g.team_totals).flatMap(g => [["away", g.away, g.home], ["home", g.home, g.away]]
+    .filter(([side]) => g.team_totals[side]).map(([side, t, o]) => ({pid: "TEAM_" + t, game_id: g.game_id, name: `${t} team total`, team: t, opp: o, pos: "Team", markets: {team_total: g.team_totals[side]}})));
+  const all = mUI.mkt === "team_total" ? teamRows() : (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && games[p.game_id] && games[p.game_id].state === "upcoming");
   const rows = all.filter(p => (!mUI.game || p.game_id === mUI.game) && (!mUI.q || `${p.name} ${p.team} ${p.opp}`.toLowerCase().includes(mUI.q)))
     .sort((a, b) => b.markets[mUI.mkt].mean - a.markets[mUI.mkt].mean);
-  const step = ["pass_cmp", "pass_att", "carries", "q1_rec"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") ? 5 : 10);
+  const step = ["pass_cmp", "pass_att", "carries", "q1_rec", "rec", "team_total"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") || ["rush_yds", "rec_yds"].includes(mUI.mkt) ? 5 : 10);
   let h = `<div class="sec-head"><h2>More markets</h2><span class="aside">Model lines only, no book odds loaded</span></div>
-    <p class="sub">Fair lines from the same simulations as every other prop. Compare to your book: if your book's line is lower than the fair line, the over has value, and if higher, the under. Tap a player and enter your book's line and odds: the model marks it Play, Watch, or No play with the same rules as your other props.</p>
+    <p class="sub">Fair lines from the same simulations as every other prop, including alternate lines for the main props. Compare to your book: if your book's line is lower than the fair line, the over has value, and if higher, the under. Tap a player and enter your book's line and odds: the model marks it Play, Watch, or No play with the same rules as your other props.</p>
     ${(() => { const mp = myPlays(games); const lab = Object.fromEntries(MKTS); return mp.length ? `<h3>Your plays from entered lines</h3><div class="gaps myplays">${mp.map(x => `<div class="gapcard">
       <span class="k">${esc(lab[x.mkt])}</span><span class="p">${esc(x.p.name)} ${x.j.side} ${x.j.line}<small>${esc(x.j.odds)}</small></span>
       <span class="w">${esc(x.p.team)} vs ${esc(x.p.opp)}. Model ${n(x.j.model, 0)}%, book ${n(x.j.book, 0)}%. Expected return ${sgn(x.j.ev)}%</span>
@@ -911,11 +922,11 @@ function renderMore() {
   if (!rows.length) { $("#propBody").innerHTML = h + `<div class="empty"><b>No players for this market yet.</b> Pick another market or clear the filters.</div>`; bindMore(); return; }
   const isCount = !!rows[0].markets[mUI.mkt].ge;
   const ph = isPhone(), span = ph ? 3 : 5;
-  h += `<div class="tablewrap"><table class="mtable"><thead><tr><th>Player</th><th>Fair line</th>${ph ? "" : "<th>Median</th><th>Average</th>"}<th>Likely range</th></tr></thead><tbody>`;
+  h += `<div class="tablewrap"><table class="mtable"><thead><tr><th>${mUI.mkt === "team_total" ? "Team" : "Player"}</th><th>Fair line</th>${ph ? "" : "<th>Median</th><th>Average</th>"}<th>Likely range</th></tr></thead><tbody>`;
   for (const p of rows.slice(0, 150)) {
     const m = p.markets[mUI.mkt], fl = fairLine(m), key = p.pid + "|" + p.game_id, open = mUI.open === key;
-    const lo = m.q ? m.q[4] : m.ge.findLastIndex(v => v >= 90), hi = m.q ? m.q[44] : m.ge.findLastIndex(v => v >= 10);
-    h += `<tr class="p" tabindex="0" data-key="${esc(key)}" aria-expanded="${open}"><td><div class="who" style="display:flex;align-items:center;gap:8px">${badge(p.team)}<div><b>${esc(p.name)}</b> ${tierTag(judge(m, mUI.lines[key + "|" + mUI.mkt]))}<span class="pos">${esc(p.pos)} vs ${esc(p.opp)}</span></div></div></td>
+    const lo = m.q ? m.q[2] : m.ge.findLastIndex(v => v >= 90), hi = m.q ? m.q[22] : m.ge.findLastIndex(v => v >= 10);
+    h += `<tr class="p" tabindex="0" data-key="${esc(key)}" aria-expanded="${open}"><td><div class="who" style="display:flex;align-items:center;gap:8px">${badge(p.team)}<div><b>${esc(p.name)}</b> ${tierTag(judge(m, mUI.lines[key + "|" + mUI.mkt]))}<span class="pos">${p.pos === "Team" ? "" : esc(p.pos) + " "}vs ${esc(p.opp)}</span></div></div></td>
       <td class="fair">${fl}</td>${ph ? "" : `<td>${n(m.med)}</td><td>${n(m.mean)}</td>`}<td>${n(lo, 0)} to ${n(hi, 0)}</td></tr>`;
     if (open) {
       const ek = key + "|" + mUI.mkt, e = mUI.lines[ek] || {}, j = judge(m, e);
@@ -1096,6 +1107,20 @@ function myBetsHTML() {
   return h;
 }
 
+function reportHTML() {
+  const R = D.report; if (!R) return "";
+  const wl = x => x ? `${x.w}–${x.l}${x.p ? "–" + x.p : ""}` : "–";
+  const pp = R.prop_plays || {};
+  return `<div class="sec-head"><h2>Week ${esc(R.week)} report card</h2><span class="aside">Updates after each week's games</span></div>
+    <div class="strip">
+      <div class="st"><strong>${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, <b class="${uc(pp.units)}">${units(pp.units)}</b>` : ""}</span></div>
+      <div class="st"><strong>${wl(R.picks?.spread)}</strong><span>Spread picks, every game</span></div>
+      <div class="st"><strong>${wl(R.picks?.total)}</strong><span>Total picks, every game</span></div>
+      <div class="st"><strong>${wl(R.picks?.moneyline)}</strong><span>Moneyline picks</span></div>
+    </div>
+    ${(R.takeaways || []).length ? `<ul class="takeaways">${R.takeaways.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}`;
+}
+
 function clvHTML() {
   const C = D.clv; if (!C || !C.spread) return "";
   const cell = (name, x) => x && x.n ? `<div class="st"><strong class="${x.avg ? uc(x.avg) : ""}">${sgn(x.avg, 2)}</strong><span>${name}: avg points vs close. Beat the close ${x.beat}, worse ${x.worse}, same ${x.same}</span></div>`
@@ -1122,7 +1147,7 @@ function bindRecord() {
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = reportHTML() + myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>

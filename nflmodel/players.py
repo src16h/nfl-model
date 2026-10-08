@@ -221,8 +221,9 @@ def _finish(r, game_id, sim=None) -> dict:
 # Extra markets (model only, no book odds): compact distributions so the
 # dashboard can show a fair line and the over chance at any line you type.
 # ---------------------------------------------------------------------
-COUNT_STATS = {"pass_cmp", "pass_att", "carries", "q1_rec"}
+COUNT_STATS = {"pass_cmp", "pass_att", "carries", "q1_rec", "rec"}
 MARKET_POS = {
+    "pass_yds": ("QB",), "rush_yds": ("RB", "QB"), "rec_yds": ("WR", "TE", "RB"), "rec": ("WR", "TE", "RB"),
     "rush_rec_yds": ("RB", "WR", "TE"), "pass_cmp": ("QB",), "pass_att": ("QB",),
     "carries": ("RB", "QB"), "q1_pass_yds": ("QB",), "q1_rec_yds": ("WR", "TE", "RB"),
     "q1_rec": ("WR", "TE", "RB"),
@@ -242,7 +243,7 @@ def market_dists(sim: dict, pos: str) -> dict:
             ge = [fnum(float((a >= k).mean()) * 100, 1) for k in range(0, hi + 1)]
             out[stat] = {"mean": fnum(a.mean(), 1), "med": fnum(np.median(a), 1), "ge": ge}
         else:
-            q = np.percentile(a, list(range(2, 100, 2)))               # 2nd..98th percentile
+            q = np.percentile(a, list(range(2, 100, 4)))               # 2nd, 6th ... 98th percentile
             out[stat] = {"mean": fnum(a.mean(), 1), "med": fnum(np.median(a), 1),
                          "zero": fnum(float((a <= 0).mean()) * 100, 1), "q": [fnum(v, 1) for v in q]}
     return out

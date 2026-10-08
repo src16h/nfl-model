@@ -17,7 +17,7 @@ from nflmodel import config as C
 from nflmodel import data as D
 from nflmodel.ratings import build_context, ratings_table
 from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulate, KeyNumbers,
-                            fit_win_sigma, win_prob)
+                            fit_win_sigma, win_prob, TeamTotals)
 from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
@@ -126,6 +126,7 @@ def build_games(bundle, season, week, now):
     report = backtest_report(rows[rows["season"] >= season - 1].copy()) if len(rows) else {"games": 0}
     keynum = KeyNumbers(sch)
     win_sigma = fit_win_sigma(sch)
+    team_tt = TeamTotals(sch)
 
     u = U.build(bundle.pbp, season, week)
     roster = current_roster(bundle.rosters, season, week)
@@ -262,6 +263,7 @@ def build_games(bundle, season, week, now):
         game["win_sigma"] = round(win_sigma, 2)
         h1m = C.H1_MARGIN_SLOPE * margin                        # first half, model only
         h1t = C.H1_TOTAL_SLOPE * total + C.H1_TOTAL_INTERCEPT
+        game["team_totals"] = {"home": team_tt.dist(ph), "away": team_tt.dist(pa)}
         game["h1"] = {"margin": fnum(h1m), "total": fnum(h1t), "line": line_text(h, h1m),
                       "sd_margin": C.H1_MARGIN_SD, "sd_total": C.H1_TOTAL_SD}
         game["picks"] = P.build(game, game["ml_home"], game["ml_away"])
@@ -395,7 +397,7 @@ def grade(season, sch) -> dict:
     res = sch[(sch["season"] == season) & sch["home_score"].notna()].set_index("game_id")
     su, ats, ats_lean, ou_lean, err_m, err_v = [], [], [], [], [], []
     ats_play, ou_play = [], []
-    pick_rows = []
+    pick_rows, week_rows = [], {}
     for f in sorted(HIST.glob(f"{season}_week*.json")):
         for g in json.loads(f.read_text()).get("games", []):
             if g["game_id"] not in res.index:
@@ -407,6 +409,7 @@ def grade(season, sch) -> dict:
                 gr, pk = P.grade_one(g, float(r["home_score"]), float(r["away_score"]))
                 for mkt, (res_, u) in gr.items():
                     pick_rows.append((mkt, res_, u, pk[mkt].get("edge")))
+                    week_rows.setdefault(int(g.get("week") or 0), []).append((mkt, res_, u, pk[mkt].get("edge")))
             except Exception as e:  # noqa: BLE001
                 log.warning(f"pick grade skipped {g['game_id']}: {e}")
             if act != 0:
@@ -431,8 +434,74 @@ def grade(season, sch) -> dict:
     return {"straight_up": rec(su), "ats_all": rec(ats), "ats_leans": rec(ats_lean),
             "totals_leans": rec(ou_lean), "ats_plays": rec(ats_play), "totals_plays": rec(ou_play),
             "picks": P.summarize(pick_rows),
+            "picks_by_week": {str(w): P.summarize(r) for w, r in sorted(week_rows.items())},
             "model_mae": fnum(np.mean(err_m)) if err_m else None,
             "vegas_mae": fnum(np.mean(err_v)) if err_v else None}
+
+
+def weekly_report(live, clv, props_path, week):
+    """Report card for the last finished week plus season takeaways, in plain words."""
+    try:
+        weeks = sorted(int(w) for w in (live.get("picks_by_week") or {}) if int(w) < (week or 99))
+        if not weeks:
+            return None
+        wk = weeks[-1]
+        pw = live["picks_by_week"][str(wk)]
+        lg = json.loads(Path(props_path).read_text()) if Path(props_path).exists() else {}
+        props = [r for r in (lg.get("props") or {}).values() if r.get("result") and r["result"].get("lean_result") in ("win", "loss")]
+
+        def rec(rows):
+            w = sum(1 for r in rows if r["result"]["lean_result"] == "win")
+            l = sum(1 for r in rows if r["result"]["lean_result"] == "loss")
+            u = sum(float(r["result"].get("profit") or 0) for r in rows)
+            return {"w": w, "l": l, "units": round(u, 2), "n": w + l}
+        wk_props = [r for r in props if int(r.get("week") or 0) == wk]
+        out = {"week": wk,
+               "picks": {k: {kk: pw[k][kk] for kk in ("w", "l", "p", "units")} for k in ("spread", "total", "moneyline")},
+               "prop_plays": rec([r for r in wk_props if r.get("tier") == "play"]),
+               "props_flagged": rec(wk_props),
+               "season_prop_plays": rec([r for r in props if r.get("tier") == "play"])}
+        # prop types this season, by units (only with a real sample)
+        types = {}
+        for r in props:
+            key = f"{stat_label(r.get('stat'))}, {r.get('lean')}"
+            types.setdefault(key, []).append(r)
+        ranked = sorted(((k, rec(v)) for k, v in types.items() if len(v) >= 12), key=lambda kv: -kv[1]["units"])
+        out["best_type"] = {"name": ranked[0][0], **ranked[0][1]} if ranked and ranked[0][1]["units"] > 0 else None
+        out["worst_type"] = {"name": ranked[-1][0], **ranked[-1][1]} if ranked and ranked[-1][1]["units"] < 0 else None
+        # closing line value this week
+        if clv and clv.get("games"):
+            sp = [g.get("clv_spread") for gid, g in clv["games"].items()
+                  if g.get("clv_spread") is not None and int(gid.split("_")[1]) == wk]
+            out["clv_week"] = {"n": len(sp), "avg": fnum(np.mean(sp), 2) if sp else None,
+                               "beat": sum(1 for v in sp if v > 0), "worse": sum(1 for v in sp if v < 0)}
+        # takeaways
+        t = []
+        pp = out["prop_plays"]
+        if pp["n"]:
+            t.append(f"Prop plays went {pp['w']}-{pp['l']} ({pp['units']:+.2f} units) in week {wk}.")
+        sp = out["picks"]["spread"]
+        t.append(f"Every-game spread picks went {sp['w']}-{sp['l']}" + (f"-{sp['p']}" if sp["p"] else "") + ". Most are tiny gaps, so about half is expected.")
+        if out.get("best_type"):
+            b = out["best_type"]
+            longshot = "TD" in b["name"] or (b["n"] and b["w"] / b["n"] < 0.4)
+            t.append(f"Best prop type this season: {b['name']} ({b['w']}-{b['l']}, {b['units']:+.2f} units)."
+                     + (" These are long-shot odds, so a few hits swing the total. Likely luck at this sample." if longshot else ""))
+        if out.get("worst_type"):
+            b = out["worst_type"]; t.append(f"Weakest: {b['name']} ({b['w']}-{b['l']}, {b['units']:+.2f} units). Worth avoiding until it turns.")
+        cw = out.get("clv_week") or {}
+        if cw.get("n"):
+            moved = cw["beat"] + cw["worse"]
+            t.append(f"Closing lines: {cw['beat']} picks beat the close, {cw['worse']} were worse, {cw['n'] - moved} didn't move." if moved
+                     else "Closing lines didn't move on any pick, so no read on the model's sharpness yet.")
+        sea = out["season_prop_plays"]
+        if sea["n"] < 100:
+            t.append(f"Season sample is still small ({sea['n']} prop plays). Judge the model after 100+.")
+        out["takeaways"] = t
+        return clean_json(out)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"weekly report skipped: {e}")
+        return None
 
 
 def season_last_week(sch, season):
@@ -525,11 +594,12 @@ def main():
         "games": all_games, "players": all_players, "teams": teams_tbl,
         "backtest": {k: (fnum(v, 2) if isinstance(v, float) else v) for k, v in report.items()},
         "live_record": live,
+        "report": weekly_report(live, payload.get("clv"), OUT / "props_log.json", week),
         "settings": {"lean_engine": model_info["lean_engine"],
                      "lean_spread": C.ANCHOR_LEAN_SPREAD if model_info["lean_engine"] == "anchored" else C.LEAN_SPREAD_EDGE,
                      "lean_total": C.ANCHOR_LEAN_TOTAL if model_info["lean_engine"] == "anchored" else C.LEAN_TOTAL_EDGE},
     })
-    (OUT / "latest.json").write_text(json.dumps(clean_json(payload), indent=1, default=str, allow_nan=False))
+    (OUT / "latest.json").write_text(json.dumps(clean_json(payload), separators=(",", ":"), default=str, allow_nan=False))
     log.info(f"wrote {len(games)} games, {len(players)} player projections for week {week}")
 
 
