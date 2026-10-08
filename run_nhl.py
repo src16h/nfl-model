@@ -117,6 +117,9 @@ def game_picks(g, sim):
     lim = {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE}
     for k, v in out.items():
         v["play"] = v["edge"] is not None and lim[k] <= v["edge"] <= C.PLAY_MAX_EDGE
+    ml, pl = out.get("ml"), out.get("pl")
+    if ml and pl and ml["play"] and pl["play"] and ml["side"] == pl["side"]:   # same team twice: keep the bigger gap
+        (pl if ml["edge"] >= pl["edge"] else ml)["play"] = False
     return out
 
 
