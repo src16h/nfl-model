@@ -604,6 +604,7 @@ def build_plays(games, props, model_info):
                     "matchup": f"{p['team']} vs {p['opp']}", "player": p["player"], "pos": p.get("pos"),
                     "pick": f"{p['lean']} {p['line']}", "label": p.get("label"), "odds": odds,
                     "detail": f"Model {_pct_side(p['model_over'], p['lean'])}% vs book {_pct_side(p['book_over'], p['lean'])}%",
+                    "model_pct": _pct_side(p["model_over"], p["lean"]), "book_pct": _pct_side(p["book_over"], p["lean"]),
                     "gap": fnum(abs(p["edge"])), "gap_unit": "%", "book": p.get("book"), "median": p.get("median"),
                     "bet": {"kind": "prop", "game_id": p["game_id"], "pid": p.get("pid"), "player": p["player"],
                             "stat": p.get("stat_key") or p.get("stat"), "label": p.get("label"), "side": p["lean"],
@@ -740,6 +741,16 @@ def weekly_report(live, clv, props_path, week, tracking=None):
         if sea["n"] < 100:
             t.append(f"Season sample is still small ({sea['n']} prop plays). Judge the model after 100+.")
         out["takeaways"] = t
+        # week-by-week series for the dashboard trend charts
+        series = []
+        for w in sorted(set(weeks) | {int(r.get("week") or 0) for r in props}):
+            if not w or w >= (week or 99):
+                continue
+            pr = rec([r for r in props if int(r.get("week") or 0) == w and r.get("tier") == "play"])
+            pk = (live.get("picks_by_week") or {}).get(str(w)) or {}
+            series.append({"week": w, "prop_units": pr["units"], "prop_w": pr["w"], "prop_l": pr["l"],
+                           "spread_w": (pk.get("spread") or {}).get("w", 0), "spread_l": (pk.get("spread") or {}).get("l", 0)})
+        out["series"] = series
         return clean_json(out)
     except Exception as e:  # noqa: BLE001
         log.warning(f"weekly report skipped: {e}")
