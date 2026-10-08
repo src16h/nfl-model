@@ -410,6 +410,86 @@ def lock_combos(game, side_sims, qbs, pts):
     game["sgp_combos"] = out
 
 
+ALT_STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
+ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions"}
+
+
+def build_alt_parlay(game, side_sims):
+    """The model's alt-line parlay: 'alt down' legs (70-92% each) from both teams whose
+    combined true chance lands at fair odds of +100 to +125. Among the options it picks
+    the legs that move together most (they make each other more likely)."""
+    lo_o, hi_o = C.ALT_PARLAY_ODDS
+    p_lo, p_hi = 100 / (hi_o + 100), 100 / (lo_o + 100)          # +125 -> 44.4%, +100 -> 50%
+    cands = []
+    for side in ("home", "away"):
+        sims, rows = side_sims[side]
+        keep = sorted([r for r in rows if r.get("markets") and r["pid"] in sims], key=lambda r: -(r.get("fpts") or 0))
+        taken = {}
+        for r in keep:
+            if taken.get(r["pos"], 0) >= SGP_KEEP.get(r["pos"], 0):
+                continue
+            taken[r["pos"]] = taken.get(r["pos"], 0) + 1
+            for st in ALT_STATS.get(r["pos"], []):
+                arr = sims[r["pid"]].get(st)
+                if arr is None:
+                    continue
+                for x in C.ALT_LADDERS.get(st, []):
+                    hit = arr >= x
+                    p = float(hit.mean())
+                    if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1]:
+                        cands.append({"pid": r["pid"], "name": r["name"], "team": game[side], "pos": r["pos"], "stat": st,
+                                      "line": x - 0.5, "label": f"{x}+ {ALT_LABEL[st]}", "p": p, "hit": hit})
+    if len(cands) < 3:
+        return None
+    teams = {game["home"], game["away"]}
+
+    def search(n_legs):
+        beams = [((i,), cands[i]["hit"]) for i in range(len(cands))]
+        for _ in range(n_legs - 1):
+            nxt = []
+            for idx, h in beams:
+                used = {cands[i]["pid"] for i in idx}
+                qb_legs = sum(1 for i in idx if cands[i]["stat"] == "pass_yds")
+                for j in range(idx[-1] + 1, len(cands)):
+                    if cands[j]["pid"] in used:
+                        continue
+                    # one QB yards leg at most: the model overrates how much the two
+                    # passing games move together (0.20 vs 0.06 in real games)
+                    if qb_legs and cands[j]["stat"] == "pass_yds":
+                        continue
+                    hj = h & cands[j]["hit"]
+                    pj = hj.mean()
+                    if pj >= p_lo:                                  # adding legs only lowers the chance
+                        nxt.append((idx + (j,), hj, pj))
+            # keep the most promising: highest lift (legs that move together)
+            nxt.sort(key=lambda t: -(t[2] / np.prod([cands[i]["p"] for i in t[0]])))
+            beams = [(t[0], t[1]) for t in nxt[:300]]
+        best = None
+        for idx, h in beams:
+            pj = float(h.mean())
+            if not (p_lo <= pj <= p_hi) or {cands[i]["team"] for i in idx} != teams:
+                continue
+            pi = float(np.prod([cands[i]["p"] for i in idx]))
+            score = pj / pi
+            if best is None or score > best[0]:
+                best = (score, idx, pj, pi)
+        return best
+    best = None
+    for n_legs in (C.ALT_PARLAY_LEGS, C.ALT_PARLAY_LEGS - 1, C.ALT_PARLAY_LEGS + 1):
+        best = search(n_legs)
+        if best:
+            break
+    if not best:
+        return None
+    _, idx, pj, pi = best
+    legs = [{"kind": "player", "pid": cands[i]["pid"], "name": cands[i]["name"], "team": cands[i]["team"], "pos": cands[i]["pos"],
+             "stat": cands[i]["stat"], "side": "Over", "line": cands[i]["line"], "label": cands[i]["label"],
+             "p": round(cands[i]["p"] * 100, 1)} for i in idx]
+    legs.sort(key=lambda L: (L["team"] != game["away"], -L["p"]))
+    fair = (1 - pj) / pj * 100
+    return {"legs": legs, "p": round(pj * 100, 1), "pi": round(pi * 100, 1), "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj)))}
+
+
 def write_sgp(game, side_sims, qbs, pnoise):
     """Publish SGP_DRAWS simulated games for one matchup (players + final score)."""
     K = C.SGP_DRAWS
@@ -424,6 +504,10 @@ def write_sgp(game, side_sims, qbs, pnoise):
         lock_combos(game, side_sims, qbs, full)
     except Exception as e:  # noqa: BLE001
         log.warning(f"parlay combos skipped for {game['game_id']}: {str(e)[:120]}")
+    try:
+        game["alt_parlay"] = build_alt_parlay(game, side_sims)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"alt parlay skipped for {game['game_id']}: {str(e)[:120]}")
     for side in ("home", "away"):
         sims, rows = side_sims[side]
         team = game[side]

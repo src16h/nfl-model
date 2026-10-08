@@ -599,7 +599,7 @@ def model_tracking(hist_dir, season, results):
     import json as _json
     cols = results.get("cols") or []
     rg, rp = results.get("games") or {}, results.get("players") or {}
-    mk, tds, combos = [], [], []
+    mk, tds, combos, alts, alt_legs = [], [], [], [], []
     for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
         d = _json.loads(f.read_text())
         week = int(d.get("week") or f.stem.split("week")[-1])
@@ -622,6 +622,15 @@ def model_tracking(hist_dir, season, results):
                 mk.append(("h1_spread", week, 1 - _ncdf((L - H["margin"]) / H["sd_margin"]), hm > L, hm - H["margin"]))
                 L = float(np.floor(H["total"]) + 0.5)
                 mk.append(("h1_total", week, 1 - _ncdf((L - H["total"]) / H["sd_total"]), ht > L, ht - H["total"]))
+            # the model's alt-line parlay
+            ap = hg.get("alt_parlay")
+            if ap and ap.get("legs"):
+                hits = [_leg_hit(L, g, pl, cols) for L in ap["legs"]]
+                for L, hh in zip(ap["legs"], hits):
+                    if hh is not None:
+                        alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
+                if None not in hits:
+                    alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
             # parlay combos locked with the game
             for c in hg.get("sgp_combos") or []:
                 hits = [_leg_hit(L, g, pl, cols) for L in c["legs"]]
@@ -691,5 +700,15 @@ def model_tracking(hist_dir, season, results):
     combo_total = {"n": len(allc), "model": fnum(100 * np.mean([r[2] for r in allc]), 1) if allc else None,
                    "unrelated": fnum(100 * np.mean([r[3] for r in allc]), 1) if allc else None,
                    "actual": fnum(100 * np.mean([r[4] for r in allc]), 1) if allc else None}
-    return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total,
+    alt_out = None
+    if alts:
+        alt_out = {"n": len(alts), "model": fnum(100 * np.mean([a[1] for a in alts]), 1),
+                   "actual": fnum(100 * np.mean([a[2] for a in alts]), 1), "hits": int(sum(a[2] for a in alts)),
+                   "legs_n": len(alt_legs), "legs_model": fnum(100 * np.mean([x[2] for x in alt_legs]), 1) if alt_legs else None,
+                   "legs_actual": fnum(100 * np.mean([x[3] for x in alt_legs]), 1) if alt_legs else None,
+                   "weeks": {str(w): {"n": sum(1 for a in alts if a[0] == w), "hits": int(sum(a[2] for a in alts if a[0] == w))}
+                             for w in sorted({a[0] for a in alts})},
+                   "recent": [{"week": a[0], "game": f"{a[3]} at {a[4]}", "hit": bool(a[2]), "legs_hit": int(a[5]), "legs": int(a[6])}
+                              for a in sorted(alts, key=lambda a: -a[0])[:16]]}
+    return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total, "alt_parlays": alt_out,
             "weeks": sorted({r[1] for r in mk} | {r[1] for r in tds})}

@@ -1036,7 +1036,9 @@ function loadSGP(gid) {
   fetch(`data/sgp/${gid}.json?ts=${Date.now()}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then(j => {
     const d = {home: j.home, away: j.away, n: j.n, ph: decode(j.pts_home), pa: decode(j.pts_away), players: {}};
     for (const [pid, v] of Object.entries(j.players)) { const st = {}; for (const [k, s2] of Object.entries(v.s)) st[k] = decode(s2); d.players[pid] = {...v, s: st}; }
-    PX.data = d; PX.loading = false; renderParlays();
+    PX.data = d; PX.loading = false;
+    if (PX.pendingLegs) { PX.legs = PX.pendingLegs.filter(L => d.players[L.pid] && d.players[L.pid].s[L.stat]); PX.pendingLegs = null; }
+    renderParlays();
   }).catch(() => { PX.loading = false; PX.err = "Simulated games for this matchup aren't available yet. They're published with each model run."; renderParlays(); });
 }
 function legHits(L) {                                // boolean per simulated game
@@ -1116,6 +1118,8 @@ function renderParlays() {
   let h = `<div class="sec-head" style="margin-top:26px"><h2>Same-game parlays</h2><span class="aside">${C_SGP_NOTE}</span></div>
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
     <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
+  const alts = up.filter(g => g.alt_parlay);
+  if (alts.length && !PX.gid) h = altCardsHTML(alts) + h;
   if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
   if (PX.loading) { $("#parlays").innerHTML = h + `<div class="empty">Loading simulated games…</div>`; bindParlays(); return; }
   if (PX.err) { $("#parlays").innerHTML = h + `<div class="empty">${esc(PX.err)}</div>`; bindParlays(); return; }
@@ -1150,7 +1154,23 @@ function renderParlays() {
   bindParlays();
 }
 const C_SGP_NOTE = "Both teams and the final score in one simulation";
+function altCardsHTML(games) {
+  return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, fair odds +100 to +125</span></div>
+    <p class="sub">The model builds one parlay per game from lowered "alt" lines it rates about 70 to 92% each, choosing legs that tend to hit together. Odds shown are fair odds. Your book will usually price these shorter, so tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
+    <div class="tickets">${games.map(g => { const a = g.alt_parlay;
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
+        <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
+        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%</span></div>`).join("")}</div>
+        <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
+        <div class="t-actions"><button class="logbtn" data-altgo="${esc(g.game_id)}">Check my book's price</button></div></div>
+        <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`;
+}
 function bindParlays() {
+  document.querySelectorAll("[data-altgo]").forEach(b => b.onclick = () => {
+    const g = (D.games || []).find(x => x.game_id === b.dataset.altgo); if (!g || !g.alt_parlay) return;
+    PX.form = null; PX.odds = "";
+    const legs = g.alt_parlay.legs.map(L => ({kind: "player", pid: L.pid, stat: L.stat, side: "Over", line: L.line}));
+    loadSGP(g.game_id); PX.pendingLegs = legs; window.scrollTo({top: 0}); });
   const g = $("#pxGame"); if (g) g.onchange = e => { PX.form = null; if (e.target.value) loadSGP(e.target.value); else { PX.gid = ""; renderParlays(); } };
   const k = PX.form;
   const on = (id, f) => { const el = $("#" + id); if (el) el.onchange = e => { f(e.target.value); renderParlays(); }; };
@@ -1320,6 +1340,12 @@ function trackingHTML() {
   const tdKeys = Object.keys(T.tds || {});
   if (tdKeys.length) h += `<h3>Touchdown chances vs reality</h3><div class="tablewrap"><table><thead><tr><th>Bet</th><th>Model said</th><th>Players</th><th>Model avg</th><th>Actually scored</th></tr></thead><tbody>${tdKeys.flatMap(k =>
     T.tds[k].bins.map((b, i) => `<tr><td>${i === 0 ? esc(k) : ""}</td><td>${esc(b.range)}</td><td>${b.n}</td><td>${n(b.model)}%</td><td class="${Math.abs(b.actual - b.model) > 5 && b.n >= 30 ? (b.actual > b.model ? "up" : "down") : ""}">${n(b.actual)}%</td></tr>`)).join("")}</tbody></table></div>`;
+  const A = T.alt_parlays;
+  if (A && A.n) h += `<h3>Model alt-line parlays</h3><div class="strip">
+      <div class="st"><strong>${A.hits}–${A.n - A.hits}</strong><span>Parlays hit, ${n(A.actual)}% (model said ${n(A.model)}%)</span></div>
+      <div class="st"><strong>${n(A.legs_actual)}%</strong><span>Single legs hit (model said ${n(A.legs_model)}%, ${A.legs_n} legs)</span></div></div>
+      <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Week</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${(A.recent || []).map(r =>
+        `<tr><td>${r.week}</td><td>${esc(r.game)}</td><td>${r.legs_hit} of ${r.legs}</td><td><span class="res ${r.hit ? "W" : "L"}">${r.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
   const C = Object.entries(T.combos || {});
   if (C.length) { const ct = T.combo_total || {};
     h += `<h3>Parlay combos</h3><p class="sub">The model locks a standard set of correlated 2-leg parlays for every game at kickoff. If real hit rates land near "Model said" instead of "If unrelated," the correlation engine is earning its keep.</p>

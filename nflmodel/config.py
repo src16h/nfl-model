@@ -199,3 +199,16 @@ SGP_PTS_TD = 1.465           # team points blend: touchdowns
 SGP_PTS_PASS = 0.484         #                    passing yards
 SGP_PTS_RUSH = 0.551         #                    rushing yards
 SGP_DRAWS = 1000             # simulated games published per matchup for the parlay helper
+
+# ------------------------------------------------------------
+# v11: model-built alt-line parlay for every game
+# ------------------------------------------------------------
+ALT_PARLAY_ODDS = (100, 125)       # target fair odds range for the whole parlay
+ALT_PARLAY_LEGS = 4                # preferred number of legs (falls back to 3 or 5)
+ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines)
+ALT_LADDERS = {                    # alt lines books commonly offer (X+ means over X - 0.5)
+    "pass_yds": [150, 175, 200, 225, 250, 275, 300],
+    "rush_yds": [25, 40, 50, 60, 70, 80, 100],
+    "rec_yds": [25, 40, 50, 60, 70, 80, 100],
+    "rec": [2, 3, 4, 5, 6, 7],
+}
