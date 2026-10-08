@@ -213,7 +213,7 @@
    "over_prob": 48.0,
    "qb_home": "Trevor Lawrence",
    "qb_away": "Jalen Hurts",
-   "weather": "83\u00b0F, wind 9 mph, 22% rain",
+   "weather": "81\u00b0F, wind 9 mph, 22% rain",
    "why_margin": [
     {
      "factor": "Success rate matchup",
@@ -347,10 +347,10 @@
    "away": "CHI",
    "home": "GB",
    "neutral": false,
-   "proj_home": 22.3,
+   "proj_home": 22.2,
    "proj_away": 23.3,
    "margin": -1.0,
-   "total": 45.6,
+   "total": 45.5,
    "win_prob_home": 46.4,
    "margin_range": [
     -16.0,
@@ -360,12 +360,12 @@
    "final_line": "GB +1.0",
    "lean_engine": "anchored",
    "indep_margin": -2.5,
-   "indep_total": 46.1,
+   "indep_total": 45.1,
    "market_line": "GB +1.5",
    "market_spread": -1.5,
    "market_total": 45.5,
    "edge_spread": 0.5,
-   "edge_total": 0.1,
+   "edge_total": 0.0,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
@@ -374,7 +374,7 @@
    "over_prob": 51.0,
    "qb_home": "Jordan Love",
    "qb_away": "Caleb Williams",
-   "weather": "76\u00b0F, wind 12 mph, 0% rain",
+   "weather": "76\u00b0F, wind 14 mph, 0% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -403,11 +403,11 @@
      "pts": -1.0
     },
     {
-     "factor": "Outdoors",
-     "pts": -0.5
+     "factor": "Wind",
+     "pts": -0.7
     },
     {
-     "factor": "Division game",
+     "factor": "Outdoors",
      "pts": -0.5
     }
    ],
@@ -418,6 +418,10 @@
     }
    ],
    "why_edge_total": [
+    {
+     "factor": "Wind",
+     "pts": -0.2
+    },
     {
      "factor": "Artificial turf",
      "pts": -0.2
@@ -489,8 +493,8 @@
      "pick": "Over 45.5",
      "side": "Over",
      "line": 45.5,
-     "edge": 0.1,
-     "edge_text": "0.1"
+     "edge": 0.0,
+     "edge_text": "0.0"
     },
     "moneyline": {
      "pick": "GB +110",
@@ -511,8 +515,8 @@
    "away": "CIN",
    "home": "MIA",
    "neutral": false,
-   "proj_home": 17.9,
-   "proj_away": 24.7,
+   "proj_home": 18.0,
+   "proj_away": 24.8,
    "margin": -6.8,
    "total": 42.7,
    "win_prob_home": 27.6,
@@ -524,7 +528,7 @@
    "final_line": "MIA +6.8",
    "lean_engine": "anchored",
    "indep_margin": -4.5,
-   "indep_total": 44.3,
+   "indep_total": 44.5,
    "market_line": "MIA +6.5",
    "market_spread": -6.5,
    "market_total": 42.5,
@@ -569,10 +573,6 @@
     {
      "factor": "Outdoors",
      "pts": -0.5
-    },
-    {
-     "factor": "Wind",
-     "pts": -0.4
     }
    ],
    "why_edge": [
@@ -696,7 +696,7 @@
    "over_prob": 51.0,
    "qb_home": "Drake Maye",
    "qb_away": "Kirk Cousins",
-   "weather": "65\u00b0F, wind 7 mph, 0% rain",
+   "weather": "64\u00b0F, wind 8 mph, 0% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -947,8 +947,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 114.0,
-   "ml_away": -135.0,
+   "ml_home": 124.0,
+   "ml_away": -148.0,
    "win_sigma": 11.37,
    "picks": {
     "spread": {
@@ -966,9 +966,9 @@
      "edge_text": "1.8"
     },
     "moneyline": {
-     "pick": "MIN -135",
+     "pick": "MIN -148",
      "side": "MIN",
-     "odds": "-135",
+     "odds": "-148",
      "edge": 0.7,
      "edge_text": "0.7%",
      "model_pct": 59,
@@ -987,7 +987,7 @@
    "proj_home": 20.9,
    "proj_away": 19.8,
    "margin": 1.1,
-   "total": 40.7,
+   "total": 40.8,
    "win_prob_home": 53.9,
    "margin_range": [
     -15.0,
@@ -997,12 +997,12 @@
    "final_line": "NYJ -1.1",
    "lean_engine": "anchored",
    "indep_margin": -2.7,
-   "indep_total": 41.7,
+   "indep_total": 42.0,
    "market_line": "NYJ -1.5",
    "market_spread": 1.5,
    "market_total": 39.5,
    "edge_spread": -0.4,
-   "edge_total": 1.2,
+   "edge_total": 1.3,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
@@ -1011,7 +1011,7 @@
    "over_prob": 56.0,
    "qb_home": "Geno Smith",
    "qb_away": "Deshaun Watson",
-   "weather": "65\u00b0F, wind 11 mph, 18% rain",
+   "weather": "63\u00b0F, wind 9 mph, 18% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -1106,8 +1106,8 @@
      "pick": "Over 39.5",
      "side": "Over",
      "line": 39.5,
-     "edge": 1.2,
-     "edge_text": "1.2"
+     "edge": 1.3,
+     "edge_text": "1.3"
     },
     "moneyline": {
      "pick": "CLE +105",
@@ -1155,7 +1155,7 @@
    "over_prob": 49.0,
    "qb_home": "Aaron Rodgers",
    "qb_away": "Daniel Jones",
-   "weather": "60\u00b0F, wind 10 mph, 82% rain",
+   "weather": "59\u00b0F, wind 9 mph, 82% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -1297,7 +1297,7 @@
    "over_prob": 52.0,
    "qb_home": "Cam Ward",
    "qb_away": "C.J. Stroud",
-   "weather": "64\u00b0F, wind 8 mph, 39% rain",
+   "weather": "64\u00b0F, wind 7 mph, 39% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -1429,10 +1429,10 @@
    "away": "NYG",
    "home": "WAS",
    "neutral": false,
-   "proj_home": 22.8,
-   "proj_away": 18.5,
+   "proj_home": 22.9,
+   "proj_away": 18.6,
    "margin": 4.3,
-   "total": 41.3,
+   "total": 41.4,
    "win_prob_home": 64.7,
    "margin_range": [
     -9.0,
@@ -1442,12 +1442,12 @@
    "final_line": "WAS -4.3",
    "lean_engine": "anchored",
    "indep_margin": 3.8,
-   "indep_total": 37.0,
+   "indep_total": 38.0,
    "market_line": "WAS -3.5",
    "market_spread": 3.5,
    "market_total": 41.5,
    "edge_spread": 0.8,
-   "edge_total": -0.2,
+   "edge_total": -0.1,
    "lean_side": null,
    "lean_total": null,
    "play_spread": null,
@@ -1456,7 +1456,7 @@
    "over_prob": 50.0,
    "qb_home": "Marcus Mariota",
    "qb_away": "Jameis Winston",
-   "weather": "62\u00b0F, wind 14 mph, 75% rain",
+   "weather": "63\u00b0F, wind 12 mph, 75% rain",
    "why_margin": [
     {
      "factor": "QB accuracy (CPOE)",
@@ -1482,7 +1482,7 @@
     },
     {
      "factor": "Machine-learning patterns",
-     "pts": -1.3
+     "pts": -1.0
     },
     {
      "factor": "Pace",
@@ -1500,10 +1500,6 @@
     }
    ],
    "why_edge_total": [
-    {
-     "factor": "Wind",
-     "pts": -0.3
-    },
     {
      "factor": "Artificial turf",
      "pts": -0.2
@@ -1564,8 +1560,8 @@
      "pick": "Under 41.5",
      "side": "Under",
      "line": 41.5,
-     "edge": 0.2,
-     "edge_text": "0.2"
+     "edge": 0.1,
+     "edge_text": "0.1"
     },
     "moneyline": {
      "pick": "WAS -185",
@@ -1929,7 +1925,7 @@
    "over_prob": 51.0,
    "qb_home": "Sam Darnold",
    "qb_away": "Brock Purdy",
-   "weather": null,
+   "weather": "58\u00b0F, wind 8 mph, 0% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -2161,8 +2157,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -175.0,
-   "ml_away": 145.0,
+   "ml_home": -170.0,
+   "ml_away": 142.0,
    "win_sigma": 11.37,
    "picks": {
     "spread": {
@@ -2180,9 +2176,9 @@
      "edge_text": "0.8"
     },
     "moneyline": {
-     "pick": "ATL -175",
+     "pick": "ATL -170",
      "side": "ATL",
-     "odds": "-175",
+     "odds": "-170",
      "edge": 1.3,
      "edge_text": "1.3%",
      "model_pct": 62,
@@ -2360,7 +2356,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 18.3,
-   "td_prob": 40.0,
+   "td_prob": 40.4,
+   "td2_prob": 10.3,
+   "td_exp": 0.52,
    "fpts_med": 16.9,
    "fpts_range": [
     7.6,
@@ -2385,7 +2383,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 20.0,
-   "td_prob": 67.0,
+   "td_prob": 66.8,
+   "td2_prob": 32.2,
+   "td_exp": 1.17,
    "fpts_med": 18.5,
    "fpts_range": [
     8.5,
@@ -2418,7 +2418,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 1.8,
-   "td_prob": 7.0,
+   "td_prob": 7.4,
+   "td2_prob": 0.3,
+   "td_exp": 0.08,
    "fpts_med": 0.9,
    "fpts_range": [
     0.1,
@@ -2442,7 +2444,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 12.6,
-   "td_prob": 29.0,
+   "td_prob": 28.8,
+   "td2_prob": 5.2,
+   "td_exp": 0.35,
    "fpts_med": 11.4,
    "fpts_range": [
     4.0,
@@ -2467,7 +2471,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 7.7,
-   "td_prob": 27.0,
+   "td_prob": 26.5,
+   "td2_prob": 4.1,
+   "td_exp": 0.3,
    "fpts_med": 6.3,
    "fpts_range": [
     0.9,
@@ -2492,7 +2498,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 7.5,
-   "td_prob": 24.0,
+   "td_prob": 23.6,
+   "td2_prob": 3.2,
+   "td_exp": 0.28,
    "fpts_med": 6.3,
    "fpts_range": [
     1.1,
@@ -2517,7 +2525,9 @@
    "opp": "TB",
    "status": "",
    "fpts": 17.3,
-   "td_prob": 2.0,
+   "td_prob": 2.3,
+   "td2_prob": 0.0,
+   "td_exp": 0.02,
    "fpts_med": 16.5,
    "fpts_range": [
     8.5,
@@ -2551,7 +2561,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 9.6,
-   "td_prob": 14.0,
+   "td_prob": 14.3,
+   "td2_prob": 1.1,
+   "td_exp": 0.16,
    "fpts_med": 8.3,
    "fpts_range": [
     2.3,
@@ -2576,7 +2588,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 5.7,
-   "td_prob": 19.0,
+   "td_prob": 19.2,
+   "td2_prob": 2.1,
+   "td_exp": 0.22,
    "fpts_med": 4.2,
    "fpts_range": [
     0.5,
@@ -2609,7 +2623,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 11.4,
-   "td_prob": 18.0,
+   "td_prob": 17.6,
+   "td2_prob": 1.7,
+   "td_exp": 0.2,
    "fpts_med": 10.0,
    "fpts_range": [
     3.1,
@@ -2634,7 +2650,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 3.2,
-   "td_prob": 21.0,
+   "td_prob": 20.6,
+   "td2_prob": 2.9,
+   "td_exp": 0.23,
    "fpts_med": 1.7,
    "fpts_range": [
     0.3,
@@ -2658,7 +2676,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 15.8,
-   "td_prob": 47.0,
+   "td_prob": 46.9,
+   "td2_prob": 14.3,
+   "td_exp": 0.66,
    "fpts_med": 14.4,
    "fpts_range": [
     6.6,
@@ -2691,7 +2711,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 13.8,
-   "td_prob": 30.0,
+   "td_prob": 29.9,
+   "td2_prob": 5.0,
+   "td_exp": 0.35,
    "fpts_med": 12.6,
    "fpts_range": [
     4.7,
@@ -2716,7 +2738,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 5.4,
-   "td_prob": 13.0,
+   "td_prob": 13.2,
+   "td2_prob": 0.9,
+   "td_exp": 0.14,
    "fpts_med": 4.1,
    "fpts_range": [
     0.5,
@@ -2749,7 +2773,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 4.9,
-   "td_prob": 12.0,
+   "td_prob": 11.6,
+   "td2_prob": 0.7,
+   "td_exp": 0.12,
    "fpts_med": 3.6,
    "fpts_range": [
     0.2,
@@ -2774,7 +2800,9 @@
    "opp": "DAL",
    "status": "",
    "fpts": 16.0,
-   "td_prob": 4.0,
+   "td_prob": 3.5,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 15.4,
    "fpts_range": [
     7.5,
@@ -2809,6 +2837,8 @@
    "status": "",
    "fpts": 8.8,
    "td_prob": 25.0,
+   "td2_prob": 3.7,
+   "td_exp": 0.3,
    "fpts_med": 7.6,
    "fpts_range": [
     1.8,
@@ -2833,7 +2863,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 14.1,
-   "td_prob": 35.0,
+   "td_prob": 35.4,
+   "td2_prob": 7.4,
+   "td_exp": 0.44,
    "fpts_med": 13.1,
    "fpts_range": [
     5.1,
@@ -2866,7 +2898,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 3.7,
-   "td_prob": 18.0,
+   "td_prob": 18.1,
+   "td2_prob": 2.2,
+   "td_exp": 0.21,
    "fpts_med": 2.4,
    "fpts_range": [
     0.7,
@@ -2890,7 +2924,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 10.2,
-   "td_prob": 23.0,
+   "td_prob": 23.4,
+   "td2_prob": 3.2,
+   "td_exp": 0.28,
    "fpts_med": 9.0,
    "fpts_range": [
     2.5,
@@ -2915,7 +2951,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 8.9,
-   "td_prob": 23.0,
+   "td_prob": 23.2,
+   "td2_prob": 2.9,
+   "td_exp": 0.26,
    "fpts_med": 7.7,
    "fpts_range": [
     1.9,
@@ -2940,7 +2978,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 13.4,
-   "td_prob": 47.0,
+   "td_prob": 47.3,
+   "td2_prob": 14.2,
+   "td_exp": 0.66,
    "fpts_med": 12.1,
    "fpts_range": [
     5.2,
@@ -2973,7 +3013,9 @@
    "opp": "PHI",
    "status": "",
    "fpts": 17.5,
-   "td_prob": 10.0,
+   "td_prob": 10.1,
+   "td2_prob": 0.4,
+   "td_exp": 0.11,
    "fpts_med": 16.7,
    "fpts_range": [
     8.7,
@@ -3007,7 +3049,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 7.9,
-   "td_prob": 21.0,
+   "td_prob": 20.8,
+   "td2_prob": 2.4,
+   "td_exp": 0.23,
    "fpts_med": 6.7,
    "fpts_range": [
     1.2,
@@ -3032,7 +3076,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 13.6,
-   "td_prob": 36.0,
+   "td_prob": 36.5,
+   "td2_prob": 8.1,
+   "td_exp": 0.46,
    "fpts_med": 12.3,
    "fpts_range": [
     5.5,
@@ -3065,7 +3111,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 17.1,
-   "td_prob": 26.0,
+   "td_prob": 26.1,
+   "td2_prob": 4.2,
+   "td_exp": 0.32,
    "fpts_med": 16.0,
    "fpts_range": [
     7.0,
@@ -3090,7 +3138,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 7.7,
-   "td_prob": 18.0,
+   "td_prob": 18.3,
+   "td2_prob": 1.8,
+   "td_exp": 0.21,
    "fpts_med": 6.5,
    "fpts_range": [
     1.4,
@@ -3115,7 +3165,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 4.3,
-   "td_prob": 13.0,
+   "td_prob": 13.4,
+   "td2_prob": 1.0,
+   "td_exp": 0.14,
    "fpts_med": 2.9,
    "fpts_range": [
     0.5,
@@ -3148,7 +3200,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 5.1,
-   "td_prob": 16.0,
+   "td_prob": 16.2,
+   "td2_prob": 1.4,
+   "td_exp": 0.18,
    "fpts_med": 3.8,
    "fpts_range": [
     0.2,
@@ -3173,7 +3227,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 5.2,
-   "td_prob": 6.0,
+   "td_prob": 6.1,
+   "td2_prob": 0.2,
+   "td_exp": 0.07,
    "fpts_med": 3.9,
    "fpts_range": [
     0.4,
@@ -3198,7 +3254,9 @@
    "opp": "JAX",
    "status": "",
    "fpts": 16.6,
-   "td_prob": 13.0,
+   "td_prob": 12.7,
+   "td2_prob": 0.8,
+   "td_exp": 0.14,
    "fpts_med": 15.6,
    "fpts_range": [
     8.6,
@@ -3232,11 +3290,13 @@
    "opp": "CHI",
    "status": "",
    "fpts": 3.9,
-   "td_prob": 16.0,
+   "td_prob": 15.2,
+   "td2_prob": 1.4,
+   "td_exp": 0.17,
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
-    9.9
+    9.7
    ],
    "targets": 2.1,
    "rec": 1.3,
@@ -3256,11 +3316,13 @@
    "team": "GB",
    "opp": "CHI",
    "status": "",
-   "fpts": 14.5,
-   "td_prob": 40.0,
-   "fpts_med": 13.2,
+   "fpts": 14.4,
+   "td_prob": 39.1,
+   "td2_prob": 9.3,
+   "td_exp": 0.51,
+   "fpts_med": 13.1,
    "fpts_range": [
-    5.2,
+    5.1,
     25.2
    ],
    "targets": 7.2,
@@ -3282,15 +3344,17 @@
    "opp": "CHI",
    "status": "",
    "fpts": 5.6,
-   "td_prob": 21.0,
-   "fpts_med": 4.2,
+   "td_prob": 21.3,
+   "td2_prob": 2.6,
+   "td_exp": 0.23,
+   "fpts_med": 4.3,
    "fpts_range": [
-    1.2,
+    1.3,
     11.8
    ],
    "carries": 5.4,
    "rush_yds": 25.0,
-   "rush_yds_med": 21.0,
+   "rush_yds_med": 20.0,
    "rush_yds_range": [
     7.0,
     47.0
@@ -3315,11 +3379,13 @@
    "opp": "CHI",
    "status": "",
    "fpts": 10.8,
-   "td_prob": 32.0,
-   "fpts_med": 9.6,
+   "td_prob": 31.1,
+   "td2_prob": 5.9,
+   "td_exp": 0.39,
+   "fpts_med": 9.5,
    "fpts_range": [
     2.7,
-    20.2
+    20.3
    ],
    "targets": 5.5,
    "rec": 3.8,
@@ -3339,9 +3405,11 @@
    "team": "GB",
    "opp": "CHI",
    "status": "",
-   "fpts": 9.1,
+   "fpts": 9.0,
    "td_prob": 34.0,
-   "fpts_med": 7.9,
+   "td2_prob": 6.6,
+   "td_exp": 0.42,
+   "fpts_med": 8.1,
    "fpts_range": [
     2.5,
     17.0
@@ -3373,7 +3441,9 @@
    "opp": "CHI",
    "status": "",
    "fpts": 3.9,
-   "td_prob": 13.0,
+   "td_prob": 13.1,
+   "td2_prob": 0.8,
+   "td_exp": 0.14,
    "fpts_med": 2.9,
    "fpts_range": [
     1.0,
@@ -3384,7 +3454,7 @@
    "rush_yds_med": 23.0,
    "rush_yds_range": [
     9.0,
-    52.0
+    51.0
    ],
    "rush_td": 0.13
   },
@@ -3397,11 +3467,13 @@
    "opp": "CHI",
    "status": "",
    "fpts": 13.0,
-   "td_prob": 28.0,
+   "td_prob": 29.0,
+   "td2_prob": 4.7,
+   "td_exp": 0.34,
    "fpts_med": 11.8,
    "fpts_range": [
-    4.4,
-    22.8
+    4.5,
+    22.9
    ],
    "carries": 0.8,
    "rush_yds": 5.0,
@@ -3419,7 +3491,7 @@
     18.0,
     116.0
    ],
-   "rec_td": 0.33
+   "rec_td": 0.32
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -3430,8 +3502,10 @@
    "opp": "CHI",
    "status": "",
    "fpts": 16.5,
-   "td_prob": 3.0,
-   "fpts_med": 15.8,
+   "td_prob": 3.2,
+   "td2_prob": 0.1,
+   "td_exp": 0.03,
+   "fpts_med": 15.7,
    "fpts_range": [
     8.2,
     26.1
@@ -3464,11 +3538,13 @@
    "opp": "GB",
    "status": "",
    "fpts": 7.2,
-   "td_prob": 15.0,
+   "td_prob": 16.0,
+   "td2_prob": 1.3,
+   "td_exp": 0.17,
    "fpts_med": 6.0,
    "fpts_range": [
     1.0,
-    15.0
+    15.1
    ],
    "targets": 3.9,
    "rec": 2.9,
@@ -3489,8 +3565,10 @@
    "opp": "GB",
    "status": "",
    "fpts": 15.9,
-   "td_prob": 46.0,
-   "fpts_med": 14.6,
+   "td_prob": 45.5,
+   "td2_prob": 14.0,
+   "td_exp": 0.63,
+   "fpts_med": 14.5,
    "fpts_range": [
     6.5,
     26.8
@@ -3522,7 +3600,9 @@
    "opp": "GB",
    "status": "",
    "fpts": 4.2,
-   "td_prob": 9.0,
+   "td_prob": 8.7,
+   "td2_prob": 0.4,
+   "td_exp": 0.09,
    "fpts_med": 2.7,
    "fpts_range": [
     0.1,
@@ -3547,11 +3627,13 @@
    "opp": "GB",
    "status": "",
    "fpts": 9.9,
-   "td_prob": 19.0,
+   "td_prob": 18.6,
+   "td2_prob": 2.0,
+   "td_exp": 0.21,
    "fpts_med": 8.8,
    "fpts_range": [
-    2.6,
-    18.6
+    2.5,
+    18.7
    ],
    "targets": 6.4,
    "rec": 3.5,
@@ -3572,11 +3654,13 @@
    "opp": "GB",
    "status": "",
    "fpts": 11.9,
-   "td_prob": 30.0,
-   "fpts_med": 10.7,
+   "td_prob": 30.3,
+   "td2_prob": 5.8,
+   "td_exp": 0.37,
+   "fpts_med": 10.8,
    "fpts_range": [
-    3.1,
-    22.1
+    3.2,
+    22.2
    ],
    "targets": 7.1,
    "rec": 4.6,
@@ -3586,7 +3670,7 @@
     11.0,
     103.0
    ],
-   "rec_td": 0.37
+   "rec_td": 0.36
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -3597,18 +3681,20 @@
    "opp": "GB",
    "status": "",
    "fpts": 11.1,
-   "td_prob": 39.0,
+   "td_prob": 38.2,
+   "td2_prob": 9.3,
+   "td_exp": 0.49,
    "fpts_med": 9.9,
    "fpts_range": [
-    3.8,
-    20.2
+    3.7,
+    20.0
    ],
    "carries": 12.4,
    "rush_yds": 58.0,
    "rush_yds_med": 50.0,
    "rush_yds_range": [
     23.0,
-    100.0
+    99.0
    ],
    "rush_td": 0.42,
    "targets": 1.8,
@@ -3630,11 +3716,13 @@
    "opp": "GB",
    "status": "",
    "fpts": 12.6,
-   "td_prob": 28.0,
+   "td_prob": 27.6,
+   "td2_prob": 4.7,
+   "td_exp": 0.33,
    "fpts_med": 11.4,
    "fpts_range": [
     3.9,
-    22.9
+    22.7
    ],
    "carries": 0.6,
    "rush_yds": 4.0,
@@ -3663,11 +3751,13 @@
    "opp": "GB",
    "status": "",
    "fpts": 17.3,
-   "td_prob": 5.0,
-   "fpts_med": 16.3,
+   "td_prob": 5.1,
+   "td2_prob": 0.2,
+   "td_exp": 0.05,
+   "fpts_med": 16.4,
    "fpts_range": [
     8.8,
-    26.7
+    26.8
    ],
    "pass_att": 36.4,
    "pass_cmp": 22.4,
@@ -3681,10 +3771,10 @@
    "pass_int": 0.74,
    "carries": 3.9,
    "rush_yds": 26.0,
-   "rush_yds_med": 22.0,
+   "rush_yds_med": 21.0,
    "rush_yds_range": [
     6.0,
-    51.0
+    52.0
    ],
    "rush_td": 0.05
   },
@@ -3697,11 +3787,13 @@
    "opp": "CIN",
    "status": "",
    "fpts": 9.1,
-   "td_prob": 26.0,
+   "td_prob": 25.6,
+   "td2_prob": 3.9,
+   "td_exp": 0.3,
    "fpts_med": 7.9,
    "fpts_range": [
-    1.9,
-    17.9
+    1.8,
+    17.6
    ],
    "targets": 4.5,
    "rec": 3.4,
@@ -3722,10 +3814,12 @@
    "opp": "CIN",
    "status": "",
    "fpts": 4.0,
-   "td_prob": 17.0,
+   "td_prob": 17.3,
+   "td2_prob": 1.7,
+   "td_exp": 0.2,
    "fpts_med": 2.7,
    "fpts_range": [
-    0.9,
+    0.8,
     8.8
    ],
    "carries": 5.5,
@@ -3747,17 +3841,19 @@
    "status": "",
    "fpts": 18.5,
    "td_prob": 37.0,
+   "td2_prob": 8.5,
+   "td_exp": 0.48,
    "fpts_med": 17.3,
    "fpts_range": [
     8.4,
-    29.9
+    29.8
    ],
    "carries": 2.4,
    "rush_yds": 15.0,
    "rush_yds_med": 11.0,
    "rush_yds_range": [
     3.0,
-    32.0
+    31.0
    ],
    "rush_td": 0.11,
    "targets": 9.7,
@@ -3778,21 +3874,23 @@
    "team": "MIA",
    "opp": "CIN",
    "status": "",
-   "fpts": 11.2,
-   "td_prob": 40.0,
-   "fpts_med": 10.2,
+   "fpts": 11.3,
+   "td_prob": 39.1,
+   "td2_prob": 9.6,
+   "td_exp": 0.51,
+   "fpts_med": 10.1,
    "fpts_range": [
     4.0,
-    20.1
+    19.9
    ],
    "carries": 12.3,
    "rush_yds": 53.0,
    "rush_yds_med": 47.0,
    "rush_yds_range": [
     24.0,
-    88.0
+    87.0
    ],
-   "rush_td": 0.45,
+   "rush_td": 0.46,
    "targets": 2.0,
    "rec": 1.7,
    "rec_yds": 12.0,
@@ -3812,7 +3910,9 @@
    "opp": "CIN",
    "status": "",
    "fpts": 3.2,
-   "td_prob": 9.0,
+   "td_prob": 8.9,
+   "td2_prob": 0.4,
+   "td_exp": 0.09,
    "fpts_med": 1.9,
    "fpts_range": [
     0.1,
@@ -3837,7 +3937,9 @@
    "opp": "CIN",
    "status": "",
    "fpts": 6.4,
-   "td_prob": 8.0,
+   "td_prob": 7.9,
+   "td2_prob": 0.3,
+   "td_exp": 0.08,
    "fpts_med": 5.3,
    "fpts_range": [
     1.2,
@@ -3862,11 +3964,13 @@
    "opp": "CIN",
    "status": "",
    "fpts": 4.3,
-   "td_prob": 13.0,
+   "td_prob": 13.1,
+   "td2_prob": 1.0,
+   "td_exp": 0.13,
    "fpts_med": 3.0,
    "fpts_range": [
     0.2,
-    10.1
+    10.3
    ],
    "targets": 2.6,
    "rec": 1.5,
@@ -3887,11 +3991,13 @@
    "opp": "CIN",
    "status": "",
    "fpts": 15.2,
-   "td_prob": 4.0,
-   "fpts_med": 14.3,
+   "td_prob": 3.1,
+   "td2_prob": 0.1,
+   "td_exp": 0.03,
+   "fpts_med": 14.4,
    "fpts_range": [
     8.0,
-    23.6
+    23.5
    ],
    "pass_att": 30.1,
    "pass_cmp": 18.8,
@@ -3921,11 +4027,13 @@
    "opp": "MIA",
    "status": "",
    "fpts": 6.0,
-   "td_prob": 22.0,
+   "td_prob": 21.6,
+   "td2_prob": 3.0,
+   "td_exp": 0.25,
    "fpts_med": 4.5,
    "fpts_range": [
     1.1,
-    12.7
+    12.8
    ],
    "carries": 5.2,
    "rush_yds": 22.0,
@@ -3954,11 +4062,13 @@
    "opp": "MIA",
    "status": "",
    "fpts": 5.7,
-   "td_prob": 19.0,
-   "fpts_med": 4.2,
+   "td_prob": 18.9,
+   "td2_prob": 2.4,
+   "td_exp": 0.22,
+   "fpts_med": 4.3,
    "fpts_range": [
     0.2,
-    13.0
+    12.9
    ],
    "targets": 2.7,
    "rec": 2.1,
@@ -3979,8 +4089,10 @@
    "opp": "MIA",
    "status": "",
    "fpts": 15.3,
-   "td_prob": 33.0,
-   "fpts_med": 14.0,
+   "td_prob": 33.7,
+   "td2_prob": 6.7,
+   "td_exp": 0.41,
+   "fpts_med": 14.1,
    "fpts_range": [
     5.6,
     26.4
@@ -4005,10 +4117,12 @@
    "status": "",
    "fpts": 16.1,
    "td_prob": 39.0,
-   "fpts_med": 14.9,
+   "td2_prob": 9.7,
+   "td_exp": 0.51,
+   "fpts_med": 14.8,
    "fpts_range": [
-    5.5,
-    28.0
+    5.6,
+    28.1
    ],
    "targets": 8.2,
    "rec": 6.1,
@@ -4028,18 +4142,20 @@
    "team": "CIN",
    "opp": "MIA",
    "status": "",
-   "fpts": 19.5,
-   "td_prob": 50.0,
-   "fpts_med": 18.2,
+   "fpts": 19.6,
+   "td_prob": 51.0,
+   "td2_prob": 17.2,
+   "td_exp": 0.72,
+   "fpts_med": 18.1,
    "fpts_range": [
-    8.6,
-    32.2
+    8.7,
+    32.0
    ],
    "carries": 18.1,
    "rush_yds": 76.0,
-   "rush_yds_med": 69.0,
+   "rush_yds_med": 68.0,
    "rush_yds_range": [
-    39.0,
+    38.0,
     121.0
    ],
    "rush_td": 0.5,
@@ -4062,7 +4178,9 @@
    "opp": "MIA",
    "status": "",
    "fpts": 3.5,
-   "td_prob": 18.0,
+   "td_prob": 17.8,
+   "td2_prob": 1.8,
+   "td_exp": 0.2,
    "fpts_med": 1.9,
    "fpts_range": [
     0.0,
@@ -4087,7 +4205,9 @@
    "opp": "MIA",
    "status": "",
    "fpts": 5.0,
-   "td_prob": 8.0,
+   "td_prob": 7.7,
+   "td2_prob": 0.3,
+   "td_exp": 0.08,
    "fpts_med": 3.6,
    "fpts_range": [
     0.3,
@@ -4112,11 +4232,13 @@
    "opp": "MIA",
    "status": "",
    "fpts": 17.6,
-   "td_prob": 6.0,
+   "td_prob": 5.9,
+   "td2_prob": 0.3,
+   "td_exp": 0.06,
    "fpts_med": 16.7,
    "fpts_range": [
-    8.3,
-    28.0
+    8.4,
+    27.9
    ],
    "pass_att": 35.0,
    "pass_cmp": 24.6,
@@ -4146,7 +4268,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 10.1,
-   "td_prob": 26.0,
+   "td_prob": 26.1,
+   "td2_prob": 4.1,
+   "td_exp": 0.31,
    "fpts_med": 9.0,
    "fpts_range": [
     2.4,
@@ -4172,6 +4296,8 @@
    "status": "",
    "fpts": 10.3,
    "td_prob": 24.0,
+   "td2_prob": 3.2,
+   "td_exp": 0.28,
    "fpts_med": 9.0,
    "fpts_range": [
     2.6,
@@ -4196,7 +4322,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 15.7,
-   "td_prob": 46.0,
+   "td_prob": 46.5,
+   "td2_prob": 12.8,
+   "td_exp": 0.62,
    "fpts_med": 14.3,
    "fpts_range": [
     6.4,
@@ -4229,7 +4357,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 7.5,
-   "td_prob": 27.0,
+   "td_prob": 26.7,
+   "td2_prob": 3.9,
+   "td_exp": 0.3,
    "fpts_med": 6.5,
    "fpts_range": [
     1.2,
@@ -4254,7 +4384,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 7.9,
-   "td_prob": 21.0,
+   "td_prob": 20.8,
+   "td2_prob": 2.5,
+   "td_exp": 0.23,
    "fpts_med": 6.8,
    "fpts_range": [
     1.4,
@@ -4279,7 +4411,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 2.6,
-   "td_prob": 4.0,
+   "td_prob": 4.4,
+   "td2_prob": 0.1,
+   "td_exp": 0.05,
    "fpts_med": 1.4,
    "fpts_range": [
     0.0,
@@ -4305,6 +4439,8 @@
    "status": "",
    "fpts": 10.8,
    "td_prob": 38.0,
+   "td2_prob": 8.8,
+   "td_exp": 0.49,
    "fpts_med": 9.7,
    "fpts_range": [
     3.6,
@@ -4337,7 +4473,9 @@
    "opp": "LV",
    "status": "",
    "fpts": 18.8,
-   "td_prob": 12.0,
+   "td_prob": 11.9,
+   "td2_prob": 0.8,
+   "td_exp": 0.13,
    "fpts_med": 18.1,
    "fpts_range": [
     9.6,
@@ -4371,7 +4509,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 4.0,
-   "td_prob": 19.0,
+   "td_prob": 18.7,
+   "td2_prob": 2.2,
+   "td_exp": 0.21,
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
@@ -4396,7 +4536,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 10.9,
-   "td_prob": 22.0,
+   "td_prob": 21.5,
+   "td2_prob": 2.5,
+   "td_exp": 0.23,
    "fpts_med": 9.9,
    "fpts_range": [
     3.3,
@@ -4421,7 +4563,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 9.6,
-   "td_prob": 22.0,
+   "td_prob": 22.5,
+   "td2_prob": 2.9,
+   "td_exp": 0.26,
    "fpts_med": 8.5,
    "fpts_range": [
     2.1,
@@ -4446,7 +4590,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 12.6,
-   "td_prob": 33.0,
+   "td_prob": 32.6,
+   "td2_prob": 6.8,
+   "td_exp": 0.41,
    "fpts_med": 11.4,
    "fpts_range": [
     3.8,
@@ -4472,6 +4618,8 @@
    "status": "",
    "fpts": 19.4,
    "td_prob": 57.0,
+   "td2_prob": 21.9,
+   "td_exp": 0.87,
    "fpts_med": 18.1,
    "fpts_range": [
     9.0,
@@ -4504,7 +4652,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 3.2,
-   "td_prob": 11.0,
+   "td_prob": 10.7,
+   "td2_prob": 0.6,
+   "td_exp": 0.11,
    "fpts_med": 2.1,
    "fpts_range": [
     0.6,
@@ -4537,7 +4687,9 @@
    "opp": "NE",
    "status": "",
    "fpts": 14.6,
-   "td_prob": 0.0,
+   "td_prob": 0.1,
+   "td2_prob": 0.0,
+   "td_exp": 0.0,
    "fpts_med": 13.8,
    "fpts_range": [
     6.2,
@@ -4572,6 +4724,8 @@
    "status": "",
    "fpts": 11.6,
    "td_prob": 36.0,
+   "td2_prob": 7.9,
+   "td_exp": 0.45,
    "fpts_med": 10.3,
    "fpts_range": [
     3.9,
@@ -4604,7 +4758,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 3.2,
-   "td_prob": 11.0,
+   "td_prob": 10.9,
+   "td2_prob": 0.7,
+   "td_exp": 0.12,
    "fpts_med": 1.6,
    "fpts_range": [
     0.0,
@@ -4629,7 +4785,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 11.4,
-   "td_prob": 25.0,
+   "td_prob": 25.4,
+   "td2_prob": 3.7,
+   "td_exp": 0.3,
    "fpts_med": 10.1,
    "fpts_range": [
     3.0,
@@ -4654,7 +4812,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 18.7,
-   "td_prob": 33.0,
+   "td_prob": 33.3,
+   "td2_prob": 6.6,
+   "td_exp": 0.41,
    "fpts_med": 17.4,
    "fpts_range": [
     8.1,
@@ -4679,7 +4839,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 5.2,
-   "td_prob": 17.0,
+   "td_prob": 17.1,
+   "td2_prob": 1.5,
+   "td_exp": 0.19,
    "fpts_med": 3.8,
    "fpts_range": [
     1.2,
@@ -4712,7 +4874,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 9.6,
-   "td_prob": 24.0,
+   "td_prob": 23.8,
+   "td2_prob": 3.3,
+   "td_exp": 0.27,
    "fpts_med": 8.3,
    "fpts_range": [
     2.1,
@@ -4737,7 +4901,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 3.6,
-   "td_prob": 10.0,
+   "td_prob": 10.2,
+   "td2_prob": 0.5,
+   "td_exp": 0.1,
    "fpts_med": 2.2,
    "fpts_range": [
     0.1,
@@ -4762,7 +4928,9 @@
    "opp": "MIN",
    "status": "",
    "fpts": 17.7,
-   "td_prob": 15.0,
+   "td_prob": 14.8,
+   "td2_prob": 1.3,
+   "td_exp": 0.16,
    "fpts_med": 17.0,
    "fpts_range": [
     9.1,
@@ -4797,6 +4965,8 @@
    "status": "",
    "fpts": 22.3,
    "td_prob": 66.0,
+   "td2_prob": 30.7,
+   "td_exp": 1.13,
    "fpts_med": 20.7,
    "fpts_range": [
     10.7,
@@ -4830,6 +5000,8 @@
    "status": "",
    "fpts": 12.5,
    "td_prob": 34.0,
+   "td2_prob": 7.2,
+   "td_exp": 0.42,
    "fpts_med": 11.3,
    "fpts_range": [
     4.0,
@@ -4854,7 +5026,9 @@
    "opp": "NO",
    "status": "",
    "fpts": 12.2,
-   "td_prob": 34.0,
+   "td_prob": 34.1,
+   "td2_prob": 6.9,
+   "td_exp": 0.43,
    "fpts_med": 11.1,
    "fpts_range": [
     3.9,
@@ -4879,7 +5053,9 @@
    "opp": "NO",
    "status": "",
    "fpts": 11.1,
-   "td_prob": 25.0,
+   "td_prob": 24.6,
+   "td2_prob": 3.5,
+   "td_exp": 0.29,
    "fpts_med": 10.2,
    "fpts_range": [
     3.7,
@@ -4904,7 +5080,9 @@
    "opp": "NO",
    "status": "",
    "fpts": 14.2,
-   "td_prob": 0.0,
+   "td_prob": 0.5,
+   "td2_prob": 0.0,
+   "td_exp": 0.01,
    "fpts_med": 13.4,
    "fpts_range": [
     6.4,
@@ -4938,11 +5116,13 @@
    "opp": "CLE",
    "status": "",
    "fpts": 12.2,
-   "td_prob": 26.0,
-   "fpts_med": 11.0,
+   "td_prob": 25.5,
+   "td2_prob": 4.0,
+   "td_exp": 0.31,
+   "fpts_med": 11.1,
    "fpts_range": [
     4.2,
-    21.5
+    21.4
    ],
    "targets": 7.1,
    "rec": 4.7,
@@ -4963,11 +5143,13 @@
    "opp": "CLE",
    "status": "",
    "fpts": 3.8,
-   "td_prob": 12.0,
+   "td_prob": 12.5,
+   "td2_prob": 0.9,
+   "td_exp": 0.13,
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
-    9.2
+    9.3
    ],
    "targets": 2.0,
    "rec": 1.6,
@@ -4988,18 +5170,20 @@
    "opp": "CLE",
    "status": "",
    "fpts": 15.1,
-   "td_prob": 45.0,
-   "fpts_med": 14.0,
+   "td_prob": 45.4,
+   "td2_prob": 12.0,
+   "td_exp": 0.6,
+   "fpts_med": 13.9,
    "fpts_range": [
-    6.4,
-    24.9
+    6.3,
+    25.0
    ],
    "carries": 15.8,
    "rush_yds": 68.0,
-   "rush_yds_med": 62.0,
+   "rush_yds_med": 61.0,
    "rush_yds_range": [
     33.0,
-    110.0
+    108.0
    ],
    "rush_td": 0.46,
    "targets": 3.2,
@@ -5021,7 +5205,9 @@
    "opp": "CLE",
    "status": "",
    "fpts": 5.2,
-   "td_prob": 11.0,
+   "td_prob": 10.6,
+   "td2_prob": 0.5,
+   "td_exp": 0.11,
    "fpts_med": 4.1,
    "fpts_range": [
     0.5,
@@ -5046,15 +5232,17 @@
    "opp": "CLE",
    "status": "",
    "fpts": 7.7,
-   "td_prob": 37.0,
-   "fpts_med": 6.8,
+   "td_prob": 36.4,
+   "td2_prob": 7.8,
+   "td_exp": 0.46,
+   "fpts_med": 6.6,
    "fpts_range": [
     1.8,
-    14.9
+    15.0
    ],
    "carries": 7.2,
    "rush_yds": 31.0,
-   "rush_yds_med": 26.0,
+   "rush_yds_med": 25.0,
    "rush_yds_range": [
     10.0,
     56.0
@@ -5079,11 +5267,13 @@
    "opp": "CLE",
    "status": "",
    "fpts": 7.1,
-   "td_prob": 20.0,
-   "fpts_med": 6.1,
+   "td_prob": 19.9,
+   "td2_prob": 2.4,
+   "td_exp": 0.23,
+   "fpts_med": 6.0,
    "fpts_range": [
     1.3,
-    14.4
+    14.3
    ],
    "targets": 4.4,
    "rec": 2.4,
@@ -5104,11 +5294,13 @@
    "opp": "CLE",
    "status": "",
    "fpts": 3.4,
-   "td_prob": 9.0,
+   "td_prob": 9.7,
+   "td2_prob": 0.5,
+   "td_exp": 0.11,
    "fpts_med": 2.0,
    "fpts_range": [
     0.0,
-    8.6
+    8.7
    ],
    "targets": 2.1,
    "rec": 1.4,
@@ -5128,12 +5320,14 @@
    "team": "NYJ",
    "opp": "CLE",
    "status": "",
-   "fpts": 5.3,
-   "td_prob": 9.0,
+   "fpts": 5.4,
+   "td_prob": 9.8,
+   "td2_prob": 0.4,
+   "td_exp": 0.1,
    "fpts_med": 4.2,
    "fpts_range": [
     0.5,
-    11.5
+    11.7
    ],
    "targets": 3.2,
    "rec": 2.3,
@@ -5154,11 +5348,13 @@
    "opp": "CLE",
    "status": "",
    "fpts": 13.1,
-   "td_prob": 0.0,
+   "td_prob": 0.7,
+   "td2_prob": 0.0,
+   "td_exp": 0.01,
    "fpts_med": 12.4,
    "fpts_range": [
     5.7,
-    21.7
+    21.6
    ],
    "pass_att": 30.0,
    "pass_cmp": 19.2,
@@ -5189,10 +5385,12 @@
    "status": "",
    "fpts": 6.4,
    "td_prob": 12.0,
+   "td2_prob": 0.8,
+   "td_exp": 0.12,
    "fpts_med": 5.2,
    "fpts_range": [
     0.8,
-    13.6
+    13.5
    ],
    "targets": 4.3,
    "rec": 2.5,
@@ -5213,18 +5411,20 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 4.9,
-   "td_prob": 11.0,
+   "td_prob": 10.3,
+   "td2_prob": 0.5,
+   "td_exp": 0.11,
    "fpts_med": 3.4,
    "fpts_range": [
     0.5,
-    11.3
+    11.1
    ],
    "carries": 2.2,
    "rush_yds": 9.0,
    "rush_yds_med": 6.0,
    "rush_yds_range": [
     1.0,
-    22.0
+    21.0
    ],
    "rush_td": 0.06,
    "targets": 2.2,
@@ -5246,8 +5446,10 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 13.4,
-   "td_prob": 29.0,
-   "fpts_med": 12.1,
+   "td_prob": 29.7,
+   "td2_prob": 5.1,
+   "td_exp": 0.36,
+   "fpts_med": 12.2,
    "fpts_range": [
     4.1,
     24.1
@@ -5271,11 +5473,13 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 2.7,
-   "td_prob": 5.0,
+   "td_prob": 5.3,
+   "td2_prob": 0.1,
+   "td_exp": 0.05,
    "fpts_med": 1.4,
    "fpts_range": [
     0.0,
-    7.1
+    7.2
    ],
    "targets": 1.6,
    "rec": 1.0,
@@ -5296,11 +5500,13 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 17.9,
-   "td_prob": 54.0,
+   "td_prob": 53.8,
+   "td2_prob": 18.8,
+   "td_exp": 0.79,
    "fpts_med": 16.6,
    "fpts_range": [
     7.7,
-    29.4
+    29.5
    ],
    "carries": 17.9,
    "rush_yds": 68.0,
@@ -5329,11 +5535,13 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 8.3,
-   "td_prob": 19.0,
+   "td_prob": 19.8,
+   "td2_prob": 2.2,
+   "td_exp": 0.22,
    "fpts_med": 7.2,
    "fpts_range": [
     1.7,
-    16.4
+    16.5
    ],
    "targets": 4.3,
    "rec": 2.8,
@@ -5354,10 +5562,12 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 9.9,
-   "td_prob": 22.0,
+   "td_prob": 21.6,
+   "td2_prob": 2.8,
+   "td_exp": 0.25,
    "fpts_med": 8.6,
    "fpts_range": [
-    2.4,
+    2.3,
     18.8
    ],
    "targets": 5.8,
@@ -5379,11 +5589,13 @@
    "opp": "NYJ",
    "status": "",
    "fpts": 16.4,
-   "td_prob": 7.0,
+   "td_prob": 6.6,
+   "td2_prob": 0.3,
+   "td_exp": 0.07,
    "fpts_med": 15.7,
    "fpts_range": [
-    8.3,
-    25.7
+    8.5,
+    25.5
    ],
    "pass_att": 34.5,
    "pass_cmp": 22.5,
@@ -5393,7 +5605,7 @@
     165.0,
     319.0
    ],
-   "pass_td": 1.35,
+   "pass_td": 1.36,
    "pass_int": 0.76,
    "carries": 4.3,
    "rush_yds": 26.0,
@@ -5414,6 +5626,8 @@
    "status": "",
    "fpts": 13.8,
    "td_prob": 29.0,
+   "td2_prob": 4.9,
+   "td_exp": 0.34,
    "fpts_med": 12.6,
    "fpts_range": [
     4.6,
@@ -5438,7 +5652,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 3.1,
-   "td_prob": 7.0,
+   "td_prob": 7.4,
+   "td2_prob": 0.4,
+   "td_exp": 0.09,
    "fpts_med": 1.7,
    "fpts_range": [
     0.2,
@@ -5472,6 +5688,8 @@
    "status": "",
    "fpts": 3.7,
    "td_prob": 6.0,
+   "td2_prob": 0.2,
+   "td_exp": 0.06,
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
@@ -5496,7 +5714,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 9.7,
-   "td_prob": 26.0,
+   "td_prob": 26.5,
+   "td2_prob": 3.8,
+   "td_exp": 0.3,
    "fpts_med": 8.3,
    "fpts_range": [
     1.9,
@@ -5521,7 +5741,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 22.2,
-   "td_prob": 58.0,
+   "td_prob": 58.4,
+   "td2_prob": 22.6,
+   "td_exp": 0.9,
    "fpts_med": 20.8,
    "fpts_range": [
     10.9,
@@ -5554,7 +5776,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 7.2,
-   "td_prob": 21.0,
+   "td_prob": 21.4,
+   "td2_prob": 2.8,
+   "td_exp": 0.24,
    "fpts_med": 6.1,
    "fpts_range": [
     0.8,
@@ -5579,7 +5803,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 7.8,
-   "td_prob": 19.0,
+   "td_prob": 19.5,
+   "td2_prob": 2.3,
+   "td_exp": 0.22,
    "fpts_med": 6.5,
    "fpts_range": [
     1.3,
@@ -5604,7 +5830,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 3.3,
-   "td_prob": 10.0,
+   "td_prob": 10.2,
+   "td2_prob": 0.7,
+   "td_exp": 0.11,
    "fpts_med": 1.8,
    "fpts_range": [
     0.0,
@@ -5629,7 +5857,9 @@
    "opp": "IND",
    "status": "",
    "fpts": 16.9,
-   "td_prob": 4.0,
+   "td_prob": 3.6,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 16.1,
    "fpts_range": [
     8.0,
@@ -5663,7 +5893,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 5.8,
-   "td_prob": 12.0,
+   "td_prob": 11.7,
+   "td2_prob": 0.8,
+   "td_exp": 0.13,
    "fpts_med": 4.5,
    "fpts_range": [
     0.3,
@@ -5688,7 +5920,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 4.9,
-   "td_prob": 10.0,
+   "td_prob": 10.3,
+   "td2_prob": 0.6,
+   "td_exp": 0.11,
    "fpts_med": 3.5,
    "fpts_range": [
     0.3,
@@ -5713,7 +5947,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 3.1,
-   "td_prob": 4.0,
+   "td_prob": 3.9,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 1.8,
    "fpts_range": [
     0.0,
@@ -5738,7 +5974,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 21.6,
-   "td_prob": 62.0,
+   "td_prob": 61.7,
+   "td2_prob": 26.5,
+   "td_exp": 1.02,
    "fpts_med": 20.1,
    "fpts_range": [
     9.9,
@@ -5771,7 +6009,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 14.4,
-   "td_prob": 26.0,
+   "td_prob": 26.1,
+   "td2_prob": 3.9,
+   "td_exp": 0.31,
    "fpts_med": 13.1,
    "fpts_range": [
     5.0,
@@ -5796,7 +6036,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 15.1,
-   "td_prob": 27.0,
+   "td_prob": 26.8,
+   "td2_prob": 4.1,
+   "td_exp": 0.31,
    "fpts_med": 13.9,
    "fpts_range": [
     5.2,
@@ -5821,7 +6063,9 @@
    "opp": "PIT",
    "status": "",
    "fpts": 14.5,
-   "td_prob": 5.0,
+   "td_prob": 5.2,
+   "td2_prob": 0.2,
+   "td_exp": 0.05,
    "fpts_med": 13.7,
    "fpts_range": [
     7.1,
@@ -5855,7 +6099,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 3.0,
-   "td_prob": 4.0,
+   "td_prob": 3.8,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 1.9,
    "fpts_range": [
     0.1,
@@ -5880,7 +6126,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 13.7,
-   "td_prob": 39.0,
+   "td_prob": 39.4,
+   "td2_prob": 9.7,
+   "td_exp": 0.51,
    "fpts_med": 12.5,
    "fpts_range": [
     5.5,
@@ -5913,7 +6161,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 6.8,
-   "td_prob": 16.0,
+   "td_prob": 15.8,
+   "td2_prob": 1.7,
+   "td_exp": 0.18,
    "fpts_med": 5.6,
    "fpts_range": [
     1.1,
@@ -5938,7 +6188,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 6.2,
-   "td_prob": 16.0,
+   "td_prob": 15.6,
+   "td2_prob": 1.3,
+   "td_exp": 0.17,
    "fpts_med": 5.0,
    "fpts_range": [
     1.3,
@@ -5971,7 +6223,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 7.2,
-   "td_prob": 21.0,
+   "td_prob": 21.3,
+   "td2_prob": 2.6,
+   "td_exp": 0.24,
    "fpts_med": 6.2,
    "fpts_range": [
     1.2,
@@ -5996,7 +6250,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 5.7,
-   "td_prob": 17.0,
+   "td_prob": 16.9,
+   "td2_prob": 1.7,
+   "td_exp": 0.18,
    "fpts_med": 4.5,
    "fpts_range": [
     0.4,
@@ -6021,7 +6277,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 4.8,
-   "td_prob": 10.0,
+   "td_prob": 9.7,
+   "td2_prob": 0.8,
+   "td_exp": 0.1,
    "fpts_med": 3.5,
    "fpts_range": [
     0.3,
@@ -6046,7 +6304,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 9.7,
-   "td_prob": 13.0,
+   "td_prob": 12.6,
+   "td2_prob": 0.9,
+   "td_exp": 0.14,
    "fpts_med": 8.7,
    "fpts_range": [
     2.8,
@@ -6071,7 +6331,9 @@
    "opp": "HOU",
    "status": "",
    "fpts": 12.9,
-   "td_prob": 3.0,
+   "td_prob": 3.4,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 12.1,
    "fpts_range": [
     6.2,
@@ -6106,6 +6368,8 @@
    "status": "",
    "fpts": 11.2,
    "td_prob": 26.0,
+   "td2_prob": 4.2,
+   "td_exp": 0.31,
    "fpts_med": 9.8,
    "fpts_range": [
     2.8,
@@ -6131,6 +6395,8 @@
    "status": "",
    "fpts": 8.0,
    "td_prob": 31.0,
+   "td2_prob": 5.9,
+   "td_exp": 0.38,
    "fpts_med": 6.7,
    "fpts_range": [
     2.3,
@@ -6163,7 +6429,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 12.0,
-   "td_prob": 29.0,
+   "td_prob": 29.3,
+   "td2_prob": 5.3,
+   "td_exp": 0.36,
    "fpts_med": 10.7,
    "fpts_range": [
     3.5,
@@ -6188,7 +6456,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 3.9,
-   "td_prob": 10.0,
+   "td_prob": 9.5,
+   "td2_prob": 0.5,
+   "td_exp": 0.1,
    "fpts_med": 2.5,
    "fpts_range": [
     0.1,
@@ -6213,7 +6483,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 9.7,
-   "td_prob": 18.0,
+   "td_prob": 18.3,
+   "td2_prob": 2.0,
+   "td_exp": 0.21,
    "fpts_med": 8.4,
    "fpts_range": [
     2.4,
@@ -6246,7 +6518,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 2.9,
-   "td_prob": 7.0,
+   "td_prob": 6.6,
+   "td2_prob": 0.4,
+   "td_exp": 0.07,
    "fpts_med": 1.5,
    "fpts_range": [
     0.0,
@@ -6271,7 +6545,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 5.4,
-   "td_prob": 9.0,
+   "td_prob": 9.4,
+   "td2_prob": 0.4,
+   "td_exp": 0.1,
    "fpts_med": 4.1,
    "fpts_range": [
     0.7,
@@ -6304,7 +6580,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 12.2,
-   "td_prob": 46.0,
+   "td_prob": 45.9,
+   "td2_prob": 13.5,
+   "td_exp": 0.65,
    "fpts_med": 11.0,
    "fpts_range": [
     4.1,
@@ -6337,7 +6615,9 @@
    "opp": "TEN",
    "status": "",
    "fpts": 16.5,
-   "td_prob": 3.0,
+   "td_prob": 2.6,
+   "td2_prob": 0.1,
+   "td_exp": 0.03,
    "fpts_med": 15.6,
    "fpts_range": [
     8.3,
@@ -6371,7 +6651,9 @@
    "opp": "NYG",
    "status": "",
    "fpts": 11.3,
-   "td_prob": 26.0,
+   "td_prob": 26.7,
+   "td2_prob": 4.3,
+   "td_exp": 0.32,
    "fpts_med": 10.1,
    "fpts_range": [
     3.3,
@@ -6396,8 +6678,10 @@
    "opp": "NYG",
    "status": "",
    "fpts": 10.6,
-   "td_prob": 25.0,
-   "fpts_med": 9.6,
+   "td_prob": 25.1,
+   "td2_prob": 3.9,
+   "td_exp": 0.3,
+   "fpts_med": 9.5,
    "fpts_range": [
     3.1,
     19.5
@@ -6421,7 +6705,9 @@
    "opp": "NYG",
    "status": "",
    "fpts": 3.7,
-   "td_prob": 10.0,
+   "td_prob": 10.1,
+   "td2_prob": 0.7,
+   "td_exp": 0.11,
    "fpts_med": 2.4,
    "fpts_range": [
     0.1,
@@ -6446,10 +6732,12 @@
    "opp": "NYG",
    "status": "",
    "fpts": 5.8,
-   "td_prob": 24.0,
-   "fpts_med": 4.4,
+   "td_prob": 23.9,
+   "td2_prob": 3.3,
+   "td_exp": 0.28,
+   "fpts_med": 4.3,
    "fpts_range": [
-    0.9,
+    1.0,
     12.3
    ],
    "carries": 4.5,
@@ -6457,7 +6745,7 @@
    "rush_yds_med": 16.0,
    "rush_yds_range": [
     4.0,
-    44.0
+    42.0
    ],
    "rush_td": 0.14,
    "targets": 1.4,
@@ -6468,7 +6756,7 @@
     0.0,
     23.0
    ],
-   "rec_td": 0.13
+   "rec_td": 0.14
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -6479,11 +6767,13 @@
    "opp": "NYG",
    "status": "",
    "fpts": 3.6,
-   "td_prob": 13.0,
-   "fpts_med": 2.1,
+   "td_prob": 13.3,
+   "td2_prob": 1.0,
+   "td_exp": 0.15,
+   "fpts_med": 2.2,
    "fpts_range": [
     0.1,
-    8.8
+    8.7
    ],
    "targets": 1.9,
    "rec": 1.1,
@@ -6504,7 +6794,9 @@
    "opp": "NYG",
    "status": "",
    "fpts": 2.6,
-   "td_prob": 4.0,
+   "td_prob": 4.2,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 1.3,
    "fpts_range": [
     0.0,
@@ -6529,20 +6821,22 @@
    "opp": "NYG",
    "status": "",
    "fpts": 14.3,
-   "td_prob": 46.0,
+   "td_prob": 45.9,
+   "td2_prob": 13.6,
+   "td_exp": 0.63,
    "fpts_med": 13.0,
    "fpts_range": [
-    5.9,
-    24.0
+    6.0,
+    23.9
    ],
    "carries": 18.5,
    "rush_yds": 83.0,
-   "rush_yds_med": 73.0,
+   "rush_yds_med": 74.0,
    "rush_yds_range": [
     40.0,
     130.0
    ],
-   "rush_td": 0.5,
+   "rush_td": 0.51,
    "targets": 1.7,
    "rec": 1.3,
    "rec_yds": 10.0,
@@ -6563,9 +6857,11 @@
    "status": "",
    "fpts": 6.4,
    "td_prob": 16.0,
+   "td2_prob": 1.4,
+   "td_exp": 0.18,
    "fpts_med": 5.2,
    "fpts_range": [
-    0.7,
+    0.8,
     13.6
    ],
    "targets": 3.8,
@@ -6586,12 +6882,14 @@
    "team": "WAS",
    "opp": "NYG",
    "status": "",
-   "fpts": 15.8,
-   "td_prob": 4.0,
-   "fpts_med": 15.0,
+   "fpts": 15.9,
+   "td_prob": 3.6,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
+   "fpts_med": 15.1,
    "fpts_range": [
-    7.5,
-    25.3
+    7.6,
+    25.2
    ],
    "pass_att": 31.7,
    "pass_cmp": 20.0,
@@ -6601,7 +6899,7 @@
     153.0,
     296.0
    ],
-   "pass_td": 1.58,
+   "pass_td": 1.59,
    "pass_int": 0.74,
    "carries": 3.0,
    "rush_yds": 20.0,
@@ -6621,11 +6919,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 4.3,
-   "td_prob": 14.0,
+   "td_prob": 13.7,
+   "td2_prob": 1.2,
+   "td_exp": 0.16,
    "fpts_med": 2.9,
    "fpts_range": [
     0.6,
-    9.4
+    9.6
    ],
    "carries": 4.1,
    "rush_yds": 16.0,
@@ -6654,11 +6954,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 3.7,
-   "td_prob": 5.0,
+   "td_prob": 4.7,
+   "td2_prob": 0.1,
+   "td_exp": 0.05,
    "fpts_med": 2.5,
    "fpts_range": [
     0.2,
-    8.8
+    8.7
    ],
    "targets": 2.4,
    "rec": 1.3,
@@ -6679,11 +6981,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 2.7,
-   "td_prob": 15.0,
+   "td_prob": 14.2,
+   "td2_prob": 1.3,
+   "td_exp": 0.16,
    "fpts_med": 1.6,
    "fpts_range": [
     0.4,
-    7.3
+    7.1
    ],
    "carries": 4.1,
    "rush_yds": 17.0,
@@ -6703,11 +7007,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 13.1,
-   "td_prob": 28.0,
-   "fpts_med": 11.7,
+   "td_prob": 29.4,
+   "td2_prob": 5.1,
+   "td_exp": 0.35,
+   "fpts_med": 11.8,
    "fpts_range": [
-    4.1,
-    23.7
+    4.0,
+    23.9
    ],
    "targets": 7.7,
    "rec": 5.3,
@@ -6728,11 +7034,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 12.7,
-   "td_prob": 24.0,
+   "td_prob": 23.1,
+   "td2_prob": 3.1,
+   "td_exp": 0.27,
    "fpts_med": 11.6,
    "fpts_range": [
     4.1,
-    22.8
+    22.7
    ],
    "targets": 7.5,
    "rec": 4.7,
@@ -6753,18 +7061,20 @@
    "opp": "WAS",
    "status": "",
    "fpts": 5.6,
-   "td_prob": 16.0,
+   "td_prob": 15.8,
+   "td2_prob": 1.4,
+   "td_exp": 0.17,
    "fpts_med": 4.3,
    "fpts_range": [
-    1.2,
-    11.6
+    1.1,
+    12.0
    ],
    "carries": 5.0,
    "rush_yds": 22.0,
    "rush_yds_med": 17.0,
    "rush_yds_range": [
     5.0,
-    42.0
+    43.0
    ],
    "rush_td": 0.1,
    "targets": 1.8,
@@ -6786,8 +7096,10 @@
    "opp": "WAS",
    "status": "",
    "fpts": 6.6,
-   "td_prob": 18.0,
-   "fpts_med": 5.3,
+   "td_prob": 17.7,
+   "td2_prob": 1.7,
+   "td_exp": 0.2,
+   "fpts_med": 5.4,
    "fpts_range": [
     0.7,
     14.1
@@ -6811,7 +7123,9 @@
    "opp": "WAS",
    "status": "",
    "fpts": 12.1,
-   "td_prob": 33.0,
+   "td_prob": 33.6,
+   "td2_prob": 7.1,
+   "td_exp": 0.41,
    "fpts_med": 10.9,
    "fpts_range": [
     4.5,
@@ -6844,11 +7158,13 @@
    "opp": "WAS",
    "status": "",
    "fpts": 4.8,
-   "td_prob": 10.0,
+   "td_prob": 9.7,
+   "td2_prob": 0.5,
+   "td_exp": 0.1,
    "fpts_med": 3.6,
    "fpts_range": [
     0.3,
-    10.9
+    10.8
    ],
    "targets": 2.8,
    "rec": 1.7,
@@ -6870,10 +7186,12 @@
    "status": "",
    "fpts": 13.8,
    "td_prob": 1.0,
+   "td2_prob": 0.0,
+   "td_exp": 0.01,
    "fpts_med": 13.1,
    "fpts_range": [
-    6.2,
-    22.5
+    6.1,
+    22.8
    ],
    "pass_att": 34.1,
    "pass_cmp": 21.1,
@@ -6903,7 +7221,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 5.7,
-   "td_prob": 17.0,
+   "td_prob": 17.1,
+   "td2_prob": 1.6,
+   "td_exp": 0.18,
    "fpts_med": 4.4,
    "fpts_range": [
     1.1,
@@ -6936,7 +7256,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 10.0,
-   "td_prob": 19.0,
+   "td_prob": 19.5,
+   "td2_prob": 2.1,
+   "td_exp": 0.22,
    "fpts_med": 9.0,
    "fpts_range": [
     2.8,
@@ -6961,7 +7283,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 6.2,
-   "td_prob": 21.0,
+   "td_prob": 21.4,
+   "td2_prob": 2.5,
+   "td_exp": 0.24,
    "fpts_med": 4.8,
    "fpts_range": [
     1.3,
@@ -6994,7 +7318,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 11.0,
-   "td_prob": 24.0,
+   "td_prob": 24.4,
+   "td2_prob": 3.6,
+   "td_exp": 0.28,
    "fpts_med": 9.9,
    "fpts_range": [
     3.1,
@@ -7019,7 +7345,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 8.8,
-   "td_prob": 22.0,
+   "td_prob": 22.1,
+   "td2_prob": 3.1,
+   "td_exp": 0.26,
    "fpts_med": 7.6,
    "fpts_range": [
     1.8,
@@ -7044,7 +7372,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 11.9,
-   "td_prob": 37.0,
+   "td_prob": 37.1,
+   "td2_prob": 8.9,
+   "td_exp": 0.49,
    "fpts_med": 10.6,
    "fpts_range": [
     4.3,
@@ -7077,7 +7407,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 8.3,
-   "td_prob": 19.0,
+   "td_prob": 18.7,
+   "td2_prob": 2.2,
+   "td_exp": 0.22,
    "fpts_med": 7.1,
    "fpts_range": [
     1.6,
@@ -7102,7 +7434,9 @@
    "opp": "DEN",
    "status": "",
    "fpts": 16.1,
-   "td_prob": 7.0,
+   "td_prob": 6.5,
+   "td2_prob": 0.2,
+   "td_exp": 0.07,
    "fpts_med": 15.3,
    "fpts_range": [
     7.5,
@@ -7136,7 +7470,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 5.3,
-   "td_prob": 14.0,
+   "td_prob": 14.5,
+   "td2_prob": 1.2,
+   "td_exp": 0.16,
    "fpts_med": 4.0,
    "fpts_range": [
     0.3,
@@ -7161,7 +7497,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 10.3,
-   "td_prob": 30.0,
+   "td_prob": 30.2,
+   "td2_prob": 5.4,
+   "td_exp": 0.37,
    "fpts_med": 9.2,
    "fpts_range": [
     2.6,
@@ -7186,7 +7524,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 8.9,
-   "td_prob": 33.0,
+   "td_prob": 33.1,
+   "td2_prob": 6.7,
+   "td_exp": 0.41,
    "fpts_med": 7.8,
    "fpts_range": [
     3.0,
@@ -7219,7 +7559,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 6.8,
-   "td_prob": 15.0,
+   "td_prob": 15.2,
+   "td2_prob": 1.4,
+   "td_exp": 0.17,
    "fpts_med": 5.7,
    "fpts_range": [
     1.1,
@@ -7244,7 +7586,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 3.4,
-   "td_prob": 7.0,
+   "td_prob": 6.8,
+   "td2_prob": 0.2,
+   "td_exp": 0.07,
    "fpts_med": 2.1,
    "fpts_range": [
     0.1,
@@ -7269,7 +7613,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 5.0,
-   "td_prob": 16.0,
+   "td_prob": 15.9,
+   "td2_prob": 1.2,
+   "td_exp": 0.17,
    "fpts_med": 3.7,
    "fpts_range": [
     0.3,
@@ -7295,6 +7641,8 @@
    "status": "",
    "fpts": 5.7,
    "td_prob": 16.0,
+   "td2_prob": 1.5,
+   "td_exp": 0.17,
    "fpts_med": 4.5,
    "fpts_range": [
     0.5,
@@ -7320,6 +7668,8 @@
    "status": "",
    "fpts": 12.5,
    "td_prob": 36.0,
+   "td2_prob": 7.8,
+   "td_exp": 0.46,
    "fpts_med": 11.4,
    "fpts_range": [
     4.1,
@@ -7352,7 +7702,9 @@
    "opp": "LAC",
    "status": "",
    "fpts": 16.8,
-   "td_prob": 12.0,
+   "td_prob": 12.2,
+   "td2_prob": 1.1,
+   "td_exp": 0.13,
    "fpts_med": 15.8,
    "fpts_range": [
     8.1,
@@ -7386,7 +7738,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 4.2,
-   "td_prob": 10.0,
+   "td_prob": 9.6,
+   "td2_prob": 0.5,
+   "td_exp": 0.1,
    "fpts_med": 2.8,
    "fpts_range": [
     0.1,
@@ -7411,7 +7765,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 3.1,
-   "td_prob": 12.0,
+   "td_prob": 12.5,
+   "td2_prob": 0.8,
+   "td_exp": 0.13,
    "fpts_med": 1.7,
    "fpts_range": [
     0.3,
@@ -7444,7 +7800,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 7.2,
-   "td_prob": 27.0,
+   "td_prob": 26.8,
+   "td2_prob": 4.2,
+   "td_exp": 0.32,
    "fpts_med": 5.7,
    "fpts_range": [
     1.5,
@@ -7477,7 +7835,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 22.0,
-   "td_prob": 44.0,
+   "td_prob": 44.4,
+   "td2_prob": 13.1,
+   "td_exp": 0.6,
    "fpts_med": 20.6,
    "fpts_range": [
     9.2,
@@ -7502,7 +7862,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 19.5,
-   "td_prob": 42.0,
+   "td_prob": 41.6,
+   "td2_prob": 11.3,
+   "td_exp": 0.55,
    "fpts_med": 18.3,
    "fpts_range": [
     8.0,
@@ -7527,7 +7889,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 3.6,
-   "td_prob": 8.0,
+   "td_prob": 8.5,
+   "td2_prob": 0.3,
+   "td_exp": 0.09,
    "fpts_med": 1.9,
    "fpts_range": [
     0.0,
@@ -7552,7 +7916,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 7.1,
-   "td_prob": 17.0,
+   "td_prob": 16.6,
+   "td2_prob": 1.6,
+   "td_exp": 0.18,
    "fpts_med": 6.0,
    "fpts_range": [
     0.9,
@@ -7577,7 +7943,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 11.6,
-   "td_prob": 39.0,
+   "td_prob": 39.4,
+   "td2_prob": 9.2,
+   "td_exp": 0.5,
    "fpts_med": 10.4,
    "fpts_range": [
     4.0,
@@ -7610,7 +7978,9 @@
    "opp": "DET",
    "status": "",
    "fpts": 19.5,
-   "td_prob": 12.0,
+   "td_prob": 11.9,
+   "td2_prob": 0.9,
+   "td_exp": 0.13,
    "fpts_med": 18.7,
    "fpts_range": [
     9.9,
@@ -7644,7 +8014,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 19.2,
-   "td_prob": 49.0,
+   "td_prob": 49.2,
+   "td2_prob": 15.7,
+   "td_exp": 0.69,
    "fpts_med": 17.7,
    "fpts_range": [
     7.8,
@@ -7669,7 +8041,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 11.6,
-   "td_prob": 24.0,
+   "td_prob": 24.5,
+   "td2_prob": 3.3,
+   "td_exp": 0.28,
    "fpts_med": 10.3,
    "fpts_range": [
     3.3,
@@ -7694,7 +8068,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 10.1,
-   "td_prob": 29.0,
+   "td_prob": 28.8,
+   "td2_prob": 5.0,
+   "td_exp": 0.35,
    "fpts_med": 8.8,
    "fpts_range": [
     2.1,
@@ -7719,7 +8095,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 30.7,
-   "td_prob": 77.0,
+   "td_prob": 77.1,
+   "td2_prob": 44.4,
+   "td_exp": 1.54,
    "fpts_med": 29.2,
    "fpts_range": [
     16.3,
@@ -7752,7 +8130,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 5.1,
-   "td_prob": 16.0,
+   "td_prob": 16.2,
+   "td2_prob": 1.5,
+   "td_exp": 0.18,
    "fpts_med": 3.7,
    "fpts_range": [
     0.2,
@@ -7777,7 +8157,9 @@
    "opp": "ARI",
    "status": "",
    "fpts": 18.5,
-   "td_prob": 2.0,
+   "td_prob": 1.7,
+   "td2_prob": 0.0,
+   "td_exp": 0.02,
    "fpts_med": 17.7,
    "fpts_range": [
     9.3,
@@ -7811,7 +8193,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 8.2,
-   "td_prob": 20.0,
+   "td_prob": 20.5,
+   "td2_prob": 2.5,
+   "td_exp": 0.23,
    "fpts_med": 6.9,
    "fpts_range": [
     1.4,
@@ -7836,7 +8220,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 6.8,
-   "td_prob": 15.0,
+   "td_prob": 14.7,
+   "td2_prob": 1.4,
+   "td_exp": 0.16,
    "fpts_med": 5.5,
    "fpts_range": [
     1.3,
@@ -7869,7 +8255,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 24.3,
-   "td_prob": 47.0,
+   "td_prob": 47.1,
+   "td2_prob": 14.4,
+   "td_exp": 0.67,
    "fpts_med": 22.8,
    "fpts_range": [
     12.0,
@@ -7894,7 +8282,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 10.9,
-   "td_prob": 42.0,
+   "td_prob": 42.3,
+   "td2_prob": 11.3,
+   "td_exp": 0.58,
    "fpts_med": 9.7,
    "fpts_range": [
     3.9,
@@ -7927,7 +8317,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 7.7,
-   "td_prob": 30.0,
+   "td_prob": 29.6,
+   "td2_prob": 5.2,
+   "td_exp": 0.36,
    "fpts_med": 6.6,
    "fpts_range": [
     1.8,
@@ -7960,7 +8352,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 9.1,
-   "td_prob": 31.0,
+   "td_prob": 31.2,
+   "td2_prob": 5.9,
+   "td_exp": 0.37,
    "fpts_med": 7.9,
    "fpts_range": [
     1.6,
@@ -7993,7 +8387,9 @@
    "opp": "SF",
    "status": "",
    "fpts": 15.8,
-   "td_prob": 1.0,
+   "td_prob": 1.3,
+   "td2_prob": 0.0,
+   "td_exp": 0.01,
    "fpts_med": 15.0,
    "fpts_range": [
     7.3,
@@ -8027,7 +8423,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 4.5,
-   "td_prob": 13.0,
+   "td_prob": 13.3,
+   "td2_prob": 1.0,
+   "td_exp": 0.14,
    "fpts_med": 2.9,
    "fpts_range": [
     0.1,
@@ -8052,7 +8450,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 9.7,
-   "td_prob": 24.0,
+   "td_prob": 24.4,
+   "td2_prob": 3.5,
+   "td_exp": 0.28,
    "fpts_med": 8.5,
    "fpts_range": [
     2.2,
@@ -8077,7 +8477,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 25.1,
-   "td_prob": 60.0,
+   "td_prob": 59.7,
+   "td2_prob": 24.5,
+   "td_exp": 0.94,
    "fpts_med": 23.8,
    "fpts_range": [
     12.9,
@@ -8110,7 +8512,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 13.6,
-   "td_prob": 28.0,
+   "td_prob": 28.3,
+   "td2_prob": 5.0,
+   "td_exp": 0.34,
    "fpts_med": 12.4,
    "fpts_range": [
     4.5,
@@ -8135,7 +8539,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 7.5,
-   "td_prob": 23.0,
+   "td_prob": 23.1,
+   "td2_prob": 3.2,
+   "td_exp": 0.26,
    "fpts_med": 6.4,
    "fpts_range": [
     1.4,
@@ -8168,7 +8574,9 @@
    "opp": "SEA",
    "status": "",
    "fpts": 3.0,
-   "td_prob": 14.0,
+   "td_prob": 13.8,
+   "td2_prob": 1.3,
+   "td_exp": 0.15,
    "fpts_med": 1.8,
    "fpts_range": [
     0.4,
@@ -8193,6 +8601,8 @@
    "status": "",
    "fpts": 16.5,
    "td_prob": 4.0,
+   "td2_prob": 0.1,
+   "td_exp": 0.04,
    "fpts_med": 15.8,
    "fpts_range": [
     8.0,
@@ -8226,7 +8636,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 10.4,
-   "td_prob": 21.0,
+   "td_prob": 20.6,
+   "td2_prob": 2.6,
+   "td_exp": 0.23,
    "fpts_med": 9.1,
    "fpts_range": [
     2.6,
@@ -8251,7 +8663,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 16.2,
-   "td_prob": 27.0,
+   "td_prob": 26.7,
+   "td2_prob": 3.5,
+   "td_exp": 0.31,
    "fpts_med": 14.9,
    "fpts_range": [
     6.9,
@@ -8276,7 +8690,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 3.3,
-   "td_prob": 4.0,
+   "td_prob": 4.5,
+   "td2_prob": 0.0,
+   "td_exp": 0.04,
    "fpts_med": 2.0,
    "fpts_range": [
     0.1,
@@ -8301,7 +8717,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 5.2,
-   "td_prob": 26.0,
+   "td_prob": 26.2,
+   "td2_prob": 3.9,
+   "td_exp": 0.31,
    "fpts_med": 3.7,
    "fpts_range": [
     0.9,
@@ -8325,7 +8743,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 30.0,
-   "td_prob": 74.0,
+   "td_prob": 73.7,
+   "td2_prob": 40.3,
+   "td_exp": 1.39,
    "fpts_med": 28.6,
    "fpts_range": [
     16.1,
@@ -8358,7 +8778,9 @@
    "opp": "BAL",
    "status": "",
    "fpts": 13.6,
-   "td_prob": 0.0,
+   "td_prob": 0.1,
+   "td2_prob": 0.0,
+   "td_exp": 0.0,
    "fpts_med": 12.8,
    "fpts_range": [
     6.6,
@@ -8392,7 +8814,9 @@
    "opp": "ATL",
    "status": "",
    "fpts": 18.4,
-   "td_prob": 58.0,
+   "td_prob": 58.3,
+   "td2_prob": 22.9,
+   "td_exp": 0.91,
    "fpts_med": 17.1,
    "fpts_range": [
     8.1,
@@ -8425,7 +8849,9 @@
    "opp": "ATL",
    "status": "",
    "fpts": 12.1,
-   "td_prob": 27.0,
+   "td_prob": 27.3,
+   "td2_prob": 4.3,
+   "td_exp": 0.32,
    "fpts_med": 11.0,
    "fpts_range": [
     3.4,
@@ -8451,6 +8877,8 @@
    "status": "",
    "fpts": 3.5,
    "td_prob": 7.0,
+   "td2_prob": 0.3,
+   "td_exp": 0.08,
    "fpts_med": 2.2,
    "fpts_range": [
     0.2,
@@ -8483,7 +8911,9 @@
    "opp": "ATL",
    "status": "",
    "fpts": 7.0,
-   "td_prob": 17.0,
+   "td_prob": 16.6,
+   "td2_prob": 1.4,
+   "td_exp": 0.18,
    "fpts_med": 6.0,
    "fpts_range": [
     1.1,
@@ -8509,6 +8939,8 @@
    "status": "",
    "fpts": 17.6,
    "td_prob": 31.0,
+   "td2_prob": 5.9,
+   "td_exp": 0.37,
    "fpts_med": 16.5,
    "fpts_range": [
     7.7,
@@ -8533,7 +8965,9 @@
    "opp": "ATL",
    "status": "",
    "fpts": 16.1,
-   "td_prob": 10.0,
+   "td_prob": 10.4,
+   "td2_prob": 0.7,
+   "td_exp": 0.11,
    "fpts_med": 15.5,
    "fpts_range": [
     8.5,
@@ -8567,7 +9001,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 14.8,
-   "td_prob": 39.0,
+   "td_prob": 38.6,
+   "td2_prob": 9.7,
+   "td_exp": 0.5,
    "fpts_med": 13.4,
    "fpts_range": [
     4.8,
@@ -8592,7 +9028,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 7.1,
-   "td_prob": 20.0,
+   "td_prob": 19.5,
+   "td2_prob": 2.0,
+   "td_exp": 0.22,
    "fpts_med": 6.0,
    "fpts_range": [
     0.6,
@@ -8617,7 +9055,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 4.9,
-   "td_prob": 19.0,
+   "td_prob": 19.2,
+   "td2_prob": 2.2,
+   "td_exp": 0.23,
    "fpts_med": 3.2,
    "fpts_range": [
     0.1,
@@ -8642,7 +9082,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 21.1,
-   "td_prob": 63.0,
+   "td_prob": 62.5,
+   "td2_prob": 26.8,
+   "td_exp": 1.01,
    "fpts_med": 19.6,
    "fpts_range": [
     9.2,
@@ -8675,7 +9117,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 16.4,
-   "td_prob": 32.0,
+   "td_prob": 32.4,
+   "td2_prob": 6.6,
+   "td_exp": 0.4,
    "fpts_med": 14.9,
    "fpts_range": [
     6.0,
@@ -8708,7 +9152,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 8.1,
-   "td_prob": 28.0,
+   "td_prob": 27.9,
+   "td2_prob": 4.8,
+   "td_exp": 0.33,
    "fpts_med": 6.8,
    "fpts_range": [
     2.3,
@@ -8741,7 +9187,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 4.7,
-   "td_prob": 14.0,
+   "td_prob": 13.8,
+   "td2_prob": 1.2,
+   "td_exp": 0.15,
    "fpts_med": 3.2,
    "fpts_range": [
     0.1,
@@ -8766,7 +9214,9 @@
    "opp": "BUF",
    "status": "",
    "fpts": 18.6,
-   "td_prob": 3.0,
+   "td_prob": 2.8,
+   "td2_prob": 0.0,
+   "td_exp": 0.03,
    "fpts_med": 17.5,
    "fpts_range": [
     8.8,
@@ -8800,7 +9250,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 6.2,
-   "td_prob": 17.0,
+   "td_prob": 17.4,
+   "td2_prob": 1.8,
+   "td_exp": 0.19,
    "fpts_med": 5.0,
    "fpts_range": [
     0.7,
@@ -8825,7 +9277,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 4.6,
-   "td_prob": 18.0,
+   "td_prob": 17.9,
+   "td2_prob": 1.8,
+   "td_exp": 0.2,
    "fpts_med": 3.1,
    "fpts_range": [
     0.2,
@@ -8858,7 +9312,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 5.0,
-   "td_prob": 16.0,
+   "td_prob": 16.1,
+   "td2_prob": 1.7,
+   "td_exp": 0.18,
    "fpts_med": 3.6,
    "fpts_range": [
     0.2,
@@ -8883,7 +9339,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 4.2,
-   "td_prob": 11.0,
+   "td_prob": 11.1,
+   "td2_prob": 0.6,
+   "td_exp": 0.11,
    "fpts_med": 3.0,
    "fpts_range": [
     0.2,
@@ -8908,7 +9366,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 18.0,
-   "td_prob": 59.0,
+   "td_prob": 58.9,
+   "td2_prob": 22.8,
+   "td_exp": 0.91,
    "fpts_med": 16.6,
    "fpts_range": [
     7.8,
@@ -8941,7 +9401,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 12.7,
-   "td_prob": 31.0,
+   "td_prob": 31.3,
+   "td2_prob": 6.2,
+   "td_exp": 0.4,
    "fpts_med": 11.4,
    "fpts_range": [
     3.8,
@@ -8966,7 +9428,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 7.8,
-   "td_prob": 15.0,
+   "td_prob": 14.8,
+   "td2_prob": 1.2,
+   "td_exp": 0.16,
    "fpts_med": 6.7,
    "fpts_range": [
     1.6,
@@ -8991,7 +9455,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 7.5,
-   "td_prob": 20.0,
+   "td_prob": 19.7,
+   "td2_prob": 2.4,
+   "td_exp": 0.22,
    "fpts_med": 6.4,
    "fpts_range": [
     1.3,
@@ -9016,7 +9482,9 @@
    "opp": "LA",
    "status": "",
    "fpts": 19.8,
-   "td_prob": 27.0,
+   "td_prob": 26.8,
+   "td2_prob": 4.4,
+   "td_exp": 0.32,
    "fpts_med": 18.9,
    "fpts_range": [
     10.2,
