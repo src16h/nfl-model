@@ -149,8 +149,8 @@
    "notes": [
     "TB QB: Jalon Daniels instead of Baker Mayfield (-0.9 pts)"
    ],
-   "ml_home": -520.0,
-   "ml_away": 390.0,
+   "ml_home": -500.0,
+   "ml_away": 380.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -288,15 +288,357 @@
      "edge_text": "0.7"
     },
     "moneyline": {
-     "pick": "TB +390",
+     "pick": "TB +380",
      "side": "TB",
-     "odds": "+390",
+     "odds": "+380",
      "edge": 0.3,
      "edge_text": "0.3%",
      "model_pct": 23,
      "vegas_pct": 23
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "DAL QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033077",
+       "name": "Dak Prescott",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 235.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036358",
+       "name": "CeeDee Lamb",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 74.5
+      }
+     ],
+     "p": 32.4,
+     "pi": 24.8
+    },
+    {
+     "name": "DAL QB over + DAL team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033077",
+       "name": "Dak Prescott",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 235.5
+      },
+      {
+       "kind": "tt",
+       "team": "DAL",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 30.4,
+     "pi": 24.9
+    },
+    {
+     "name": "DAL QB over + TB team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033077",
+       "name": "Dak Prescott",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 235.5
+      },
+      {
+       "kind": "tt",
+       "team": "TB",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 24.2
+    },
+    {
+     "name": "DAL QB over + DAL covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033077",
+       "name": "Dak Prescott",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 235.5
+      },
+      {
+       "kind": "spread",
+       "team": "DAL",
+       "line": -8.5
+      }
+     ],
+     "p": 26.1,
+     "pi": 23.4
+    },
+    {
+     "name": "DAL RB1 rush over + DAL wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036997",
+       "name": "Javonte Williams",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 82.5
+      },
+      {
+       "kind": "ml",
+       "team": "DAL"
+      }
+     ],
+     "p": 37.9,
+     "pi": 34.9
+    },
+    {
+     "name": "DAL RB1 anytime TD + DAL wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036997",
+       "name": "Javonte Williams",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "DAL"
+      }
+     ],
+     "p": 52.2,
+     "pi": 47.1
+    },
+    {
+     "name": "DAL WR1 over + DAL team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036358",
+       "name": "CeeDee Lamb",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 74.5
+      },
+      {
+       "kind": "tt",
+       "team": "DAL",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 27.2,
+     "pi": 24.5
+    },
+    {
+     "name": "DAL team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "DAL",
+       "side": "Over",
+       "line": 27.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 48.5
+      }
+     ],
+     "p": 36.7,
+     "pi": 24.4
+    },
+    {
+     "name": "TB QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041251",
+       "name": "Jalon Daniels",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 249.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0040129",
+       "name": "Emeka Egbuka",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 57.5
+      }
+     ],
+     "p": 31.6,
+     "pi": 25.2
+    },
+    {
+     "name": "TB QB over + TB team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041251",
+       "name": "Jalon Daniels",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 249.5
+      },
+      {
+       "kind": "tt",
+       "team": "TB",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 29.8,
+     "pi": 24.3
+    },
+    {
+     "name": "TB QB over + DAL team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041251",
+       "name": "Jalon Daniels",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 249.5
+      },
+      {
+       "kind": "tt",
+       "team": "DAL",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 26.5,
+     "pi": 24.9
+    },
+    {
+     "name": "TB QB over + TB covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041251",
+       "name": "Jalon Daniels",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 249.5
+      },
+      {
+       "kind": "spread",
+       "team": "TB",
+       "line": 8.5
+      }
+     ],
+     "p": 29.5,
+     "pi": 26.8
+    },
+    {
+     "name": "TB RB1 rush over + TB wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039361",
+       "name": "Bucky Irving",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 59.5
+      },
+      {
+       "kind": "ml",
+       "team": "TB"
+      }
+     ],
+     "p": 15.8,
+     "pi": 13.4
+    },
+    {
+     "name": "TB RB1 anytime TD + TB wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039361",
+       "name": "Bucky Irving",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "TB"
+      }
+     ],
+     "p": 17.4,
+     "pi": 12.6
+    },
+    {
+     "name": "TB WR1 over + TB team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040129",
+       "name": "Emeka Egbuka",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 57.5
+      },
+      {
+       "kind": "tt",
+       "team": "TB",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 26.2,
+     "pi": 24.2
+    },
+    {
+     "name": "TB team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "TB",
+       "side": "Over",
+       "line": 20.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 48.5
+      }
+     ],
+     "p": 36.5,
+     "pi": 23.7
+    }
+   ]
   },
   {
    "game_id": "2026_05_PHI_JAX",
@@ -576,7 +918,349 @@
      "model_pct": 77,
      "vegas_pct": 75
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "JAX QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036971",
+       "name": "Trevor Lawrence",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 223.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0038606",
+       "name": "Parker Washington",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 55.5
+      }
+     ],
+     "p": 31.7,
+     "pi": 25.1
+    },
+    {
+     "name": "JAX QB over + JAX team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036971",
+       "name": "Trevor Lawrence",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 223.5
+      },
+      {
+       "kind": "tt",
+       "team": "JAX",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 30.2,
+     "pi": 24.2
+    },
+    {
+     "name": "JAX QB over + PHI team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036971",
+       "name": "Trevor Lawrence",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 223.5
+      },
+      {
+       "kind": "tt",
+       "team": "PHI",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 24.2,
+     "pi": 22.8
+    },
+    {
+     "name": "JAX QB over + JAX covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036971",
+       "name": "Trevor Lawrence",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 223.5
+      },
+      {
+       "kind": "spread",
+       "team": "JAX",
+       "line": -7.5
+      }
+     ],
+     "p": 29.1,
+     "pi": 26.0
+    },
+    {
+     "name": "JAX RB1 rush over + JAX wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040719",
+       "name": "Bhayshul Tuten",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 63.5
+      },
+      {
+       "kind": "ml",
+       "team": "JAX"
+      }
+     ],
+     "p": 38.6,
+     "pi": 36.1
+    },
+    {
+     "name": "JAX RB1 anytime TD + JAX wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040719",
+       "name": "Bhayshul Tuten",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "JAX"
+      }
+     ],
+     "p": 38.4,
+     "pi": 34.5
+    },
+    {
+     "name": "JAX WR1 over + JAX team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038606",
+       "name": "Parker Washington",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 55.5
+      },
+      {
+       "kind": "tt",
+       "team": "JAX",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 26.2,
+     "pi": 24.1
+    },
+    {
+     "name": "JAX team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "JAX",
+       "side": "Over",
+       "line": 25.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 38.0,
+     "pi": 25.3
+    },
+    {
+     "name": "PHI QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036389",
+       "name": "Jalen Hurts",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036912",
+       "name": "DeVonta Smith",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 74.5
+      }
+     ],
+     "p": 32.5,
+     "pi": 25.0
+    },
+    {
+     "name": "PHI QB over + PHI team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036389",
+       "name": "Jalen Hurts",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "tt",
+       "team": "PHI",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 28.2,
+     "pi": 22.6
+    },
+    {
+     "name": "PHI QB over + JAX team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036389",
+       "name": "Jalen Hurts",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "tt",
+       "team": "JAX",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 25.7,
+     "pi": 24.0
+    },
+    {
+     "name": "PHI QB over + PHI covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036389",
+       "name": "Jalen Hurts",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "spread",
+       "team": "PHI",
+       "line": 7.5
+      }
+     ],
+     "p": 26.7,
+     "pi": 24.0
+    },
+    {
+     "name": "PHI RB1 rush over + PHI wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034844",
+       "name": "Saquon Barkley",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 57.5
+      },
+      {
+       "kind": "ml",
+       "team": "PHI"
+      }
+     ],
+     "p": 15.0,
+     "pi": 12.4
+    },
+    {
+     "name": "PHI RB1 anytime TD + PHI wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034844",
+       "name": "Saquon Barkley",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "PHI"
+      }
+     ],
+     "p": 13.7,
+     "pi": 9.2
+    },
+    {
+     "name": "PHI WR1 over + PHI team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036912",
+       "name": "DeVonta Smith",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 74.5
+      },
+      {
+       "kind": "tt",
+       "team": "PHI",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 25.4,
+     "pi": 22.8
+    },
+    {
+     "name": "PHI team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "PHI",
+       "side": "Over",
+       "line": 17.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 36.7,
+     "pi": 23.9
+    }
+   ]
   },
   {
    "game_id": "2026_05_CHI_GB",
@@ -866,7 +1550,349 @@
      "model_pct": 46,
      "vegas_pct": 45
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "GB QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036264",
+       "name": "Jordan Love",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0038124",
+       "name": "Christian Watson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 60.5
+      }
+     ],
+     "p": 31.2,
+     "pi": 24.9
+    },
+    {
+     "name": "GB QB over + GB team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036264",
+       "name": "Jordan Love",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "tt",
+       "team": "GB",
+       "side": "Over",
+       "line": 22.5
+      }
+     ],
+     "p": 30.5,
+     "pi": 24.4
+    },
+    {
+     "name": "GB QB over + CHI team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036264",
+       "name": "Jordan Love",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "tt",
+       "team": "CHI",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 25.4,
+     "pi": 24.4
+    },
+    {
+     "name": "GB QB over + GB covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036264",
+       "name": "Jordan Love",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "spread",
+       "team": "GB",
+       "line": 1.5
+      }
+     ],
+     "p": 29.0,
+     "pi": 25.4
+    },
+    {
+     "name": "GB RB1 rush over + GB wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039811",
+       "name": "MarShawn Lloyd",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 29.5
+      },
+      {
+       "kind": "ml",
+       "team": "GB"
+      }
+     ],
+     "p": 24.7,
+     "pi": 22.5
+    },
+    {
+     "name": "GB RB1 anytime TD + GB wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039811",
+       "name": "MarShawn Lloyd",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "GB"
+      }
+     ],
+     "p": 18.9,
+     "pi": 14.8
+    },
+    {
+     "name": "GB WR1 over + GB team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038124",
+       "name": "Christian Watson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 60.5
+      },
+      {
+       "kind": "tt",
+       "team": "GB",
+       "side": "Over",
+       "line": 22.5
+      }
+     ],
+     "p": 26.8,
+     "pi": 24.5
+    },
+    {
+     "name": "GB team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "GB",
+       "side": "Over",
+       "line": 22.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 36.7,
+     "pi": 24.4
+    },
+    {
+     "name": "CHI QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039918",
+       "name": "Caleb Williams",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 244.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0040735",
+       "name": "Luther Burden III",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 46.5
+      }
+     ],
+     "p": 30.4,
+     "pi": 25.3
+    },
+    {
+     "name": "CHI QB over + CHI team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039918",
+       "name": "Caleb Williams",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 244.5
+      },
+      {
+       "kind": "tt",
+       "team": "CHI",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 29.5,
+     "pi": 24.6
+    },
+    {
+     "name": "CHI QB over + GB team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039918",
+       "name": "Caleb Williams",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 244.5
+      },
+      {
+       "kind": "tt",
+       "team": "GB",
+       "side": "Over",
+       "line": 22.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 24.6
+    },
+    {
+     "name": "CHI QB over + CHI covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039918",
+       "name": "Caleb Williams",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 244.5
+      },
+      {
+       "kind": "spread",
+       "team": "CHI",
+       "line": -1.5
+      }
+     ],
+     "p": 27.1,
+     "pi": 24.6
+    },
+    {
+     "name": "CHI RB1 rush over + CHI wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036275",
+       "name": "D'Andre Swift",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 67.5
+      },
+      {
+       "kind": "ml",
+       "team": "CHI"
+      }
+     ],
+     "p": 28.7,
+     "pi": 25.9
+    },
+    {
+     "name": "CHI RB1 anytime TD + CHI wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036275",
+       "name": "D'Andre Swift",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "CHI"
+      }
+     ],
+     "p": 29.2,
+     "pi": 23.7
+    },
+    {
+     "name": "CHI WR1 over + CHI team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040735",
+       "name": "Luther Burden III",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 46.5
+      },
+      {
+       "kind": "tt",
+       "team": "CHI",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 26.2,
+     "pi": 24.7
+    },
+    {
+     "name": "CHI team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "CHI",
+       "side": "Over",
+       "line": 23.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 37.2,
+     "pi": 24.4
+    }
+   ]
   },
   {
    "game_id": "2026_05_CIN_MIA",
@@ -1135,7 +2161,349 @@
      "model_pct": 73,
      "vegas_pct": 72
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "MIA QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038128",
+       "name": "Malik Willis",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 217.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0039880",
+       "name": "Malik Washington",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 68.5
+      }
+     ],
+     "p": 32.3,
+     "pi": 24.9
+    },
+    {
+     "name": "MIA QB over + MIA team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038128",
+       "name": "Malik Willis",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 217.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIA",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 29.7,
+     "pi": 24.6
+    },
+    {
+     "name": "MIA QB over + CIN team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038128",
+       "name": "Malik Willis",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 217.5
+      },
+      {
+       "kind": "tt",
+       "team": "CIN",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 26.6,
+     "pi": 24.9
+    },
+    {
+     "name": "MIA QB over + MIA covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038128",
+       "name": "Malik Willis",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 217.5
+      },
+      {
+       "kind": "spread",
+       "team": "MIA",
+       "line": 6.5
+      }
+     ],
+     "p": 26.8,
+     "pi": 24.4
+    },
+    {
+     "name": "MIA RB1 rush over + MIA wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040198",
+       "name": "Ollie Gordon II",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 46.5
+      },
+      {
+       "kind": "ml",
+       "team": "MIA"
+      }
+     ],
+     "p": 16.3,
+     "pi": 14.0
+    },
+    {
+     "name": "MIA RB1 anytime TD + MIA wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040198",
+       "name": "Ollie Gordon II",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "MIA"
+      }
+     ],
+     "p": 15.7,
+     "pi": 10.9
+    },
+    {
+     "name": "MIA WR1 over + MIA team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039880",
+       "name": "Malik Washington",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 68.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIA",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 26.4,
+     "pi": 24.2
+    },
+    {
+     "name": "MIA team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "MIA",
+       "side": "Over",
+       "line": 17.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 42.5
+      }
+     ],
+     "p": 37.2,
+     "pi": 24.5
+    },
+    {
+     "name": "CIN QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036442",
+       "name": "Joe Burrow",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 250.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036410",
+       "name": "Tee Higgins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 64.5
+      }
+     ],
+     "p": 32.1,
+     "pi": 25.1
+    },
+    {
+     "name": "CIN QB over + CIN team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036442",
+       "name": "Joe Burrow",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 250.5
+      },
+      {
+       "kind": "tt",
+       "team": "CIN",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 31.2,
+     "pi": 24.9
+    },
+    {
+     "name": "CIN QB over + MIA team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036442",
+       "name": "Joe Burrow",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 250.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIA",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 25.6,
+     "pi": 24.6
+    },
+    {
+     "name": "CIN QB over + CIN covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036442",
+       "name": "Joe Burrow",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 250.5
+      },
+      {
+       "kind": "spread",
+       "team": "CIN",
+       "line": -6.5
+      }
+     ],
+     "p": 29.4,
+     "pi": 25.9
+    },
+    {
+     "name": "CIN RB1 rush over + CIN wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038597",
+       "name": "Chase Brown",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 69.5
+      },
+      {
+       "kind": "ml",
+       "team": "CIN"
+      }
+     ],
+     "p": 37.1,
+     "pi": 34.4
+    },
+    {
+     "name": "CIN RB1 anytime TD + CIN wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038597",
+       "name": "Chase Brown",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "CIN"
+      }
+     ],
+     "p": 39.2,
+     "pi": 34.7
+    },
+    {
+     "name": "CIN WR1 over + CIN team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036410",
+       "name": "Tee Higgins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 64.5
+      },
+      {
+       "kind": "tt",
+       "team": "CIN",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 27.0,
+     "pi": 24.7
+    },
+    {
+     "name": "CIN team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "CIN",
+       "side": "Over",
+       "line": 24.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 42.5
+      }
+     ],
+     "p": 37.5,
+     "pi": 24.8
+    }
+   ]
   },
   {
    "game_id": "2026_05_LV_NE",
@@ -1400,7 +2768,349 @@
      "model_pct": 63,
      "vegas_pct": 62
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "NE QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039851",
+       "name": "Drake Maye",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 232.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0033555",
+       "name": "Mack Hollins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 39.5
+      }
+     ],
+     "p": 30.0,
+     "pi": 25.4
+    },
+    {
+     "name": "NE QB over + NE team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039851",
+       "name": "Drake Maye",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 232.5
+      },
+      {
+       "kind": "tt",
+       "team": "NE",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 30.1,
+     "pi": 24.3
+    },
+    {
+     "name": "NE QB over + LV team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039851",
+       "name": "Drake Maye",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 232.5
+      },
+      {
+       "kind": "tt",
+       "team": "LV",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 25.7,
+     "pi": 24.4
+    },
+    {
+     "name": "NE QB over + NE covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039851",
+       "name": "Drake Maye",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 232.5
+      },
+      {
+       "kind": "spread",
+       "team": "NE",
+       "line": -3.5
+      }
+     ],
+     "p": 28.6,
+     "pi": 25.3
+    },
+    {
+     "name": "NE RB1 rush over + NE wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040734",
+       "name": "TreVeyon Henderson",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 45.5
+      },
+      {
+       "kind": "ml",
+       "team": "NE"
+      }
+     ],
+     "p": 32.0,
+     "pi": 29.7
+    },
+    {
+     "name": "NE RB1 anytime TD + NE wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040734",
+       "name": "TreVeyon Henderson",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "NE"
+      }
+     ],
+     "p": 27.8,
+     "pi": 23.2
+    },
+    {
+     "name": "NE WR1 over + NE team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033555",
+       "name": "Mack Hollins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 39.5
+      },
+      {
+       "kind": "tt",
+       "team": "NE",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 26.3,
+     "pi": 24.3
+    },
+    {
+     "name": "NE team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "NE",
+       "side": "Over",
+       "line": 25.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 39.0,
+     "pi": 26.0
+    },
+    {
+     "name": "LV QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0029604",
+       "name": "Kirk Cousins",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 214.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0038563",
+       "name": "Tre Tucker",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 43.5
+      }
+     ],
+     "p": 30.7,
+     "pi": 25.4
+    },
+    {
+     "name": "LV QB over + LV team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0029604",
+       "name": "Kirk Cousins",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 214.5
+      },
+      {
+       "kind": "tt",
+       "team": "LV",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 30.4,
+     "pi": 24.3
+    },
+    {
+     "name": "LV QB over + NE team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0029604",
+       "name": "Kirk Cousins",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 214.5
+      },
+      {
+       "kind": "tt",
+       "team": "NE",
+       "side": "Over",
+       "line": 25.5
+      }
+     ],
+     "p": 25.7,
+     "pi": 24.2
+    },
+    {
+     "name": "LV QB over + LV covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0029604",
+       "name": "Kirk Cousins",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 214.5
+      },
+      {
+       "kind": "spread",
+       "team": "LV",
+       "line": 3.5
+      }
+     ],
+     "p": 28.6,
+     "pi": 24.9
+    },
+    {
+     "name": "LV RB1 rush over + LV wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040122",
+       "name": "Ashton Jeanty",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 59.5
+      },
+      {
+       "kind": "ml",
+       "team": "LV"
+      }
+     ],
+     "p": 21.1,
+     "pi": 18.6
+    },
+    {
+     "name": "LV RB1 anytime TD + LV wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040122",
+       "name": "Ashton Jeanty",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "LV"
+      }
+     ],
+     "p": 26.6,
+     "pi": 21.0
+    },
+    {
+     "name": "LV WR1 over + LV team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038563",
+       "name": "Tre Tucker",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 43.5
+      },
+      {
+       "kind": "tt",
+       "team": "LV",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.6,
+     "pi": 24.5
+    },
+    {
+     "name": "LV team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "LV",
+       "side": "Over",
+       "line": 21.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 38.6,
+     "pi": 26.1
+    }
+   ]
   },
   {
    "game_id": "2026_05_MIN_NO",
@@ -1684,7 +3394,349 @@
      "model_pct": 59,
      "vegas_pct": 59
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "NO QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040743",
+       "name": "Tyler Shough",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 239.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0037239",
+       "name": "Chris Olave",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 81.5
+      }
+     ],
+     "p": 33.0,
+     "pi": 24.9
+    },
+    {
+     "name": "NO QB over + NO team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040743",
+       "name": "Tyler Shough",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 239.5
+      },
+      {
+       "kind": "tt",
+       "team": "NO",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 29.9,
+     "pi": 24.2
+    },
+    {
+     "name": "NO QB over + MIN team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040743",
+       "name": "Tyler Shough",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 239.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 24.0,
+     "pi": 23.1
+    },
+    {
+     "name": "NO QB over + NO covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040743",
+       "name": "Tyler Shough",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 239.5
+      },
+      {
+       "kind": "spread",
+       "team": "NO",
+       "line": 2.5
+      }
+     ],
+     "p": 28.8,
+     "pi": 25.5
+    },
+    {
+     "name": "NO RB1 rush over + NO wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033906",
+       "name": "Alvin Kamara",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 40.5
+      },
+      {
+       "kind": "ml",
+       "team": "NO"
+      }
+     ],
+     "p": 23.5,
+     "pi": 20.9
+    },
+    {
+     "name": "NO RB1 anytime TD + NO wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033906",
+       "name": "Alvin Kamara",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "NO"
+      }
+     ],
+     "p": 20.2,
+     "pi": 15.3
+    },
+    {
+     "name": "NO WR1 over + NO team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037239",
+       "name": "Chris Olave",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 81.5
+      },
+      {
+       "kind": "tt",
+       "team": "NO",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 27.0,
+     "pi": 24.0
+    },
+    {
+     "name": "NO team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "NO",
+       "side": "Over",
+       "line": 20.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 39.1,
+     "pi": 26.5
+    },
+    {
+     "name": "MIN QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035228",
+       "name": "Kyler Murray",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 192.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036322",
+       "name": "Justin Jefferson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 31.5,
+     "pi": 25.1
+    },
+    {
+     "name": "MIN QB over + MIN team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035228",
+       "name": "Kyler Murray",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 192.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 28.8,
+     "pi": 23.2
+    },
+    {
+     "name": "MIN QB over + NO team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035228",
+       "name": "Kyler Murray",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 192.5
+      },
+      {
+       "kind": "tt",
+       "team": "NO",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 25.9,
+     "pi": 24.3
+    },
+    {
+     "name": "MIN QB over + MIN covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035228",
+       "name": "Kyler Murray",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 192.5
+      },
+      {
+       "kind": "spread",
+       "team": "MIN",
+       "line": -2.5
+      }
+     ],
+     "p": 27.5,
+     "pi": 24.7
+    },
+    {
+     "name": "MIN RB1 rush over + MIN wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033293",
+       "name": "Aaron Jones",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 89.5
+      },
+      {
+       "kind": "ml",
+       "team": "MIN"
+      }
+     ],
+     "p": 31.1,
+     "pi": 27.4
+    },
+    {
+     "name": "MIN RB1 anytime TD + MIN wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033293",
+       "name": "Aaron Jones",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "MIN"
+      }
+     ],
+     "p": 41.6,
+     "pi": 36.0
+    },
+    {
+     "name": "MIN WR1 over + MIN team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036322",
+       "name": "Justin Jefferson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 45.5
+      },
+      {
+       "kind": "tt",
+       "team": "MIN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 25.0,
+     "pi": 23.0
+    },
+    {
+     "name": "MIN team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "MIN",
+       "side": "Over",
+       "line": 23.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 37.6,
+     "pi": 25.3
+    }
+   ]
   },
   {
    "game_id": "2026_05_CLE_NYJ",
@@ -1945,7 +3997,349 @@
      "model_pct": 46,
      "vegas_pct": 45
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "NYJ QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0030565",
+       "name": "Geno Smith",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 194.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0037740",
+       "name": "Garrett Wilson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 47.5
+      }
+     ],
+     "p": 31.5,
+     "pi": 25.4
+    },
+    {
+     "name": "NYJ QB over + NYJ team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0030565",
+       "name": "Geno Smith",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 194.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYJ",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 29.1,
+     "pi": 23.8
+    },
+    {
+     "name": "NYJ QB over + CLE team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0030565",
+       "name": "Geno Smith",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 194.5
+      },
+      {
+       "kind": "tt",
+       "team": "CLE",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 24.0,
+     "pi": 22.8
+    },
+    {
+     "name": "NYJ QB over + NYJ covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0030565",
+       "name": "Geno Smith",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 194.5
+      },
+      {
+       "kind": "spread",
+       "team": "NYJ",
+       "line": -1.5
+      }
+     ],
+     "p": 27.8,
+     "pi": 24.9
+    },
+    {
+     "name": "NYJ RB1 rush over + NYJ wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038120",
+       "name": "Breece Hall",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 61.5
+      },
+      {
+       "kind": "ml",
+       "team": "NYJ"
+      }
+     ],
+     "p": 28.7,
+     "pi": 26.0
+    },
+    {
+     "name": "NYJ RB1 anytime TD + NYJ wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038120",
+       "name": "Breece Hall",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "NYJ"
+      }
+     ],
+     "p": 29.1,
+     "pi": 23.6
+    },
+    {
+     "name": "NYJ WR1 over + NYJ team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037740",
+       "name": "Garrett Wilson",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 47.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYJ",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.3,
+     "pi": 23.8
+    },
+    {
+     "name": "NYJ team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "NYJ",
+       "side": "Over",
+       "line": 21.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 39.5
+      }
+     ],
+     "p": 38.5,
+     "pi": 25.8
+    },
+    {
+     "name": "CLE QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033537",
+       "name": "Deshaun Watson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 229.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0040663",
+       "name": "Harold Fannin Jr.",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 46.5
+      }
+     ],
+     "p": 30.6,
+     "pi": 25.2
+    },
+    {
+     "name": "CLE QB over + CLE team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033537",
+       "name": "Deshaun Watson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 229.5
+      },
+      {
+       "kind": "tt",
+       "team": "CLE",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 28.1,
+     "pi": 22.6
+    },
+    {
+     "name": "CLE QB over + NYJ team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033537",
+       "name": "Deshaun Watson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 229.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYJ",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 25.3,
+     "pi": 23.6
+    },
+    {
+     "name": "CLE QB over + CLE covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033537",
+       "name": "Deshaun Watson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 229.5
+      },
+      {
+       "kind": "spread",
+       "team": "CLE",
+       "line": 1.5
+      }
+     ],
+     "p": 27.6,
+     "pi": 25.2
+    },
+    {
+     "name": "CLE RB1 rush over + CLE wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040784",
+       "name": "Quinshon Judkins",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 61.5
+      },
+      {
+       "kind": "ml",
+       "team": "CLE"
+      }
+     ],
+     "p": 25.2,
+     "pi": 22.1
+    },
+    {
+     "name": "CLE RB1 anytime TD + CLE wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040784",
+       "name": "Quinshon Judkins",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "CLE"
+      }
+     ],
+     "p": 29.2,
+     "pi": 23.6
+    },
+    {
+     "name": "CLE WR1 over + CLE team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040663",
+       "name": "Harold Fannin Jr.",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 46.5
+      },
+      {
+       "kind": "tt",
+       "team": "CLE",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 24.6,
+     "pi": 22.9
+    },
+    {
+     "name": "CLE team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "CLE",
+       "side": "Over",
+       "line": 20.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 39.5
+      }
+     ],
+     "p": 37.0,
+     "pi": 24.7
+    }
+   ]
   },
   {
    "game_id": "2026_05_IND_PIT",
@@ -2205,7 +4599,349 @@
      "model_pct": 60,
      "vegas_pct": 59
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "PIT QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0023459",
+       "name": "Aaron Rodgers",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 248.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0035640",
+       "name": "DK Metcalf",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 58.5
+      }
+     ],
+     "p": 31.2,
+     "pi": 25.2
+    },
+    {
+     "name": "PIT QB over + PIT team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0023459",
+       "name": "Aaron Rodgers",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 248.5
+      },
+      {
+       "kind": "tt",
+       "team": "PIT",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 28.4,
+     "pi": 22.7
+    },
+    {
+     "name": "PIT QB over + IND team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0023459",
+       "name": "Aaron Rodgers",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 248.5
+      },
+      {
+       "kind": "tt",
+       "team": "IND",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.2,
+     "pi": 24.7
+    },
+    {
+     "name": "PIT QB over + PIT covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0023459",
+       "name": "Aaron Rodgers",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 248.5
+      },
+      {
+       "kind": "spread",
+       "team": "PIT",
+       "line": -2.5
+      }
+     ],
+     "p": 28.3,
+     "pi": 25.0
+    },
+    {
+     "name": "PIT RB1 rush over + PIT wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037228",
+       "name": "Jaylen Warren",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 87.5
+      },
+      {
+       "kind": "ml",
+       "team": "PIT"
+      }
+     ],
+     "p": 30.8,
+     "pi": 27.4
+    },
+    {
+     "name": "PIT RB1 anytime TD + PIT wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037228",
+       "name": "Jaylen Warren",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "PIT"
+      }
+     ],
+     "p": 38.0,
+     "pi": 32.5
+    },
+    {
+     "name": "PIT WR1 over + PIT team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035640",
+       "name": "DK Metcalf",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 58.5
+      },
+      {
+       "kind": "tt",
+       "team": "PIT",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 24.7,
+     "pi": 22.5
+    },
+    {
+     "name": "PIT team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "PIT",
+       "side": "Over",
+       "line": 24.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 44.5
+      }
+     ],
+     "p": 36.0,
+     "pi": 23.5
+    },
+    {
+     "name": "IND QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035710",
+       "name": "Daniel Jones",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 242.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0038997",
+       "name": "Josh Downs",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 57.5
+      }
+     ],
+     "p": 30.9,
+     "pi": 25.1
+    },
+    {
+     "name": "IND QB over + IND team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035710",
+       "name": "Daniel Jones",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 242.5
+      },
+      {
+       "kind": "tt",
+       "team": "IND",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 29.7,
+     "pi": 24.4
+    },
+    {
+     "name": "IND QB over + PIT team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035710",
+       "name": "Daniel Jones",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 242.5
+      },
+      {
+       "kind": "tt",
+       "team": "PIT",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 23.5,
+     "pi": 22.4
+    },
+    {
+     "name": "IND QB over + IND covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035710",
+       "name": "Daniel Jones",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 242.5
+      },
+      {
+       "kind": "spread",
+       "team": "IND",
+       "line": 2.5
+      }
+     ],
+     "p": 27.6,
+     "pi": 25.1
+    },
+    {
+     "name": "IND RB1 rush over + IND wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036223",
+       "name": "Jonathan Taylor",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 79.5
+      },
+      {
+       "kind": "ml",
+       "team": "IND"
+      }
+     ],
+     "p": 24.2,
+     "pi": 20.5
+    },
+    {
+     "name": "IND RB1 anytime TD + IND wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036223",
+       "name": "Jonathan Taylor",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "IND"
+      }
+     ],
+     "p": 32.0,
+     "pi": 25.6
+    },
+    {
+     "name": "IND WR1 over + IND team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038997",
+       "name": "Josh Downs",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 57.5
+      },
+      {
+       "kind": "tt",
+       "team": "IND",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.7,
+     "pi": 24.7
+    },
+    {
+     "name": "IND team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "IND",
+       "side": "Over",
+       "line": 21.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 44.5
+      }
+     ],
+     "p": 38.0,
+     "pi": 25.6
+    }
+   ]
   },
   {
    "game_id": "2026_05_HOU_TEN",
@@ -2477,7 +5213,349 @@
      "model_pct": 25,
      "vegas_pct": 25
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "TEN QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040676",
+       "name": "Cam Ward",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 202.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0041438",
+       "name": "Carnell Tate",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 30.4,
+     "pi": 24.9
+    },
+    {
+     "name": "TEN QB over + TEN team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040676",
+       "name": "Cam Ward",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 202.5
+      },
+      {
+       "kind": "tt",
+       "team": "TEN",
+       "side": "Over",
+       "line": 15.5
+      }
+     ],
+     "p": 29.3,
+     "pi": 24.6
+    },
+    {
+     "name": "TEN QB over + HOU team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040676",
+       "name": "Cam Ward",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 202.5
+      },
+      {
+       "kind": "tt",
+       "team": "HOU",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 25.3,
+     "pi": 23.9
+    },
+    {
+     "name": "TEN QB over + TEN covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040676",
+       "name": "Cam Ward",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 202.5
+      },
+      {
+       "kind": "spread",
+       "team": "TEN",
+       "line": 7.5
+      }
+     ],
+     "p": 27.7,
+     "pi": 25.4
+    },
+    {
+     "name": "TEN RB1 rush over + TEN wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035261",
+       "name": "Tony Pollard",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 58.5
+      },
+      {
+       "kind": "ml",
+       "team": "TEN"
+      }
+     ],
+     "p": 16.5,
+     "pi": 13.5
+    },
+    {
+     "name": "TEN RB1 anytime TD + TEN wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035261",
+       "name": "Tony Pollard",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "TEN"
+      }
+     ],
+     "p": 14.9,
+     "pi": 10.3
+    },
+    {
+     "name": "TEN WR1 over + TEN team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041438",
+       "name": "Carnell Tate",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 41.5
+      },
+      {
+       "kind": "tt",
+       "team": "TEN",
+       "side": "Over",
+       "line": 15.5
+      }
+     ],
+     "p": 26.4,
+     "pi": 24.6
+    },
+    {
+     "name": "TEN team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "TEN",
+       "side": "Over",
+       "line": 15.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 38.5
+      }
+     ],
+     "p": 37.7,
+     "pi": 24.9
+    },
+    {
+     "name": "HOU QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039163",
+       "name": "C.J. Stroud",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 240.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036554",
+       "name": "Nico Collins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 47.5
+      }
+     ],
+     "p": 29.2,
+     "pi": 24.6
+    },
+    {
+     "name": "HOU QB over + HOU team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039163",
+       "name": "C.J. Stroud",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 240.5
+      },
+      {
+       "kind": "tt",
+       "team": "HOU",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 29.1,
+     "pi": 23.8
+    },
+    {
+     "name": "HOU QB over + TEN team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039163",
+       "name": "C.J. Stroud",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 240.5
+      },
+      {
+       "kind": "tt",
+       "team": "TEN",
+       "side": "Over",
+       "line": 15.5
+      }
+     ],
+     "p": 25.5,
+     "pi": 24.5
+    },
+    {
+     "name": "HOU QB over + HOU covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039163",
+       "name": "C.J. Stroud",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 240.5
+      },
+      {
+       "kind": "spread",
+       "team": "HOU",
+       "line": -7.5
+      }
+     ],
+     "p": 27.4,
+     "pi": 24.3
+    },
+    {
+     "name": "HOU RB1 rush over + HOU wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040583",
+       "name": "Woody Marks",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 46.5
+      },
+      {
+       "kind": "ml",
+       "team": "HOU"
+      }
+     ],
+     "p": 37.7,
+     "pi": 35.5
+    },
+    {
+     "name": "HOU RB1 anytime TD + HOU wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040583",
+       "name": "Woody Marks",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "HOU"
+      }
+     ],
+     "p": 36.5,
+     "pi": 32.6
+    },
+    {
+     "name": "HOU WR1 over + HOU team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036554",
+       "name": "Nico Collins",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 47.5
+      },
+      {
+       "kind": "tt",
+       "team": "HOU",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 25.6,
+     "pi": 23.7
+    },
+    {
+     "name": "HOU team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "HOU",
+       "side": "Over",
+       "line": 23.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 38.5
+      }
+     ],
+     "p": 36.9,
+     "pi": 24.2
+    }
+   ]
   },
   {
    "game_id": "2026_05_NYG_WAS",
@@ -2744,7 +5822,349 @@
      "model_pct": 65,
      "vegas_pct": 62
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "WAS QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032268",
+       "name": "Marcus Mariota",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 210.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0035659",
+       "name": "Terry McLaurin",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 42.5
+      }
+     ],
+     "p": 30.2,
+     "pi": 24.9
+    },
+    {
+     "name": "WAS QB over + WAS team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032268",
+       "name": "Marcus Mariota",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 210.5
+      },
+      {
+       "kind": "tt",
+       "team": "WAS",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 29.1,
+     "pi": 23.1
+    },
+    {
+     "name": "WAS QB over + NYG team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032268",
+       "name": "Marcus Mariota",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 210.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYG",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 24.7
+    },
+    {
+     "name": "WAS QB over + WAS covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032268",
+       "name": "Marcus Mariota",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 210.5
+      },
+      {
+       "kind": "spread",
+       "team": "WAS",
+       "line": -3.5
+      }
+     ],
+     "p": 30.2,
+     "pi": 26.8
+    },
+    {
+     "name": "WAS RB1 rush over + WAS wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040242",
+       "name": "Jacory Croskey-Merritt",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 74.5
+      },
+      {
+       "kind": "ml",
+       "team": "WAS"
+      }
+     ],
+     "p": 34.0,
+     "pi": 31.0
+    },
+    {
+     "name": "WAS RB1 anytime TD + WAS wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040242",
+       "name": "Jacory Croskey-Merritt",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "WAS"
+      }
+     ],
+     "p": 33.5,
+     "pi": 28.4
+    },
+    {
+     "name": "WAS WR1 over + WAS team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0035659",
+       "name": "Terry McLaurin",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 42.5
+      },
+      {
+       "kind": "tt",
+       "team": "WAS",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 24.8,
+     "pi": 22.9
+    },
+    {
+     "name": "WAS team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "WAS",
+       "side": "Over",
+       "line": 23.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 35.0,
+     "pi": 21.9
+    },
+    {
+     "name": "NYG QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0031503",
+       "name": "Jameis Winston",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 234.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0039337",
+       "name": "Malik Nabers",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 55.5
+      }
+     ],
+     "p": 30.9,
+     "pi": 24.9
+    },
+    {
+     "name": "NYG QB over + NYG team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0031503",
+       "name": "Jameis Winston",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 234.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYG",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 29.9,
+     "pi": 24.5
+    },
+    {
+     "name": "NYG QB over + WAS team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0031503",
+       "name": "Jameis Winston",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 234.5
+      },
+      {
+       "kind": "tt",
+       "team": "WAS",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 24.5,
+     "pi": 22.9
+    },
+    {
+     "name": "NYG QB over + NYG covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0031503",
+       "name": "Jameis Winston",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 234.5
+      },
+      {
+       "kind": "spread",
+       "team": "NYG",
+       "line": 3.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 23.2
+    },
+    {
+     "name": "NYG RB1 rush over + NYG wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040715",
+       "name": "Cam Skattebo",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 45.5
+      },
+      {
+       "kind": "ml",
+       "team": "NYG"
+      }
+     ],
+     "p": 19.1,
+     "pi": 17.0
+    },
+    {
+     "name": "NYG RB1 anytime TD + NYG wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040715",
+       "name": "Cam Skattebo",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "NYG"
+      }
+     ],
+     "p": 15.9,
+     "pi": 11.6
+    },
+    {
+     "name": "NYG WR1 over + NYG team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039337",
+       "name": "Malik Nabers",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 55.5
+      },
+      {
+       "kind": "tt",
+       "team": "NYG",
+       "side": "Over",
+       "line": 17.5
+      }
+     ],
+     "p": 26.5,
+     "pi": 24.6
+    },
+    {
+     "name": "NYG team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "NYG",
+       "side": "Over",
+       "line": 17.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 35.7,
+     "pi": 23.4
+    }
+   ]
   },
   {
    "game_id": "2026_05_DEN_LAC",
@@ -3017,7 +6437,349 @@
      "model_pct": 62,
      "vegas_pct": 62
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "LAC QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036355",
+       "name": "Justin Herbert",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0039915",
+       "name": "Ladd McConkey",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 43.5
+      }
+     ],
+     "p": 30.1,
+     "pi": 25.0
+    },
+    {
+     "name": "LAC QB over + LAC team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036355",
+       "name": "Justin Herbert",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "tt",
+       "team": "LAC",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 27.2,
+     "pi": 21.5
+    },
+    {
+     "name": "LAC QB over + DEN team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036355",
+       "name": "Justin Herbert",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "tt",
+       "team": "DEN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 25.6,
+     "pi": 24.3
+    },
+    {
+     "name": "LAC QB over + LAC covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036355",
+       "name": "Justin Herbert",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "spread",
+       "team": "LAC",
+       "line": 3.5
+      }
+     ],
+     "p": 26.9,
+     "pi": 24.1
+    },
+    {
+     "name": "LAC RB1 rush over + LAC wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040666",
+       "name": "Omarion Hampton",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 53.5
+      },
+      {
+       "kind": "ml",
+       "team": "LAC"
+      }
+     ],
+     "p": 20.6,
+     "pi": 18.1
+    },
+    {
+     "name": "LAC RB1 anytime TD + LAC wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0040666",
+       "name": "Omarion Hampton",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "LAC"
+      }
+     ],
+     "p": 18.4,
+     "pi": 13.8
+    },
+    {
+     "name": "LAC WR1 over + LAC team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039915",
+       "name": "Ladd McConkey",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 43.5
+      },
+      {
+       "kind": "tt",
+       "team": "LAC",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 23.5,
+     "pi": 21.8
+    },
+    {
+     "name": "LAC team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "LAC",
+       "side": "Over",
+       "line": 20.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 34.5,
+     "pi": 23.1
+    },
+    {
+     "name": "DEN QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039732",
+       "name": "Bo Nix",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 215.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0034348",
+       "name": "Courtland Sutton",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 37.5
+      }
+     ],
+     "p": 30.6,
+     "pi": 25.4
+    },
+    {
+     "name": "DEN QB over + DEN team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039732",
+       "name": "Bo Nix",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 215.5
+      },
+      {
+       "kind": "tt",
+       "team": "DEN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 30.4,
+     "pi": 24.6
+    },
+    {
+     "name": "DEN QB over + LAC team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039732",
+       "name": "Bo Nix",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 215.5
+      },
+      {
+       "kind": "tt",
+       "team": "LAC",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 23.3,
+     "pi": 21.7
+    },
+    {
+     "name": "DEN QB over + DEN covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039732",
+       "name": "Bo Nix",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 215.5
+      },
+      {
+       "kind": "spread",
+       "team": "DEN",
+       "line": -3.5
+      }
+     ],
+     "p": 28.6,
+     "pi": 25.8
+    },
+    {
+     "name": "DEN RB1 rush over + DEN wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036158",
+       "name": "J.K. Dobbins",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 46.5
+      },
+      {
+       "kind": "ml",
+       "team": "DEN"
+      }
+     ],
+     "p": 32.9,
+     "pi": 30.2
+    },
+    {
+     "name": "DEN RB1 anytime TD + DEN wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036158",
+       "name": "J.K. Dobbins",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "DEN"
+      }
+     ],
+     "p": 23.7,
+     "pi": 19.5
+    },
+    {
+     "name": "DEN WR1 over + DEN team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034348",
+       "name": "Courtland Sutton",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 37.5
+      },
+      {
+       "kind": "tt",
+       "team": "DEN",
+       "side": "Over",
+       "line": 23.5
+      }
+     ],
+     "p": 26.7,
+     "pi": 24.8
+    },
+    {
+     "name": "DEN team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "DEN",
+       "side": "Over",
+       "line": 23.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 41.5
+      }
+     ],
+     "p": 39.0,
+     "pi": 26.2
+    }
+   ]
   },
   {
    "game_id": "2026_05_DET_ARI",
@@ -3311,7 +7073,349 @@
      "model_pct": 69,
      "vegas_pct": 69
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "ARI QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033119",
+       "name": "Jacoby Brissett",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 271.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0037744",
+       "name": "Trey McBride",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 80.5
+      }
+     ],
+     "p": 31.6,
+     "pi": 24.8
+    },
+    {
+     "name": "ARI QB over + ARI team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033119",
+       "name": "Jacoby Brissett",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 271.5
+      },
+      {
+       "kind": "tt",
+       "team": "ARI",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 30.7,
+     "pi": 24.7
+    },
+    {
+     "name": "ARI QB over + DET team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033119",
+       "name": "Jacoby Brissett",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 271.5
+      },
+      {
+       "kind": "tt",
+       "team": "DET",
+       "side": "Over",
+       "line": 30.5
+      }
+     ],
+     "p": 25.5,
+     "pi": 24.1
+    },
+    {
+     "name": "ARI QB over + ARI covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033119",
+       "name": "Jacoby Brissett",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 271.5
+      },
+      {
+       "kind": "spread",
+       "team": "ARI",
+       "line": 5.5
+      }
+     ],
+     "p": 28.0,
+     "pi": 24.6
+    },
+    {
+     "name": "ARI RB1 rush over + ARI wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041027",
+       "name": "Jeremiyah Love",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 48.5
+      },
+      {
+       "kind": "ml",
+       "team": "ARI"
+      }
+     ],
+     "p": 18.3,
+     "pi": 15.8
+    },
+    {
+     "name": "ARI RB1 anytime TD + ARI wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0041027",
+       "name": "Jeremiyah Love",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "ARI"
+      }
+     ],
+     "p": 16.5,
+     "pi": 12.4
+    },
+    {
+     "name": "ARI WR1 over + ARI team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037744",
+       "name": "Trey McBride",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 80.5
+      },
+      {
+       "kind": "tt",
+       "team": "ARI",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 27.3,
+     "pi": 24.6
+    },
+    {
+     "name": "ARI team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "ARI",
+       "side": "Over",
+       "line": 24.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 54.5
+      }
+     ],
+     "p": 38.8,
+     "pi": 25.8
+    },
+    {
+     "name": "DET QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033106",
+       "name": "Jared Goff",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 258.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0036963",
+       "name": "Amon-Ra St. Brown",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 73.5
+      }
+     ],
+     "p": 31.6,
+     "pi": 24.9
+    },
+    {
+     "name": "DET QB over + DET team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033106",
+       "name": "Jared Goff",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 258.5
+      },
+      {
+       "kind": "tt",
+       "team": "DET",
+       "side": "Over",
+       "line": 30.5
+      }
+     ],
+     "p": 29.8,
+     "pi": 24.0
+    },
+    {
+     "name": "DET QB over + ARI team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033106",
+       "name": "Jared Goff",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 258.5
+      },
+      {
+       "kind": "tt",
+       "team": "ARI",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 24.6
+    },
+    {
+     "name": "DET QB over + DET covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033106",
+       "name": "Jared Goff",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 258.5
+      },
+      {
+       "kind": "spread",
+       "team": "DET",
+       "line": -5.5
+      }
+     ],
+     "p": 27.9,
+     "pi": 25.1
+    },
+    {
+     "name": "DET RB1 rush over + DET wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039139",
+       "name": "Jahmyr Gibbs",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 113.5
+      },
+      {
+       "kind": "ml",
+       "team": "DET"
+      }
+     ],
+     "p": 36.1,
+     "pi": 32.4
+    },
+    {
+     "name": "DET RB1 anytime TD + DET wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039139",
+       "name": "Jahmyr Gibbs",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "DET"
+      }
+     ],
+     "p": 54.6,
+     "pi": 50.1
+    },
+    {
+     "name": "DET WR1 over + DET team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0036963",
+       "name": "Amon-Ra St. Brown",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 73.5
+      },
+      {
+       "kind": "tt",
+       "team": "DET",
+       "side": "Over",
+       "line": 30.5
+      }
+     ],
+     "p": 26.3,
+     "pi": 24.3
+    },
+    {
+     "name": "DET team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "DET",
+       "side": "Over",
+       "line": 30.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 54.5
+      }
+     ],
+     "p": 37.2,
+     "pi": 25.2
+    }
+   ]
   },
   {
    "game_id": "2026_05_SF_SEA",
@@ -3575,7 +7679,349 @@
      "model_pct": 61,
      "vegas_pct": 60
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "SEA QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034869",
+       "name": "Sam Darnold",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 237.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0038543",
+       "name": "Jaxon Smith-Njigba",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 103.5
+      }
+     ],
+     "p": 34.1,
+     "pi": 25.1
+    },
+    {
+     "name": "SEA QB over + SEA team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034869",
+       "name": "Sam Darnold",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 237.5
+      },
+      {
+       "kind": "tt",
+       "team": "SEA",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 30.9,
+     "pi": 24.9
+    },
+    {
+     "name": "SEA QB over + SF team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034869",
+       "name": "Sam Darnold",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 237.5
+      },
+      {
+       "kind": "tt",
+       "team": "SF",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.0,
+     "pi": 24.8
+    },
+    {
+     "name": "SEA QB over + SEA covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034869",
+       "name": "Sam Darnold",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 237.5
+      },
+      {
+       "kind": "spread",
+       "team": "SEA",
+       "line": -3.0
+      }
+     ],
+     "p": 27.7,
+     "pi": 24.3
+    },
+    {
+     "name": "SEA RB1 rush over + SEA wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038797",
+       "name": "Emanuel Wilson",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 56.5
+      },
+      {
+       "kind": "ml",
+       "team": "SEA"
+      }
+     ],
+     "p": 31.8,
+     "pi": 28.9
+    },
+    {
+     "name": "SEA RB1 anytime TD + SEA wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038797",
+       "name": "Emanuel Wilson",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "SEA"
+      }
+     ],
+     "p": 28.5,
+     "pi": 23.8
+    },
+    {
+     "name": "SEA WR1 over + SEA team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038543",
+       "name": "Jaxon Smith-Njigba",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 103.5
+      },
+      {
+       "kind": "tt",
+       "team": "SEA",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 27.7,
+     "pi": 24.7
+    },
+    {
+     "name": "SEA team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "SEA",
+       "side": "Over",
+       "line": 24.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 38.7,
+     "pi": 26.2
+    },
+    {
+     "name": "SF QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037834",
+       "name": "Brock Purdy",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0033288",
+       "name": "George Kittle",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 50.5
+      }
+     ],
+     "p": 30.6,
+     "pi": 25.2
+    },
+    {
+     "name": "SF QB over + SF team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037834",
+       "name": "Brock Purdy",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "tt",
+       "team": "SF",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 30.6,
+     "pi": 24.6
+    },
+    {
+     "name": "SF QB over + SEA team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037834",
+       "name": "Brock Purdy",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "tt",
+       "team": "SEA",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 25.9,
+     "pi": 24.7
+    },
+    {
+     "name": "SF QB over + SF covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037834",
+       "name": "Brock Purdy",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 227.5
+      },
+      {
+       "kind": "spread",
+       "team": "SF",
+       "line": 3.0
+      }
+     ],
+     "p": 27.5,
+     "pi": 24.2
+    },
+    {
+     "name": "SF RB1 rush over + SF wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033280",
+       "name": "Christian McCaffrey",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 51.5
+      },
+      {
+       "kind": "ml",
+       "team": "SF"
+      }
+     ],
+     "p": 22.1,
+     "pi": 19.8
+    },
+    {
+     "name": "SF RB1 anytime TD + SF wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033280",
+       "name": "Christian McCaffrey",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "SF"
+      }
+     ],
+     "p": 29.4,
+     "pi": 23.7
+    },
+    {
+     "name": "SF WR1 over + SF team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0033288",
+       "name": "George Kittle",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 50.5
+      },
+      {
+       "kind": "tt",
+       "team": "SF",
+       "side": "Over",
+       "line": 21.5
+      }
+     ],
+     "p": 26.9,
+     "pi": 24.9
+    },
+    {
+     "name": "SF team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "SF",
+       "side": "Over",
+       "line": 21.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 45.5
+      }
+     ],
+     "p": 39.0,
+     "pi": 26.1
+    }
+   ]
   },
   {
    "game_id": "2026_05_BAL_ATL",
@@ -3848,7 +8294,349 @@
      "model_pct": 62,
      "vegas_pct": 60
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "ATL QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039917",
+       "name": "Michael Penix Jr.",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 222.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0037238",
+       "name": "Drake London",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 73.5
+      }
+     ],
+     "p": 32.9,
+     "pi": 25.0
+    },
+    {
+     "name": "ATL QB over + ATL team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039917",
+       "name": "Michael Penix Jr.",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 222.5
+      },
+      {
+       "kind": "tt",
+       "team": "ATL",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 27.6,
+     "pi": 22.5
+    },
+    {
+     "name": "ATL QB over + BAL team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039917",
+       "name": "Michael Penix Jr.",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 222.5
+      },
+      {
+       "kind": "tt",
+       "team": "BAL",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 25.3,
+     "pi": 24.1
+    },
+    {
+     "name": "ATL QB over + ATL covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039917",
+       "name": "Michael Penix Jr.",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 222.5
+      },
+      {
+       "kind": "spread",
+       "team": "ATL",
+       "line": -3.0
+      }
+     ],
+     "p": 27.2,
+     "pi": 24.6
+    },
+    {
+     "name": "ATL RB1 rush over + ATL wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038542",
+       "name": "Bijan Robinson",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 100.5
+      },
+      {
+       "kind": "ml",
+       "team": "ATL"
+      }
+     ],
+     "p": 33.7,
+     "pi": 29.4
+    },
+    {
+     "name": "ATL RB1 anytime TD + ATL wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0038542",
+       "name": "Bijan Robinson",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "ATL"
+      }
+     ],
+     "p": 48.9,
+     "pi": 43.3
+    },
+    {
+     "name": "ATL WR1 over + ATL team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037238",
+       "name": "Drake London",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 73.5
+      },
+      {
+       "kind": "tt",
+       "team": "ATL",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 24.7,
+     "pi": 22.5
+    },
+    {
+     "name": "ATL team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "ATL",
+       "side": "Over",
+       "line": 24.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 43.5
+      }
+     ],
+     "p": 35.8,
+     "pi": 23.3
+    },
+    {
+     "name": "BAL QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034796",
+       "name": "Lamar Jackson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0039064",
+       "name": "Zay Flowers",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 80.5
+      }
+     ],
+     "p": 32.9,
+     "pi": 24.9
+    },
+    {
+     "name": "BAL QB over + BAL team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034796",
+       "name": "Lamar Jackson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "tt",
+       "team": "BAL",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 29.2,
+     "pi": 24.1
+    },
+    {
+     "name": "BAL QB over + ATL team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034796",
+       "name": "Lamar Jackson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "tt",
+       "team": "ATL",
+       "side": "Over",
+       "line": 24.5
+      }
+     ],
+     "p": 24.2,
+     "pi": 22.4
+    },
+    {
+     "name": "BAL QB over + BAL covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034796",
+       "name": "Lamar Jackson",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 228.5
+      },
+      {
+       "kind": "spread",
+       "team": "BAL",
+       "line": 3.0
+      }
+     ],
+     "p": 26.1,
+     "pi": 23.6
+    },
+    {
+     "name": "BAL RB1 rush over + BAL wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032764",
+       "name": "Derrick Henry",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 89.5
+      },
+      {
+       "kind": "ml",
+       "team": "BAL"
+      }
+     ],
+     "p": 22.8,
+     "pi": 19.3
+    },
+    {
+     "name": "BAL RB1 anytime TD + BAL wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0032764",
+       "name": "Derrick Henry",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "BAL"
+      }
+     ],
+     "p": 27.5,
+     "pi": 22.0
+    },
+    {
+     "name": "BAL WR1 over + BAL team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039064",
+       "name": "Zay Flowers",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 80.5
+      },
+      {
+       "kind": "tt",
+       "team": "BAL",
+       "side": "Over",
+       "line": 20.5
+      }
+     ],
+     "p": 26.5,
+     "pi": 24.2
+    },
+    {
+     "name": "BAL team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "BAL",
+       "side": "Over",
+       "line": 20.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 43.5
+      }
+     ],
+     "p": 38.0,
+     "pi": 25.0
+    }
+   ]
   },
   {
    "game_id": "2026_05_BUF_LA",
@@ -4136,7 +8924,349 @@
      "model_pct": 43,
      "vegas_pct": 40
     }
-   }
+   },
+   "sgp_combos": [
+    {
+     "name": "LA QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0026498",
+       "name": "Matthew Stafford",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 278.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0039075",
+       "name": "Puka Nacua",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 65.5
+      }
+     ],
+     "p": 30.8,
+     "pi": 25.1
+    },
+    {
+     "name": "LA QB over + LA team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0026498",
+       "name": "Matthew Stafford",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 278.5
+      },
+      {
+       "kind": "tt",
+       "team": "LA",
+       "side": "Over",
+       "line": 28.5
+      }
+     ],
+     "p": 29.3,
+     "pi": 23.6
+    },
+    {
+     "name": "LA QB over + BUF team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0026498",
+       "name": "Matthew Stafford",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 278.5
+      },
+      {
+       "kind": "tt",
+       "team": "BUF",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 25.8,
+     "pi": 24.6
+    },
+    {
+     "name": "LA QB over + LA covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0026498",
+       "name": "Matthew Stafford",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 278.5
+      },
+      {
+       "kind": "spread",
+       "team": "LA",
+       "line": -3.0
+      }
+     ],
+     "p": 24.2,
+     "pi": 21.2
+    },
+    {
+     "name": "LA RB1 rush over + LA wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037840",
+       "name": "Kyren Williams",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 66.5
+      },
+      {
+       "kind": "ml",
+       "team": "LA"
+      }
+     ],
+     "p": 28.5,
+     "pi": 25.8
+    },
+    {
+     "name": "LA RB1 anytime TD + LA wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037840",
+       "name": "Kyren Williams",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "LA"
+      }
+     ],
+     "p": 36.9,
+     "pi": 31.8
+    },
+    {
+     "name": "LA WR1 over + LA team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0039075",
+       "name": "Puka Nacua",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 65.5
+      },
+      {
+       "kind": "tt",
+       "team": "LA",
+       "side": "Over",
+       "line": 28.5
+      }
+     ],
+     "p": 25.6,
+     "pi": 23.7
+    },
+    {
+     "name": "LA team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "LA",
+       "side": "Over",
+       "line": 28.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 54.5
+      }
+     ],
+     "p": 37.1,
+     "pi": 25.1
+    },
+    {
+     "name": "BUF QB + WR1 overs",
+     "type": "QB + WR1 overs",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034857",
+       "name": "Josh Allen",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "player",
+       "pid": "00-0037261",
+       "name": "Khalil Shakir",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 44.5
+      }
+     ],
+     "p": 29.9,
+     "pi": 24.8
+    },
+    {
+     "name": "BUF QB over + BUF team total over",
+     "type": "QB over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034857",
+       "name": "Josh Allen",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "tt",
+       "team": "BUF",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 29.8,
+     "pi": 24.5
+    },
+    {
+     "name": "BUF QB over + LA team total over",
+     "type": "QB over + opponent team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034857",
+       "name": "Josh Allen",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "tt",
+       "team": "LA",
+       "side": "Over",
+       "line": 28.5
+      }
+     ],
+     "p": 24.6,
+     "pi": 23.5
+    },
+    {
+     "name": "BUF QB over + BUF covers",
+     "type": "QB over + team covers",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0034857",
+       "name": "Josh Allen",
+       "stat": "pass_yds",
+       "side": "Over",
+       "line": 224.5
+      },
+      {
+       "kind": "spread",
+       "team": "BUF",
+       "line": 3.0
+      }
+     ],
+     "p": 30.0,
+     "pi": 27.1
+    },
+    {
+     "name": "BUF RB1 rush over + BUF wins",
+     "type": "RB1 rush over + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037248",
+       "name": "James Cook",
+       "stat": "rush_yds",
+       "side": "Over",
+       "line": 80.5
+      },
+      {
+       "kind": "ml",
+       "team": "BUF"
+      }
+     ],
+     "p": 27.1,
+     "pi": 23.0
+    },
+    {
+     "name": "BUF RB1 anytime TD + BUF wins",
+     "type": "RB1 anytime TD + team wins",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037248",
+       "name": "James Cook",
+       "stat": "tds",
+       "side": "Over",
+       "line": 0.5
+      },
+      {
+       "kind": "ml",
+       "team": "BUF"
+      }
+     ],
+     "p": 32.2,
+     "pi": 26.5
+    },
+    {
+     "name": "BUF WR1 over + BUF team total over",
+     "type": "WR1 over + team total over",
+     "legs": [
+      {
+       "kind": "player",
+       "pid": "00-0037261",
+       "name": "Khalil Shakir",
+       "stat": "rec_yds",
+       "side": "Over",
+       "line": 44.5
+      },
+      {
+       "kind": "tt",
+       "team": "BUF",
+       "side": "Over",
+       "line": 27.5
+      }
+     ],
+     "p": 25.7,
+     "pi": 24.5
+    },
+    {
+     "name": "BUF team total over + game over",
+     "type": "team total over + game over",
+     "legs": [
+      {
+       "kind": "tt",
+       "team": "BUF",
+       "side": "Over",
+       "line": 27.5
+      },
+      {
+       "kind": "total",
+       "side": "Over",
+       "line": 54.5
+      }
+     ],
+     "p": 39.2,
+     "pi": 26.1
+    }
+   ]
   }
  ],
  "players": [
