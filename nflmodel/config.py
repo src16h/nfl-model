@@ -149,8 +149,8 @@ GAME_PLAY_SPREAD = 1.5       # spread gap (points) that makes a spread Play
 GAME_PLAY_TOTAL = None       # totals: off, the backtest shows no edge
 
 # Live game lines are cached between runs so frequent updates don't burn credits.
-ODDS_LINES_EVERY_HOURS = 8       # refresh spreads and totals at most this often (both daily runs)
-ODDS_LINES_GAMEDAY_HOURS = 3     # when a game kicks off within 12 hours
+ODDS_LINES_EVERY_HOURS = 22      # refresh spreads and totals once a day (keeps the month under 500 credits)
+ODDS_LINES_GAMEDAY_HOURS = 8     # game days: both daily runs refresh
 ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls to save credits for props
 
 # ------------------------------------------------------------
@@ -163,7 +163,18 @@ WIN_SIGMA_DEFAULT = 11.4         # win chance curve spread (refit every run from
 # ------------------------------------------------------------
 # v8: extra context features (each kept only if the backtest says it helps)
 # ------------------------------------------------------------
-CPOE_SHRINK_ATT = 150            # QB completion % over expected: attempts before it's fully trusted
+CPOE_SHRINK_ATT = 150
+Q1_CATCH_SHARE = 0.22            # chance a given catch happens in the 1st quarter (2023-25: 21-22%)
+Q1_PASS_SHARE = 0.218           # QB: share of passing yards thrown in the 1st quarter
+Q1_PASS_KAPPA = 10.3            # how much that share moves game to game (beta concentration)
+Q1_YPC_SHAPE = 1.3               # spread of yards on a single catch (fit to 2023-25 Q1 games)
+# first half, from 2022-25 games: halftime margin = 0.63 x full-game margin,
+# halftime total = 0.49 x full-game total + 1.0
+H1_MARGIN_SLOPE = 0.628
+H1_TOTAL_SLOPE = 0.493
+H1_TOTAL_INTERCEPT = 0.97
+H1_MARGIN_SD = 9.84
+H1_TOTAL_SD = 8.62            # QB completion % over expected: attempts before it's fully trusted
 # Backtest 2015-2025 (walk-forward). Football-only engine (projected scores without Vegas):
 EXTRA_MARGIN_FEATS = ["sr_diff", "cpoe_diff", "surface_switch"]   # better in both 2015-19 and 2020-25
 EXTRA_TOTAL_FEATS = ["cpoe_sum", "precip"]                         # better overall, mostly since 2020

@@ -143,7 +143,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb) -> list[dict]:
     if len(df):
         seed = zlib.crc32(f"{game['game_id']}{team}".encode())
         sims = simulate_team(df, qb_pid, pass_tds, rush_tds, pass_att * int_rate,
-                             scrambles, scrambles * scr_ypa, seed=seed)
+                             scrambles, scrambles * scr_ypa, seed=seed, pass_att=pass_att)
         # simulated passing volume follows receivers; keep the mean consistent
         team_cmp = float(df["rec"].sum())
 
@@ -194,6 +194,8 @@ def _finish(r, game_id, sim=None) -> dict:
     if sim is not None:
         med, lo, hi = quantiles(sim["fpts"])
         d.update({"fpts_med": fnum(med), "fpts_range": [fnum(lo), fnum(hi)]})
+    if sim is not None:
+        d["markets"] = market_dists(sim, r["pos"])
     if r["pos"] == "QB":
         med, lo, hi = _rng(sim, "pass_yds", r["pass_yds"], C.PASS_YDS_CV)
         d.update({"pass_att": fnum(r["pass_att"]), "pass_cmp": fnum(r["pass_cmp"]),
@@ -213,3 +215,34 @@ def _finish(r, game_id, sim=None) -> dict:
                   "rec_yds": fnum(r["rec_yds"], 0), "rec_yds_med": fnum(med, 0),
                   "rec_yds_range": [fnum(lo, 0), fnum(hi, 0)], "rec_td": fnum(r["rec_td"], 2)})
     return d
+
+
+# ---------------------------------------------------------------------
+# Extra markets (model only, no book odds): compact distributions so the
+# dashboard can show a fair line and the over chance at any line you type.
+# ---------------------------------------------------------------------
+COUNT_STATS = {"pass_cmp", "pass_att", "carries", "q1_rec"}
+MARKET_POS = {
+    "rush_rec_yds": ("RB", "WR", "TE"), "pass_cmp": ("QB",), "pass_att": ("QB",),
+    "carries": ("RB", "QB"), "q1_pass_yds": ("QB",), "q1_rec_yds": ("WR", "TE", "RB"),
+    "q1_rec": ("WR", "TE", "RB"),
+}
+
+
+def market_dists(sim: dict, pos: str) -> dict:
+    out = {}
+    for stat, poss in MARKET_POS.items():
+        if pos not in poss or stat not in sim:
+            continue
+        a = np.asarray(sim[stat], float)
+        if a.mean() < (0.6 if stat in COUNT_STATS else 3.0):      # too small to be offered
+            continue
+        if stat in COUNT_STATS:
+            hi = int(np.percentile(a, 99.5)) + 1
+            ge = [fnum(float((a >= k).mean()) * 100, 1) for k in range(0, hi + 1)]
+            out[stat] = {"mean": fnum(a.mean(), 1), "med": fnum(np.median(a), 1), "ge": ge}
+        else:
+            q = np.percentile(a, list(range(2, 100, 2)))               # 2nd..98th percentile
+            out[stat] = {"mean": fnum(a.mean(), 1), "med": fnum(np.median(a), 1),
+                         "zero": fnum(float((a <= 0).mean()) * 100, 1), "q": [fnum(v, 1) for v in q]}
+    return out

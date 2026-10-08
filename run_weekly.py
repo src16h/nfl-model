@@ -260,6 +260,10 @@ def build_games(bundle, season, week, now):
             ml_a = pd.to_numeric(g.get("away_moneyline"), errors="coerce")
         game["ml_home"], game["ml_away"] = fnum(ml_h, 0), fnum(ml_a, 0)
         game["win_sigma"] = round(win_sigma, 2)
+        h1m = C.H1_MARGIN_SLOPE * margin                        # first half, model only
+        h1t = C.H1_TOTAL_SLOPE * total + C.H1_TOTAL_INTERCEPT
+        game["h1"] = {"margin": fnum(h1m), "total": fnum(h1t), "line": line_text(h, h1m),
+                      "sd_margin": C.H1_MARGIN_SD, "sd_total": C.H1_TOTAL_SD}
         game["picks"] = P.build(game, game["ml_home"], game["ml_away"])
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],

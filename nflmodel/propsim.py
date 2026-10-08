@@ -24,7 +24,7 @@ def _norm_factor(x):
 
 
 def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
-                  scr_car, scr_yds, seed=0) -> dict:
+                  scr_car, scr_yds, seed=0, pass_att=None) -> dict:
     """pool: one row per non-QB-scramble player with mean rec, rec_yds, rec_td,
     carries, rush_yds, rush_td. Returns pid -> {stat: array}."""
     N = C.PLAYER_SIMS
@@ -70,19 +70,35 @@ def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
             cnt = rng.poisson(rush_td * _norm_factor(Fr ** 1.2))
             rush_tdm = rng.multinomial(cnt, tdr / tdr.sum())
 
+    # first quarter: each catch lands in Q1 with a fixed chance, and each Q1 catch
+    # gets its own yardage draw (checked against 2023-25 games: within ~3 pts at every line)
+    q1_n = rng.binomial(rec_n.astype(int), C.Q1_CATCH_SHARE)
+    ypc = np.where(rec_n > 0, rec_yds / np.maximum(rec_n, 1), 0.0)
+    q1_yds = np.where(q1_n > 0, rng.gamma(np.maximum(q1_n, 1) * C.Q1_YPC_SHAPE,
+                                          np.maximum(ypc, 0.5) / C.Q1_YPC_SHAPE), 0.0)
+
     out = {}
     for j, pid in enumerate(pids):
         out[pid] = {"rec": rec_n[:, j], "rec_yds": rec_yds[:, j], "rec_td": rec_td[:, j],
-                    "carries": car_n[:, j].astype(float), "rush_yds": rush_yds[:, j], "rush_td": rush_tdm[:, j]}
+                    "carries": car_n[:, j].astype(float), "rush_yds": rush_yds[:, j], "rush_td": rush_tdm[:, j],
+                    "q1_rec": q1_n[:, j].astype(float), "q1_rec_yds": q1_yds[:, j]}
 
     if qb_pid is not None:
-        q = out.setdefault(qb_pid, {s: np.zeros(N) for s in ["rec", "rec_yds", "rec_td", "carries", "rush_yds", "rush_td"]})
+        q = out.setdefault(qb_pid, {s: np.zeros(N) for s in ["rec", "rec_yds", "rec_td", "carries", "rush_yds", "rush_td",
+                                                              "q1_rec", "q1_rec_yds"]})
         if scr_car > 0:
             sy = rng.gamma(1.5, max(scr_yds, 0.1) / 1.5, N)
             q["rush_yds"] = q["rush_yds"] + sy
             q["carries"] = q["carries"] + rng.poisson(scr_car, N)
         q["pass_yds"] = rec_yds.sum(axis=1)
         q["pass_cmp"] = rec_n.sum(axis=1).astype(float)
+        # QB first quarter: full-game passing yards x a first-quarter share that varies
+        # game to game (2022-25: mean 21.8%, beta spread fit on real team-games)
+        sh = rng.beta(C.Q1_PASS_SHARE * C.Q1_PASS_KAPPA, (1 - C.Q1_PASS_SHARE) * C.Q1_PASS_KAPPA, N)
+        q["q1_pass_yds"] = q["pass_yds"] * sh
+        if pass_att is not None:                      # attempts = completions + incompletions
+            inc = max(float(pass_att) - float(q["pass_cmp"].mean()), 0.0)
+            q["pass_att"] = q["pass_cmp"] + rng.poisson(inc * _norm_factor(Fp ** 0.5))
         q["pass_td"] = rec_td.sum(axis=1).astype(float)
         q["pass_int"] = rng.poisson(int_mean * _norm_factor(np.exp(-0.2 * s1)), N).astype(float)
 
