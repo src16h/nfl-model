@@ -159,3 +159,15 @@ ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls
 ODDS_MONEYLINE_LIVE = False      # True: also pull live moneylines with each line refresh (+1 credit each time).
                                  # False: moneylines come from the free data feed (no credits, can lag a bit).
 WIN_SIGMA_DEFAULT = 11.4         # win chance curve spread (refit every run from real results)
+
+# ------------------------------------------------------------
+# v8: extra context features (each kept only if the backtest says it helps)
+# ------------------------------------------------------------
+CPOE_SHRINK_ATT = 150            # QB completion % over expected: attempts before it's fully trusted
+# Backtest 2015-2025 (walk-forward). Football-only engine (projected scores without Vegas):
+EXTRA_MARGIN_FEATS = ["sr_diff", "cpoe_diff", "surface_switch"]   # better in both 2015-19 and 2020-25
+EXTRA_TOTAL_FEATS = ["cpoe_sum", "precip"]                         # better overall, mostly since 2020
+# Market-anchored engine (the one that makes picks): only what beat Vegas in both halves
+EXTRA_ANCHOR_MARGIN_FEATS = []   # tested sr_diff, cpoe_diff, surface_switch: Vegas already prices them
+EXTRA_ANCHOR_TOTAL_FEATS = ["turf"]
+# Tested and left out (no gain): heat (both engines), sr_sum (hurt the anchored total)

@@ -21,6 +21,7 @@ PBP_COLS = [
     "passer_player_id", "passer_player_name", "rusher_player_id", "rusher_player_name",
     "receiver_player_id", "receiver_player_name", "touchdown", "pass_touchdown",
     "rush_touchdown", "td_team", "xpass", "air_yards", "two_point_attempt", "qb_hit",
+    "cpoe", "weather",
 ]
 
 
@@ -82,6 +83,8 @@ def clean_pbp(df):
         df["qb_hit"] = 0
     df["season"] = df["season"].astype(int)
     df["week"] = df["week"].astype(int)
+    if "weather" in df.columns:                      # one text per game; keep it small
+        df["weather"] = df["weather"].astype("category")
     return df
 
 

@@ -10,17 +10,22 @@ import pandas as pd
 from .ratings import build_context
 from .games import raw_game, home_field, rest_adj
 from .qb import qb_weeks_fast, qb_quality, incumbent, adj_value
-from .geo import travel, kickoff_hour_et, is_indoor, weather_features
+from .geo import travel, kickoff_hour_et, is_indoor, weather_features, precip_from_text
+from .ratings import is_turf
+from . import config as C
 from .util import before
 
 log = logging.getLogger("nflmodel")
 
-MARGIN_FEATS = ["raw_margin", "hf", "elo_diff", "qb_diff", "rest", "tz_shift",
-                "west_early", "dist", "div_x_margin", "prime_hf", "pressure_diff", "inj_margin"]
-TOTAL_FEATS = ["raw_total", "plays_total", "dome", "wind10", "cold", "prime", "div", "qb_sum", "inj_total"]
+BASE_MARGIN_FEATS = ["raw_margin", "hf", "elo_diff", "qb_diff", "rest", "tz_shift",
+                     "west_early", "dist", "div_x_margin", "prime_hf", "pressure_diff", "inj_margin"]
+BASE_TOTAL_FEATS = ["raw_total", "plays_total", "dome", "wind10", "cold", "prime", "div", "qb_sum", "inj_total"]
+# v8 context features: switched on in config.py only after passing the backtest
+MARGIN_FEATS = BASE_MARGIN_FEATS + [f for f in getattr(C, "EXTRA_MARGIN_FEATS", []) if f not in BASE_MARGIN_FEATS]
+TOTAL_FEATS = BASE_TOTAL_FEATS + [f for f in getattr(C, "EXTRA_TOTAL_FEATS", []) if f not in BASE_TOTAL_FEATS]
 # market-anchored versions also see the Vegas number
-ANCHOR_MARGIN_FEATS = MARGIN_FEATS + ["spread_line"]
-ANCHOR_TOTAL_FEATS = TOTAL_FEATS + ["total_line"]
+ANCHOR_MARGIN_FEATS = BASE_MARGIN_FEATS + list(getattr(C, "EXTRA_ANCHOR_MARGIN_FEATS", [])) + ["spread_line"]
+ANCHOR_TOTAL_FEATS = BASE_TOTAL_FEATS + list(getattr(C, "EXTRA_ANCHOR_TOTAL_FEATS", [])) + ["total_line"]
 NO_INJ = {"off": 0.0, "def": 0.0, "list": []}
 LABELS = {
     "raw_margin": "Team strength (EPA ratings)", "hf": "Home field", "elo_diff": "Elo history",
@@ -32,6 +37,10 @@ LABELS = {
     "wind10": "Wind", "cold": "Cold", "prime": "Primetime", "div": "Division game",
     "qb_sum": "QB changes", "inj_margin": "Injuries (non-QB)", "inj_total": "Injuries (non-QB)",
     "spread_line": "Vegas line", "total_line": "Vegas total",
+    "sr_diff": "Success rate matchup", "sr_sum": "Success rate (both offenses)",
+    "cpoe_diff": "QB accuracy (CPOE)", "cpoe_sum": "QB accuracy (both QBs)",
+    "heat": "Heat", "precip": "Rain or snow", "turf": "Artificial turf",
+    "surface_switch": "Road team on unfamiliar surface",
 }
 
 
@@ -56,7 +65,7 @@ def injury_effects(ih: dict, ia: dict) -> tuple[float, float, float]:
 
 
 def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None,
-             inj=None) -> dict:
+             inj=None, qb_pids=None) -> dict:
     """starters: (home_qb_pid, away_qb_pid) or None to use schedule / incumbent.
     weather: dict with temp/wind or None to use schedule columns."""
     h, a = g["home_team"], g["away_team"]
@@ -71,8 +80,31 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None,
         ih, ia = incumbent(qw, h), incumbent(qw, a)
         qb_h = adj_value(qual, sh or ih, ih, dropbacks)
         qb_a = adj_value(qual, sa or ia, ia, dropbacks)
+        pid_h, pid_a = sh or ih, sa or ia
     else:
         qb_h, qb_a = starters
+        pid_h, pid_a = qb_pids if qb_pids is not None else (incumbent(qw, h), incumbent(qw, a))
+
+    # success rate matchup (opponent-adjusted, in percentage points)
+    sr = ctx.sr
+    if sr is not None:
+        so, sd = sr["off"], sr["def"]
+        h_sr = so.get(h, 0.0) + sd.get(a, 0.0)
+        a_sr = so.get(a, 0.0) + sd.get(h, 0.0)
+        sr_diff, sr_sum = (h_sr - a_sr) * 100, (h_sr + a_sr) * 100
+    else:
+        sr_diff = sr_sum = 0.0
+    # starting QB accuracy (completion % over expected)
+    cp = ctx.qb_cpoe if ctx.qb_cpoe is not None else pd.Series(dtype=float)
+    c_h, c_a = float(cp.get(pid_h, 0.0) or 0.0), float(cp.get(pid_a, 0.0) or 0.0)
+    # playing surface
+    th = ctx.turf_home if ctx.turf_home is not None else pd.Series(dtype=float)
+    turf = is_turf(g.get("surface"))
+    if turf is None:
+        turf = th.get(h)
+    turf = float(turf) if turf is not None and pd.notna(turf) else 0.0
+    away_home = th.get(a)
+    switch = float(away_home is not None and pd.notna(away_home) and away_home != turf)
 
     lp = ctx.lg_press
     po, pd_ = ctx.press_off, ctx.press_def
@@ -82,9 +114,11 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None,
     tr = travel(h, a, hf == 0, ko)
     indoor = is_indoor(g)
     if weather is None:
-        wf = weather_features(g.get("temp"), g.get("wind"), indoor)
+        wf = weather_features(g.get("temp"), g.get("wind"), indoor, g.get("precip"))
     else:
-        wf = weather_features(weather.get("temp"), weather.get("wind"), indoor)
+        pp = weather.get("precip")
+        wf = weather_features(weather.get("temp"), weather.get("wind"), indoor,
+                              None if pp is None else float(pp) / 100)
     ih, ia = inj if inj is not None else (NO_INJ, NO_INJ)
     dh, da, _ = injury_effects(ih, ia)
     div = float(g.get("div_game") == 1 or g.get("div_game") is True)
@@ -101,6 +135,8 @@ def game_row(ctx, g, elo_pre: dict, qual, qw, starters=None, weather=None,
         "pressure_diff": (home_rush - away_rush) * 100,
         "inj_margin": dh - da, "inj_total": dh + da, "inj_known": float(inj is not None),
         "div": div, "prime": prime, "prime_hf": prime * hf, "div_x_margin": div * r["raw_margin"],
+        "sr_diff": sr_diff, "sr_sum": sr_sum, "cpoe_diff": c_h - c_a, "cpoe_sum": c_h + c_a,
+        "turf": turf, "surface_switch": switch,
         **tr, **wf,
         "spread_line": pd.to_numeric(g.get("spread_line"), errors="coerce"),
         "total_line": pd.to_numeric(g.get("total_line"), errors="coerce"),
@@ -120,6 +156,10 @@ def history_rows(pbp, schedules, elo_pre, seasons, max_week_in_last=None,
     from .adjust import starters_from_snaps, injury_points
 
     empty_ov = pd.DataFrame(columns=["team", "player", "status", "note", "nname"])
+    wet = {}
+    if "weather" in pbp.columns:
+        wt = pbp.groupby("game_id", observed=True)["weather"].first()
+        wet = {k: precip_from_text(v) for k, v in wt.items()}
     sch = schedules[schedules["home_score"].notna() & schedules["season"].isin(seasons)]
     rows = []
     for (s, wk), games in sch.groupby(["season", "week"]):
@@ -148,5 +188,7 @@ def history_rows(pbp, schedules, elo_pre, seasons, max_week_in_last=None,
             inj = None
             if injpts is not None:
                 inj = (injpts.get(g["home_team"], NO_INJ), injpts.get(g["away_team"], NO_INJ))
+            g = g.copy()
+            g["precip"] = wet.get(g["game_id"], 0.0)
             rows.append(game_row(ctx, g, elo_pre, qual, qw, inj=inj))
     return pd.DataFrame(rows)

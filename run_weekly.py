@@ -146,7 +146,7 @@ def build_games(bundle, season, week, now):
         wx = None if is_indoor(g) else forecast(h, g["ko"])
         ih, ia = injpts.get(h, NO_INJ), injpts.get(a, NO_INJ)
         feat = game_row(ctx, g, elo_pre, qual, qw, starters=(qbs[h]["adj"], qbs[a]["adj"]),
-                        weather=wx or {}, inj=(ih, ia))
+                        weather=wx or {}, inj=(ih, ia), qb_pids=(qbs[h].get("pid"), qbs[a].get("pid")))
         fdf = pd.DataFrame([feat])
         sl = pd.to_numeric(g.get("spread_line"), errors="coerce")
         tl = pd.to_numeric(g.get("total_line"), errors="coerce")
@@ -210,6 +210,12 @@ def build_games(bundle, season, week, now):
             q = qbs[team]
             if abs(q["adj"]) >= 0.5:
                 notes.append(f"{team} QB: {q['name']} instead of {q['incumbent']} ({q['adj']:+.1f} pts)")
+            try:
+                st = inj.loc[inj["pid"] == q.get("pid"), "status"]
+                if len(st) and str(st.iloc[0]).upper() == "QUESTIONABLE":
+                    notes.append(f"Heads up: {team} QB {q['name']} is questionable. Picks assume he plays.")
+            except Exception:  # noqa: BLE001
+                pass
         weather = None
         if is_indoor(g):
             weather = "Indoors"

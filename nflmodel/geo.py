@@ -71,9 +71,10 @@ def is_indoor(row) -> bool:
     return bool(s and s[3])
 
 
-def weather_features(temp, wind, indoor) -> dict:
+def weather_features(temp, wind, indoor, precip=None) -> dict:
+    """precip: chance of rain or snow, 0 to 1 (1 = it is raining/snowing)."""
     if indoor:
-        return {"dome": 1.0, "wind10": 0.0, "cold": 0.0}
+        return {"dome": 1.0, "wind10": 0.0, "cold": 0.0, "heat": 0.0, "precip": 0.0}
     try:
         w = float(wind)
         w = 0.0 if math.isnan(w) else w
@@ -84,7 +85,24 @@ def weather_features(temp, wind, indoor) -> dict:
         t = 60.0 if math.isnan(t) else t
     except (TypeError, ValueError):
         t = 60.0
-    return {"dome": 0.0, "wind10": max(w - 10, 0.0), "cold": max(45 - t, 0.0)}
+    try:
+        pr = float(precip)
+        pr = 0.0 if math.isnan(pr) else min(max(pr, 0.0), 1.0)
+    except (TypeError, ValueError):
+        pr = 0.0
+    return {"dome": 0.0, "wind10": max(w - 10, 0.0), "cold": max(45 - t, 0.0),
+            "heat": max(t - 80, 0.0), "precip": pr}
+
+
+WET = ("rain", "snow", "shower", "drizzle", "sleet", "storm", "flurr")
+
+
+def precip_from_text(text) -> float:
+    """Game-day weather text from play-by-play -> 1 if rain or snow, else 0."""
+    s = str(text or "").lower()
+    if not s or "indoor" in s or "dome" in s or "no chance" in s or "0% chance" in s:
+        return 0.0
+    return 1.0 if any(k in s for k in WET) else 0.0
 
 
 def forecast(home, kickoff_utc: datetime) -> dict | None:

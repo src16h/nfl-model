@@ -28,8 +28,8 @@ def offense_plays(pbp: pd.DataFrame) -> pd.DataFrame:
     return p
 
 
-def fit_ridge(p: pd.DataFrame, w: np.ndarray, alpha: float, teams: list):
-    """Weighted ridge: epa ~ intercept + offense[team] + defense[team] + home."""
+def fit_ridge(p: pd.DataFrame, w: np.ndarray, alpha: float, teams: list, target: str = "epa"):
+    """Weighted ridge: target ~ intercept + offense[team] + defense[team] + home."""
     keep = w > 0
     p, w = p[keep], w[keep]
     T = len(teams)
@@ -44,7 +44,7 @@ def fit_ridge(p: pd.DataFrame, w: np.ndarray, alpha: float, teams: list):
     rows = np.concatenate([np.arange(n), np.arange(n), np.arange(n)[hi >= 0]])
     cols = np.concatenate([oi, di, hi[hi >= 0]])
     X = sparse.csr_matrix((np.ones(len(rows)), (rows, cols)), shape=(n, 2 * T + 1))
-    y = p["epa"].to_numpy(dtype=float)
+    y = p[target].fillna(0).to_numpy(dtype=float)
 
     ws = w.sum()
     ybar = (w * y).sum() / ws
@@ -89,6 +89,9 @@ class Context:
     press_off: pd.Series = field(default=None)   # pressure allowed per dropback
     press_def: pd.Series = field(default=None)   # pressure generated per dropback
     lg_press: float = 0.15
+    sr: dict = field(default=None)               # opponent-adjusted success rate (off/def)
+    qb_cpoe: pd.Series = field(default=None)     # completion % over expected per QB, shrunk
+    turf_home: pd.Series = field(default=None)   # 1 if the team's home field is turf
 
 
 def _wmean_by(df, key, val, w):
@@ -176,6 +179,23 @@ def build_context(pbp_all: pd.DataFrame, schedules: pd.DataFrame,
     v, ww = _wmean_by(db, "posteam", db["epa"].to_numpy(dtype=float), wdb)
     team_db_epa = (v / ww.replace(0, np.nan)).reindex(teams)
 
+    # ---- success rate, adjusted for opponents (same method as EPA) ----
+    sr = None
+    if "success" in p.columns and p["success"].notna().mean() > 0.5:
+        sr = fit_ridge(p, w, C.RIDGE_ALPHA_ALL, teams, target="success")
+
+    # ---- QB completion % over expected (only QBs; shrunk toward average) ----
+    qb_cpoe = pd.Series(dtype=float)
+    if "cpoe" in p.columns:
+        cp = p[p["cpoe"].notna() & p["passer_player_id"].notna()]
+        wcp = gw[(p["cpoe"].notna() & p["passer_player_id"].notna()).to_numpy()]
+        if len(cp):
+            v, ww = _wmean_by(cp, "passer_player_id", cp["cpoe"].to_numpy(dtype=float), wcp)
+            qb_cpoe = pd.Series(shrink(v, ww, 0.0, C.CPOE_SHRINK_ATT), index=v.index)
+
+    # ---- home surface (most recent home game before this week) ----
+    turf_home = home_turf(schedules, season, week)
+
     # ---- league points per team game ----
     sch = schedules.copy()
     done = sch[sch["home_score"].notna() & (
@@ -187,7 +207,24 @@ def build_context(pbp_all: pd.DataFrame, schedules: pd.DataFrame,
                    off_pace, def_pace, proe, sack_off, sack_def, lg_sack,
                    fill(def_ypa_mult, 1.0), fill(def_cmp_mult, 1.0), fill(def_ypc_mult, 1.0),
                    fill(pass_td_share, C.LEAGUE_PASS_TD_SHARE), team_db_epa,
-                   press_off=press_off, press_def=press_def, lg_press=lg_press)
+                   press_off=press_off, press_def=press_def, lg_press=lg_press,
+                   sr=sr, qb_cpoe=qb_cpoe, turf_home=turf_home)
+
+
+def is_turf(surface) -> float | None:
+    s = str(surface or "").strip().lower()
+    if not s or s == "nan":
+        return None
+    return 0.0 if "grass" in s else 1.0
+
+
+def home_turf(schedules: pd.DataFrame, season: int, week: int) -> pd.Series:
+    if "surface" not in schedules.columns:
+        return pd.Series(dtype=float)
+    s = schedules[(schedules["season"] < season) | ((schedules["season"] == season) & (schedules["week"] <= week))]
+    s = s[s["location"].fillna("Home").str.lower().str.startswith("home")] if "location" in s.columns else s
+    s = s.assign(t=s["surface"].map(is_turf)).dropna(subset=["t"]).sort_values(["season", "week"])
+    return s.groupby("home_team")["t"].last()
 
 
 def team_pass_rate(ctx: Context, team: str) -> float:
