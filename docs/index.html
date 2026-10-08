@@ -270,6 +270,17 @@ input[type=search]:focus,select:focus{border-color:var(--gold);outline:none;box-
 .checker input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
 .checker output{color:var(--ink);font:600 15px var(--cond)}
 .h1fold td{font-size:15px}
+.checker .fld{display:flex;align-items:center;gap:6px}
+.checker input.odds{width:76px}
+.verdict{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);font-size:13.5px}
+.verdict.play{border-color:var(--gold-line);background:var(--gold-soft)}
+.verdict b{font:700 17px var(--cond);color:var(--ink)}
+.verdict.play b{color:var(--gold-text)}
+.vt{display:inline-block;font:600 11.5px/1 var(--sans);padding:3px 7px;border-radius:2px;border:1px solid var(--line);color:var(--muted)}
+.vt.play{background:var(--gold);border-color:var(--gold);color:#1B1505}
+.vt.big{border-color:var(--loss);color:var(--loss)}
+.myplays{margin:0 0 16px}
+.myplays .gapcard .e{color:var(--gold-text)}
 @media (max-width:640px){
   .mtable .who .badge{display:none}
   .mtable td:first-child{white-space:normal}
@@ -715,6 +726,38 @@ function ladderRows(fn, center, step, fmtL) {
 }
 const ladderHead = (a, b) => isPhone() ? `<thead><tr><th>Line</th><th>${a}</th><th>${b}</th></tr></thead>`
   : `<thead><tr><th>Line</th><th>${a}</th><th>Fair odds</th><th>${b}</th><th>Fair odds</th></tr></thead>`;
+const LS_LINES = "board.lines.v1";
+const loadLines = () => { try { return JSON.parse(localStorage.getItem(LS_LINES)) || {}; } catch (e) { return {}; } };
+const saveLines = v => { try { localStorage.setItem(LS_LINES, JSON.stringify(v)); } catch (e) {} };
+mUI.lines = loadLines();
+const amImp = o => { o = +String(o).replace("+", ""); if (!isFinite(o) || o === 0 || Math.abs(o) < 100) return null; return o > 0 ? 100 / (o + 100) : -o / (-o + 100); };
+const amPay = o => { o = +String(o).replace("+", ""); return o > 0 ? o / 100 : 100 / -o; };
+function judge(m, e) {                        // same Play rules as the props the book loads
+  if (!e || e.line === "" || e.line == null || isNaN(+e.line)) return null;
+  const L = +e.line, po = pOver(m, L) / 100;
+  const oo = e.o || "-110", uo = e.u || "-110", bo = amImp(oo), bu = amImp(uo);
+  if (bo == null || bu == null) return {bad: true};
+  const fairO = bo / (bo + bu), gO = po - fairO;
+  const over = gO >= 0, pSide = over ? po : 1 - po, odds = over ? oo : uo, gap = Math.abs(gO) * 100;
+  const R = D.plays_rules || {}, [pmin, pmax] = R.prop_play || [4, 7], wmax = R.prop_watch_max || 15;
+  const tier = gap >= wmax ? "big" : gap >= pmin && gap < pmax ? "play" : gap >= pmax ? "watch" : "none";
+  return {side: over ? "Over" : "Under", line: L, odds, gap, model: pSide * 100, book: (over ? fairO : 1 - fairO) * 100,
+    ev: (pSide * amPay(odds) - (1 - pSide)) * 100, tier};
+}
+const TIER = {play: "Play", watch: "Watch", big: "Too big to trust", none: "No play"};
+const tierTag = j => j && !j.bad ? `<span class="vt ${j.tier === "play" ? "play" : j.tier === "big" ? "big" : ""}">${TIER[j.tier]}</span>` : "";
+function myPlays(games) {
+  const out = [];
+  for (const [k, e] of Object.entries(mUI.lines)) {
+    const [pid, gid, mkt] = k.split("|"), g = games[gid];
+    if (!g || g.state !== "upcoming") continue;
+    const p = (D.players || []).find(x => x.pid === pid && x.game_id === gid), m = p?.markets?.[mkt];
+    const j = m ? judge(m, e) : null;
+    if (j && !j.bad && j.tier === "play") out.push({p, mkt, j});
+  }
+  return out.sort((a, b) => b.j.gap - a.j.gap);
+}
+
 function renderMore() {
   const games = {}; (D.games || []).forEach(g => games[g.game_id] = g);
   const all = (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && games[p.game_id] && games[p.game_id].state === "upcoming");
@@ -722,7 +765,11 @@ function renderMore() {
     .sort((a, b) => b.markets[mUI.mkt].mean - a.markets[mUI.mkt].mean);
   const step = ["pass_cmp", "pass_att", "carries", "q1_rec"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") ? 5 : 10);
   let h = `<div class="sec-head"><h2>More markets</h2><span class="aside">Model lines only, no book odds loaded</span></div>
-    <p class="sub">Fair lines from the same simulations as every other prop. Compare to your book: if your book's line is lower than the fair line, the over has value, and if higher, the under. Tap a player to check any line.</p>
+    <p class="sub">Fair lines from the same simulations as every other prop. Compare to your book: if your book's line is lower than the fair line, the over has value, and if higher, the under. Tap a player and enter your book's line and odds: the model marks it Play, Watch, or No play with the same rules as your other props.</p>
+    ${(() => { const mp = myPlays(games); const lab = Object.fromEntries(MKTS); return mp.length ? `<h3>Your plays from entered lines</h3><div class="gaps myplays">${mp.map(x => `<div class="gapcard">
+      <span class="k">${esc(lab[x.mkt])}</span><span class="p">${esc(x.p.name)} ${x.j.side} ${x.j.line}<small>${esc(x.j.odds)}</small></span>
+      <span class="w">${esc(x.p.team)} vs ${esc(x.p.opp)}. Model ${n(x.j.model, 0)}%, book ${n(x.j.book, 0)}%. Expected return ${sgn(x.j.ev)}%</span>
+      <span class="e">+${n(x.j.gap)}%<small>gap</small></span></div>`).join("")}</div>` : ""; })()}
     <div class="mkts" role="group" aria-label="Market">${MKTS.map(([k, l]) => `<button aria-pressed="${mUI.mkt === k}" data-m="${k}">${l}</button>`).join("")}</div>
     <div class="controls"><select id="mGame" aria-label="Game"><option value="">All games</option>${Object.values(games).filter(g => g.state === "upcoming").map(g => `<option value="${esc(g.game_id)}" ${mUI.game === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}</option>`).join("")}</select>
     <input type="search" id="mQ" placeholder="Search player or team" aria-label="Search markets" value="${esc(mUI.q)}"></div>`;
@@ -731,20 +778,25 @@ function renderMore() {
   const ph = isPhone(), span = ph ? 3 : 5;
   h += `<div class="tablewrap"><table class="mtable"><thead><tr><th>Player</th><th>Fair line</th>${ph ? "" : "<th>Median</th><th>Average</th>"}<th>Likely range</th></tr></thead><tbody>`;
   for (const p of rows.slice(0, 150)) {
-    const m = p.markets[mUI.mkt], fl = fairLine(m), key = p.pid + p.game_id, open = mUI.open === key;
+    const m = p.markets[mUI.mkt], fl = fairLine(m), key = p.pid + "|" + p.game_id, open = mUI.open === key;
     const lo = m.q ? m.q[4] : m.ge.findLastIndex(v => v >= 90), hi = m.q ? m.q[44] : m.ge.findLastIndex(v => v >= 10);
-    h += `<tr class="p" tabindex="0" data-key="${esc(key)}" aria-expanded="${open}"><td><div class="who" style="display:flex;align-items:center;gap:8px">${badge(p.team)}<div><b>${esc(p.name)}</b><span class="pos">${esc(p.pos)} vs ${esc(p.opp)}</span></div></div></td>
+    h += `<tr class="p" tabindex="0" data-key="${esc(key)}" aria-expanded="${open}"><td><div class="who" style="display:flex;align-items:center;gap:8px">${badge(p.team)}<div><b>${esc(p.name)}</b> ${tierTag(judge(m, mUI.lines[key + "|" + mUI.mkt]))}<span class="pos">${esc(p.pos)} vs ${esc(p.opp)}</span></div></div></td>
       <td class="fair">${fl}</td>${ph ? "" : `<td>${n(m.med)}</td><td>${n(m.mean)}</td>`}<td>${n(lo, 0)} to ${n(hi, 0)}</td></tr>`;
     if (open) {
-      const typed = mUI.lines[key];
-      const chk = typed != null && typed !== "" && !isNaN(+typed) ? (() => { const o = pOver(m, +typed); return `Over ${n(o, 0)}% (fair ${fairOdds(o)}), under ${n(100 - o, 0)}% (fair ${fairOdds(100 - o)})`; })() : "Type your book's line";
+      const ek = key + "|" + mUI.mkt, e = mUI.lines[ek] || {}, j = judge(m, e);
+      const verdict = !j ? `<div class="verdict">Enter your book's line to get the model's call. Odds default to -110.</div>`
+        : j.bad ? `<div class="verdict">Odds look off. Use American odds like -115 or +105.</div>`
+        : `<div class="verdict ${j.tier === "play" ? "play" : ""}">${tierTag(j)}<b>${j.side} ${j.line} ${esc(j.odds)}</b>
+           <span>Model ${n(j.model, 0)}% vs book ${n(j.book, 0)}%, gap ${n(j.gap)}%. Expected return ${sgn(j.ev)}% per bet.</span></div>`;
+      const fld = (id, f, lab, ph, cls) => `<span class="fld"><label for="${id}">${lab}</label><input id="${id}" class="${cls}" data-ek="${esc(ek)}" data-f="${f}" inputmode="decimal" value="${esc(e[f] ?? "")}" placeholder="${ph}"></span>`;
       h += `<tr class="detail"><td colspan="${span}"><div class="ladder">
-        <div class="checker"><label for="ln-${esc(key)}">Your book's line</label><input id="ln-${esc(key)}" data-key="${esc(key)}" inputmode="decimal" value="${esc(typed ?? "")}" placeholder="${fl}"><output>${chk}</output></div>
+        <div class="checker">${fld("ln-" + ek, "line", "Book line", fl, "")}${fld("oo-" + ek, "o", "Over odds", "-110", "odds")}${fld("uo-" + ek, "u", "Under odds", "-110", "odds")}</div>
+        ${verdict}
         <table>${ladderHead("Over", "Under")}<tbody>${ladderRows(L => pOver(m, L), fl, step, L => String(L))}</tbody></table>
         ${m.zero != null && m.zero > 5 ? `<span>${n(m.zero, 0)}% of simulated games had zero.</span>` : ""}</div></td></tr>`;
     }
   }
-  h += `</tbody></table></div><p class="note">Likely range covers 80% of simulated games. These markets aren't graded yet, since no book lines are saved for them.${mUI.mkt.startsWith("q1") ? " First-quarter numbers were checked against 2023 to 2025 games and land within about 3 points of real results at every line." : ""}</p>`;
+  h += `</tbody></table></div><p class="note">Likely range covers 80% of simulated games. Plays here use the same rules as your other props, but these markets have no track record yet, so start small. Your entered lines are saved on this device only.${mUI.mkt.startsWith("q1") ? " First-quarter numbers were checked against 2023 to 2025 games and land within about 3 points of real results at every line." : ""}</p>`;
   $("#propBody").innerHTML = h;
   bindMore();
 }
@@ -754,7 +806,12 @@ function bindMore() {
   const q = $("#mQ"); if (q) q.oninput = e => { mUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderMore(); const nq = $("#mQ"); nq.focus(); nq.setSelectionRange(pos, pos); };
   document.querySelectorAll(".mtable tr.p").forEach(tr => { const t = () => { mUI.open = mUI.open === tr.dataset.key ? null : tr.dataset.key; renderMore(); };
     tr.onclick = t; tr.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t(); } }; });
-  document.querySelectorAll(".checker input").forEach(inp => inp.oninput = e => { mUI.lines[inp.dataset.key] = e.target.value; const pos = e.target.selectionStart; renderMore(); const ni = document.getElementById(inp.id); if (ni) { ni.focus(); ni.setSelectionRange(pos, pos); } });
+  document.querySelectorAll(".checker input").forEach(inp => inp.oninput = ev => {
+    const k = inp.dataset.ek, cur = {...(mUI.lines[k] || {})};
+    cur[inp.dataset.f] = ev.target.value.trim();
+    if (!cur.line && !cur.o && !cur.u) delete mUI.lines[k]; else mUI.lines[k] = cur;
+    saveLines(mUI.lines);
+    const pos = ev.target.selectionStart; renderMore(); const ni = document.getElementById(inp.id); if (ni) { ni.focus(); ni.setSelectionRange(pos, pos); } });
 }
 
 /* ---------------- First half (model only) ---------------- */
