@@ -38,7 +38,8 @@ TOI_RECENT_WEIGHT = 0.5          # last games' ice time vs season average
 ALT_PARLAY_ODDS = (100, 125)
 ALT_PARLAY_LEGS = 4
 ALT_LEG_RANGE = (0.66, 0.90)
-ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 5}   # how far below the main line a leg may go
+ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 0}   # how far below the main line a leg may go
+ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only the posted main line, never a model line
 
 # odds (separate free key for hockey)
 ODDS_KEY_ENV = "ODDS_API_KEY_NHL"

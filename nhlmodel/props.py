@@ -180,6 +180,8 @@ def alt_parlay(arrs, info, game, book):
             b = (book or {}).get(norm_name(p["name"]), {}).get(st)
             main = float(b["line"]) if b and b.get("line") is not None else _fair(_dist(x, MAXK[st]))
             src = "book" if b and b.get("line") is not None else "model"
+            if st in C.ALT_MAIN_LINE_ONLY and src != "book":
+                continue                                   # main line only, and only the book's real one
             k_main = int(main + 0.5)
             for k in range(max(1, k_main - C.ALT_MAX_DROP[st]), k_main + 1):
                 hit = x >= k
@@ -187,6 +189,9 @@ def alt_parlay(arrs, info, game, book):
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
                     cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": k - 0.5,
                                   "p": ph, "main": main, "main_src": src, "hit": hit})
+    booked = [c for c in cands if c["main_src"] == "book"]
+    if len(booked) >= 4:                                   # stick to players the book has posted (their alts exist)
+        cands = booked
     if len(cands) < 3:
         return None
     cands.sort(key=lambda c: -c["p"])

@@ -1003,7 +1003,7 @@ function bindChecker() {
 function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay);
   let h = `<div class="sec-head"><h2>Model alt-line parlays</h2><span class="aside">One per game, fair odds +100 to +125</span></div>
-    <p class="sub">The model builds one parlay per game from half-point alt lines it rates about 66 to 90% each, using both teams and legs that tend to hit together inside the same simulated game (more shots for a team means more for its shooters and more saves for the other goalie). Each leg stays near the book's main line, or the model's fair line when the book hasn't posted. Odds shown are fair, so check your book's price.</p>`;
+    <p class="sub">The model builds one parlay per game from half-point alt lines it rates about 66 to 90% each, using both teams and legs that tend to hit together inside the same simulated game (more shots for a team means more for its shooters and more saves for the other goalie). Each leg stays near the book's main line, or the model's fair line when the book hasn't posted. Goalie saves only ever use the book's posted main line, since Hard Rock Bet has no alt saves. Odds shown are fair, so check your book's price.</p>`;
   h += G.length ? `<div class="tickets">${G.map(g => { const a = g.alt_parlay;
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
       <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
