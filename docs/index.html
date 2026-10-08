@@ -1303,6 +1303,35 @@ function reportHTML() {
     ${(R.takeaways || []).length ? `<ul class="takeaways">${R.takeaways.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}`;
 }
 
+const MKT_NAME = {team_total: "Team totals", h1_spread: "1st half margin", h1_total: "1st half total", pass_yds: "Passing yards", pass_cmp: "Completions",
+  pass_att: "Pass attempts", rush_yds: "Rushing yards", carries: "Rush attempts", rec: "Receptions", rec_yds: "Receiving yards", rush_rec_yds: "Rush + rec yards",
+  q1_pass_yds: "1st quarter pass yards", q1_rec_yds: "1st quarter rec yards", q1_rec: "1st quarter receptions"};
+function trackingHTML() {
+  const T = D.tracking; if (!T) return "";
+  const M = Object.entries(T.markets || {}).sort((a, b) => b[1].n - a[1].n);
+  let h = `<div class="sec-head"><h2>Model accuracy</h2><span class="aside">Graded automatically, no bets needed</span></div>
+    <p class="sub">Every prediction is saved at kickoff and checked against the final box score. At the model's fair line, overs should hit about half the time. If they hit much more, the model runs low and overs have an edge. If much less, unders do.</p>`;
+  if (!M.length && !Object.keys(T.tds || {}).length) return h + `<div class="empty"><b>Nothing graded yet.</b> Results appear the morning after each game.</div>`;
+  const read = m => m.verdict === "too_few" ? `<span class="dim">Too few yet</span>` : m.verdict === "low" ? `<span class="up">Runs low, overs hitting</span>`
+    : m.verdict === "high" ? `<span class="down">Runs high, unders hitting</span>` : "On target";
+  if (M.length) h += `<div class="tablewrap"><table><thead><tr><th>Market</th><th>Graded</th><th>Overs hit</th><th>Expected</th><th>Avg vs model</th><th>Read</th></tr></thead><tbody>${M.map(([k, m]) =>
+    `<tr><td>${esc(MKT_NAME[k] || k)}</td><td>${m.n}</td><td>${n(m.over)}%</td><td>${n(m.expected)}%</td><td>${sgn(m.miss)}</td><td>${read(m)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="note">"Avg vs model" is how far real results landed from the model's middle number on average. A market needs 30+ graded and a clear gap before it's called low or high.</p>`;
+  const tdKeys = Object.keys(T.tds || {});
+  if (tdKeys.length) h += `<h3>Touchdown chances vs reality</h3><div class="tablewrap"><table><thead><tr><th>Bet</th><th>Model said</th><th>Players</th><th>Model avg</th><th>Actually scored</th></tr></thead><tbody>${tdKeys.flatMap(k =>
+    T.tds[k].bins.map((b, i) => `<tr><td>${i === 0 ? esc(k) : ""}</td><td>${esc(b.range)}</td><td>${b.n}</td><td>${n(b.model)}%</td><td class="${Math.abs(b.actual - b.model) > 5 && b.n >= 30 ? (b.actual > b.model ? "up" : "down") : ""}">${n(b.actual)}%</td></tr>`)).join("")}</tbody></table></div>`;
+  const C = Object.entries(T.combos || {});
+  if (C.length) { const ct = T.combo_total || {};
+    h += `<h3>Parlay combos</h3><p class="sub">The model locks a standard set of correlated 2-leg parlays for every game at kickoff. If real hit rates land near "Model said" instead of "If unrelated," the correlation engine is earning its keep.</p>
+    <div class="tablewrap"><table><thead><tr><th>Combo</th><th>Graded</th><th>Model said</th><th>If unrelated</th><th>Actually hit</th></tr></thead><tbody>${C.map(([k, c]) =>
+      `<tr><td>${esc(k)}</td><td>${c.n}</td><td>${n(c.model)}%</td><td>${n(c.unrelated)}%</td><td>${n(c.actual)}%</td></tr>`).join("")}
+      <tr><td><b>All combos</b></td><td><b>${ct.n}</b></td><td><b>${n(ct.model)}%</b></td><td><b>${n(ct.unrelated)}%</b></td><td><b>${n(ct.actual)}%</b></td></tr></tbody></table></div>`; }
+  const W = (T.weeks || []).filter(w => w < 100);
+  if (W.length > 1 && M.length) h += `<details class="fold"><summary>Week by week <span>overs hit at the fair line</span></summary><div class="fold-body"><div class="tablewrap"><table><thead><tr><th>Market</th>${W.map(w => `<th>Wk ${w}</th>`).join("")}</tr></thead><tbody>${M.map(([k, m]) =>
+    `<tr><td>${esc(MKT_NAME[k] || k)}</td>${W.map(w => { const x = m.weeks[String(w)]; return `<td>${x ? `${n(x.over, 0)}% <span class="dim">(${x.n})</span>` : "–"}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div></div></details>`;
+  return h;
+}
+
 function clvHTML() {
   const C = D.clv; if (!C || !C.spread) return "";
   const cell = (name, x) => x && x.n ? `<div class="st"><strong class="${x.avg ? uc(x.avg) : ""}">${sgn(x.avg, 2)}</strong><span>${name}: avg points vs close. Beat the close ${x.beat}, worse ${x.worse}, same ${x.same}</span></div>`
@@ -1329,7 +1358,7 @@ function bindRecord() {
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = reportHTML() + myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = reportHTML() + trackingHTML() + myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>

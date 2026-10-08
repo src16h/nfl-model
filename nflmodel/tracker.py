@@ -15,6 +15,7 @@ Both logs live in docs/data so the weekly robot saves them automatically.
 Nothing here can break the main run: failures are logged and skipped.
 """
 import json
+import math
 import logging
 from pathlib import Path
 
@@ -540,3 +541,155 @@ def prop_summary(lg):
                       "outcome": r["result"]["outcome"], "result": r["result"]["lean_result"],
                       "profit": r["result"]["profit"]} for r in recent]
     return out
+
+
+# ---------------------------------------------------------------------
+# AUTOMATIC MODEL TRACKING (no bets needed)
+# Every prediction saved at kickoff is graded against the final box score:
+# does the model's fair line split 50/50, and do its chances match reality?
+# ---------------------------------------------------------------------
+_PGRID = np.array([(2 + 4 * i) / 100 for i in range(25)])
+
+
+def _p_over(m, L):
+    """Chance the stat finishes above line L, from a saved distribution."""
+    if m.get("ge") is not None:
+        k = int(np.ceil(L + 1e-9))
+        ge = m["ge"]
+        return 1.0 if k < 0 else (0.0 if k >= len(ge) else ge[k] / 100)
+    q = np.asarray(m["q"], float)
+    grid = _PGRID if len(q) == len(_PGRID) else np.linspace(0.02, 0.98, len(q))
+    if L < q[0]:
+        return 1 - grid[0] * max(L, 0) / max(q[0], 1e-9)
+    if L >= q[-1]:
+        return 1 - grid[-1]
+    return float(1 - np.interp(L, q, grid))
+
+
+def _fair(m):
+    c = np.floor(m.get("med") or 0) + 0.5
+    cands = [x for x in (c - 1, c, c + 1) if x > 0] or [0.5]
+    return min(cands, key=lambda x: abs(_p_over(m, x) - 0.5))
+
+
+def _ncdf(z):
+    return 0.5 * (1 + math.erf(z / math.sqrt(2)))
+
+
+def _leg_hit(L, g, pl, cols):
+    """Grade one parlay leg from results: True / False / None (can't grade)."""
+    h, a = g["h"], g["a"]
+    if L["kind"] == "tt":
+        v = h if L["team"] == g["home"] else a
+        return v > L["line"]
+    if L["kind"] == "ml":
+        return (h > a) if L["team"] == g["home"] else (a > h)
+    if L["kind"] == "total":
+        return (h + a) > L["line"]
+    if L["kind"] == "spread":
+        m = (h - a) if L["team"] == g["home"] else (a - h)
+        return None if m + L["line"] == 0 else m + L["line"] > 0
+    row = pl.get(L["pid"])
+    if row is None:
+        return None
+    return row[cols.index(L["stat"])] > L["line"]
+
+
+def model_tracking(hist_dir, season, results):
+    import json as _json
+    cols = results.get("cols") or []
+    rg, rp = results.get("games") or {}, results.get("players") or {}
+    mk, tds, combos = [], [], []
+    for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
+        d = _json.loads(f.read_text())
+        week = int(d.get("week") or f.stem.split("week")[-1])
+        for hg in d.get("games", []):
+            gid = hg["game_id"]
+            g = rg.get(gid)
+            if not g:
+                continue
+            pl = rp.get(gid, {})
+            # team totals and first half
+            for side, pts in (("home", g["h"]), ("away", g["a"])):
+                m = (hg.get("team_totals") or {}).get(side)
+                if m:
+                    L = _fair(m)
+                    mk.append(("team_total", week, _p_over(m, L), pts > L, pts - (m.get("med") or 0)))
+            H = hg.get("h1")
+            if H and g.get("h1h") is not None:
+                hm, ht = g["h1h"] - g["h1a"], g["h1h"] + g["h1a"]
+                L = float(np.floor(H["margin"]) + 0.5)
+                mk.append(("h1_spread", week, 1 - _ncdf((L - H["margin"]) / H["sd_margin"]), hm > L, hm - H["margin"]))
+                L = float(np.floor(H["total"]) + 0.5)
+                mk.append(("h1_total", week, 1 - _ncdf((L - H["total"]) / H["sd_total"]), ht > L, ht - H["total"]))
+            # parlay combos locked with the game
+            for c in hg.get("sgp_combos") or []:
+                hits = [_leg_hit(L, g, pl, cols) for L in c["legs"]]
+                if None in hits:
+                    continue
+                combos.append((c["type"], week, c["p"] / 100, c["pi"] / 100, all(hits)))
+        for p in d.get("players", []):
+            gid = p.get("game_id")
+            if gid not in rg:
+                continue
+            row = rp.get(gid, {}).get(p["pid"])
+            if row is None:
+                continue                                   # did not play
+            st = dict(zip(cols, row))
+            if p.get("td_prob") is not None:
+                tds.append(("Anytime TD", week, p["td_prob"] / 100, st["tds"] >= 1))
+            if p.get("td2_prob") is not None:
+                tds.append(("2+ TDs", week, p["td2_prob"] / 100, st["tds"] >= 2))
+            for stat, m in (p.get("markets") or {}).items():
+                if stat not in st:
+                    continue
+                L = _fair(m)
+                mk.append((stat, week, _p_over(m, L), st[stat] > L, st[stat] - (m.get("med") or 0)))
+
+    def verdict(n, rate, exp):
+        if n < 30:
+            return "too_few"
+        se = math.sqrt(max(exp * (1 - exp), 1e-6) / n)
+        z = (rate - exp) / se
+        return "low" if z >= 2 else ("high" if z <= -2 else "ok")
+    markets = {}
+    for key in sorted({r[0] for r in mk}):
+        rows = [r for r in mk if r[0] == key]
+        n = len(rows)
+        rate, exp = float(np.mean([r[3] for r in rows])), float(np.mean([r[2] for r in rows]))
+        weeks = {}
+        for w in sorted({r[1] for r in rows}):
+            wr = [r for r in rows if r[1] == w]
+            weeks[str(w)] = {"n": len(wr), "over": fnum(100 * np.mean([r[3] for r in wr]), 1)}
+        markets[key] = {"n": n, "over": fnum(100 * rate, 1), "expected": fnum(100 * exp, 1),
+                        "miss": fnum(float(np.mean([r[4] for r in rows])), 2), "verdict": verdict(n, rate, exp), "weeks": weeks}
+    td_out = {}
+    bins = [0, .1, .2, .35, .5, .65, 1.01]
+    for key in ("Anytime TD", "2+ TDs"):
+        rows = [r for r in tds if r[0] == key]
+        if not rows:
+            continue
+        p = np.array([r[2] for r in rows]); y = np.array([r[3] for r in rows], float)
+        b = []
+        for lo, hi in zip(bins[:-1], bins[1:]):
+            sel = (p >= lo) & (p < hi)
+            if sel.sum():
+                b.append({"range": f"{int(lo * 100)} to {int(min(hi, 1) * 100)}%", "n": int(sel.sum()),
+                          "model": fnum(100 * p[sel].mean(), 1), "actual": fnum(100 * y[sel].mean(), 1)})
+        td_out[key] = {"n": len(rows), "model": fnum(100 * p.mean(), 1), "actual": fnum(100 * y.mean(), 1), "bins": b,
+                       "weeks": {str(w): {"n": int(sum(1 for r in rows if r[1] == w)),
+                                          "model": fnum(100 * np.mean([r[2] for r in rows if r[1] == w]), 1),
+                                          "actual": fnum(100 * np.mean([r[3] for r in rows if r[1] == w]), 1)}
+                                 for w in sorted({r[1] for r in rows})}}
+    cb = {}
+    for key in sorted({r[0] for r in combos}):
+        rows = [r for r in combos if r[0] == key]
+        cb[key] = {"n": len(rows), "model": fnum(100 * np.mean([r[2] for r in rows]), 1),
+                   "unrelated": fnum(100 * np.mean([r[3] for r in rows]), 1),
+                   "actual": fnum(100 * np.mean([r[4] for r in rows]), 1)}
+    allc = combos
+    combo_total = {"n": len(allc), "model": fnum(100 * np.mean([r[2] for r in allc]), 1) if allc else None,
+                   "unrelated": fnum(100 * np.mean([r[3] for r in allc]), 1) if allc else None,
+                   "actual": fnum(100 * np.mean([r[4] for r in allc]), 1) if allc else None}
+    return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total,
+            "weeks": sorted({r[1] for r in mk} | {r[1] for r in tds})}

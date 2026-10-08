@@ -341,16 +341,93 @@ def _b64(arr, small=False):
     return "i2:" + base64.b64encode(a.tobytes()).decode()
 
 
+def _half(x):
+    return float(np.floor(x) + 0.5)
+
+
+def lock_combos(game, side_sims, qbs, pts):
+    """A standard set of correlated 2-leg parlays per team, priced from the full
+    simulation and saved with the game, so the tracker can check later whether
+    'more likely together' held up in real games."""
+    h, a = game["home"], game["away"]
+    ph, pa = pts["home"], pts["away"]
+    out = []
+    gt_line = game.get("market_total") if game.get("market_total") is not None else _half(np.median(ph + pa))
+
+    def leg_hits(L):
+        if L["kind"] == "tt":
+            v = ph if L["team"] == h else pa
+            return v > L["line"]
+        if L["kind"] == "ml":
+            return (ph > pa) if L["team"] == h else (pa > ph)
+        if L["kind"] == "total":
+            return (ph + pa) > L["line"]
+        if L["kind"] == "spread":
+            m = (ph - pa) if L["team"] == h else (pa - ph)
+            return m + L["line"] > 0
+        sims = side_sims[L["_side"]][0][L["pid"]]
+        v = sims["rush_td"] + sims["rec_td"] if L["stat"] == "tds" else sims[L["stat"]]
+        return v > L["line"]
+
+    for side, team, opp in (("home", h, a), ("away", a, h)):
+        sims, rows = side_sims[side]
+        by = lambda pos, stat: sorted([r for r in rows if r["pos"] in pos and r["pid"] in sims and stat in sims[r["pid"]]],
+                                      key=lambda r: -float(np.mean(sims[r["pid"]][stat])))
+        qb = qbs[team].get("pid")
+        wr = by(("WR", "TE"), "rec_yds")
+        rb = by(("RB",), "rush_yds")
+        P = lambda r, st: {"kind": "player", "pid": r["pid"], "name": r["name"], "stat": st, "side": "Over",
+                           "line": _half(np.median(sims[r["pid"]][st])), "_side": side}
+        tt = {"kind": "tt", "team": team, "side": "Over", "line": _half(np.median(pts[side]))}
+        ott = {"kind": "tt", "team": opp, "side": "Over", "line": _half(np.median(pts["home" if side == "away" else "away"]))}
+        win = {"kind": "ml", "team": team}
+        combos = []
+        if qb in sims and "pass_yds" in sims[qb]:
+            qbr = {"pid": qb, "name": qbs[team].get("name")}
+            qleg = P(qbr, "pass_yds")
+            if wr:
+                combos.append(("Team QB + WR1 overs", [qleg, P(wr[0], "rec_yds")]))
+            combos.append(("Team QB over + Team team total over", [qleg, tt]))
+            combos.append(("Team QB over + Opp team total over", [qleg, ott]))
+            if game.get("market_spread") is not None:
+                line = -game["market_spread"] if team == h else game["market_spread"]
+                combos.append(("Team QB over + Team covers", [qleg, {"kind": "spread", "team": team, "line": float(line)}]))
+        if rb:
+            combos.append(("Team RB1 rush over + Team wins", [P(rb[0], "rush_yds"), win]))
+            combos.append(("Team RB1 anytime TD + Team wins", [{"kind": "player", "pid": rb[0]["pid"], "name": rb[0]["name"],
+                                                                   "stat": "tds", "side": "Over", "line": 0.5, "_side": side}, win]))
+        if wr:
+            combos.append(("Team WR1 over + Team team total over", [P(wr[0], "rec_yds"), tt]))
+        combos.append(("Team team total over + game over", [tt, {"kind": "total", "side": "Over", "line": float(gt_line)}]))
+        for tp, legs in combos:
+            name = tp.replace("Team team", f"{team} team").replace("Opp team", f"{opp} team").replace("Team ", f"{team} ", 1).replace("+ Team", f"+ {team}")
+            hits = [leg_hits(L) for L in legs]
+            joint = float(np.mean(np.logical_and.reduce(hits)))
+            indep = float(np.prod([np.mean(x) for x in hits]))
+            out.append({"name": name, "type": tp.replace("Team team", "team").replace("Opp team", "opponent team").replace("Team ", "", 1).replace("+ Team", "+ team"),
+                        "legs": [{k: v for k, v in L.items() if k != "_side"} for L in legs],
+                        "p": round(joint * 100, 1), "pi": round(indep * 100, 1)})
+    game["sgp_combos"] = out
+
+
 def write_sgp(game, side_sims, qbs, pnoise):
     """Publish SGP_DRAWS simulated games for one matchup (players + final score)."""
     K = C.SGP_DRAWS
     out = {"game_id": game["game_id"], "home": game["home"], "away": game["away"], "n": K, "players": {}}
+    full = {}
+    for side in ("home", "away"):
+        team = game[side]
+        full[side] = team_points(side_sims[side][0], qbs[team].get("pid"), (game.get("team_totals") or {}).get(side), pnoise[side])
+        if full[side] is None:
+            return
+    try:
+        lock_combos(game, side_sims, qbs, full)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"parlay combos skipped for {game['game_id']}: {str(e)[:120]}")
     for side in ("home", "away"):
         sims, rows = side_sims[side]
         team = game[side]
-        pts = team_points(sims, qbs[team].get("pid"), (game.get("team_totals") or {}).get(side), pnoise[side])
-        if pts is None:
-            return
+        pts = full[side]
         out[f"pts_{side}"] = _b64(pts[:K], small=True)
         ranked = sorted([r for r in rows if r.get("markets") and sims.get(r["pid"]) is not None],
                         key=lambda r: -(r.get("fpts") or 0))
@@ -508,7 +585,13 @@ def grade(season, sch) -> dict:
             "vegas_mae": fnum(np.mean(err_v)) if err_v else None}
 
 
-def weekly_report(live, clv, props_path, week):
+MARKET_NAMES = {"team_total": "Team totals", "h1_spread": "1st half margin", "h1_total": "1st half total",
+                "pass_yds": "Passing yards", "pass_cmp": "Completions", "pass_att": "Pass attempts", "rush_yds": "Rushing yards",
+                "carries": "Rush attempts", "rec": "Receptions", "rec_yds": "Receiving yards", "rush_rec_yds": "Rush + rec yards",
+                "q1_pass_yds": "1st quarter pass yards", "q1_rec_yds": "1st quarter rec yards", "q1_rec": "1st quarter receptions"}
+
+
+def weekly_report(live, clv, props_path, week, tracking=None):
     """Report card for the last finished week plus season takeaways, in plain words."""
     try:
         weeks = sorted(int(w) for w in (live.get("picks_by_week") or {}) if int(w) < (week or 99))
@@ -563,6 +646,12 @@ def weekly_report(live, clv, props_path, week):
             moved = cw["beat"] + cw["worse"]
             t.append(f"Closing lines: {cw['beat']} picks beat the close, {cw['worse']} were worse, {cw['n'] - moved} didn't move." if moved
                      else "Closing lines didn't move on any pick, so no read on the model's sharpness yet.")
+        for key, m in ((tracking or {}).get("markets") or {}).items():
+            nm = MARKET_NAMES.get(key, key)
+            if m.get("verdict") == "low":
+                t.append(f"{nm}: overs hit {m['over']}% at the model's fair line ({m['n']} graded). The model runs low here, so overs have an edge.")
+            elif m.get("verdict") == "high":
+                t.append(f"{nm}: overs hit only {m['over']}% at the model's fair line ({m['n']} graded). The model runs high here, so unders have an edge.")
         sea = out["season_prop_plays"]
         if sea["n"] < 100:
             t.append(f"Season sample is still small ({sea['n']} prop plays). Judge the model after 100+.")
@@ -595,10 +684,11 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         log.warning(f"prop tracker skipped: {e}")
         res["prop_record"] = {"error": str(e)[:160]}
     try:                                       # box scores the dashboard uses to grade your bets
-        (OUT / "results.json").write_text(json.dumps(clean_json(tracker.build_results(bundle.pbp, bundle.schedules, season)),
-                                                     separators=(",", ":"), allow_nan=False))
+        results = tracker.build_results(bundle.pbp, bundle.schedules, season)
+        (OUT / "results.json").write_text(json.dumps(clean_json(results), separators=(",", ":"), allow_nan=False))
+        res["tracking"] = clean_json(tracker.model_tracking(HIST, season, results))
     except Exception as e:  # noqa: BLE001
-        log.warning(f"results file skipped: {e}")
+        log.warning(f"results / tracking skipped: {e}")
     return res
 
 
@@ -668,7 +758,7 @@ def main():
         "games": all_games, "players": all_players, "teams": teams_tbl,
         "backtest": {k: (fnum(v, 2) if isinstance(v, float) else v) for k, v in report.items()},
         "live_record": live,
-        "report": weekly_report(live, payload.get("clv"), OUT / "props_log.json", week),
+        "report": weekly_report(live, payload.get("clv"), OUT / "props_log.json", week, payload.get("tracking")),
         "settings": {"lean_engine": model_info["lean_engine"],
                      "lean_spread": C.ANCHOR_LEAN_SPREAD if model_info["lean_engine"] == "anchored" else C.LEAN_SPREAD_EDGE,
                      "lean_total": C.ANCHOR_LEAN_TOTAL if model_info["lean_engine"] == "anchored" else C.LEAN_TOTAL_EDGE},
