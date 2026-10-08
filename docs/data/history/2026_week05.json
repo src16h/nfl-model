@@ -776,7 +776,7 @@
    "final_line": "JAX -8.3",
    "lean_engine": "anchored",
    "indep_margin": 7.8,
-   "indep_total": 43.3,
+   "indep_total": 43.2,
    "market_line": "JAX -7.5",
    "market_spread": 7.5,
    "market_total": 41.5,
@@ -790,7 +790,7 @@
    "over_prob": 48.0,
    "qb_home": "Trevor Lawrence",
    "qb_away": "Jalen Hurts",
-   "weather": "81\u00b0F, wind 9 mph, 22% rain",
+   "weather": "81\u00b0F, wind 9 mph, 26% rain",
    "why_margin": [
     {
      "factor": "Success rate matchup",
@@ -819,11 +819,11 @@
      "pts": -1.1
     },
     {
-     "factor": "Outdoors",
-     "pts": -0.5
+     "factor": "Rain or snow",
+     "pts": -0.6
     },
     {
-     "factor": "Rain or snow",
+     "factor": "Outdoors",
      "pts": -0.5
     }
    ],
@@ -887,8 +887,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -345.0,
-   "ml_away": 275.0,
+   "ml_home": -395.0,
+   "ml_away": 310.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -1025,9 +1025,9 @@
      "edge_text": "0.6"
     },
     "moneyline": {
-     "pick": "JAX -345",
+     "pick": "JAX -395",
      "side": "JAX",
-     "odds": "-345",
+     "odds": "-395",
      "edge": 2.2,
      "edge_text": "2.2%",
      "model_pct": 77,
@@ -2260,7 +2260,7 @@
    "final_line": "MIA +6.8",
    "lean_engine": "anchored",
    "indep_margin": -4.5,
-   "indep_total": 44.5,
+   "indep_total": 44.4,
    "market_line": "MIA +6.5",
    "market_spread": -6.5,
    "market_total": 42.5,
@@ -2274,7 +2274,7 @@
    "over_prob": 47.0,
    "qb_home": "Malik Willis",
    "qb_away": "Joe Burrow",
-   "weather": "91\u00b0F, wind 12 mph, 5% rain",
+   "weather": "91\u00b0F, wind 12 mph, 6% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -2986,7 +2986,7 @@
    "final_line": "NE -3.8",
    "lean_engine": "anchored",
    "indep_margin": 8.3,
-   "indep_total": 44.5,
+   "indep_total": 44.4,
    "market_line": "NE -3.5",
    "market_spread": 3.5,
    "market_total": 45.5,
@@ -3000,7 +3000,7 @@
    "over_prob": 51.0,
    "qb_home": "Drake Maye",
    "qb_away": "Kirk Cousins",
-   "weather": "64\u00b0F, wind 8 mph, 0% rain",
+   "weather": "64\u00b0F, wind 8 mph, 1% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -3825,8 +3825,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 124.0,
-   "ml_away": -148.0,
+   "ml_home": 120.0,
+   "ml_away": -142.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -3961,9 +3961,9 @@
      "edge_text": "1.8"
     },
     "moneyline": {
-     "pick": "MIN -148",
+     "pick": "MIN -142",
      "side": "MIN",
-     "odds": "-148",
+     "odds": "-142",
      "edge": 0.7,
      "edge_text": "0.7%",
      "model_pct": 59,
@@ -4449,7 +4449,7 @@
    "final_line": "NYJ -1.1",
    "lean_engine": "anchored",
    "indep_margin": -2.7,
-   "indep_total": 42.0,
+   "indep_total": 41.9,
    "market_line": "NYJ -1.5",
    "market_spread": 1.5,
    "market_total": 39.5,
@@ -4463,7 +4463,7 @@
    "over_prob": 56.0,
    "qb_home": "Geno Smith",
    "qb_away": "Deshaun Watson",
-   "weather": "63\u00b0F, wind 9 mph, 18% rain",
+   "weather": "63\u00b0F, wind 9 mph, 24% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -4496,7 +4496,7 @@
      "pts": 0.6
     },
     {
-     "factor": "Outdoors",
+     "factor": "Rain or snow",
      "pts": -0.5
     }
    ],
@@ -5167,7 +5167,7 @@
    "final_line": "PIT -2.9",
    "lean_engine": "anchored",
    "indep_margin": 2.9,
-   "indep_total": 41.3,
+   "indep_total": 41.5,
    "market_line": "PIT -2.5",
    "market_spread": 2.5,
    "market_total": 44.5,
@@ -5181,7 +5181,7 @@
    "over_prob": 49.0,
    "qb_home": "Aaron Rodgers",
    "qb_away": "Daniel Jones",
-   "weather": "59\u00b0F, wind 9 mph, 82% rain",
+   "weather": "59\u00b0F, wind 9 mph, 78% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -5199,7 +5199,7 @@
    "why_total": [
     {
      "factor": "Rain or snow",
-     "pts": -2.1
+     "pts": -2.0
     },
     {
      "factor": "QB accuracy (both QBs)",
@@ -5259,8 +5259,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -142.0,
-   "ml_away": 120.0,
+   "ml_home": -148.0,
+   "ml_away": 124.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -5396,9 +5396,9 @@
      "edge_text": "0.5"
     },
     "moneyline": {
-     "pick": "PIT -142",
+     "pick": "PIT -148",
      "side": "PIT",
-     "odds": "-142",
+     "odds": "-148",
      "edge": 1.4,
      "edge_text": "1.4%",
      "model_pct": 60,
@@ -5870,7 +5870,7 @@
    "final_line": "TEN +7.5",
    "lean_engine": "anchored",
    "indep_margin": -4.0,
-   "indep_total": 41.2,
+   "indep_total": 41.4,
    "market_line": "TEN +7.5",
    "market_spread": -7.5,
    "market_total": 38.5,
@@ -5884,7 +5884,7 @@
    "over_prob": 52.0,
    "qb_home": "Cam Ward",
    "qb_away": "C.J. Stroud",
-   "weather": "64\u00b0F, wind 7 mph, 39% rain",
+   "weather": "64\u00b0F, wind 7 mph, 32% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -5918,7 +5918,7 @@
     },
     {
      "factor": "Rain or snow",
-     "pts": -0.9
+     "pts": -0.7
     }
    ],
    "why_edge": [],
@@ -6599,7 +6599,7 @@
    "final_line": "WAS -4.3",
    "lean_engine": "anchored",
    "indep_margin": 3.8,
-   "indep_total": 38.0,
+   "indep_total": 37.7,
    "market_line": "WAS -3.5",
    "market_spread": 3.5,
    "market_total": 41.5,
@@ -6613,7 +6613,7 @@
    "over_prob": 50.0,
    "qb_home": "Marcus Mariota",
    "qb_away": "Jameis Winston",
-   "weather": "63\u00b0F, wind 12 mph, 75% rain",
+   "weather": "63\u00b0F, wind 12 mph, 85% rain",
    "why_margin": [
     {
      "factor": "QB accuracy (CPOE)",
@@ -6635,11 +6635,7 @@
    "why_total": [
     {
      "factor": "Rain or snow",
-     "pts": -2.0
-    },
-    {
-     "factor": "Machine-learning patterns",
-     "pts": -1.0
+     "pts": -2.2
     },
     {
      "factor": "Pace",
@@ -6647,6 +6643,10 @@
     },
     {
      "factor": "QB accuracy (both QBs)",
+     "pts": -0.9
+    },
+    {
+     "factor": "Machine-learning patterns",
      "pts": -0.9
     }
    ],
@@ -10364,8 +10364,8 @@
    ],
    "injuries_away": [],
    "notes": [],
-   "ml_home": -166.0,
-   "ml_away": 140.0,
+   "ml_home": -175.0,
+   "ml_away": 145.0,
    "win_sigma": 11.37,
    "team_totals": {
     "home": {
@@ -10512,9 +10512,9 @@
      "edge_text": "0.8"
     },
     "moneyline": {
-     "pick": "BUF +140",
+     "pick": "BUF +145",
      "side": "BUF",
-     "odds": "+140",
+     "odds": "+145",
      "edge": 3.4,
      "edge_text": "3.4%",
      "model_pct": 43,
