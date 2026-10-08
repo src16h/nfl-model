@@ -147,6 +147,111 @@ def line_summary(lg):
     return out
 
 
+def _open_close(rec, lk):
+    """Opening line (first snapshot) and closing line (last one before kickoff, same source)."""
+    snaps = rec.get("snaps") or []
+    if not snaps:
+        return None, None, None
+    ref = snaps[-1].get("src", "feed")
+    same = [x for x in snaps if x.get("src", "feed") == ref and x.get(lk) is not None]
+    if not same:
+        return None, None, None
+    fin = rec.get("final") or {}
+    close = same[-1].get(lk) if ref.startswith("live") else (fin.get(lk) if fin.get(lk) is not None else same[-1].get(lk))
+    return same[0].get(lk), close, same[0]
+
+
+def clv_report(path, play_spread=None):
+    """Closing line value for every model pick, plus each game's open/close lines
+    so the dashboard can score your own bets against the close."""
+    lg = _load(path, {"games": {}})
+    games, rows = {}, {"spread": [], "total": []}
+    for gid, rec in lg.get("games", {}).items():
+        g = {}
+        for kind, lk, ek in (("spread", "spread", "edge_s"), ("total", "total", "edge_t")):
+            a, b, first = _open_close(rec, lk)
+            if a is None:
+                continue
+            g[f"open_{kind}"], g[f"close_{kind}"] = a, b
+            gap = first.get(ek)
+            if rec.get("final") and gap is not None and b is not None:
+                side = 1.0 if gap >= 0 else -1.0                  # home / over
+                clv = float(side * (b - a))
+                g[f"clv_{kind}"] = fnum(clv, 2)
+                rows[kind].append({"clv": clv, "gap": abs(gap), "week": rec.get("week")})
+        if g:
+            g["home"], g["away"] = rec.get("home"), rec.get("away")
+            games[gid] = g
+
+    def summ(items):
+        if not items:
+            return {"n": 0}
+        c = np.array([i["clv"] for i in items])
+        return {"n": len(items), "avg": fnum(c.mean(), 2), "beat": int((c > 0).sum()),
+                "worse": int((c < 0).sum()), "same": int((c == 0).sum()),
+                "beat_pct": fnum(100 * (c > 0).sum() / max((c != 0).sum(), 1), 0)}
+    out = {"games": games}
+    for kind in ("spread", "total"):
+        it = rows[kind]
+        out[kind] = {"all": summ(it),
+                     "small": summ([i for i in it if i["gap"] < 1]),
+                     "big": summ([i for i in it if i["gap"] >= 1]),
+                     "plays": summ([i for i in it if play_spread is not None and kind == "spread" and i["gap"] >= play_spread])}
+    return out
+
+
+def q1_and_half(pbp: pd.DataFrame, game_ids) -> tuple[dict, dict]:
+    """First-quarter receiving and passing yards per player, and halftime scores."""
+    p = pbp[pbp["game_id"].isin(set(game_ids))]
+    q1, half = {}, {}
+    if not len(p):
+        return q1, half
+    c = p[(p["qtr"] == 1) & (p["complete_pass"] == 1)]
+    yd = c["yards_gained"].fillna(0)
+    for (gid, pid), v in c.assign(y=yd).groupby(["game_id", "receiver_player_id"])["y"].agg(["size", "sum"]).iterrows():
+        q1.setdefault(gid, {}).setdefault(pid, {})
+        q1[gid][pid].update({"q1_rec": float(v["size"]), "q1_rec_yds": float(v["sum"])})
+    for (gid, pid), v in c.assign(y=yd).groupby(["game_id", "passer_player_id"])["y"].sum().items():
+        q1.setdefault(gid, {}).setdefault(pid, {})["q1_pass_yds"] = float(v)
+    if "total_home_score" in p.columns:
+        h = p[p["qtr"] <= 2].groupby("game_id")[["total_home_score", "total_away_score"]].max()
+        for gid, r in h.iterrows():
+            half[gid] = {"h": float(r["total_home_score"]), "a": float(r["total_away_score"])}
+    return q1, half
+
+
+RESULT_COLS = ["pass_yds", "pass_cmp", "pass_att", "pass_td", "pass_int", "rec", "rec_yds", "rec_td",
+               "carries", "rush_yds", "rush_td", "rush_rec_yds", "tds", "q1_rec", "q1_rec_yds", "q1_pass_yds"]
+
+
+def build_results(pbp: pd.DataFrame, schedules: pd.DataFrame, season: int) -> dict:
+    """Final scores, halftime scores and box scores for this season's finished games.
+    The dashboard grades your logged bets from this file."""
+    sch = schedules[(schedules["season"] == season) & schedules["home_score"].notna()]
+    ids = list(sch["game_id"])
+    out = {"cols": RESULT_COLS, "games": {}, "players": {}}
+    if not ids:
+        return out
+    st = player_game_stats(pbp, ids)
+    pa = pbp[pbp["game_id"].isin(set(ids)) & (pbp["pass_attempt"] == 1) & (pbp["sack"] != 1)]
+    att = pa.groupby(["game_id", "passer_player_id"]).size()
+    q1, half = q1_and_half(pbp, ids)
+    for _, r in sch.iterrows():
+        gid = r["game_id"]
+        g = {"home": r["home_team"], "away": r["away_team"], "h": float(r["home_score"]), "a": float(r["away_score"])}
+        if gid in half:
+            g["h1h"], g["h1a"] = half[gid]["h"], half[gid]["a"]
+        out["games"][gid] = g
+    if len(st):
+        for (gid, pid), r in st.iterrows():
+            d = r.to_dict()
+            d["pass_att"] = float(att.get((gid, pid), 0))
+            d["tds"] = float(d.get("rush_td", 0) + d.get("rec_td", 0))
+            d.update(q1.get(gid, {}).get(pid, {}))
+            out["players"].setdefault(gid, {})[pid] = [fnum(d.get(c, 0.0) or 0.0, 1) for c in RESULT_COLS]
+    return out
+
+
 # ---------------------------------------------------------------------
 # PROPS
 # ---------------------------------------------------------------------

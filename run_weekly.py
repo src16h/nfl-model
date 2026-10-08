@@ -351,11 +351,17 @@ def build_plays(games, props, model_info):
                         "pick": f"{t} {_fmt_line(vl)}", "detail": f"Model has {t} {_fmt_line(ml)}",
                         "gap": fnum(abs(g["edge_spread"])), "gap_unit": "pts", "book": g.get("line_book"),
                         "cover_prob": None if g.get("cover_prob_home") is None else
-                        fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 0)})
+                        fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 0),
+                        "bet": {"kind": "spread", "game_id": g["game_id"], "side": t, "line": vl, "odds": "-110",
+                                "model_pct": None if g.get("cover_prob_home") is None else
+                                fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 1)}})
         if g.get("play_total"):
             out.append({"kind": "total", "kickoff": g.get("kickoff"), "game_id": g["game_id"], "matchup": matchup,
                         "pick": f"{g['play_total']} {g['market_total']:g}", "detail": f"Model total {g['total']:.1f}",
-                        "gap": fnum(abs(g["edge_total"])), "gap_unit": "pts", "book": g.get("line_book")})
+                        "gap": fnum(abs(g["edge_total"])), "gap_unit": "pts", "book": g.get("line_book"),
+                        "bet": {"kind": "total", "game_id": g["game_id"], "side": g["play_total"], "line": g["market_total"],
+                                "odds": "-110", "model_pct": None if g.get("over_prob") is None else
+                                fnum(g["over_prob"] if g["play_total"] == "Over" else 100 - g["over_prob"], 1)}})
     ko = {g["game_id"]: g.get("kickoff") for g in games}
     st = {g["game_id"]: g.get("state") for g in games}
     for p in props.get("props", []):
@@ -366,7 +372,11 @@ def build_plays(games, props, model_info):
                     "matchup": f"{p['team']} vs {p['opp']}", "player": p["player"], "pos": p.get("pos"),
                     "pick": f"{p['lean']} {p['line']}", "label": p.get("label"), "odds": odds,
                     "detail": f"Model {_pct_side(p['model_over'], p['lean'])}% vs book {_pct_side(p['book_over'], p['lean'])}%",
-                    "gap": fnum(abs(p["edge"])), "gap_unit": "%", "book": p.get("book"), "median": p.get("median")})
+                    "gap": fnum(abs(p["edge"])), "gap_unit": "%", "book": p.get("book"), "median": p.get("median"),
+                    "bet": {"kind": "prop", "game_id": p["game_id"], "pid": p.get("pid"), "player": p["player"],
+                            "stat": p.get("stat_key") or p.get("stat"), "label": p.get("label"), "side": p["lean"],
+                            "line": 0.5 if (p.get("stat_key") or p.get("stat")) == "anytime_td" else float(p["line"]),
+                            "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"])}})
     out.sort(key=lambda x: (x.get("kickoff") or "", x["kind"] != "spread", -(x.get("gap") or 0)))
     return out
 
@@ -436,6 +446,7 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
     try:
         tracker.update_line_log(OUT / "line_log.json", games, now)
         res["lines"] = tracker.grade_lines(OUT / "line_log.json", bundle.schedules)
+        res["clv"] = tracker.clv_report(OUT / "line_log.json", C.GAME_PLAY_SPREAD)
     except Exception as e:  # noqa: BLE001
         log.warning(f"line tracker skipped: {e}")
         res["lines"] = {"error": str(e)[:160]}
@@ -445,6 +456,11 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
     except Exception as e:  # noqa: BLE001
         log.warning(f"prop tracker skipped: {e}")
         res["prop_record"] = {"error": str(e)[:160]}
+    try:                                       # box scores the dashboard uses to grade your bets
+        (OUT / "results.json").write_text(json.dumps(clean_json(tracker.build_results(bundle.pbp, bundle.schedules, season)),
+                                                     separators=(",", ":"), allow_nan=False))
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"results file skipped: {e}")
     return res
 
 

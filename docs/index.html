@@ -291,6 +291,36 @@ input[type=search]:focus,select:focus{border-color:var(--gold);outline:none;box-
   .ladder td,.ladder th{padding:6px 10px}
 }
 
+/* ---------- bets ---------- */
+.logbtn{font:600 12px var(--sans);background:var(--surface);color:var(--garnet-text);border:1px solid var(--line);border-radius:var(--r);padding:5px 10px;cursor:pointer;white-space:nowrap}
+.logbtn:hover{border-color:var(--garnet-text)}
+.logbtn.done{color:var(--win);border-color:var(--win);cursor:default}
+.stake{font-size:12.5px;color:var(--muted)}
+.stake b{color:var(--ink);font-weight:600}
+.t-actions{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.logrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+dialog.slip{border:1px solid var(--line);border-radius:var(--r-lg);padding:0;background:var(--surface);color:var(--ink);width:min(440px,calc(100vw - 32px));box-shadow:0 20px 50px rgba(0,0,0,.25)}
+dialog.slip::backdrop{background:rgba(20,10,12,.45)}
+.slip-h{background:var(--garnet);color:var(--on-garnet);padding:12px 18px;font:700 17px var(--cond)}
+.slip-b{padding:16px 18px;display:grid;gap:12px}
+.slip-b .what{font:700 22px/1.15 var(--cond)}
+.slip-b .what small{display:block;font:500 13px var(--sans);color:var(--muted);margin-top:3px}
+.slip-f{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slip-f label{font-size:12px;color:var(--muted);display:grid;gap:4px}
+.slip-f input{font:600 16px var(--cond);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px;width:100%}
+.slip-f input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
+.slip-a{display:flex;justify-content:flex-end;gap:8px;padding:0 18px 16px}
+.btn{font:600 14px var(--sans);border-radius:var(--r);padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--garnet);border-color:var(--garnet);color:var(--on-garnet)}
+.bets td{font-size:14px}
+.res{display:inline-block;min-width:22px;text-align:center;font:700 12px/1 var(--sans);padding:3px 6px;border-radius:2px}
+.res.W{background:var(--win);color:#fff}.res.L{background:var(--loss);color:#fff}.res.P,.res.V{background:var(--line);color:var(--ink)}.res.O{border:1px solid var(--line);color:var(--muted)}
+.xbtn{background:none;border:0;color:var(--faint);cursor:pointer;font-size:16px;padding:0 4px}
+.xbtn:hover{color:var(--loss)}
+.setgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:4px 0 10px}
+.setgrid label{font-size:12.5px;color:var(--muted);display:grid;gap:4px}
+.setgrid input,.setgrid select{font:600 15px var(--cond);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
+
 /* ---------- stat strip ---------- */
 .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
 .st{padding:14px 18px;border-left:1px solid var(--line-soft)}
@@ -366,6 +396,11 @@ tr.small td{color:var(--faint)}
   </section>
   <section id="record" role="tabpanel" hidden></section>
 </main>
+<dialog class="slip" id="slip" aria-labelledby="slipTitle"><div class="slip-h" id="slipTitle">Log this bet</div>
+  <div class="slip-b"><div class="what" id="slipWhat"></div>
+    <div class="slip-f"><label>Line<input id="slipLine" inputmode="decimal"></label><label>Odds<input id="slipOdds" inputmode="decimal"></label><label>Units<input id="slipUnits" inputmode="decimal"></label></div>
+    <div class="stake" id="slipNote"></div></div>
+  <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
 <footer class="foot">Projections for research and entertainment. Lines move, so check your book before betting.</footer>
 
 <script>
@@ -407,6 +442,91 @@ function tabFromHash() {
 tabFromHash();
 window.addEventListener("hashchange", tabFromHash);
 
+/* ---------------- Bankroll, sizing, my bets ---------------- */
+const LS_SET = "board.settings.v1", LS_BETS = "board.bets.v1";
+const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+let SET = {bankroll: 1000, unit: 10, kelly: 0.25, maxpct: 3, ...lsGet(LS_SET, {})};
+let BETS = lsGet(LS_BETS, []);
+let RES = null;                                            // final box scores (results.json)
+const oddsNum = o => +String(o ?? "").replace("+", "");
+const payout = o => { o = oddsNum(o); return o > 0 ? o / 100 : 100 / -o; };
+function sizing(pPct, odds) {                              // fractional Kelly, capped
+  const p = (pPct ?? NaN) / 100, b = payout(odds || -110);
+  if (!isFinite(p) || !isFinite(b) || b <= 0) return null;
+  const f = (b * p - (1 - p)) / b;
+  if (f <= 0) return {units: 0, dollars: 0, pct: 0};
+  const pct = Math.min(f * SET.kelly * 100, SET.maxpct), dollars = SET.bankroll * pct / 100;
+  return {units: Math.round(dollars / Math.max(SET.unit, 0.01) * 10) / 10, dollars: Math.round(dollars), pct};
+}
+const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})` : `Suggested bet <b>none</b>, no edge at this price`; };
+const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side].join("|");
+const hasBet = b => BETS.some(x => betKey(x) === betKey(b) && x.status !== "deleted");
+const PENDING = {};
+function logBtn(b) {                                      // b: bet template with kind, game_id, side, line, odds, model_pct, desc
+  if (!b) return "";
+  const id = "b" + Math.random().toString(36).slice(2, 9); PENDING[id] = b;
+  return hasBet(b) ? `<button class="logbtn done" disabled>Logged</button>` : `<button class="logbtn" data-log="${id}">I bet this</button>`;
+}
+document.addEventListener("click", ev => {
+  const btn = ev.target.closest("[data-log]"); if (!btn) return;
+  ev.preventDefault(); ev.stopPropagation(); openSlip(PENDING[btn.dataset.log]);
+});
+let SLIP = null;
+function openSlip(b) {
+  SLIP = b; const z = sizing(b.model_pct, b.odds);
+  $("#slipWhat").innerHTML = `${esc(b.desc)}<small>${esc(b.sub || "")}</small>`;
+  $("#slipLine").value = b.line ?? ""; $("#slipLine").disabled = b.kind === "ml";
+  $("#slipOdds").value = b.odds || "-110"; $("#slipUnits").value = z && z.units > 0 ? z.units : 1;
+  const note = () => { const zz = sizing(b.model_pct, $("#slipOdds").value); $("#slipNote").innerHTML = b.model_pct != null ? `Model chance ${n(b.model_pct, 0)}%. ${zz ? stakeTxt(b.model_pct, $("#slipOdds").value) : ""}. 1 unit = $${SET.unit}.` : `1 unit = $${SET.unit}.`; };
+  note(); $("#slipOdds").oninput = note;
+  $("#slip").showModal();
+}
+$("#slipCancel").onclick = () => $("#slip").close();
+$("#slipSave").onclick = () => {
+  const b = SLIP; if (!b) return;
+  const odds = $("#slipOdds").value.trim() || "-110", units = +$("#slipUnits").value || 1;
+  if (!isFinite(payout(odds)) || Math.abs(oddsNum(odds)) < 100) { $("#slipNote").textContent = "Use American odds like -110 or +150."; return; }
+  const line = b.kind === "ml" ? null : (+$("#slipLine").value);
+  BETS.push({...b, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), line, odds, units, placed: new Date().toISOString(), status: "open"});
+  lsSet(LS_BETS, BETS); $("#slip").close(); render(); };
+
+function gradeBet(b) {                                   // returns {res: W|L|P|V|O, units, actual}
+  const g = RES?.games?.[b.game_id];
+  if (!g) return {res: "O"};
+  const homeM = g.h - g.a, tot = g.h + g.a;
+  const wl = r => r > 0 ? "W" : r < 0 ? "L" : "P";
+  let res, actual;
+  if (b.kind === "spread") { const m = b.side === g.home ? homeM : -homeM; res = wl(m + b.line); actual = `${g.away} ${g.a}, ${g.home} ${g.h}`; }
+  else if (b.kind === "total") { res = wl((tot - b.line) * (b.side === "Over" ? 1 : -1)); actual = `${tot} points`; }
+  else if (b.kind === "ml") { const m = b.side === g.home ? homeM : -homeM; res = m > 0 ? "W" : m < 0 ? "L" : "P"; actual = `${g.away} ${g.a}, ${g.home} ${g.h}`; }
+  else if (b.kind === "h1spread" || b.kind === "h1total") {
+    if (g.h1h == null) return {res: "O"};
+    const hm = g.h1h - g.h1a, ht = g.h1h + g.h1a;
+    res = b.kind === "h1total" ? wl((ht - b.line) * (b.side === "Over" ? 1 : -1)) : wl((b.side === g.home ? hm : -hm) + b.line);
+    actual = `Halftime ${g.h1a}-${g.h1h}`;
+  } else {
+    const row = RES.players?.[b.game_id]?.[b.pid];
+    if (!row) return {res: "V", units: 0, actual: "Did not play"};
+    const stat = b.stat === "anytime_td" ? "tds" : b.stat, v = row[RES.cols.indexOf(stat)];
+    if (v == null) return {res: "O"};
+    res = wl((v - b.line) * (b.side === "Over" ? 1 : -1)); actual = `${v}`;
+  }
+  const units = res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0;
+  return {res, units, actual};
+}
+function betCLV(b) {                                    // points better than the closing line (spreads, totals)
+  const c = D?.clv?.games?.[b.game_id]; if (!c) return null;
+  const home = c.home || (D.games || []).find(x => x.game_id === b.game_id)?.home;
+  if (b.kind === "spread" && c.close_spread != null && home) { const close = b.side === home ? -c.close_spread : c.close_spread; return b.line - close; }
+  if (b.kind === "total" && c.close_total != null) return (c.close_total - b.line) * (b.side === "Over" ? 1 : -1);
+  return null;
+}
+function loadResults() {
+  fetch("data/results.json?ts=" + Date.now()).then(r => r.ok ? r.json() : null).then(r => { if (r) { RES = r; if (D) renderRecord(); } }).catch(() => {});
+}
+loadResults();
+
 function load(first) {
   fetch("data/latest.json?ts=" + Date.now()).then(r => { if (!r.ok) throw new Error("none"); return r.json(); })
     .then(d => { const changed = !D || d.generated_at !== D.generated_at; D = d; if (changed) render(); freshness(); })
@@ -443,7 +563,9 @@ function ticket(p) {
   if (p.book) meta.push(esc(p.book));
   return `<article class="ticket">
     <div class="t-main"><div class="t-kind">${kind}<span>${esc(kickoff(p.kickoff))}</span></div>
-      <div class="t-pick">${esc(p.pick)}${odds}</div><div class="t-who">${who}</div><div class="t-meta">${meta.join(". ")}</div></div>
+      <div class="t-pick">${esc(p.pick)}${odds}</div><div class="t-who">${who}</div><div class="t-meta">${meta.join(". ")}</div>
+      ${p.bet ? `<div class="t-actions"><span class="stake">${stakeTxt(p.bet.model_pct, p.bet.odds)}</span>${logBtn({...p.bet,
+        desc: p.kind === "prop" ? `${p.player} ${p.pick}` : p.pick, sub: p.kind === "prop" ? `${p.label || ""}, ${p.matchup}` : p.matchup})}</div>` : ""}</div>
     <div class="t-side"><div class="t-gap">${n(p.gap)}<small>${p.gap_unit === "%" ? "%" : " pts"}</small></div><div class="t-gl">gap vs book</div></div></article>`;
 }
 
@@ -535,6 +657,14 @@ function gameRow(g) {
   </summary><div class="g-body">
     <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
     ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows the model's win chance minus the win chance the Vegas spread implies${g.picks.moneyline && g.picks.moneyline.vegas_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs Vegas ${g.picks.moneyline.vegas_pct}%)` : ""}, on the same team as the spread pick. Odds are the price only. Gold means it is also a Play.</div>` : ""}
+    ${g.state === "upcoming" && g.picks ? (() => { const P = g.picks, mu = `${g.away} at ${g.home}`, wpH = g.win_prob_home;
+      const sp = P.spread && {kind: "spread", game_id: g.game_id, side: P.spread.side, line: P.spread.line, odds: "-110", desc: P.spread.pick, sub: mu,
+        model_pct: g.cover_prob_home == null ? null : (P.spread.side === g.home ? g.cover_prob_home : 100 - g.cover_prob_home)};
+      const to = P.total && {kind: "total", game_id: g.game_id, side: P.total.side, line: P.total.line, odds: "-110", desc: P.total.pick, sub: mu,
+        model_pct: g.over_prob == null ? null : (P.total.side === "Over" ? g.over_prob : 100 - g.over_prob)};
+      const ml = P.moneyline && {kind: "ml", game_id: g.game_id, side: P.moneyline.side, line: null, odds: P.moneyline.odds || "", desc: `${P.moneyline.side} moneyline`, sub: mu,
+        model_pct: wpH == null ? null : (P.moneyline.side === g.home ? wpH : 100 - wpH)};
+      return `<div class="logrow"><b>Log a pick:</b> ${sp ? `Spread ${logBtn(sp)}` : ""} ${to ? `Total ${logBtn(to)}` : ""} ${ml ? `Moneyline ${logBtn(ml)}` : ""}</div>`; })() : ""}
     ${g.h1 ? `<div><b>First half (model):</b> ${esc(g.h1.line || "")}, total ${n(g.h1.total)}</div>` : ""}
     ${why}
     ${(g.notes || []).map(x => `<div>${esc(x)}</div>`).join("")}
@@ -574,7 +704,9 @@ function propRows(rows, limitKey) {
     h += `<div class="prow"><div class="pl">${esc(p.player)}<span>${esc(p.pos)} ${esc(p.team)} vs ${esc(p.opp)}</span></div>
       <div class="c-prop">${esc(p.label || label(p.stat_key || p.stat))}${p.median != null ? `<span class="dim" style="display:block;font-size:13px">Median ${n(p.median)}</span>` : ""}</div>
       <div class="c-pick pick ${isOver ? "over" : "under"}">${pick}${odds ? ` <span class="dim" style="font-weight:500">${esc(odds)}</span>` : ""}</div>
-      <div class="c-mb r">${n(mo, 0)}% / ${n(bo, 0)}%</div><div class="c-gap r gapv">${n(Math.abs(p.edge))}%</div></div>`;
+      <div class="c-mb r">${n(mo, 0)}% / ${n(bo, 0)}%</div><div class="c-gap r gapv">${n(Math.abs(p.edge))}%
+        ${p.lean ? `<div style="margin-top:4px">${logBtn({kind: "prop", game_id: p.game_id, pid: p.pid, player: p.player, stat: p.stat_key || p.stat, label: p.label, side: p.lean,
+          line: (p.stat_key || p.stat) === "anytime_td" ? 0.5 : +p.line, odds: odds || "-110", model_pct: mo, desc: `${p.player} ${p.lean} ${p.line ?? ""}`, sub: `${p.label || ""}, ${p.team} vs ${p.opp}`})}</div>` : ""}</div></div>`;
   }
   h += `</div>`;
   if (!showAll && rows.length > LIMIT) h += `<button class="more" data-all="${limitKey}">Show all ${rows.length}</button>`;
@@ -658,7 +790,10 @@ function renderTD() {
       <span class="k">${esc(x.kind)}</span>
       <span class="p">${esc(x.r.name)}<small>${esc(x.odds || "")}</small></span>
       <span class="w">${esc(x.r.pos)} ${esc(x.r.team)} vs ${esc(x.r.opp)}. Model ${n(x.model, 0)}%, book ${n(x.book, 0)}%</span>
-      <span class="e">+${n(x.edge)}%<small>gap</small></span></div>`).join("")}</div>` : `<p class="sub">No gaps under ${cap}% right now.</p>`}
+      <span class="e">+${n(x.edge)}%<small>gap</small></span>
+      <span class="w" style="grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn({kind: "prop", game_id: x.r.game_id, pid: x.r.pid, player: x.r.name,
+        stat: x.kind === "Anytime TD" ? "anytime_td" : "tds", label: x.kind, side: "Over", line: x.kind === "Anytime TD" ? 0.5 : 1.5, odds: x.odds || "-110", model_pct: x.model,
+        desc: `${x.r.name} ${x.kind === "Anytime TD" ? "anytime TD" : "2+ TDs"}`, sub: `${x.r.team} vs ${x.r.opp}`})}</span></div>`).join("")}</div>` : `<p class="sub">No gaps under ${cap}% right now.</p>`}
       ${wild.length ? `<p class="note"><b>Too big to trust (${cap}%+):</b> ${wild.map(x => `${esc(x.r.name)}, ${esc(x.kind)} +${n(x.edge)}%`).join(", ")}. Gaps this large usually mean the model is missing something, like a role change or goal-line back.</p>` : ""}
       <p class="note">Not Plays. TD bets swing a lot and books take a bigger cut on them, so judge these over many weeks on the Record tab.</p>`;
   }
@@ -787,7 +922,9 @@ function renderMore() {
       const verdict = !j ? `<div class="verdict">Enter your book's line to get the model's call. Odds default to -110.</div>`
         : j.bad ? `<div class="verdict">Odds look off. Use American odds like -115 or +105.</div>`
         : `<div class="verdict ${j.tier === "play" ? "play" : ""}">${tierTag(j)}<b>${j.side} ${j.line} ${esc(j.odds)}</b>
-           <span>Model ${n(j.model, 0)}% vs book ${n(j.book, 0)}%, gap ${n(j.gap)}%. Expected return ${sgn(j.ev)}% per bet.</span></div>`;
+           <span>Model ${n(j.model, 0)}% vs book ${n(j.book, 0)}%, gap ${n(j.gap)}%. Expected return ${sgn(j.ev)}% per bet.</span>
+           ${j.tier === "play" || j.tier === "watch" ? `<span class="stake">${stakeTxt(j.model, j.odds)}</span>${logBtn({kind: "prop", game_id: p.game_id, pid: p.pid, player: p.name, stat: mUI.mkt,
+             label: Object.fromEntries(MKTS)[mUI.mkt], side: j.side, line: j.line, odds: j.odds, model_pct: j.model, desc: `${p.name} ${j.side} ${j.line}`, sub: Object.fromEntries(MKTS)[mUI.mkt]})}` : ""}</div>`;
       const fld = (id, f, lab, ph, cls) => `<span class="fld"><label for="${id}">${lab}</label><input id="${id}" class="${cls}" data-ek="${esc(ek)}" data-f="${f}" inputmode="decimal" value="${esc(e[f] ?? "")}" placeholder="${ph}"></span>`;
       h += `<tr class="detail"><td colspan="${span}"><div class="ladder">
         <div class="checker">${fld("ln-" + ek, "line", "Book line", fl, "")}${fld("oo-" + ek, "o", "Over odds", "-110", "odds")}${fld("uo-" + ek, "u", "Under odds", "-110", "odds")}</div>
@@ -909,10 +1046,83 @@ function recTable(title, rows, nameKey, nameCol) {
     `</tbody></table></div>`;
 }
 
+function myBetsHTML() {
+  const live = BETS.filter(b => b.status !== "deleted");
+  const graded = live.map(b => ({b, g: gradeBet(b), clv: betCLV(b)}));
+  const done = graded.filter(x => ["W", "L", "P"].includes(x.g.res)), open = graded.filter(x => x.g.res === "O");
+  const w = done.filter(x => x.g.res === "W").length, l = done.filter(x => x.g.res === "L").length, p = done.filter(x => x.g.res === "P").length;
+  const u = done.reduce((a, x) => a + x.g.units, 0), risked = done.filter(x => x.g.res !== "P").reduce((a, x) => a + x.b.units, 0);
+  const clvs = graded.map(x => x.clv).filter(v => v != null);
+  const kindName = {spread: "Spread", total: "Total", ml: "Moneyline", prop: "Prop", h1spread: "1st half spread", h1total: "1st half total"};
+  let h = `<div class="sec-head"><h2>My bets</h2><span class="aside">Saved on this device</span></div>
+  <p class="sub">Tap <b>I bet this</b> on any pick or Play to log it. Bets grade themselves from final box scores, and spreads and totals also get scored against the closing line.</p>
+  <div class="strip">
+    <div class="st"><strong>${w}–${l}${p ? "–" + p : ""}</strong><span>Record${w + l ? `, ${n(100 * w / (w + l))}%` : ""}</span></div>
+    <div class="st"><strong class="${uc(done.length ? u : null)}">${done.length ? units(u) : "–"}</strong><span>Units${done.length ? ` ($${Math.round(u * SET.unit)})` : ""}</span></div>
+    <div class="st"><strong class="${uc(risked ? u : null)}">${risked ? sgn(100 * u / risked) + "%" : "–"}</strong><span>Return on money risked</span></div>
+    <div class="st"><strong class="${clvs.length && clvs.some(v => v) ? uc(clvs.reduce((a, v) => a + v, 0)) : ""}">${clvs.length ? sgn(clvs.reduce((a, v) => a + v, 0) / clvs.length, 2) : "–"}</strong><span>Avg points vs closing line${clvs.length ? ` (${clvs.length})` : ""}</span></div>
+  </div>`;
+  if (!live.length) h += `<div class="empty" style="margin-top:10px"><b>No bets logged yet.</b> Find a Play on the Games or Props tab and tap <b>I bet this</b>.</div>`;
+  else {
+    const row = x => { const b = x.b, r = x.g.res;
+      return `<tr><td><span class="res ${r}">${r === "O" ? "Open" : r === "V" ? "Void" : r}</span></td><td style="text-align:left;white-space:normal"><b>${esc(b.desc)}</b><span class="pos">${esc(kindName[b.kind] || b.kind)}${b.sub ? ", " + esc(b.sub) : ""}</span></td>
+        <td>${esc(b.odds)}</td><td>${n(b.units, 1)}u</td><td class="${uc(r === "O" ? null : x.g.units)}">${r === "O" ? "–" : units(x.g.units)}</td>
+        <td>${x.clv == null ? "–" : `<span class="${x.clv > 0 ? "up" : x.clv < 0 ? "down" : ""}">${sgn(x.clv)}</span>`}</td><td style="white-space:normal">${esc(x.g.actual || "")}</td>
+        <td><button class="xbtn" data-del="${esc(b.id)}" aria-label="Delete bet">×</button></td></tr>`; };
+    const head = `<thead><tr><th>Result</th><th style="text-align:left">Bet</th><th>Odds</th><th>Stake</th><th>Units</th><th>vs close</th><th>Final</th><th></th></tr></thead>`;
+    if (open.length) h += `<h3>Open (${open.length})</h3><div class="tablewrap"><table class="bets">${head}<tbody>${open.map(row).join("")}</tbody></table></div>`;
+    const fin = graded.filter(x => x.g.res !== "O").sort((a, b) => String(b.b.placed).localeCompare(String(a.b.placed)));
+    if (fin.length) {
+      h += `<h3>Graded (${fin.length})</h3><div class="tablewrap"><table class="bets">${head}<tbody>${fin.map(row).join("")}</tbody></table></div>`;
+      const by = {};
+      done.forEach(x => { const k = x.b.kind === "prop" ? (x.b.label || "Prop") : kindName[x.b.kind]; by[k] = by[k] || {w: 0, l: 0, u: 0, r: 0}; const t = by[k];
+        if (x.g.res === "W") t.w++; if (x.g.res === "L") t.l++; t.u += x.g.units; if (x.g.res !== "P") t.r += x.b.units; });
+      if (Object.keys(by).length > 1) h += `<h3>By bet type</h3><div class="tablewrap"><table><thead><tr><th>Type</th><th>Record</th><th>Units</th><th>Return</th></tr></thead><tbody>${Object.entries(by).map(([k, t]) =>
+        `<tr><td>${esc(k)}</td><td>${t.w}–${t.l}</td><td class="${uc(t.u)}">${units(t.u)}</td><td class="${uc(t.u)}">${t.r ? sgn(100 * t.u / t.r) + "%" : "–"}</td></tr>`).join("")}</tbody></table></div>`;
+    }
+  }
+  h += `<details class="fold"><summary>Bankroll and bet sizing <span>$${SET.bankroll} bankroll, 1 unit = $${SET.unit}</span></summary><div class="fold-body">
+    <p class="sub">Suggested bets use a fraction of the Kelly formula, which sizes each bet by how big the edge is. Quarter Kelly is the common cautious choice. The cap stops any single bet from getting too large.</p>
+    <div class="setgrid">
+      <label>Bankroll ($)<input data-set="bankroll" inputmode="decimal" value="${SET.bankroll}"></label>
+      <label>1 unit ($)<input data-set="unit" inputmode="decimal" value="${SET.unit}"></label>
+      <label>Kelly fraction<select data-set="kelly">${[[0.125, "1/8 (very cautious)"], [0.25, "1/4 (recommended)"], [0.5, "1/2 (aggressive)"]].map(([v, l]) => `<option value="${v}" ${SET.kelly == v ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+      <label>Max bet (% of bankroll)<input data-set="maxpct" inputmode="decimal" value="${SET.maxpct}"></label>
+    </div>
+    <p class="note">The model's chances aren't perfect, so suggested bets are only as good as the model. Keep stakes small until the Record tab shows a real edge.</p></div></details>
+  <details class="fold"><summary>Move bets between devices <span>export or import</span></summary><div class="fold-body">
+    <p class="sub">Bets live in this browser only. Export a file here, then import it on your other device.</p>
+    <div class="logrow"><button class="btn" id="betsExport">Export bets</button><label class="btn" style="cursor:pointer">Import bets<input type="file" id="betsImport" accept="application/json" hidden></label><span class="stake" id="betsMsg"></span></div></div></details>`;
+  return h;
+}
+
+function clvHTML() {
+  const C = D.clv; if (!C || !C.spread) return "";
+  const cell = (name, x) => x && x.n ? `<div class="st"><strong class="${x.avg ? uc(x.avg) : ""}">${sgn(x.avg, 2)}</strong><span>${name}: avg points vs close. Beat the close ${x.beat}, worse ${x.worse}, same ${x.same}</span></div>`
+    : `<div class="st"><strong>–</strong><span>${name}: no finished games yet</span></div>`;
+  return `<div class="sec-head"><h2>Closing line value</h2><span class="aside">The fastest honest test of a model</span></div>
+    <p class="sub">Did the line move toward the model's pick between our first look and kickoff? Positive means the market agreed with the model after the fact, which predicts long-run profit long before win-loss does. Most picks are tiny gaps, so many lines don't move at all.</p>
+    <div class="strip">${cell("Spread picks", C.spread.all)}${cell("Spread gaps 1+ pt", C.spread.big)}${cell("Total picks", C.total.all)}${cell("Total gaps 1+ pt", C.total.big)}</div>`;
+}
+
+function bindRecord() {
+  document.querySelectorAll("#record [data-set]").forEach(inp => inp.onchange = () => {
+    const v = +inp.value; if (isFinite(v) && v > 0) { SET[inp.dataset.set] = v; lsSet(LS_SET, SET); render(); } });
+  document.querySelectorAll("#record [data-del]").forEach(b => b.onclick = () => {
+    if (!confirm("Delete this bet?")) return; BETS = BETS.filter(x => x.id !== b.dataset.del); lsSet(LS_BETS, BETS); render(); });
+  const ex = $("#betsExport"); if (ex) ex.onclick = () => {
+    const blob = new Blob([JSON.stringify({bets: BETS, settings: SET}, null, 1)], {type: "application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `my-bets-${new Date().toISOString().slice(0, 10)}.json`; a.click(); };
+  const im = $("#betsImport"); if (im) im.onchange = () => { const f = im.files[0]; if (!f) return; f.text().then(t => {
+    try { const d = JSON.parse(t), add = (d.bets || []).filter(x => x && x.id && !BETS.some(y => y.id === x.id));
+      BETS = BETS.concat(add); lsSet(LS_BETS, BETS); if (d.settings) { SET = {...SET, ...d.settings}; lsSet(LS_SET, SET); } render();
+      $("#betsMsg").textContent = `Imported ${add.length} new bets.`; } catch (e) { $("#betsMsg").textContent = "That file isn't a bets export."; } }); };
+}
+
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>
@@ -952,6 +1162,7 @@ function renderRecord() {
 
   h += `<details class="fold"><summary>Model details <span>backtests, line movement, settings</span></summary><div class="fold-body">${modelDetails(M)}</div></details>`;
   $("#record").innerHTML = h;
+  bindRecord();
 }
 
 function modelDetails(M) {

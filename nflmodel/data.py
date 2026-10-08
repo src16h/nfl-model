@@ -21,7 +21,7 @@ PBP_COLS = [
     "passer_player_id", "passer_player_name", "rusher_player_id", "rusher_player_name",
     "receiver_player_id", "receiver_player_name", "touchdown", "pass_touchdown",
     "rush_touchdown", "td_team", "xpass", "air_yards", "two_point_attempt", "qb_hit",
-    "cpoe", "weather",
+    "cpoe", "weather", "total_home_score", "total_away_score",
 ]
 
 
