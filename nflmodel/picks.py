@@ -89,3 +89,70 @@ def build(g, ml_home=None, ml_away=None):
         "total": total_pick(g.get("edge_total"), g.get("market_total"), g.get("over_prob")),
         "moneyline": moneyline_pick(g["home"], g["away"], g.get("win_prob_home"), ml_home, ml_away),
     }
+
+
+# ---------------------------------------------------------------------
+# Grading every pick
+# ---------------------------------------------------------------------
+STD_WIN = 100 / 110                                   # spread and total payout at -110
+
+
+def _payout(odds):
+    o = float(str(odds).replace("+", ""))
+    return o / 100 if o > 0 else 100 / -o
+
+
+def grade_one(g, home_score, away_score):
+    """Returns {market: (result, units)} with result 'W', 'L' or 'P'."""
+    pk = g.get("picks") or build(g, g.get("ml_home"), g.get("ml_away"))
+    act = home_score - away_score
+    tot = home_score + away_score
+    out = {}
+    s = pk.get("spread")
+    if s:
+        r = (act if s["side"] == g["home"] else -act) + s["line"]
+        out["spread"] = ("P", 0.0) if r == 0 else (("W", STD_WIN) if r > 0 else ("L", -1.0))
+    t = pk.get("total")
+    if t:
+        r = tot - t["line"]
+        if r == 0:
+            out["total"] = ("P", 0.0)
+        else:
+            win = (r > 0) == (t["side"] == "Over")
+            out["total"] = ("W", STD_WIN) if win else ("L", -1.0)
+    m = pk.get("moneyline")
+    if m:
+        if act == 0:
+            out["moneyline"] = ("P", 0.0)
+        else:
+            win = (act > 0) == (m["side"] == g["home"])
+            u = None if not m.get("odds") else (_payout(m["odds"]) if win else -1.0)
+            out["moneyline"] = ("W" if win else "L", u)
+    return out, pk
+
+
+EDGE_BINS = {"spread": [(0, 1, "Under 1 pt"), (1, 2, "1 to 2 pts"), (2, 99, "2+ pts")],
+             "total": [(0, 1, "Under 1 pt"), (1, 2, "1 to 2 pts"), (2, 99, "2+ pts")],
+             "moneyline": [(0, 2, "Under 2%"), (2, 4, "2 to 4%"), (4, 999, "4%+")]}
+
+
+def summarize(graded):
+    """graded: list of (market, result, units, edge). Records per market and by edge size."""
+    def rec(rows):
+        w = sum(1 for r in rows if r[1] == "W")
+        l = sum(1 for r in rows if r[1] == "L")
+        p = sum(1 for r in rows if r[1] == "P")
+        priced = [r[2] for r in rows if r[2] is not None]
+        return {"w": w, "l": l, "p": p, "n": w + l,
+                "pct": round(100 * w / (w + l), 1) if w + l else None,
+                "units": round(sum(priced), 2) if priced else None,
+                "priced": len(priced)}
+    out = {}
+    for mkt, bins in EDGE_BINS.items():
+        rows = [r for r in graded if r[0] == mkt]
+        out[mkt] = rec(rows)
+        out[mkt]["by_edge"] = []
+        for lo, hi, name in bins:
+            sub = [r for r in rows if r[3] is not None and lo <= r[3] < hi]
+            out[mkt]["by_edge"].append({"range": name, **rec(sub)})
+    return out

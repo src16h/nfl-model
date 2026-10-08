@@ -541,6 +541,18 @@ function renderRecord() {
     if (B) h += `<p class="note">Forecast error on every graded prop, model ${n(B.model, 3)} vs book ${n(B.book, 3)} (${B.n} props, lower wins). ${B.model < B.book ? "The model is beating the book here, a good sign." : "The book is still more accurate overall."}</p>`;
   }
 
+  const PK = L.picks;
+  if (PK) {
+    const wl = x => x && x.n + x.p ? `${x.w}–${x.l}${x.p ? `–${x.p}` : ""}` : "0–0";
+    const pc = x => x && x.pct != null ? `, ${n(x.pct)}%` : "";
+    const cell = (name, x) => `<div class="st"><strong>${wl(x)}</strong><span>${name}${pc(x)}${x && x.units != null ? `, <b class="${uc(x.units)}">${units(x.units)}</b>` : ""}</span></div>`;
+    h += `<h2>Every model pick</h2><p class="sub">The pick shown on every game card, graded at flat 1 unit. Spreads and totals assume -110 (break-even 52.4%). Moneyline units count only games where odds were saved. Most picks are tiny gaps, so expect close to 50% here: the useful part is whether bigger gaps win more.</p>
+    <div class="strip">${cell("Spread picks", PK.spread)}${cell("Total picks", PK.total)}${cell("Moneyline picks", PK.moneyline)}</div>`;
+    const rows = [["Spread", PK.spread], ["Total", PK.total], ["Moneyline", PK.moneyline]].flatMap(([m, x]) => (x?.by_edge || []).filter(b => b.n + b.p).map(b =>
+      `<tr><td>${m}</td><td>${esc(b.range)}</td><td>${wl(b)}</td><td>${b.pct == null ? "–" : n(b.pct) + "%"}</td><td class="${uc(b.units)}">${units(b.units)}</td></tr>`));
+    if (rows.length) h += `<details class="fold"><summary>By size of gap <span>do bigger gaps win more?</span></summary><div class="fold-body"><div class="tablewrap"><table><thead><tr><th>Bet</th><th>Gap</th><th>Record</th><th>Win %</th><th>Units</th></tr></thead><tbody>${rows.join("")}</tbody></table></div></div></details>`;
+  }
+
   h += `<h2>Every game this season</h2><div class="strip">
     <div class="st"><strong>${rec(L.ats_all)}</strong><span>Model side vs spread${pctOf(L.ats_all) != null ? `, ${n(pctOf(L.ats_all))}%` : ""}</span></div>
     <div class="st"><strong>${rec(L.straight_up)}</strong><span>Winners picked</span></div>

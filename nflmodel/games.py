@@ -221,3 +221,37 @@ class KeyNumbers:
             dec = t != total_line
             out["over"] = float((t[dec] > total_line).mean())
         return out
+
+
+# ---------------------------------------------------------------------
+# Win chance: a smooth curve from the projected margin
+# ---------------------------------------------------------------------
+def fit_win_sigma(schedules) -> float:
+    """How spread-out NFL results are around the line. Win chance = normal curve
+    of (margin / sigma). Fit on real results since KEYNUM_SINCE; in testing this
+    picked winners as well as the books' own moneylines."""
+    from scipy.optimize import minimize_scalar
+    from scipy.stats import norm
+    try:
+        s = schedules[schedules["home_score"].notna() & (schedules["season"] >= C.KEYNUM_SINCE)]
+        s = s.dropna(subset=["spread_line"])
+        s = s[s["home_score"] != s["away_score"]]
+        if len(s) < 500:
+            return C.WIN_SIGMA_DEFAULT
+        L = s["spread_line"].to_numpy(float)
+        y = (s["home_score"] > s["away_score"]).to_numpy(float)
+
+        def nll(sig):
+            p = np.clip(norm.cdf(L / sig), 1e-6, 1 - 1e-6)
+            return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+        sig = float(minimize_scalar(nll, bounds=(9, 15), method="bounded").x)
+        log.info(f"win chance curve: sigma {sig:.2f} from {len(s)} games")
+        return sig
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"win sigma fit skipped: {e}")
+        return C.WIN_SIGMA_DEFAULT
+
+
+def win_prob(margin, sigma) -> float:
+    from scipy.stats import norm
+    return float(norm.cdf(margin / sigma))

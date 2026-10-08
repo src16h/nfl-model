@@ -158,3 +158,4 @@ ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls
 # ------------------------------------------------------------
 ODDS_MONEYLINE_LIVE = False      # True: also pull live moneylines with each line refresh (+1 credit each time).
                                  # False: moneylines come from the free data feed (no credits, can lag a bit).
+WIN_SIGMA_DEFAULT = 11.4         # win chance curve spread (refit every run from real results)

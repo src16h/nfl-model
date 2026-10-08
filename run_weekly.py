@@ -16,7 +16,8 @@ import pandas as pd
 from nflmodel import config as C
 from nflmodel import data as D
 from nflmodel.ratings import build_context, ratings_table
-from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulate, KeyNumbers)
+from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulate, KeyNumbers,
+                            fit_win_sigma, win_prob)
 from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
@@ -124,6 +125,7 @@ def build_games(bundle, season, week, now):
     cal = fit_calibration(rows) if ens is None else None
     report = backtest_report(rows[rows["season"] >= season - 1].copy()) if len(rows) else {"games": 0}
     keynum = KeyNumbers(sch)
+    win_sigma = fit_win_sigma(sch)
 
     u = U.build(bundle.pbp, season, week)
     roster = current_roster(bundle.rosters, season, week)
@@ -220,7 +222,7 @@ def build_games(bundle, season, week, now):
             "away": a, "home": h, "neutral": feat["hf"] == 0,
             "proj_home": fnum(ph), "proj_away": fnum(pa),
             "margin": fnum(margin), "total": fnum(total),
-            "win_prob_home": fnum(sim["win_home"] * 100, 0),
+            "win_prob_home": fnum(win_prob(margin, win_sigma) * 100, 1),
             "margin_range": [fnum(sim["margin_p10"], 0), fnum(sim["margin_p90"], 0)],
             "model_line": line_text(h, ind_m),
             "final_line": line_text(h, margin),
@@ -372,6 +374,7 @@ def grade(season, sch) -> dict:
     res = sch[(sch["season"] == season) & sch["home_score"].notna()].set_index("game_id")
     su, ats, ats_lean, ou_lean, err_m, err_v = [], [], [], [], [], []
     ats_play, ou_play = [], []
+    pick_rows = []
     for f in sorted(HIST.glob(f"{season}_week*.json")):
         for g in json.loads(f.read_text()).get("games", []):
             if g["game_id"] not in res.index:
@@ -379,6 +382,12 @@ def grade(season, sch) -> dict:
             r = res.loc[g["game_id"]]
             act = r["home_score"] - r["away_score"]
             tot = r["home_score"] + r["away_score"]
+            try:
+                gr, pk = P.grade_one(g, float(r["home_score"]), float(r["away_score"]))
+                for mkt, (res_, u) in gr.items():
+                    pick_rows.append((mkt, res_, u, pk[mkt].get("edge")))
+            except Exception as e:  # noqa: BLE001
+                log.warning(f"pick grade skipped {g['game_id']}: {e}")
             if act != 0:
                 su.append(int((g["margin"] > 0) == (act > 0)))
             err_m.append(abs(g["margin"] - act))
@@ -400,6 +409,7 @@ def grade(season, sch) -> dict:
     rec = lambda x: [int(sum(x)), int(len(x) - sum(x))]
     return {"straight_up": rec(su), "ats_all": rec(ats), "ats_leans": rec(ats_lean),
             "totals_leans": rec(ou_lean), "ats_plays": rec(ats_play), "totals_plays": rec(ou_play),
+            "picks": P.summarize(pick_rows),
             "model_mae": fnum(np.mean(err_m)) if err_m else None,
             "vegas_mae": fnum(np.mean(err_v)) if err_v else None}
 
