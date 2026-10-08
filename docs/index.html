@@ -124,6 +124,20 @@ details.game>summary::-webkit-details-marker{display:none}
   .mu{grid-column:1/-1}
 }
 
+.picks{grid-column:1/-1;display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));align-items:baseline;gap:4px 14px;border-top:1px solid var(--line-soft);padding-top:10px;margin-top:2px}
+.picks .pl{font-size:12px;color:var(--muted);letter-spacing:.4px;text-transform:uppercase}
+.pk{font-size:12px;color:var(--muted);line-height:1.3;min-width:0}
+.pk strong{display:block;font:700 17px/1.25 var(--font);font-stretch:85%;color:var(--ink)}
+.pk strong small{font-weight:600;color:var(--muted);margin-left:4px}
+.pk.on strong{color:var(--accent)}
+.pk.on strong small{color:var(--accent);opacity:.85}
+.pk strong small{white-space:nowrap}
+@media (max-width:640px){
+  .picks{grid-template-columns:1fr;gap:6px}
+  .pk{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px}
+  .pk strong{display:inline;text-align:right}
+}
+
 /* lists of props */
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
 input[type=search],select{font:500 15px var(--font);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;min-width:0}
@@ -329,7 +343,7 @@ function renderGames() {
     <p class="sub">Smaller gaps vs Vegas (${n(D.settings?.lean_spread)}+ pts on spreads, ${n(D.settings?.lean_total)}+ on totals). Not plays: in the backtest, gaps this size won about half the time.</p>
     ${watch.length ? `<div class="tablewrap"><table><thead><tr><th>Game</th><th>Side</th><th>Gap</th><th>Type</th></tr></thead><tbody>${watch.join("")}</tbody></table></div>` : `<p class="sub">None this week. The model agrees with Vegas on every game.</p>`}</div></details>`;
 
-  h += `<h2>All games</h2><p class="sub">Projected score, model line vs Vegas, and win chance. Tap a game for the reasons, injuries, and weather.</p><div class="games">`;
+  h += `<h2>All games</h2><p class="sub">Projected score, model line vs Vegas, win chance, and a model pick on every bet. Tap a game for the reasons, injuries, and weather.</p><div class="games">`;
   for (const g of D.games) h += gameRow(g);
   $("#games").innerHTML = h + `</div>`;
   const mb = $("#morePlaysBtn");
@@ -337,6 +351,17 @@ function renderGames() {
 }
 
 function fmtLine(v) { return v == null || isNaN(v) ? "–" : (Math.abs(v) < 0.25 ? "PK" : (v > 0 ? "+" : "") + Number(v).toFixed(1)); }
+
+function picksRow(g) {
+  const P = g.picks;
+  if (!P || !(P.spread || P.total || P.moneyline)) return "";
+  const cell = (label, p, on) => `<div class="pk${on ? " on" : ""}">${label}<strong>${p ? `${esc(p.pick)}<small>(${esc(p.edge_text)})</small>` : "–"}</strong></div>`;
+  return `<div class="picks"><span class="pl">Model picks</span>
+    ${cell("Spread", P.spread, !!g.play_spread)}
+    ${cell("Total", P.total, !!g.play_total)}
+    ${cell("Moneyline", P.moneyline, false)}
+  </div>`;
+}
 
 function gameRow(g) {
   const st = g.state === "final" ? `<span class="final">Final ${g.final_away}–${g.final_home}</span>` : g.state === "locked" ? "Locked at kickoff" : `${esc(kickoff(g.kickoff))}${g.neutral ? ", neutral site" : ""}`;
@@ -353,8 +378,10 @@ function gameRow(g) {
     <div class="kv">Vegas line<strong>${esc(g.market_line || "Not posted")}</strong></div>
     <div class="kv">Total, model / Vegas<strong>${n(g.total)} / ${g.market_total == null ? "–" : n(g.market_total)}</strong></div>
     <div class="kv">Win chance<strong>${esc(favHome ? g.home : g.away)} ${n(favHome ? g.win_prob_home : wpA, 0)}%</strong></div>
+    ${picksRow(g)}
   </summary><div class="g-body">
     <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
+    ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows model win chance minus the book's fair win chance${g.picks.moneyline && g.picks.moneyline.book_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs book ${g.picks.moneyline.book_pct}%)` : ""}. Gold means it is also a Play.</div>` : ""}
     ${why}
     ${(g.notes || []).map(x => `<div>${esc(x)}</div>`).join("")}
     ${inj.length ? `<div class="inj"><b>Key injuries:</b> ${esc(inj.join(", "))}</div>` : ""}

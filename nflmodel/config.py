@@ -152,3 +152,9 @@ GAME_PLAY_TOTAL = None       # totals: off, the backtest shows no edge
 ODDS_LINES_EVERY_HOURS = 8       # refresh spreads and totals at most this often (both daily runs)
 ODDS_LINES_GAMEDAY_HOURS = 3     # when a game kicks off within 12 hours
 ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls to save credits for props
+
+# ------------------------------------------------------------
+# v7: MODEL PICKS (every game gets a spread, total and moneyline pick)
+# ------------------------------------------------------------
+ODDS_MONEYLINE_LIVE = False      # True: also pull live moneylines with each line refresh (+1 credit each time).
+                                 # False: moneylines come from the free data feed (no credits, can lag a bit).

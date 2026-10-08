@@ -25,6 +25,7 @@ from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES, stat_labe
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
 from nflmodel.util import before, clean_json
+from nflmodel import picks as P
 from nflmodel import tracker
 from nflmodel import usage as U
 from nflmodel.availability import current_roster, load_overrides, injury_table, recently_out_ids
@@ -104,7 +105,8 @@ def build_games(bundle, season, week, now):
                 todo.loc[m, "spread_line"] = float(L["spread_line"])
             if L.get("total_line") is not None:
                 todo.loc[m, "total_line"] = float(L["total_line"])
-            line_meta[gid] = {"src": f"live:{L['book']}", "book": L["book_title"]}
+            line_meta[gid] = {"src": f"live:{L['book']}", "book": L["book_title"],
+                              "ml_home": L.get("ml_home"), "ml_away": L.get("ml_away")}
     except Exception as e:  # noqa: BLE001
         log.warning(f"live lines not applied, using the free feed: {str(e)[:120]}")
         line_meta = {}
@@ -243,6 +245,13 @@ def build_games(bundle, season, week, now):
             "injuries_home": ih["list"], "injuries_away": ia["list"],
             "notes": notes,
         }
+        lm = line_meta.get(g["game_id"], {})
+        ml_h, ml_a = lm.get("ml_home"), lm.get("ml_away")
+        if ml_h is None or ml_a is None:                     # free feed fallback
+            ml_h = pd.to_numeric(g.get("home_moneyline"), errors="coerce")
+            ml_a = pd.to_numeric(g.get("away_moneyline"), errors="coerce")
+        game["ml_home"], game["ml_away"] = fnum(ml_h, 0), fnum(ml_a, 0)
+        game["picks"] = P.build(game, game["ml_home"], game["ml_away"])
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],
                   proj_home=ph, proj_away=pa, margin=margin)
@@ -450,6 +459,9 @@ def main():
             g["state"] = "final" if pd.notna(r["home_score"]) else "locked"
             if pd.notna(r["home_score"]):
                 g["final_home"], g["final_away"] = int(r["home_score"]), int(r["away_score"])
+    for g in all_games:                                  # older saved games: add picks from stored numbers
+        if "picks" not in g:
+            g["picks"] = P.build(g, g.get("ml_home"), g.get("ml_away"))
     all_games.sort(key=lambda g: g.get("kickoff") or "")
     hpath.write_text(json.dumps(clean_json({"season": season, "week": week, "games": all_games,
                                             "players": all_players}), indent=1, allow_nan=False))

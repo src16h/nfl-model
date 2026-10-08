@@ -183,7 +183,7 @@ def match_events(todo: pd.DataFrame, events: list) -> dict:
 def _parse_lines(ev: dict, home_abbr: str):
     """spread_line follows the data feed's convention: the home team's expected margin."""
     home_full = ABBR_TEAM.get(home_abbr)
-    spread = total = None
+    spread = total = ml_home = ml_away = None
     book_s = book_t = None
     updated = None
     for b in sorted(ev.get("bookmakers", []), key=lambda b: _rank(b.get("key"))):
@@ -193,6 +193,12 @@ def _parse_lines(ev: dict, home_abbr: str):
                     p = _num(o.get("point"))
                     if o.get("name") == home_full and p is not None:
                         spread, book_s, updated = -p, b, b.get("last_update")
+            elif m.get("key") == "h2h" and ml_home is None:
+                prices = {o.get("name"): _num(o.get("price")) for o in m.get("outcomes", [])}
+                hp = prices.get(home_full)
+                ap = next((v for k, v in prices.items() if k != home_full and k != "Draw"), None)
+                if hp is not None and ap is not None:
+                    ml_home, ml_away = hp, ap
             elif m.get("key") == "totals" and total is None:
                 for o in m.get("outcomes", []):
                     p = _num(o.get("point"))
@@ -201,12 +207,14 @@ def _parse_lines(ev: dict, home_abbr: str):
     book = book_s or book_t
     if book is None:
         return None
-    return {"spread_line": spread, "total_line": total, "book": book.get("key"),
+    return {"spread_line": spread, "total_line": total, "ml_home": ml_home, "ml_away": ml_away,
+            "book": book.get("key"),
             "book_title": book.get("title") or book.get("key"), "updated": updated}
 
 
 def fetch_game_lines(client: Client, todo: pd.DataFrame) -> dict:
-    data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=2, regions="us", markets="spreads,totals",
+    markets = "spreads,totals" + (",h2h" if getattr(C, "ODDS_MONEYLINE_LIVE", False) else "")
+    data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=markets.count(",") + 1, regions="us", markets=markets,
                       oddsFormat="american", dateFormat="iso")
     if not isinstance(data, list):
         raise OddsError("unexpected game lines response")
