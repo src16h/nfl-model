@@ -468,7 +468,7 @@ def main():
     lg_ = lambda x: np.log(np.clip(x, 0.5, 99.5) / (100 - np.clip(x, 0.5, 99.5)))
     for st in C.PROP_STATS:
         diffs = [lg_(p["m"][st]["book"]["model_over"]) - lg_(p["m"][st]["book"]["book_over"]) for p in players if p["m"].get(st, {}).get("book")]
-        if len(diffs) >= 12:
+        if len(diffs) >= 6:
             level[st] = float(np.median(diffs))
     for p in players:
         for st, m in p["m"].items():
