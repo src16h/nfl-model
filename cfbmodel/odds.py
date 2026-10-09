@@ -29,6 +29,9 @@ PROP_STAT = {"player_pass_yds": "pass_yds", "player_rush_yds": "rush_yds", "play
              "player_receptions": "rec", "player_pass_tds": "pass_td", "player_anytime_td": "td"}
 
 
+BOOK_ORDER = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "hardrockbet", "betrivers", "fanatics", "bovada"]
+
+
 class Fatal(Exception):
     pass
 
@@ -79,7 +82,7 @@ def run(games, state_path, cache_path, now):
     """Returns ({game_id: {player name key: {stat: {line, over, under, book}}}}, status)."""
     state, cache = _load(state_path, {}), _load(cache_path, {})
     live = {str(g["game_id"]) for g in games}
-    cache = {k: v for k, v in cache.items() if k.split("|")[0] in live}        # drop games already played
+    cache = {k: v for k, v in cache.items() if k.split("|")[0] in live and v.get("rows")}   # drop played games and empty pulls
     key = C.odds_key()
     status = {"source": "espn", "props": "model", "spent": 0, "remaining": state.get("remaining")}
     if not key:
@@ -104,31 +107,38 @@ def run(games, state_path, cache_path, now):
             allowance = int(week_allow) - state.get("spent_week", 0)
             # both-Power-4 games first, then by kickoff
             need.sort(key=lambda g: (not (g.get("p4_home") and g.get("p4_away")), g["start"]))
+            tried = 0
             for g in need:
                 eid = by.get((norm_name(g["home_full"]), norm_name(g["away_full"])))
                 mk = [m for m in C.ODDS_PROP_MARKETS if f"{g['game_id']}|{m}" not in cache]
                 if not eid or allowance < len(mk):
                     continue
+                before = cl.spent
                 ev = cl.get(f"/v4/sports/{SPORT}/events/{eid}/odds", regions=C.ODDS_REGION, markets=",".join(mk),
                             oddsFormat="american", bookmakers=C.ODDS_BOOK)
-                got = {m: {} for m in mk}
-                title = None
-                for b in ev.get("bookmakers", []):
-                    title = b.get("title")
-                    for m in b.get("markets", []):
-                        rows = got.setdefault(m["key"], {})
-                        for o in m.get("outcomes", []):
-                            nm = norm_name(o.get("description", ""))
-                            rr = rows.setdefault(nm, {"line": o.get("point")})
-                            side = "over" if o["name"] in ("Over", "Yes") else "under"
-                            rr[side] = o["price"]
-                            if m["key"] == "player_anytime_td":
-                                rr["line"] = 0.5
-                    break
+                if not any(m.get("outcomes") for b in ev.get("bookmakers", []) for m in b.get("markets", [])):
+                    # the preferred book has nothing up: take any US book (an empty answer costs no credits)
+                    ev = cl.get(f"/v4/sports/{SPORT}/events/{eid}/odds", regions=C.ODDS_REGION, markets=",".join(mk), oddsFormat="american")
+                books = sorted(ev.get("bookmakers", []), key=lambda b: BOOK_ORDER.index(b.get("key")) if b.get("key") in BOOK_ORDER else 99)
+                tried += 1
                 for m in mk:
-                    cache[f"{g['game_id']}|{m}"] = {"rows": got.get(m, {}), "book": title, "at": now.isoformat()}
-                allowance -= len(mk)
-                state["spent_week"] = state.get("spent_week", 0) + len(mk)
+                    for b in books:                              # first book in our order that posted this market
+                        mm = next((x for x in b.get("markets", []) if x["key"] == m and x.get("outcomes")), None)
+                        if not mm:
+                            continue
+                        rows = {}
+                        for o in mm["outcomes"]:
+                            nm = norm_name(o.get("description", ""))
+                            rr = rows.setdefault(nm, {"line": 0.5 if m == "player_anytime_td" else o.get("point")})
+                            rr["over" if o["name"] in ("Over", "Yes") else "under"] = o["price"]
+                        cache[f"{g['game_id']}|{m}"] = {"rows": rows, "book": b.get("title"), "at": now.isoformat()}
+                        break
+                used = cl.spent - before
+                allowance -= used
+                state["spent_week"] = state.get("spent_week", 0) + used
+            got = len({k.split("|")[0] for k in cache})
+            if tried and not got:
+                status["note"] = "The odds key works, but no book has posted player props for these games yet. The next run checks again."
         status["props"] = "odds_api"
     except Fatal as e:
         log.warning(f"CFB odds: {e}")
