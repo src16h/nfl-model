@@ -115,6 +115,19 @@ Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old 
 
 ---
 
+## College football (Power 4)
+
+The CFB page lives at `/cfb/` on the same site (use the NFL / NHL / CFB switch at the top). It covers every game with an ACC, Big Ten, Big 12 or SEC team, plus Notre Dame.
+
+- **Runs by itself:** `.github/workflows/cfb.yml` runs every morning, Tuesday to Friday evenings, and three times on Saturday.
+- **Data:** ESPN's free public feed (every play, box scores, DraftKings spreads, totals and moneylines). No key needed.
+- **Model:** our own expected-points value for every snap, opponent-adjusted team ratings (`cfbmodel/ratings.py`), a points model, then 20,000 simulated scores per game anchored to the book's line (`cfbmodel/gamemodel.py`). Settings are in `cfbmodel/config.py`.
+- **Props:** passing, rushing and receiving yards, receptions, passing TDs and anytime TD for Power 4 players. Without an odds key the site shows the model's fair line and you type in your book's line.
+- **Book prop lines (optional):** add a repository secret named `ODDS_API_KEY_CFB` with a free key from the-odds-api.com. Each game's props are pulled once, inside 30 hours of kickoff, within the free plan's 500 credits a month.
+- **Rebuilding history:** the tables in `data/cfb/` were built from 2018 to now. Each run only adds new games.
+
+---
+
 ## How the model works
 
 **1. Team ratings (EPA based).** Every offensive play has an Expected Points Added value. The model fits all plays at once so each team's rating is adjusted for its schedule. It fits separate pass and run ratings, so a strong passing offense gets extra credit against a weak pass defense. Recent weeks count more, and last season fades out as this season builds up. Garbage-time plays are down-weighted.
