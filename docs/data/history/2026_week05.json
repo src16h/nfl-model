@@ -760,7 +760,7 @@
   {
    "game_id": "2026_05_PHI_JAX",
    "week": 5,
-   "state": "locked",
+   "state": "final",
    "kickoff": "2026-10-11T09:30:00-04:00",
    "away": "PHI",
    "home": "JAX",
@@ -1517,12 +1517,14 @@
     "p": 46.5,
     "pi": 43.6,
     "fair": "+115"
-   }
+   },
+   "final_home": 19,
+   "final_away": 17
   },
   {
    "game_id": "2026_05_CHI_GB",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "CHI",
    "home": "GB",
@@ -2284,12 +2286,14 @@
     "p": 47.0,
     "pi": 43.5,
     "fair": "+113"
-   }
+   },
+   "final_home": 31,
+   "final_away": 7
   },
   {
    "game_id": "2026_05_CIN_MIA",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "CIN",
    "home": "MIA",
@@ -3032,12 +3036,14 @@
     "p": 45.5,
     "pi": 42.1,
     "fair": "+120"
-   }
+   },
+   "final_home": 24,
+   "final_away": 31
   },
   {
    "game_id": "2026_05_LV_NE",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "LV",
    "home": "NE",
@@ -3804,12 +3810,14 @@
     "p": 44.7,
     "pi": 41.6,
     "fair": "+124"
-   }
+   },
+   "final_home": 45,
+   "final_away": 17
   },
   {
    "game_id": "2026_05_MIN_NO",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "MIN",
    "home": "NO",
@@ -4587,12 +4595,14 @@
     "p": 47.1,
     "pi": 42.6,
     "fair": "+112"
-   }
+   },
+   "final_home": 13,
+   "final_away": 23
   },
   {
    "game_id": "2026_05_CLE_NYJ",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "CLE",
    "home": "NYJ",
@@ -5333,12 +5343,14 @@
     "p": 45.6,
     "pi": 41.1,
     "fair": "+120"
-   }
+   },
+   "final_home": 17,
+   "final_away": 12
   },
   {
    "game_id": "2026_05_IND_PIT",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "IND",
    "home": "PIT",
@@ -6093,12 +6105,14 @@
     "p": 44.8,
     "pi": 41.7,
     "fair": "+123"
-   }
+   },
+   "final_home": 34,
+   "final_away": 22
   },
   {
    "game_id": "2026_05_HOU_TEN",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "HOU",
    "home": "TEN",
@@ -6845,12 +6859,14 @@
     "p": 46.0,
     "pi": 44.0,
     "fair": "+117"
-   }
+   },
+   "final_home": 3,
+   "final_away": 26
   },
   {
    "game_id": "2026_05_NYG_WAS",
    "week": 5,
-   "state": "upcoming",
+   "state": "final",
    "kickoff": "2026-10-11T13:00:00-04:00",
    "away": "NYG",
    "home": "WAS",
@@ -7594,12 +7610,14 @@
     "p": 46.1,
     "pi": 42.8,
     "fair": "+117"
-   }
+   },
+   "final_home": 27,
+   "final_away": 27
   },
   {
    "game_id": "2026_05_DEN_LAC",
    "week": 5,
-   "state": "upcoming",
+   "state": "locked",
    "kickoff": "2026-10-11T16:05:00-04:00",
    "away": "DEN",
    "home": "LAC",
@@ -8372,7 +8390,7 @@
   {
    "game_id": "2026_05_DET_ARI",
    "week": 5,
-   "state": "upcoming",
+   "state": "locked",
    "kickoff": "2026-10-11T16:25:00-04:00",
    "away": "DET",
    "home": "ARI",
@@ -9151,7 +9169,7 @@
   {
    "game_id": "2026_05_SF_SEA",
    "week": 5,
-   "state": "upcoming",
+   "state": "locked",
    "kickoff": "2026-10-11T16:25:00-04:00",
    "away": "SF",
    "home": "SEA",
@@ -9896,7 +9914,7 @@
    "proj_away": 20.2,
    "margin": 3.9,
    "total": 44.3,
-   "win_prob_home": 63.4,
+   "win_prob_home": 63.5,
    "margin_range": [
     -10.0,
     21.0
@@ -9916,7 +9934,7 @@
    "play_spread": null,
    "play_total": null,
    "cover_prob_home": 54.0,
-   "over_prob": 50.0,
+   "over_prob": 51.0,
    "qb_home": "Michael Penix Jr.",
    "qb_away": "Tyler Huntley",
    "weather": "Indoors",
@@ -10051,9 +10069,9 @@
    "notes": [
     "BAL QB: Tyler Huntley instead of Lamar Jackson (-2.9 pts)"
    ],
-   "ml_home": -175.0,
-   "ml_away": 145.0,
-   "win_sigma": 11.4,
+   "ml_home": -185.0,
+   "ml_away": 154.0,
+   "win_sigma": 11.37,
    "team_totals": {
     "home": {
      "mean": 24.1,
@@ -10067,25 +10085,25 @@
       98.5,
       98.4,
       97.2,
-      96.5,
-      95.5,
-      94.3,
-      91.6,
-      90.7,
+      96.4,
+      95.4,
+      94.2,
+      91.5,
+      90.6,
       89.5,
-      87.5,
+      87.4,
       85.2,
-      83.9,
+      83.8,
       80.3,
       75.1,
       72.7,
-      69.4,
-      64.1,
-      59.9,
-      58.0,
+      69.3,
+      64.0,
+      59.8,
+      57.9,
       53.5,
-      47.4,
-      44.0,
+      47.3,
+      43.9,
       40.2,
       34.1,
       30.1,
@@ -10093,18 +10111,18 @@
       24.7,
       19.9,
       18.2,
-      15.8,
-      11.9,
-      9.8,
+      15.9,
+      12.0,
+      9.9,
       8.9,
-      7.0,
-      5.6,
-      4.9,
-      4.4,
-      3.8,
-      2.5,
-      2.3,
-      1.8,
+      7.1,
+      5.7,
+      5.0,
+      4.5,
+      3.9,
+      2.6,
+      2.4,
+      1.9,
       1.5,
       1.2,
       0.9,
@@ -10122,30 +10140,30 @@
       97.3,
       96.5,
       96.3,
-      93.8,
+      93.9,
       91.3,
       90.4,
       87.2,
       83.6,
       82.3,
-      80.1,
+      80.2,
       76.4,
-      72.7,
-      70.5,
-      66.9,
-      61.0,
-      58.8,
-      54.9,
-      47.8,
-      42.7,
-      39.3,
-      33.9,
-      30.2,
-      27.5,
+      72.6,
+      70.4,
+      66.8,
+      60.8,
+      58.6,
+      54.8,
+      47.6,
+      42.6,
+      39.2,
+      33.8,
+      30.1,
+      27.4,
       24.5,
-      20.7,
-      18.5,
-      16.7,
+      20.6,
+      18.4,
+      16.6,
       14.0,
       11.4,
       10.1,
@@ -10191,9 +10209,9 @@
      "edge_text": "0.8"
     },
     "moneyline": {
-     "pick": "ATL -175",
+     "pick": "ATL -185",
      "side": "ATL",
-     "odds": "-175",
+     "odds": "-185",
      "edge": 3.0,
      "edge_text": "3.0%",
      "model_pct": 63,
@@ -10209,9 +10227,9 @@
      "line": 3.0,
      "label": "ATL +3",
      "was": "ATL -3",
-     "p": 69.2,
+     "p": 69.4,
      "push": 4.9,
-     "p_before": 50.4,
+     "p_before": 50.5,
      "wong": false
     },
     {
@@ -10222,7 +10240,7 @@
      "line": 9.0,
      "label": "BAL +9",
      "was": "BAL +3",
-     "p": 71.9,
+     "p": 71.7,
      "push": 1.2,
      "p_before": 42.8,
      "wong": true
@@ -10236,7 +10254,7 @@
      "was": "Over 43.5",
      "p": 69.9,
      "push": 0.0,
-     "p_before": 50.4,
+     "p_before": 50.5,
      "wong": false
     },
     {
@@ -10246,9 +10264,9 @@
      "line": 49.5,
      "label": "Under 49.5",
      "was": "Under 43.5",
-     "p": 67.0,
+     "p": 66.9,
      "push": 0.0,
-     "p_before": 49.6,
+     "p_before": 49.5,
      "wong": false
     }
    ],
@@ -10296,8 +10314,8 @@
        "line": 24.5
       }
      ],
-     "p": 28.3,
-     "pi": 23.6
+     "p": 28.2,
+     "pi": 23.5
     },
     {
      "name": "ATL QB over + BAL team total over",
@@ -10318,8 +10336,8 @@
        "line": 20.5
       }
      ],
-     "p": 24.9,
-     "pi": 23.8
+     "p": 24.8,
+     "pi": 23.7
     },
     {
      "name": "ATL QB over + ATL covers",
@@ -10340,7 +10358,7 @@
       }
      ],
      "p": 27.9,
-     "pi": 25.4
+     "pi": 25.5
     },
     {
      "name": "ATL RB1 rush over + ATL wins",
@@ -10380,7 +10398,7 @@
       }
      ],
      "p": 49.9,
-     "pi": 44.4
+     "pi": 44.5
     },
     {
      "name": "ATL WR1 over + ATL team total over",
@@ -10401,7 +10419,7 @@
        "line": 24.5
       }
      ],
-     "p": 26.0,
+     "p": 25.9,
      "pi": 23.9
     },
     {
@@ -10420,8 +10438,8 @@
        "line": 43.5
       }
      ],
-     "p": 37.1,
-     "pi": 24.6
+     "p": 37.0,
+     "pi": 24.5
     },
     {
      "name": "BAL QB + WR1 overs",
@@ -10466,8 +10484,8 @@
        "line": 20.5
       }
      ],
-     "p": 28.8,
-     "pi": 23.9
+     "p": 28.7,
+     "pi": 23.8
     },
     {
      "name": "BAL QB over + ATL team total over",
@@ -10488,7 +10506,7 @@
        "line": 24.5
       }
      ],
-     "p": 25.2,
+     "p": 25.1,
      "pi": 23.7
     },
     {
@@ -10530,7 +10548,7 @@
       }
      ],
      "p": 22.5,
-     "pi": 18.6
+     "pi": 18.5
     },
     {
      "name": "BAL RB1 anytime TD + BAL wins",
@@ -10550,7 +10568,7 @@
       }
      ],
      "p": 28.2,
-     "pi": 22.2
+     "pi": 22.1
     },
     {
      "name": "BAL WR1 over + BAL team total over",
@@ -10572,7 +10590,7 @@
       }
      ],
      "p": 26.5,
-     "pi": 23.8
+     "pi": 23.7
     },
     {
      "name": "BAL team total over + game over",
@@ -10590,8 +10608,8 @@
        "line": 43.5
       }
      ],
-     "p": 37.3,
-     "pi": 24.8
+     "p": 37.2,
+     "pi": 24.7
     }
    ],
    "alt_parlay": {
@@ -10689,7 +10707,7 @@
    "lean_total": null,
    "play_spread": null,
    "play_total": null,
-   "cover_prob_home": 42.0,
+   "cover_prob_home": 43.0,
    "over_prob": 43.0,
    "qb_home": "Matthew Stafford",
    "qb_away": "Josh Allen",
@@ -10807,9 +10825,9 @@
     }
    ],
    "notes": [],
-   "ml_home": -175.0,
-   "ml_away": 145.0,
-   "win_sigma": 11.4,
+   "ml_home": -180.0,
+   "ml_away": 150.0,
+   "win_sigma": 11.37,
    "team_totals": {
     "home": {
      "mean": 28.3,
@@ -10955,9 +10973,9 @@
      "edge_text": "0.8"
     },
     "moneyline": {
-     "pick": "BUF +145",
+     "pick": "BUF +150",
      "side": "BUF",
-     "odds": "+145",
+     "odds": "+150",
      "edge": 3.1,
      "edge_text": "3.1%",
      "model_pct": 43,
@@ -10973,9 +10991,9 @@
      "line": 3.0,
      "label": "LA +3",
      "was": "LA -3",
-     "p": 61.2,
+     "p": 61.4,
      "push": 3.6,
-     "p_before": 40.5,
+     "p_before": 40.7,
      "wong": false
     },
     {
@@ -10986,9 +11004,9 @@
      "line": 9.0,
      "label": "BUF +9",
      "was": "BUF +3",
-     "p": 77.0,
+     "p": 76.9,
      "push": 1.5,
-     "p_before": 54.9,
+     "p_before": 54.7,
      "wong": true
     },
     {
@@ -11362,17 +11380,17 @@
     "legs": [
      {
       "kind": "player",
-      "pid": "00-0037261",
-      "name": "Khalil Shakir",
+      "pid": "00-0037248",
+      "name": "James Cook",
       "team": "BUF",
-      "pos": "WR",
-      "stat": "rec_yds",
+      "pos": "RB",
+      "stat": "rush_yds",
       "side": "Over",
-      "line": 23.5,
-      "label": "Over 23.5 rec yds",
-      "main": 48.5,
-      "main_src": "model",
-      "p": 80.7
+      "line": 48.5,
+      "label": "Over 48.5 rush yds",
+      "main": 73.5,
+      "main_src": "book",
+      "p": 88.2
      },
      {
       "kind": "player",
@@ -11385,7 +11403,7 @@
       "line": 15.5,
       "label": "Over 15.5 rush yds",
       "main": 35.5,
-      "main_src": "model",
+      "main_src": "book",
       "p": 89.1
      },
      {
@@ -11399,7 +11417,7 @@
       "line": 228.5,
       "label": "Over 228.5 pass yds",
       "main": 278.5,
-      "main_src": "model",
+      "main_src": "book",
       "p": 77.9
      },
      {
@@ -11410,16 +11428,16 @@
       "pos": "WR",
       "stat": "rec_yds",
       "side": "Over",
-      "line": 34.5,
-      "label": "Over 34.5 rec yds",
-      "main": 59.5,
-      "main_src": "model",
-      "p": 75.2
+      "line": 37.5,
+      "label": "Over 37.5 rec yds",
+      "main": 62.5,
+      "main_src": "book",
+      "p": 72.2
      }
     ],
-    "p": 44.5,
-    "pi": 42.2,
-    "fair": "+125"
+    "p": 46.2,
+    "pi": 44.2,
+    "fair": "+117"
    }
   }
  ],
