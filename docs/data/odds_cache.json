@@ -1,1034 +1,5 @@
 {
  "games": {
-  "2026_05_PHI_JAX": {
-   "fetched_at": "2026-10-10T12:27+00:00",
-   "event_id": "21b26266f3d78af02eb672e606275d95",
-   "rows": [
-    {
-     "player": "Bhayshul Tuten",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "-110",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Parker Washington",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+135",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jalen Hurts",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+195",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dallas Goedert",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+270",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brenton Strange",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+290",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Will Shipley",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+300",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jakobi Meyers",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+310",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Trevor Lawrence",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+310",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Chris Rodriguez Jr.",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+350",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dontayvion Wicks",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+360",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brian Thomas Jr",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+380",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dameon Pierce",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+450",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jacksonville Jaguars D/ST",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+475",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Makai Lemon",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+475",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Philadelphia Eagles D/ST",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+550",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Darius Cooper",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+600",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Josh Cameron",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+700",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Nate Boerkircher",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+850",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "LeQuint Allen Jr.",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+950",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Ameer Abdullah",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1100",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Quintin Morris",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Johnny Mundt",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Travis Hunter",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1800",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Tanner Koziol",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1800",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Elijah Moore",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+1900",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "CJ Williams",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+2000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Britain Covey",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+2200",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "E.J. Jenkins",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+3500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Trevor Lawrence",
-     "team": "",
-     "stat": "pass_yds",
-     "line": "227.5",
-     "over_odds": "-113",
-     "under_odds": "-111",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jalen Hurts",
-     "team": "",
-     "stat": "pass_yds",
-     "line": "186.5",
-     "over_odds": "-111",
-     "under_odds": "-113",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Parker Washington",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "63.5",
-     "over_odds": "-111",
-     "under_odds": "-113",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dontayvion Wicks",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "45.5",
-     "over_odds": "-114",
-     "under_odds": "-110",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dallas Goedert",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "44.5",
-     "over_odds": "-110",
-     "under_odds": "-114",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jakobi Meyers",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "42.5",
-     "over_odds": "-113",
-     "under_odds": "-111",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Makai Lemon",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "35.5",
-     "over_odds": "-110",
-     "under_odds": "-114",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brenton Strange",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "31.5",
-     "over_odds": "-113",
-     "under_odds": "-111",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brian Thomas Jr",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "24.5",
-     "over_odds": "-112",
-     "under_odds": "-112",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Darius Cooper",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "20.5",
-     "over_odds": "-112",
-     "under_odds": "-112",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Will Shipley",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "16.5",
-     "over_odds": "-111",
-     "under_odds": "-114",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Josh Cameron",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "10.5",
-     "over_odds": "-114",
-     "under_odds": "-110",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Bhayshul Tuten",
-     "team": "",
-     "stat": "rec_yds",
-     "line": "9.5",
-     "over_odds": "-119",
-     "under_odds": "-106",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Parker Washington",
-     "team": "",
-     "stat": "rec",
-     "line": "4.5",
-     "over_odds": "-125",
-     "under_odds": "-102",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dallas Goedert",
-     "team": "",
-     "stat": "rec",
-     "line": "4.5",
-     "over_odds": "-102",
-     "under_odds": "-124",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dontayvion Wicks",
-     "team": "",
-     "stat": "rec",
-     "line": "3.5",
-     "over_odds": "-125",
-     "under_odds": "-102",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jakobi Meyers",
-     "team": "",
-     "stat": "rec",
-     "line": "3.5",
-     "over_odds": "-118",
-     "under_odds": "-108",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Makai Lemon",
-     "team": "",
-     "stat": "rec",
-     "line": "3.5",
-     "over_odds": "-118",
-     "under_odds": "-108",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brenton Strange",
-     "team": "",
-     "stat": "rec",
-     "line": "3.5",
-     "over_odds": "+134",
-     "under_odds": "-172",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Will Shipley",
-     "team": "",
-     "stat": "rec",
-     "line": "2.5",
-     "over_odds": "-109",
-     "under_odds": "-117",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Darius Cooper",
-     "team": "",
-     "stat": "rec",
-     "line": "2.5",
-     "over_odds": "+119",
-     "under_odds": "-152",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brian Thomas Jr",
-     "team": "",
-     "stat": "rec",
-     "line": "1.5",
-     "over_odds": "-177",
-     "under_odds": "+138",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Bhayshul Tuten",
-     "team": "",
-     "stat": "rec",
-     "line": "1.5",
-     "over_odds": "-107",
-     "under_odds": "-119",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Josh Cameron",
-     "team": "",
-     "stat": "rec",
-     "line": "1.5",
-     "over_odds": "+142",
-     "under_odds": "-182",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Bhayshul Tuten",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "67.5",
-     "over_odds": "-110",
-     "under_odds": "-114",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Will Shipley",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "35.5",
-     "over_odds": "-110",
-     "under_odds": "-114",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jalen Hurts",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "27.5",
-     "over_odds": "-114",
-     "under_odds": "-110",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Chris Rodriguez Jr.",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "26.5",
-     "over_odds": "-108",
-     "under_odds": "-116",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dameon Pierce",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "23.5",
-     "over_odds": "-113",
-     "under_odds": "-111",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Trevor Lawrence",
-     "team": "",
-     "stat": "rush_yds",
-     "line": "15.5",
-     "over_odds": "-109",
-     "under_odds": "-115",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Bhayshul Tuten",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+550",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Parker Washington",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+1000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jalen Hurts",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+1700",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dallas Goedert",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+2500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Trevor Lawrence",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+2800",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brenton Strange",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+2800",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Will Shipley",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+2800",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jakobi Meyers",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+3000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Chris Rodriguez Jr.",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+3000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Brian Thomas Jr",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+4000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dontayvion Wicks",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+4000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jacksonville Jaguars D/ST",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+4500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Dameon Pierce",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+5000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Philadelphia Eagles D/ST",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+5500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Makai Lemon",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+6000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Darius Cooper",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+7500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Josh Cameron",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+8000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Nate Boerkircher",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+10000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "LeQuint Allen Jr.",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+10000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Ameer Abdullah",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+13000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Quintin Morris",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+18000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Johnny Mundt",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+18000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "CJ Williams",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+19000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Tanner Koziol",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+19000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Travis Hunter",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+20000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Elijah Moore",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+20000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Britain Covey",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+20000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "E.J. Jenkins",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+25000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:draftkings",
-     "book": "DraftKings"
-    },
-    {
-     "player": "Jacksonville Jaguars Defense",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+600",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:fanduel",
-     "book": "FanDuel"
-    },
-    {
-     "player": "Philadelphia Eagles Defense",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+900",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:fanduel",
-     "book": "FanDuel"
-    },
-    {
-     "player": "Jacksonville Jaguars Defense",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+7500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:fanduel",
-     "book": "FanDuel"
-    },
-    {
-     "player": "Philadelphia Eagles Defense",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+12500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:fanduel",
-     "book": "FanDuel"
-    },
-    {
-     "player": "Zach Ertz",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+700",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:betmgm",
-     "book": "BetMGM"
-    },
-    {
-     "player": "Zach Ertz",
-     "team": "",
-     "stat": "tds",
-     "line": "1.5",
-     "over_odds": "+5000",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:betmgm",
-     "book": "BetMGM"
-    },
-    {
-     "player": "Josiah Deguara",
-     "team": "",
-     "stat": "anytime_td",
-     "line": "",
-     "over_odds": "+3500",
-     "under_odds": "",
-     "game_id": "2026_05_PHI_JAX",
-     "source": "auto:betrivers",
-     "book": "BetRivers"
-    }
-   ]
-  },
   "2026_05_CHI_GB": {
    "fetched_at": "2026-10-10T12:27+00:00",
    "event_id": "2caea57b1e5cfbba1334cfbfd46f6771",
@@ -12807,61 +11778,52 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-10-10T22:18+00:00",
+  "fetched_at": "2026-10-11T15:57+00:00",
   "data": {
-   "2026_05_PHI_JAX": {
-    "spread_line": 7.5,
-    "total_line": 41.5,
-    "ml_home": null,
-    "ml_away": null,
-    "book": "draftkings",
-    "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
-   },
    "2026_05_CHI_GB": {
     "spread_line": -1.5,
-    "total_line": 46.5,
+    "total_line": 47.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_CIN_MIA": {
     "spread_line": -7.0,
-    "total_line": 43.5,
+    "total_line": 44.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_CLE_NYJ": {
     "spread_line": 2.5,
-    "total_line": 39.5,
-    "ml_home": null,
-    "ml_away": null,
-    "book": "draftkings",
-    "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
-   },
-   "2026_05_HOU_TEN": {
-    "spread_line": -7.0,
     "total_line": 38.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
-   "2026_05_IND_PIT": {
-    "spread_line": 3.0,
-    "total_line": 43.5,
+   "2026_05_HOU_TEN": {
+    "spread_line": -6.5,
+    "total_line": 37.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
+   },
+   "2026_05_IND_PIT": {
+    "spread_line": 3.0,
+    "total_line": 41.5,
+    "ml_home": null,
+    "ml_away": null,
+    "book": "draftkings",
+    "book_title": "DraftKings",
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_LV_NE": {
     "spread_line": 3.5,
@@ -12870,7 +11832,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_MIN_NO": {
     "spread_line": -2.5,
@@ -12879,7 +11841,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_NYG_WAS": {
     "spread_line": 3.5,
@@ -12888,7 +11850,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_DEN_LAC": {
     "spread_line": -3.5,
@@ -12897,7 +11859,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_DET_ARI": {
     "spread_line": -5.5,
@@ -12906,16 +11868,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_SF_SEA": {
     "spread_line": 3.0,
-    "total_line": 45.5,
+    "total_line": 46.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_BAL_ATL": {
     "spread_line": 3.0,
@@ -12924,16 +11886,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    },
    "2026_05_BUF_LA": {
-    "spread_line": 3.5,
+    "spread_line": 3.0,
     "total_line": 54.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-10T22:18:20Z"
+    "updated": "2026-10-11T15:56:48Z"
    }
   }
  }
