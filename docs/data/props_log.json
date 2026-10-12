@@ -50274,9 +50274,9 @@
    "line": null,
    "over_odds": "-170",
    "under_odds": null,
-   "model_over": 63.1,
+   "model_over": 63.3,
    "book_over": 63.0,
-   "edge": 0.1,
+   "edge": 0.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50285,7 +50285,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|anytime_td": {
@@ -50302,9 +50302,9 @@
    "line": null,
    "over_odds": "-130",
    "under_odds": null,
-   "model_over": 32.6,
+   "model_over": 33.3,
    "book_over": 56.5,
-   "edge": -23.9,
+   "edge": -23.3,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50313,7 +50313,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|anytime_td": {
@@ -50330,9 +50330,9 @@
    "line": null,
    "over_odds": "-130",
    "under_odds": null,
-   "model_over": 26.1,
+   "model_over": 26.6,
    "book_over": 56.5,
-   "edge": -30.4,
+   "edge": -29.9,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50341,7 +50341,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|anytime_td": {
@@ -50358,18 +50358,18 @@
    "line": null,
    "over_odds": "-120",
    "under_odds": null,
-   "model_over": 58.1,
+   "model_over": 58.9,
    "book_over": 54.5,
-   "edge": 3.6,
-   "lean": null,
-   "tier": null,
+   "edge": 4.4,
+   "lean": "Over",
+   "tier": "watch",
    "median": null,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|anytime_td": {
@@ -50386,9 +50386,9 @@
    "line": null,
    "over_odds": "+100",
    "under_odds": null,
-   "model_over": 39.2,
+   "model_over": 39.5,
    "book_over": 50.0,
-   "edge": -10.8,
+   "edge": -10.5,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50397,7 +50397,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|anytime_td": {
@@ -50414,9 +50414,9 @@
    "line": null,
    "over_odds": "+185",
    "under_odds": null,
-   "model_over": 15.8,
+   "model_over": 15.7,
    "book_over": 35.1,
-   "edge": -19.3,
+   "edge": -19.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50425,7 +50425,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|anytime_td": {
@@ -50453,7 +50453,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|anytime_td": {
@@ -50470,9 +50470,9 @@
    "line": null,
    "over_odds": "+225",
    "under_odds": null,
-   "model_over": 19.3,
+   "model_over": 20.3,
    "book_over": 30.8,
-   "edge": -11.5,
+   "edge": -10.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50481,7 +50481,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|anytime_td": {
@@ -50498,9 +50498,9 @@
    "line": null,
    "over_odds": "+235",
    "under_odds": null,
-   "model_over": 20.7,
+   "model_over": 21.3,
    "book_over": 29.9,
-   "edge": -9.2,
+   "edge": -8.6,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50509,7 +50509,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|anytime_td": {
@@ -50526,9 +50526,9 @@
    "line": null,
    "over_odds": "+255",
    "under_odds": null,
-   "model_over": 20.0,
+   "model_over": 19.8,
    "book_over": 28.2,
-   "edge": -8.2,
+   "edge": -8.3,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50537,7 +50537,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|anytime_td": {
@@ -50554,18 +50554,18 @@
    "line": null,
    "over_odds": "+300",
    "under_odds": null,
-   "model_over": 28.0,
+   "model_over": 29.0,
    "book_over": 25.0,
-   "edge": 3.0,
-   "lean": null,
-   "tier": null,
+   "edge": 4.0,
+   "lean": "Over",
+   "tier": "watch",
    "median": null,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|anytime_td": {
@@ -50582,9 +50582,9 @@
    "line": null,
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 18.2,
+   "model_over": 18.8,
    "book_over": 17.4,
-   "edge": 0.8,
+   "edge": 1.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50593,7 +50593,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|anytime_td": {
@@ -50610,9 +50610,9 @@
    "line": null,
    "over_odds": "+650",
    "under_odds": null,
-   "model_over": 19.1,
+   "model_over": 19.4,
    "book_over": 13.3,
-   "edge": 5.8,
+   "edge": 6.1,
    "lean": "Over",
    "tier": "watch",
    "median": null,
@@ -50621,7 +50621,7 @@
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|anytime_td": {
@@ -50638,9 +50638,9 @@
    "line": null,
    "over_odds": "+750",
    "under_odds": null,
-   "model_over": 14.3,
+   "model_over": 14.9,
    "book_over": 11.8,
-   "edge": 2.5,
+   "edge": 3.1,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50649,7 +50649,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|anytime_td": {
@@ -50666,9 +50666,9 @@
    "line": null,
    "over_odds": "+1600",
    "under_odds": null,
-   "model_over": 3.1,
+   "model_over": 2.9,
    "book_over": 5.9,
-   "edge": -2.8,
+   "edge": -2.9,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50677,7 +50677,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|pass_yds": {
@@ -50705,7 +50705,7 @@
    "first_line": "278.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|pass_yds": {
@@ -50733,7 +50733,7 @@
    "first_line": "242.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|rec_yds": {
@@ -50761,7 +50761,7 @@
    "first_line": "93.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|rec_yds": {
@@ -50789,7 +50789,7 @@
    "first_line": "62.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|rec_yds": {
@@ -50817,7 +50817,7 @@
    "first_line": "54.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|rec_yds": {
@@ -50845,7 +50845,7 @@
    "first_line": "46.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|rec_yds": {
@@ -50873,7 +50873,7 @@
    "first_line": "38.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rec_yds": {
@@ -50901,7 +50901,7 @@
    "first_line": "22.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|rec_yds": {
@@ -50929,7 +50929,7 @@
    "first_line": "22.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|rec_yds": {
@@ -50957,7 +50957,7 @@
    "first_line": "16.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|rec_yds": {
@@ -50985,7 +50985,7 @@
    "first_line": "11.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|rec_yds": {
@@ -51013,7 +51013,7 @@
    "first_line": "10.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rec_yds": {
@@ -51041,7 +51041,7 @@
    "first_line": "10.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|rec_yds": {
@@ -51069,7 +51069,7 @@
    "first_line": "6.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|rec": {
@@ -51097,7 +51097,7 @@
    "first_line": "7.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|rec": {
@@ -51125,7 +51125,7 @@
    "first_line": "4.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|rec": {
@@ -51153,7 +51153,7 @@
    "first_line": "4.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|rec": {
@@ -51181,7 +51181,7 @@
    "first_line": "4.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|rec": {
@@ -51209,7 +51209,7 @@
    "first_line": "3.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rec": {
@@ -51237,7 +51237,7 @@
    "first_line": "2.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|rec": {
@@ -51265,7 +51265,7 @@
    "first_line": "2.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|rec": {
@@ -51293,7 +51293,7 @@
    "first_line": "2.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|rec": {
@@ -51321,7 +51321,7 @@
    "first_line": "1.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rec": {
@@ -51349,7 +51349,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|rec": {
@@ -51377,7 +51377,7 @@
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|rec": {
@@ -51405,7 +51405,7 @@
    "first_line": "0.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rush_yds": {
@@ -51422,18 +51422,18 @@
    "line": "73.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 58.4,
+   "model_over": 58.5,
    "book_over": 49.6,
-   "edge": 8.9,
+   "edge": 9.0,
    "lean": "Over",
    "tier": "watch",
-   "median": 80.4,
+   "median": 80.7,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "73.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rush_yds": {
@@ -51450,18 +51450,18 @@
    "line": "69.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 47.5,
+   "model_over": 47.9,
    "book_over": 49.6,
-   "edge": -2.1,
+   "edge": -1.7,
    "lean": null,
    "tier": null,
-   "median": 67.6,
+   "median": 67.8,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "69.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|rush_yds": {
@@ -51478,18 +51478,18 @@
    "line": "38.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 40.6,
+   "model_over": 41.3,
    "book_over": 49.6,
-   "edge": -9.0,
+   "edge": -8.3,
    "lean": "Under",
    "tier": "play",
-   "median": 33.1,
+   "median": 33.5,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "38.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|rush_yds": {
@@ -51506,18 +51506,18 @@
    "line": "35.5",
    "over_odds": "-115",
    "under_odds": "-109",
-   "model_over": 49.7,
+   "model_over": 49.9,
    "book_over": 50.6,
-   "edge": -0.9,
+   "edge": -0.7,
    "lean": null,
    "tier": null,
-   "median": 35.3,
+   "median": 35.5,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "35.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|rush_yds": {
@@ -51534,18 +51534,18 @@
    "line": "1.5",
    "over_odds": "-102",
    "under_odds": "-123",
-   "model_over": 89.6,
+   "model_over": 89.4,
    "book_over": 47.8,
-   "edge": 41.8,
+   "edge": 41.6,
    "lean": "Over",
    "tier": "too_big",
-   "median": 5.3,
+   "median": 5.4,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|tds": {
@@ -51562,9 +51562,9 @@
    "line": "1.5",
    "over_odds": "+330",
    "under_odds": null,
-   "model_over": 27.7,
+   "model_over": 27.9,
    "book_over": 23.3,
-   "edge": 4.4,
+   "edge": 4.6,
    "lean": "Over",
    "tier": "watch",
    "median": 1.0,
@@ -51573,7 +51573,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|tds": {
@@ -51590,9 +51590,9 @@
    "line": "1.5",
    "over_odds": "+450",
    "under_odds": null,
-   "model_over": 4.3,
+   "model_over": 4.4,
    "book_over": 18.2,
-   "edge": -13.9,
+   "edge": -13.7,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51601,7 +51601,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|tds": {
@@ -51618,9 +51618,9 @@
    "line": "1.5",
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 6.9,
+   "model_over": 6.8,
    "book_over": 17.4,
-   "edge": -10.5,
+   "edge": -10.6,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51629,7 +51629,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|tds": {
@@ -51646,9 +51646,9 @@
    "line": "1.5",
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 23.8,
+   "model_over": 24.5,
    "book_over": 17.4,
-   "edge": 6.4,
+   "edge": 7.1,
    "lean": "Over",
    "tier": "watch",
    "median": 1.0,
@@ -51657,7 +51657,7 @@
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|tds": {
@@ -51674,9 +51674,9 @@
    "line": "1.5",
    "over_odds": "+650",
    "under_odds": null,
-   "model_over": 9.9,
+   "model_over": 10.0,
    "book_over": 13.3,
-   "edge": -3.4,
+   "edge": -3.3,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51685,7 +51685,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|tds": {
@@ -51702,9 +51702,9 @@
    "line": "1.5",
    "over_odds": "+1400",
    "under_odds": null,
-   "model_over": 1.4,
+   "model_over": 1.3,
    "book_over": 6.7,
-   "edge": -5.2,
+   "edge": -5.4,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51713,7 +51713,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|tds": {
@@ -51730,9 +51730,9 @@
    "line": "1.5",
    "over_odds": "+1600",
    "under_odds": null,
-   "model_over": 7.4,
+   "model_over": 7.6,
    "book_over": 5.9,
-   "edge": 1.5,
+   "edge": 1.7,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51741,7 +51741,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|tds": {
@@ -51758,9 +51758,9 @@
    "line": "1.5",
    "over_odds": "+1800",
    "under_odds": null,
-   "model_over": 2.5,
+   "model_over": 2.7,
    "book_over": 5.3,
-   "edge": -2.8,
+   "edge": -2.6,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51769,7 +51769,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|tds": {
@@ -51786,9 +51786,9 @@
    "line": "1.5",
    "over_odds": "+1900",
    "under_odds": null,
-   "model_over": 2.5,
+   "model_over": 2.1,
    "book_over": 5.0,
-   "edge": -2.5,
+   "edge": -2.9,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51797,7 +51797,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|tds": {
@@ -51814,7 +51814,7 @@
    "line": "1.5",
    "over_odds": "+2200",
    "under_odds": null,
-   "model_over": 2.1,
+   "model_over": 2.2,
    "book_over": 4.3,
    "edge": -2.2,
    "lean": null,
@@ -51825,7 +51825,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|tds": {
@@ -51842,9 +51842,9 @@
    "line": "1.5",
    "over_odds": "+2500",
    "under_odds": null,
-   "model_over": 4.4,
+   "model_over": 5.0,
    "book_over": 3.8,
-   "edge": 0.6,
+   "edge": 1.1,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51853,7 +51853,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|tds": {
@@ -51870,9 +51870,9 @@
    "line": "1.5",
    "over_odds": "+4500",
    "under_odds": null,
-   "model_over": 1.9,
+   "model_over": 2.2,
    "book_over": 2.2,
-   "edge": -0.3,
+   "edge": 0.0,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51881,7 +51881,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|tds": {
@@ -51898,9 +51898,9 @@
    "line": "1.5",
    "over_odds": "+7500",
    "under_odds": null,
-   "model_over": 1.8,
+   "model_over": 1.9,
    "book_over": 1.3,
-   "edge": 0.5,
+   "edge": 0.6,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51909,7 +51909,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|tds": {
@@ -51926,9 +51926,9 @@
    "line": "1.5",
    "over_odds": "+8000",
    "under_odds": null,
-   "model_over": 1.1,
+   "model_over": 0.9,
    "book_over": 1.2,
-   "edge": -0.1,
+   "edge": -0.3,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -51937,7 +51937,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|tds": {
@@ -51965,7 +51965,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034827|anytime_td": {
@@ -51982,9 +51982,9 @@
    "line": null,
    "over_odds": "+195",
    "under_odds": null,
-   "model_over": 18.5,
+   "model_over": 18.6,
    "book_over": 33.9,
-   "edge": -15.4,
+   "edge": -15.3,
    "lean": null,
    "tier": null,
    "median": null,
@@ -51993,7 +51993,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034827|tds": {
@@ -52021,7 +52021,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-12T12:47+00:00",
+   "updated_at": "2026-10-12T22:20+00:00",
    "result": null
   }
  }

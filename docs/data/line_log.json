@@ -2615,10 +2615,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-12T22:20+00:00",
+     "src": "live:draftkings",
+     "spread": 3.5,
+     "total": 55.5,
+     "m": 2.7,
+     "t": 56.3,
+     "edge_s": -0.8,
+     "edge_t": 0.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-12T12:47+00:00"
+   "last_seen": "2026-10-12T22:20+00:00"
   }
  }
 }

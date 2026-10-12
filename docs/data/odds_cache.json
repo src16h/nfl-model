@@ -1075,16 +1075,16 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-10-12T12:43+00:00",
+  "fetched_at": "2026-10-12T22:20+00:00",
   "data": {
    "2026_05_BUF_LA": {
     "spread_line": 3.5,
-    "total_line": 54.5,
+    "total_line": 55.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-12T12:43:03Z"
+    "updated": "2026-10-12T22:20:34Z"
    }
   }
  }
