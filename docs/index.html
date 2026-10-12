@@ -1069,7 +1069,7 @@ function renderGames() {
   const pp = rules.prop_play || [4, 7];
   const sb = rules.spread_backtest;
   h += `<div class="rules"><span>${playsRecordLine()}</span>
-    <span><b>Prop plays:</b> ${pp[0]} to ${pp[1]}% gap, ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}</span>
+    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}; ${rules.min_ev ? `blended 50/50 with the book, ${rules.min_ev.prop}%+ expected profit at the price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+)` : `${pp[0]} to ${pp[1]}% gap`}</span>
     ${rules.spread_gap != null ? `<span><b>Spread plays:</b> ${n(rules.spread_gap)}+ pt gap${sb && sb.n ? ` (backtest ${rec(sb.record)}, ${n(sb.pct)}%)` : " (rare: the backtest had none this large)"}</span>` : ""}</div>`;
 
   // watch list: game leans that are not plays
@@ -1211,7 +1211,7 @@ function renderYards() {
     h += `<div class="empty"><b>No prop lines yet.</b> Books post props midweek, and the model loads them about a day before each game.</div>`;
   } else {
     h += `<div class="controls"><input type="search" id="propQ" placeholder="Search player, team, or prop" aria-label="Search props" value="${esc(q)}"></div>`;
-    h += `<p class="sub">Gap of ${pp[0]} to ${pp[1]}% between the model and the book, on ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}. These also show on the Games tab.</p>`;
+    h += `<p class="sub">${rules.min_ev ? `The model's chance is blended 50/50 with the book's and nudged by how each stat has run so far. A play needs ${rules.min_ev.prop}%+ expected profit at the posted price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+, since books shade Overs)` : `Gap of ${pp[0]} to ${pp[1]}% between the model and the book`}, on ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}. These also show on the Games tab.</p>`;
     h += propRows(plays);
     h += `<details class="fold"${q && watch.length ? " open" : ""}><summary>Watch <span>${watch.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${pp[1]} to ${wm}%, plus Anytime TD picks at any gap up to ${wm}%. Not plays. They're graded so we can see if they earn a promotion.</p>${propRows(watch, "watch")}</div></details>`;
     h += `<details class="fold"${q && big.length ? " open" : ""}><summary>Too big to trust <span>${big.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${wm}%+. These usually mean the model is missing something, like an injury, a role change, or a stale line. Still graded in the background.</p>${propRows(big, "too_big")}</div></details>`;

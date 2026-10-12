@@ -31,6 +31,9 @@ from cfbmodel import ratings as R
 from cfbmodel import teasers as TZ
 from cfbmodel.util import clean, r
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import betrules as BR  # noqa: E402
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("cfbmodel")
 ROOT = Path(__file__).resolve().parent
@@ -144,10 +147,40 @@ def game_picks(g, star, mkt, pure):
     return out
 
 
+def prop_bias(hist_dir, results):
+    """How each prop stat has run against the book in graded games (fades in with sample size)."""
+    rows = []
+    for f in sorted(Path(hist_dir).glob("*.json")):
+        wk = load_json(f, {})
+        for p in wk.get("players", []):
+            res = results.get(str(p["game_id"]))
+            st = res and res["p"].get(str(p["pid"]))
+            if not st:
+                continue
+            for stat, m in p["m"].items():
+                bk = m.get("book")
+                if not bk or bk.get("odds") is None:
+                    continue
+                v = st[STAT_IDX[stat]]
+                if v == bk["line"]:
+                    continue
+                bo = bk.get("book_over")
+                if bo is not None:
+                    bo = bo / 100
+                else:       # older files kept only the bet side's price
+                    q = BR.no_vig_from_one(bk["odds"])
+                    bo = q if bk["side"] == "Over" else 1 - q
+                rows.append((stat, bo, v > bk["line"]))
+    return BR.bias_table(rows)
+
+
 def _play(pk, allowed):
-    """A play has to make money at the book's posted price, vig included, not just beat the fair price."""
-    pk["ev"] = r(100 * (pk["model"] / 100 * (payout(pk["odds"]) + 1) - 1))
-    pk["play"] = bool(allowed and pk["ev"] >= C.PLAY_MIN_EV)
+    """A play has to make money at the book's posted price, vig included, after the model's chance is
+    blended with the book's (betrules.py), not just beat the fair price."""
+    p = BR.adjust_game(pk["model"] / 100, pk["book"] / 100)
+    ev, need = BR.game_ev(p, int(pk["odds"]))
+    pk["adj"], pk["ev"] = r(100 * p), r(ev)
+    pk["play"] = bool(allowed and ev >= max(need, C.PLAY_MIN_EV))
 
 
 def _cover(d, s):
@@ -470,17 +503,20 @@ def main():
         diffs = [lg_(p["m"][st]["book"]["model_over"]) - lg_(p["m"][st]["book"]["book_over"]) for p in players if p["m"].get(st, {}).get("book")]
         if len(diffs) >= 6:
             level[st] = float(np.median(diffs))
+    bias = prop_bias(HIST, load_json(OUT / "results.json", {}))
+    log.info(f"prop bias from graded results: {bias}")
     for p in players:
         for st, m in p["m"].items():
             bk = m.get("book")
-            if not bk or st not in level:
+            if not bk:
                 continue
-            adj = 100 / (1 + np.exp(-(lg_(bk["model_over"]) - level[st])))
-            side = "Over" if adj >= bk["book_over"] or not bk.get("under") else "Under"
-            edge = (adj - bk["book_over"]) if side == "Over" else (bk["book_over"] - adj)
-            bk.update({"model_over_raw": bk["model_over"], "model_over": r(adj), "side": side, "edge": r(edge),
-                       "odds": bk["over"] if side == "Over" else bk["under"],
-                       "play": 100 * C.PROP_PLAY_MIN <= edge <= 100 * C.PROP_PLAY_MAX})
+            adj = 100 / (1 + np.exp(-(lg_(bk["model_over"]) - level.get(st, 0.0))))
+            dec = BR.decide_prop(adj / 100, bk["book_over"] / 100, bk.get("over"), bk.get("under"), st, bias,
+                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX)
+            if not dec:
+                continue
+            bk.update({"model_over_raw": bk["model_over"], "model_over": r(adj), "side": dec["side"], "edge": dec["raw_edge"],
+                       "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"]})
     level = {k: r(v, 3) for k, v in level.items()}
 
     # history: one file per week, each game locked at kickoff
@@ -498,7 +534,7 @@ def main():
             else:
                 pf = float(np.interp(m["fair"], m["q"], 1 - P.QS)) if m["q"][-1] > m["q"][0] else 0.5
             lite["m"][st] = {"fair": m["fair"], "pf": round(float(pf), 3),
-                             **({"book": {x: m["book"][x] for x in ("line", "side", "odds", "edge", "play")}} if m.get("book") else {})}
+                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev")}} if m.get("book") else {})}
         by_wk[gwk[p["game_id"]]]["players"].append(lite)
     for wk, v in by_wk.items():
         path = HIST / f"{wk}.json"
@@ -559,8 +595,9 @@ def main():
                          "anchor": {"spread": C.ANCHOR_SPREAD * damp, "total": C.ANCHOR_TOTAL * damp, "early": [x * damp for x in C.ANCHOR_EARLY], "early_days": C.ANCHOR_EARLY_DAYS},
                          "sd": {"margin": r(scores.sd_m), "total": r(scores.sd_t)}, "train_games": int(len(Ftrain) / 2),
                          "league": {"pts": r(cur["pts"][0]), "epa_p": r(cur["epa_p"][0], 3), "epa_r": r(cur["epa_r"][0], 3)}},
-               "rules": {"min_ev": C.PLAY_MIN_EV,
-                         "max_gap": [C.MAX_GAP_SPREAD, C.MAX_GAP_TOTAL], "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX]}}
+               "rules": {
+                         "max_gap": [C.MAX_GAP_SPREAD, C.MAX_GAP_TOTAL], "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX],
+                         **BR.summary(), "bias": bias}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} games, {len(players)} players")
 

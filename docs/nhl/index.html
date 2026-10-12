@@ -909,7 +909,7 @@ function renderGames() {
     <div class="fact"><b class="gold">${allPlays().length}</b>plays on the board</div>
     <div class="fact"><b>${esc(D.odds?.source === "odds_api" ? (G.find(g => g.book?.src)?.book?.src || "Book") : "NHL.com")}</b>lines from</div>
     <div class="fact"><b>${n(D.model?.league?.gf, 2)}</b>league goals per team, regulation</div></div></div>`;
-  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Gap of ${D.rules.ml}% to ${D.rules.max}% over the book's no-vig price</span></div>
+  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">${D.rules.min_ev ? `Blended 50/50 with the book, ${D.rules.min_ev.game}%+ expected profit at the price` : `Gap of ${D.rules.ml}% to ${D.rules.max}% over the book's no-vig price`}</span></div>
     <p class="sub">Moneyline, puck line and total plays where the model's win chance beats the book's fair price by enough to bet. NHL edges are small and goalie news moves lines fast, so confirm the starter before betting.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No game plays right now.</b> ${D.odds?.source === "odds_api" ? "The model is close to the book on every game." : "Puck lines and totals need the NHL odds key. Moneylines come from NHL.com."}</div>`}`;
   h += `<div class="sec-head"><h2>All games</h2><span class="aside">Tap a game for goalies and form</span></div>
@@ -953,7 +953,7 @@ function renderProps() {
   if (PU.onlyBook) rows = rows.filter(p => p.m[PU.stat].book);
   rows.sort((a, b) => (b.m[PU.stat].book?.edge ?? -99) - (a.m[PU.stat].book?.edge ?? -99) || b.m[PU.stat].mean - a.m[PU.stat].mean);
   const plays = allPlays().filter(x => x.type === "prop");
-  let h = `<div class="sec-head"><h2>Prop plays</h2><span class="aside">Gap of ${D.rules.prop[0]}% to ${D.rules.prop[1]}% vs the book</span></div>
+  let h = `<div class="sec-head"><h2>Prop plays</h2><span class="aside">${D.rules.min_ev ? `Blended 50/50 with the book, ${D.rules.min_ev.prop}%+ expected profit (Overs ${D.rules.min_ev.prop + D.rules.over_extra_ev}%+), no points Overs` : `Gap of ${D.rules.prop[0]}% to ${D.rules.prop[1]}% vs the book`}</span></div>
     <p class="sub">Every player is simulated inside the same game as his team, so a high-shot game lifts every shooter's line together. Book lines arrive game by game within the free plan's daily budget, shots on goal first. For anything without a book line, enter yours in the table.</p>
     ${plays.length ? `<div class="tickets">${plays.slice(0, 8).map(ticket).join("")}</div>` : `<div class="empty"><b>No prop plays right now.</b> ${(D.players || []).some(p => Object.values(p.m).some(m => m.book)) ? "The model agrees with the posted lines." : "Book prop lines arrive in the afternoon run. Until then, tap any player and enter your book's line."}</div>`}
     <div class="sec-head"><h2>Every player</h2><span class="aside">${rows.length} players</span></div>

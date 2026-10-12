@@ -16,6 +16,10 @@ import pandas as pd
 from . import config as C
 from .util import norm_name, fnum
 
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import betrules as BR  # noqa: E402
+
 log = logging.getLogger("nflmodel")
 
 
@@ -156,7 +160,8 @@ def stat_label(key) -> str:
 
 
 def prop_tier(stat, edge_pct, lean):
-    """Play (4-7% gap, allowed prop types), Watch (rest up to 15%), Too big (15%+)."""
+    """First pass: Play candidate (4-15% gap, allowed prop types), Watch, Too big (15%+).
+    evaluate_props then keeps a Play only if it clears the shared bar in betrules.py."""
     if not lean or edge_pct is None:
         return None
     e = abs(float(edge_pct)) / 100
@@ -178,9 +183,26 @@ def load_props(path: Path) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
+def prop_bias(log_path) -> dict:
+    """How each prop stat has run against the book in graded games (fades in with sample size)."""
+    import json
+    try:
+        log_ = json.loads(Path(log_path).read_text()).get("props", {})
+    except Exception:  # noqa: BLE001
+        return {}
+    rows = []
+    for p in log_.values():
+        res = p.get("result") or {}
+        if res.get("outcome") not in ("Over", "Under") or p.get("book_over") is None or p.get("stat") in ("anytime_td", "tds"):
+            continue
+        rows.append((p["stat"], p["book_over"] / 100, res["outcome"] == "Over"))
+    return BR.bias_table(rows)
+
+
+def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None) -> dict:
     if not len(props):
         return {"props": [], "pairs": []}
+    pending = []
     by_name = {}
     for p in players:
         by_name.setdefault(norm_name(p["name"]), []).append(p)
@@ -222,17 +244,39 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict) -> dict:
             book_over = bo
         else:
             book_over = 0.5
-        edge = p_over - book_over
-        side = "Over" if edge >= C.PROP_EDGE else ("Under" if edge <= -C.PROP_EDGE else None)
-        if side == "Under" and stat in ("anytime_td", "tds") and bu is None and C.TD_NO_NEEDS_PRICE:
-            side = None   # no "No TD" price posted, so there is nothing to bet or grade
-        tier = prop_tier(stat, edge * 100, side)
         row.update({"team": p["team"], "opp": p["opp"], "pos": p["pos"], "game_id": p["game_id"],
                     "pid": p["pid"], "stat_key": stat,
-                    "median": None if stat == "anytime_td" else fnum(np.median(arr), 1), "model_over": fnum(p_over * 100, 1),
-                    "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
-                    "tier": tier, "label": stat_label(stat)})
+                    "median": None if stat == "anytime_td" else fnum(np.median(arr), 1), "label": stat_label(stat)})
         out.append(row)
+        pending.append((row, arr, line, p_over, book_over, r.get("over_odds"), r.get("under_odds") if bu is not None else None, stat, p))
+
+    # slate-level check (as in the NHL and CFB models): if the model sits above or below the book on almost
+    # every prop of a stat, that is a level problem, not 40 separate edges. Remove the median gap per stat.
+    lg_ = lambda x: float(np.log(np.clip(x, 0.005, 0.995) / (1 - np.clip(x, 0.005, 0.995))))
+    level = {}
+    for st in {x[7] for x in pending}:
+        if st in ("anytime_td", "tds"):
+            continue
+        diffs = [lg_(x[3]) - lg_(x[4]) for x in pending if x[7] == st]
+        if len(diffs) >= 12:
+            level[st] = float(np.median(diffs))
+    for row, arr, line, p_over, book_over, oo, uo, stat, p in pending:
+        adj = 1 / (1 + np.exp(-(lg_(p_over) - level.get(stat, 0.0))))
+        edge = adj - book_over
+        side = "Over" if edge >= C.PROP_EDGE else ("Under" if edge <= -C.PROP_EDGE else None)
+        if side == "Under" and stat in ("anytime_td", "tds") and uo is None and C.TD_NO_NEEDS_PRICE:
+            side = None   # no "No TD" price posted, so there is nothing to bet or grade
+        num = lambda o: None if o is None else float(o)
+        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias) if (side and oo is not None) else None
+        tier = prop_tier(stat, edge * 100, side)
+        if tier in ("play", "watch") and dec is not None:
+            ok = dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
+            tier = "play" if ok else "watch"
+        elif tier == "play":
+            tier = "watch"
+        row.update({"model_over": fnum(adj * 100, 1), "model_over_raw": fnum(p_over * 100, 1),
+                    "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
+                    "ev": dec["ev"] if dec else None, "tier": tier})
         if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))
 

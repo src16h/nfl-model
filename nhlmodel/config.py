@@ -25,7 +25,9 @@ PL_PLAY_EDGE = 3.0
 TOTAL_PLAY_EDGE = 4.0           # scoring drifts during a season, so totals need a bigger gap
 PLAY_MAX_EDGE = 10.0             # bigger gaps usually mean the model is missing news
 PROP_PLAY_MIN = 0.07             # after removing the slate-wide gap to the book
-PROP_PLAY_MAX = 0.12
+PROP_PLAY_MAX = 0.12             # raw gap cap; the bar to be a play is set in betrules.py (blend with the book, profit at the price)
+# markets that may not be plays (checked Oct 2026: points Overs 1-17, puck-line underdogs 0-5, saves far off)
+BLOCKED = {("points", "Over"), "saves", "pl_dog"}
 
 # props
 PROP_STATS = ["sog", "points", "goals", "assists", "saves"]

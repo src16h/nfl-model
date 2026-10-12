@@ -25,7 +25,8 @@ from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
-from nflmodel.propsim import load_props, evaluate_props, STAT_ALIASES, stat_label, game_shocks, team_points
+import betrules as BR
+from nflmodel.propsim import load_props, evaluate_props, prop_bias, STAT_ALIASES, stat_label, game_shocks, team_points
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
 from nflmodel.util import before, clean_json
@@ -303,7 +304,9 @@ def build_games(bundle, season, week, now):
                        for _, r in props_df.iterrows()} if len(props_df) else set()
         auto = auto[[(norm_name(r["player"]), r["stat"]) not in manual_keys for _, r in auto.iterrows()]]  # your rows win
         props_df = pd.concat([props_df, auto], ignore_index=True) if len(props_df) else auto.reset_index(drop=True)
-    props = evaluate_props(props_df, players, sims)
+    prop_bias_tbl = prop_bias(OUT / "props_log.json")
+    log.info(f"prop bias from graded results: {prop_bias_tbl}")
+    props = evaluate_props(props_df, players, sims, prop_bias_tbl)
     # alt-line parlays: anchored to the book's main line (or the model's middle number if not posted)
     main_lines = {}
     for r in props.get("props", []):
@@ -885,6 +888,7 @@ def main():
         "spread_gap": C.GAME_PLAY_SPREAD, "total_gap": C.GAME_PLAY_TOTAL,
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
+        **BR.summary(), "bias": prop_bias_tbl,
     }
     payload.update({
         "model": model_info,

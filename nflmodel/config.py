@@ -133,14 +133,14 @@ ODDS_CREDIT_RESERVE = 25     # never spend the last credits of your month
 # v6: BEST PLAYS AND FASTER UPDATES
 # ---------------------------------------------------------------
 # Props are sorted into three groups by the gap between the model and the book:
-#   Play: 4 to 7%      shown on the Games tab and graded as a play
+#   Play: 4 to 15% AND clears betrules.py (blended with the book, profit at the price)
 #   Watch: 7 to 15%    shown on the Props tab, not a play, still graded
 #   Too big: 15%+      hidden behind a toggle, still graded (usually missing info)
 PROP_PLAY_MIN = 0.04
-PROP_PLAY_MAX = 0.07
+PROP_PLAY_MAX = 0.15         # Oct 2026: a candidate becomes a Play only if it clears betrules.py (blend with the book, profit at the price)
 PROP_WATCH_MAX = 0.15
 # Prop types allowed to be a Play. Anytime TD stays in Watch until it proves itself.
-PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds", "rec"]
+PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
 # A "No TD" pick needs a real No price from the book. Without one it is never flagged.
 TD_NO_NEEDS_PRICE = True
 

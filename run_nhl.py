@@ -27,6 +27,9 @@ from nhlmodel import props as P
 from nhlmodel import ratings as R
 from nhlmodel.util import clean, norm_name, r
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import betrules as BR  # noqa: E402
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nhlmodel")
 ROOT = Path(__file__).resolve().parent
@@ -114,9 +117,17 @@ def game_picks(g, sim):
         po = float((t > L).mean())
         out["total"] = {"side": "Over" if po >= 0.5 else "Under", "line": L, "odds": None,
                         "model": r(100 * max(po, 1 - po)), "book": None, "edge": None, "fair": fmt_odds(american(max(po, 1 - po)))}
+    # plays: blend the model with the book, then demand a real profit at the posted price
     lim = {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE}
     for k, v in out.items():
-        v["play"] = v["edge"] is not None and lim[k] <= v["edge"] <= C.PLAY_MAX_EDGE
+        if v["edge"] is None or not v.get("odds"):
+            v["play"] = False
+            continue
+        p = BR.adjust_game(v["model"] / 100, v["book"] / 100)
+        ev, need = BR.game_ev(p, int(v["odds"]))
+        v["adj"], v["ev"] = r(100 * p), r(ev)
+        blocked = k == "pl" and int(v["odds"]) > 0 and "pl_dog" in C.BLOCKED      # puck-line long shots lost every time
+        v["play"] = bool(lim[k] <= v["edge"] <= C.PLAY_MAX_EDGE and ev >= need and not blocked)
     ml, pl = out.get("ml"), out.get("pl")
     if ml and pl and ml["play"] and pl["play"] and ml["side"] == pl["side"]:   # same team twice: keep the bigger gap
         (pl if ml["edge"] >= pl["edge"] else ml)["play"] = False
@@ -242,6 +253,33 @@ def tracking(history_days, results):
             "series": series}
 
 
+def prop_bias(hist_dir, results):
+    """How each prop stat has run against the book in graded games (fades in with sample size)."""
+    rows = []
+    for f in sorted(Path(hist_dir).glob("*.json")):
+        day = load_json(f, {})
+        for p in day.get("players", []):
+            res = results.get(str(p["game_id"]))
+            st = res and res["p"].get(str(p["pid"]))
+            if not st:
+                continue
+            for stat, m in p["m"].items():
+                bk = m.get("book")
+                if not bk or bk.get("odds") is None:
+                    continue
+                v = st[0] if stat == "saves" else st[{"sog": 0, "goals": 1, "assists": 2, "points": 3}[stat]]
+                if v == bk["line"]:
+                    continue
+                bo = bk.get("book_over")
+                if bo is not None:
+                    bo = bo / 100
+                else:       # older files kept only the bet side's price
+                    q = BR.no_vig_from_one(bk["odds"])
+                    bo = q if bk["side"] == "Over" else 1 - q
+                rows.append((stat, bo, v > bk["line"]))
+    return BR.bias_table(rows)
+
+
 def pick_text(k, pk):
     if k == "ml":
         return f"{pk['side']} ML"
@@ -358,17 +396,20 @@ def main():
         diffs = [lg_(p["m"][st]["book"]["model_over"]) - lg_(p["m"][st]["book"]["book_over"]) for p in players if p["m"].get(st, {}).get("book")]
         if len(diffs) >= 12:
             level[st] = float(np.median(diffs))
+    bias = prop_bias(HIST, load_json(OUT / "results.json", {}))
+    log.info(f"prop bias from graded results: {bias}")
     for p in players:
         for st, m in p["m"].items():
             b = m.get("book")
-            if not b or st not in level:
+            if not b:
                 continue
-            adj_over = 100 / (1 + np.exp(-(lg_(b["model_over"]) - level[st])))      # same shift on the log-odds scale
-            side = "Over" if adj_over >= b["book_over"] else "Under"
-            edge = (adj_over - b["book_over"]) if side == "Over" else (b["book_over"] - adj_over)
-            b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": side, "edge": r(edge),
-                      "odds": b["over"] if side == "Over" else b["under"],
-                      "play": 100 * C.PROP_PLAY_MIN <= edge <= 100 * C.PROP_PLAY_MAX})
+            adj_over = 100 / (1 + np.exp(-(lg_(b["model_over"]) - level.get(st, 0.0))))      # same shift on the log-odds scale
+            dec = BR.decide_prop(adj_over / 100, b["book_over"] / 100, b.get("over"), b.get("under"), st, bias,
+                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX)
+            if not dec:
+                continue
+            b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": dec["side"], "edge": dec["raw_edge"],
+                      "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"]})
     level = {k: r(v, 3) for k, v in level.items()}
     log.info(f"prop level vs book (model minus book, over %): {level}")
 
@@ -383,7 +424,7 @@ def main():
         for st, m in p["m"].items():
             k = int(m["fair"] + 0.5)
             lite["m"][st] = {"fair": m["fair"], "pf": m["ge"][k] if k < len(m["ge"]) else 0.0,
-                             **({"book": {x: m["book"][x] for x in ("line", "side", "odds", "edge", "play")}} if m.get("book") else {})}
+                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev")}} if m.get("book") else {})}
         pl_lite.append(lite)
     gdate = {g["game_id"]: g["date"] for g in games}
     for p in pl_lite:
@@ -417,7 +458,8 @@ def main():
                          "backtest": BACKTEST},
                "teams": [{"team": t, **{k: r(v, 2) for k, v in f.items() if k not in ("last",)}} for t, f in sorted(form.items())],
                "rules": {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE, "max": C.PLAY_MAX_EDGE,
-                         "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX]}}
+                         "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX], **BR.summary(), "bias": bias,
+                         "blocked": sorted(" ".join(x) if isinstance(x, tuple) else x for x in C.BLOCKED)}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} games, {len(players)} players")
 

@@ -21,7 +21,8 @@ WEEK_DECAY = 1.0                 # 1.0 = every game this season counts the same 
 PLAY_MIN_EV = 0.5                # a play needs at least this expected return (%) at the book's posted price, vig included
 ML_MAX_DOG = 350                 # no moneyline plays on longer shots than this
 PROP_PLAY_MIN = 0.06
-PROP_PLAY_MAX = 0.12
+PROP_PLAY_MAX = 0.12             # raw gap cap; the bar to be a play is set in betrules.py
+BLOCKED = set()                  # markets that may not be plays, e.g. ("rush_yds", "Over")
 
 # props
 PROP_STATS = ["pass_yds", "pass_td", "rush_yds", "rec_yds", "rec", "td"]
