@@ -888,7 +888,7 @@ def main():
         "spread_gap": C.GAME_PLAY_SPREAD, "total_gap": C.GAME_PLAY_TOTAL,
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
-        **BR.summary(), "bias": prop_bias_tbl,
+        **BR.summary(), "bias": prop_bias(OUT / "props_log.json"),
     }
     payload.update({
         "model": model_info,
