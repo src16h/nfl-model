@@ -2051,7 +2051,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.5,
+    "total": 42.5,
+    "margin": -6.0,
+    "points": 40.0
+   },
    "last_seen": "2026-10-11T15:57+00:00"
   },
   "2026_05_DET_ARI": {
@@ -2115,7 +2120,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -5.5,
+    "total": 55.5,
+    "margin": -24.0,
+    "points": 66.0
+   },
    "last_seen": "2026-10-11T15:57+00:00"
   },
   "2026_05_CHI_GB": {
@@ -2404,7 +2414,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.0,
+    "total": 46.5,
+    "margin": -3.0,
+    "points": 61.0
+   },
    "last_seen": "2026-10-11T15:57+00:00"
   },
   "2026_05_BAL_ATL": {
@@ -2507,7 +2522,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.5,
+    "total": 44.5,
+    "margin": -7.0,
+    "points": 53.0
+   },
    "last_seen": "2026-10-11T23:19+00:00"
   },
   "2026_05_BUF_LA": {
@@ -2582,10 +2602,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-12T12:43+00:00",
+     "src": "live:draftkings",
+     "spread": 3.5,
+     "total": 54.5,
+     "m": 2.7,
+     "t": 55.3,
+     "edge_s": -0.8,
+     "edge_t": 0.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-11T23:19+00:00"
+   "last_seen": "2026-10-12T12:43+00:00"
   }
  }
 }

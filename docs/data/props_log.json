@@ -43010,7 +43010,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040666|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0040666|anytime_td",
@@ -43038,7 +43044,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040730|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0040730|anytime_td",
@@ -43066,7 +43078,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036613|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0036613|anytime_td",
@@ -43094,7 +43112,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0034348|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0034348|anytime_td",
@@ -43122,7 +43146,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039915|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0039915|anytime_td",
@@ -43150,7 +43180,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040727|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0040727|anytime_td",
@@ -43178,7 +43214,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038454|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0038454|anytime_td",
@@ -43206,7 +43248,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040189|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0040189|anytime_td",
@@ -43234,7 +43282,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039732|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0039732|anytime_td",
@@ -43262,7 +43316,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0033881|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0033881|anytime_td",
@@ -43290,7 +43350,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036355|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0036355|anytime_td",
@@ -43318,7 +43384,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039391|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0039391|anytime_td",
@@ -43346,7 +43418,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 6.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039868|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0039868|anytime_td",
@@ -43374,7 +43452,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0037085|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0037085|anytime_td",
@@ -43402,7 +43486,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038976|anytime_td": {
    "key": "2026_05_DEN_LAC|00-0038976|anytime_td",
@@ -43430,7 +43520,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039732|pass_yds": {
    "key": "2026_05_DEN_LAC|00-0039732|pass_yds",
@@ -43458,7 +43554,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 123.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036355|pass_yds": {
    "key": "2026_05_DEN_LAC|00-0036355|pass_yds",
@@ -43486,7 +43588,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 121.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036613|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0036613|rec_yds",
@@ -43514,7 +43622,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 19.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039915|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0039915|rec_yds",
@@ -43542,7 +43656,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": "void",
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0034348|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0034348|rec_yds",
@@ -43570,7 +43690,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 18.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040730|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0040730|rec_yds",
@@ -43598,7 +43724,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039868|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0039868|rec_yds",
@@ -43626,7 +43758,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0033881|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0033881|rec_yds",
@@ -43654,7 +43792,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 55.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038976|rec_yds": {
    "key": "2026_05_DEN_LAC|00-0038976|rec_yds",
@@ -43682,7 +43826,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.926,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036613|rec": {
    "key": "2026_05_DEN_LAC|00-0036613|rec",
@@ -43710,7 +43860,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.09,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040730|rec": {
    "key": "2026_05_DEN_LAC|00-0040730|rec",
@@ -43738,7 +43894,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039915|rec": {
    "key": "2026_05_DEN_LAC|00-0039915|rec",
@@ -43766,7 +43928,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": "void",
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0034348|rec": {
    "key": "2026_05_DEN_LAC|00-0034348|rec",
@@ -43794,7 +43962,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0033881|rec": {
    "key": "2026_05_DEN_LAC|00-0033881|rec",
@@ -43822,7 +43996,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039868|rec": {
    "key": "2026_05_DEN_LAC|00-0039868|rec",
@@ -43850,7 +44030,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038976|rec": {
    "key": "2026_05_DEN_LAC|00-0038976|rec",
@@ -43878,7 +44064,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036158|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0036158|rush_yds",
@@ -43906,7 +44098,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 68.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040666|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0040666|rush_yds",
@@ -43934,7 +44132,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 33.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038454|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0038454|rush_yds",
@@ -43962,7 +44166,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 11.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036355|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0036355|rush_yds",
@@ -43990,7 +44200,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 24.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040730|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0040730|rush_yds",
@@ -44018,7 +44234,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 7.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039732|rush_yds": {
    "key": "2026_05_DEN_LAC|00-0039732|rush_yds",
@@ -44046,7 +44268,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 9.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036158|tds": {
    "key": "2026_05_DEN_LAC|00-0036158|tds",
@@ -44074,7 +44302,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040666|tds": {
    "key": "2026_05_DEN_LAC|00-0040666|tds",
@@ -44102,7 +44336,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040730|tds": {
    "key": "2026_05_DEN_LAC|00-0040730|tds",
@@ -44130,7 +44370,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036613|tds": {
    "key": "2026_05_DEN_LAC|00-0036613|tds",
@@ -44158,7 +44404,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0034348|tds": {
    "key": "2026_05_DEN_LAC|00-0034348|tds",
@@ -44186,7 +44438,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039915|tds": {
    "key": "2026_05_DEN_LAC|00-0039915|tds",
@@ -44214,7 +44472,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038454|tds": {
    "key": "2026_05_DEN_LAC|00-0038454|tds",
@@ -44242,7 +44506,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040727|tds": {
    "key": "2026_05_DEN_LAC|00-0040727|tds",
@@ -44270,7 +44540,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0040189|tds": {
    "key": "2026_05_DEN_LAC|00-0040189|tds",
@@ -44298,7 +44574,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039732|tds": {
    "key": "2026_05_DEN_LAC|00-0039732|tds",
@@ -44326,7 +44608,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0033881|tds": {
    "key": "2026_05_DEN_LAC|00-0033881|tds",
@@ -44354,7 +44642,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039391|tds": {
    "key": "2026_05_DEN_LAC|00-0039391|tds",
@@ -44382,7 +44676,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0036355|tds": {
    "key": "2026_05_DEN_LAC|00-0036355|tds",
@@ -44410,7 +44710,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0039868|tds": {
    "key": "2026_05_DEN_LAC|00-0039868|tds",
@@ -44438,7 +44744,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0037085|tds": {
    "key": "2026_05_DEN_LAC|00-0037085|tds",
@@ -44466,7 +44778,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DEN_LAC|00-0038976|tds": {
    "key": "2026_05_DEN_LAC|00-0038976|tds",
@@ -44494,7 +44812,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039139|anytime_td": {
    "key": "2026_05_DET_ARI|00-0039139|anytime_td",
@@ -44522,7 +44846,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0036963|anytime_td": {
    "key": "2026_05_DET_ARI|00-0036963|anytime_td",
@@ -44550,7 +44880,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0041027|anytime_td": {
    "key": "2026_05_DET_ARI|00-0041027|anytime_td",
@@ -44578,7 +44914,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037744|anytime_td": {
    "key": "2026_05_DET_ARI|00-0037744|anytime_td",
@@ -44606,7 +44948,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0038559|anytime_td": {
    "key": "2026_05_DET_ARI|00-0038559|anytime_td",
@@ -44634,7 +44982,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039065|anytime_td": {
    "key": "2026_05_DET_ARI|00-0039065|anytime_td",
@@ -44662,7 +45016,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037240|anytime_td": {
    "key": "2026_05_DET_ARI|00-0037240|anytime_td",
@@ -44690,7 +45050,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037263|anytime_td": {
    "key": "2026_05_DET_ARI|00-0037263|anytime_td",
@@ -44718,7 +45084,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033307|anytime_td": {
    "key": "2026_05_DET_ARI|00-0033307|anytime_td",
@@ -44746,7 +45118,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0040669|anytime_td": {
    "key": "2026_05_DET_ARI|00-0040669|anytime_td",
@@ -44774,7 +45152,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033119|anytime_td": {
    "key": "2026_05_DET_ARI|00-0033119|anytime_td",
@@ -44802,7 +45186,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039041|anytime_td": {
    "key": "2026_05_DET_ARI|00-0039041|anytime_td",
@@ -44830,7 +45220,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033106|anytime_td": {
    "key": "2026_05_DET_ARI|00-0033106|anytime_td",
@@ -44858,7 +45254,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033106|pass_yds": {
    "key": "2026_05_DET_ARI|00-0033106|pass_yds",
@@ -44886,7 +45288,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 271.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033119|pass_yds": {
    "key": "2026_05_DET_ARI|00-0033119|pass_yds",
@@ -44914,7 +45322,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 292.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037744|rec_yds": {
    "key": "2026_05_DET_ARI|00-0037744|rec_yds",
@@ -44942,7 +45356,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 66.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0036963|rec_yds": {
    "key": "2026_05_DET_ARI|00-0036963|rec_yds",
@@ -44970,7 +45390,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 69.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0038559|rec_yds": {
    "key": "2026_05_DET_ARI|00-0038559|rec_yds",
@@ -44998,7 +45424,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 30.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037240|rec_yds": {
    "key": "2026_05_DET_ARI|00-0037240|rec_yds",
@@ -45026,7 +45458,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 47.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039065|rec_yds": {
    "key": "2026_05_DET_ARI|00-0039065|rec_yds",
@@ -45054,7 +45492,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 88.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039139|rec_yds": {
    "key": "2026_05_DET_ARI|00-0039139|rec_yds",
@@ -45082,7 +45526,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 56.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033307|rec_yds": {
    "key": "2026_05_DET_ARI|00-0033307|rec_yds",
@@ -45110,7 +45560,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 70.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0040669|rec_yds": {
    "key": "2026_05_DET_ARI|00-0040669|rec_yds",
@@ -45138,7 +45594,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0041027|rec_yds": {
    "key": "2026_05_DET_ARI|00-0041027|rec_yds",
@@ -45166,7 +45628,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037263|rec_yds": {
    "key": "2026_05_DET_ARI|00-0037263|rec_yds",
@@ -45194,7 +45662,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 9.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037744|rec": {
    "key": "2026_05_DET_ARI|00-0037744|rec",
@@ -45222,7 +45696,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 9.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.09,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0036963|rec": {
    "key": "2026_05_DET_ARI|00-0036963|rec",
@@ -45250,7 +45730,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.813,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0038559|rec": {
    "key": "2026_05_DET_ARI|00-0038559|rec",
@@ -45278,7 +45764,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039065|rec": {
    "key": "2026_05_DET_ARI|00-0039065|rec",
@@ -45306,7 +45798,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039139|rec": {
    "key": "2026_05_DET_ARI|00-0039139|rec",
@@ -45334,7 +45832,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037240|rec": {
    "key": "2026_05_DET_ARI|00-0037240|rec",
@@ -45362,7 +45866,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.09,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033307|rec": {
    "key": "2026_05_DET_ARI|00-0033307|rec",
@@ -45390,7 +45900,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0041027|rec": {
    "key": "2026_05_DET_ARI|00-0041027|rec",
@@ -45418,7 +45934,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.714,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0040669|rec": {
    "key": "2026_05_DET_ARI|00-0040669|rec",
@@ -45446,7 +45968,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.606,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037263|rec": {
    "key": "2026_05_DET_ARI|00-0037263|rec",
@@ -45474,7 +46002,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039139|rush_yds": {
    "key": "2026_05_DET_ARI|00-0039139|rush_yds",
@@ -45502,7 +46036,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 151.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0041027|rush_yds": {
    "key": "2026_05_DET_ARI|00-0041027|rush_yds",
@@ -45530,7 +46070,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 22.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037263|rush_yds": {
    "key": "2026_05_DET_ARI|00-0037263|rush_yds",
@@ -45558,7 +46104,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 7.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033119|rush_yds": {
    "key": "2026_05_DET_ARI|00-0033119|rush_yds",
@@ -45586,7 +46138,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033106|rush_yds": {
    "key": "2026_05_DET_ARI|00-0033106|rush_yds",
@@ -45614,7 +46172,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.826,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039139|tds": {
    "key": "2026_05_DET_ARI|00-0039139|tds",
@@ -45642,7 +46206,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0036963|tds": {
    "key": "2026_05_DET_ARI|00-0036963|tds",
@@ -45670,7 +46240,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0041027|tds": {
    "key": "2026_05_DET_ARI|00-0041027|tds",
@@ -45698,7 +46274,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037744|tds": {
    "key": "2026_05_DET_ARI|00-0037744|tds",
@@ -45726,7 +46308,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0038559|tds": {
    "key": "2026_05_DET_ARI|00-0038559|tds",
@@ -45754,7 +46342,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039065|tds": {
    "key": "2026_05_DET_ARI|00-0039065|tds",
@@ -45782,7 +46376,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037240|tds": {
    "key": "2026_05_DET_ARI|00-0037240|tds",
@@ -45810,7 +46410,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037263|tds": {
    "key": "2026_05_DET_ARI|00-0037263|tds",
@@ -45838,7 +46444,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033307|tds": {
    "key": "2026_05_DET_ARI|00-0033307|tds",
@@ -45866,7 +46478,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0040669|tds": {
    "key": "2026_05_DET_ARI|00-0040669|tds",
@@ -45894,7 +46512,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033119|tds": {
    "key": "2026_05_DET_ARI|00-0033119|tds",
@@ -45922,7 +46546,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0039041|tds": {
    "key": "2026_05_DET_ARI|00-0039041|tds",
@@ -45950,7 +46580,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0033106|tds": {
    "key": "2026_05_DET_ARI|00-0033106|tds",
@@ -45978,7 +46614,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037157|anytime_td": {
    "key": "2026_05_DET_ARI|00-0037157|anytime_td",
@@ -46006,7 +46648,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_DET_ARI|00-0037157|tds": {
    "key": "2026_05_DET_ARI|00-0037157|tds",
@@ -46034,7 +46682,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033280|anytime_td": {
    "key": "2026_05_SF_SEA|00-0033280|anytime_td",
@@ -46062,7 +46716,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.769,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038797|anytime_td": {
    "key": "2026_05_SF_SEA|00-0038797|anytime_td",
@@ -46090,7 +46750,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038543|anytime_td": {
    "key": "2026_05_SF_SEA|00-0038543|anytime_td",
@@ -46118,7 +46784,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033288|anytime_td": {
    "key": "2026_05_SF_SEA|00-0033288|anytime_td",
@@ -46146,7 +46818,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0031408|anytime_td": {
    "key": "2026_05_SF_SEA|00-0031408|anytime_td",
@@ -46174,7 +46852,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0035719|anytime_td": {
    "key": "2026_05_SF_SEA|00-0035719|anytime_td",
@@ -46202,7 +46886,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039299|anytime_td": {
    "key": "2026_05_SF_SEA|00-0039299|anytime_td",
@@ -46230,7 +46920,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039793|anytime_td": {
    "key": "2026_05_SF_SEA|00-0039793|anytime_td",
@@ -46258,7 +46954,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037545|anytime_td": {
    "key": "2026_05_SF_SEA|00-0037545|anytime_td",
@@ -46286,7 +46988,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033908|anytime_td": {
    "key": "2026_05_SF_SEA|00-0033908|anytime_td",
@@ -46314,7 +47022,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037834|anytime_td": {
    "key": "2026_05_SF_SEA|00-0037834|anytime_td",
@@ -46342,7 +47056,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0041052|anytime_td": {
    "key": "2026_05_SF_SEA|00-0041052|anytime_td",
@@ -46370,7 +47090,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0034869|anytime_td": {
    "key": "2026_05_SF_SEA|00-0034869|anytime_td",
@@ -46398,7 +47124,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0034869|pass_yds": {
    "key": "2026_05_SF_SEA|00-0034869|pass_yds",
@@ -46426,7 +47158,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 195.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037834|pass_yds": {
    "key": "2026_05_SF_SEA|00-0037834|pass_yds",
@@ -46454,7 +47192,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 189.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038543|rec_yds": {
    "key": "2026_05_SF_SEA|00-0038543|rec_yds",
@@ -46482,7 +47226,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 102.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033288|rec_yds": {
    "key": "2026_05_SF_SEA|00-0033288|rec_yds",
@@ -46510,7 +47260,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 24.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0031408|rec_yds": {
    "key": "2026_05_SF_SEA|00-0031408|rec_yds",
@@ -46538,7 +47294,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 113.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033280|rec_yds": {
    "key": "2026_05_SF_SEA|00-0033280|rec_yds",
@@ -46566,7 +47328,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 15.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0035719|rec_yds": {
    "key": "2026_05_SF_SEA|00-0035719|rec_yds",
@@ -46594,7 +47362,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 21.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033908|rec_yds": {
    "key": "2026_05_SF_SEA|00-0033908|rec_yds",
@@ -46622,7 +47396,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 15.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039793|rec_yds": {
    "key": "2026_05_SF_SEA|00-0039793|rec_yds",
@@ -46650,7 +47430,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 20.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037545|rec_yds": {
    "key": "2026_05_SF_SEA|00-0037545|rec_yds",
@@ -46678,7 +47464,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 23.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038797|rec_yds": {
    "key": "2026_05_SF_SEA|00-0038797|rec_yds",
@@ -46706,7 +47498,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 11.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.862,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039299|rec_yds": {
    "key": "2026_05_SF_SEA|00-0039299|rec_yds",
@@ -46734,7 +47532,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 24.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038543|rec": {
    "key": "2026_05_SF_SEA|00-0038543|rec",
@@ -46762,7 +47566,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033280|rec": {
    "key": "2026_05_SF_SEA|00-0033280|rec",
@@ -46790,7 +47600,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033288|rec": {
    "key": "2026_05_SF_SEA|00-0033288|rec",
@@ -46818,7 +47634,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.82,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0031408|rec": {
    "key": "2026_05_SF_SEA|00-0031408|rec",
@@ -46846,7 +47668,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 7.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0035719|rec": {
    "key": "2026_05_SF_SEA|00-0035719|rec",
@@ -46874,7 +47702,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039793|rec": {
    "key": "2026_05_SF_SEA|00-0039793|rec",
@@ -46902,7 +47736,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.952,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033908|rec": {
    "key": "2026_05_SF_SEA|00-0033908|rec",
@@ -46930,7 +47770,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037545|rec": {
    "key": "2026_05_SF_SEA|00-0037545|rec",
@@ -46958,7 +47804,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038797|rec": {
    "key": "2026_05_SF_SEA|00-0038797|rec",
@@ -46986,7 +47838,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039299|rec": {
    "key": "2026_05_SF_SEA|00-0039299|rec",
@@ -47014,7 +47872,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038797|rush_yds": {
    "key": "2026_05_SF_SEA|00-0038797|rush_yds",
@@ -47042,7 +47906,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 61.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033280|rush_yds": {
    "key": "2026_05_SF_SEA|00-0033280|rush_yds",
@@ -47070,7 +47940,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 68.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037834|rush_yds": {
    "key": "2026_05_SF_SEA|00-0037834|rush_yds",
@@ -47098,7 +47974,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039299|rush_yds": {
    "key": "2026_05_SF_SEA|00-0039299|rush_yds",
@@ -47126,7 +48008,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 7.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0041052|rush_yds": {
    "key": "2026_05_SF_SEA|00-0041052|rush_yds",
@@ -47154,7 +48042,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0035719|rush_yds": {
    "key": "2026_05_SF_SEA|00-0035719|rush_yds",
@@ -47182,7 +48076,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0034869|rush_yds": {
    "key": "2026_05_SF_SEA|00-0034869|rush_yds",
@@ -47210,7 +48110,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033280|tds": {
    "key": "2026_05_SF_SEA|00-0033280|tds",
@@ -47238,7 +48144,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038797|tds": {
    "key": "2026_05_SF_SEA|00-0038797|tds",
@@ -47266,7 +48178,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0038543|tds": {
    "key": "2026_05_SF_SEA|00-0038543|tds",
@@ -47294,7 +48212,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033288|tds": {
    "key": "2026_05_SF_SEA|00-0033288|tds",
@@ -47322,7 +48246,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0031408|tds": {
    "key": "2026_05_SF_SEA|00-0031408|tds",
@@ -47350,7 +48280,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0035719|tds": {
    "key": "2026_05_SF_SEA|00-0035719|tds",
@@ -47378,7 +48314,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039299|tds": {
    "key": "2026_05_SF_SEA|00-0039299|tds",
@@ -47406,7 +48348,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0039793|tds": {
    "key": "2026_05_SF_SEA|00-0039793|tds",
@@ -47434,7 +48382,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037545|tds": {
    "key": "2026_05_SF_SEA|00-0037545|tds",
@@ -47462,7 +48416,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0033908|tds": {
    "key": "2026_05_SF_SEA|00-0033908|tds",
@@ -47490,7 +48450,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0037834|tds": {
    "key": "2026_05_SF_SEA|00-0037834|tds",
@@ -47518,7 +48484,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0034869|tds": {
    "key": "2026_05_SF_SEA|00-0034869|tds",
@@ -47546,7 +48518,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_SF_SEA|00-0041052|tds": {
    "key": "2026_05_SF_SEA|00-0041052|tds",
@@ -47574,7 +48552,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0038542|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0038542|anytime_td",
@@ -47602,7 +48586,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0032764|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0032764|anytime_td",
@@ -47630,7 +48620,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037238|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0037238|anytime_td",
@@ -47658,7 +48654,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039064|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0039064|anytime_td",
@@ -47686,7 +48688,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037746|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0037746|anytime_td",
@@ -47714,7 +48722,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034753|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0034753|anytime_td",
@@ -47742,7 +48756,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036970|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0036970|anytime_td",
@@ -47770,7 +48790,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0035993|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0035993|anytime_td",
@@ -47798,7 +48824,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036550|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0036550|anytime_td",
@@ -47826,7 +48858,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037741|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0037741|anytime_td",
@@ -47854,7 +48892,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034975|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0034975|anytime_td",
@@ -47882,7 +48926,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039917|anytime_td": {
    "key": "2026_05_BAL_ATL|00-0039917|anytime_td",
@@ -47910,7 +48960,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039917|pass_yds": {
    "key": "2026_05_BAL_ATL|00-0039917|pass_yds",
@@ -47938,7 +48994,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 240.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0035993|pass_yds": {
    "key": "2026_05_BAL_ATL|00-0035993|pass_yds",
@@ -47966,7 +49028,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 201.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037238|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0037238|rec_yds",
@@ -47994,7 +49062,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 118.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039064|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0039064|rec_yds",
@@ -48022,7 +49096,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 53.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034753|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0034753|rec_yds",
@@ -48050,7 +49130,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 28.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0038542|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0038542|rec_yds",
@@ -48078,7 +49164,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 32.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036970|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0036970|rec_yds",
@@ -48106,7 +49198,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 42.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037741|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0037741|rec_yds",
@@ -48134,7 +49232,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 54.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036550|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0036550|rec_yds",
@@ -48162,7 +49266,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 62.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034975|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0034975|rec_yds",
@@ -48190,7 +49300,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0032764|rec_yds": {
    "key": "2026_05_BAL_ATL|00-0032764|rec_yds",
@@ -48218,7 +49334,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 18.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037238|rec": {
    "key": "2026_05_BAL_ATL|00-0037238|rec",
@@ -48246,7 +49368,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 7.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039064|rec": {
    "key": "2026_05_BAL_ATL|00-0039064|rec",
@@ -48274,7 +49402,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 8.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034753|rec": {
    "key": "2026_05_BAL_ATL|00-0034753|rec",
@@ -48302,7 +49436,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.694,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0038542|rec": {
    "key": "2026_05_BAL_ATL|00-0038542|rec",
@@ -48330,7 +49470,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036970|rec": {
    "key": "2026_05_BAL_ATL|00-0036970|rec",
@@ -48358,7 +49504,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.06,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036550|rec": {
    "key": "2026_05_BAL_ATL|00-0036550|rec",
@@ -48386,7 +49538,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.667,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037741|rec": {
    "key": "2026_05_BAL_ATL|00-0037741|rec",
@@ -48414,7 +49572,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034975|rec": {
    "key": "2026_05_BAL_ATL|00-0034975|rec",
@@ -48442,7 +49606,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0032764|rec": {
    "key": "2026_05_BAL_ATL|00-0032764|rec",
@@ -48470,7 +49640,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0038542|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0038542|rush_yds",
@@ -48498,7 +49674,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 86.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0032764|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0032764|rush_yds",
@@ -48526,7 +49708,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 102.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037746|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0037746|rush_yds",
@@ -48554,7 +49742,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0035993|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0035993|rush_yds",
@@ -48582,7 +49776,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 18.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.862,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034975|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0034975|rush_yds",
@@ -48610,7 +49810,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 73.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039917|rush_yds": {
    "key": "2026_05_BAL_ATL|00-0039917|rush_yds",
@@ -48638,7 +49844,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0038542|tds": {
    "key": "2026_05_BAL_ATL|00-0038542|tds",
@@ -48666,7 +49878,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0032764|tds": {
    "key": "2026_05_BAL_ATL|00-0032764|tds",
@@ -48694,7 +49912,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037238|tds": {
    "key": "2026_05_BAL_ATL|00-0037238|tds",
@@ -48722,7 +49946,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039064|tds": {
    "key": "2026_05_BAL_ATL|00-0039064|tds",
@@ -48750,7 +49980,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037746|tds": {
    "key": "2026_05_BAL_ATL|00-0037746|tds",
@@ -48778,7 +50014,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034753|tds": {
    "key": "2026_05_BAL_ATL|00-0034753|tds",
@@ -48806,7 +50048,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036970|tds": {
    "key": "2026_05_BAL_ATL|00-0036970|tds",
@@ -48834,7 +50082,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0035993|tds": {
    "key": "2026_05_BAL_ATL|00-0035993|tds",
@@ -48862,7 +50116,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0036550|tds": {
    "key": "2026_05_BAL_ATL|00-0036550|tds",
@@ -48890,7 +50150,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0037741|tds": {
    "key": "2026_05_BAL_ATL|00-0037741|tds",
@@ -48918,7 +50184,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0034975|tds": {
    "key": "2026_05_BAL_ATL|00-0034975|tds",
@@ -48946,7 +50218,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BAL_ATL|00-0039917|tds": {
    "key": "2026_05_BAL_ATL|00-0039917|tds",
@@ -48974,7 +50252,13 @@
    "first_lean": null,
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   }
   },
   "2026_05_BUF_LA|00-0037840|anytime_td": {
    "key": "2026_05_BUF_LA|00-0037840|anytime_td",
@@ -48990,9 +50274,9 @@
    "line": null,
    "over_odds": "-170",
    "under_odds": null,
-   "model_over": 62.9,
+   "model_over": 63.1,
    "book_over": 63.0,
-   "edge": -0.1,
+   "edge": 0.1,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49001,7 +50285,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|anytime_td": {
@@ -49018,9 +50302,9 @@
    "line": null,
    "over_odds": "-130",
    "under_odds": null,
-   "model_over": 33.0,
+   "model_over": 32.6,
    "book_over": 56.5,
-   "edge": -23.5,
+   "edge": -23.9,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49029,7 +50313,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|anytime_td": {
@@ -49046,9 +50330,9 @@
    "line": null,
    "over_odds": "-130",
    "under_odds": null,
-   "model_over": 26.9,
+   "model_over": 26.1,
    "book_over": 56.5,
-   "edge": -29.6,
+   "edge": -30.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49057,7 +50341,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|anytime_td": {
@@ -49074,18 +50358,18 @@
    "line": null,
    "over_odds": "-120",
    "under_odds": null,
-   "model_over": 58.7,
+   "model_over": 58.1,
    "book_over": 54.5,
-   "edge": 4.2,
-   "lean": "Over",
-   "tier": "watch",
+   "edge": 3.6,
+   "lean": null,
+   "tier": null,
    "median": null,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|anytime_td": {
@@ -49102,9 +50386,9 @@
    "line": null,
    "over_odds": "+100",
    "under_odds": null,
-   "model_over": 39.5,
+   "model_over": 39.2,
    "book_over": 50.0,
-   "edge": -10.5,
+   "edge": -10.8,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49113,7 +50397,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|anytime_td": {
@@ -49130,9 +50414,9 @@
    "line": null,
    "over_odds": "+185",
    "under_odds": null,
-   "model_over": 15.5,
+   "model_over": 15.8,
    "book_over": 35.1,
-   "edge": -19.6,
+   "edge": -19.3,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49141,7 +50425,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|anytime_td": {
@@ -49158,9 +50442,9 @@
    "line": null,
    "over_odds": "+210",
    "under_odds": null,
-   "model_over": 34.6,
+   "model_over": 34.8,
    "book_over": 32.3,
-   "edge": 2.4,
+   "edge": 2.5,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49169,7 +50453,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|anytime_td": {
@@ -49186,9 +50470,9 @@
    "line": null,
    "over_odds": "+225",
    "under_odds": null,
-   "model_over": 19.1,
+   "model_over": 19.3,
    "book_over": 30.8,
-   "edge": -11.7,
+   "edge": -11.5,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49197,7 +50481,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|anytime_td": {
@@ -49225,7 +50509,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|anytime_td": {
@@ -49242,9 +50526,9 @@
    "line": null,
    "over_odds": "+255",
    "under_odds": null,
-   "model_over": 18.9,
+   "model_over": 20.0,
    "book_over": 28.2,
-   "edge": -9.2,
+   "edge": -8.2,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49253,7 +50537,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|anytime_td": {
@@ -49270,18 +50554,18 @@
    "line": null,
    "over_odds": "+300",
    "under_odds": null,
-   "model_over": 29.2,
+   "model_over": 28.0,
    "book_over": 25.0,
-   "edge": 4.2,
-   "lean": "Over",
-   "tier": "watch",
+   "edge": 3.0,
+   "lean": null,
+   "tier": null,
    "median": null,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|anytime_td": {
@@ -49298,9 +50582,9 @@
    "line": null,
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 18.4,
+   "model_over": 18.2,
    "book_over": 17.4,
-   "edge": 1.0,
+   "edge": 0.8,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49309,7 +50593,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|anytime_td": {
@@ -49326,9 +50610,9 @@
    "line": null,
    "over_odds": "+650",
    "under_odds": null,
-   "model_over": 18.8,
+   "model_over": 19.1,
    "book_over": 13.3,
-   "edge": 5.5,
+   "edge": 5.8,
    "lean": "Over",
    "tier": "watch",
    "median": null,
@@ -49337,7 +50621,7 @@
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|anytime_td": {
@@ -49354,9 +50638,9 @@
    "line": null,
    "over_odds": "+750",
    "under_odds": null,
-   "model_over": 14.1,
+   "model_over": 14.3,
    "book_over": 11.8,
-   "edge": 2.3,
+   "edge": 2.5,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49365,7 +50649,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|anytime_td": {
@@ -49382,9 +50666,9 @@
    "line": null,
    "over_odds": "+1600",
    "under_odds": null,
-   "model_over": 2.8,
+   "model_over": 3.1,
    "book_over": 5.9,
-   "edge": -3.1,
+   "edge": -2.8,
    "lean": null,
    "tier": null,
    "median": null,
@@ -49393,7 +50677,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|pass_yds": {
@@ -49410,18 +50694,18 @@
    "line": "278.5",
    "over_odds": "-112",
    "under_odds": "-112",
-   "model_over": 50.0,
+   "model_over": 48.9,
    "book_over": 50.0,
-   "edge": -0.1,
+   "edge": -1.1,
    "lean": null,
    "tier": null,
-   "median": 278.4,
+   "median": 276.8,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "278.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|pass_yds": {
@@ -49438,18 +50722,18 @@
    "line": "242.5",
    "over_odds": "-113",
    "under_odds": "-111",
-   "model_over": 38.0,
+   "model_over": 38.8,
    "book_over": 50.2,
-   "edge": -12.2,
+   "edge": -11.4,
    "lean": "Under",
    "tier": "watch",
-   "median": 224.6,
+   "median": 226.0,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "242.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|rec_yds": {
@@ -49466,18 +50750,18 @@
    "line": "93.5",
    "over_odds": "-113",
    "under_odds": "-111",
-   "model_over": 29.5,
+   "model_over": 29.2,
    "book_over": 50.2,
-   "edge": -20.7,
+   "edge": -21.0,
    "lean": "Under",
    "tier": "too_big",
-   "median": 65.7,
+   "median": 65.4,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "93.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|rec_yds": {
@@ -49494,18 +50778,18 @@
    "line": "62.5",
    "over_odds": "-112",
    "under_odds": "-112",
-   "model_over": 47.5,
+   "model_over": 47.2,
    "book_over": 50.0,
-   "edge": -2.5,
+   "edge": -2.8,
    "lean": null,
    "tier": null,
-   "median": 59.5,
+   "median": 59.1,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "62.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|rec_yds": {
@@ -49522,18 +50806,18 @@
    "line": "54.5",
    "over_odds": "-111",
    "under_odds": "-113",
-   "model_over": 27.2,
+   "model_over": 27.4,
    "book_over": 49.8,
-   "edge": -22.6,
+   "edge": -22.4,
    "lean": "Under",
    "tier": "too_big",
-   "median": 33.0,
+   "median": 33.2,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "54.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|rec_yds": {
@@ -49550,18 +50834,18 @@
    "line": "46.5",
    "over_odds": "-112",
    "under_odds": "-112",
-   "model_over": 52.6,
+   "model_over": 52.9,
    "book_over": 50.0,
-   "edge": 2.6,
+   "edge": 2.9,
    "lean": null,
    "tier": null,
-   "median": 48.8,
+   "median": 49.1,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "46.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|rec_yds": {
@@ -49578,18 +50862,18 @@
    "line": "38.5",
    "over_odds": "-113",
    "under_odds": "-111",
-   "model_over": 38.4,
+   "model_over": 38.6,
    "book_over": 50.2,
-   "edge": -11.8,
+   "edge": -11.6,
    "lean": "Under",
    "tier": "watch",
-   "median": 29.5,
+   "median": 29.7,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "38.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rec_yds": {
@@ -49606,18 +50890,18 @@
    "line": "22.5",
    "over_odds": "-113",
    "under_odds": "-111",
-   "model_over": 50.8,
+   "model_over": 50.6,
    "book_over": 50.2,
-   "edge": 0.6,
+   "edge": 0.4,
    "lean": null,
    "tier": null,
-   "median": 22.9,
+   "median": 22.8,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "22.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|rec_yds": {
@@ -49634,18 +50918,18 @@
    "line": "22.5",
    "over_odds": "-111",
    "under_odds": "-113",
-   "model_over": 45.8,
+   "model_over": 45.6,
    "book_over": 49.8,
-   "edge": -4.0,
-   "lean": null,
-   "tier": null,
-   "median": 19.7,
+   "edge": -4.2,
+   "lean": "Under",
+   "tier": "play",
+   "median": 19.6,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "22.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|rec_yds": {
@@ -49662,18 +50946,18 @@
    "line": "16.5",
    "over_odds": "-112",
    "under_odds": "-112",
-   "model_over": 35.1,
+   "model_over": 34.9,
    "book_over": 50.0,
-   "edge": -14.9,
+   "edge": -15.1,
    "lean": "Under",
-   "tier": "watch",
-   "median": 8.8,
+   "tier": "too_big",
+   "median": 8.7,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "16.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|rec_yds": {
@@ -49690,9 +50974,9 @@
    "line": "11.5",
    "over_odds": "-118",
    "under_odds": "-106",
-   "model_over": 37.2,
+   "model_over": 37.4,
    "book_over": 51.3,
-   "edge": -14.1,
+   "edge": -13.9,
    "lean": "Under",
    "tier": "watch",
    "median": 6.6,
@@ -49701,7 +50985,7 @@
    "first_line": "11.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|rec_yds": {
@@ -49718,18 +51002,18 @@
    "line": "10.5",
    "over_odds": "-111",
    "under_odds": "-113",
-   "model_over": 55.0,
+   "model_over": 55.1,
    "book_over": 49.8,
-   "edge": 5.2,
+   "edge": 5.3,
    "lean": "Over",
    "tier": "play",
-   "median": 12.7,
+   "median": 12.8,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "10.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rec_yds": {
@@ -49746,18 +51030,18 @@
    "line": "10.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 45.9,
+   "model_over": 46.0,
    "book_over": 49.6,
-   "edge": -3.7,
+   "edge": -3.5,
    "lean": null,
    "tier": null,
-   "median": 8.9,
+   "median": 9.0,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "10.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|rec_yds": {
@@ -49774,18 +51058,18 @@
    "line": "6.5",
    "over_odds": "-114",
    "under_odds": "-110",
-   "model_over": 63.3,
+   "model_over": 63.1,
    "book_over": 50.4,
-   "edge": 12.9,
+   "edge": 12.7,
    "lean": "Over",
    "tier": "watch",
-   "median": 11.8,
+   "median": 11.7,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "6.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|rec": {
@@ -49802,9 +51086,9 @@
    "line": "7.5",
    "over_odds": "+101",
    "under_odds": "-128",
-   "model_over": 27.6,
+   "model_over": 27.2,
    "book_over": 47.0,
-   "edge": -19.4,
+   "edge": -19.8,
    "lean": "Under",
    "tier": "too_big",
    "median": 5.0,
@@ -49813,7 +51097,7 @@
    "first_line": "7.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|rec": {
@@ -49830,9 +51114,9 @@
    "line": "4.5",
    "over_odds": "-109",
    "under_odds": "-117",
-   "model_over": 54.6,
+   "model_over": 55.1,
    "book_over": 49.2,
-   "edge": 5.4,
+   "edge": 5.9,
    "lean": "Over",
    "tier": "play",
    "median": 5.0,
@@ -49841,7 +51125,7 @@
    "first_line": "4.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|rec": {
@@ -49858,9 +51142,9 @@
    "line": "4.5",
    "over_odds": "+101",
    "under_odds": "-129",
-   "model_over": 26.5,
+   "model_over": 27.4,
    "book_over": 46.9,
-   "edge": -20.4,
+   "edge": -19.5,
    "lean": "Under",
    "tier": "too_big",
    "median": 3.0,
@@ -49869,7 +51153,7 @@
    "first_line": "4.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|rec": {
@@ -49886,9 +51170,9 @@
    "line": "4.5",
    "over_odds": "+107",
    "under_odds": "-136",
-   "model_over": 48.4,
+   "model_over": 46.9,
    "book_over": 45.6,
-   "edge": 2.8,
+   "edge": 1.3,
    "lean": null,
    "tier": null,
    "median": 4.0,
@@ -49897,7 +51181,7 @@
    "first_line": "4.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|rec": {
@@ -49914,9 +51198,9 @@
    "line": "3.5",
    "over_odds": "+129",
    "under_odds": "-165",
-   "model_over": 34.2,
+   "model_over": 34.1,
    "book_over": 41.2,
-   "edge": -7.0,
+   "edge": -7.2,
    "lean": "Under",
    "tier": "watch",
    "median": 2.0,
@@ -49925,7 +51209,7 @@
    "first_line": "3.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rec": {
@@ -49942,9 +51226,9 @@
    "line": "2.5",
    "over_odds": "-168",
    "under_odds": "+131",
-   "model_over": 61.1,
+   "model_over": 61.4,
    "book_over": 59.2,
-   "edge": 1.9,
+   "edge": 2.2,
    "lean": null,
    "tier": null,
    "median": 3.0,
@@ -49953,7 +51237,7 @@
    "first_line": "2.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|rec": {
@@ -49970,9 +51254,9 @@
    "line": "2.5",
    "over_odds": "-128",
    "under_odds": "+100",
-   "model_over": 44.4,
+   "model_over": 44.5,
    "book_over": 52.9,
-   "edge": -8.5,
+   "edge": -8.4,
    "lean": "Under",
    "tier": "watch",
    "median": 2.0,
@@ -49981,7 +51265,7 @@
    "first_line": "2.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|rec": {
@@ -49998,9 +51282,9 @@
    "line": "2.5",
    "over_odds": "+148",
    "under_odds": "-190",
-   "model_over": 25.9,
+   "model_over": 26.9,
    "book_over": 38.1,
-   "edge": -12.2,
+   "edge": -11.2,
    "lean": "Under",
    "tier": "watch",
    "median": 1.0,
@@ -50009,7 +51293,7 @@
    "first_line": "2.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|rec": {
@@ -50026,9 +51310,9 @@
    "line": "1.5",
    "over_odds": "-178",
    "under_odds": "+139",
-   "model_over": 41.7,
+   "model_over": 42.2,
    "book_over": 60.5,
-   "edge": -18.8,
+   "edge": -18.3,
    "lean": "Under",
    "tier": "too_big",
    "median": 1.0,
@@ -50037,7 +51321,7 @@
    "first_line": "1.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rec": {
@@ -50054,9 +51338,9 @@
    "line": "1.5",
    "over_odds": "-130",
    "under_odds": "+102",
-   "model_over": 50.5,
+   "model_over": 50.6,
    "book_over": 53.3,
-   "edge": -2.8,
+   "edge": -2.7,
    "lean": null,
    "tier": null,
    "median": 2.0,
@@ -50065,7 +51349,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|rec": {
@@ -50082,18 +51366,18 @@
    "line": "1.5",
    "over_odds": "+122",
    "under_odds": "-156",
-   "model_over": 49.5,
+   "model_over": 50.1,
    "book_over": 42.5,
-   "edge": 7.0,
+   "edge": 7.6,
    "lean": "Over",
-   "tier": "play",
-   "median": 1.0,
+   "tier": "watch",
+   "median": 2.0,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|rec": {
@@ -50110,9 +51394,9 @@
    "line": "0.5",
    "over_odds": "-173",
    "under_odds": "+135",
-   "model_over": 63.7,
+   "model_over": 63.2,
    "book_over": 59.8,
-   "edge": 3.9,
+   "edge": 3.4,
    "lean": null,
    "tier": null,
    "median": 1.0,
@@ -50121,7 +51405,7 @@
    "first_line": "0.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|rush_yds": {
@@ -50138,18 +51422,18 @@
    "line": "73.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 59.1,
+   "model_over": 58.4,
    "book_over": 49.6,
-   "edge": 9.5,
+   "edge": 8.9,
    "lean": "Over",
    "tier": "watch",
-   "median": 81.5,
+   "median": 80.4,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "73.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|rush_yds": {
@@ -50166,18 +51450,18 @@
    "line": "69.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 47.4,
+   "model_over": 47.5,
    "book_over": 49.6,
-   "edge": -2.2,
+   "edge": -2.1,
    "lean": null,
    "tier": null,
-   "median": 67.4,
+   "median": 67.6,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "69.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|rush_yds": {
@@ -50194,18 +51478,18 @@
    "line": "38.5",
    "over_odds": "-110",
    "under_odds": "-114",
-   "model_over": 40.8,
+   "model_over": 40.6,
    "book_over": 49.6,
-   "edge": -8.8,
+   "edge": -9.0,
    "lean": "Under",
    "tier": "watch",
-   "median": 33.3,
+   "median": 33.1,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "38.5",
    "first_lean": "Under",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|rush_yds": {
@@ -50222,18 +51506,18 @@
    "line": "35.5",
    "over_odds": "-115",
    "under_odds": "-109",
-   "model_over": 49.2,
+   "model_over": 49.7,
    "book_over": 50.6,
-   "edge": -1.5,
+   "edge": -0.9,
    "lean": null,
    "tier": null,
-   "median": 35.0,
+   "median": 35.3,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "35.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|rush_yds": {
@@ -50250,18 +51534,18 @@
    "line": "1.5",
    "over_odds": "-102",
    "under_odds": "-123",
-   "model_over": 89.1,
+   "model_over": 89.6,
    "book_over": 47.8,
-   "edge": 41.3,
+   "edge": 41.8,
    "lean": "Over",
    "tier": "too_big",
-   "median": 5.4,
+   "median": 5.3,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037840|tds": {
@@ -50278,18 +51562,18 @@
    "line": "1.5",
    "over_odds": "+330",
    "under_odds": null,
-   "model_over": 26.9,
+   "model_over": 27.7,
    "book_over": 23.3,
-   "edge": 3.6,
-   "lean": null,
-   "tier": null,
+   "edge": 4.4,
+   "lean": "Over",
+   "tier": "watch",
    "median": 1.0,
    "source": "auto:draftkings",
    "book": "DraftKings",
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034857|tds": {
@@ -50306,7 +51590,7 @@
    "line": "1.5",
    "over_odds": "+450",
    "under_odds": null,
-   "model_over": 4.2,
+   "model_over": 4.3,
    "book_over": 18.2,
    "edge": -13.9,
    "lean": null,
@@ -50317,7 +51601,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039075|tds": {
@@ -50334,9 +51618,9 @@
    "line": "1.5",
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 6.4,
+   "model_over": 6.9,
    "book_over": 17.4,
-   "edge": -11.0,
+   "edge": -10.5,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50345,7 +51629,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037248|tds": {
@@ -50362,9 +51646,9 @@
    "line": "1.5",
    "over_odds": "+475",
    "under_odds": null,
-   "model_over": 24.0,
+   "model_over": 23.8,
    "book_over": 17.4,
-   "edge": 6.6,
+   "edge": 6.4,
    "lean": "Over",
    "tier": "watch",
    "median": 1.0,
@@ -50373,7 +51657,7 @@
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0031381|tds": {
@@ -50390,9 +51674,9 @@
    "line": "1.5",
    "over_odds": "+650",
    "under_odds": null,
-   "model_over": 9.7,
+   "model_over": 9.9,
    "book_over": 13.3,
-   "edge": -3.6,
+   "edge": -3.4,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50401,7 +51685,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0038933|tds": {
@@ -50429,7 +51713,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0037261|tds": {
@@ -50446,9 +51730,9 @@
    "line": "1.5",
    "over_odds": "+1600",
    "under_odds": null,
-   "model_over": 6.9,
+   "model_over": 7.4,
    "book_over": 5.9,
-   "edge": 1.0,
+   "edge": 1.5,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50457,7 +51741,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039901|tds": {
@@ -50485,7 +51769,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0036244|tds": {
@@ -50502,9 +51786,9 @@
    "line": "1.5",
    "over_odds": "+1900",
    "under_odds": null,
-   "model_over": 2.0,
+   "model_over": 2.5,
    "book_over": 5.0,
-   "edge": -3.0,
+   "edge": -2.5,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50513,7 +51797,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0033110|tds": {
@@ -50541,7 +51825,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0039738|tds": {
@@ -50558,9 +51842,9 @@
    "line": "1.5",
    "over_odds": "+2500",
    "under_odds": null,
-   "model_over": 5.1,
+   "model_over": 4.4,
    "book_over": 3.8,
-   "edge": 1.2,
+   "edge": 0.6,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50569,7 +51853,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035689|tds": {
@@ -50588,7 +51872,7 @@
    "under_odds": null,
    "model_over": 1.9,
    "book_over": 2.2,
-   "edge": -0.2,
+   "edge": -0.3,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50597,7 +51881,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0035537|tds": {
@@ -50625,7 +51909,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0040590|tds": {
@@ -50642,9 +51926,9 @@
    "line": "1.5",
    "over_odds": "+8000",
    "under_odds": null,
-   "model_over": 1.0,
+   "model_over": 1.1,
    "book_over": 1.2,
-   "edge": -0.3,
+   "edge": -0.1,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50653,7 +51937,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0026498|tds": {
@@ -50670,9 +51954,9 @@
    "line": "1.5",
    "over_odds": "+17000",
    "under_odds": null,
-   "model_over": 0.0,
+   "model_over": 0.1,
    "book_over": 0.6,
-   "edge": -0.6,
+   "edge": -0.5,
    "lean": null,
    "tier": null,
    "median": 0.0,
@@ -50681,7 +51965,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034827|anytime_td": {
@@ -50698,9 +51982,9 @@
    "line": null,
    "over_odds": "+195",
    "under_odds": null,
-   "model_over": 19.2,
+   "model_over": 18.5,
    "book_over": 33.9,
-   "edge": -14.7,
+   "edge": -15.4,
    "lean": null,
    "tier": null,
    "median": null,
@@ -50709,7 +51993,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   },
   "2026_05_BUF_LA|00-0034827|tds": {
@@ -50726,7 +52010,7 @@
    "line": "1.5",
    "over_odds": "+1350",
    "under_odds": null,
-   "model_over": 1.9,
+   "model_over": 2.0,
    "book_over": 6.9,
    "edge": -4.9,
    "lean": null,
@@ -50737,7 +52021,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-10-11T23:19+00:00",
-   "updated_at": "2026-10-11T23:19+00:00",
+   "updated_at": "2026-10-12T12:43+00:00",
    "result": null
   }
  }
