@@ -1,7 +1,1092 @@
 {
- "games": {},
+ "games": {
+  "2026_06_SEA_DEN": {
+   "fetched_at": "2026-10-14T22:30+00:00",
+   "event_id": "855f58fad5f0f14b239f4f63df27998b",
+   "rows": [
+    {
+     "player": "Jaxon Smith-Njigba",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+110",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emanuel Wilson",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+110",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "J.K. Dobbins",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+175",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Courtland Sutton",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+245",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaylen Waddle",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+250",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "RJ Harvey",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+270",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "AJ Barner",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+380",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Holani",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+390",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Rashid Shaheed",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+400",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bo Nix",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+425",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cooper Kupp",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+425",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Denver Broncos D/ST",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Seattle Seahawks D/ST",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Evan Engram",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+550",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tory Horton",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+700",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Troy Franklin",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+750",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Marvin Mims Jr.",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+950",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Elijah Arroyo",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Adam Trautman",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1100",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tyler Badie",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1100",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Sam Darnold",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1100",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Lil'Jordan Humphrey",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1400",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Nate Adkins",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dallen Bentley",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Eric Saubert",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Nick Kallerup",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Adam Prentice",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+2800",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Brady Russell",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+3000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Montorie Foster Jr.",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+4500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Sam Darnold",
+     "team": "",
+     "stat": "pass_yds",
+     "line": "220.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bo Nix",
+     "team": "",
+     "stat": "pass_yds",
+     "line": "199.5",
+     "over_odds": "-112",
+     "under_odds": "-112",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaxon Smith-Njigba",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "91.5",
+     "over_odds": "-114",
+     "under_odds": "-110",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaylen Waddle",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "46.5",
+     "over_odds": "-110",
+     "under_odds": "-114",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Courtland Sutton",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "32.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "AJ Barner",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "22.5",
+     "over_odds": "-116",
+     "under_odds": "-108",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Evan Engram",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "21.5",
+     "over_odds": "-115",
+     "under_odds": "-109",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Rashid Shaheed",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "21.5",
+     "over_odds": "-114",
+     "under_odds": "-110",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cooper Kupp",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "21.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "RJ Harvey",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "21.5",
+     "over_odds": "-108",
+     "under_odds": "-116",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Troy Franklin",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "17.5",
+     "over_odds": "-109",
+     "under_odds": "-116",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Marvin Mims Jr.",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "11.5",
+     "over_odds": "-110",
+     "under_odds": "-114",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emanuel Wilson",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "9.5",
+     "over_odds": "-118",
+     "under_odds": "-106",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Holani",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "9.5",
+     "over_odds": "-115",
+     "under_odds": "-109",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tory Horton",
+     "team": "",
+     "stat": "rec_yds",
+     "line": "4.5",
+     "over_odds": "-109",
+     "under_odds": "-115",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaxon Smith-Njigba",
+     "team": "",
+     "stat": "rec",
+     "line": "6.5",
+     "over_odds": "-136",
+     "under_odds": "+106",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaylen Waddle",
+     "team": "",
+     "stat": "rec",
+     "line": "4.5",
+     "over_odds": "+114",
+     "under_odds": "-146",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "RJ Harvey",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "-114",
+     "under_odds": "-112",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Courtland Sutton",
+     "team": "",
+     "stat": "rec",
+     "line": "3.5",
+     "over_odds": "+110",
+     "under_odds": "-141",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Evan Engram",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "-160",
+     "under_odds": "+125",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "AJ Barner",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "-135",
+     "under_odds": "+106",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cooper Kupp",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "+112",
+     "under_odds": "-143",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Rashid Shaheed",
+     "team": "",
+     "stat": "rec",
+     "line": "2.5",
+     "over_odds": "+131",
+     "under_odds": "-167",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Troy Franklin",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "-138",
+     "under_odds": "+108",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emanuel Wilson",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "-130",
+     "under_odds": "+102",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Holani",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "-120",
+     "under_odds": "-106",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Marvin Mims Jr.",
+     "team": "",
+     "stat": "rec",
+     "line": "1.5",
+     "over_odds": "+124",
+     "under_odds": "-158",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tory Horton",
+     "team": "",
+     "stat": "rec",
+     "line": "0.5",
+     "over_odds": "-149",
+     "under_odds": "+116",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emanuel Wilson",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "65.5",
+     "over_odds": "-111",
+     "under_odds": "-113",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "J.K. Dobbins",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "47.5",
+     "over_odds": "-109",
+     "under_odds": "-115",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bo Nix",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "15.5",
+     "over_odds": "-109",
+     "under_odds": "-115",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "RJ Harvey",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "14.5",
+     "over_odds": "-112",
+     "under_odds": "-112",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Holani",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "13.5",
+     "over_odds": "-113",
+     "under_odds": "-111",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Sam Darnold",
+     "team": "",
+     "stat": "rush_yds",
+     "line": "4.5",
+     "over_odds": "-117",
+     "under_odds": "-107",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Emanuel Wilson",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+700",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaxon Smith-Njigba",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+700",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "J.K. Dobbins",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+1200",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Jaylen Waddle",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+2200",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Courtland Sutton",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+2200",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "RJ Harvey",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+2500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "AJ Barner",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+3500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "George Holani",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+4000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Bo Nix",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+4500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Cooper Kupp",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+4500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Rashid Shaheed",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+4500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Seattle Seahawks D/ST",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+4500",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Denver Broncos D/ST",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+5000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Evan Engram",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+7000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tory Horton",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+8000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Troy Franklin",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+9000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Marvin Mims Jr.",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+12000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Sam Darnold",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+13000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Elijah Arroyo",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+13000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Adam Trautman",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+15000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Tyler Badie",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+15000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Lil'Jordan Humphrey",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+18000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Nate Adkins",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+20000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Dallen Bentley",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+20000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Adam Prentice",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+20000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Montorie Foster Jr.",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+25000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Eric Saubert",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+25000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Nick Kallerup",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+25000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Brady Russell",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+25000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:draftkings",
+     "book": "DraftKings"
+    },
+    {
+     "player": "Seattle Seahawks Defense",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+850",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Denver Broncos Defense",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+850",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Velus Jones Jr.",
+     "team": "",
+     "stat": "anytime_td",
+     "line": "",
+     "over_odds": "+1800",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Denver Broncos Defense",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+10000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Seattle Seahawks Defense",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+10000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:fanduel",
+     "book": "FanDuel"
+    },
+    {
+     "player": "Velus Jones Jr.",
+     "team": "",
+     "stat": "tds",
+     "line": "1.5",
+     "over_odds": "+16000",
+     "under_odds": "",
+     "game_id": "2026_06_SEA_DEN",
+     "source": "auto:betrivers",
+     "book": "BetRivers"
+    }
+   ]
+  }
+ },
  "lines": {
-  "fetched_at": "2026-10-13T22:29+00:00",
+  "fetched_at": "2026-10-14T22:30+00:00",
   "data": {
    "2026_06_SEA_DEN": {
     "spread_line": -2.5,
@@ -10,52 +1095,52 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_HOU_JAX": {
-    "spread_line": 3.0,
+    "spread_line": 2.5,
     "total_line": 42.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_CHI_ATL": {
-    "spread_line": -3.0,
-    "total_line": 49.5,
+    "spread_line": -1.5,
+    "total_line": 51.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_BAL_CLE": {
-    "spread_line": -4.5,
-    "total_line": 41.5,
+    "spread_line": -5.5,
+    "total_line": 42.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_CAR_PHI": {
-    "spread_line": 1.5,
-    "total_line": 40.5,
+    "spread_line": -1.5,
+    "total_line": 39.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_TEN_IND": {
     "spread_line": 7.0,
-    "total_line": 44.5,
+    "total_line": 43.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_NYJ_NE": {
     "spread_line": 7.5,
@@ -64,7 +1149,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_NO_NYG": {
     "spread_line": -1.5,
@@ -73,7 +1158,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_PIT_TB": {
     "spread_line": -2.5,
@@ -82,7 +1167,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_ARI_LA": {
     "spread_line": 12.5,
@@ -91,7 +1176,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_BUF_LV": {
     "spread_line": -5.5,
@@ -100,7 +1185,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_LAC_KC": {
     "spread_line": 8.5,
@@ -109,16 +1194,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_DAL_GB": {
     "spread_line": 1.5,
-    "total_line": 52.5,
+    "total_line": 53.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    },
    "2026_06_WAS_SF": {
     "spread_line": 7.5,
@@ -127,7 +1212,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-13T22:28:56Z"
+    "updated": "2026-10-14T22:28:56Z"
    }
   }
  }
