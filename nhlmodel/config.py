@@ -37,9 +37,10 @@ SOG_PLAYER_BLEND = 0.7          # team shots: mostly the dressed skaters' own sh
 TOI_RECENT_WEIGHT = 0.5          # last games' ice time vs season average
 
 # alt-line parlays
-ALT_PARLAY_ODDS = (100, 125)
-ALT_PARLAY_LEGS = 4
-ALT_LEG_RANGE = (0.66, 0.90)
+ALT_LEG_RANGE = (0.80, 0.97)     # legs the model rates 80%+ (below that its alt legs ran about 10 points too high)
+ALT_TARGET_P = (0.60, 0.72)      # joint hit chance for the SGP (fair about -150 to -260); picks the most likely ticket in range, no filler
+ALT_SIZES = (3, 2)               # try 3 legs first, then 2
+ALT_POOL = 30                    # strongest candidate legs searched per game
 ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 0}   # how far below the main line a leg may go
 ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only the posted main line, never a model line
 
@@ -54,3 +55,8 @@ ODDS_LINES_EVERY_HOURS = 5
 
 def odds_key():
     return os.environ.get(ODDS_KEY_ENV, "").strip()
+
+# edge parlays: 2 prop plays from 2 different games (each leg already beats the book)
+EDGE_LEGS = 2
+EDGE_MAX_PER_DAY = 3             # each play is used once, so these are separate tickets
+EDGE_MIN_EV = 5.0                # parlay expected return in %, at the book's prices

@@ -168,9 +168,16 @@ def summarize(arrs, info, book):
     return rows
 
 
+def american(p):
+    """Fair American odds for a hit chance (0-1)."""
+    return f"-{round(100 * p / (1 - p))}" if p > 0.5 else f"+{round(100 * (1 - p) / p)}"
+
+
 def alt_parlay(arrs, info, game, book):
-    """Model alt-line parlay: half-point overs near the main line, fair odds +100 to +125."""
-    lo_p, hi_p = 1 / (1 + C.ALT_PARLAY_ODDS[1] / 100), 1 / (1 + C.ALT_PARLAY_ODDS[0] / 100)
+    """Model alt-line SGP built for hit rate: only legs the model rates highly (where its numbers
+    have held up), no filler leg to chase a price. Picks the most likely 3-leg (else 2-leg) ticket
+    from both teams whose joint chance lands in ALT_TARGET_P, using the simulated games so legs that
+    hit together are priced together."""
     cands = []
     for pid, stats in arrs.items():
         p = info[pid]
@@ -192,43 +199,33 @@ def alt_parlay(arrs, info, game, book):
     booked = [c for c in cands if c["main_src"] == "book"]
     if len(booked) >= 4:                                   # stick to players the book has posted (their alts exist)
         cands = booked
-    if len(cands) < 3:
+    if len(cands) < 2:
         return None
     cands.sort(key=lambda c: -c["p"])
-    cands = cands[:40]
+    cands = cands[:C.ALT_POOL]
+    lo, hi = C.ALT_TARGET_P
     best = None
-    for size in (C.ALT_PARLAY_LEGS, 3, 5):
-        beam = [((), None)]
-        for _ in range(size):
-            nxt = []
-            for idx, joint in beam:
-                used = {cands[i]["pid"] for i in idx}
-                saves = any(cands[i]["stat"] == "saves" for i in idx)
-                for i in range((idx[-1] + 1) if idx else 0, len(cands)):
-                    c = cands[i]
-                    if c["pid"] in used or (saves and c["stat"] == "saves"):
-                        continue
-                    j = c["hit"] if joint is None else joint & c["hit"]
-                    nxt.append((idx + (i,), j))
-            nxt.sort(key=lambda t: -float(t[1].mean()) / np.prod([cands[i]["p"] for i in t[0]]))
-            beam = nxt[:60]
-        beam = [(tuple(cands[i] for i in idx), j) for idx, j in beam]
-        for legs, joint in beam:
+    for size in C.ALT_SIZES:
+        for idx in itertools.combinations(range(len(cands)), size):
+            legs = [cands[i] for i in idx]
+            if len({c["pid"] for c in legs}) < size or len({c["team"] for c in legs}) < 2:
+                continue
+            if sum(c["stat"] == "saves" for c in legs) > 1:
+                continue
+            joint = legs[0]["hit"]
+            for c in legs[1:]:
+                joint = joint & c["hit"]
             pj = float(joint.mean())
-            teams = {c["team"] for c in legs}
-            if lo_p <= pj <= hi_p and len(teams) == 2:
-                pi = float(np.prod([c["p"] for c in legs]))
-                score = pj / pi
-                if best is None or score > best[0]:
-                    best = (score, legs, pj, pi)
+            if lo <= pj <= hi and (best is None or pj > best[1]):
+                best = (legs, pj)
         if best:
             break
     if not best:
         return None
-    _, legs, pj, pi = best
-    fair = round(100 * (1 - pj) / pj)
+    legs, pj = best
+    pi = float(np.prod([c["p"] for c in legs]))
     label = {"sog": "shots", "points": "points", "saves": "saves"}
-    return {"p": r(100 * pj), "pi": r(100 * pi), "fair": f"+{fair}",
+    return {"v": 2, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
             "legs": [{"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
                       "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
                      for c in legs]}

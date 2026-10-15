@@ -8,6 +8,7 @@ since 2012, find today's games and starting goalies, simulate each game,
 price game lines and player props, build alt-line parlays, then grade
 everything already played.
 """
+import itertools
 import json
 import logging
 import sys
@@ -177,9 +178,53 @@ def grade_pick(kind, pk, g, res):
     return rr, (payout(pk["odds"]) if rr == "W" else (-1.0 if rr == "L" else 0.0))
 
 
+def edge_parlays(players, games):
+    """Cross-game parlays from the day's prop plays: the best pairs by expected return at the book's
+    prices, each play used once. Legs come from different games, so they are priced as unrelated."""
+    gdate = {g["game_id"]: g["date"] for g in games}
+    gname = {g["game_id"]: f"{g['away']} at {g['home']}" for g in games}
+    legs = []
+    for p in players:
+        for st, m in p["m"].items():
+            b = m.get("book")
+            if b and b.get("play") and b.get("odds") is not None and b.get("adj") is not None:
+                legs.append({"pid": p["pid"], "name": p["name"], "team": p["team"], "game_id": p["game_id"],
+                             "game": gname.get(p["game_id"], ""), "date": gdate.get(p["game_id"]), "stat": st,
+                             "side": b["side"], "line": b["line"], "odds": b["odds"], "p": b["adj"]})
+    out = {}
+    for day in sorted({l["date"] for l in legs if l["date"]}):
+        pool = [l for l in legs if l["date"] == day]
+        combos = []
+        for combo in itertools.combinations(pool, C.EDGE_LEGS):
+            if len({l["game_id"] for l in combo}) < C.EDGE_LEGS:
+                continue
+            pj = float(np.prod([l["p"] / 100 for l in combo]))
+            dec = float(np.prod([1 + payout(l["odds"]) for l in combo]))
+            ev = 100 * (pj * dec - 1)
+            if ev >= C.EDGE_MIN_EV:
+                combos.append((ev, combo, pj, dec))
+        combos.sort(key=lambda t: -t[2])                 # every ticket clears the edge bar; most likely to hit first
+        used, picks = set(), []
+        for ev, combo, pj, dec in combos:
+            keys = {(l["pid"], l["stat"]) for l in combo}
+            if keys & used:
+                continue
+            used |= keys
+            picks.append({"p": r(100 * pj), "ev": r(ev), "odds": fmt_odds(dec_to_american(dec)), "fair": P.american(pj),
+                          "legs": [dict(l) for l in combo]})
+            if len(picks) >= C.EDGE_MAX_PER_DAY:
+                break
+        out[day] = picks
+    return out
+
+
+def dec_to_american(dec):
+    return round(100 * (dec - 1)) if dec >= 2 else round(-100 / (dec - 1))
+
+
 def tracking(history_days, results):
     picks = {k: [] for k in ("ml", "pl", "total")}
-    plays, prop_plays, calib, alts, daily = [], [], {}, [], {}
+    plays, prop_plays, calib, alts, daily, edges = [], [], {}, [], {}, []
     for day in history_days:
         dt = day["date"]
         for g in day.get("games", []):
@@ -205,7 +250,28 @@ def tracking(history_days, results):
                     hits.append(v > L["line"])
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
-                                 "legs": len(hits), "p": ap["p"]})
+                                 "legs": len(hits), "p": ap["p"], "v": ap.get("v", 1), "fair": ap.get("fair")})
+        for e in day.get("edge", []):
+            rs, dec = [], 1.0
+            for L in e["legs"]:
+                res = results.get(str(L["game_id"]))
+                st = res and res["p"].get(str(L["pid"]))
+                if not st:
+                    rs.append(None)
+                    continue
+                v = st[0] if L["stat"] == "saves" else st[{"sog": 0, "goals": 1, "assists": 2, "points": 3}[L["stat"]]]
+                rr = "P" if v == L["line"] else ("W" if (v > L["line"]) == (L["side"] == "Over") else "L")
+                rs.append(rr)
+                if rr == "W":
+                    dec *= 1 + payout(L["odds"])
+            if None in rs:
+                continue
+            res_e = "L" if "L" in rs else ("W" if "W" in rs else "P")
+            u = (dec - 1) if res_e == "W" else (-1.0 if res_e == "L" else 0.0)
+            edges.append({"date": dt, "res": res_e, "units": u, "p": e["p"], "odds": e["odds"],
+                          "legs": " + ".join(f"{L['name']} {L['side']} {L['line']:g} {L['stat']}" for L in e["legs"]),
+                          "legs_hit": sum(x == "W" for x in rs), "n": len(rs)})
+            daily[dt] = daily.get(dt, 0) + u
         for p in day.get("players", []):
             res = results.get(str(p["game_id"]))
             if not res:
@@ -236,6 +302,10 @@ def tracking(history_days, results):
         u = sum(x["units"] or 0 for x in rows)
         return {"w": w, "l": l, "pct": r(100 * w / (w + l)) if w + l else None, "units": r(u, 2),
                 "roi": r(100 * u / (w + l)) if w + l else None}
+    def alt_rec(rows):
+        return {"n": len(rows), "hits": sum(a["hit"] for a in rows),
+                "model": r(np.mean([a["p"] for a in rows])) if rows else None,
+                "recent": sorted(rows, key=lambda x: x["date"], reverse=True)[:20]}
     cal = {}
     for st, rows in calib.items():
         cal[st] = {"n": len(rows), "model": r(100 * np.mean([x[0] for x in rows])), "actual": r(100 * np.mean([x[1] for x in rows]))}
@@ -247,9 +317,10 @@ def tracking(history_days, results):
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
             "calibration": cal,
-            "alt": {"n": len(alts), "hits": sum(a["hit"] for a in alts),
-                    "model": r(np.mean([a["p"] for a in alts])) if alts else None,
-                    "recent": sorted(alts, key=lambda x: x["date"], reverse=True)[:20]},
+            "alt": alt_rec([a for a in alts if a["v"] >= 2]),
+            "alt_old": alt_rec([a for a in alts if a["v"] < 2]),
+            "edge": {**rec2(edges), "model": r(np.mean([e["p"] for e in edges])) if edges else None,
+                     "recent": sorted(edges, key=lambda x: x["date"], reverse=True)[:20]},
             "series": series}
 
 
@@ -410,6 +481,7 @@ def main():
                 continue
             b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": dec["side"], "edge": dec["raw_edge"],
                       "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"]})
+    edge_new = edge_parlays(players, games)
     level = {k: r(v, 3) for k, v in level.items()}
     log.info(f"prop level vs book (model minus book, over %): {level}")
 
@@ -429,6 +501,7 @@ def main():
     gdate = {g["game_id"]: g["date"] for g in games}
     for p in pl_lite:
         by_day[gdate[p["game_id"]]]["players"].append(p)
+    edge_final = {}
     for day, v in by_day.items():
         path = HIST / f"{day}.json"
         old = load_json(path, {"date": day, "games": [], "players": []})
@@ -441,7 +514,13 @@ def main():
             prev = next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)
             lite["open_book"] = (prev or {}).get("open_book") or g.get("book")
             keep.append(lite)
-        path.write_text(json.dumps(clean({"date": day, "games": old_games + keep, "players": old_players + v["players"]}),
+        # edge parlays: keep any ticket with a game already under way (locked), refresh the rest
+        locked = [e for e in old.get("edge", []) if any(l["game_id"] not in live for l in e["legs"])]
+        taken = {(l["pid"], l["stat"]) for e in locked for l in e["legs"]}
+        fresh = [e for e in edge_new.get(day, []) if not ({(l["pid"], l["stat"]) for l in e["legs"]} & taken)]
+        edge_final[day] = (locked + fresh)[:max(C.EDGE_MAX_PER_DAY, len(locked))]
+        path.write_text(json.dumps(clean({"date": day, "games": old_games + keep, "players": old_players + v["players"],
+                                          "edge": edge_final[day]}),
                                    separators=(",", ":")))
     days = [load_json(p, {}) for p in sorted(HIST.glob("*.json"))]
     days = [d for d in days if d]
@@ -453,6 +532,7 @@ def main():
     # finished/locked games from today's file so the slate stays complete
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
+               "edge_parlays": edge_final,
                "model": {"coefs": model.coefs(), "eng": eng, "eng_check": eng_info, "ot_goal_share": r(model.ot_goal_share, 3),
                          "league": {k: r(v, 2) for k, v in lg.items()}, "train_games": int(len(rows) / 2),
                          "backtest": BACKTEST},
