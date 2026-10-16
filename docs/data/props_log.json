@@ -52428,7 +52428,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038797|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0038797|anytime_td",
@@ -52456,7 +52462,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036158|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0036158|anytime_td",
@@ -52484,7 +52496,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034348|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0034348|anytime_td",
@@ -52512,7 +52530,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036613|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0036613|anytime_td",
@@ -52540,7 +52564,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0040730|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0040730|anytime_td",
@@ -52568,7 +52598,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039793|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0039793|anytime_td",
@@ -52596,7 +52632,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039299|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0039299|anytime_td",
@@ -52624,7 +52666,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 3.9,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037545|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0037545|anytime_td",
@@ -52652,7 +52700,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039732|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0039732|anytime_td",
@@ -52680,7 +52734,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033908|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0033908|anytime_td",
@@ -52708,7 +52768,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033881|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0033881|anytime_td",
@@ -52736,7 +52802,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039868|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0039868|anytime_td",
@@ -52764,7 +52836,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038976|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0038976|anytime_td",
@@ -52792,7 +52870,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037085|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0037085|anytime_td",
@@ -52820,7 +52904,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034869|anytime_td": {
    "key": "2026_06_SEA_DEN|00-0034869|anytime_td",
@@ -52848,7 +52938,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034869|pass_yds": {
    "key": "2026_06_SEA_DEN|00-0034869|pass_yds",
@@ -52876,7 +52972,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 278.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039732|pass_yds": {
    "key": "2026_06_SEA_DEN|00-0039732|pass_yds",
@@ -52904,7 +53006,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 107.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038543|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0038543|rec_yds",
@@ -52932,7 +53040,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 134.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036613|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0036613|rec_yds",
@@ -52960,7 +53074,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 24.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034348|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0034348|rec_yds",
@@ -52988,7 +53108,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 19.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039793|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0039793|rec_yds",
@@ -53016,7 +53142,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033881|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0033881|rec_yds",
@@ -53044,7 +53176,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 13.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037545|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0037545|rec_yds",
@@ -53072,7 +53210,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 66.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033908|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0033908|rec_yds",
@@ -53100,7 +53244,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 50.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0040730|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0040730|rec_yds",
@@ -53128,7 +53278,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 31.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039868|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0039868|rec_yds",
@@ -53156,7 +53312,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038976|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0038976|rec_yds",
@@ -53184,7 +53346,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 13.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038797|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0038797|rec_yds",
@@ -53212,7 +53380,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.943,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039299|rec_yds": {
    "key": "2026_06_SEA_DEN|00-0039299|rec_yds",
@@ -53240,7 +53414,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038543|rec": {
    "key": "2026_06_SEA_DEN|00-0038543|rec",
@@ -53268,7 +53448,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 12.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.735,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036613|rec": {
    "key": "2026_06_SEA_DEN|00-0036613|rec",
@@ -53296,7 +53482,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.685,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0040730|rec": {
    "key": "2026_06_SEA_DEN|00-0040730|rec",
@@ -53324,7 +53516,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034348|rec": {
    "key": "2026_06_SEA_DEN|00-0034348|rec",
@@ -53352,7 +53550,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033881|rec": {
    "key": "2026_06_SEA_DEN|00-0033881|rec",
@@ -53380,7 +53584,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.25,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039793|rec": {
    "key": "2026_06_SEA_DEN|00-0039793|rec",
@@ -53408,7 +53618,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033908|rec": {
    "key": "2026_06_SEA_DEN|00-0033908|rec",
@@ -53436,7 +53652,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.12,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037545|rec": {
    "key": "2026_06_SEA_DEN|00-0037545|rec",
@@ -53464,7 +53686,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039868|rec": {
    "key": "2026_06_SEA_DEN|00-0039868|rec",
@@ -53492,7 +53720,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038797|rec": {
    "key": "2026_06_SEA_DEN|00-0038797|rec",
@@ -53520,7 +53754,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.02,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039299|rec": {
    "key": "2026_06_SEA_DEN|00-0039299|rec",
@@ -53548,7 +53788,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.943,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038976|rec": {
    "key": "2026_06_SEA_DEN|00-0038976|rec",
@@ -53576,7 +53822,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038797|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0038797|rush_yds",
@@ -53604,7 +53856,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 52.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036158|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0036158|rush_yds",
@@ -53632,7 +53890,13 @@
    "first_lean": "Under",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 41.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039732|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0039732|rush_yds",
@@ -53660,7 +53924,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0040730|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0040730|rush_yds",
@@ -53688,7 +53958,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 25.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039299|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0039299|rush_yds",
@@ -53716,7 +53992,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 20.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034869|rush_yds": {
    "key": "2026_06_SEA_DEN|00-0034869|rush_yds",
@@ -53744,7 +54026,13 @@
    "first_lean": "Over",
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038797|tds": {
    "key": "2026_06_SEA_DEN|00-0038797|tds",
@@ -53772,7 +54060,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038543|tds": {
    "key": "2026_06_SEA_DEN|00-0038543|tds",
@@ -53800,7 +54094,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036158|tds": {
    "key": "2026_06_SEA_DEN|00-0036158|tds",
@@ -53828,7 +54128,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0036613|tds": {
    "key": "2026_06_SEA_DEN|00-0036613|tds",
@@ -53856,7 +54162,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034348|tds": {
    "key": "2026_06_SEA_DEN|00-0034348|tds",
@@ -53884,7 +54196,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0040730|tds": {
    "key": "2026_06_SEA_DEN|00-0040730|tds",
@@ -53912,7 +54230,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039793|tds": {
    "key": "2026_06_SEA_DEN|00-0039793|tds",
@@ -53940,7 +54264,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039299|tds": {
    "key": "2026_06_SEA_DEN|00-0039299|tds",
@@ -53968,7 +54298,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039732|tds": {
    "key": "2026_06_SEA_DEN|00-0039732|tds",
@@ -53996,7 +54332,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033908|tds": {
    "key": "2026_06_SEA_DEN|00-0033908|tds",
@@ -54024,7 +54366,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037545|tds": {
    "key": "2026_06_SEA_DEN|00-0037545|tds",
@@ -54052,7 +54400,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0033881|tds": {
    "key": "2026_06_SEA_DEN|00-0033881|tds",
@@ -54080,7 +54434,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0039868|tds": {
    "key": "2026_06_SEA_DEN|00-0039868|tds",
@@ -54108,7 +54468,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0038976|tds": {
    "key": "2026_06_SEA_DEN|00-0038976|tds",
@@ -54136,7 +54502,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0034869|tds": {
    "key": "2026_06_SEA_DEN|00-0034869|tds",
@@ -54164,7 +54536,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   },
   "2026_06_SEA_DEN|00-0037085|tds": {
    "key": "2026_06_SEA_DEN|00-0037085|tds",
@@ -54192,7 +54570,13 @@
    "first_lean": null,
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
-   "result": null
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   }
   }
  }
 }
