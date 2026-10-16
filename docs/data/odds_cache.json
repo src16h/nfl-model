@@ -1,17 +1,8 @@
 {
  "games": {},
  "lines": {
-  "fetched_at": "2026-10-15T22:30+00:00",
+  "fetched_at": "2026-10-16T22:29+00:00",
   "data": {
-   "2026_06_SEA_DEN": {
-    "spread_line": -2.5,
-    "total_line": 40.5,
-    "ml_home": null,
-    "ml_away": null,
-    "book": "draftkings",
-    "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
-   },
    "2026_06_HOU_JAX": {
     "spread_line": 2.5,
     "total_line": 42.5,
@@ -19,7 +10,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_CHI_ATL": {
     "spread_line": -1.5,
@@ -28,25 +19,25 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_BAL_CLE": {
-    "spread_line": -3.5,
-    "total_line": 40.5,
+    "spread_line": -3.0,
+    "total_line": 39.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_CAR_PHI": {
     "spread_line": -3.5,
-    "total_line": 38.5,
+    "total_line": 39.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_TEN_IND": {
     "spread_line": 7.0,
@@ -55,7 +46,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_NYJ_NE": {
     "spread_line": 7.5,
@@ -64,16 +55,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_NO_NYG": {
     "spread_line": -1.5,
-    "total_line": 45.5,
+    "total_line": 46.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_PIT_TB": {
     "spread_line": -2.5,
@@ -82,7 +73,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_ARI_LA": {
     "spread_line": 12.5,
@@ -91,7 +82,7 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_BUF_LV": {
     "spread_line": -4.5,
@@ -100,16 +91,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_LAC_KC": {
-    "spread_line": 8.5,
+    "spread_line": 7.5,
     "total_line": 41.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_DAL_GB": {
     "spread_line": 1.5,
@@ -118,16 +109,16 @@
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    },
    "2026_06_WAS_SF": {
     "spread_line": 7.5,
-    "total_line": 51.5,
+    "total_line": 52.5,
     "ml_home": null,
     "ml_away": null,
     "book": "draftkings",
     "book_title": "DraftKings",
-    "updated": "2026-10-15T22:30:15Z"
+    "updated": "2026-10-16T22:28:45Z"
    }
   }
  }
