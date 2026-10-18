@@ -95,19 +95,33 @@ def simulate(lam_h, lam_a, mus_h, mus_a, eng=(0.0, 0.0, 0.0), ot_goal_share=0.57
     rng = np.random.default_rng(seed)
     qt, q1, q2 = eng[:3]
     rho = (eng[3] if len(eng) > 3 else 0.0) if rho is None else rho
+    e = eng[4] if len(eng) > 4 else 1.0
     k = C.SOG_DISPERSION
+    mus_ref = [0.0]
+
+    def rate(S, lam):
+        # shot link e: 1 = every shot equally dangerous; below 1 = big shot totals come with a lower
+        # shooting % (teams chasing the game pile up weak shots). Average goals stay at lam.
+        if e == 1.0:
+            return min(lam / mus_ref[0], 0.5)
+        w = np.power(np.maximum(S, 1), e - 1.0)
+        return np.minimum(lam * w / max(float(np.mean(S * w)), 1e-9), 0.5)
 
     def draw(lh, la):
         Sh = rng.negative_binomial(k, k / (k + mus_h), n)
         Sa = rng.negative_binomial(k, k / (k + mus_a), n)
+        mus_ref[0] = mus_h
+        ph = rate(Sh, lh)
+        mus_ref[0] = mus_a
+        pa = rate(Sa, la)
         if rho:
             z1 = rng.standard_normal(n)
             z2 = rho * z1 + np.sqrt(1 - rho * rho) * rng.standard_normal(n)
-            Gh = binom.ppf(norm.cdf(z1), Sh, min(lh / mus_h, 0.5)).astype(int)
-            Ga = binom.ppf(norm.cdf(z2), Sa, min(la / mus_a, 0.5)).astype(int)
+            Gh = binom.ppf(norm.cdf(z1), Sh, ph).astype(int)
+            Ga = binom.ppf(norm.cdf(z2), Sa, pa).astype(int)
         else:
-            Gh = rng.binomial(Sh, min(lh / mus_h, 0.5))
-            Ga = rng.binomial(Sa, min(la / mus_a, 0.5))
+            Gh = rng.binomial(Sh, ph)
+            Ga = rng.binomial(Sa, pa)
         m = Gh - Ga
         u = rng.random(n)
         # late-game hockey: a team down one pulls its goalie. Sometimes it ties it (6-on-5),
@@ -158,9 +172,9 @@ def market_probs(sim, spread_home, total):
     return {"cover_home": cover, "over": over, "total_push": float((~td).mean())}
 
 
-def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3, -0.4)):
+def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3), links=(1.0, 0.7, 0.4, 0.1)):
     """Pick the empty-net rates and the goal link (rho) so simulated regulation margins
-    AND regulation totals match real ones. Returns (qt, q1, q2, rho)."""
+    AND regulation totals match real ones. Returns (qt, q1, q2, rho, shot_link)."""
     grid = grid or [(t, a, b) for t in (0.14, 0.20, 0.26) for a in (0.25, 0.35, 0.45) for b in (0.25, 0.40, 0.55)]
     sub = rows[rows["home"] == 1].sample(min(800, int((rows["home"] == 1).sum())), random_state=1)
     away = rows[rows["home"] == 0].set_index("gameId")
@@ -185,10 +199,10 @@ def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3, -0.4)):
         cache[q] = (err, am, at)
         return cache[q]
 
-    best = (0.20, 0.35, 0.40, 0.0)
-    for _ in range(2):                                        # alternate: goal link, then empty-net rates
-        best = min(((*best[:3], rh) for rh in rhos), key=lambda q: score(q)[0])
-        best = min(((*g, best[3]) for g in grid), key=lambda q: score(q)[0])
+    best = (0.20, 0.35, 0.40, 0.0, 1.0)
+    for _ in range(2):                                        # alternate: goal link + shot link, then empty-net rates
+        best = min(((*best[:3], rh, ln) for rh in rhos for ln in links), key=lambda q: score(q)[0])
+        best = min(((*g, *best[3:]) for g in grid), key=lambda q: score(q)[0])
     err, am, at = score(best)
     sd = lambda d: float(np.sqrt(np.sum(d * (np.arange(11) - np.sum(d * np.arange(11))) ** 2)))
     log.info(f"empty-net rates + goal link {best}, margins {np.round(am, 3)} vs {np.round(real_m, 3)}, total SD {sd(at):.2f} vs {sd(real_t):.2f}")
