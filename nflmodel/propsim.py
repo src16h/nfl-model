@@ -254,7 +254,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
             continue
         dec = arr != line
         p_over = float((arr[dec] > line).mean()) if dec.any() else 0.5
-        if stat in ("anytime_td", "tds"):
+        if stat == "anytime_td":                     # 2+ TDs left alone: scaled Over leans hit 11.5% vs book 13.7%
             p_over = td_scale(p_over, line)
         bo, bu = american_to_prob(r.get("over_odds")), american_to_prob(r.get("under_odds"))
         if bo is not None and bu is not None:
