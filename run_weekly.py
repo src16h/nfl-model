@@ -438,9 +438,12 @@ ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds
 
 
 def build_alt_parlay(game, side_sims, main_lines=None):
-    """The model's alt-line parlay: 'alt down' legs (70-92% each) from both teams whose
-    combined true chance lands at fair odds of +100 to +125. Among the options it picks
-    the legs that move together most (they make each other more likely)."""
+    """The model's alt-line parlay: 'alt down' legs (70-92% each, after calibration) from both
+    teams whose combined chance lands at fair odds of +100 to +125. Leg chances are corrected
+    by leg type from graded weeks (nflmodel/altcal.py: yardage tails ran thin, catches held up).
+    It picks the ticket most likely to hit; how much the legs move together breaks ties."""
+    from nflmodel import altcal
+    cal = altcal.fit(HIST, OUT / "results.json", int(str(game["game_id"])[:4]))
     lo_o, hi_o = C.ALT_PARLAY_ODDS
     p_lo, p_hi = 100 / (hi_o + 100), 100 / (lo_o + 100)          # +125 -> 44.4%, +100 -> 50%
     cands = []
@@ -467,14 +470,22 @@ def build_alt_parlay(game, side_sims, main_lines=None):
                     if L < C.ALT_MIN_LINE[st]:
                         break
                     hit = arr > L
-                    p = float(hit.mean())
-                    if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1]:
+                    p_raw = float(hit.mean())
+                    p = altcal.adjust(cal, r["pos"], st, p_raw)
+                    if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1] and p_raw > 0:
                         cands.append({"pid": r["pid"], "name": r["name"], "team": game[side], "pos": r["pos"], "stat": st,
-                                      "line": L, "label": f"Over {L:g} {ALT_LABEL[st]}", "p": p, "hit": hit,
+                                      "line": L, "label": f"Over {L:g} {ALT_LABEL[st]}", "p": p, "p_raw": p_raw, "hit": hit,
                                       "main": main, "main_src": "book" if book is not None else "model"})
     if len(cands) < 3:
         return None
     teams = {game["home"], game["away"]}
+
+    def joint(idx, h):
+        """Sim joint chance (keeps how legs move together) with each leg's calibration applied."""
+        pj = float(h.mean())
+        for i in idx:
+            pj *= cands[i]["p"] / cands[i]["p_raw"]
+        return min(pj, min(cands[i]["p"] for i in idx))
 
     def search(n_legs):
         beams = [((i,), cands[i]["hit"]) for i in range(len(cands))]
@@ -491,19 +502,21 @@ def build_alt_parlay(game, side_sims, main_lines=None):
                     if qb_legs and cands[j]["stat"] == "pass_yds":
                         continue
                     hj = h & cands[j]["hit"]
-                    pj = hj.mean()
+                    pj = joint(idx + (j,), hj)
                     if pj >= p_lo:                                  # adding legs only lowers the chance
                         nxt.append((idx + (j,), hj, pj))
-            # keep the most promising: highest lift (legs that move together)
-            nxt.sort(key=lambda t: -(t[2] / np.prod([cands[i]["p"] for i in t[0]])))
-            beams = [(t[0], t[1]) for t in nxt[:300]]
+            # keep the most promising: most likely to hit, then legs that move together
+            nxt.sort(key=lambda t: -(t[2] + 0.01 * t[2] / np.prod([cands[i]["p"] for i in t[0]])))
+            beams = [(t[0], t[1]) for t in nxt[:400]]
         best = None
         for idx, h in beams:
-            pj = float(h.mean())
+            pj = joint(idx, h)
             if not (p_lo <= pj <= p_hi) or {cands[i]["team"] for i in idx} != teams:
                 continue
+            if sum(1 for i in idx if cands[i]["stat"] != "rec") > C.ALT_MAX_YARD_LEGS:
+                continue                                            # yardage legs miss more than the sims say
             pi = float(np.prod([cands[i]["p"] for i in idx]))
-            score = pj / pi
+            score = pj + 0.01 * pj / pi                             # hit chance first; correlation breaks ties
             if best is None or score > best[0]:
                 best = (score, idx, pj, pi)
         return best
