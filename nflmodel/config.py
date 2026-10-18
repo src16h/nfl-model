@@ -145,6 +145,8 @@ PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct
 TD_NO_NEEDS_PRICE = True
 
 # Game plays use the market-anchored engine. Set to None to switch one off.
+PROP_MODEL_WEIGHT = 0.4      # NFL props: model's share vs the book (Oct 18 2026: book more accurate; 0.4 took past plays from -1.7% to +5.7%)
+TD_PROB_SCALE = 1.15         # TD props: model ran 23.5% vs 27.2% real on anytime TDs; scales scoring chances up (fit on 453 graded)
 GAME_PLAY_SPREAD = 1.5       # spread gap (points) that makes a spread Play
 GAME_PLAY_TOTAL = None       # totals: off, the backtest shows no edge
 

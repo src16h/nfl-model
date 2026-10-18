@@ -889,6 +889,7 @@ def main():
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
         **BR.summary(), "bias": prop_bias(OUT / "props_log.json"),
+        "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE,
     }
     payload.update({
         "model": model_info,

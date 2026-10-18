@@ -199,6 +199,23 @@ def prop_bias(log_path) -> dict:
     return BR.bias_table(rows)
 
 
+def td_scale(p, line):
+    """The sims gave scorers too low a TD chance (23.5% vs 27.2% real on anytime TDs).
+    Treat TDs as Poisson, back out the scoring rate, scale it by TD_PROB_SCALE."""
+    k = C.TD_PROB_SCALE
+    if k == 1.0 or not (0 < p < 1):
+        return p
+    if line < 1:                                         # 1+ TD
+        return 1 - (1 - p) ** k
+    n = int(np.floor(line)) + 1                          # need n or more
+    from scipy.stats import poisson
+    lo, hi = 1e-6, 10.0
+    for _ in range(60):                                  # rate with P(X >= n) = p
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if poisson.sf(n - 1, mid) < p else (lo, mid)
+    return float(poisson.sf(n - 1, k * (lo + hi) / 2))
+
+
 def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None) -> dict:
     if not len(props):
         return {"props": [], "pairs": []}
@@ -237,6 +254,8 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
             continue
         dec = arr != line
         p_over = float((arr[dec] > line).mean()) if dec.any() else 0.5
+        if stat in ("anytime_td", "tds"):
+            p_over = td_scale(p_over, line)
         bo, bu = american_to_prob(r.get("over_odds")), american_to_prob(r.get("under_odds"))
         if bo is not None and bu is not None:
             book_over = bo / (bo + bu)
@@ -267,7 +286,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         if side == "Under" and stat in ("anytime_td", "tds") and uo is None and C.TD_NO_NEEDS_PRICE:
             side = None   # no "No TD" price posted, so there is nothing to bet or grade
         num = lambda o: None if o is None else float(o)
-        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias) if (side and oo is not None) else None
+        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias, weight=C.PROP_MODEL_WEIGHT) if (side and oo is not None) else None
         tier = prop_tier(stat, edge * 100, side)
         if tier in ("play", "watch") and dec is not None:
             ok = dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side

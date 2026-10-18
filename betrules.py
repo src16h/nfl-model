@@ -86,12 +86,12 @@ def _side(side, p, odds, kind, over_extra=True):
     return {"side": side, "p": p, "odds": odds, "ev": ev, "need": need}
 
 
-def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, blocked=(), raw_cap=None):
+def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, blocked=(), raw_cap=None, weight=None):
     """Chances are 0-1 for the Over; book_over is the book's no-vig chance.
 
     Returns side, adjusted chance for that side, book chance for that side, edge (adjusted minus
     book, in %), raw edge (model minus book, in %), expected return in %, and whether it is a play."""
-    w = MODEL_WEIGHT["prop"]
+    w = MODEL_WEIGHT["prop"] if weight is None else weight
     p = book_over + w * (model_over - book_over)
     shift = (bias or {}).get(stat, {}).get("shift", 0.0)
     p = inv_logit(logit(p) + shift)
