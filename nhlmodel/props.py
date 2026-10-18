@@ -174,10 +174,14 @@ def american(p):
 
 
 def alt_parlay(arrs, info, game, book):
-    """Model alt-line SGP built for hit rate: only legs the model rates highly (where its numbers
-    have held up), no filler leg to chase a price. Picks the most likely 3-leg (else 2-leg) ticket
+    """Model alt-line SGP built for hit rate: only legs rated 80%+ after a per-leg-type correction
+    learned from graded games (nhlmodel/altcal.py), no filler leg to chase a price. Picks the most likely 3-leg (else 2-leg) ticket
     from both teams whose joint chance lands in ALT_TARGET_P, using the simulated games so legs that
     hit together are priced together."""
+    from pathlib import Path
+    from . import altcal
+    data = Path(__file__).resolve().parents[1] / "docs" / "nhl" / "data"
+    cal = altcal.fit(data / "history", data / "results.json")
     cands = []
     for pid, stats in arrs.items():
         p = info[pid]
@@ -192,10 +196,11 @@ def alt_parlay(arrs, info, game, book):
             k_main = int(main + 0.5)
             for k in range(max(1, k_main - C.ALT_MAX_DROP[st]), k_main + 1):
                 hit = x >= k
-                ph = float(hit.mean())
+                raw = float(hit.mean())
+                ph = altcal.adjust(cal, st, k - 0.5, raw) if raw > 0 else 0.0   # corrected by leg type from graded games
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
                     cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": k - 0.5,
-                                  "p": ph, "main": main, "main_src": src, "hit": hit})
+                                  "p": ph, "p_raw": raw, "main": main, "main_src": src, "hit": hit})
     booked = [c for c in cands if c["main_src"] == "book"]
     if len(booked) >= 4:                                   # stick to players the book has posted (their alts exist)
         cands = booked
@@ -216,6 +221,9 @@ def alt_parlay(arrs, info, game, book):
             for c in legs[1:]:
                 joint = joint & c["hit"]
             pj = float(joint.mean())
+            for c in legs:                                 # keep how legs move together, apply each leg's correction
+                pj *= c["p"] / c["p_raw"]
+            pj = min(pj, min(c["p"] for c in legs))
             if lo <= pj <= hi and (best is None or pj > best[1]):
                 best = (legs, pj)
         if best:
