@@ -127,7 +127,8 @@ def game_picks(g, sim):
         p = BR.adjust_game(v["model"] / 100, v["book"] / 100)
         ev, need = BR.game_ev(p, int(v["odds"]))
         v["adj"], v["ev"] = r(100 * p), r(ev)
-        blocked = k == "pl" and int(v["odds"]) > 0 and "pl_dog" in C.BLOCKED      # puck-line long shots lost every time
+        blocked = ((k == "pl" and int(v["odds"]) > 0 and "pl_dog" in C.BLOCKED)      # puck-line long shots lost every time
+                   or (k == "total" and "totals" in C.BLOCKED))                   # totals: lean only until proven
         v["play"] = bool(lim[k] <= v["edge"] <= C.PLAY_MAX_EDGE and ev >= need and not blocked)
     ml, pl = out.get("ml"), out.get("pl")
     if ml and pl and ml["play"] and pl["play"] and ml["side"] == pl["side"]:   # same team twice: keep the bigger gap
@@ -546,7 +547,7 @@ def main():
 
 # walk-forward check, refreshed by hand (python -m nhlmodel.backtest); shown on the Record tab
 BACKTEST = {"seasons": "2023-24 to 2025-26", "win_logloss": 0.668, "base_logloss": 0.689,
-            "note": "Puck-line and overtime rates land within about 1 to 3 points of real results each season. Totals drift with league scoring (off by up to 0.2 goals a game in a season), so total plays need a bigger gap."}
+            "note": "Puck-line and overtime rates land within about 1 to 3 points of real results each season. Totals were recalibrated Oct 18 2026 (scoring catch-up, linked home/away goals, shot-volume effect): this season the model has 45.0% of games over 6.5 vs 44.6% real. Totals show a lean but are not plays until about 150 graded totals show an edge."}
 
 if __name__ == "__main__":
     try:

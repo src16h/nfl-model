@@ -16,6 +16,9 @@ GOAL_BIAS_DECAY = 0.995          # about the last 200 team-games
 GOAL_BIAS_PRIOR = 100.0          # goals of "no correction" mixed in so it moves gradually
 
 # game sim
+GOAL_LINK = -0.1                 # home and away goals pull against each other a little (real totals bunch up). Locked
+SHOT_LINK = 0.7                  # 1 = every shot equally dangerous; lower = big shot totals come with a lower shooting %.
+                                 # Locked (fits ran 0.4 / 1.0 / 0.7 by season); keeps totals from shifting night to night
 SOG_DISPERSION = 60.0            # negative binomial size for team shots on goal
 OT_GOAL_SHARE = None             # filled from data: share of OT games decided in 3-on-3 (rest go to a shootout)
 OT_STRENGTH = 0.35               # how much the stronger team's edge carries into OT
@@ -30,8 +33,9 @@ TOTAL_PLAY_EDGE = 4.0           # scoring drifts during a season, so totals need
 PLAY_MAX_EDGE = 10.0             # bigger gaps usually mean the model is missing news
 PROP_PLAY_MIN = 0.07             # after removing the slate-wide gap to the book
 PROP_PLAY_MAX = 0.12             # raw gap cap; the bar to be a play is set in betrules.py (blend with the book, profit at the price)
-# markets that may not be plays (checked Oct 2026: points Overs 1-17, puck-line underdogs 0-5, saves far off)
-BLOCKED = {("points", "Over"), "saves", "pl_dog"}
+# markets that may not be plays (checked Oct 2026: points Overs 1-17, puck-line underdogs 0-5, saves far off;
+# totals lean only after the Oct 18 recalibration, until about 150 graded totals show an edge)
+BLOCKED = {("points", "Over"), "saves", "pl_dog", "totals"}
 
 # props
 PROP_STATS = ["sog", "points", "goals", "assists", "saves"]

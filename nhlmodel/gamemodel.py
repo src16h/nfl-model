@@ -172,7 +172,7 @@ def market_probs(sim, spread_home, total):
     return {"cover_home": cover, "over": over, "total_push": float((~td).mean())}
 
 
-def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3), links=(1.0, 0.7, 0.4, 0.1)):
+def fit_eng(model, rows, grid=None, rhos=None, links=None):
     """Pick the empty-net rates and the goal link (rho) so simulated regulation margins
     AND regulation totals match real ones. Returns (qt, q1, q2, rho, shot_link)."""
     grid = grid or [(t, a, b) for t in (0.14, 0.20, 0.26) for a in (0.25, 0.35, 0.45) for b in (0.25, 0.40, 0.55)]
@@ -184,6 +184,8 @@ def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3), links=(1.0, 0.
     pair = sub
     real_m = np.abs(pair["reg_g"] - pair["reg_ga"]).clip(upper=4).value_counts(normalize=True).reindex(range(5), fill_value=0).to_numpy()
     real_t = (pair["reg_g"] + pair["reg_ga"]).clip(upper=10).value_counts(normalize=True).reindex(range(11), fill_value=0).to_numpy()
+    links = links or (C.SHOT_LINK,)
+    rhos = rhos or (C.GOAL_LINK,)
     cache = {}
 
     def score(q):
@@ -199,7 +201,7 @@ def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3), links=(1.0, 0.
         cache[q] = (err, am, at)
         return cache[q]
 
-    best = (0.20, 0.35, 0.40, 0.0, 1.0)
+    best = (0.20, 0.35, 0.40, rhos[0], links[0])
     for _ in range(2):                                        # alternate: goal link + shot link, then empty-net rates
         best = min(((*best[:3], rh, ln) for rh in rhos for ln in links), key=lambda q: score(q)[0])
         best = min(((*g, *best[3:]) for g in grid), key=lambda q: score(q)[0])
