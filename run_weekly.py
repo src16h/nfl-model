@@ -515,6 +515,8 @@ def build_alt_parlay(game, side_sims, main_lines=None):
                 continue
             if sum(1 for i in idx if cands[i]["stat"] != "rec") > C.ALT_MAX_YARD_LEGS:
                 continue                                            # yardage legs miss more than the sims say
+            if sum(1 for i in idx if cands[i]["stat"] == "rush_yds") > C.ALT_MAX_RUSH_LEGS:
+                continue                                            # RB rushing misses most (82% real when the sims say 90%)
             pi = float(np.prod([cands[i]["p"] for i in idx]))
             score = pj + 0.01 * pj / pi                             # hit chance first; correlation breaks ties
             if best is None or score > best[0]:

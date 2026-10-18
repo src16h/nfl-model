@@ -210,6 +210,7 @@ ALT_PARLAY_LEGS = 4                # preferred number of legs (falls back to 3 o
 ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines), after calibration
 ALT_CAL_K = 60                     # leg calibration counts half after this many graded player-games per leg type
 ALT_MAX_YARD_LEGS = 3              # at most 3 yardage legs (pass/rush/rec yds); catches fill the rest
+ALT_MAX_RUSH_LEGS = 1              # at most 1 RB rushing leg while the leg calibration is still learning
 ALT_STEP = {"pass_yds": 10, "rush_yds": 5, "rec_yds": 5, "rec": 1}       # alt lines come in these steps (.5 lines)
 ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2}   # how far below the book's main line books go
 ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5}  # skip players books rarely post
