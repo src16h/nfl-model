@@ -2833,7 +2833,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 2.5,
+    "total": 42.5,
+    "margin": -3.0,
+    "points": 65.0
+   },
    "last_seen": "2026-10-18T13:08+00:00"
   },
   "2026_06_CHI_ATL": {
@@ -2923,7 +2928,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -1.5,
+    "total": 51.5,
+    "margin": -8.0,
+    "points": 54.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_BAL_CLE": {
@@ -3013,7 +3023,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.0,
+    "total": 39.5,
+    "margin": 3.0,
+    "points": 23.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_TEN_IND": {
@@ -3103,7 +3118,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 6.5,
+    "total": 43.5,
+    "margin": -6.0,
+    "points": 46.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_NYJ_NE": {
@@ -3167,7 +3187,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 7.5,
+    "total": 43.5,
+    "margin": 7.0,
+    "points": 45.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_NO_NYG": {
@@ -3257,7 +3282,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -1.5,
+    "total": 46.5,
+    "margin": -7.0,
+    "points": 61.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_CAR_PHI": {
@@ -3386,7 +3416,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.0,
+    "total": 39.5,
+    "margin": -11.0,
+    "points": 39.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_PIT_TB": {
@@ -3554,7 +3589,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -2.5,
+    "total": 38.5,
+    "margin": -7.0,
+    "points": 45.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_ARI_LA": {
@@ -3618,7 +3658,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 12.5,
+    "total": 51.5,
+    "margin": -2.0,
+    "points": 34.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_LAC_KC": {
@@ -3964,10 +4009,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-18T23:24+00:00",
+     "src": "live:draftkings",
+     "spread": -1.5,
+     "total": 54.5,
+     "m": -2.0,
+     "t": 53.9,
+     "edge_s": -0.5,
+     "edge_t": -0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-18T16:04+00:00"
+   "last_seen": "2026-10-18T23:24+00:00"
   },
   "2026_06_WAS_SF": {
    "game_id": "2026_06_WAS_SF",
@@ -4083,7 +4141,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-18T16:04+00:00"
+   "last_seen": "2026-10-18T23:24+00:00"
   }
  }
 }
