@@ -11,6 +11,10 @@ FORM_CARRY = 0.35                # share of last season's weight carried into a 
 FORM_PRIOR = 6.0                 # league-average games mixed in
 LEAGUE_DECAY = 0.995             # league scoring level: about the last 100 games
 
+# scoring-level catch-up (real vs predicted goals over recent games)
+GOAL_BIAS_DECAY = 0.995          # about the last 200 team-games
+GOAL_BIAS_PRIOR = 100.0          # goals of "no correction" mixed in so it moves gradually
+
 # game sim
 SOG_DISPERSION = 60.0            # negative binomial size for team shots on goal
 OT_GOAL_SHARE = None             # filled from data: share of OT games decided in 3-on-3 (rest go to a shootout)

@@ -12,6 +12,7 @@ import logging
 
 import numpy as np
 import pandas as pd
+from scipy.stats import binom, norm
 from sklearn.linear_model import PoissonRegressor
 
 from . import config as C
@@ -57,29 +58,56 @@ class Model:
         self.s = PoissonRegressor(alpha=1e-4, max_iter=500).fit(rows[SOG_FEATS], rows["sog60"] / rows["lg_sog"], sample_weight=rows["lg_sog"])
         ot = rows[rows["ot"] == 1]
         self.ot_goal_share = float(1 - ot["so"].mean()) if len(ot) else 0.57
+        self.set_bias(rows)
         return self
 
+    def set_bias(self, rows):
+        """Scoring-level catch-up: a running ratio of real to predicted regulation goals over
+        recent games (no peeking ahead). Fixes the lag when league scoring rises or falls.
+        Adds a pre-game 'gbias' column to rows; bias_now is the value for upcoming games."""
+        o = rows.sort_values(["date", "gameId"]).index
+        pred = self.g.predict(rows.loc[o, GOAL_FEATS]) * rows.loc[o, "lg_g"].to_numpy(float)
+        act = rows.loc[o, "reg_g"].to_numpy(float)
+        d, pa, aa, w = C.GOAL_BIAS_DECAY, 0.0, 0.0, 0.0
+        out = np.ones(len(o))
+        for i in range(len(o)):
+            out[i] = (aa + C.GOAL_BIAS_PRIOR) / (pa + C.GOAL_BIAS_PRIOR) if w else 1.0
+            pa, aa, w = d * pa + pred[i], d * aa + act[i], d * w + 1
+        rows.loc[o, "gbias"] = np.clip(out, 0.9, 1.1)
+        self.bias_now = float(np.clip((aa + C.GOAL_BIAS_PRIOR) / (pa + C.GOAL_BIAS_PRIOR), 0.9, 1.1))
+        return rows
+
     def predict(self, X):
-        return self.g.predict(X[GOAL_FEATS]) * X["lg_g"].to_numpy(float), self.s.predict(X[SOG_FEATS]) * X["lg_sog"].to_numpy(float)
+        b = X["gbias"].to_numpy(float) if "gbias" in X else getattr(self, "bias_now", 1.0)
+        return self.g.predict(X[GOAL_FEATS]) * X["lg_g"].to_numpy(float) * b, self.s.predict(X[SOG_FEATS]) * X["lg_sog"].to_numpy(float)
 
     def coefs(self):
         return {"goals": dict(zip(GOAL_FEATS, np.round(self.g.coef_, 3))) | {"intercept": round(float(self.g.intercept_), 3)},
                 "shots": dict(zip(SOG_FEATS, np.round(self.s.coef_, 3))) | {"intercept": round(float(self.s.intercept_), 3)}}
 
 
-def simulate(lam_h, lam_a, mus_h, mus_a, eng=(0.0, 0.0, 0.0), ot_goal_share=0.57, n=None, seed=0, detail=False):
+def simulate(lam_h, lam_a, mus_h, mus_a, eng=(0.0, 0.0, 0.0), ot_goal_share=0.57, n=None, seed=0, detail=False, rho=None):
     """Returns sims of final scores plus regulation detail.
-    lam: expected regulation goals including empty-netters. mus: expected shots (not counting empty-net shots)."""
+    lam: expected regulation goals including empty-netters. mus: expected shots (not counting empty-net shots).
+    rho: link between the two teams' goals (negative in real games: totals bunch up more than
+    two independent teams would). Each team's own goals per shot are unchanged."""
     n = n or C.N_SIMS
     rng = np.random.default_rng(seed)
-    qt, q1, q2 = eng
+    qt, q1, q2 = eng[:3]
+    rho = (eng[3] if len(eng) > 3 else 0.0) if rho is None else rho
     k = C.SOG_DISPERSION
 
     def draw(lh, la):
         Sh = rng.negative_binomial(k, k / (k + mus_h), n)
         Sa = rng.negative_binomial(k, k / (k + mus_a), n)
-        Gh = rng.binomial(Sh, min(lh / mus_h, 0.5))
-        Ga = rng.binomial(Sa, min(la / mus_a, 0.5))
+        if rho:
+            z1 = rng.standard_normal(n)
+            z2 = rho * z1 + np.sqrt(1 - rho * rho) * rng.standard_normal(n)
+            Gh = binom.ppf(norm.cdf(z1), Sh, min(lh / mus_h, 0.5)).astype(int)
+            Ga = binom.ppf(norm.cdf(z2), Sa, min(la / mus_a, 0.5)).astype(int)
+        else:
+            Gh = rng.binomial(Sh, min(lh / mus_h, 0.5))
+            Ga = rng.binomial(Sa, min(la / mus_a, 0.5))
         m = Gh - Ga
         u = rng.random(n)
         # late-game hockey: a team down one pulls its goalie. Sometimes it ties it (6-on-5),
@@ -130,8 +158,9 @@ def market_probs(sim, spread_home, total):
     return {"cover_home": cover, "over": over, "total_push": float((~td).mean())}
 
 
-def fit_eng(model, rows, grid=None):
-    """Pick the empty-net rates so simulated regulation margins match real ones."""
+def fit_eng(model, rows, grid=None, rhos=(0.0, -0.1, -0.2, -0.3, -0.4)):
+    """Pick the empty-net rates and the goal link (rho) so simulated regulation margins
+    AND regulation totals match real ones. Returns (qt, q1, q2, rho)."""
     grid = grid or [(t, a, b) for t in (0.14, 0.20, 0.26) for a in (0.25, 0.35, 0.45) for b in (0.25, 0.40, 0.55)]
     sub = rows[rows["home"] == 1].sample(min(800, int((rows["home"] == 1).sum())), random_state=1)
     away = rows[rows["home"] == 0].set_index("gameId")
@@ -139,17 +168,29 @@ def fit_eng(model, rows, grid=None):
     lh, sh = model.predict(sub)
     la, sa = model.predict(away.loc[sub["gameId"]].reset_index())
     pair = sub
-    real = np.abs(pair["reg_g"] - pair["reg_ga"]).clip(upper=4).value_counts(normalize=True).sort_index()
-    best = None
-    for q in grid:
-        acc = np.zeros(5)
+    real_m = np.abs(pair["reg_g"] - pair["reg_ga"]).clip(upper=4).value_counts(normalize=True).reindex(range(5), fill_value=0).to_numpy()
+    real_t = (pair["reg_g"] + pair["reg_ga"]).clip(upper=10).value_counts(normalize=True).reindex(range(11), fill_value=0).to_numpy()
+    cache = {}
+
+    def score(q):
+        if q in cache:
+            return cache[q]
+        am, at = np.zeros(5), np.zeros(11)
         for i in range(len(pair)):
             s = simulate(lh[i], la[i], sh[i], sa[i], eng=q, n=400, seed=i)
-            m = np.abs(s["RH"] - s["RA"]).clip(max=4)
-            acc += np.bincount(m, minlength=5)[:5] / 400
-        acc /= len(pair)
-        err = float(np.sum((acc - real.reindex(range(5), fill_value=0).to_numpy()) ** 2))
-        if best is None or err < best[0]:
-            best = (err, q, acc)
-    log.info(f"empty-net rates {best[1]}, sim margins {np.round(best[2], 3)} vs real {np.round(real.to_numpy(), 3)}")
-    return best[1], {"sim": [round(float(x), 3) for x in best[2]], "real": [round(float(x), 3) for x in real.to_numpy()]}
+            am += np.bincount(np.abs(s["RH"] - s["RA"]).clip(max=4), minlength=5)[:5] / 400
+            at += np.bincount((s["RH"] + s["RA"]).clip(max=10), minlength=11)[:11] / 400
+        am /= len(pair); at /= len(pair)
+        err = float(np.sum((am - real_m) ** 2) + np.sum((at - real_t) ** 2))
+        cache[q] = (err, am, at)
+        return cache[q]
+
+    best = (0.20, 0.35, 0.40, 0.0)
+    for _ in range(2):                                        # alternate: goal link, then empty-net rates
+        best = min(((*best[:3], rh) for rh in rhos), key=lambda q: score(q)[0])
+        best = min(((*g, best[3]) for g in grid), key=lambda q: score(q)[0])
+    err, am, at = score(best)
+    sd = lambda d: float(np.sqrt(np.sum(d * (np.arange(11) - np.sum(d * np.arange(11))) ** 2)))
+    log.info(f"empty-net rates + goal link {best}, margins {np.round(am, 3)} vs {np.round(real_m, 3)}, total SD {sd(at):.2f} vs {sd(real_t):.2f}")
+    return best, {"sim": [round(float(x), 3) for x in am], "real": [round(float(x), 3) for x in real_m],
+                  "total_sd": [round(sd(at), 2), round(sd(real_t), 2)], "goal_bias": round(getattr(model, "bias_now", 1.0), 3)}
