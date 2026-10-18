@@ -359,7 +359,10 @@ def player_game_stats(pbp: pd.DataFrame, game_ids) -> pd.DataFrame:
         rec=("complete_pass", "sum"), rec_yds=("ry", "sum"), rec_td=("pass_touchdown", "sum"))
     receiving.index.names = ["game_id", "pid"]
 
-    ru = p[(p["rush"] == 1) & p["rusher_player_id"].notna()]
+    # official rushing counts designed runs, QB scrambles and kneel-downs
+    is_run = (p["rush"] == 1) | (p["qb_scramble"] == 1) | (p["play_type"] == "qb_kneel")
+    ru = p[is_run & p["rusher_player_id"].notna()]
+    ru = ru.assign(rush=1)
     rushing = ru.assign(ryd=yds[ru.index]).groupby(["game_id", "rusher_player_id"]).agg(
         carries=("rush", "sum"), rush_yds=("ryd", "sum"), rush_td=("rush_touchdown", "sum"))
     rushing.index.names = ["game_id", "pid"]
@@ -414,9 +417,19 @@ def _est_no_td_payout(book_over_pct, hold=0.04):
     return 1 / p_no - 1
 
 
+RUSH_FIX_STATS = {"rush_yds", "carries", "rush_rec_yds", "anytime_td", "tds", "rush_td"}
+
+
 def backfill(lg) -> bool:
     """One-time fixes for records saved by older versions. Returns True if anything changed."""
     changed = False
+    if not lg.get("fix_scrambles_v1"):
+        # before Oct 18 2026 grading skipped QB scrambles and kneels: regrade every rushing-based prop
+        for r in lg.get("props", {}).values():
+            if r.get("result") and r.get("stat") in RUSH_FIX_STATS and r["result"].get("outcome") != "Void":
+                r["result"] = None
+        lg["fix_scrambles_v1"] = True
+        changed = True
     for r in lg.get("props", {}).values():
         if "tier" not in r:
             r["tier"] = prop_tier(r.get("stat"), r.get("edge"), r.get("lean"))
