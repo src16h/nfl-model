@@ -45,11 +45,11 @@ SOG_PLAYER_BLEND = 0.7          # team shots: mostly the dressed skaters' own sh
 TOI_RECENT_WEIGHT = 0.5          # last games' ice time vs season average
 
 # alt-line parlays
-ALT_LEG_RANGE = (0.80, 0.97)     # legs the model rates 80%+ (below that its alt legs ran about 10 points too high)
-ALT_TARGET_P = (0.60, 0.72)      # joint hit chance for the SGP (fair about -150 to -260); picks the most likely ticket in range, no filler
-ALT_SIZES = (3, 2)               # try 3 legs first, then 2
+ALT_LEG_RANGE = (0.70, 0.97)     # leg chance window AFTER the per-leg-type correction (Oct 18: was 80%+ before calibration)
+ALT_TARGET_P = (0.444, 0.50)     # joint chance = fair odds +100 to +125, same as the NFL (Oct 18; Oct 15-18 was -150 to -260)
+ALT_SIZES = (4, 3)               # try 4 legs first, then 3
+ALT_BEAM = 400                   # partial tickets kept at each step of the search
 ALT_CAL_K = 300                  # leg calibration counts half after this many graded player-games per leg type
-ALT_POOL = 30                    # strongest candidate legs searched per game
 ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 0}   # how far below the main line a leg may go
 ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only the posted main line, never a model line
 

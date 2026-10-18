@@ -174,8 +174,8 @@ def american(p):
 
 
 def alt_parlay(arrs, info, game, book):
-    """Model alt-line SGP built for hit rate: only legs rated 80%+ after a per-leg-type correction
-    learned from graded games (nhlmodel/altcal.py), no filler leg to chase a price. Picks the most likely 3-leg (else 2-leg) ticket
+    """Model alt-line SGP at fair odds of +100 to +125 (same target as the NFL): legs rated 70%+ after a
+    per-leg-type correction learned from graded games (nhlmodel/altcal.py); picks the ticket most likely to hit. Picks the most likely 3-leg (else 2-leg) ticket
     from both teams whose joint chance lands in ALT_TARGET_P, using the simulated games so legs that
     hit together are priced together."""
     from pathlib import Path
@@ -206,26 +206,41 @@ def alt_parlay(arrs, info, game, book):
         cands = booked
     if len(cands) < 2:
         return None
-    cands.sort(key=lambda c: -c["p"])
-    cands = cands[:C.ALT_POOL]
     lo, hi = C.ALT_TARGET_P
+
+    def joint(idx, h):
+        pj = float(h.mean())
+        for i in idx:                                      # keep how legs move together, apply each leg's correction
+            pj *= cands[i]["p"] / cands[i]["p_raw"]
+        return min(pj, min(cands[i]["p"] for i in idx))
+
+    def search(size):
+        beams = [((i,), cands[i]["hit"], cands[i]["p"]) for i in range(len(cands))]
+        for step in range(size - 1):
+            last = step == size - 2
+            nxt = []
+            for idx, h, _p in beams:
+                used = {cands[i]["pid"] for i in idx}
+                saves = sum(cands[i]["stat"] == "saves" for i in idx)
+                for j in range(idx[-1] + 1, len(cands)):
+                    c = cands[j]
+                    if c["pid"] in used or (saves and c["stat"] == "saves"):
+                        continue
+                    hj = h & c["hit"]
+                    pj = joint(idx + (j,), hj)
+                    if pj >= lo and (not last or pj <= hi):   # adding legs only lowers the chance
+                        nxt.append((idx + (j,), hj, pj))
+            nxt.sort(key=lambda t: -t[2])
+            beams = nxt if last else nxt[:C.ALT_BEAM]
+        best = None
+        for idx, h, pj in beams:
+            if lo <= pj <= hi and len({cands[i]["team"] for i in idx}) == 2 and (best is None or pj > best[1]):
+                best = ([cands[i] for i in idx], pj)
+        return best
+
     best = None
     for size in C.ALT_SIZES:
-        for idx in itertools.combinations(range(len(cands)), size):
-            legs = [cands[i] for i in idx]
-            if len({c["pid"] for c in legs}) < size or len({c["team"] for c in legs}) < 2:
-                continue
-            if sum(c["stat"] == "saves" for c in legs) > 1:
-                continue
-            joint = legs[0]["hit"]
-            for c in legs[1:]:
-                joint = joint & c["hit"]
-            pj = float(joint.mean())
-            for c in legs:                                 # keep how legs move together, apply each leg's correction
-                pj *= c["p"] / c["p_raw"]
-            pj = min(pj, min(c["p"] for c in legs))
-            if lo <= pj <= hi and (best is None or pj > best[1]):
-                best = (legs, pj)
+        best = search(size)
         if best:
             break
     if not best:
@@ -233,7 +248,7 @@ def alt_parlay(arrs, info, game, book):
     legs, pj = best
     pi = float(np.prod([c["p"] for c in legs]))
     label = {"sog": "shots", "points": "points", "saves": "saves"}
-    return {"v": 2, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
+    return {"v": 3, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
             "legs": [{"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
                       "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
                      for c in legs]}

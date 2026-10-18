@@ -1089,10 +1089,11 @@ function renderRecord() {
   h += `<h3>Edge parlays</h3>` + ((E.w || E.l) ? `<div class="strip"><div class="st"><strong>${E.w}–${E.l}</strong><span>Hit ${n(E.pct)}% (model said ${n(E.model)}%)</span></div><div class="st"><strong class="${uc(E.units)}">${units(E.units)}</strong><span>Units at feed odds (ROI ${n(E.roi)}%)</span></div></div>
     <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Legs</th><th>Odds</th><th>Result</th></tr></thead><tbody>${E.recent.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.legs)}</td><td>${esc(x.odds)}</td><td><span class="res ${x.res}">${x.res}</span></td></tr>`).join("")}</tbody></table></div>`
     : `<div class="empty">Nothing graded yet. Started Oct 15.</div>`);
-  const A = T.alt || {}, AO = T.alt_old || {};
-  h += `<h3>Same-game parlays</h3>`;
-  if (AO.n) h += `<p class="sub">Old version (fair +100 to +125, with filler legs): ${AO.hits}–${AO.n - AO.hits}, hit ${n(100 * AO.hits / AO.n)}% when the model said ${n(AO.model)}%. Retired Oct 15.</p>`;
-  if (!A.n) h += `<div class="empty">New version: nothing graded yet. Started Oct 15.</div>`;
+  const A = T.alt || {}, AO = T.alt_old || {}, AH = T.alt_hr || {};
+  h += `<h3>Same-game parlays</h3><p class="sub">Current version (since Oct 18): fair +100 to +125, legs corrected by type from graded games, most likely ticket.</p>`;
+  if (AO.n) h += `<p class="sub">First version (fair +100 to +125, with filler legs): ${AO.hits}–${AO.n - AO.hits}, hit ${n(100 * AO.hits / AO.n)}% when the model said ${n(AO.model)}%. Retired Oct 15.</p>`;
+  if (AH.n) h += `<p class="sub">Hit-rate version (fair −150 to −260, 80%+ legs): ${AH.hits}–${AH.n - AH.hits}, hit ${n(100 * AH.hits / AH.n)}% when the model said ${n(AH.model)}%. Oct 15 to 18.</p>`;
+  if (!A.n) h += `<div class="empty">Current version: nothing graded yet. Started Oct 18.</div>`;
   if (A.n) h += `<div class="strip"><div class="st"><strong>${A.hits}–${A.n - A.hits}</strong><span>Hit ${n(100 * A.hits / A.n)}% (model said ${n(A.model)}%)</span></div></div>
     <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${A.recent.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.game)}</td><td>${x.legs_hit} of ${x.legs}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
   const L = [...(T.plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.prop_plays_list || []).map(x => ({...x, what: x.pick, who: x.player}))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40);
