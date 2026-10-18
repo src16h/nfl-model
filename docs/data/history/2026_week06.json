@@ -6007,17 +6007,17 @@
     "legs": [
      {
       "kind": "player",
-      "pid": "00-0036555",
-      "name": "Chuba Hubbard",
+      "pid": "00-0040124",
+      "name": "Tetairoa McMillan",
       "team": "CAR",
-      "pos": "RB",
-      "stat": "rush_yds",
+      "pos": "WR",
+      "stat": "rec_yds",
       "side": "Over",
-      "line": 61.5,
-      "label": "Over 61.5 rush yds",
-      "main": 71.5,
+      "line": 39.5,
+      "label": "Over 39.5 rec yds",
+      "main": 64.5,
       "main_src": "book",
-      "p": 84.1
+      "p": 82.5
      },
      {
       "kind": "player",
@@ -6076,9 +6076,9 @@
       "p": 83.7
      }
     ],
-    "p": 49.3,
-    "pi": 48.9,
-    "fair": "+103"
+    "p": 48.5,
+    "pi": 48.0,
+    "fair": "+106"
    }
   },
   {
@@ -9862,25 +9862,11 @@
       "pos": "RB",
       "stat": "rush_yds",
       "side": "Over",
-      "line": 48.5,
-      "label": "Over 48.5 rush yds",
+      "line": 43.5,
+      "label": "Over 43.5 rush yds",
       "main": 68.5,
       "main_src": "book",
-      "p": 84.8
-     },
-     {
-      "kind": "player",
-      "pid": "00-0039811",
-      "name": "MarShawn Lloyd",
-      "team": "GB",
-      "pos": "RB",
-      "stat": "rush_yds",
-      "side": "Over",
-      "line": 22.5,
-      "label": "Over 22.5 rush yds",
-      "main": 42.5,
-      "main_src": "book",
-      "p": 87.0
+      "p": 89.8
      },
      {
       "kind": "player",
@@ -9898,6 +9884,20 @@
      },
      {
       "kind": "player",
+      "pid": "00-0040667",
+      "name": "Matthew Golden",
+      "team": "GB",
+      "pos": "WR",
+      "stat": "rec",
+      "side": "Over",
+      "line": 2.5,
+      "label": "Over 2.5 receptions",
+      "main": 4.5,
+      "main_src": "book",
+      "p": 80.0
+     },
+     {
+      "kind": "player",
       "pid": "00-0036264",
       "name": "Jordan Love",
       "team": "GB",
@@ -9911,9 +9911,9 @@
       "p": 75.0
      }
     ],
-    "p": 48.6,
-    "pi": 47.9,
-    "fair": "+106"
+    "p": 48.4,
+    "pi": 46.7,
+    "fair": "+107"
    }
   },
   {
@@ -10679,36 +10679,36 @@
      },
      {
       "kind": "player",
-      "pid": "00-0031588",
-      "name": "Stefon Diggs",
+      "pid": "00-0035659",
+      "name": "Terry McLaurin",
       "team": "WAS",
       "pos": "WR",
-      "stat": "rec",
+      "stat": "rec_yds",
       "side": "Over",
-      "line": 1.5,
-      "label": "Over 1.5 receptions",
-      "main": 3.5,
+      "line": 19.5,
+      "label": "Over 19.5 rec yds",
+      "main": 44.5,
       "main_src": "model",
-      "p": 78.9
+      "p": 80.2
      },
      {
       "kind": "player",
-      "pid": "00-0033280",
-      "name": "Christian McCaffrey",
+      "pid": "00-0031408",
+      "name": "Mike Evans",
       "team": "SF",
-      "pos": "RB",
-      "stat": "rush_yds",
+      "pos": "WR",
+      "stat": "rec",
       "side": "Over",
-      "line": 43.5,
-      "label": "Over 43.5 rush yds",
-      "main": 68.5,
+      "line": 2.5,
+      "label": "Over 2.5 receptions",
+      "main": 4.5,
       "main_src": "model",
-      "p": 80.3
+      "p": 76.1
      }
     ],
-    "p": 46.7,
-    "pi": 46.6,
-    "fair": "+114"
+    "p": 46.2,
+    "pi": 44.9,
+    "fair": "+117"
    }
   }
  ],
