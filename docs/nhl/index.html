@@ -1058,15 +1058,17 @@ function altCheck(g) {
 }
 
 /* ---------- teams ---------- */
-const TS = {sort: "xgp", dir: -1};
+const TS = {sort: "power", dir: -1};
 function renderTeams() {
   const rows = (D.teams || []).map(t => ({...t, xgp: 100 * t.xgf / (t.xgf + t.xga), gd: t.gf - t.ga}));
-  rows.sort((a, b) => TS.dir * ((a[TS.sort] ?? 0) - (b[TS.sort] ?? 0)));
+  rows.sort((a, b) => TS.dir * ((a[TS.sort] ?? -99) - (b[TS.sort] ?? -99)));
+  const rk = {}; [...rows].sort((a, b) => (b.power ?? -99) - (a.power ?? -99)).forEach((t, i) => rk[t.team] = i + 1);
+  const sg = (v, d = 2) => v == null ? "–" : (v > 0 ? "+" : "") + n(v, d);
   const col = (k, lab) => `<th class="sort ${TS.sort === k ? "sorted" : ""}" data-sort="${k}">${lab}</th>`;
-  $("#teams").innerHTML = `<h2>Team form</h2><p class="sub">Per game in regulation, recent games count more and early-season numbers are pulled toward league average. xG is our own expected goals from the NHL's shot locations. Goalie gap is goals allowed against expected (below 0 means the goaltending is saving more than expected).</p>
-    <div class="tablewrap"><table><thead><tr><th>Team</th>${col("xgp", "xG share")}${col("xgf", "xG for")}${col("xga", "xG against")}${col("gf", "Goals for")}${col("ga", "Goals against")}${col("sogf", "Shots for")}${col("soga", "Shots against")}${col("gp", "Games")}</tr></thead><tbody>
-    ${rows.map(t => `<tr><td><div style="display:flex;align-items:center;gap:9px">${badge(t.team)}</div></td><td>${n(t.xgp, 1)}%</td><td>${n(t.xgf, 2)}</td><td>${n(t.xga, 2)}</td><td>${n(t.gf, 2)}</td><td>${n(t.ga, 2)}</td><td>${n(t.sogf, 1)}</td><td>${n(t.soga, 1)}</td><td>${t.gp}</td></tr>`).join("")}</tbody></table></div>`;
-  document.querySelectorAll("#teams th[data-sort]").forEach(th => th.onclick = () => { const k = th.dataset.sort; TS.dir = TS.sort === k ? -TS.dir : -1; TS.sort = k; renderTeams(); });
+  $("#teams").innerHTML = `<h2>Power rankings</h2><p class="sub"><b>Power</b> is the model's own grade: expected goal margin per game against a league-average team on neutral ice. It combines shot quality (xG) with finishing and goaltending, the same way the game picks do. Per game in regulation; recent games count more, and early in the season last year's numbers still carry a lot of weight. <b>Finishing</b> is goals scored above expected per game; <b>Goalies</b> is goals saved above expected per game (above 0 is good for both).</p>
+    <div class="tablewrap"><table><thead><tr><th>#</th><th>Team</th>${col("power", "Power")}${col("xgp", "xG share")}${col("fin", "Finishing")}${col("gsax", "Goalies")}${col("xgf", "xG for")}${col("xga", "xG against")}${col("gf", "Goals for")}${col("ga", "Goals against")}${col("sogf", "Shots for")}${col("soga", "Shots against")}${col("gp", "Games")}</tr></thead><tbody>
+    ${rows.map(t => `<tr><td>${rk[t.team]}</td><td><div style="display:flex;align-items:center;gap:9px">${badge(t.team)}</div></td><td><b>${sg(t.power)}</b></td><td>${n(t.xgp, 1)}%</td><td>${sg(t.fin)}</td><td>${sg(t.gsax)}</td><td>${n(t.xgf, 2)}</td><td>${n(t.xga, 2)}</td><td>${n(t.gf, 2)}</td><td>${n(t.ga, 2)}</td><td>${n(t.sogf, 1)}</td><td>${n(t.soga, 1)}</td><td>${t.gp}</td></tr>`).join("")}</tbody></table></div>`;
+  document.querySelectorAll("#teams th[data-sort]").forEach(th => th.onclick = () => { const k = th.dataset.sort; TS.dir = TS.sort === k ? -TS.dir : (k === "xga" || k === "ga" || k === "soga" ? 1 : -1); TS.sort = k; renderTeams(); });
 }
 
 /* ---------- record ---------- */

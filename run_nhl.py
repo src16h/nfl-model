@@ -380,6 +380,7 @@ def main():
     model = G.Model().fit(rows)
     eng, eng_info = G.fit_eng(model, rows[rows["season"] >= season - 3])
     form, lg = R.current(state, league, season)
+    tpow = model.team_power(form, lg)
     log.info(f"model coefs {model.coefs()}")
     rates, pos = P.skater_rates(pg, season)
     gskill = P.goalie_skill(gg, pg, season)
@@ -538,7 +539,8 @@ def main():
                "model": {"coefs": model.coefs(), "eng": eng, "eng_check": eng_info, "ot_goal_share": r(model.ot_goal_share, 3),
                          "league": {k: r(v, 2) for k, v in lg.items()}, "train_games": int(len(rows) / 2),
                          "backtest": BACKTEST},
-               "teams": [{"team": t, **{k: r(v, 2) for k, v in f.items() if k not in ("last",)}} for t, f in sorted(form.items())],
+               "teams": [{"team": t, **{k: r(v, 2) for k, v in f.items() if k not in ("last",)}, **{k: r(v, 2) for k, v in tpow[t].items()}}
+                         for t, f in sorted(form.items()) if t in tpow],          # teams with a game this season (drops moved franchises)
                "rules": {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE, "max": C.PLAY_MAX_EDGE,
                          "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX], **BR.summary(), "bias": bias,
                          "blocked": sorted(" ".join(x) if isinstance(x, tuple) else x for x in C.BLOCKED)}}
