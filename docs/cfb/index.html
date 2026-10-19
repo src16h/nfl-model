@@ -841,6 +841,26 @@ function sparkSVG(series) {
     <text x="${W - pad}" y="${H - 3}" text-anchor="end">${esc(series[series.length - 1].date.slice(5))}</text></svg>`;
 }
 
+/* ---------- closing line value and calibration (Record tab) ---------- */
+const moveNote = p => p?.move == null || Math.abs(p.move) < 1 ? "" : p.move > 0
+  ? `<div class="t-meta"><b>Line moving toward this play</b> (${sgn(p.move)} pts since it was flagged). The price is getting worse, so bet soon.</div>`
+  : `<div class="t-meta">Better price now than when first flagged (${sgn(p.move)} pts).</div>`;
+function clvBlock() {
+  const C = D.tracking?.clv; if (!C) return "";
+  const P = C.plays || {}, F = C.first_line || {};
+  const st = (x, lab) => `<div class="st"><strong class="${x.n ? (x.avg > 0 ? "up" : x.avg < 0 ? "down" : "") : ""}">${x.n ? sgn(x.avg, 2) : "–"}</strong><span>${lab}${x.n ? `: beat the close ${x.beat}, lost to it ${x.worse}, same ${x.same} (${x.n} plays)` : ""}</span></div>`;
+  return `<h3>Closing line value</h3><p class="sub">Did you get a better price than the final line? Measured in win-chance points on the play's side (a line that never moved scores 0). Beating the close most of the time is the best early sign of a real edge, long before wins and losses settle down. <b>Since flagged</b> starts Oct 19 and measures from the moment each pick became a play. <b>From first line</b> covers older plays: the play's side at the first posted line, which answers "bet early or wait?".</p>
+    <div class="strip">${st(P, P.n ? "Since flagged as a play" : "Since flagged as a play: builds from today's plays")}${st(F, "From the first posted line")}
+      <div class="st"><strong>${F.n ? (F.avg < -0.25 ? "Wait" : F.avg > 0.25 ? "Early" : "Either") : "–"}</strong><span>Best time to bet so far (first line vs close)</span></div></div>`;
+}
+function calBlock() {
+  const R = D.rules?.calibration; if (!R || !R._all) return "";
+  const rows = Object.entries(R).filter(([k]) => k !== "_all").sort((a, b) => b[1].n - a[1].n);
+  return `<h3>Prop calibration</h3><p class="sub">On the side the model leaned, how much edge over the book it claimed vs how much really showed up in graded props. Each play's edge is scaled by <b>Kept</b>. It starts near 100% and only drops as results keep showing an edge was overstated, so a hot or cold week can't swing it. It never makes an edge bigger.</p>
+    <div class="tablewrap"><table><thead><tr><th>Stat</th><th>Graded</th><th>Edge claimed</th><th>Edge real</th><th>Kept</th></tr></thead><tbody>
+    ${[["_all", R._all], ...rows].map(([k, c]) => `<tr><td>${k === "_all" ? "<b>All props</b>" : esc(STAT[k] || k)}</td><td>${c.n}</td><td>${sgn(c.claimed)}%</td><td class="${c.realized >= c.claimed ? "up" : c.realized < c.claimed / 2 ? "down" : ""}">${sgn(c.realized)}%</td><td><b>${n(100 * c.k, 0)}%</b></td></tr>`).join("")}</tbody></table></div>`;
+}
+
 /* ---------- plays ---------- */
 const PK_NAME = {spread: "Spread", total: "Total", ml: "Moneyline"};
 const KINDS = ["spread", "total", "ml"];
@@ -868,7 +888,7 @@ function ticket(x) {
   return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
     <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small></div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away_name)} at ${esc(x.g.home_name)}`}</div>
-    ${meterHTML(x.model, x.book)}
+    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}
     <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
     <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "game" && x.p.ev != null ? `edge, ${sgn(x.p.ev)}% return at ${esc(x.odds)}` : "gap vs book"}</div></div></article>`;
 }
@@ -1163,6 +1183,7 @@ function renderRecord() {
       <div class="st"><strong class="${uc(P.units)}">${units(P.w + P.l ? P.units : null)}</strong><span>Game plays, units</span></div>
       <div class="st"><strong>${PP.w || 0}–${PP.l || 0}</strong><span>Prop plays, ${n(PP.pct)}%</span></div>
       <div class="st"><strong class="${uc(PP.units)}">${units(PP.w + PP.l ? PP.units : null)}</strong><span>Prop plays, units</span></div></div>`;
+  h += clvBlock() + calBlock();
   h += `<h3>Every pick, every game</h3><div class="strip">${KINDS.map(k => `<div class="st"><strong>${K[k]?.w || 0}–${K[k]?.l || 0}</strong><span>${PK_NAME[k]} picks${K[k]?.units != null ? `, ${units(K[k].units)}` : ""}</span></div>`).join("")}</div>`;
   const M = T.line_move || {};
   h += `<h3>Line movement check</h3><p class="sub">The fastest honest test of a model. For every game where the model was 3 or more points off the first line it saw, did the line then move toward the model's side by kickoff? Sharp bettors move lines, so landing on their side more often than not is a real signal, and it shows up in weeks instead of seasons.</p>
@@ -1179,7 +1200,7 @@ function renderRecord() {
       <div class="st"><strong>${TT.best2.hits}–${TT.best2.n - TT.best2.hits}</strong><span>Best 2-team teaser each week, ${sgn(TT.best2.units, 2)}u at ${esc(fmtO(D.teasers?.prices?.["2"] ?? -120))}</span></div>
       <div class="st"><strong>${n(TT.legs_actual)}%</strong><span>All teaser legs hit (model said ${n(TT.legs_model)}%, ${TT.legs_n} legs)</span></div></div>`;
   const L = [...(T.plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.prop_plays_list || []).map(x => ({...x, what: x.pick, who: x.player}))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40);
-  if (L.length) h += `<h3>Recent plays</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Play</th><th>Odds</th><th>Gap</th><th>Result</th></tr></thead><tbody>${L.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.who)} <span class="dim">${esc(x.what)}</span></td><td>${esc(x.odds || "")}</td><td>${n(x.edge)}%</td><td><span class="res ${x.res}">${x.res}</span></td></tr>`).join("")}</tbody></table></div>`;
+  if (L.length) h += `<h3>Recent plays</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Play</th><th>Odds</th><th>Gap</th><th>vs close</th><th>Result</th></tr></thead><tbody>${L.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.who)} <span class="dim">${esc(x.what)}</span></td><td>${esc(x.odds || "")}</td><td>${n(x.edge)}%</td><td class="${x.clv > 0 ? "up" : x.clv < 0 ? "down" : ""}">${x.clv == null ? "–" : sgn(x.clv)}</td><td><span class="res ${x.res}">${x.res}</span></td></tr>`).join("")}</tbody></table></div>`;
   h += `<div class="sec-head"><h2>My bets</h2><span class="aside">Saved on this device</span></div>
     <div class="strip"><div class="st"><strong>${mw}–${ml}</strong><span>Record</span></div><div class="st"><strong class="${uc(mu)}">${done.length ? units(mu) : "–"}</strong><span>Units</span></div>
       <div class="st"><strong>${risked ? n(100 * mu / risked) + "%" : "–"}</strong><span>Return on money risked</span></div></div>

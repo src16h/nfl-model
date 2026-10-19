@@ -220,3 +220,13 @@ ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5
 TEASER_POINTS = 6
 TEASER_PRICES = {2: -120, 3: 160}          # common book prices; the dashboard lets you enter yours
 TEASER_HIST_SINCE = 2018
+# Wong teaser plays (Oct 19 2026). Checked on every NFL game since 2018 at the closing line:
+#   underdogs of +1.5 to +3 teased past 7 won 75.2% (74.0% since 2023); with a game total of 44 or less, 77.8% (74.9%)
+#   favorites of -7.5 to -8.5 teased under 3 won only 70.7% (64.3% since 2023), so they are never plays
+# A 2-team teaser at -120 needs about 73.9% a leg.
+WONG_TOTAL_MAX = 44.0       # low-total games go first (a 6-point move is worth more when fewer points are scored)
+WONG_MIN_P = 70.0           # the model's own chance for the leg must agree it is a good spot
+WONG_MAX_TICKETS = 3        # 2-team tickets a week, each leg used once
+WONG_MIN_EV = 2.0           # a ticket is a play only if it shows this much expected profit at the price
+WONG_HIST_WEIGHT = 0.5      # each leg's chance = this share of its historical rate + the rest from the model
+WONG_HIST_FALLBACK = {"low": 74.9, "other": 73.1}   # underdog Wong legs since 2023 (low total / higher total), used if history can't load

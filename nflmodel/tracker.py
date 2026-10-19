@@ -331,6 +331,7 @@ def update_props_log(path, rows, season, week, now):
             "over_odds": r.get("over_odds"), "under_odds": r.get("under_odds"),
             "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
             "lean": r.get("lean"), "tier": r.get("tier"), "median": r.get("median"),
+            "pre": r.get("pre"), "ev": r.get("ev"),
             "source": r.get("source") or "manual", "book": r.get("book"),
             "first_line": first_line, "first_lean": first_lean,
             "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None}
