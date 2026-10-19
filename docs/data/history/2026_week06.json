@@ -10129,8 +10129,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -410.0,
-   "ml_away": 320.0,
+   "ml_home": -395.0,
+   "ml_away": 310.0,
    "win_sigma": 11.43,
    "team_totals": {
     "home": {
@@ -10270,9 +10270,9 @@
      "edge_text": "0.1"
     },
     "moneyline": {
-     "pick": "WAS +320",
+     "pick": "WAS +310",
      "side": "WAS",
-     "odds": "+320",
+     "odds": "+310",
      "edge": 0.6,
      "edge_text": "0.6%",
      "model_pct": 26,
@@ -10687,7 +10687,7 @@
       "label": "Over 22.5 rush yds",
       "main": 47.5,
       "main_src": "book",
-      "p": 89.6
+      "p": 88.3
      },
      {
       "kind": "player",
@@ -10697,25 +10697,11 @@
       "pos": "QB",
       "stat": "pass_yds",
       "side": "Over",
-      "line": 166.5,
-      "label": "Over 166.5 pass yds",
+      "line": 156.5,
+      "label": "Over 156.5 pass yds",
       "main": 206.5,
       "main_src": "book",
-      "p": 81.8
-     },
-     {
-      "kind": "player",
-      "pid": "00-0035659",
-      "name": "Terry McLaurin",
-      "team": "WAS",
-      "pos": "WR",
-      "stat": "rec_yds",
-      "side": "Over",
-      "line": 24.5,
-      "label": "Over 24.5 rec yds",
-      "main": 44.5,
-      "main_src": "book",
-      "p": 74.9
+      "p": 87.7
      },
      {
       "kind": "player",
@@ -10729,12 +10715,26 @@
       "label": "Over 2.5 receptions",
       "main": 4.5,
       "main_src": "book",
-      "p": 87.6
+      "p": 88.4
+     },
+     {
+      "kind": "player",
+      "pid": "00-0033288",
+      "name": "George Kittle",
+      "team": "SF",
+      "pos": "TE",
+      "stat": "rec",
+      "side": "Over",
+      "line": 3.5,
+      "label": "Over 3.5 receptions",
+      "main": 5.5,
+      "main_src": "book",
+      "p": 72.7
      }
     ],
-    "p": 50.0,
-    "pi": 48.1,
-    "fair": "+100"
+    "p": 49.7,
+    "pi": 49.8,
+    "fair": "+101"
    }
   }
  ],
