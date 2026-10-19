@@ -30,6 +30,7 @@ from nhlmodel.util import clean, norm_name, r
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
+import clv as CLV  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nhlmodel")
@@ -226,6 +227,7 @@ def dec_to_american(dec):
 def tracking(history_days, results):
     picks = {k: [] for k in ("ml", "pl", "total")}
     plays, prop_plays, calib, alts, daily, edges = [], [], {}, [], {}, []
+    clv_rows = []
     for day in history_days:
         dt = day["date"]
         for g in day.get("games", []):
@@ -236,8 +238,11 @@ def tracking(history_days, results):
                 rr, u = grade_pick(k, pk, g, res)
                 picks[k].append((rr, u, pk.get("edge")))
                 if pk.get("play"):
+                    c, e, exact = CLV.play_clv("nhl", k, pk, g, g.get("open_book"))
                     plays.append({"date": dt, "kind": k, "pick": pick_text(k, pk), "game": f"{g['away']} at {g['home']}",
-                                  "odds": pk.get("odds"), "edge": pk.get("edge"), "res": rr, "units": u})
+                                  "odds": pk.get("odds"), "edge": pk.get("edge"), "res": rr, "units": u,
+                                  "clv": None if c is None else r(c, 1)})
+                    clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
                     daily[dt] = daily.get(dt, 0) + (u or 0)
             ap = g.get("alt_parlay")
             if ap:
@@ -316,6 +321,7 @@ def tracking(history_days, results):
         series.append({"date": dt, "units": r(run, 2)})
     return {"picks": {k: rec(v) for k, v in picks.items()},
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
+            "clv": CLV.summary(clv_rows),
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
             "calibration": cal,
             "alt": alt_rec([a for a in alts if a["v"] >= 3]),
@@ -327,8 +333,9 @@ def tracking(history_days, results):
 
 
 def prop_bias(hist_dir, results):
-    """How each prop stat has run against the book in graded games (fades in with sample size)."""
-    rows = []
+    """How each prop stat has run against the book in graded games (fades in with sample size),
+    and how much of the final edge over the book has really shown up (calibration, betrules.realization_table)."""
+    rows, real = [], []
     for f in sorted(Path(hist_dir).glob("*.json")):
         day = load_json(f, {})
         for p in day.get("players", []):
@@ -350,7 +357,10 @@ def prop_bias(hist_dir, results):
                     q = BR.no_vig_from_one(bk["odds"])
                     bo = q if bk["side"] == "Over" else 1 - q
                 rows.append((stat, bo, v > bk["line"]))
-    return BR.bias_table(rows)
+                fo = BR.final_over_from(bk)
+                if fo is not None and bk.get("book_over") is not None:
+                    real.append((stat, fo, bk["book_over"] / 100, v > bk["line"]))
+    return BR.bias_table(rows), BR.realization_table(real)
 
 
 def pick_text(k, pk):
@@ -470,8 +480,9 @@ def main():
         diffs = [lg_(p["m"][st]["book"]["model_over"]) - lg_(p["m"][st]["book"]["book_over"]) for p in players if p["m"].get(st, {}).get("book")]
         if len(diffs) >= 12:
             level[st] = float(np.median(diffs))
-    bias = prop_bias(HIST, load_json(OUT / "results.json", {}))
+    bias, real = prop_bias(HIST, load_json(OUT / "results.json", {}))
     log.info(f"prop bias from graded results: {bias}")
+    log.info(f"prop calibration from graded results: {real}")
     for p in players:
         for st, m in p["m"].items():
             b = m.get("book")
@@ -479,11 +490,12 @@ def main():
                 continue
             adj_over = 100 / (1 + np.exp(-(lg_(b["model_over"]) - level.get(st, 0.0))))      # same shift on the log-odds scale
             dec = BR.decide_prop(adj_over / 100, b["book_over"] / 100, b.get("over"), b.get("under"), st, bias,
-                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX)
+                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX, real=real)
             if not dec:
                 continue
             b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": dec["side"], "edge": dec["raw_edge"],
-                      "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"]})
+                      "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"],
+                       "pre": dec["pre"], "k": dec["k"]})
     edge_new = edge_parlays(players, games)
     level = {k: r(v, 3) for k, v in level.items()}
     log.info(f"prop level vs book (model minus book, over %): {level}")
@@ -499,7 +511,7 @@ def main():
         for st, m in p["m"].items():
             k = int(m["fair"] + 0.5)
             lite["m"][st] = {"fair": m["fair"], "pf": m["ge"][k] if k < len(m["ge"]) else 0.0,
-                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev")}} if m.get("book") else {})}
+                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev", "pre", "k")}} if m.get("book") else {})}
         pl_lite.append(lite)
     gdate = {g["game_id"]: g["date"] for g in games}
     for p in pl_lite:
@@ -516,6 +528,10 @@ def main():
             lite = {k: g[k] for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "win_home", "book", "goalies")}
             prev = next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)
             lite["open_book"] = (prev or {}).get("open_book") or g.get("book")
+            lite["play_at"] = g["play_at"] = CLV.snapshot(g.get("picks"), (prev or {}).get("play_at"), now.isoformat(timespec="minutes"))
+            for k_, pk_ in (g.get("picks") or {}).items():         # live plays: price change since flagged (site shows "bet soon")
+                if pk_ and pk_.get("play"):
+                    pk_["move"] = CLV.moving("nhl", k_, pk_, g, g["play_at"].get(k_))
             keep.append(lite)
         # edge parlays: keep any ticket with a game already under way (locked), refresh the rest
         locked = [e for e in old.get("edge", []) if any(l["game_id"] not in live for l in e["legs"])]
@@ -542,7 +558,7 @@ def main():
                "teams": [{"team": t, **{k: r(v, 2) for k, v in f.items() if k not in ("last",)}, **{k: r(v, 2) for k, v in tpow[t].items()}}
                          for t, f in sorted(form.items()) if t in tpow],          # teams with a game this season (drops moved franchises)
                "rules": {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE, "max": C.PLAY_MAX_EDGE,
-                         "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX], **BR.summary(), "bias": bias,
+                         "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX], **BR.summary(), "bias": bias, "calibration": real,
                          "blocked": sorted(" ".join(x) if isinstance(x, tuple) else x for x in C.BLOCKED)}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} games, {len(players)} players")

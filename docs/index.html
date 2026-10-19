@@ -1627,6 +1627,17 @@ function teaserHTML() {
       <div class="t-actions">${tzTag(c.tier)}${tzLog(b.legs, b.p, b.size)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(tzAm(b.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
   const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now))[0]).filter(Boolean);
+  const WR = Z.wong_rules || {}, HD = H.wong_dog || {}, HL = H.wong_dog_low || {}, HF = H.wong_fav || {};
+  const wong = (Z.wong_plays || []).filter(t => t.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now));
+  const wcard = t => { const c = tzCall(t.p, 2); const play = t.play && c.ev != null && c.ev >= (WR.min_ev ?? 2);
+    return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Wong teaser${play ? "" : " (watch)"}</b><span>2 underdogs teased past 7</span></div>
+      <div style="display:grid;gap:4px;margin:8px 0 2px">${t.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}${L.total != null ? `, total ${L.total}` : ""}</span> <span class="dim">${n(L.p_use, 0)}%</span>${L.low_total ? ` <span class="tag">Low total</span>` : ""}</div>`).join("")}</div>
+      <div class="t-meta">Both legs hit <b>${n(t.p)}%</b> (half history, half model; model alone ${n(t.p_model)}%). At ${esc(c.odds)}: ${c.ev == null ? "enter a price" : `expected return <b>${sgn(c.ev)}%</b>`}</div>
+      <div class="t-actions">${tzTag(play ? "play" : c.ev != null && c.ev >= 0 ? "watch" : "none")}${play ? tzLog(t.legs, t.p, 2) : ""}</div></div>
+      <div class="t-side"><div class="t-gap">${esc(tzAm(t.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
+  const wongHTML = `<div class="sec-head"><h2>Wong teaser plays</h2><span class="aside">Underdogs only</span></div>
+    <p class="sub">Underdogs of +1.5 to +3 teased to +7.5 to +9 cross both 3 and 7, the two most common NFL margins. At the closing line since ${H.since}, those legs won <b>${n(HD.pct)}%</b> (${HD.n}), and <b>${n(HL.pct)}%</b> in games with a total of ${WR.total_max ?? 44} or less. The favorite version (-7.5 to -8.5 teased under 3) won only ${n(HF.pct)}%, so it's never a play. A ticket is a play only when both legs are underdog Wong spots, the model gives each at least ${WR.min_p ?? 70}%, and the pair shows ${WR.min_ev ?? 2}%+ expected profit at your price.</p>
+    ${wong.length ? `<div class="tickets">${wong.map(wcard).join("")}</div>` : `<div class="empty"><b>No Wong teaser spots this week.</b> They need two underdogs of +1.5 to +3 the model also likes.</div>`}`;
   // your own teaser
   const sel = TZS.sel.map(k => legs.find(L => tzKey(L) === k)).filter(Boolean);
   let mine = `<div class="verdict">Tap up to 4 legs in the table, one per game, to price your own teaser.</div>`;
@@ -1639,7 +1650,7 @@ function teaserHTML() {
     return `<tr class="p" data-tz="${esc(k)}" aria-pressed="${on}"${on ? ` style="background:var(--gold-soft)"` : ""}><td><b>${esc(L.label)}</b> <span class="pos">was ${esc(L.was)}</span>${L.wong ? ` <span class="tag">3 and 7</span>` : ""}<span class="pos" style="display:block;margin:2px 0 0">${esc(L.matchup)}, ${esc(kickoff(L.kickoff))}</span></td>
       <td class="${L.p >= be2 ? "gold" : ""}" style="font-weight:600">${n(L.p)}%</td><td>${n(L.p_before)}%</td><td>${L.push ? n(L.push) + "%" : "–"}</td><td>${on ? "✓" : "+"}</td></tr>`; }).join("");
   const pin = size => `<span class="fld"><label for="tzP${size}">${size}-team price</label><input id="tzP${size}" class="odds" inputmode="decimal" value="${esc(tzPrice(size))}"></span>`;
-  return `<div class="sec-head"><h2>${Z.points}-point teasers</h2><span class="aside">Model only, no extra odds calls</span></div>
+  return wongHTML + `<div class="sec-head"><h2>${Z.points}-point teasers</h2><span class="aside">Model only, no extra odds calls</span></div>
     <p class="sub">Every spread and total moved ${Z.points} points your way, priced from real NFL final scores centered on the model's number, so the pile-ups on 3 and 7 are built in. <b>3 and 7</b> marks classic teaser spots: favorites of 7.5 to 8.5 moved under 3, and underdogs of 1.5 to 3 moved past 7. A 2-team teaser at ${esc(String(Z.prices["2"]))} needs each leg to hit about <b>${n(be2)}%</b>.</p>
     <div class="strip">
       <div class="st"><strong>${n(be2)}%</strong><span>Per-leg chance needed, 2 teams at ${esc(String(Z.prices["2"]))}</span></div>
@@ -1859,7 +1870,8 @@ function trackingHTML() {
   if (TT && TT.legs_n) h += `<h3>Model teasers</h3><div class="strip">
       <div class="st"><strong>${TT.best2.hits}–${TT.best2.n - TT.best2.hits}</strong><span>Best 2-team teaser each week, ${sgn(TT.best2.units, 2)}u at ${esc(String(D.teasers?.prices?.["2"] ?? -120))}</span></div>
       <div class="st"><strong>${n(TT.legs_actual)}%</strong><span>All teaser legs hit (model said ${n(TT.legs_model)}%, ${TT.legs_n} legs)</span></div>
-      <div class="st"><strong>${TT.wong_actual == null ? "–" : n(TT.wong_actual) + "%"}</strong><span>3-and-7 legs hit this season (${TT.wong_n})</span></div></div>
+      <div class="st"><strong>${TT.wong_actual == null ? "–" : n(TT.wong_actual) + "%"}</strong><span>3-and-7 legs hit this season (${TT.wong_n})</span></div>
+      <div class="st"><strong class="${TT.wong_plays?.n ? uc(TT.wong_plays.units) : ""}">${TT.wong_plays?.n ? `${TT.wong_plays.hits}–${TT.wong_plays.n - TT.wong_plays.hits}` : "–"}</strong><span>Wong teaser plays${TT.wong_plays?.n ? `, ${sgn(TT.wong_plays.units, 2)}u, legs ${TT.wong_plays.legs_hit} of ${TT.wong_plays.legs_n}` : ": new Oct 19"}</span></div></div>
       ${(TT.best2.recent || []).length ? `<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Week</th><th>Teaser</th><th>Model chance</th><th>Result</th></tr></thead><tbody>${TT.best2.recent.map(r =>
         `<tr><td>${r.week}</td><td>${esc(r.legs.join(" + "))}</td><td>${n(r.p)}%</td><td><span class="res ${r.hit ? "W" : "L"}">${r.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>` : ""}`;
   const C = Object.entries(T.combos || {});
@@ -1897,10 +1909,17 @@ function bindRecord() {
       $("#betsMsg").textContent = `Imported ${add.length} new bets.`; } catch (e) { $("#betsMsg").textContent = "That file isn't a bets export."; } }); };
 }
 
+function calBlock() {
+  const R = D.plays_rules?.calibration; if (!R || !R._all) return "";
+  const rows = Object.entries(R).filter(([k]) => k !== "_all").sort((a, b) => b[1].n - a[1].n);
+  return `<h3>Prop calibration</h3><p class="sub">On the side the model leaned, how much edge over the book it claimed vs how much really showed up in graded props. Each play's edge is scaled by <b>Kept</b>. It starts near 100% and only drops as results keep showing an edge was overstated, so a hot or cold week can't swing it. It never makes an edge bigger.</p>
+    <div class="tablewrap"><table><thead><tr><th>Stat</th><th>Graded</th><th>Edge claimed</th><th>Edge real</th><th>Kept</th></tr></thead><tbody>
+    ${[["_all", R._all], ...rows].map(([k, c]) => `<tr><td>${k === "_all" ? "<b>All props</b>" : esc(LABELS[k] || (k === "tds" ? "2+ TDs" : k))}</td><td>${c.n}</td><td>${sgn(c.claimed)}%</td><td class="${c.realized >= c.claimed ? "up" : c.realized < c.claimed / 2 ? "down" : ""}">${sgn(c.realized)}%</td><td><b>${n(100 * c.k, 0)}%</b></td></tr>`).join("")}</tbody></table></div>`;
+}
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = reportHTML() + trackingHTML() + myBetsHTML() + clvHTML() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = reportHTML() + trackingHTML() + myBetsHTML() + clvHTML() + calBlock() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>

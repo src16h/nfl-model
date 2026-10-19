@@ -304,9 +304,10 @@ def build_games(bundle, season, week, now):
                        for _, r in props_df.iterrows()} if len(props_df) else set()
         auto = auto[[(norm_name(r["player"]), r["stat"]) not in manual_keys for _, r in auto.iterrows()]]  # your rows win
         props_df = pd.concat([props_df, auto], ignore_index=True) if len(props_df) else auto.reset_index(drop=True)
-    prop_bias_tbl = prop_bias(OUT / "props_log.json")
+    prop_bias_tbl, prop_real_tbl = prop_bias(OUT / "props_log.json", with_real=True)
     log.info(f"prop bias from graded results: {prop_bias_tbl}")
-    props = evaluate_props(props_df, players, sims, prop_bias_tbl)
+    log.info(f"prop calibration from graded results: {prop_real_tbl}")
+    props = evaluate_props(props_df, players, sims, prop_bias_tbl, prop_real_tbl)
     # alt-line parlays: anchored to the book's main line (or the model's middle number if not posted)
     main_lines = {}
     for r in props.get("props", []):
@@ -903,7 +904,7 @@ def main():
         "spread_gap": C.GAME_PLAY_SPREAD, "total_gap": C.GAME_PLAY_TOTAL,
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
-        **BR.summary(), "bias": prop_bias(OUT / "props_log.json"),
+        **BR.summary(), **dict(zip(("bias", "calibration"), prop_bias(OUT / "props_log.json", with_real=True))),
         "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE,
     }
     payload.update({

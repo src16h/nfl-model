@@ -183,20 +183,37 @@ def load_props(path: Path) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def prop_bias(log_path) -> dict:
-    """How each prop stat has run against the book in graded games (fades in with sample size)."""
+def prop_bias(log_path, with_real=False):
+    """How each prop stat has run against the book in graded games (fades in with sample size).
+    with_real=True also returns the calibration table (betrules.realization_table): how much of the
+    final edge over the book has really shown up, per stat."""
     import json
     try:
         log_ = json.loads(Path(log_path).read_text()).get("props", {})
     except Exception:  # noqa: BLE001
-        return {}
+        return ({}, {}) if with_real else {}
     rows = []
     for p in log_.values():
         res = p.get("result") or {}
         if res.get("outcome") not in ("Over", "Under") or p.get("book_over") is None or p.get("stat") in ("anytime_td", "tds"):
             continue
         rows.append((p["stat"], p["book_over"] / 100, res["outcome"] == "Over"))
-    return BR.bias_table(rows)
+    bias = BR.bias_table(rows)
+    if not with_real:
+        return bias
+    real = []
+    for p in log_.values():
+        res = p.get("result") or {}
+        if res.get("outcome") not in ("Over", "Under") or p.get("book_over") is None or p.get("model_over") is None:
+            continue
+        b = p["book_over"] / 100
+        if p.get("pre") is not None:
+            f = p["pre"] / 100
+        else:      # logged before calibration existed: rebuild the chance the rules acted on (blend + bias nudge)
+            f = b + C.PROP_MODEL_WEIGHT * (p["model_over"] / 100 - b)
+            f = BR.inv_logit(BR.logit(f) + bias.get(p["stat"], {}).get("shift", 0.0))
+        real.append((p["stat"], f, b, res["outcome"] == "Over"))
+    return bias, BR.realization_table(real)
 
 
 def td_scale(p, line):
@@ -216,7 +233,7 @@ def td_scale(p, line):
     return float(poisson.sf(n - 1, k * (lo + hi) / 2))
 
 
-def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None) -> dict:
+def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None, real: dict = None) -> dict:
     if not len(props):
         return {"props": [], "pairs": []}
     pending = []
@@ -286,7 +303,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         if side == "Under" and stat in ("anytime_td", "tds") and uo is None and C.TD_NO_NEEDS_PRICE:
             side = None   # no "No TD" price posted, so there is nothing to bet or grade
         num = lambda o: None if o is None else float(o)
-        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias, weight=C.PROP_MODEL_WEIGHT) if (side and oo is not None) else None
+        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias, weight=C.PROP_MODEL_WEIGHT, real=real) if (side and oo is not None) else None
         tier = prop_tier(stat, edge * 100, side)
         if tier in ("play", "watch") and dec is not None:
             ok = dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
@@ -295,7 +312,8 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
             tier = "watch"
         row.update({"model_over": fnum(adj * 100, 1), "model_over_raw": fnum(p_over * 100, 1),
                     "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
-                    "ev": dec["ev"] if dec else None, "tier": tier})
+                    "ev": dec["ev"] if dec else None, "tier": tier,
+                    "pre": dec["pre"] if dec else None, "cal_k": dec["k"] if dec else None})
         if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))
 
