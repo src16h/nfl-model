@@ -3831,7 +3831,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 7.5,
+    "total": 41.5,
+    "margin": 16.0,
+    "points": 28.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_BUF_LV": {
@@ -3908,7 +3913,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -5.5,
+    "total": 53.5,
+    "margin": -3.0,
+    "points": 63.0
+   },
    "last_seen": "2026-10-18T16:04+00:00"
   },
   "2026_06_DAL_GB": {
@@ -4024,7 +4034,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -1.5,
+    "total": 53.5,
+    "margin": 10.0,
+    "points": 36.0
+   },
    "last_seen": "2026-10-18T23:24+00:00"
   },
   "2026_06_WAS_SF": {
@@ -4138,10 +4153,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-19T12:45+00:00",
+     "src": "live:draftkings",
+     "spread": 7.5,
+     "total": 51.5,
+     "m": 7.3,
+     "t": 51.4,
+     "edge_s": -0.2,
+     "edge_t": -0.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-18T23:24+00:00"
+   "last_seen": "2026-10-19T12:45+00:00"
   }
  }
 }
