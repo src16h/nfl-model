@@ -223,6 +223,30 @@ class KeyNumbers:
         return out
 
 
+    def shift(self, kind, sharp_line, p_sharp, bet_line, side_high):
+        """Move a sharp book's fair chance from its own line to the bet book's line (Oct 20 2026).
+        kind: "spread" (home margin convention, home covers when margin > line) or "total".
+        p_sharp: the sharp book's no-vig chance for the side at sharp_line. side_high: True for the home side
+        (spread) or the Over (total). Real results from games priced near the sharp line give how much of the
+        outcome sits between the two lines (a lot at 3 and 7), and that change is applied on the log-odds scale
+        so the sharp book's own price still sets the level. None if the lines are too far apart or data is thin."""
+        if not self.ok or sharp_line is None or bet_line is None or abs(sharp_line - bet_line) > 1.5:
+            return None
+        arr_l, arr_o = (self.L, self.M) if kind == "spread" else (self.TL, self.T)
+        o = self._near(arr_l, arr_o, sharp_line)
+        if o is None:
+            return None
+
+        def cover(line):
+            dec = o != line
+            c = float((o[dec] > line).mean()) if dec.any() else 0.5
+            return c if side_high else 1 - c
+        c0, c1 = min(max(cover(sharp_line), 1e-3), 1 - 1e-3), min(max(cover(bet_line), 1e-3), 1 - 1e-3)
+        p = min(max(p_sharp, 1e-3), 1 - 1e-3)
+        lg = np.log(p / (1 - p)) + np.log(c1 / (1 - c1)) - np.log(c0 / (1 - c0))
+        return float(1 / (1 + np.exp(-lg)))
+
+
 # ---------------------------------------------------------------------
 # Win chance: a smooth curve from the projected margin
 # ---------------------------------------------------------------------

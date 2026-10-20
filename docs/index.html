@@ -1070,7 +1070,7 @@ function renderGames() {
   const sb = rules.spread_backtest;
   h += `<div class="rules"><span>${playsRecordLine()}</span>
     <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}; ${rules.min_ev ? `blended 50/50 with the book, ${rules.min_ev.prop}%+ expected profit at the price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+)` : `${pp[0]} to ${pp[1]}% gap`}</span>
-    <span><b>Spread and total plays:</b> Pinnacle's fair price says your book's price is 1.5% to 8% too generous, and the model agrees on the side. Plays lock the moment they appear and are graded at that line and price.</span></div>`;
+    <span><b>Spread and total plays:</b> Pinnacle's fair price says your book's price is 1.5% to 8% too generous, and the model agrees on the side. When Pinnacle has a different line (say -3.5 vs your -3), its price is moved to your line using how often real games land on each number. Plays lock the moment they appear and are graded at that line and price.</span></div>`;
 
   // watch list: game leans that are not plays
   const watch = [];

@@ -224,18 +224,22 @@ SHARP_MIN_EV = 1.5
 SHARP_MAX_EV = 8.0
 
 
-def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other):
+def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=None):
     """Chances 0-1. odds/other_odds: the bet book's prices for this side and the other side (American).
     sharp_*: Pinnacle's prices for the same side and line (None when it has no matching line).
+    sharp_p: Pinnacle's fair chance already converted to the bet line (used instead of sharp_* when given).
     Returns {"play", "sharp", "book", "ev"} with chances in % and ev in % at the bet price."""
     if odds is None or other_odds is None:
         return {"play": False, "sharp": None, "book": None, "ev": None}
     pa, pb = implied(odds), implied(other_odds)
     book = pa / (pa + pb)
-    if sharp_odds is None or sharp_other is None:
+    if sharp_p is not None:                     # sharp chance already moved to the bet book's line (key numbers)
+        sharp = sharp_p
+    elif sharp_odds is None or sharp_other is None:
         return {"play": False, "sharp": None, "book": round(100 * book, 1), "ev": None}
-    sa, sb = implied(sharp_odds), implied(sharp_other)
-    sharp = sa / (sa + sb)
+    else:
+        sa, sb = implied(sharp_odds), implied(sharp_other)
+        sharp = sa / (sa + sb)
     ev = 100 * (sharp * (1 + payout(odds)) - 1)
     play = SHARP_MIN_EV <= ev <= SHARP_MAX_EV and model_p is not None and model_p >= book
     return {"play": bool(play), "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1)}

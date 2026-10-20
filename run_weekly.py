@@ -214,10 +214,20 @@ def build_games(bundle, season, week, now):
             home_side = e_sp > 0 if abs(e_sp) >= 0.05 else sim.get("cover_home", 0.5) >= 0.5
             mp = sim.get("cover_home") if home_side else (1 - sim["cover_home"] if sim.get("cover_home") is not None else None)
             same = shp.get("spread_line") is not None and abs(shp["spread_line"] - sl) < 1e-9
+            sp_conv = None
+            if not same and shp.get("spread_line") is not None and shp.get("spread_home_odds") and shp.get("spread_away_odds"):
+                hs_, as_ = BR.implied(shp["spread_home_odds"]), BR.implied(shp["spread_away_odds"])
+                p_home = hs_ / (hs_ + as_)                      # Pinnacle's fair home cover chance at its own line
+                ph_bet = keynum.shift("spread", shp["spread_line"], p_home, sl, True)
+                if ph_bet is not None:
+                    sp_conv = ph_bet if home_side else 1 - ph_bet
             sharp_sp = BR.decide_sharp(mp, lm.get("spread_home_odds" if home_side else "spread_away_odds"),
                                        lm.get("spread_away_odds" if home_side else "spread_home_odds"),
                                        (shp.get("spread_home_odds" if home_side else "spread_away_odds")) if same else None,
-                                       (shp.get("spread_away_odds" if home_side else "spread_home_odds")) if same else None)
+                                       (shp.get("spread_away_odds" if home_side else "spread_home_odds")) if same else None,
+                                       sharp_p=sp_conv)
+            if sp_conv is not None:
+                sharp_sp["converted_from"] = shp["spread_line"]
             sharp_sp["side"] = h if home_side else a
             sharp_sp["odds"] = lm.get("spread_home_odds" if home_side else "spread_away_odds")
             play_spread = sharp_sp["side"] if sharp_sp["play"] else None
@@ -225,9 +235,18 @@ def build_games(bundle, season, week, now):
             over = e_to > 0 if abs(e_to) >= 0.05 else sim.get("over", 0.5) >= 0.5
             mp = sim.get("over") if over else (1 - sim["over"] if sim.get("over") is not None else None)
             same = shp.get("total_line") is not None and abs(shp["total_line"] - tl) < 1e-9
+            to_conv = None
+            if not same and shp.get("total_line") is not None and shp.get("over_odds") and shp.get("under_odds"):
+                os_, us_ = BR.implied(shp["over_odds"]), BR.implied(shp["under_odds"])
+                po_bet = keynum.shift("total", shp["total_line"], os_ / (os_ + us_), tl, True)
+                if po_bet is not None:
+                    to_conv = po_bet if over else 1 - po_bet
             sharp_to = BR.decide_sharp(mp, lm.get("over_odds" if over else "under_odds"), lm.get("under_odds" if over else "over_odds"),
                                        (shp.get("over_odds" if over else "under_odds")) if same else None,
-                                       (shp.get("under_odds" if over else "over_odds")) if same else None)
+                                       (shp.get("under_odds" if over else "over_odds")) if same else None,
+                                       sharp_p=to_conv)
+            if to_conv is not None:
+                sharp_to["converted_from"] = shp["total_line"]
             sharp_to["side"] = "Over" if over else "Under"
             sharp_to["odds"] = lm.get("over_odds" if over else "under_odds")
             play_total = sharp_to["side"] if sharp_to["play"] else None
