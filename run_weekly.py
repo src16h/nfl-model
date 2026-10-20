@@ -361,6 +361,8 @@ def build_games(bundle, season, week, now):
                 main_lines[(r["pid"], r.get("stat_key") or r.get("stat"))] = float(r["line"])
         except (TypeError, ValueError):
             pass
+    from nflmodel import altcal
+    altcal.PLAYED = tracker.played_set(bundle.snaps)
     for game, side_sims in alt_inputs:
         try:
             game["alt_parlay"] = build_alt_parlay(game, side_sims, main_lines)
@@ -580,8 +582,22 @@ def build_alt_parlay(game, side_sims, main_lines=None):
              "stat": cands[i]["stat"], "side": "Over", "line": cands[i]["line"], "label": cands[i]["label"],
              "main": cands[i]["main"], "main_src": cands[i]["main_src"], "p": round(cands[i]["p"] * 100, 1)} for i in idx]
     legs.sort(key=lambda L: (L["team"] != game["away"], -L["p"]))
+    # whole-ticket correction (Oct 20 2026): graded tickets hit 35% when the model said 47% even after the leg
+    # calibration, so the ticket's chance moves toward its record on the log-odds scale, fading in with the sample
+    raw = pj
+    try:
+        ap = (json.loads((OUT / "latest.json").read_text()).get("tracking") or {}).get("alt_parlays") or {}
+        n_, m_, a_ = ap.get("n") or 0, (ap.get("model") or 0) / 100, (ap.get("actual") or 0) / 100
+        if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
+            shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K)
+            lg = np.log(pj / (1 - pj)) + shift
+            pj = float(1 / (1 + np.exp(-lg)))
+    except Exception:  # noqa: BLE001
+        pass
     fair = (1 - pj) / pj * 100
-    return {"legs": legs, "p": round(pj * 100, 1), "pi": round(pi * 100, 1), "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj)))}
+    return {"legs": legs, "p": round(pj * 100, 1), "p_sim": round(raw * 100, 1), "pi": round(pi * 100, 1),
+            "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj))),
+            "note": "Only bet it if Hard Rock pays more than the fair odds"}
 
 
 def write_sgp(game, side_sims, qbs, pnoise):
@@ -709,7 +725,9 @@ def build_plays(games, props, model_info):
         out.append({"kind": "prop", "kickoff": ko.get(p["game_id"]), "game_id": p["game_id"],
                     "matchup": f"{p['team']} vs {p['opp']}", "player": p["player"], "pos": p.get("pos"),
                     "pick": f"{p['lean']} {p['line']}", "label": p.get("label"), "odds": odds,
-                    "detail": f"Model {_pct_side(p['model_over'], p['lean'])}% vs book {_pct_side(p['book_over'], p['lean'])}%",
+                    "detail": f"Model {_pct_side(p['model_over'], p['lean'])}% vs book {_pct_side(p['book_over'], p['lean'])}%"
+                              + (f", other books {_pct_side(p['cons_over'], p['lean'])}% ({p.get('cons_n')} books, {p['cons_ev']:+.1f}% value at this price)"
+                                 if p.get("cons_over") is not None and p.get("cons_ev") is not None else ""),
                     "model_pct": _pct_side(p["model_over"], p["lean"]), "book_pct": _pct_side(p["book_over"], p["lean"]),
                     "gap": fnum(abs(p["edge"])), "gap_unit": "%", "book": p.get("book"), "median": p.get("median"),
                     "bet": {"kind": "prop", "game_id": p["game_id"], "pid": p.get("pid"), "player": p["player"],

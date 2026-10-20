@@ -294,6 +294,13 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
                     "pid": p["pid"], "stat_key": stat,
                     "median": None if stat == "anytime_td" else fnum(np.median(arr), 1), "label": stat_label(stat)})
         out.append(row)
+        try:
+            co = float(r.get("cons_over")) if r.get("cons_over") not in (None, "") else None
+            co = co if co is not None and np.isfinite(co) else None
+        except (TypeError, ValueError):
+            co = None
+        row["cons_over"] = None if co is None else fnum(co * 100, 1)
+        row["cons_n"] = int(float(r.get("cons_n") or 0)) if str(r.get("cons_n") or "").replace(".", "").isdigit() else 0
         pending.append((row, arr, line, p_over, book_over, r.get("over_odds"), r.get("under_odds") if bu is not None else None, stat, p))
 
     # slate-level check (as in the NHL and CFB models): if the model sits above or below the book on almost
@@ -313,10 +320,23 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         if side == "Under" and stat in ("anytime_td", "tds") and uo is None and C.TD_NO_NEEDS_PRICE:
             side = None   # no "No TD" price posted, so there is nothing to bet or grade
         num = lambda o: None if o is None else float(o)
-        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias, weight=C.PROP_MODEL_WEIGHT, real=real) if (side and oo is not None) else None
+        # side_k: each side keeps only the share of its edge it has delivered (Oct 20 2026: receptions and passing-yard
+        # Unders claimed +3 to +4 points and delivered nothing)
+        dec = BR.decide_prop(adj, book_over, num(oo), num(uo), stat, bias, weight=C.PROP_MODEL_WEIGHT, real=real,
+                             side_k=True) if (side and oo is not None) else None
         tier = prop_tier(stat, edge * 100, side)
+        # consensus referee (Oct 20 2026): the other books' no-vig chance at the same line must make this price
+        # worth at least PROP_CONS_MIN_EV, with PROP_CONS_MIN_BOOKS books posting it
+        cons_ev = None
+        if side and row.get("cons_over") is not None and (row.get("cons_n") or 0) >= C.PROP_CONS_MIN_BOOKS:
+            price = num(oo) if side == "Over" else num(uo)
+            if price is not None:
+                pc = row["cons_over"] / 100 if side == "Over" else 1 - row["cons_over"] / 100
+                cons_ev = 100 * (pc * (1 + BR.payout(price)) - 1)
+        row["cons_ev"] = None if cons_ev is None else fnum(cons_ev, 1)
         if tier in ("play", "watch") and dec is not None:
-            ok = dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
+            ok = (dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
+                  and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
             tier = "play" if ok else "watch"
         elif tier == "play":
             tier = "watch"
@@ -326,6 +346,19 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
                     "pre": dec["pre"] if dec else None, "cal_k": dec["k"] if dec else None})
         if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))
+
+    # correlated plays: at most PROP_CAP_TEAM per team per game, best expected return first (same offense's props
+    # win and lose together, like NHL points Unders on Oct 19)
+    taken, kept = {}, []
+    for k_ in sorted(keep, key=lambda t: -(t[0].get("ev") or 0)):
+        key = (k_[0]["game_id"], k_[2])
+        if taken.get(key, 0) < C.PROP_CAP_TEAM:
+            taken[key] = taken.get(key, 0) + 1
+            kept.append(k_)
+        else:
+            k_[0]["tier"] = "watch"
+            k_[0]["capped"] = True
+    keep = kept
 
     pairs = []
     for i in range(len(keep)):

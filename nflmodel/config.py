@@ -147,6 +147,13 @@ TD_NO_NEEDS_PRICE = True
 
 # Game plays use the market-anchored engine. Set to None to switch one off.
 PROP_MODEL_WEIGHT = 0.4      # NFL props: model's share vs the book (Oct 18 2026: book more accurate; 0.4 took past plays from -1.7% to +5.7%)
+# Prop plays (Oct 20 2026): the book was a better forecaster than the model on props, so a play also needs the
+# market's consensus (other US books' no-vig price at the same line) to rate your book's price as fair or better,
+# and at most PROP_CAP_TEAM plays per team per game.
+PROP_CONS_MIN_EV = 0.0           # % expected return at your book's price using the consensus chance
+PROP_CONS_MIN_BOOKS = 2          # other books that must post the same line
+PROP_CAP_TEAM = 2
+ALT_TICKET_K = 30                # alt-parlay record counts half after this many graded tickets
 TD_PROB_SCALE = 1.0          # retired Oct 20 2026 (flat boost made likely scorers worse); see TD_CURVE
 # TD calibration curve, logit(p') = a + b*logit(p). Fit Oct 20 2026 on 670 graded anytime TDs (weeks 4-7), counting
 # players who played without a touch (they were dropped before, which inflated real TD rates). Full fit a=-0.20,

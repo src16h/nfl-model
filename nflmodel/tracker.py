@@ -331,7 +331,7 @@ def update_props_log(path, rows, season, week, now):
             "over_odds": r.get("over_odds"), "under_odds": r.get("under_odds"),
             "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
             "lean": r.get("lean"), "tier": r.get("tier"), "median": r.get("median"),
-            "pre": r.get("pre"), "ev": r.get("ev"),
+            "pre": r.get("pre"), "ev": r.get("ev"), "cons_over": r.get("cons_over"), "cons_ev": r.get("cons_ev"),
             "source": r.get("source") or "manual", "book": r.get("book"),
             "first_line": first_line, "first_lean": first_lean,
             "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None,
@@ -339,7 +339,8 @@ def update_props_log(path, rows, season, week, now):
             "flag": (old or {}).get("flag") or ({"line": r.get("line"), "lean": r.get("lean"),
                                                  "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
                                                  "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
-                                                 "book": r.get("book"), "at": ts} if r.get("tier") == "play" else None)}
+                                                 "book": r.get("book"), "cons_ev": r.get("cons_ev"), "at": ts}
+                                                if r.get("tier") == "play" else None)}
         index[trio] = key
     _save(path, lg)
 
@@ -463,6 +464,22 @@ def played_set(snaps):
     return {(g, norm_name(p)) for g, p in zip(sn["game_id"], sn["player"])}
 
 
+def prop_clv(r, fl):
+    """Closing line value of a locked prop play, in %: its price's expected return at the closing no-vig chance
+    (the last line saved before kickoff, same line only). None when the line moved or a side's price is missing."""
+    try:
+        if fl.get("odds") in (None, "") or r.get("over_odds") in (None, "") or r.get("under_odds") in (None, ""):
+            return None
+        if fl.get("line") is not None and r.get("line") is not None and abs(float(fl["line"]) - float(r["line"])) > 1e-9:
+            return None
+        imp = lambda o: (100 / (o + 100)) if o > 0 else (-o / (-o + 100))
+        po, pu = imp(float(r["over_odds"])), imp(float(r["under_odds"]))
+        pc = po / (po + pu) if fl.get("lean") == "Over" else pu / (po + pu)
+        return round(100 * (pc * (1 + _payout(fl["odds"])) - 1), 2)
+    except (TypeError, ValueError):
+        return None
+
+
 def _grade_with_flag(r, s, ts):
     r["result"] = _grade_one(r, s, ts)
     fl = r.get("flag")
@@ -470,6 +487,8 @@ def _grade_with_flag(r, s, ts):
         r["flag_result"] = _grade_one({**r, "line": fl.get("line"), "lean": fl.get("lean"),
                                        "over_odds": fl.get("odds") if fl.get("lean") == "Over" else r.get("over_odds"),
                                        "under_odds": fl.get("odds") if fl.get("lean") == "Under" else r.get("under_odds")}, s, ts)
+        if fl.get("at"):
+            r["flag_result"]["clv"] = prop_clv(r, fl)
 
 
 def grade_props(path, pbp, schedules, now, snaps=None):
@@ -554,6 +573,9 @@ def prop_summary(lg):
     fl = [{**r, "result": r["flag_result"]} for r in graded if r.get("flag") and r.get("flag_result")
           and r["flag_result"].get("lean_result") in ("win", "loss", "push")]
     out["plays"] = _rec_block(fl)          # locked plays, graded at the line and price when first flagged
+    cl = [r["result"].get("clv") for r in fl if r["result"].get("clv") is not None]
+    out["plays_clv"] = {"n": len(cl), "avg": fnum(float(np.mean(cl)), 2) if cl else None,
+                        "beat": fnum(100 * float(np.mean([c > 0 for c in cl])), 1) if cl else None}
     out["est_priced"] = sum(1 for r in bets if r["result"].get("est_price"))
     out["weeks"] = sorted({int(r["week"]) for r in bets if r.get("week") is not None})
 
@@ -646,7 +668,7 @@ def _ncdf(z):
     return 0.5 * (1 + math.erf(z / math.sqrt(2)))
 
 
-def _leg_hit(L, g, pl, cols):
+def _leg_hit(L, g, pl, cols, played=None, gid=None):
     """Grade one parlay leg from results: True / False / None (can't grade)."""
     h, a = g["h"], g["a"]
     if L["kind"] == "tt":
@@ -661,6 +683,8 @@ def _leg_hit(L, g, pl, cols):
         return None if m + L["line"] == 0 else m + L["line"] > 0
     row = pl.get(L["pid"])
     if row is None:
+        if played and (gid, norm_name(L.get("name"))) in played:
+            return 0.0 > L["line"]                          # played, no touch: the leg loses
         return None
     return row[cols.index(L["stat"])] > L["line"]
 
@@ -696,7 +720,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
             # the model's alt-line parlay
             ap = hg.get("alt_parlay")
             if ap and ap.get("legs"):
-                hits = [_leg_hit(L, g, pl, cols) for L in ap["legs"]]
+                hits = [_leg_hit(L, g, pl, cols, played, gid) for L in ap["legs"]]
                 for L, hh in zip(ap["legs"], hits):
                     if hh is not None:
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
@@ -704,7 +728,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
                     alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
             # parlay combos locked with the game
             for c in hg.get("sgp_combos") or []:
-                hits = [_leg_hit(L, g, pl, cols) for L in c["legs"]]
+                hits = [_leg_hit(L, g, pl, cols, played, gid) for L in c["legs"]]
                 if None in hits:
                     continue
                 combos.append((c["type"], week, c["p"] / 100, c["pi"] / 100, all(hits)))

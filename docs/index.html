@@ -1048,7 +1048,11 @@ function playsRecordLine() {
   const bits = [];
   if (pr && pr.n) bits.push(`Prop plays <b>${pr.w}–${pr.l}</b> <span class="${uc(pr.units)}">${units(pr.units)}</span>`);
   else bits.push(`Prop plays <b>0–0</b>`);
+  const pc = (D.prop_record || {}).plays_clv;
+  if (pc && pc.n) bits.push(`Prop closing value <b class="${pc.avg > 0 ? "up" : "down"}">${sgn(pc.avg, 2)}%</b> (beat the close ${n(pc.beat, 0)}%, ${pc.n} plays)`);
   bits.push(`Spread plays <b>${rec(R.spreads)}</b>`);
+  const gp = (D.plays_rules || {}).game_plays;
+  if (gp && gp.n_clv) bits.push(`Game plays line value <b>${sgn(gp.clv_pts, 1)} pts</b>`);
   return bits.join(" &nbsp; ");
 }
 
@@ -1069,7 +1073,7 @@ function renderGames() {
   const pp = rules.prop_play || [4, 7];
   const sb = rules.spread_backtest;
   h += `<div class="rules"><span>${playsRecordLine()}</span>
-    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}; ${rules.min_ev ? `blended 50/50 with the book, ${rules.min_ev.prop}%+ expected profit at the price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+)` : `${pp[0]} to ${pp[1]}% gap`}</span>
+    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}; the model's edge (scaled by how much each side has really delivered) must clear the bar, the other books' consensus price must rate your book's price as fair or better, and at most 2 per team per game.</span>
     <span><b>Spread and total plays:</b> Pinnacle's fair price says your book's price is 1.5% to 8% too generous, and the model agrees on the side. When Pinnacle has a different line (say -3.5 vs your -3), its price is moved to your line using how often real games land on each number. Plays lock the moment they appear and are graded at that line and price.</span></div>`;
 
   // watch list: game leans that are not plays
@@ -1680,7 +1684,7 @@ function altCardsHTML(games) {
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}${L.main_src === "model" ? " (model)" : ""}` : ""}</span></div>`).join("")}</div>
-        <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
+        <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated. <b>Only bet it if your book pays more than ${esc(a.fair)}.</b></div>
         <div class="t-actions"><button class="logbtn" data-altgo="${esc(g.game_id)}">Check my book's price</button></div></div>
         <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`;
 }

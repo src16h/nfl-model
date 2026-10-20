@@ -19,10 +19,12 @@ import numpy as np
 from scipy.optimize import minimize
 
 from . import config as C
+from .util import norm_name
 
 log = logging.getLogger("nflmodel")
 STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
 _CACHE = {}
+PLAYED = set()     # (game_id, normalized name) with an offensive snap; set by run_weekly from snap counts
 
 
 def group(pos, stat):
@@ -48,9 +50,14 @@ def fit(hist_dir, results_path, season):
             for p in json.loads(f.read_text()).get("players", []):
                 mk = p.get("markets")
                 pl = (res.get("players") or {}).get(p.get("game_id"))
-                if not mk or not pl or p.get("pid") not in pl:
+                if not mk or not pl:
+                    continue
+                if p.get("pid") in pl:
+                    act = dict(zip(cols, pl[p["pid"]]))
+                elif (p.get("game_id"), norm_name(p.get("name"))) in PLAYED:
+                    act = {c: 0.0 for c in cols}              # played, no touch: books grade the leg a loss
+                else:
                     continue                                  # did not play: books void the leg
-                act = dict(zip(cols, pl[p["pid"]]))
                 for st in STATS.get(p.get("pos"), []):
                     m = mk.get(st)
                     if not m or (m.get("med") or 0) < C.ALT_MIN_MAIN[st]:

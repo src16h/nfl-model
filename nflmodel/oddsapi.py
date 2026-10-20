@@ -275,6 +275,25 @@ def parse_props(ev: dict, game_id: str) -> list:
     """Rows shaped like data/props.csv. One row per player per stat, from the
     highest-ranked book that lists that player."""
     rows = {}
+    allq = {}          # (stat, player) -> [(book key, line, over, under)] from every book: the consensus price
+    for b in ev.get("bookmakers", []):
+        for m in b.get("markets", []):
+            stat = MARKETS.get(m.get("key"))
+            if not stat:
+                continue
+            g2 = {}
+            for o in m.get("outcomes", []):
+                player, price = str(o.get("description") or "").strip(), _num(o.get("price"))
+                side = str(o.get("name", "")).strip().lower()
+                line = 0.5 if stat == "anytime_td" else _num(o.get("point"))
+                if not player or price is None or line is None:
+                    continue
+                side = "over" if side in ("yes", "over") else ("under" if side in ("no", "under") else "")
+                if side:
+                    g2.setdefault((player, line), {})[side] = price
+            for (player, line), sd in g2.items():
+                if "over" in sd and "under" in sd:
+                    allq.setdefault((stat, norm_name(player)), []).append((b.get("key"), line, sd["over"], sd["under"]))
     for b in sorted(ev.get("bookmakers", []), key=lambda b: _rank(b.get("key"))):
         for m in b.get("markets", []):
             stat = MARKETS.get(m.get("key"))
@@ -321,6 +340,12 @@ def parse_props(ev: dict, game_id: str) -> list:
                     "over_odds": _fmt_odds(sides["over"]),
                     "under_odds": _fmt_odds(sides["under"]) if "under" in sides else "",
                     "game_id": game_id, "source": f"auto:{b.get('key')}", "book": b.get("title") or b.get("key")}
+                # consensus: the other books' no-vig Over chance at this same line (median), the referee for props
+                imp = lambda x: 100 / (x + 100) if x > 0 else -x / (-x + 100)
+                cons = [imp(o) / (imp(o) + imp(u)) for bk, L, o, u in allq.get((stat, norm_name(player)), [])
+                        if bk != b.get("key") and abs(L - line) < 1e-9]
+                rows[(stat, norm_name(player))]["cons_over"] = round(float(np.median(cons)), 4) if cons else None
+                rows[(stat, norm_name(player))]["cons_n"] = len(cons)
     return list(rows.values())
 
 
