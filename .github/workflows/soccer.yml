@@ -1,0 +1,50 @@
+name: Soccer model
+
+on:
+  schedule:
+    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5.
+    - cron: "40 13 * * *"     # every day 9:40am ET: grades yesterday, fresh lines and props
+    - cron: "5 17 * * 2,3"    # Tue/Wed 1:05pm ET: before midweek evening kickoffs (7:45pm UK)
+    - cron: "5 20 * * 5"      # Friday 4:05pm ET: weekend lines
+    - cron: "5 10 * * 6,0"    # Sat/Sun 6:05am ET: before the early kickoffs, lineups closer
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soccer-model
+  cancel-in-progress: false
+
+jobs:
+  run-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run model
+        env:
+          ODDS_API_KEY_SOCCER: ${{ secrets.ODDS_API_KEY_SOCCER }}   # optional: book lines for 1X2, handicaps and totals
+        run: python run_soccer.py
+
+      - name: Save results
+        run: |
+          git config user.name "soccer-model-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/soccer/data data/soccer
+          git diff --staged --quiet && exit 0
+          git commit -m "Soccer update $(date -u +'%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 7
+          done
+          echo "::error::Could not save results after 4 tries"; exit 1

@@ -126,6 +126,17 @@ The CFB page lives at `/cfb/` on the same site (use the NFL / NHL / CFB switch a
 - **Book prop lines (optional):** add a repository secret named `ODDS_API_KEY_CFB` with a free key from the-odds-api.com. Each game's props are pulled once, inside 30 hours of kickoff, within the free plan's 500 credits a month.
 - **Rebuilding history:** the tables in `data/cfb/` were built from 2018 to now. Each run only adds new games.
 
+## Soccer (Premier League, Championship, La Liga)
+
+The soccer page lives at `/soccer/` on the same site, with a league filter.
+
+- **Runs by itself:** `.github/workflows/soccer.yml` runs every morning, Tuesday and Wednesday before midweek games, Friday afternoon, and early Saturday and Sunday.
+- **Data:** Football-Data.co.uk (every match since 2020 with shots and closing odds), Understat (free xG for the Premier League and La Liga) and ESPN (fixtures, results, player box scores). No key needed.
+- **Model:** team attack and defence ratings from a recency-weighted Poisson fit on xG (shots on target in the Championship) blended with goals, a newcomer offset for promoted and relegated clubs, then a full scoreline grid with the Dixon-Coles draw correction (`soccermodel/model.py`). Every market (1X2, draw no bet, Asian handicap, totals, BTTS) reads off the same grid. Settings are in `soccermodel/config.py`.
+- **Plays:** only markets that made money in the walk-forward backtest (`python -m soccermodel.backtest`): Premier League Asian handicap and totals, Championship Asian handicap. Everything else shows the lean and fair odds.
+- **Props:** anytime goalscorer and shots on target from each player's recent per-90 rates and expected minutes. You type in your book's price.
+- **Book lines (optional):** add a repository secret named `ODDS_API_KEY_SOCCER` with a free key from the-odds-api.com. Each league pull costs 3 credits; the run spreads the 500 monthly credits over the month.
+
 ---
 
 ## How the model works

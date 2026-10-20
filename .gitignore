@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 data/nhl_cache/
 data/cfb_cache/
+data/soccer/bt_pred_*.pkl
