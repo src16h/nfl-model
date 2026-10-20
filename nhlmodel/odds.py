@@ -16,6 +16,7 @@ import urllib.request
 from calendar import monthrange
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from . import config as C
 from .util import norm_name
@@ -70,6 +71,45 @@ def _team(name, games):
     return None
 
 
+def _parse_book(ev, b):
+    rec = {"event": ev["id"], "book": b.get("title"), "commence": ev.get("commence_time")}
+    hn, an = ev["home_team"], ev["away_team"]
+    for m in b.get("markets", []):
+        out = {o["name"]: o for o in m.get("outcomes", [])}
+        if m["key"] == "h2h" and hn in out and an in out:
+            rec["ml_home"], rec["ml_away"] = out[hn]["price"], out[an]["price"]
+        elif m["key"] == "spreads" and hn in out and an in out:
+            rec["pl_home"], rec["pl_home_odds"] = out[hn].get("point"), out[hn]["price"]
+            rec["pl_away_odds"] = out[an]["price"]
+        elif m["key"] == "totals" and "Over" in out and "Under" in out:
+            rec["total"], rec["over_odds"], rec["under_odds"] = out["Over"].get("point"), out["Over"]["price"], out["Under"]["price"]
+    return rec
+
+
+def _lines_for(ev):
+    """Bet book: the first of C.ODDS_BOOKS (Hard Rock first) with a moneyline; a missing puck line or total is filled
+    from the next book. Pinnacle's lines ride along as rec['sharp'], the referee price."""
+    books = {b["key"]: b for b in ev.get("bookmakers", [])}
+    rec = None
+    for k in [k for k in C.ODDS_BOOKS if k in books]:
+        r = _parse_book(ev, books[k])
+        if rec is None:
+            if "ml_home" in r:
+                rec = r
+            continue
+        for f in (("pl_home", "pl_home_odds", "pl_away_odds"), ("total", "over_odds", "under_odds")):
+            if f[0] not in rec and f[0] in r:
+                rec.update({x: r[x] for x in f})
+    if rec is None:
+        return None
+    for k in C.SHARP_BOOKS:
+        if k in books:
+            sh = _parse_book(ev, books[k])
+            rec["sharp"] = {x: v for x, v in sh.items() if x not in ("event", "commence")}
+            break
+    return rec
+
+
 def _no_vig(a, b):
     def imp(x):
         return 100 / (x + 100) if x > 0 else -x / (-x + 100)
@@ -111,30 +151,21 @@ def run(games, state_path, cache_path, now):
     try:
         hours = (now - datetime.fromisoformat(state["lines_at"])).total_seconds() / 3600 if state.get("lines_at") else 99
         lines = state.get("lines") or {}
-        if hours >= C.ODDS_LINES_EVERY_HOURS or not lines:
-            data = cl.get(f"/v4/sports/{SPORT}/odds", regions=C.ODDS_REGION, markets="h2h,spreads,totals",
-                          oddsFormat="american", bookmakers=C.ODDS_BOOK)
-            if not data:                                   # preferred book missing: any US book
-                data = cl.get(f"/v4/sports/{SPORT}/odds", regions=C.ODDS_REGION, markets="h2h,spreads,totals", oddsFormat="american")
+        soon = [g for g in games if 0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+                <= C.ODDS_PREKO_HOURS]
+        due = hours >= C.ODDS_LINES_EVERY_HOURS or not lines or (soon and hours >= 1.0)    # near puck drop: near-closing prices
+        if due:
+            # one call, up to 10 books = same credits as one book: Hard Rock (where you bet) first, Pinnacle kept as the referee
+            data = cl.get(f"/v4/sports/{SPORT}/odds", markets="h2h,spreads,totals", oddsFormat="american",
+                          bookmakers=",".join(C.ODDS_BOOKS + C.SHARP_BOOKS))
             lines = {}
             for ev in data:
                 h, a = _team(ev["home_team"], games), _team(ev["away_team"], games)
                 if not h or not a:
                     continue
-                for b in ev.get("bookmakers", []):
-                    rec = {"event": ev["id"], "book": b.get("title"), "commence": ev.get("commence_time")}
-                    for m in b.get("markets", []):
-                        out = {o["name"]: o for o in m.get("outcomes", [])}
-                        hn, an = ev["home_team"], ev["away_team"]
-                        if m["key"] == "h2h" and hn in out and an in out:
-                            rec["ml_home"], rec["ml_away"] = out[hn]["price"], out[an]["price"]
-                        elif m["key"] == "spreads" and hn in out and an in out:
-                            rec["pl_home"], rec["pl_home_odds"] = out[hn].get("point"), out[hn]["price"]
-                            rec["pl_away_odds"] = out[an]["price"]
-                        elif m["key"] == "totals" and "Over" in out and "Under" in out:
-                            rec["total"], rec["over_odds"], rec["under_odds"] = out["Over"].get("point"), out["Over"]["price"], out["Under"]["price"]
+                rec = _lines_for(ev)
+                if rec:
                     lines[f"{a}@{h}"] = rec
-                    break
             state["lines"], state["lines_at"] = lines, now.isoformat()
         for g in games:
             rec = lines.get(f"{g['away']}@{g['home']}")
@@ -146,7 +177,7 @@ def run(games, state_path, cache_path, now):
         rem = cl.remaining if cl.remaining is not None else state.get("remaining") or 500
         daily = max(0, (rem - C.ODDS_RESERVE)) / days_left
         allowance = int(daily) - 6 - state.get("spent_today", 0)          # keep room for line pulls
-        et_hour = (now.astimezone(timezone.utc).hour - 4) % 24
+        et_hour = now.astimezone(ZoneInfo("America/New_York")).hour
         todo = [g for g in games if g.get("book", {}).get("event") and g["date_et"] == g["today_et"]]
         if et_hour >= 13:                                  # props are posted by early afternoon
             for mkt in C.ODDS_PROP_MARKETS:
@@ -154,17 +185,20 @@ def run(games, state_path, cache_path, now):
                     ck = f"{g['game_id']}|{mkt}"
                     if ck in cache or allowance < 1:
                         continue
-                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds", regions=C.ODDS_REGION,
-                                markets=mkt, oddsFormat="american", bookmakers=C.ODDS_BOOK)
-                    rows = {}
-                    for b in ev.get("bookmakers", []):
-                        for m in b.get("markets", []):
+                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
+                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
+                    rows, used = {}, None
+                    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
+                    for k in [k for k in C.PROP_BOOKS if k in bks]:          # Hard Rock first; a player missing there
+                        for m in bks[k].get("markets", []):                  # is filled from the next book
                             for o in m.get("outcomes", []):
                                 nm = norm_name(o.get("description", ""))
-                                r = rows.setdefault(nm, {"line": o.get("point")})
+                                if nm in rows and rows[nm].get("bk") != k:
+                                    continue
+                                r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
                                 r["over" if o["name"] == "Over" else "under"] = o["price"]
-                        break
-                    cache[ck] = {"day": today, "rows": rows, "book": (ev.get("bookmakers") or [{}])[0].get("title")}
+                        used = used or bks[k].get("title")
+                    cache[ck] = {"day": today, "rows": rows, "book": used}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
     except Fatal as e:
@@ -184,7 +218,7 @@ def _props(cache):
         for nm, r in v["rows"].items():
             if r.get("line") is None:
                 continue
-            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(r, book=v.get("book"))
+            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(r, book=r.get("book") or v.get("book"))
     return props
 
 

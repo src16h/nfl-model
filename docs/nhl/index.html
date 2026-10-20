@@ -904,7 +904,7 @@ function pickText(k, p) { return k === "ml" ? `${p.side} ML` : k === "pl" ? `${p
 function allPlays() {
   const out = [];
   for (const g of D.games || []) for (const [k, p] of Object.entries(g.picks || {})) if (p.play)
-    out.push({type: "game", kind: k, g, p, edge: p.edge, model: p.model, book: p.book, odds: p.odds,
+    out.push({type: "game", kind: k, g, p, edge: p.ev ?? p.edge, model: p.sharp ?? p.model, book: p.book, odds: p.odds,
       title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.away} at ${g.home}`});
   for (const pl of D.players || []) for (const [st, m] of Object.entries(pl.m)) if (m.book?.play) {
     const g = (D.games || []).find(x => x.game_id === pl.game_id);
@@ -925,7 +925,7 @@ function ticket(x) {
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away)} at ${esc(x.g.home)}`}</div>
     ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}
     <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
-    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">gap vs book</div></div></article>`;
+    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "game" && x.p.sharp != null ? "value vs Pinnacle" : "gap vs book"}</div></div></article>`;
 }
 
 /* ---------- home ---------- */
@@ -946,7 +946,7 @@ function renderHome() {
   h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All plays</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book.</p>
       <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" ? "The model agrees with the book on everything posted." : "Book lines for puck lines, totals and props arrive with the NHL odds key."}</div>`}</div></div>
     <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit, by bet type</p>${multiSVG(T)}
-      <div class="kpis"><div class="kpi"><b>${n(D.model?.backtest?.win_logloss, 3)}</b><span>Win log loss (lower is better, ${n(D.model?.backtest?.base_logloss, 3)} = coin flip with home ice)</span></div>
+      <div class="kpis"><div class="kpi"><b>${n(D.model?.backtest?.win_logloss, 3)}</b><span>Win log loss (lower is better). Coin flip with home ice ${n(D.model?.backtest?.base_logloss, 3)}${D.model?.backtest?.market_logloss ? `, the betting line ${n(D.model.backtest.market_logloss, 3)} vs the model's ${n(D.model.backtest.model_vs_market_logloss, 3)} on the same games` : ""}</span></div>
       <div class="kpi"><b>${T.picks?.ml ? `${T.picks.ml.w}–${T.picks.ml.l}` : "0–0"}</b><span>Moneyline picks</span></div></div></div></div>`;
   if (w + l) h += `<div class="dash"><div class="panel span-12"><h3>Record by bet type <button data-go="record">Record</button></h3><p class="pmuted">Graded automatically, flat 1 unit per play.</p>${recordByType(T)}</div></div>`;
   const EP = edgeToday();
@@ -985,8 +985,8 @@ function renderGames() {
     <div class="fact"><b class="gold">${allPlays().length}</b>plays on the board</div>
     <div class="fact"><b>${esc(D.odds?.source === "odds_api" ? (G.find(g => g.book?.src)?.book?.src || "Book") : "NHL.com")}</b>lines from</div>
     <div class="fact"><b>${n(D.model?.league?.gf, 2)}</b>league goals per team, regulation</div></div></div>`;
-  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">${D.rules.min_ev ? `Blended 50/50 with the book, ${D.rules.min_ev.game}%+ expected profit at the price` : `Gap of ${D.rules.ml}% to ${D.rules.max}% over the book's no-vig price`}</span></div>
-    <p class="sub">Moneyline, puck line and total plays where the model's win chance beats the book's fair price by enough to bet. NHL edges are small and goalie news moves lines fast, so confirm the starter before betting.</p>
+  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Pinnacle value 1.5% to 8%, model agrees</span></div>
+    <p class="sub">A game play needs two things: <b>Pinnacle's fair price</b> (the sharpest book) says Hard Rock's price is at least 1.5% too generous, and <b>the model agrees</b> on the side. Checked on graded games, the model alone did not beat the market, so it is a veto, not the source of the edge. One play per game. Plays are locked the moment they appear and graded at that price, so bet soon and confirm the starting goalie.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No game plays right now.</b> ${D.odds?.source === "odds_api" ? "The model is close to the book on every game." : "Puck lines and totals need the NHL odds key. Moneylines come from NHL.com."}</div>`}`;
   h += `<div class="sec-head"><h2>All games</h2><span class="aside">Tap a game for goalies and form</span></div>
     <div class="board"><div class="board-head"><span>Expected goals</span><span>Win chance</span><span>Moneyline</span><span>Total, model / book</span><span>Puck line</span></div>

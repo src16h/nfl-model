@@ -42,7 +42,7 @@ TEASER_PRICES = {2: -120, 3: 160}
 
 # odds: ESPN's free DraftKings lines for games; optional Odds API key for prop lines
 ODDS_KEY_ENV = "ODDS_API_KEY_CFB"
-ODDS_BOOK = "draftkings"
+ODDS_BOOK = "hardrockbet,draftkings"   # Hard Rock first (where you bet), DraftKings fallback, same credits
 ODDS_REGION = "us"
 ODDS_RESERVE = 15
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds"]   # in priority order

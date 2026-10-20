@@ -181,13 +181,48 @@ def match_events(todo: pd.DataFrame, events: list) -> dict:
 # ---------------------------------------------------------------------
 # game lines (spreads and totals)
 # ---------------------------------------------------------------------
+def _one_book(b, home_full):
+    """Spread (home margin convention), spread prices, total and total prices, moneylines from one book."""
+    out = {}
+    for m in b.get("markets", []):
+        oc = m.get("outcomes", [])
+        if m.get("key") == "spreads":
+            hm = next((o for o in oc if o.get("name") == home_full), None)
+            aw = next((o for o in oc if o.get("name") != home_full), None)
+            if hm and aw and _num(hm.get("point")) is not None:
+                out.update({"spread_line": -_num(hm["point"]), "spread_home_odds": _num(hm.get("price")),
+                            "spread_away_odds": _num(aw.get("price"))})
+        elif m.get("key") == "totals":
+            ov = next((o for o in oc if str(o.get("name", "")).lower() == "over"), None)
+            un = next((o for o in oc if str(o.get("name", "")).lower() == "under"), None)
+            if ov and un and _num(ov.get("point")) is not None:
+                out.update({"total_line": _num(ov["point"]), "over_odds": _num(ov.get("price")), "under_odds": _num(un.get("price"))})
+        elif m.get("key") == "h2h":
+            prices = {o.get("name"): _num(o.get("price")) for o in oc}
+            hp = prices.get(home_full)
+            ap = next((v for k, v in prices.items() if k != home_full and k != "Draw"), None)
+            if hp is not None and ap is not None:
+                out.update({"ml_home": hp, "ml_away": ap})
+    return out
+
+
 def _parse_lines(ev: dict, home_abbr: str):
     """spread_line follows the data feed's convention: the home team's expected margin."""
     home_full = ABBR_TEAM.get(home_abbr)
     spread = total = ml_home = ml_away = None
     book_s = book_t = None
     updated = None
-    for b in sorted(ev.get("bookmakers", []), key=lambda b: _rank(b.get("key"))):
+    prices = {}
+    sharp = None
+    for b in ev.get("bookmakers", []):                      # the referee: Pinnacle's own lines, kept separately
+        if b.get("key") in C.SHARP_BOOKS:
+            sharp = _one_book(b, home_full) or None
+    for b in sorted([b for b in ev.get("bookmakers", []) if b.get("key") not in C.SHARP_BOOKS], key=lambda b: _rank(b.get("key"))):
+        one = _one_book(b, home_full)
+        if spread is None and "spread_line" in one:
+            prices.update({k: one[k] for k in ("spread_home_odds", "spread_away_odds")})
+        if total is None and "total_line" in one:
+            prices.update({k: one[k] for k in ("over_odds", "under_odds")})
         for m in b.get("markets", []):
             if m.get("key") == "spreads" and spread is None:
                 for o in m.get("outcomes", []):
@@ -209,14 +244,15 @@ def _parse_lines(ev: dict, home_abbr: str):
     if book is None:
         return None
     return {"spread_line": spread, "total_line": total, "ml_home": ml_home, "ml_away": ml_away,
-            "book": book.get("key"),
+            "book": book.get("key"), **prices, "sharp": sharp,
             "book_title": book.get("title") or book.get("key"), "updated": updated}
 
 
 def fetch_game_lines(client: Client, todo: pd.DataFrame) -> dict:
     markets = "spreads,totals" + (",h2h" if getattr(C, "ODDS_MONEYLINE_LIVE", False) else "")
-    data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=markets.count(",") + 1, regions="us", markets=markets,
-                      oddsFormat="american", dateFormat="iso")
+    # up to 10 named books cost the same as one region: the US books in ODDS_BOOKS (Hard Rock first) plus Pinnacle
+    data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=markets.count(",") + 1, markets=markets,
+                      bookmakers=",".join((C.ODDS_BOOKS + C.SHARP_BOOKS)[:10]), oddsFormat="american", dateFormat="iso")
     if not isinstance(data, list):
         raise OddsError("unexpected game lines response")
     by_pair = {frozenset((g["home_team"], g["away_team"])): g for _, g in todo.iterrows()}

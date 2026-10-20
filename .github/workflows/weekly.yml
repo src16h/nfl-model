@@ -7,6 +7,7 @@ on:
     - cron: "7 12 * * 1-6"   # Mon to Sat, 8am ET: overnight injury news, grades finished games
     - cron: "7 22 * * 1-6"   # Mon to Sat, 6pm ET: before Thursday and Monday night games
     - cron: "45 15 * * 0"    # Sunday 11:45am ET: after inactives, before 1pm kickoffs
+    - cron: "40 18 * * 0"    # Sunday 2:40pm ET: inactives and near-closing lines for the 4pm games
     - cron: "7 23 * * 0"     # Sunday 7pm ET: before the Sunday night game
   workflow_dispatch:        # adds a "Run workflow" button in the Actions tab
 

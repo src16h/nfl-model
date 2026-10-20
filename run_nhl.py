@@ -119,21 +119,36 @@ def game_picks(g, sim):
         po = float((t > L).mean())
         out["total"] = {"side": "Over" if po >= 0.5 else "Under", "line": L, "odds": None,
                         "model": r(100 * max(po, 1 - po)), "book": None, "edge": None, "fair": fmt_odds(american(max(po, 1 - po)))}
-    # plays: blend the model with the book, then demand a real profit at the posted price
-    lim = {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE}
+    # plays (Oct 20 2026): Pinnacle's fair price must call the bet price value at the same line, and the model
+    # must agree. Checked on 85 graded games: blending the model into the line made it less accurate at every
+    # weight, and the model's side on every game went 36-49 (-17%). betrules.decide_sharp.
+    sh = b.get("sharp") or {}
     for k, v in out.items():
         if v["edge"] is None or not v.get("odds"):
             v["play"] = False
             continue
-        p = BR.adjust_game(v["model"] / 100, v["book"] / 100)
-        ev, need = BR.game_ev(p, int(v["odds"]))
-        v["adj"], v["ev"] = r(100 * p), r(ev)
-        blocked = ((k == "pl" and int(v["odds"]) > 0 and "pl_dog" in C.BLOCKED)      # puck-line long shots lost every time
-                   or (k == "total" and "totals" in C.BLOCKED))                   # totals: lean only until proven
-        v["play"] = bool(lim[k] <= v["edge"] <= C.PLAY_MAX_EDGE and ev >= need and not blocked)
+        if k == "ml":
+            home = v["side"] == g["home"]
+            mine, other = (b["ml_home"], b["ml_away"]) if home else (b["ml_away"], b["ml_home"])
+            s1, s2 = ((sh.get("ml_home"), sh.get("ml_away")) if home else (sh.get("ml_away"), sh.get("ml_home")))
+        elif k == "pl":
+            home = v["side"] == g["home"]
+            mine, other = (b["pl_home_odds"], b["pl_away_odds"]) if home else (b["pl_away_odds"], b["pl_home_odds"])
+            same = sh.get("pl_home") is not None and b.get("pl_home") is not None and abs(sh["pl_home"] - b["pl_home"]) < 1e-9
+            s1, s2 = ((sh.get("pl_home_odds"), sh.get("pl_away_odds")) if home else (sh.get("pl_away_odds"), sh.get("pl_home_odds"))) if same else (None, None)
+        else:
+            over = v["side"] == "Over"
+            mine, other = (b["over_odds"], b["under_odds"]) if over else (b["under_odds"], b["over_odds"])
+            same = sh.get("total") is not None and abs(sh["total"] - b["total"]) < 1e-9
+            s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
+        dec = BR.decide_sharp(v["model"] / 100, mine, other, s1, s2)
+        v["sharp"], v["ev"], v["play"] = dec["sharp"], dec["ev"], dec["play"]
     ml, pl = out.get("ml"), out.get("pl")
-    if ml and pl and ml["play"] and pl["play"] and ml["side"] == pl["side"]:   # same team twice: keep the bigger gap
-        (pl if ml["edge"] >= pl["edge"] else ml)["play"] = False
+    plays = [x for x in out.values() if x.get("play")]
+    if len(plays) > 1:                                  # one play per game: the best value
+        best = max(plays, key=lambda x: x.get("ev") or 0)
+        for x in plays:
+            x["play"] = x is best
     return out
 
 
@@ -238,14 +253,25 @@ def tracking(history_days, results):
             for k, pk in (g.get("picks") or {}).items():
                 rr, u = grade_pick(k, pk, g, res)
                 picks[k].append((rr, u, pk.get("edge")))
-                if pk.get("play"):
-                    c, e, exact = CLV.play_clv("nhl", k, pk, g, g.get("open_book"))
-                    plays.append({"date": dt, "kind": k, "pick": pick_text(k, pk), "game": f"{g['away']} at {g['home']}",
-                                  "odds": pk.get("odds"), "edge": pk.get("edge"), "res": rr, "units": u,
-                                  "clv": None if c is None else r(c, 1)})
-                    clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
-                    daily[dt] = daily.get(dt, 0) + (u or 0)
-                    daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
+            flags = g.get("flags")
+            if flags is None:                                    # saved before flags: the plays as last saved
+                flags = {k: pk for k, pk in (g.get("picks") or {}).items() if pk and pk.get("play")}
+            for k, fl in flags.items():
+                if not fl.get("odds") or fl.get("side") is None:
+                    continue
+                if k != "ml" and fl.get("line") is None:
+                    continue
+                rr, u = grade_pick(k, fl, g, res)
+                if fl.get("at"):                                 # locked when flagged: CLV from that price
+                    c, e = CLV.measure(fl["odds"], CLV.close("nhl", k, fl, g, g.get("book"), fl.get("line")))
+                else:                                            # older plays: from the first line seen (bet early vs wait)
+                    c, e, _ = CLV.play_clv("nhl", k, fl, g, g.get("open_book"))
+                plays.append({"date": dt, "kind": k, "pick": pick_text(k, fl), "game": f"{g['away']} at {g['home']}",
+                              "odds": fl.get("odds"), "edge": fl.get("ev", fl.get("edge")), "res": rr, "units": u,
+                              "clv": None if c is None else r(c, 1), "legacy": bool(fl.get("legacy"))})
+                clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": bool(fl.get("at"))})
+                daily[dt] = daily.get(dt, 0) + (u or 0)
+                daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
             ap = g.get("alt_parlay")
             if ap:
                 hits = []
@@ -292,8 +318,8 @@ def tracking(history_days, results):
                 v = st[0] if stat == "saves" else st[{"sog": 0, "goals": 1, "assists": 2, "points": 3}[stat]]
                 c = calib.setdefault(stat, [])
                 c.append((m["pf"], v > m["fair"]))
-                bk = m.get("book")
-                if bk and bk.get("play"):
+                bk = m.get("flag") if "flag" in m else (m.get("book") if (m.get("book") or {}).get("play") else None)
+                if bk and bk.get("line") is not None and bk.get("odds") is not None:
                     L = bk["line"]
                     rr = "P" if v == L else ("W" if (v > L) == (bk["side"] == "Over") else "L")
                     u = payout(bk["odds"]) if rr == "W" else (-1.0 if rr == "L" else 0.0)
@@ -570,6 +596,20 @@ def main():
         live = {g["game_id"] for g in v["games"]}
         old_games = [g for g in old["games"] if g["game_id"] not in live]
         old_players = [p for p in old["players"] if p["game_id"] not in live]
+        prev_pl = {(p["game_id"], p["pid"]): p for p in old["players"] if p["game_id"] in live}
+        for p in v["players"]:                                   # prop plays: locked at first flag
+            pv = prev_pl.get((p["game_id"], p["pid"])) or {}
+            for st, m in p["m"].items():
+                pm = (pv.get("m") or {}).get(st) or {}
+                fl = pm.get("flag")
+                if fl is None and pv and "flag" not in pm and (pm.get("book") or {}).get("play"):
+                    fl = {x: pm["book"].get(x) for x in ("line", "side", "odds", "book_over", "edge")}
+                    fl.update({"at": None, "legacy": True})
+                bk = m.get("book") or {}
+                if fl is None and bk.get("play"):
+                    fl = {x: bk.get(x) for x in ("line", "side", "odds", "book_over", "edge", "ev", "pre")}
+                    fl["at"] = now.isoformat(timespec="minutes")
+                m["flag"] = fl
         keep = []
         for g in v["games"]:
             lite = {k: g[k] for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "win_home", "book", "goalies")}
@@ -579,6 +619,22 @@ def main():
             for k_, pk_ in (g.get("picks") or {}).items():         # live plays: price change since flagged (site shows "bet soon")
                 if pk_ and pk_.get("play"):
                     pk_["move"] = CLV.moving("nhl", k_, pk_, g, g["play_at"].get(k_))
+            # plays are locked the first time they're flagged (Oct 20 2026): graded at that price, even if they later drop off
+            flags = dict((prev or {}).get("flags") or {})
+            if prev is not None and "flags" not in prev:            # saved before flags existed: their last plays count
+                for k_, pk_ in (prev.get("picks") or {}).items():
+                    if pk_ and pk_.get("play"):
+                        flags[k_] = {x: pk_.get(x) for x in ("side", "line", "odds", "model", "book", "edge")}
+                        flags[k_].update({"at": None, "legacy": True})
+                for k_, snap in ((prev or {}).get("play_at") or {}).items():   # flagged earlier but gone by now: still counts
+                    if k_ not in flags and snap.get("odds"):
+                        flags[k_] = {"side": snap.get("side"), "line": snap.get("line"), "odds": snap.get("odds"), "at": snap.get("ts"),
+                                     "legacy": True}
+            for k_, pk_ in (g.get("picks") or {}).items():
+                if pk_ and pk_.get("play") and k_ not in flags:
+                    flags[k_] = {x: pk_.get(x) for x in ("side", "line", "odds", "model", "book", "sharp", "ev", "edge")}
+                    flags[k_]["at"] = now.isoformat(timespec="minutes")
+            lite["flags"] = g["flags"] = flags
             keep.append(lite)
         # edge parlays: keep any ticket with a game already under way (locked), refresh the rest
         locked = [e for e in old.get("edge", []) if any(l["game_id"] not in live for l in e["legs"])]
@@ -613,6 +669,9 @@ def main():
 
 # walk-forward check, refreshed by hand (python -m nhlmodel.backtest); shown on the Record tab
 BACKTEST = {"seasons": "2023-24 to 2025-26", "win_logloss": 0.668, "base_logloss": 0.689,
+            # vs the market (Oct 20 2026, 85 graded games with book moneylines): book no-vig 0.6338, model 0.6409,
+            # 50/50 blend 0.6365. The model is less accurate than the line, which is why plays now need Pinnacle's price.
+            "market_logloss": 0.6338, "model_vs_market_logloss": 0.6409,
             "note": "Puck-line and overtime rates land within about 1 to 3 points of real results each season. Totals were recalibrated Oct 18 2026 (scoring catch-up, linked home/away goals, shot-volume effect): this season the model has 45.0% of games over 6.5 vs 44.6% real. Totals show a lean but are not plays until about 150 graded totals show an edge."}
 
 if __name__ == "__main__":

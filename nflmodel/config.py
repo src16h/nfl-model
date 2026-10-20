@@ -118,8 +118,9 @@ ANCHOR_LEAN_TOTAL = 1.5      # anchored engine: same, for totals
 ODDS_GAME_LINES_ON = True    # live spreads/totals on every run (about 2 credits)
 ODDS_PROPS_ON = True         # live player props (about 1 credit per market per game)
 # Which sportsbook to trust first. Each line uses the first book on this list that has it.
-ODDS_BOOKS = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "betrivers",
-              "fanatics", "hardrockbet", "bovada"]
+ODDS_BOOKS = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "betrivers",
+              "fanatics", "bovada"]   # Hard Rock first: the price you actually bet (Oct 20 2026)
+SHARP_BOOKS = ["pinnacle"]   # referee price for game plays; rides in the same call (10 books = 1 region of credits)
 # Which prop types to load. Each one costs about 1 credit per game. Add more from
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
@@ -146,13 +147,18 @@ TD_NO_NEEDS_PRICE = True
 
 # Game plays use the market-anchored engine. Set to None to switch one off.
 PROP_MODEL_WEIGHT = 0.4      # NFL props: model's share vs the book (Oct 18 2026: book more accurate; 0.4 took past plays from -1.7% to +5.7%)
-TD_PROB_SCALE = 1.15         # TD props: model ran 23.5% vs 27.2% real on anytime TDs; scales scoring chances up (fit on 453 graded)
+TD_PROB_SCALE = 1.0          # retired Oct 20 2026 (flat boost made likely scorers worse); see TD_CURVE
+# TD calibration curve, logit(p') = a + b*logit(p). Fit Oct 20 2026 on 670 graded anytime TDs (weeks 4-7), counting
+# players who played without a touch (they were dropped before, which inflated real TD rates). Full fit a=-0.20,
+# b=0.72; used at half strength while the sample is small. Beat the raw model and the old flat x1.15 in 2 of 3
+# held-out weeks.
+TD_CURVE = (-0.10, 0.86)
 GAME_PLAY_SPREAD = 1.5       # spread gap (points) that makes a spread Play
 GAME_PLAY_TOTAL = None       # totals: off, the backtest shows no edge
 
 # Live game lines are cached between runs so frequent updates don't burn credits.
 ODDS_LINES_EVERY_HOURS = 22      # refresh spreads and totals once a day (keeps the month under 500 credits)
-ODDS_LINES_GAMEDAY_HOURS = 8     # game days: both daily runs refresh
+ODDS_LINES_GAMEDAY_HOURS = 2.5   # game days: every pre-kickoff run refreshes (near-closing prices for CLV, about 2 credits)
 ODDS_LINES_FLOOR = 120           # below this many credits, stop live line pulls to save credits for props
 
 # ------------------------------------------------------------

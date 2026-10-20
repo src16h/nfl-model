@@ -216,21 +216,31 @@ def prop_bias(log_path, with_real=False):
     return bias, BR.realization_table(real)
 
 
+def _td_curve(p1):
+    """Calibrated 1+ TD chance: logit(p') = a + b * logit(p). Raises long shots, trims likely scorers."""
+    a, b = C.TD_CURVE
+    p1 = min(max(p1, 1e-4), 1 - 1e-4)
+    return 1 / (1 + np.exp(-(a + b * np.log(p1 / (1 - p1)))))
+
+
 def td_scale(p, line):
-    """The sims gave scorers too low a TD chance (23.5% vs 27.2% real on anytime TDs).
-    Treat TDs as Poisson, back out the scoring rate, scale it by TD_PROB_SCALE."""
-    k = C.TD_PROB_SCALE
-    if k == 1.0 or not (0 < p < 1):
+    """TD chances, recalibrated against graded results (Oct 20 2026, C.TD_CURVE). The old flat x1.15 boost raised
+    every player, but the model was too low only on long shots (5% said, 9% real) and too high on likely scorers
+    (41% said, 34% real). For 2+ TDs: treat TDs as Poisson, calibrate the matching 1+ chance, carry the new rate over."""
+    if not (0 < p < 1):
         return p
     if line < 1:                                         # 1+ TD
-        return 1 - (1 - p) ** k
+        return float(_td_curve(p))
     n = int(np.floor(line)) + 1                          # need n or more
     from scipy.stats import poisson
     lo, hi = 1e-6, 10.0
     for _ in range(60):                                  # rate with P(X >= n) = p
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if poisson.sf(n - 1, mid) < p else (lo, mid)
-    return float(poisson.sf(n - 1, k * (lo + hi) / 2))
+    rate = (lo + hi) / 2
+    p1 = 1 - np.exp(-rate)
+    new_rate = -np.log(1 - _td_curve(p1))
+    return float(poisson.sf(n - 1, new_rate))
 
 
 def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None, real: dict = None) -> dict:

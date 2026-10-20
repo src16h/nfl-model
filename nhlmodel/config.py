@@ -61,7 +61,11 @@ ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only t
 
 # odds (separate free key for hockey)
 ODDS_KEY_ENV = "ODDS_API_KEY_NHL"
-ODDS_BOOK = "draftkings"
+ODDS_BOOK = "draftkings"           # (older setting, kept for reference)
+ODDS_BOOKS = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us"]   # bet book: Hard Rock first (where you bet)
+SHARP_BOOKS = ["pinnacle"]       # referee price for plays (rides along in the same call, no extra credits)
+PROP_BOOKS = ["hardrockbet", "draftkings"]
+ODDS_PREKO_HOURS = 2.0           # games starting this soon get a fresh line pull (near-closing prices for CLV)
 ODDS_REGION = "us"
 ODDS_RESERVE = 15                # never spend the last credits of the month
 ODDS_PROP_MARKETS = ["player_shots_on_goal", "player_points"]   # in priority order

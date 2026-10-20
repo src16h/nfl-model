@@ -111,7 +111,9 @@ def build_games(bundle, season, week, now):
             if L.get("total_line") is not None:
                 todo.loc[m, "total_line"] = float(L["total_line"])
             line_meta[gid] = {"src": f"live:{L['book']}", "book": L["book_title"],
-                              "ml_home": L.get("ml_home"), "ml_away": L.get("ml_away")}
+                              "ml_home": L.get("ml_home"), "ml_away": L.get("ml_away"),
+                              **{k: L.get(k) for k in ("spread_home_odds", "spread_away_odds", "over_odds", "under_odds")},
+                              "sharp": L.get("sharp")}
     except Exception as e:  # noqa: BLE001
         log.warning(f"live lines not applied, using the free feed: {str(e)[:120]}")
         line_meta = {}
@@ -202,11 +204,33 @@ def build_games(bundle, season, week, now):
         e_to = lean_t_pred - tl if np.isfinite(tl) else None
         lean_side = (h if e_sp > 0 else a) if e_sp is not None and abs(e_sp) >= th_s else None
         lean_total = ("Over" if e_to > 0 else "Under") if e_to is not None and abs(e_to) >= th_t else None
-        # Best plays: stricter than a lean, and only from the market-anchored engine
-        play_spread = lean_side if (use_anchor and C.GAME_PLAY_SPREAD is not None and e_sp is not None
-                                    and abs(e_sp) >= C.GAME_PLAY_SPREAD) else None
-        play_total = lean_total if (use_anchor and C.GAME_PLAY_TOTAL is not None and e_to is not None
-                                    and abs(e_to) >= C.GAME_PLAY_TOTAL) else None
+        # Plays (Oct 20 2026): Pinnacle must call the bet book's price value at the same line, and the model must
+        # agree (betrules.decide_sharp). The old 1.5-point gap rule never fired in the backtest and was priced at -110.
+        lm = line_meta.get(g["game_id"], {})
+        shp = lm.get("sharp") or {}
+        sharp_sp = sharp_to = None
+        play_spread = play_total = None
+        if e_sp is not None and np.isfinite(sl):
+            home_side = e_sp > 0 if abs(e_sp) >= 0.05 else sim.get("cover_home", 0.5) >= 0.5
+            mp = sim.get("cover_home") if home_side else (1 - sim["cover_home"] if sim.get("cover_home") is not None else None)
+            same = shp.get("spread_line") is not None and abs(shp["spread_line"] - sl) < 1e-9
+            sharp_sp = BR.decide_sharp(mp, lm.get("spread_home_odds" if home_side else "spread_away_odds"),
+                                       lm.get("spread_away_odds" if home_side else "spread_home_odds"),
+                                       (shp.get("spread_home_odds" if home_side else "spread_away_odds")) if same else None,
+                                       (shp.get("spread_away_odds" if home_side else "spread_home_odds")) if same else None)
+            sharp_sp["side"] = h if home_side else a
+            sharp_sp["odds"] = lm.get("spread_home_odds" if home_side else "spread_away_odds")
+            play_spread = sharp_sp["side"] if sharp_sp["play"] else None
+        if e_to is not None and np.isfinite(tl):
+            over = e_to > 0 if abs(e_to) >= 0.05 else sim.get("over", 0.5) >= 0.5
+            mp = sim.get("over") if over else (1 - sim["over"] if sim.get("over") is not None else None)
+            same = shp.get("total_line") is not None and abs(shp["total_line"] - tl) < 1e-9
+            sharp_to = BR.decide_sharp(mp, lm.get("over_odds" if over else "under_odds"), lm.get("under_odds" if over else "over_odds"),
+                                       (shp.get("over_odds" if over else "under_odds")) if same else None,
+                                       (shp.get("under_odds" if over else "over_odds")) if same else None)
+            sharp_to["side"] = "Over" if over else "Under"
+            sharp_to["odds"] = lm.get("over_odds" if over else "under_odds")
+            play_total = sharp_to["side"] if sharp_to["play"] else None
         rep = (ens["report_anchored"] if use_anchor else ens["report_independent"]) if ens is not None else None
         hist_s = stack.lookup_bucket(rep, "spread_buckets", e_sp)
         hist_t = stack.lookup_bucket(rep, "total_buckets", e_to)
@@ -244,7 +268,9 @@ def build_games(bundle, season, week, now):
             "market_spread": fnum(sl), "market_total": fnum(tl),
             "edge_spread": fnum(e_sp), "edge_total": fnum(e_to),
             "lean_side": lean_side, "lean_total": lean_total,
-            "play_spread": play_spread, "play_total": play_total,
+            "play_spread": play_spread, "play_total": play_total, "sharp_spread": sharp_sp, "sharp_total": sharp_to,
+            "spread_odds": {"home": lm.get("spread_home_odds"), "away": lm.get("spread_away_odds")},
+            "total_odds": {"over": lm.get("over_odds"), "under": lm.get("under_odds")}, "sharp_lines": shp or None,
             "cover_prob_home": fnum(sim.get("cover_home", np.nan) * 100, 0),
             "over_prob": fnum(sim.get("over", np.nan) * 100, 0),
             "qb_home": qbs[h]["name"], "qb_away": qbs[a]["name"],
@@ -615,6 +641,13 @@ def _pct_side(over_pct, lean):
     return round(over_pct if lean == "Over" else 100 - over_pct)
 
 
+def _fmt_odds_s(o):
+    if o is None:
+        return None
+    o = int(round(float(o)))
+    return f"+{o}" if o > 0 else str(o)
+
+
 def build_plays(games, props, model_info):
     """The short list: what the model would actually bet right now."""
     out = []
@@ -625,21 +658,29 @@ def build_plays(games, props, model_info):
         if g.get("play_spread"):
             t = g["play_spread"]
             vl, ml = _team_line(g, t), (-g["margin"] if t == g["home"] else g["margin"])
+            sp = g.get("sharp_spread") or {}
+            odds_s = _fmt_odds_s(sp.get("odds"))
             out.append({"kind": "spread", "kickoff": g.get("kickoff"), "game_id": g["game_id"], "matchup": matchup,
-                        "pick": f"{t} {_fmt_line(vl)}", "detail": f"Model has {t} {_fmt_line(ml)}",
-                        "gap": fnum(abs(g["edge_spread"])), "gap_unit": "pts", "book": g.get("line_book"),
+                        "pick": f"{t} {_fmt_line(vl)}", "odds": odds_s,
+                        "detail": f"Pinnacle {sp.get('sharp')}% vs {sp.get('book')}% at {g.get('line_book')}, {sp.get('ev'):+.1f}% value. Model has {t} {_fmt_line(ml)}"
+                        if sp.get("ev") is not None else f"Model has {t} {_fmt_line(ml)}",
+                        "gap": sp.get("ev"), "gap_unit": "%", "book": g.get("line_book"),
                         "cover_prob": None if g.get("cover_prob_home") is None else
                         fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 0),
-                        "bet": {"kind": "spread", "game_id": g["game_id"], "side": t, "line": vl, "odds": "-110",
-                                "model_pct": None if g.get("cover_prob_home") is None else
-                                fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 1)}})
+                        "bet": {"kind": "spread", "game_id": g["game_id"], "side": t, "line": vl, "odds": odds_s or "-110",
+                                "model_pct": sp.get("sharp") if sp.get("sharp") is not None else (None if g.get("cover_prob_home") is None else
+                                fnum(g["cover_prob_home"] if t == g["home"] else 100 - g["cover_prob_home"], 1))}})
         if g.get("play_total"):
+            st = g.get("sharp_total") or {}
+            odds_t = _fmt_odds_s(st.get("odds"))
             out.append({"kind": "total", "kickoff": g.get("kickoff"), "game_id": g["game_id"], "matchup": matchup,
-                        "pick": f"{g['play_total']} {g['market_total']:g}", "detail": f"Model total {g['total']:.1f}",
-                        "gap": fnum(abs(g["edge_total"])), "gap_unit": "pts", "book": g.get("line_book"),
+                        "pick": f"{g['play_total']} {g['market_total']:g}", "odds": odds_t,
+                        "detail": f"Pinnacle {st.get('sharp')}% vs {st.get('book')}% at {g.get('line_book')}, {st.get('ev'):+.1f}% value. Model total {g['total']:.1f}"
+                        if st.get("ev") is not None else f"Model total {g['total']:.1f}",
+                        "gap": st.get("ev"), "gap_unit": "%", "book": g.get("line_book"),
                         "bet": {"kind": "total", "game_id": g["game_id"], "side": g["play_total"], "line": g["market_total"],
-                                "odds": "-110", "model_pct": None if g.get("over_prob") is None else
-                                fnum(g["over_prob"] if g["play_total"] == "Over" else 100 - g["over_prob"], 1)}})
+                                "odds": odds_t or "-110", "model_pct": st.get("sharp") if st.get("sharp") is not None else (None if g.get("over_prob") is None else
+                                fnum(g["over_prob"] if g["play_total"] == "Over" else 100 - g["over_prob"], 1))}})
     ko = {g["game_id"]: g.get("kickoff") for g in games}
     st = {g["game_id"]: g.get("state") for g in games}
     for p in props.get("props", []):
@@ -660,6 +701,51 @@ def build_plays(games, props, model_info):
     return out
 
 
+def lock_flags(old_games, games, now):
+    """Plays are locked the first time they are flagged (Oct 20 2026): graded at that line and price, and a play
+    that later stops qualifying still counts, since that's when you'd have bet it. Older saved plays without flags
+    count at their saved line (marked legacy)."""
+    prev = {g["game_id"]: g for g in old_games}
+    ts = now.isoformat(timespec="minutes")
+    for g in games:
+        p = prev.get(g["game_id"]) or {}
+        flags = dict(p.get("flags") or {})
+        if "flags" not in p:
+            if p.get("play_spread") and p.get("market_spread") is not None:
+                t = p["play_spread"]
+                flags["spread"] = {"side": t, "line": -p["market_spread"] if t == p["home"] else p["market_spread"],
+                                   "odds": "-110", "at": None, "legacy": True}
+            if p.get("play_total") and p.get("market_total") is not None:
+                flags["total"] = {"side": p["play_total"], "line": p["market_total"], "odds": "-110", "at": None, "legacy": True}
+        if g.get("play_spread") and "spread" not in flags:
+            t, sp = g["play_spread"], g.get("sharp_spread") or {}
+            flags["spread"] = {"side": t, "line": -g["market_spread"] if t == g["home"] else g["market_spread"],
+                               "odds": _fmt_odds_s(sp.get("odds")) or "-110", "ev": sp.get("ev"), "sharp": sp.get("sharp"),
+                               "book_pct": sp.get("book"), "book": g.get("line_book"), "at": ts}
+        if g.get("play_total") and "total" not in flags:
+            st = g.get("sharp_total") or {}
+            flags["total"] = {"side": g["play_total"], "line": g["market_total"], "odds": _fmt_odds_s(st.get("odds")) or "-110",
+                              "ev": st.get("ev"), "sharp": st.get("sharp"), "book_pct": st.get("book"), "book": g.get("line_book"), "at": ts}
+        g["flags"] = flags
+
+
+def grade_flag(kind, fl, g, hs, as_):
+    """(result, units, line CLV in points) for a locked play. CLV: the play's line vs the last saved line before kickoff."""
+    if kind == "spread":
+        m = (hs - as_) if fl["side"] == g["home"] else (as_ - hs)
+        v = m + fl["line"]
+        close = g.get("market_spread")
+        clv = None if close is None else fl["line"] - (-close if fl["side"] == g["home"] else close)
+    else:
+        v = (hs + as_ - fl["line"]) * (1 if fl["side"] == "Over" else -1)
+        close = g.get("market_total")
+        clv = None if close is None else (close - fl["line"]) * (1 if fl["side"] == "Over" else -1)
+    rr = "P" if v == 0 else ("W" if v > 0 else "L")
+    o = float(str(fl.get("odds") or "-110").replace("+", ""))
+    pay = o / 100 if o > 0 else 100 / -o
+    return rr, (pay if rr == "W" else (-1.0 if rr == "L" else 0.0)), clv
+
+
 def merge_history(path: Path, games, players):
     """Keep predictions for games that already kicked off (locked picks)."""
     old = json.loads(path.read_text()) if path.exists() else {"games": [], "players": []}
@@ -674,6 +760,7 @@ def grade(season, sch) -> dict:
     res = sch[(sch["season"] == season) & sch["home_score"].notna()].set_index("game_id")
     su, ats, ats_lean, ou_lean, err_m, err_v = [], [], [], [], [], []
     ats_play, ou_play = [], []
+    flag_rows = []
     pick_rows, week_rows = [], {}
     for f in sorted(HIST.glob(f"{season}_week*.json")):
         for g in json.loads(f.read_text()).get("games", []):
@@ -689,6 +776,20 @@ def grade(season, sch) -> dict:
                     week_rows.setdefault(int(g.get("week") or 0), []).append((mkt, res_, u, pk[mkt].get("edge")))
             except Exception as e:  # noqa: BLE001
                 log.warning(f"pick grade skipped {g['game_id']}: {e}")
+            flags = g.get("flags")
+            if flags is None:                          # saved before flags existed: the plays as last saved
+                flags = {}
+                if g.get("play_spread") and g.get("market_spread") is not None:
+                    t = g["play_spread"]
+                    flags["spread"] = {"side": t, "line": -g["market_spread"] if t == g["home"] else g["market_spread"], "odds": "-110", "legacy": True}
+                if g.get("play_total") and g.get("market_total") is not None:
+                    flags["total"] = {"side": g["play_total"], "line": g["market_total"], "odds": "-110", "legacy": True}
+            for kind, fl in flags.items():
+                rr, u, clv = grade_flag(kind, fl, g, float(r["home_score"]), float(r["away_score"]))
+                flag_rows.append({"kind": kind, "week": int(g.get("week") or 0), "game": f"{g['away']} at {g['home']}",
+                                  "pick": f"{fl['side']} {fl['line']:+g}" if kind == "spread" else f"{fl['side']} {fl['line']:g}",
+                                  "odds": fl.get("odds"), "res": rr, "units": round(u, 3), "clv_pts": None if clv is None else round(clv, 1),
+                                  "legacy": bool(fl.get("legacy"))})
             if act != 0:
                 su.append(int((g["margin"] > 0) == (act > 0)))
             err_m.append(abs(g["margin"] - act))
@@ -708,8 +809,14 @@ def grade(season, sch) -> dict:
             if tl is not None and g.get("play_total") and tot != tl:
                 ou_play.append(int((tot > tl) == (g["play_total"] == "Over")))
     rec = lambda x: [int(sum(x)), int(len(x) - sum(x))]
+    frec = lambda k: [sum(1 for x in flag_rows if x["kind"] == k and x["res"] == "W"), sum(1 for x in flag_rows if x["kind"] == k and x["res"] == "L")]
+    cl = [x["clv_pts"] for x in flag_rows if x["clv_pts"] is not None]
     return {"straight_up": rec(su), "ats_all": rec(ats), "ats_leans": rec(ats_lean),
-            "totals_leans": rec(ou_lean), "ats_plays": rec(ats_play), "totals_plays": rec(ou_play),
+            "totals_leans": rec(ou_lean), "ats_plays": frec("spread"), "totals_plays": frec("total"),
+            "game_plays": {"list": sorted(flag_rows, key=lambda x: -x["week"])[:40],
+                           "units": round(sum(x["units"] for x in flag_rows), 2),
+                           "clv_pts": round(float(np.mean(cl)), 2) if cl else None,
+                           "beat_close": round(100 * float(np.mean([c > 0 for c in cl])), 1) if cl else None, "n_clv": len(cl)},
             "picks": P.summarize(pick_rows),
             "picks_by_week": {str(w): P.summarize(r) for w, r in sorted(week_rows.items())},
             "model_mae": fnum(np.mean(err_m)) if err_m else None,
@@ -820,14 +927,14 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         res["lines"] = {"error": str(e)[:160]}
     try:
         tracker.update_props_log(OUT / "props_log.json", prop_rows, season, week, now)
-        res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now)
+        res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now, snaps=bundle.snaps)
     except Exception as e:  # noqa: BLE001
         log.warning(f"prop tracker skipped: {e}")
         res["prop_record"] = {"error": str(e)[:160]}
     try:                                       # box scores the dashboard uses to grade your bets
         results = tracker.build_results(bundle.pbp, bundle.schedules, season)
         (OUT / "results.json").write_text(json.dumps(clean_json(results), separators=(",", ":"), allow_nan=False))
-        res["tracking"] = clean_json(tracker.model_tracking(HIST, season, results))
+        res["tracking"] = clean_json(tracker.model_tracking(HIST, season, results, snaps=bundle.snaps))
         by_week, kn = {}, KeyNumbers(bundle.schedules)
         for f in sorted(HIST.glob(f"{season}_week*.json")):
             d = json.loads(f.read_text())
@@ -869,6 +976,7 @@ def main():
             if f.stem not in live_ids:
                 f.unlink()
     hpath = HIST / f"{season}_week{week:02d}.json"
+    lock_flags((json.loads(hpath.read_text()) if hpath.exists() else {}).get("games", []), games, now)
     all_games, all_players = merge_history(hpath, games, players)
 
     # attach finals to locked games
@@ -901,11 +1009,12 @@ def main():
         "prop_play": [round(100 * C.PROP_PLAY_MIN), round(100 * C.PROP_PLAY_MAX)],
         "prop_watch_max": round(100 * C.PROP_WATCH_MAX),
         "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS],
-        "spread_gap": C.GAME_PLAY_SPREAD, "total_gap": C.GAME_PLAY_TOTAL,
+        "spread_gap": None, "total_gap": None, "sharp_rule": {"min_ev": BR.SHARP_MIN_EV, "max_ev": BR.SHARP_MAX_EV},
+        "game_plays": live.get("game_plays"),
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
         **BR.summary(), **dict(zip(("bias", "calibration"), prop_bias(OUT / "props_log.json", with_real=True))),
-        "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE,
+        "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE, "td_curve": list(C.TD_CURVE),
     }
     payload.update({
         "model": model_info,

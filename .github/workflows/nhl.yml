@@ -5,6 +5,7 @@ on:
     # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
     - cron: "12 15 * * *"   # 11:12am ET: grades last night, morning lines
     - cron: "12 21 * * *"   # 5:12pm ET: fresh lines and player props before 7pm puck drops
+    - cron: "35 22 * * *"   # 6:35pm ET: near-closing lines (CLV) and late goalie news before 7pm puck drops
   workflow_dispatch:
 
 permissions:

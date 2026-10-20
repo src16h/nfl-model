@@ -29,7 +29,7 @@ PROP_STAT = {"player_pass_yds": "pass_yds", "player_rush_yds": "rush_yds", "play
              "player_receptions": "rec", "player_pass_tds": "pass_td", "player_anytime_td": "td"}
 
 
-BOOK_ORDER = ["draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "hardrockbet", "betrivers", "fanatics", "bovada"]
+BOOK_ORDER = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "betrivers", "fanatics", "bovada"]
 
 
 class Fatal(Exception):

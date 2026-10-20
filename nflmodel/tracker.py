@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 
 from . import config as C
-from .util import clean_json, fnum, record_stats
+from .util import clean_json, fnum, norm_name, record_stats
 from .propsim import prop_tier, stat_label
 
 log = logging.getLogger("nflmodel")
@@ -334,7 +334,12 @@ def update_props_log(path, rows, season, week, now):
             "pre": r.get("pre"), "ev": r.get("ev"),
             "source": r.get("source") or "manual", "book": r.get("book"),
             "first_line": first_line, "first_lean": first_lean,
-            "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None}
+            "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None,
+            # locked the first time it's a play (Oct 20 2026): graded at that line and price even if it later drops off
+            "flag": (old or {}).get("flag") or ({"line": r.get("line"), "lean": r.get("lean"),
+                                                 "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
+                                                 "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
+                                                 "book": r.get("book"), "at": ts} if r.get("tier") == "play" else None)}
         index[trio] = key
     _save(path, lg)
 
@@ -444,11 +449,54 @@ def backfill(lg) -> bool:
     return changed
 
 
-def grade_props(path, pbp, schedules, now):
+ZERO = {"pass_yds": 0.0, "pass_cmp": 0.0, "pass_td": 0.0, "pass_int": 0.0, "rec": 0.0, "rec_yds": 0.0, "rec_td": 0.0,
+        "carries": 0.0, "rush_yds": 0.0, "rush_td": 0.0, "rush_rec_yds": 0.0, "fpts": 0.0, "pass_att": 0.0}
+
+
+def played_set(snaps):
+    """(game_id, normalized name) for every player with an offensive snap. Books grade a player who played but
+    never touched the ball as zeros (Under wins, Over loses), not as a void."""
+    if snaps is None or not len(snaps):
+        return set()
+    sn = snaps.to_pandas() if hasattr(snaps, "to_pandas") else snaps
+    sn = sn[pd.to_numeric(sn["offense_snaps"], errors="coerce").fillna(0) > 0]
+    return {(g, norm_name(p)) for g, p in zip(sn["game_id"], sn["player"])}
+
+
+def _grade_with_flag(r, s, ts):
+    r["result"] = _grade_one(r, s, ts)
+    fl = r.get("flag")
+    if fl:
+        r["flag_result"] = _grade_one({**r, "line": fl.get("line"), "lean": fl.get("lean"),
+                                       "over_odds": fl.get("odds") if fl.get("lean") == "Over" else r.get("over_odds"),
+                                       "under_odds": fl.get("odds") if fl.get("lean") == "Under" else r.get("under_odds")}, s, ts)
+
+
+def grade_props(path, pbp, schedules, now, snaps=None):
     lg = _load(path, {"props": {}})
     props = lg.setdefault("props", {})
-    if backfill(lg):
+    changed = backfill(lg)
+    if not lg.get("fix_voids_v1") and snaps is not None:
+        # before Oct 20 2026 a player who played with no catch or carry was voided: regrade every void
+        for r in props.values():
+            if r.get("result") and r["result"].get("outcome") == "Void":
+                r["result"] = None
+        lg["fix_voids_v1"] = True
+        changed = True
+    if not lg.get("flags_v1"):                       # older plays: lock at the line they were graded on
+        for r in props.values():
+            if r.get("tier") == "play" and not r.get("flag"):
+                r["flag"] = {"line": r.get("line"), "lean": r.get("lean"),
+                             "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
+                             "model_over": r.get("model_over"), "book_over": r.get("book_over"), "edge": r.get("edge"),
+                             "book": r.get("book"), "at": None, "legacy": True}
+                if r.get("result"):
+                    r["flag_result"] = r["result"]
+        lg["flags_v1"] = True
+        changed = True
+    if changed:
         _save(path, lg)
+    played = played_set(snaps)
     final_ids = set(schedules.loc[schedules["home_score"].notna(), "game_id"])
     in_pbp = set(pbp["game_id"].unique())
     pending = [r for r in props.values()
@@ -459,7 +507,13 @@ def grade_props(path, pbp, schedules, now):
         for r in pending:
             idx = (r["game_id"], r["pid"])
             try:
-                r["result"] = _grade_one(r, stats.loc[idx] if idx in stats.index else None, ts)
+                if idx in stats.index:
+                    s_ = stats.loc[idx]
+                elif (r["game_id"], norm_name(r.get("player"))) in played:
+                    s_ = pd.Series(ZERO)
+                else:
+                    s_ = None
+                _grade_with_flag(r, s_, ts)
             except Exception as e:  # noqa: BLE001
                 log.warning(f"could not grade {r.get('player')} {r.get('stat')}: {e}")
         _save(path, lg)
@@ -497,7 +551,9 @@ def prop_summary(lg):
     out["by_type_side"] = [{"stat": st, "label": stat_label(st), "side": sd,
                             **_rec_block([r for r in bets if r["stat"] == st and r["lean"] == sd])}
                            for st in sorted({r["stat"] for r in bets}) for sd in ("Over", "Under")]
-    out["plays"] = _rec_block([r for r in bets if r.get("tier") == "play"])
+    fl = [{**r, "result": r["flag_result"]} for r in graded if r.get("flag") and r.get("flag_result")
+          and r["flag_result"].get("lean_result") in ("win", "loss", "push")]
+    out["plays"] = _rec_block(fl)          # locked plays, graded at the line and price when first flagged
     out["est_priced"] = sum(1 for r in bets if r["result"].get("est_price"))
     out["weeks"] = sorted({int(r["week"]) for r in bets if r.get("week") is not None})
 
@@ -609,10 +665,11 @@ def _leg_hit(L, g, pl, cols):
     return row[cols.index(L["stat"])] > L["line"]
 
 
-def model_tracking(hist_dir, season, results):
+def model_tracking(hist_dir, season, results, snaps=None):
     import json as _json
     cols = results.get("cols") or []
     rg, rp = results.get("games") or {}, results.get("players") or {}
+    played = played_set(snaps)
     mk, tds, combos, alts, alt_legs = [], [], [], [], []
     for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
         d = _json.loads(f.read_text())
@@ -657,8 +714,11 @@ def model_tracking(hist_dir, season, results):
                 continue
             row = rp.get(gid, {}).get(p["pid"])
             if row is None:
-                continue                                   # did not play
-            st = dict(zip(cols, row))
+                if (gid, norm_name(p.get("name"))) not in played:
+                    continue                               # did not play
+                st = {c: 0.0 for c in cols}                # played, never touched the ball: counts as no TD
+            else:
+                st = dict(zip(cols, row))
             if p.get("td_prob") is not None:
                 tds.append(("Anytime TD", week, p["td_prob"] / 100, st["tds"] >= 1))
             if p.get("td2_prob") is not None:
