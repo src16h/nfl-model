@@ -6708,8 +6708,9 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "profit": 0.266,
+    "graded_at": "2026-10-20T19:23+00:00",
+    "est_price": true
    },
    "tier": "watch"
   },
@@ -13345,8 +13346,9 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "profit": 0.054,
+    "graded_at": "2026-10-20T19:23+00:00",
+    "est_price": true
    },
    "tier": "watch"
   },
@@ -17737,8 +17739,9 @@
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
-    "profit": 0.909,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "profit": 0.155,
+    "graded_at": "2026-10-20T19:23+00:00",
+    "est_price": true
    },
    "tier": "watch"
   },
