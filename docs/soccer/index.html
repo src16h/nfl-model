@@ -687,6 +687,18 @@ details.match .m-body{padding:4px 18px 18px;display:grid;gap:10px;font-size:14px
 .recent .r{border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:8px 12px;font-size:13.5px;display:flex;justify-content:space-between;gap:8px;background:var(--surface)}
 .recent .r b{font:600 14px var(--num)}
 @media (max-width:640px){.mrow{grid-template-columns:1fr}details.match>summary{padding:12px 14px}details.match .m-body{padding:4px 14px 16px}}
+
+/* plays on the game boards: green (Oct 20 2026) */
+.pk,.mk{position:relative}
+.pk.on,.mk.on{background:var(--win-soft);border-color:var(--win);box-shadow:inset 0 0 0 1px var(--win)}
+.pk.on strong,.pk.on strong small,.mk.on b{color:var(--win)}
+.pk.on::after,.mk.on::after{content:"Play";position:absolute;top:-9px;right:10px;background:var(--win);color:#fff;font:700 10.5px/1.6 var(--sans);letter-spacing:.02em;padding:0 8px;border-radius:999px}
+details.game.is-play::before{background:var(--win)}
+details.match.is-play{box-shadow:inset 3px 0 0 var(--win)}
+details.game.is-play>summary,details.match.is-play>summary{background:linear-gradient(90deg,var(--win-soft),transparent 60%)}
+.picks{padding-top:6px}
+.tag:not(.watch){background:var(--win);color:#fff;border-color:var(--win)}
+.playline{font:600 13px var(--sans);color:var(--win);background:var(--win-soft);border:1px solid var(--win);border-radius:var(--r-sm);padding:6px 10px}
 </style>
 </head>
 
@@ -984,7 +996,8 @@ function renderGames() {
     if (d !== lastDay) { h += `<div class="board-head" style="display:block">${esc(d)}</div>`; lastDay = d; }
     h += `<details class="match${Object.values(P).some(p => p.play) ? " is-play" : ""}" id="g-${g.game_id}"><summary>
       <div class="mhead"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${b.ml_home ? `${fmtO(b.ml_home)} / ${fmtO(b.ml_draw)} / ${fmtO(b.ml_away)}` : `fair ${fair(g.p_home / 100)} / ${fair(g.p_draw / 100)} / ${fair(g.p_away / 100)}`}</span></div>
-      <div class="mrow"><div><div class="tm">${esc(g.home)}<span>${n(g.xg_home, 2)} xG</span></div><div class="tm">${esc(g.away)}<span>${n(g.xg_away, 2)} xG</span></div></div><div>${threeWay(g)}</div></div></summary>
+      <div class="mrow"><div><div class="tm">${esc(g.home)}<span>${n(g.xg_home, 2)} xG</span></div><div class="tm">${esc(g.away)}<span>${n(g.xg_away, 2)} xG</span></div></div><div>${threeWay(g)}</div></div>
+      ${Object.entries(P).filter(([k, p]) => p.play).map(([k, p]) => `<div class="playline">Play: ${esc(PK_NAME[k])}, ${esc(pickText(k, p))}${p.odds ? ` ${esc(p.odds)}` : ""}</div>`).join("")}</summary>
       <div class="m-body">${lineupNote(g)}<div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
         ${P["1x2"]?.draw ? `<div class="dim">Draw: ${n(P["1x2"].draw.model, 0)}% model${P["1x2"].draw.book != null ? `, ${n(P["1x2"].draw.book, 0)}% book at ${esc(P["1x2"].draw.odds)}` : `, fair ${esc(P["1x2"].draw.fair)}`}.</div>` : ""}
         <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div></div></details>`;

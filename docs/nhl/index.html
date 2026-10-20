@@ -650,6 +650,18 @@ dialog.slip::backdrop{background:rgba(20,20,20,.35)}
 
 @media (max-width:900px){.topbar .sport a{padding:5px 9px;font-size:12.5px}.topbar .fresh span{display:none}}
 @media (max-width:420px){.topbar .fresh{display:none}}
+
+/* plays on the game boards: green (Oct 20 2026) */
+.pk,.mk{position:relative}
+.pk.on,.mk.on{background:var(--win-soft);border-color:var(--win);box-shadow:inset 0 0 0 1px var(--win)}
+.pk.on strong,.pk.on strong small,.mk.on b{color:var(--win)}
+.pk.on::after,.mk.on::after{content:"Play";position:absolute;top:-9px;right:10px;background:var(--win);color:#fff;font:700 10.5px/1.6 var(--sans);letter-spacing:.02em;padding:0 8px;border-radius:999px}
+details.game.is-play::before{background:var(--win)}
+details.match.is-play{box-shadow:inset 3px 0 0 var(--win)}
+details.game.is-play>summary,details.match.is-play>summary{background:linear-gradient(90deg,var(--win-soft),transparent 60%)}
+.picks{padding-top:6px}
+.tag:not(.watch){background:var(--win);color:#fff;border-color:var(--win)}
+.playline{font:600 13px var(--sans);color:var(--win);background:var(--win-soft);border:1px solid var(--win);border-radius:var(--r-sm);padding:6px 10px}
 </style>
 </head>
 <body>
