@@ -580,7 +580,25 @@
     "profit": 0.885,
     "graded_at": "2026-10-03T18:54+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "212.5",
+    "lean": "Over",
+    "odds": "-113",
+    "model_over": 55.0,
+    "book_over": 50.2,
+    "edge": 4.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 299.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-03T18:54+00:00"
+   }
   },
   "2026_04_PIT_CLE|00-0033537|pass_yds": {
    "key": "2026_04_PIT_CLE|00-0033537|pass_yds",
@@ -1226,7 +1244,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-03T18:54+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "3.5",
+    "lean": "Over",
+    "odds": "+128",
+    "model_over": 46.0,
+    "book_over": 41.4,
+    "edge": 4.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-03T18:54+00:00"
+   }
   },
   "2026_04_PIT_CLE|00-0041037|rec": {
    "key": "2026_04_PIT_CLE|00-0041037|rec",
@@ -1532,7 +1568,25 @@
     "profit": 0.893,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "76.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 56.5,
+    "book_over": 50.0,
+    "edge": 6.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 93.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_PIT_CLE|00-0040784|rush_yds": {
    "key": "2026_04_PIT_CLE|00-0040784|rush_yds",
@@ -2072,11 +2126,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -2106,11 +2160,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -2656,7 +2710,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "10.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.4,
+    "book_over": 50.0,
+    "edge": -5.6,
+    "book": "BetOnline.ag",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 65.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_IND_WAS|00-0031588|rec": {
    "key": "2026_04_IND_WAS|00-0031588|rec",
@@ -3442,7 +3514,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "38.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 45.6,
+    "book_over": 50.2,
+    "edge": -4.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 27.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_TEN_BAL|00-0038117|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0038117|rec_yds",
@@ -3714,7 +3804,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "7.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 55.1,
+    "book_over": 49.8,
+    "edge": 5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 13.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_TEN_BAL|00-0032764|rec_yds": {
    "key": "2026_04_TEN_BAL|00-0032764|rec_yds",
@@ -3748,7 +3856,25 @@
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "7.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 43.5,
+    "book_over": 49.8,
+    "edge": -6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_TEN_BAL|00-0039064|rec": {
    "key": "2026_04_TEN_BAL|00-0039064|rec",
@@ -3918,7 +4044,25 @@
     "profit": 1.09,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "+109",
+    "model_over": 49.5,
+    "book_over": 54.9,
+    "edge": -5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.09,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_TEN_BAL|00-0036550|rec": {
    "key": "2026_04_TEN_BAL|00-0036550|rec",
@@ -3952,7 +4096,25 @@
     "profit": 0.658,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-152",
+    "model_over": 38.5,
+    "book_over": 43.1,
+    "edge": -4.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.658,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_TEN_BAL|00-0039032|rec": {
    "key": "2026_04_TEN_BAL|00-0039032|rec",
@@ -5078,7 +5240,25 @@
     "profit": 0.885,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "42.5",
+    "lean": "Over",
+    "odds": "-113",
+    "model_over": 56.7,
+    "book_over": 50.2,
+    "edge": 6.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 53.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0037816|rec_yds": {
    "key": "2026_04_NE_BUF|00-0037816|rec_yds",
@@ -5282,7 +5462,25 @@
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "13.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 55.3,
+    "book_over": 49.6,
+    "edge": 5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 116.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0035537|rec_yds": {
    "key": "2026_04_NE_BUF|00-0035537|rec_yds",
@@ -5384,7 +5582,25 @@
     "profit": 0.917,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "9.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 53.9,
+    "book_over": 49.4,
+    "edge": 4.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 13.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0037248|rec_yds": {
    "key": "2026_04_NE_BUF|00-0037248|rec_yds",
@@ -5452,7 +5668,25 @@
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "7.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.1,
+    "book_over": 49.6,
+    "edge": -5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0038933|rec": {
    "key": "2026_04_NE_BUF|00-0038933|rec",
@@ -5588,7 +5822,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "3.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 56.9,
+    "book_over": 50.2,
+    "edge": 6.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0033090|rec": {
    "key": "2026_04_NE_BUF|00-0033090|rec",
@@ -5860,7 +6112,25 @@
     "profit": 1.35,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+135",
+    "model_over": 46.2,
+    "book_over": 40.2,
+    "edge": 6.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.35,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0040734|rec": {
    "key": "2026_04_NE_BUF|00-0040734|rec",
@@ -5894,7 +6164,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+143",
+    "model_over": 43.2,
+    "book_over": 38.9,
+    "edge": 4.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0040131|rec": {
    "key": "2026_04_NE_BUF|00-0040131|rec",
@@ -6064,7 +6352,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "31.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 53.6,
+    "book_over": 49.4,
+    "edge": 4.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_NE_BUF|00-0039851|rush_yds": {
    "key": "2026_04_NE_BUF|00-0039851|rush_yds",
@@ -6399,11 +6705,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -6571,11 +6877,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -6816,7 +7122,25 @@
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "32.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 54.1,
+    "book_over": 50.0,
+    "edge": 4.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 94.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NYJ_CHI|00-0032464|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0032464|rec_yds",
@@ -6884,7 +7208,25 @@
     "profit": 0.893,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "23.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 55.2,
+    "book_over": 50.0,
+    "edge": 5.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 73.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NYJ_CHI|00-0036275|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0036275|rec_yds",
@@ -6918,7 +7260,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "14.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 43.9,
+    "book_over": 49.6,
+    "edge": -5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 16.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NYJ_CHI|00-0039794|rec_yds": {
    "key": "2026_04_NYJ_CHI|00-0039794|rec_yds",
@@ -7014,11 +7374,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.943,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -7054,7 +7414,25 @@
     "profit": 0.943,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "5.5",
+    "lean": "Under",
+    "odds": "-106",
+    "model_over": 45.3,
+    "book_over": 51.3,
+    "edge": -5.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.943,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NYJ_CHI|00-0037740|rec": {
    "key": "2026_04_NYJ_CHI|00-0037740|rec",
@@ -7388,11 +7766,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.704,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -7428,7 +7806,25 @@
     "profit": 1.54,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+154",
+    "model_over": 43.4,
+    "book_over": 37.2,
+    "edge": 6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.54,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_NYJ_CHI|00-0040236|rec": {
    "key": "2026_04_NYJ_CHI|00-0040236|rec",
@@ -7592,11 +7988,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -8182,7 +8578,25 @@
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "84.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 43.3,
+    "book_over": 49.6,
+    "edge": -6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 27.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0038606|rec_yds": {
    "key": "2026_04_JAX_CIN|00-0038606|rec_yds",
@@ -8556,7 +8970,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "5.5",
+    "lean": "Over",
+    "odds": "+107",
+    "model_over": 50.2,
+    "book_over": 45.5,
+    "edge": 4.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0036410|rec": {
    "key": "2026_04_JAX_CIN|00-0036410|rec",
@@ -8590,7 +9022,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-117",
+    "model_over": 43.8,
+    "book_over": 49.2,
+    "edge": -5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 11.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0034960|rec": {
    "key": "2026_04_JAX_CIN|00-0034960|rec",
@@ -8658,7 +9108,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "3.5",
+    "lean": "Under",
+    "odds": "-126",
+    "model_over": 40.8,
+    "book_over": 47.4,
+    "edge": -6.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 7.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0038597|rec": {
    "key": "2026_04_JAX_CIN|00-0038597|rec",
@@ -8862,7 +9330,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "60.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 54.9,
+    "book_over": 49.8,
+    "edge": 5.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 10.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0040719|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0040719|rush_yds",
@@ -8896,7 +9382,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "55.5",
+    "lean": "Under",
+    "odds": "-109",
+    "model_over": 45.6,
+    "book_over": 50.6,
+    "edge": -5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 73.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_JAX_CIN|00-0038611|rush_yds": {
    "key": "2026_04_JAX_CIN|00-0038611|rush_yds",
@@ -9032,7 +9536,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "8.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 44.9,
+    "book_over": 50.2,
+    "edge": -5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_DAL_HOU|00-0035685|anytime_td": {
    "key": "2026_04_DAL_HOU|00-0035685|anytime_td",
@@ -9540,11 +10062,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -9614,7 +10136,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "245.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 55.8,
+    "book_over": 49.8,
+    "edge": 6.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 347.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DAL_HOU|00-0036358|rec_yds": {
    "key": "2026_04_DAL_HOU|00-0036358|rec_yds",
@@ -10124,7 +10664,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "-144",
+    "model_over": 60.7,
+    "book_over": 55.7,
+    "edge": 5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DAL_HOU|00-0034383|rec": {
    "key": "2026_04_DAL_HOU|00-0034383|rec",
@@ -10396,7 +10954,25 @@
     "profit": 1.51,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+151",
+    "model_over": 43.1,
+    "book_over": 37.6,
+    "edge": 5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.51,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DAL_HOU|00-0034981|rec": {
    "key": "2026_04_DAL_HOU|00-0034981|rec",
@@ -10430,7 +11006,25 @@
     "profit": 0.461,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Under",
+    "odds": "-217",
+    "model_over": 30.6,
+    "book_over": 35.3,
+    "edge": -4.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.461,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DAL_HOU|00-0036997|rush_yds": {
    "key": "2026_04_DAL_HOU|00-0036997|rush_yds",
@@ -11006,11 +11600,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -11182,7 +11776,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -11286,7 +11880,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "62.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 55.6,
+    "book_over": 49.4,
+    "edge": 6.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 31.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_ARI_NYG|00-0038559|rec_yds": {
    "key": "2026_04_ARI_NYG|00-0038559|rec_yds",
@@ -11484,11 +12096,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -11694,7 +12306,25 @@
     "profit": 0.645,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "-155",
+    "model_over": 61.4,
+    "book_over": 57.3,
+    "edge": 4.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 7.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.645,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_ARI_NYG|00-0039337|rec": {
    "key": "2026_04_ARI_NYG|00-0039337|rec",
@@ -11892,11 +12522,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.595,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -12236,7 +12866,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -12545,7 +13175,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -12712,11 +13342,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -12888,7 +13518,25 @@
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "66.5",
+    "lean": "Under",
+    "odds": "-110",
+    "model_over": 44.9,
+    "book_over": 50.4,
+    "edge": -5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 32.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LA_PHI|00-0039075|rec_yds": {
    "key": "2026_04_LA_PHI|00-0039075|rec_yds",
@@ -12922,7 +13570,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "66.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 46.1,
+    "book_over": 50.3,
+    "edge": -4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 125.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LA_PHI|00-0038393|rec_yds": {
    "key": "2026_04_LA_PHI|00-0038393|rec_yds",
@@ -13092,7 +13758,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "13.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 54.1,
+    "book_over": 49.8,
+    "edge": 4.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 67.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LA_PHI|00-0033246|rec_yds": {
    "key": "2026_04_LA_PHI|00-0033246|rec_yds",
@@ -13120,11 +13804,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -13392,11 +14076,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -14253,7 +14937,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "238.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 45.8,
+    "book_over": 50.2,
+    "edge": -4.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 197.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_GB_TB|00-0041251|pass_yds": {
    "key": "2026_04_GB_TB|00-0041251|pass_yds",
@@ -14321,7 +15023,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "64.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 56.0,
+    "book_over": 50.0,
+    "edge": 6.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 47.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_GB_TB|00-0040667|rec_yds": {
    "key": "2026_04_GB_TB|00-0040667|rec_yds",
@@ -14729,7 +15449,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "-131",
+    "model_over": 59.0,
+    "book_over": 53.5,
+    "edge": 5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_GB_TB|00-0040667|rec": {
    "key": "2026_04_GB_TB|00-0040667|rec",
@@ -14763,7 +15501,25 @@
     "profit": 0.99,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-101",
+    "model_over": 48.5,
+    "book_over": 52.7,
+    "edge": -4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.99,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_GB_TB|00-0038996|rec": {
    "key": "2026_04_GB_TB|00-0038996|rec",
@@ -14899,7 +15655,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "+111",
+    "model_over": 51.1,
+    "book_over": 55.2,
+    "edge": -4.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 6.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_GB_TB|00-0039361|rec": {
    "key": "2026_04_GB_TB|00-0039361|rec",
@@ -15610,11 +16384,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -15856,7 +16630,25 @@
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "38.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 55.8,
+    "book_over": 49.6,
+    "edge": 6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 119.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_MIA_MIN|00-0041525|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0041525|rec_yds",
@@ -15890,7 +16682,25 @@
     "profit": 0.877,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "34.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.5,
+    "book_over": 49.6,
+    "edge": -5.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_MIA_MIN|00-0037252|rec_yds": {
    "key": "2026_04_MIA_MIN|00-0037252|rec_yds",
@@ -15918,11 +16728,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -16224,11 +17034,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -16264,7 +17074,25 @@
     "profit": 0.901,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 43.9,
+    "book_over": 50.4,
+    "edge": -6.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_MIA_MIN|00-0041529|rec": {
    "key": "2026_04_MIA_MIN|00-0041529|rec",
@@ -16666,11 +17494,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -16906,11 +17734,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -17249,11 +18077,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -17357,7 +18185,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "34.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 44.7,
+    "book_over": 50.0,
+    "edge": -5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 70.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_KC_LV|00-0039066|rec_yds": {
    "key": "2026_04_KC_LV|00-0039066|rec_yds",
@@ -17391,7 +18237,25 @@
     "profit": 0.909,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "23.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 54.3,
+    "book_over": 49.6,
+    "edge": 4.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 82.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_KC_LV|00-0038134|rec_yds": {
    "key": "2026_04_KC_LV|00-0038134|rec_yds",
@@ -17521,11 +18385,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.935,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -17691,11 +18555,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.12,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -17929,11 +18793,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.22,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -17969,7 +18833,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "1.5",
+    "lean": "Under",
+    "odds": "-118",
+    "model_over": 43.5,
+    "book_over": 49.0,
+    "edge": -5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_KC_LV|00-0036637|rec": {
    "key": "2026_04_KC_LV|00-0036637|rec",
@@ -18960,7 +19842,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "36.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 43.1,
+    "book_over": 49.4,
+    "edge": -6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 60.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LAC_SEA|00-0038544|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0038544|rec_yds",
@@ -19096,7 +19996,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "24.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 55.8,
+    "book_over": 49.3,
+    "edge": 6.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 13.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LAC_SEA|00-0037545|rec_yds": {
    "key": "2026_04_LAC_SEA|00-0037545|rec_yds",
@@ -19266,7 +20184,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "7.5",
+    "lean": "Over",
+    "odds": "+117",
+    "model_over": 50.4,
+    "book_over": 43.5,
+    "edge": 6.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LAC_SEA|00-0039915|rec": {
    "key": "2026_04_LAC_SEA|00-0039915|rec",
@@ -19300,7 +20236,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "3.5",
+    "lean": "Over",
+    "odds": "-163",
+    "model_over": 64.3,
+    "book_over": 58.6,
+    "edge": 5.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_LAC_SEA|00-0040727|rec": {
    "key": "2026_04_LAC_SEA|00-0040727|rec",
@@ -19708,7 +20662,25 @@
     "profit": 0.855,
     "graded_at": "2026-10-18T12:26+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "20.5",
+    "lean": "Over",
+    "odds": "-117",
+    "model_over": 57.6,
+    "book_over": 51.1,
+    "edge": 6.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 40.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.855,
+    "graded_at": "2026-10-18T12:26+00:00"
+   }
   },
   "2026_04_LAC_SEA|00-0038454|rush_yds": {
    "key": "2026_04_LAC_SEA|00-0038454|rush_yds",
@@ -20286,11 +21258,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -20320,11 +21292,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -20462,7 +21434,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "226.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 56.8,
+    "book_over": 50.0,
+    "edge": 6.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 214.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DEN_SF|00-0033288|rec_yds": {
    "key": "2026_04_DEN_SF|00-0033288|rec_yds",
@@ -20762,11 +21752,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -20904,7 +21894,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "3.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 43.5,
+    "book_over": 49.6,
+    "edge": -6.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 10.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DEN_SF|00-0034348|rec": {
    "key": "2026_04_DEN_SF|00-0034348|rec",
@@ -20972,7 +21980,25 @@
     "profit": 0.714,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-140",
+    "model_over": 40.9,
+    "book_over": 44.9,
+    "edge": -4.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.714,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DEN_SF|00-0040134|rec": {
    "key": "2026_04_DEN_SF|00-0040134|rec",
@@ -21068,11 +22094,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-04T19:11+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "watch"
   },
@@ -21447,7 +22473,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -21931,7 +22957,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "69.5",
+    "lean": "Under",
+    "odds": "-110",
+    "model_over": 46.2,
+    "book_over": 50.4,
+    "edge": -4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 192.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DET_CAR|00-0039491|rec_yds": {
    "key": "2026_04_DET_CAR|00-0039491|rec_yds",
@@ -21963,7 +23007,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -22067,7 +23111,25 @@
     "profit": 0.862,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "38.5",
+    "lean": "Under",
+    "odds": "-116",
+    "model_over": 42.5,
+    "book_over": 49.3,
+    "edge": -6.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 22.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.862,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_DET_CAR|00-0031610|rec_yds": {
    "key": "2026_04_DET_CAR|00-0031610|rec_yds",
@@ -22337,7 +23399,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -23157,7 +24219,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": null
   },
@@ -23330,7 +24392,25 @@
     "profit": -1.0,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "78.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 43.9,
+    "book_over": 50.2,
+    "edge": -6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 96.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_ATL_NO|00-0039424|rec_yds": {
    "key": "2026_04_ATL_NO|00-0039424|rec_yds",
@@ -23532,7 +24612,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -23636,7 +24716,25 @@
     "profit": 1.16,
     "graded_at": "2026-10-06T12:05+00:00"
    },
-   "tier": "play"
+   "tier": "play",
+   "flag": {
+    "line": "5.5",
+    "lean": "Under",
+    "odds": "+116",
+    "model_over": 49.3,
+    "book_over": 56.2,
+    "edge": -6.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.16,
+    "graded_at": "2026-10-06T12:05+00:00"
+   }
   },
   "2026_04_ATL_NO|00-0038542|rec": {
    "key": "2026_04_ATL_NO|00-0038542|rec",
@@ -23838,7 +24936,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-06T12:05+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    },
    "tier": "too_big"
   },
@@ -24515,11 +25613,11 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-09T12:29+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_TB_DAL|00-0038129|anytime_td": {
@@ -24583,11 +25681,11 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-09T12:29+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_TB_DAL|00-0040237|anytime_td": {
@@ -24719,6 +25817,24 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
+    "actual": 9.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-09T12:29+00:00"
+   },
+   "flag": {
+    "line": "80.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 44.1,
+    "book_over": 50.2,
+    "edge": -6.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 9.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -24957,11 +26073,11 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-09T12:29+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_TB_DAL|00-0036997|rec_yds": {
@@ -25161,6 +26277,24 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
+    "actual": 9.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-09T12:29+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 43.9,
+    "book_over": 50.0,
+    "edge": -6.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 9.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -25467,11 +26601,11 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-09T12:29+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.19,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_TB_DAL|00-0040237|rec": {
@@ -25501,6 +26635,24 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-09T12:29+00:00"
+   },
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+132",
+    "model_over": 45.6,
+    "book_over": 40.7,
+    "edge": 4.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 1.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -25637,11 +26789,11 @@
    "logged_at": "2026-10-07T22:18+00:00",
    "updated_at": "2026-10-08T22:21+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-09T12:29+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_TB_DAL|00-0036919|rush_yds": {
@@ -26356,6 +27508,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "44.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 54.6,
+    "book_over": 49.6,
+    "edge": 5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 38.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_PHI_JAX|00-0034960|rec_yds": {
@@ -26453,6 +27623,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-10T22:18+00:00",
    "result": {
+    "actual": 68.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "31.5",
+    "lean": "Over",
+    "odds": "-113",
+    "model_over": 54.3,
+    "book_over": 50.2,
+    "edge": 4.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 68.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -26623,6 +27811,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-10T22:18+00:00",
    "result": {
+    "actual": 6.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-102",
+    "model_over": 47.9,
+    "book_over": 52.4,
+    "edge": -4.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 6.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -26963,6 +28169,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-10T22:18+00:00",
    "result": {
+    "actual": 72.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "67.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.5,
+    "book_over": 49.6,
+    "edge": -5.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 72.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -28056,6 +29280,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "236.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 45.8,
+    "book_over": 50.0,
+    "edge": -4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 367.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CHI_GB|00-0038124|rec_yds": {
@@ -28226,6 +29468,24 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "39.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 55.3,
+    "book_over": 49.8,
+    "edge": 5.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 40.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CHI_GB|00-0040126|rec_yds": {
@@ -28289,6 +29549,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.862,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "28.5",
+    "lean": "Under",
+    "odds": "-116",
+    "model_over": 45.0,
+    "book_over": 49.2,
+    "edge": -4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 6.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -28430,6 +29708,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "8.5",
+    "lean": "Over",
+    "odds": "-115",
+    "model_over": 55.8,
+    "book_over": 50.6,
+    "edge": 5.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 8.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CHI_GB|00-0040667|rec": {
@@ -28459,6 +29755,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 6.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-108",
+    "model_over": 45.1,
+    "book_over": 51.0,
+    "edge": -5.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 6.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -28600,6 +29914,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "+128",
+    "model_over": 48.2,
+    "book_over": 41.4,
+    "edge": 6.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CHI_GB|00-0032464|rec": {
@@ -28629,6 +29961,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.625,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "3.5",
+    "lean": "Under",
+    "odds": "-160",
+    "model_over": 35.1,
+    "book_over": 41.9,
+    "edge": -6.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 3.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -28799,6 +30149,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+139",
+    "model_over": 44.6,
+    "book_over": 39.5,
+    "edge": 5.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 1.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -29649,11 +31017,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_CIN_MIA|00-0039880|anytime_td": {
@@ -30028,6 +31396,24 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "34.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 42.6,
+    "book_over": 49.6,
+    "edge": -7.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CIN_MIA|00-0037252|rec_yds": {
@@ -30198,6 +31584,24 @@
     "lean_result": "win",
     "profit": 0.758,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Over",
+    "odds": "-132",
+    "model_over": 59.5,
+    "book_over": 53.6,
+    "edge": 5.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.758,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CIN_MIA|00-0041525|rec": {
@@ -30227,6 +31631,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.8,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-125",
+    "model_over": 43.2,
+    "book_over": 47.6,
+    "edge": -4.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -30431,6 +31853,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 11.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.862,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "22.5",
+    "lean": "Under",
+    "odds": "-116",
+    "model_over": 43.7,
+    "book_over": 49.2,
+    "edge": -5.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 11.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -30737,11 +32177,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_CIN_MIA|00-0039874|tds": {
@@ -31694,6 +33134,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "41.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 55.2,
+    "book_over": 49.8,
+    "edge": 5.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 41.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_LV_NE|00-0033090|rec_yds": {
@@ -31757,6 +33215,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "29.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 53.6,
+    "book_over": 49.3,
+    "edge": 4.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 2.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -32029,6 +33505,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "3.5",
+    "lean": "Over",
+    "odds": "-107",
+    "model_over": 53.8,
+    "book_over": 48.8,
+    "edge": 5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 1.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -33019,7 +34513,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_MIN_NO|00-0035229|anytime_td": {
@@ -33495,7 +34989,25 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
+   },
+   "flag": {
+    "line": "40.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 55.1,
+    "book_over": 50.4,
+    "edge": 4.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": "void",
+    "profit": 0.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_MIN_NO|00-0039424|rec_yds": {
@@ -33525,6 +35037,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 26.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "40.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.0,
+    "book_over": 49.6,
+    "edge": -5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 26.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -33768,6 +35298,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "-102",
+    "model_over": 53.3,
+    "book_over": 47.6,
+    "edge": 5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_MIN_NO|00-0036040|rec": {
@@ -33903,7 +35451,25 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
+   },
+   "flag": {
+    "line": "3.5",
+    "lean": "Over",
+    "odds": "+109",
+    "model_over": 50.4,
+    "book_over": 45.1,
+    "edge": 5.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": "void",
+    "profit": 0.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_MIN_NO|00-0033293|rec": {
@@ -34311,7 +35877,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_MIN_NO|00-0035229|tds": {
@@ -35089,11 +36655,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_CLE_NYJ|00-0040782|anytime_td": {
@@ -35298,6 +36864,24 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "39.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 43.6,
+    "book_over": 49.8,
+    "edge": -6.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_CLE_NYJ|00-0040663|rec_yds": {
@@ -35395,6 +36979,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "21.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 55.2,
+    "book_over": 50.0,
+    "edge": 5.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 16.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -36012,6 +37614,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "58.5",
+    "lean": "Over",
+    "odds": "-115",
+    "model_over": 54.8,
+    "book_over": 50.6,
+    "edge": 4.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 44.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
    }
   },
   "2026_05_CLE_NYJ|00-0033537|rush_yds": {
@@ -36585,11 +38205,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_CLE_NYJ|00-0030565|tds": {
@@ -36793,7 +38413,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_IND_PIT|00-0040128|anytime_td": {
@@ -37236,6 +38856,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "56.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 56.4,
+    "book_over": 49.6,
+    "edge": 6.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 47.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_IND_PIT|00-0035640|rec_yds": {
@@ -37644,6 +39282,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Over",
+    "odds": "-153",
+    "model_over": 63.2,
+    "book_over": 57.0,
+    "edge": 6.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_IND_PIT|00-0035640|rec": {
@@ -37877,6 +39533,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Over",
+    "odds": "+132",
+    "model_over": 47.4,
+    "book_over": 40.7,
+    "edge": 6.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 2.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -38221,7 +39895,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_IND_PIT|00-0040128|tds": {
@@ -39169,11 +40843,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_HOU_TEN|00-0039163|pass_yds": {
@@ -39344,6 +41018,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "33.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 55.7,
+    "book_over": 49.8,
+    "edge": 5.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 30.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_HOU_TEN|00-0038117|rec_yds": {
@@ -39446,6 +41138,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "18.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 44.7,
+    "book_over": 49.8,
+    "edge": -5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 41.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_HOU_TEN|00-0040584|rec_yds": {
@@ -39475,6 +41185,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "16.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 45.0,
+    "book_over": 49.8,
+    "edge": -4.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -39883,6 +41611,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.73,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-137",
+    "model_over": 39.6,
+    "book_over": 45.4,
+    "edge": -5.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -40325,6 +42071,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.847,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "15.5",
+    "lean": "Under",
+    "odds": "-118",
+    "model_over": 42.6,
+    "book_over": 48.7,
+    "edge": -6.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -40937,11 +42701,11 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_HOU_TEN|00-0034837|tds": {
@@ -41655,7 +43419,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_NYG_WAS|00-0031503|pass_yds": {
@@ -41724,6 +43488,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "197.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 44.6,
+    "book_over": 50.2,
+    "edge": -5.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 199.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-11T23:19+00:00"
    }
   },
   "2026_05_NYG_WAS|00-0039337|rec_yds": {
@@ -41787,6 +43569,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 94.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-11T23:19+00:00"
+   },
+   "flag": {
+    "line": "42.5",
+    "lean": "Over",
+    "odds": "-115",
+    "model_over": 56.5,
+    "book_over": 50.6,
+    "edge": 5.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 94.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -42229,6 +44029,24 @@
    "logged_at": "2026-10-10T12:27+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 103.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "28.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 45.0,
+    "book_over": 50.0,
+    "edge": -5.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 103.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -42981,7 +44799,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-11T23:19+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0036158|anytime_td": {
@@ -43185,7 +45003,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-12T12:43+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0040727|anytime_td": {
@@ -43560,6 +45378,24 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "220.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 44.8,
+    "book_over": 50.0,
+    "edge": -5.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 123.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0036355|pass_yds": {
@@ -43661,7 +45497,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-12T12:43+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0034348|rec_yds": {
@@ -43691,6 +45527,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 18.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "37.5",
+    "lean": "Over",
+    "odds": "-109",
+    "model_over": 55.1,
+    "book_over": 49.4,
+    "edge": 5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 18.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -43759,6 +45613,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "18.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 42.7,
+    "book_over": 49.6,
+    "edge": -6.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 16.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -43933,7 +45805,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-12T12:43+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0034348|rec": {
@@ -44002,6 +45874,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Under",
+    "odds": "-148",
+    "model_over": 37.2,
+    "book_over": 43.7,
+    "edge": -6.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 4.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0039868|rec": {
@@ -44031,6 +45921,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "1.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 45.9,
+    "book_over": 49.9,
+    "edge": -4.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 2.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -44477,7 +46385,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-12T12:43+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_DEN_LAC|00-0038454|tds": {
@@ -45396,6 +47304,24 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "81.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 43.5,
+    "book_over": 50.0,
+    "edge": -6.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 69.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_DET_ARI|00-0038559|rec_yds": {
@@ -45838,6 +47764,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "4.5",
+    "lean": "Under",
+    "odds": "-107",
+    "model_over": 47.2,
+    "book_over": 51.2,
+    "edge": -4.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_DET_ARI|00-0037240|rec": {
@@ -46071,6 +48015,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 22.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "44.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 56.7,
+    "book_over": 50.4,
+    "edge": 6.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 22.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -47402,6 +49364,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "23.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 55.3,
+    "book_over": 49.6,
+    "edge": 5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 15.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_SF_SEA|00-0039793|rec_yds": {
@@ -47465,6 +49445,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 23.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "20.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 43.1,
+    "book_over": 50.0,
+    "edge": -6.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 23.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -47742,6 +49740,24 @@
     "lean_result": "win",
     "profit": 0.952,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Over",
+    "odds": "-105",
+    "model_over": 54.4,
+    "book_over": 48.3,
+    "edge": 6.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.952,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_SF_SEA|00-0033908|rec": {
@@ -47771,6 +49787,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T15:57+00:00",
    "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "2.5",
+    "lean": "Over",
+    "odds": "+109",
+    "model_over": 51.5,
+    "book_over": 45.1,
+    "edge": 6.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 2.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -49068,6 +51102,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "80.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 42.9,
+    "book_over": 49.8,
+    "edge": -6.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 118.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_BAL_ATL|00-0039064|rec_yds": {
@@ -49408,6 +51460,24 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "5.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 56.2,
+    "book_over": 49.6,
+    "edge": 6.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 8.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_BAL_ATL|00-0034753|rec": {
@@ -49544,6 +51614,24 @@
     "lean_result": "win",
     "profit": 0.667,
     "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "-150",
+    "model_over": 62.5,
+    "book_over": 56.6,
+    "edge": 6.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.667,
+    "graded_at": "2026-10-12T12:43+00:00"
    }
   },
   "2026_05_BAL_ATL|00-0037741|rec": {
@@ -49641,6 +51729,24 @@
    "logged_at": "2026-10-10T22:18+00:00",
    "updated_at": "2026-10-11T23:19+00:00",
    "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-12T12:43+00:00"
+   },
+   "flag": {
+    "line": "1.5",
+    "lean": "Over",
+    "odds": "+163",
+    "model_over": 42.6,
+    "book_over": 36.0,
+    "edge": 6.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 1.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -50729,11 +52835,11 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_BUF_LA|00-0026498|anytime_td": {
@@ -50831,6 +52937,24 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
+    "actual": 210.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-13T12:34+00:00"
+   },
+   "flag": {
+    "line": "242.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 38.8,
+    "book_over": 50.2,
+    "edge": -11.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 210.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -51108,6 +53232,24 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-13T12:34+00:00"
+   },
+   "flag": {
+    "line": "16.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 38.5,
+    "book_over": 50.0,
+    "edge": -11.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-13T12:34+00:00"
    }
   },
   "2026_05_BUF_LA|00-0035537|rec_yds": {
@@ -51176,6 +53318,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-13T12:34+00:00"
+   },
+   "flag": {
+    "line": "10.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 58.9,
+    "book_over": 49.8,
+    "edge": 9.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 6.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-13T12:34+00:00"
    }
   },
   "2026_05_BUF_LA|00-0037248|rec_yds": {
@@ -51239,11 +53399,11 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_BUF_LA|00-0039075|rec": {
@@ -51647,11 +53807,11 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_BUF_LA|00-0037248|rush_yds": {
@@ -51749,6 +53909,24 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
+    "actual": 121.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "38.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 41.3,
+    "book_over": 49.6,
+    "edge": -8.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 121.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -52293,11 +54471,11 @@
    "logged_at": "2026-10-11T23:19+00:00",
    "updated_at": "2026-10-12T22:20+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_BUF_LA|00-0026498|tds": {
@@ -52365,7 +54543,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_05_BUF_LA|00-0034827|tds": {
@@ -52399,7 +54577,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-13T12:34+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_SEA_DEN|00-0038543|anytime_td": {
@@ -52978,6 +55156,24 @@
     "lean_result": "win",
     "profit": 0.901,
     "graded_at": "2026-10-16T12:44+00:00"
+   },
+   "flag": {
+    "line": "220.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 58.1,
+    "book_over": 49.8,
+    "edge": 8.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 278.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-16T12:44+00:00"
    }
   },
   "2026_06_SEA_DEN|00-0039732|pass_yds": {
@@ -53046,6 +55242,24 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-16T12:44+00:00"
+   },
+   "flag": {
+    "line": "91.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 61.3,
+    "book_over": 50.4,
+    "edge": 10.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 134.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-16T12:44+00:00"
    }
   },
   "2026_06_SEA_DEN|00-0036613|rec_yds": {
@@ -53109,6 +55323,24 @@
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
    "result": {
+    "actual": 19.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-16T12:44+00:00"
+   },
+   "flag": {
+    "line": "32.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 62.5,
+    "book_over": 49.8,
+    "edge": 12.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 19.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -53245,6 +55477,24 @@
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
    "result": {
+    "actual": 50.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-10-16T12:44+00:00"
+   },
+   "flag": {
+    "line": "21.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 60.5,
+    "book_over": 49.8,
+    "edge": 10.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 50.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -53891,6 +56141,24 @@
    "logged_at": "2026-10-14T22:30+00:00",
    "updated_at": "2026-10-15T22:30+00:00",
    "result": {
+    "actual": 41.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-18T12:26+00:00"
+   },
+   "flag": {
+    "line": "47.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 43.7,
+    "book_over": 49.4,
+    "edge": -5.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 41.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -55013,11 +57281,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_HOU_JAX|00-0038618|anytime_td": {
@@ -55358,6 +57626,24 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "30.5",
+    "lean": "Over",
+    "odds": "-113",
+    "model_over": 64.5,
+    "book_over": 50.2,
+    "edge": 14.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 33.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_HOU_JAX|00-0038608|rec_yds": {
@@ -55455,11 +57741,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_HOU_JAX|00-0040583|rec_yds": {
@@ -55489,6 +57775,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
+    "actual": 25.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "14.5",
+    "lean": "Under",
+    "odds": "-108",
+    "model_over": 36.9,
+    "book_over": 50.8,
+    "edge": -13.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 25.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -55931,11 +58235,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_HOU_JAX|00-0040719|rush_yds": {
@@ -55965,6 +58269,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
+    "actual": 39.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "63.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 40.0,
+    "book_over": 49.4,
+    "edge": -9.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 39.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -56033,6 +58355,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
+    "actual": 55.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "16.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 36.1,
+    "book_over": 50.0,
+    "edge": -13.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 55.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -56509,11 +58849,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T13:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_HOU_JAX|00-0038608|tds": {
@@ -57364,6 +59704,24 @@
     "lean_result": "win",
     "profit": 0.877,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "30.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 62.2,
+    "book_over": 50.4,
+    "edge": 11.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 60.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_CHI_ATL|00-0038542|rec_yds": {
@@ -57461,6 +59819,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 87.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "23.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 35.3,
+    "book_over": 50.0,
+    "edge": -14.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 87.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -57971,6 +60347,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 61.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "94.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 40.3,
+    "book_over": 49.6,
+    "edge": -9.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 61.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -58655,7 +61049,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0041037|anytime_td": {
@@ -59025,11 +61419,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0039792|anytime_td": {
@@ -59093,6 +61487,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 164.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "205.5",
+    "lean": "Over",
+    "odds": "-113",
+    "model_over": 62.7,
+    "book_over": 50.2,
+    "edge": 12.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 164.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -59234,6 +61646,24 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "41.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 36.3,
+    "book_over": 49.8,
+    "edge": -13.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 37.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0040663|rec_yds": {
@@ -59268,6 +61698,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "35.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 60.6,
+    "book_over": 49.8,
+    "edge": 10.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 9.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0034753|rec_yds": {
@@ -59297,6 +61745,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "29.5",
+    "lean": "Over",
+    "odds": "-108",
+    "model_over": 59.4,
+    "book_over": 49.2,
+    "edge": 10.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 4.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -59365,6 +61831,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 9.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "10.5",
+    "lean": "Under",
+    "odds": "-109",
+    "model_over": 36.8,
+    "book_over": 50.6,
+    "edge": -13.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 9.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -59744,6 +62228,24 @@
     "lean_result": "win",
     "profit": 0.855,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "29.5",
+    "lean": "Under",
+    "odds": "-117",
+    "model_over": 36.1,
+    "book_over": 48.9,
+    "edge": -12.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 29.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.855,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0035993|rush_yds": {
@@ -59807,6 +62309,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "12.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 35.8,
+    "book_over": 50.0,
+    "edge": -14.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -59879,7 +62399,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0041037|tds": {
@@ -60249,11 +62769,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BAL_CLE|00-0039792|tds": {
@@ -60355,7 +62875,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0035261|anytime_td": {
@@ -60725,11 +63245,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0034837|anytime_td": {
@@ -60827,11 +63347,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0035710|pass_yds": {
@@ -61001,7 +63521,25 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
+   },
+   "flag": {
+    "line": "48.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 62.7,
+    "book_over": 50.0,
+    "edge": 12.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": "void",
+    "profit": 0.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0030279|rec_yds": {
@@ -61167,11 +63705,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.926,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0040170|rec_yds": {
@@ -61307,7 +63845,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0041438|rec": {
@@ -61507,11 +64045,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.654,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0032951|rec": {
@@ -61784,6 +64322,24 @@
     "lean_result": "win",
     "profit": 0.885,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "12.5",
+    "lean": "Under",
+    "odds": "-113",
+    "model_over": 40.4,
+    "book_over": 49.8,
+    "edge": -9.4,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 7.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.885,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_TEN_IND|00-0035710|rush_yds": {
@@ -61919,7 +64475,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0038997|tds": {
@@ -62255,11 +64811,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0034837|tds": {
@@ -62357,11 +64913,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_TEN_IND|00-0039032|rec_yds": {
@@ -62969,11 +65525,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NYJ_NE|00-0039851|pass_yds": {
@@ -63348,6 +65904,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "66.5",
+    "lean": "Under",
+    "odds": "-111",
+    "model_over": 39.9,
+    "book_over": 50.2,
+    "edge": -10.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 78.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_NYJ_NE|00-0039851|rush_yds": {
@@ -63377,6 +65951,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 24.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "28.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 43.2,
+    "book_over": 49.4,
+    "edge": -6.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 24.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -63921,11 +66513,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NYJ_NE|00-0036875|rec_yds": {
@@ -63955,6 +66547,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "19.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 63.1,
+    "book_over": 50.0,
+    "edge": 13.1,
+    "book": "FanDuel",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -64125,11 +66735,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NO_NYG|00-0037239|anytime_td": {
@@ -65111,11 +67721,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NO_NYG|00-0035644|rec_yds": {
@@ -65145,6 +67755,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.935,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "9.5",
+    "lean": "Under",
+    "odds": "-107",
+    "model_over": 38.2,
+    "book_over": 51.1,
+    "edge": -12.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -65417,11 +68045,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NO_NYG|00-0036309|rec": {
@@ -65553,11 +68181,29 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-20T19:23+00:00"
+   },
+   "flag": {
+    "line": "53.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 44.1,
+    "book_over": 49.6,
+    "edge": -5.5,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NO_NYG|00-0038551|rush_yds": {
@@ -65587,6 +68233,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 70.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "34.5",
+    "lean": "Under",
+    "odds": "-112",
+    "model_over": 45.2,
+    "book_over": 50.0,
+    "edge": -4.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 70.0,
     "outcome": "Over",
     "lean_result": "loss",
@@ -65757,11 +68421,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_NO_NYG|00-0037239|tds": {
@@ -66879,11 +69543,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_CAR_PHI|00-0040024|anytime_td": {
@@ -67015,6 +69679,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 86.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "64.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 65.3,
+    "book_over": 50.4,
+    "edge": 14.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 86.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -67185,6 +69867,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "28.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 34.4,
+    "book_over": 49.4,
+    "edge": -14.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 0.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -67734,6 +70434,24 @@
     "lean_result": "win",
     "profit": 0.917,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "8.5",
+    "lean": "Under",
+    "odds": "-109",
+    "model_over": 43.4,
+    "book_over": 50.7,
+    "edge": -7.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_CAR_PHI|00-0036555|tds": {
@@ -68239,11 +70957,11 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_CAR_PHI|00-0040024|tds": {
@@ -68856,6 +71574,24 @@
     "lean_result": "win",
     "profit": 0.893,
     "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "51.5",
+    "lean": "Over",
+    "odds": "-112",
+    "model_over": 63.8,
+    "book_over": 50.0,
+    "edge": 13.8,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 93.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-10-18T23:24+00:00"
    }
   },
   "2026_06_PIT_TB|00-0041489|rec_yds": {
@@ -69021,6 +71757,24 @@
    "logged_at": "2026-10-17T12:37+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 28.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-18T23:24+00:00"
+   },
+   "flag": {
+    "line": "28.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 61.6,
+    "book_over": 50.4,
+    "edge": 11.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 28.0,
     "outcome": "Under",
     "lean_result": "loss",
@@ -70249,7 +73003,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_PIT_TB|00-0038951|tds": {
@@ -70283,7 +73037,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-18T23:24+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_ARI_LA|00-0037840|anytime_td": {
@@ -70828,6 +73582,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "235.5",
+    "lean": "Over",
+    "odds": "-111",
+    "model_over": 62.5,
+    "book_over": 49.8,
+    "edge": 12.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 218.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-19T12:45+00:00"
    }
   },
   "2026_06_ARI_LA|00-0039075|rec_yds": {
@@ -70993,6 +73765,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 22.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.917,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "34.5",
+    "lean": "Under",
+    "odds": "-109",
+    "model_over": 35.9,
+    "book_over": 50.6,
+    "edge": -14.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 22.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -71605,6 +74395,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 42.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "42.5",
+    "lean": "Under",
+    "odds": "-110",
+    "model_over": 39.8,
+    "book_over": 50.4,
+    "edge": -10.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 42.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -72765,7 +75573,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_LAC_KC|00-0033873|pass_yds": {
@@ -72965,6 +75773,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 57.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "35.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 60.0,
+    "book_over": 49.5,
+    "edge": 10.6,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 57.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -73854,6 +76680,24 @@
     "lean_result": "win",
     "profit": 0.847,
     "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "18.5",
+    "lean": "Under",
+    "odds": "-118",
+    "model_over": 36.1,
+    "book_over": 48.8,
+    "edge": -12.7,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.847,
+    "graded_at": "2026-10-19T12:45+00:00"
    }
   },
   "2026_06_LAC_KC|00-0033873|rush_yds": {
@@ -73883,6 +76727,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 16.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "16.5",
+    "lean": "Under",
+    "odds": "-115",
+    "model_over": 40.1,
+    "book_over": 49.4,
+    "edge": -9.2,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 16.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -74499,7 +77361,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BUF_LV|00-0034857|anytime_td": {
@@ -74703,7 +77565,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BUF_LV|00-0037261|anytime_td": {
@@ -75179,7 +78041,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BUF_LV|00-0038563|rec_yds": {
@@ -75209,6 +78071,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
+    "actual": 97.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "39.5",
+    "lean": "Over",
+    "odds": "-110",
+    "model_over": 64.6,
+    "book_over": 49.6,
+    "edge": 15.0,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 97.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -75451,7 +78331,7 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BUF_LV|00-0038563|rec": {
@@ -75758,6 +78638,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "13.5",
+    "lean": "Under",
+    "odds": "-107",
+    "model_over": 44.1,
+    "book_over": 51.2,
+    "edge": -7.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 43.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-19T12:45+00:00"
    }
   },
   "2026_06_BUF_LV|00-0029604|rush_yds": {
@@ -75995,7 +78893,7 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_BUF_LV|00-0037261|tds": {
@@ -76637,11 +79535,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T23:24+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_DAL_GB|00-0040142|anytime_td": {
@@ -76943,6 +79841,24 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T23:24+00:00",
    "result": {
+    "actual": 104.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.877,
+    "graded_at": "2026-10-19T12:45+00:00"
+   },
+   "flag": {
+    "line": "64.5",
+    "lean": "Over",
+    "odds": "-114",
+    "model_over": 62.3,
+    "book_over": 50.4,
+    "edge": 11.9,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 104.0,
     "outcome": "Over",
     "lean_result": "win",
@@ -77895,11 +80811,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T23:24+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_DAL_GB|00-0040142|tds": {
@@ -78031,11 +80947,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T23:24+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_DAL_GB|00-0037091|rec": {
@@ -78065,11 +80981,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T23:24+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-19T12:45+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 1.32,
+    "graded_at": "2026-10-20T19:23+00:00"
    }
   },
   "2026_06_WAS_SF|00-0033280|anytime_td": {
@@ -79402,6 +82318,24 @@
     "lean_result": "loss",
     "profit": -1.0,
     "graded_at": "2026-10-20T12:45+00:00"
+   },
+   "flag": {
+    "line": "24.5",
+    "lean": "Under",
+    "odds": "-114",
+    "model_over": 35.3,
+    "book_over": 49.6,
+    "edge": -14.3,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
+    "actual": 34.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-10-20T12:45+00:00"
    }
   },
   "2026_06_WAS_SF|00-0033699|rush_yds": {
@@ -79433,6 +82367,24 @@
    "logged_at": "2026-10-18T23:24+00:00",
    "updated_at": "2026-10-19T22:38+00:00",
    "result": {
+    "actual": 3.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.855,
+    "graded_at": "2026-10-20T12:45+00:00"
+   },
+   "flag": {
+    "line": "19.5",
+    "lean": "Under",
+    "odds": "-117",
+    "model_over": 38.9,
+    "book_over": 48.9,
+    "edge": -10.1,
+    "book": "DraftKings",
+    "at": null,
+    "legacy": true
+   },
+   "flag_result": {
     "actual": 3.0,
     "outcome": "Under",
     "lean_result": "win",
@@ -80017,5 +82969,7 @@
    }
   }
  },
- "fix_scrambles_v1": true
+ "fix_scrambles_v1": true,
+ "fix_voids_v1": true,
+ "flags_v1": true
 }
