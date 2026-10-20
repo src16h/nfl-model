@@ -380,6 +380,11 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
     fetched = cached = skipped_budget = 0
     budget_note = None
     order = todo.assign(_ko=todo["ko"]).sort_values("_ko", na_position="last")
+    try:                                                   # games with a locked prop play: refreshed near kickoff (CLV)
+        plg = json.loads((Path(cache_path).parent / "props_log.json").read_text()).get("props", {})
+        play_games = {r.get("game_id") for r in plg.values() if r.get("flag") and not r.get("result")}
+    except Exception:  # noqa: BLE001
+        play_games = set()
     try:
         for _, g in order.iterrows():
             gid, ko, ev = g["game_id"], g.get("ko"), matched.get(g["game_id"])
@@ -390,7 +395,11 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
             stale = True
             if ent:
                 try:
-                    stale = (now - datetime.fromisoformat(ent["fetched_at"])) >= timedelta(hours=C.ODDS_REFRESH_HOURS)
+                    age = now - datetime.fromisoformat(ent["fetched_at"])
+                    stale = age >= timedelta(hours=C.ODDS_REFRESH_HOURS)
+                    near = ko is not None and pd.notna(ko) and ko - now <= timedelta(hours=C.ODDS_PROPS_CLOSE_HOURS)
+                    if gid in play_games and near and age >= timedelta(hours=6):
+                        stale = True                       # one near-closing pull so prop plays get a closing price
                 except (ValueError, KeyError):
                     stale = True
             if in_window and stale:

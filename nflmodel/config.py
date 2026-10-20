@@ -127,6 +127,7 @@ ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds
                      "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
+ODDS_PROPS_CLOSE_HOURS = 3.5 # games with a locked prop play get one more props pull this close to kickoff (closing price)
 ODDS_MAX_CREDITS_PER_RUN = 100   # hard stop for one run
 ODDS_CREDIT_RESERVE = 25     # never spend the last credits of your month
 
