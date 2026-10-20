@@ -1,17 +1,3 @@
 {
- "games": {},
- "lines": {
-  "fetched_at": "2026-10-19T22:30+00:00",
-  "data": {
-   "2026_06_WAS_SF": {
-    "spread_line": 7.5,
-    "total_line": 51.5,
-    "ml_home": null,
-    "ml_away": null,
-    "book": "draftkings",
-    "book_title": "DraftKings",
-    "updated": "2026-10-19T22:29:33Z"
-   }
-  }
- }
+ "games": {}
 }
