@@ -70,25 +70,30 @@ def no_vig_from_one(odds, hold=0.045):
 
 
 def bias_table(rows):
-    """rows: (stat, book_over 0-1, went_over bool). Returns {stat: {"shift", "n", "book", "actual"}}.
+    """rows: (stat, book_over 0-1, went_over bool[, weight]). Returns {stat: {"shift", "n", "n_eff", "book", "actual"}}.
 
     Shift is how far real results ran from the book on the log-odds scale, shrunk by
-    sample size, so a hot week or two can only nudge the numbers."""
+    sample size, so a hot week or two can only nudge the numbers. An optional weight per row
+    (recency; NHL since Oct 20 2026) makes older games count less. The shrink then uses the
+    weighted count, so an old, fading sample also pulls the shift back toward zero."""
     by = {}
-    for stat, b, went in rows:
+    for row in rows:
+        stat, b, went = row[:3]
+        wt = float(row[3]) if len(row) > 3 else 1.0
         if b is None or went is None:
             continue
-        by.setdefault(stat, []).append((float(b), bool(went)))
+        by.setdefault(stat, []).append((float(b), bool(went), wt))
     out = {}
     for stat, xs in by.items():
         n = len(xs)
-        book = sum(x[0] for x in xs) / n
-        act = sum(x[1] for x in xs) / n
+        ws = sum(x[2] for x in xs) or 1e-9
+        book = sum(x[0] * x[2] for x in xs) / ws
+        act = sum(x[1] * x[2] for x in xs) / ws
         shift = 0.0
         if n >= BIAS_MIN_N:
-            shift = (logit(clip(act, 0.02, 0.98)) - logit(book)) * n / (n + BIAS_K)
+            shift = (logit(clip(act, 0.02, 0.98)) - logit(book)) * ws / (ws + BIAS_K)
             shift = max(-BIAS_CAP, min(BIAS_CAP, shift))
-        out[stat] = {"shift": round(shift, 3), "n": n, "book": round(100 * book, 1), "actual": round(100 * act, 1)}
+        out[stat] = {"shift": round(shift, 3), "n": n, "n_eff": round(ws, 1), "book": round(100 * book, 1), "actual": round(100 * act, 1)}
     return out
 
 
@@ -121,14 +126,22 @@ def realization_table(rows):
         c, r_ = sums(xs)
         k = max(REAL_FLOOR, min(1.0, (r_ + k_all * REAL_K_STAT) / (c + REAL_K_STAT))) if on else 1.0
         out[stat] = {"k": round(k, 3), "n": len(xs), "claimed": round(100 * c / len(xs), 1), "realized": round(100 * r_ / len(xs), 1)}
+        for side in ("Over", "Under"):           # per side, pulled toward the stat's factor (used when decide_prop gets side_k=True)
+            ys = [x for x in xs if (x[0] > x[1]) == (side == "Over")]
+            if not ys:
+                continue
+            c2, r2 = sums(ys)
+            k2 = max(REAL_FLOOR, min(1.0, (r2 + k * REAL_K_STAT) / (c2 + REAL_K_STAT))) if on else 1.0
+            out[f"{stat}|{side}"] = {"k": round(k2, 3), "n": len(ys), "claimed": round(100 * c2 / len(ys), 1),
+                                     "realized": round(100 * r2 / len(ys), 1)}
     return out
 
 
-def real_k(real, stat):
-    """Calibration factor for a stat (1.0 = keep the whole edge)."""
+def real_k(real, stat, side=None):
+    """Calibration factor for a stat, or one side of it when side is given (1.0 = keep the whole edge)."""
     if not real:
         return 1.0
-    return (real.get(stat) or real.get("_all") or {}).get("k", 1.0)
+    return ((real.get(f"{stat}|{side}") if side else None) or real.get(stat) or real.get("_all") or {}).get("k", 1.0)
 
 
 def _side(side, p, odds, kind, over_extra=True):
@@ -137,19 +150,21 @@ def _side(side, p, odds, kind, over_extra=True):
     return {"side": side, "p": p, "odds": odds, "ev": ev, "need": need}
 
 
-def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, blocked=(), raw_cap=None, weight=None, real=None):
+def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, blocked=(), raw_cap=None, weight=None, real=None,
+                side_k=False):
     """Chances are 0-1 for the Over; book_over is the book's no-vig chance.
 
     Returns side, adjusted chance for that side, book chance for that side, edge (adjusted minus
     book, in %), raw edge (model minus book, in %), expected return in %, whether it is a play,
     'pre' (the Over chance before calibration, which history keeps so calibration never feeds on
-    itself) and 'k' (the calibration factor used)."""
+    itself) and 'k' (the calibration factor used). side_k=True scales the edge by the factor for the side
+    the model leans (e.g. "points|Under"), not the stat as a whole (NHL, Oct 20 2026)."""
     w = MODEL_WEIGHT["prop"] if weight is None else weight
     p = book_over + w * (model_over - book_over)
     shift = (bias or {}).get(stat, {}).get("shift", 0.0)
     p = inv_logit(logit(p) + shift)
     pre = p
-    k = real_k(real, stat)
+    k = real_k(real, stat, ("Over" if p > book_over else "Under") if side_k else None)
     p = clip(book_over + k * (p - book_over))
     opts = []
     if over_odds is not None:

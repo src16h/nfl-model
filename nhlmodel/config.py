@@ -36,6 +36,12 @@ PROP_PLAY_MAX = 0.12             # raw gap cap; the bar to be a play is set in b
 # markets that may not be plays (checked Oct 2026: points Overs 1-17, puck-line underdogs 0-5, saves far off;
 # totals lean only after the Oct 18 recalibration, until about 150 graded totals show an edge)
 BLOCKED = {("points", "Over"), "saves", "pl_dog", "totals"}
+# Oct 20 2026: points Unders fired 38-53 a night (7-12 in one game), claimed +7 points over the book on
+# plays and delivered 0. Three guards:
+PROP_CAP_PER_GAME = {("points", "Under"): 2}   # best N by expected return in each game; the rest are not plays
+PROP_BIAS_DECAY = 0.90           # bias nudge: each older day counts 10% less (half-life about a week)
+PROP_SIDE_K_STATS = {"points"}   # these stats scale the edge by how much the PLAYS on that side really delivered
+PROP_SIDE_K_MIN = 50             # graded plays on a side before that counts
 
 # props
 PROP_STATS = ["sog", "points", "goals", "assists", "saves"]

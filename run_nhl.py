@@ -351,12 +351,28 @@ def tracking(history_days, results):
             "by_type": {"game": by_kind, "prop": by_prop}}
 
 
+def cap_props(players):
+    """Keep only the best N plays of a stat and side in each game (C.PROP_CAP_PER_GAME).
+    Same-game Unders win and lose together, so 10 of them in one game is one big bet, not 10."""
+    for (stat, side), cap in C.PROP_CAP_PER_GAME.items():
+        by_game = {}
+        for p in players:
+            b = p["m"].get(stat, {}).get("book")
+            if b and b.get("play") and b.get("side") == side:
+                by_game.setdefault(p["game_id"], []).append(b)
+        for bs in by_game.values():
+            for b in sorted(bs, key=lambda x: -(x.get("ev") or 0))[cap:]:
+                b["play"] = False
+                b["capped"] = True
+
+
 def prop_bias(hist_dir, results):
     """How each prop stat has run against the book in graded games (fades in with sample size),
     and how much of the final edge over the book has really shown up (calibration, betrules.realization_table)."""
-    rows, real = [], []
+    rows, real, real_plays = [], [], []
     for f in sorted(Path(hist_dir).glob("*.json")):
         day = load_json(f, {})
+        dt = date.fromisoformat(f.stem)
         for p in day.get("players", []):
             res = results.get(str(p["game_id"]))
             st = res and res["p"].get(str(p["pid"]))
@@ -375,11 +391,22 @@ def prop_bias(hist_dir, results):
                 else:       # older files kept only the bet side's price
                     q = BR.no_vig_from_one(bk["odds"])
                     bo = q if bk["side"] == "Over" else 1 - q
-                rows.append((stat, bo, v > bk["line"]))
+                rows.append((stat, bo, v > bk["line"], dt))
                 fo = BR.final_over_from(bk)
                 if fo is not None and bk.get("book_over") is not None:
                     real.append((stat, fo, bk["book_over"] / 100, v > bk["line"]))
-    return BR.bias_table(rows), BR.realization_table(real)
+                    if bk.get("play"):
+                        real_plays.append((stat, fo, bk["book_over"] / 100, v > bk["line"]))
+    last = max((x[3] for x in rows), default=None)          # last graded night
+    rows = [(s_, b_, y_, C.PROP_BIAS_DECAY ** (last - d_).days) for s_, b_, y_, d_ in rows]   # recent nights count more
+    real_t = BR.realization_table(real)
+    # per side, judged on the plays themselves (the biggest leans, the ones actually bet). Never raises an edge.
+    for key, v in BR.realization_table(real_plays).items():
+        stat = key.split("|")[0]
+        if "|" in key and stat in C.PROP_SIDE_K_STATS and v["n"] >= C.PROP_SIDE_K_MIN:
+            base = (real_t.get(key) or real_t.get(stat) or {}).get("k", 1.0)
+            real_t[key] = {**v, "k": round(min(v["k"], base), 3), "from": "plays"}
+    return BR.bias_table(rows), real_t
 
 
 def pick_text(k, pk):
@@ -509,12 +536,13 @@ def main():
                 continue
             adj_over = 100 / (1 + np.exp(-(lg_(b["model_over"]) - level.get(st, 0.0))))      # same shift on the log-odds scale
             dec = BR.decide_prop(adj_over / 100, b["book_over"] / 100, b.get("over"), b.get("under"), st, bias,
-                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX, real=real)
+                                 C.BLOCKED, 100 * C.PROP_PLAY_MAX, real=real, side_k=st in C.PROP_SIDE_K_STATS)
             if not dec:
                 continue
             b.update({"model_over_raw": b["model_over"], "model_over": r(adj_over), "side": dec["side"], "edge": dec["raw_edge"],
                       "adj": dec["p"], "ev": dec["ev"], "odds": dec["odds"], "play": dec["play"],
                        "pre": dec["pre"], "k": dec["k"]})
+    cap_props(players)
     edge_new = edge_parlays(players, games)
     level = {k: r(v, 3) for k, v in level.items()}
     log.info(f"prop level vs book (model minus book, over %): {level}")
