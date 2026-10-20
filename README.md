@@ -130,10 +130,12 @@ The CFB page lives at `/cfb/` on the same site (use the NFL / NHL / CFB switch a
 
 The soccer page lives at `/soccer/` on the same site, with a league filter.
 
-- **Runs by itself:** `.github/workflows/soccer.yml` runs every morning, Tuesday and Wednesday before midweek games, Friday afternoon, and early Saturday and Sunday.
+- **Runs by itself:** `.github/workflows/soccer.yml` runs every morning, before midweek games, and before each weekend kickoff window (lineups and near-closing prices).
 - **Data:** Football-Data.co.uk (every match since 2020 with shots and closing odds), Understat (free xG for the Premier League and La Liga) and ESPN (fixtures, results, player box scores). No key needed.
 - **Model:** team attack and defence ratings from a recency-weighted Poisson fit on xG (shots on target in the Championship) blended with goals, a newcomer offset for promoted and relegated clubs, then a full scoreline grid with the Dixon-Coles draw correction (`soccermodel/model.py`). Every market (1X2, draw no bet, Asian handicap, totals, BTTS) reads off the same grid. Settings are in `soccermodel/config.py`.
-- **Plays:** only markets that made money in the walk-forward backtest (`python -m soccermodel.backtest`): Premier League Asian handicap and totals, Championship Asian handicap. Everything else shows the lean and fair odds.
+- **Plays (Oct 20 2026 rules):** Pinnacle's fair price must say your book's price is 1.5% to 8% too generous, and the model must agree on the side. One play per match, at most 4 per league per day, stakes capped at 1 unit until 150 graded plays show positive closing line value. In the backtest the model alone lost the closing line about 80% of the time, so the model is a veto, not the source of the edge.
+- **Closing line value:** each play is locked at the price when first flagged and compared with the last price before kickoff (Pinnacle's when it has the same line). Shown on the Record tab.
+- **Lineups and fatigue:** runs before the main kickoff windows pick up ESPN's confirmed XIs (props use the named starters; a weakened XI trims attack by up to 10%). Rest days and midweek cup or European games show on each match; the fatigue effect is fitted but off, since it didn't improve held-out predictions.
 - **Props:** anytime goalscorer and shots on target from each player's recent per-90 rates and expected minutes. You type in your book's price.
 - **Book lines (optional):** add a repository secret named `ODDS_API_KEY_SOCCER` with a free key from the-odds-api.com. Each league pull costs 3 credits; the run spreads the 500 monthly credits over the month.
 

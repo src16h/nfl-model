@@ -136,7 +136,7 @@ def match_props(fx, lam_team, players, teams, event_id, opp):
     for r_ in players.values():
         if r_["team"] != t or r_["grp"] == "G":
             continue
-        ps, pb = r_["p_start"], r_["p_sub"]
+        ps, pb = r_.get("lu", (r_["p_start"], r_["p_sub"]))     # confirmed lineup overrides recent usage
         if ps + pb < 0.25:
             continue
         play = ps + pb
@@ -154,6 +154,59 @@ def match_props(fx, lam_team, players, teams, event_id, opp):
             fair = 0.5 if st == "goal" or ge[1] < 0.5 or ge[2] < 0.35 else 1.5
             res[st] = {"mean": round(mean, 3), "ge": ge, "fair": fair}
         out.append({"pid": r_["pid"], "name": r_["name"], "team": t, "opp": opp, "pos": r_["pos"], "game_id": event_id,
-                    "p_start": round(ps, 2), "p_play": round(play, 2), "m": res})
+                    "p_start": round(ps, 2), "p_play": round(play, 2), "m": res, "confirmed": "lu" in r_})
     out.sort(key=lambda x: -x["m"]["goal"]["ge"][1])
     return out[:14]
+
+
+# ---------------------------------------------------------------------------
+# confirmed lineups (ESPN posts them about an hour before kickoff)
+# ---------------------------------------------------------------------------
+def lineup(league, event_id):
+    """{team: {"start": {pid: name}, "bench": {pid: name}}} once both XIs are posted, else None."""
+    slug = C.LEAGUES[league]["espn"]
+    try:
+        js = json.loads(D.fetch(f"{D.ESPN}/{slug}/summary?event={event_id}"))
+    except Exception:  # noqa: BLE001
+        return None
+    out = {}
+    for t in js.get("rosters", []):
+        ro = t.get("roster", [])
+        st = {p["athlete"]["id"]: p["athlete"]["displayName"] for p in ro if p.get("starter")}
+        if len(st) != 11:
+            return None
+        from .teams import canon
+        out[canon(t["team"]["displayName"])] = {"start": st, "bench": {p["athlete"]["id"]: p["athlete"]["displayName"]
+                                                                       for p in ro if not p.get("starter")},
+                                                "formation": t.get("formation")}
+    return out if len(out) == 2 else None
+
+
+def _contrib(r_, ps, pb):
+    """A player's expected goal involvement for one match (goals plus a shot-on-target proxy), per his minutes."""
+    rate = 0.5 * r_["g90"] + 0.5 * 0.33 * r_["sot90"]
+    return rate * (ps * C.START_MIN + pb * C.SUB_MIN) / 90
+
+
+def apply_lineup(team, lu, players):
+    """Updates start/bench chances for the team's players from the confirmed XI. Returns
+    (attack multiplier, missing regulars). The multiplier compares the attacking output of the players
+    actually named with the team's usual group, softened (LINEUP_POWER) and capped (LINEUP_CAP)."""
+    mine = {pid: r_ for pid, r_ in players.items() if r_["team"] == team and r_["grp"] != "G"}
+    usual = sum(_contrib(r_, r_["p_start"], r_["p_sub"]) for r_ in mine.values())
+    actual, missing = 0.0, []
+    for pid, r_ in mine.items():
+        if pid in lu["start"]:
+            ps, pb = 1.0, 0.0
+        elif pid in lu["bench"]:
+            ps, pb = 0.0, C.BENCH_ON
+        else:
+            ps, pb = 0.0, 0.0
+            if r_["p_start"] >= 0.6:
+                missing.append(r_["name"])
+        actual += _contrib(r_, ps, pb)
+        r_["lu"] = (ps, pb)
+    if usual <= 0:
+        return 1.0, missing
+    ratio = (actual / usual) ** C.LINEUP_POWER
+    return max(1 - C.LINEUP_CAP, min(1 + C.LINEUP_CAP, ratio)), missing

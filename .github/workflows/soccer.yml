@@ -2,11 +2,19 @@ name: Soccer model
 
 on:
   schedule:
-    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5.
-    - cron: "40 13 * * *"     # every day 9:40am ET: grades yesterday, fresh lines and props
-    - cron: "5 17 * * 2,3"    # Tue/Wed 1:05pm ET: before midweek evening kickoffs (7:45pm UK)
-    - cron: "5 20 * * 5"      # Friday 4:05pm ET: weekend lines
-    - cron: "5 10 * * 6,0"    # Sat/Sun 6:05am ET: before the early kickoffs, lineups closer
+    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
+    # Each run before kickoff picks up confirmed lineups (posted about an hour before) and near-closing prices for CLV.
+    - cron: "40 13 * * *"       # daily 9:40am ET: grades yesterday, fresh lines and props
+    - cron: "40 17 * * 2,3"     # Tue/Wed 1:40pm ET: before 7:45pm UK midweek kickoffs (lineups out)
+    - cron: "50 17 * * 5"       # Fri 1:50pm ET: before Friday night games in England and Spain
+    - cron: "45 10 * * 6"       # Sat 6:45am ET: before the 12:30pm UK early game
+    - cron: "15 13 * * 6"       # Sat 9:15am ET: lineups for the 3pm UK games (Premier League, Championship)
+    - cron: "45 15 * * 6"       # Sat 11:45am ET: lineups for 5:30pm UK and La Liga afternoon
+    - cron: "15 18 * * 6"       # Sat 2:15pm ET: La Liga evening
+    - cron: "15 12 * * 0"       # Sun 8:15am ET: lineups for the 2pm UK games
+    - cron: "45 14 * * 0"       # Sun 10:45am ET: 4:30pm UK and La Liga afternoon
+    - cron: "15 18 * * 0"       # Sun 2:15pm ET: La Liga evening
+    - cron: "15 18 * * 1"       # Mon 2:15pm ET: Monday night games
   workflow_dispatch:
 
 permissions:

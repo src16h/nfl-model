@@ -1,151 +1,78 @@
 {
+ "seasons": "2023-24 to 2026-27 so far",
  "epl": {
   "rho": 0.0400000000000002,
   "n": 1210,
-  "ll_model": 0.9800226301278125,
-  "ll_close": 0.9625797574764529,
-  "ll_blend": 0.9673567992426167,
-  "ll_ou_model": 0.6742404923905887,
-  "ll_ou_close": 0.6686251253631751,
-  "home": {
-   "n": 234,
-   "won": 28.2,
-   "units": -30.7,
-   "roi": -13.1,
-   "clv": -5.41
+  "ll_model": 0.9778070456010018,
+  "ll_close": 0.9625797574764532,
+  "model_only": {
+   "n": 1110,
+   "units": -43.0,
+   "roi": -3.9,
+   "clv": -4.45,
+   "beat_close": 21.4
   },
-  "away": {
-   "n": 314,
-   "won": 23.6,
-   "units": -11.8,
-   "roi": -3.7,
-   "clv": -6.78
-  },
-  "draw": {
-   "n": 45,
-   "won": 13.3,
-   "units": -7.5,
-   "roi": -16.7,
-   "clv": -2.56
-  },
-  "over": {
-   "n": 122,
-   "won": 57.4,
-   "units": 11.3,
-   "roi": 9.2,
-   "clv": -4.77
-  },
-  "under": {
-   "n": 65,
-   "won": 35.4,
-   "units": 3.5,
-   "roi": 5.4,
-   "clv": -0.48
-  },
-  "ah": {
-   "n": 420,
-   "units": 39.0,
-   "roi": 9.3
+  "pinnacle_rule": {
+   "n": 31,
+   "units": -6.8,
+   "roi": -21.8,
+   "clv": -2.69,
+   "beat_close": 41.9
   }
  },
  "champ": {
   "rho": 1.6653345369377348e-16,
   "n": 1787,
-  "ll_model": 1.0414324404494324,
+  "ll_model": 1.0395094398060636,
   "ll_close": 1.0270130785645446,
-  "ll_blend": 1.0310442297239626,
-  "ll_ou_model": 0.6902083932237449,
-  "ll_ou_close": 0.682290042436195,
-  "home": {
-   "n": 265,
-   "won": 31.3,
-   "units": 18.4,
-   "roi": 6.9,
-   "clv": -6.73
+  "model_only": {
+   "n": 1393,
+   "units": -28.9,
+   "roi": -2.1,
+   "clv": -4.82,
+   "beat_close": 19.2
   },
-  "away": {
-   "n": 436,
-   "won": 19.3,
-   "units": -56.9,
-   "roi": -13.1,
-   "clv": -7.11
-  },
-  "draw": {
-   "n": 102,
-   "won": 12.7,
-   "units": -33.6,
-   "roi": -33.0,
-   "clv": -6.71
-  },
-  "over": {
-   "n": 40,
-   "won": 45.0,
-   "units": 1.6,
-   "roi": 4.1,
-   "clv": -3.91
-  },
-  "under": {
-   "n": 172,
-   "won": 41.9,
-   "units": -20.7,
-   "roi": -12.0,
-   "clv": -5.48
-  },
-  "ah": {
-   "n": 513,
-   "units": 8.7,
-   "roi": 1.7
+  "pinnacle_rule": {
+   "n": 74,
+   "units": 16.5,
+   "roi": 22.3,
+   "clv": 1.16,
+   "beat_close": 62.2
   }
  },
  "laliga": {
   "rho": 0.07000000000000023,
   "n": 1228,
-  "ll_model": 0.9754516481560783,
-  "ll_close": 0.9511174567229554,
-  "ll_blend": 0.9597809238391006,
-  "ll_ou_model": 0.6688659704839937,
-  "ll_ou_close": 0.6587201640341402,
-  "home": {
-   "n": 289,
-   "won": 24.9,
-   "units": -56.8,
-   "roi": -19.7,
-   "clv": -6.07
+  "ll_model": 0.9723756845202993,
+  "ll_close": 0.9511174567229546,
+  "model_only": {
+   "n": 1113,
+   "units": -116.2,
+   "roi": -10.4,
+   "clv": -5.02,
+   "beat_close": 22.3
   },
-  "away": {
-   "n": 329,
-   "won": 19.8,
-   "units": -51.8,
-   "roi": -15.7,
-   "clv": -6.39
-  },
-  "draw": {
-   "n": 24,
-   "won": 12.5,
-   "units": -9.1,
-   "roi": -37.7,
-   "clv": -5.04
-  },
-  "over": {
-   "n": 279,
-   "won": 40.5,
-   "units": -25.8,
-   "roi": -9.2,
-   "clv": -5.95
-  },
-  "under": {
-   "n": 36,
-   "won": 33.3,
-   "units": -6.4,
-   "roi": -17.9,
-   "clv": -6.18
-  },
-  "ah": {
-   "n": 335,
-   "units": -13.0,
-   "roi": -3.9
+  "pinnacle_rule": {
+   "n": 37,
+   "units": -15.1,
+   "roi": -40.7,
+   "clv": 1.14,
+   "beat_close": 43.2
   }
  },
- "seasons": "2023-24 to 2026-27 so far",
- "note": "Only Premier League Asian handicap and totals, and Championship Asian handicap, made money at early prices, so only those can be plays. Picks did not beat the closing line in any league, so treat even those as provisional until the live record confirms them. La Liga and all moneylines show leans only."
+ "pinnacle_rule_all": {
+  "n": 142,
+  "units": -5.3,
+  "roi": -3.7,
+  "clv": 0.3,
+  "beat_close": 52.8
+ },
+ "model_only_all": {
+  "n": 3616,
+  "units": -188.0,
+  "roi": -5.2,
+  "clv": -4.77,
+  "beat_close": 20.9
+ },
+ "note": "Tested Oct 20 2026 on every priced side since 2023-24 at early Bet365 prices. The model's own edges lost the closing line most of the time, so plays now need Pinnacle's fair price to call the bet price value, with the model agreeing. Bet365 rarely strays from Pinnacle, so few bets qualified in testing; US books like Hard Rock and DraftKings stray more often, which is where this rule should find its plays."
 }

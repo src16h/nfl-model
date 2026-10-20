@@ -77,9 +77,19 @@ def _parse(ev, book):
 
 
 def _best_book(ev):
-    """First book in our preference list that has the 1X2; spreads/totals filled from the next books if missing."""
+    """Bet book: first book in our preference list (Hard Rock first) that has the 1X2; spreads/totals filled from the
+    next books if missing. Pinnacle (else the Betfair exchange) is kept separately as the sharp reference."""
     books = {b["key"]: b for b in ev.get("bookmakers", [])}
-    order = [k for k in C.ODDS_BOOKS if k in books] + [k for k in books if k not in C.ODDS_BOOKS]
+    sharp = None
+    for k in C.SHARP_BOOKS:
+        if k in books:
+            r = _parse(ev, books[k])
+            sharp = {x: r[x] for x in r if x not in ("event", "commence", "home", "away")}
+            break
+    bet_books = [k for k in C.ODDS_BOOKS if k not in C.SHARP_BOOKS]
+    order = [k for k in bet_books if k in books] + [k for k in books if k not in C.ODDS_BOOKS]
+    if not order:                                     # only sharp books posted: bet off them
+        order = [k for k in C.SHARP_BOOKS if k in books]
     rec = None
     for k in order:
         r = _parse(ev, books[k])
@@ -91,6 +101,8 @@ def _best_book(ev):
             if f[0] not in rec and f[0] in r:
                 rec.update({x: r[x] for x in f})
                 rec.setdefault("book_extra", r["book"])
+    if rec is not None and sharp:
+        rec["sharp"] = sharp
     return rec
 
 
@@ -120,7 +132,9 @@ def run(games, state_path, now):
             for lg, _ in sorted(soon.items(), key=lambda x: x[1]):
                 last = pulled.get(lg)
                 hours = (now - datetime.fromisoformat(last)).total_seconds() / 3600 if last else 99
-                if hours < C.ODDS_EVERY_HOURS or allowance < 3:
+                to_ko = (soon[lg] - now).total_seconds() / 3600
+                due = hours >= C.ODDS_EVERY_HOURS or (to_ko <= C.ODDS_PREKO_HOURS and hours >= 1.5)   # closing prices for CLV
+                if not due or allowance < 3:
                     continue
                 data = cl.get(f"/v4/sports/{C.LEAGUES[lg]['odds']}/odds", markets=C.ODDS_MARKETS,
                               oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS))

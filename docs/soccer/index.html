@@ -668,6 +668,7 @@ dialog.slip::backdrop{background:rgba(20,20,20,.35)}
 .mk b{display:block;color:var(--ink);font:600 15px var(--sans);margin:2px 0}
 .mk.on{border-color:var(--gold-line);background:var(--gold-soft)}
 .mk .gold{font-weight:700}
+.bt td,.bt th{white-space:normal}.bt td:first-child{min-width:90px}
 .ptable .st-m{display:none}
 @media (max-width:640px){.ptable .c-st{display:none}.ptable .st-m{display:inline}.ptable td,.ptable th{padding:9px 8px}}
 .mk .stake b{display:inline;font:inherit;font-weight:700;margin:0}
@@ -810,7 +811,9 @@ function sizing(pPct, odds) {
   const pct = Math.min(f * SET.kelly * 100, SET.maxpct), dollars = SET.bankroll * pct / 100;
   return {units: Math.round(dollars / Math.max(SET.unit, 0.01) * 10) / 10, dollars: Math.round(dollars)};
 }
-const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})` : `Suggested bet <b>none</b> at this price`; };
+const PROV = () => D?.tracking?.provisional !== false;
+const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; if (z.units > 0 && PROV() && z.units > 1) { z.dollars = Math.round(SET.unit); z.units = 1; }
+  return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})${PROV() ? " <span class=\"dim\">(1u cap while provisional)</span>" : ""}` : `Suggested bet <b>none</b> at this price`; };
 const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side, b.line ?? ""].join("|");
 const hasBet = b => BETS.some(x => betKey(x) === betKey(b));
 const PENDING = {};
@@ -885,18 +888,29 @@ const whoOf = (g, side) => side === g.home ? "home" : side === g.away ? "away" :
 function allPlays() {
   const out = [];
   for (const g of (D.games || []).filter(lgOk)) for (const [k, p] of Object.entries(g.picks || {})) if (p.play)
-    out.push({kind: k, g, p, edge: p.edge, model: p.model, book: p.book, odds: p.odds, title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`});
+    out.push({kind: k, g, p, edge: p.ev, model: p.model, book: p.book, sharp: p.sharp, odds: p.odds, title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`});
   return out.sort((a, b) => b.edge - a.edge);
 }
-const playBet = x => ({kind: x.kind, game_id: x.g.game_id, who: x.kind === "1x2" ? x.p.who : whoOf(x.g, x.p.side), side: x.p.side,
-  line: ["ah", "total"].includes(x.kind) ? x.p.line : null, odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub});
+const playBet = x => ({kind: x.kind, game_id: x.g.game_id, who: x.p.who || whoOf(x.g, x.p.side), side: x.p.side,
+  line: ["ah", "total"].includes(x.kind) ? x.p.line : null, odds: x.odds, model_pct: x.p.sharp ?? x.model, desc: x.title, sub: x.sub});
 function ticket(x) {
   return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${PK_NAME[x.kind]}</b><span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(when(x.g.start))}</span></div>
     <div class="t-pick">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
     <div class="t-who">${esc(x.g.home)} vs ${esc(x.g.away)}</div>
-    ${meterHTML(x.model, x.book)}
-    <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
-    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">gap vs book</div></div></article>`;
+    ${valueLine(x.p)}${lineupNote(x.g)}
+    <div class="t-actions"><span class="stake">${stakeTxt(x.p.sharp, x.odds)}</span>${logBtn(playBet(x))}</div></div>
+    <div class="t-side"><div class="t-gap">+${n(x.edge)}<small>%</small></div><div class="t-gl">value vs Pinnacle</div></div></article>`;
+}
+const valueLine = p => p.sharp != null ? `<div class="t-meta">Pinnacle's fair chance <b>${n(p.sharp, 1)}%</b> vs ${n(impl(p.odds) * 100, 1)}% priced in at ${esc(p.odds)}. Model ${n(p.model, 0)}% agrees.</div>` : "";
+function lineupNote(g) {
+  const L = g.lineups || {}, parts = [];
+  for (const [side, t] of [["home", g.home], ["away", g.away]]) { const x = L[side]; if (!x) continue;
+    parts.push(`${esc(t)} XI confirmed${x.missing?.length ? `, without ${esc(x.missing.join(", "))}` : ""}${x.mult && Math.abs(x.mult - 1) >= 0.01 ? ` (attack ${sgn(100 * (x.mult - 1), 0)}%)` : ""}`); }
+  const R = g.rest || {}, tired = [];
+  for (const [side, t] of [["home", g.home], ["away", g.away]]) { const d = R[side], mid = R[side + "_mid"];
+    if (d != null && (d <= 3 || mid)) tired.push(`${esc(t)} ${d} day${d === 1 ? "" : "s"} rest${mid ? " after a cup or European game" : ""}`); }
+  const txt = [...parts, ...tired].join(". ");
+  return txt ? `<div class="t-meta">${txt}.</div>` : "";
 }
 function recRow(cls, label, r) {
   const pct = r && r.w + r.l ? `${n(100 * r.w / (r.w + r.l), 0)}%` : "–";
@@ -915,11 +929,11 @@ function renderHome() {
       <div class="hs"><b>${pr.w || 0}–${pr.l || 0}</b><span>All plays</span></div><div class="hs"><b class="${uc(pr.units)}">${units(pr.w + pr.l ? pr.units : null)}</b><span>Units</span></div></div></div>`;
   const top = plays.slice(0, 4).map(x => `<div class="bet"><span class="icon">${ico("games")}</span>
       <div><div class="k"><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.sub)}, ${esc(when(x.g.start))}</div><div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
-      <div class="who">${stakeTxt(x.model, x.odds)}</div></div>
-      <div class="gapv">+${n(x.edge)}%<small>edge</small></div>${meterHTML(x.model, x.book)}</div>`).join("");
+      <div class="who">${stakeTxt(x.p.sharp, x.odds)}</div></div>
+      <div class="gapv">+${n(x.edge)}%<small>value</small></div>${meterHTML(x.p.sharp, impl(x.odds) * 100)}</div>`).join("");
   const bt = D.backtest || {}, lgs = Object.keys(D.leagues || {}).filter(k => LG === "all" || k === LG);
   const btRow = lgs.map(k => bt[k] ? `<div class="kpi"><b>${n(bt[k].ll_model, 3)}</b><span>${esc(lgName(k))} log loss (closing line ${n(bt[k].ll_close, 3)})</span></div>` : "").join("");
-  h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All matches</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book's no-vig price.</p>
+  h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All matches</button></h3><p class="pmuted">Orange on the meter is how much Pinnacle's fair chance beats the chance priced into your book's odds.</p>
       <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" || D.odds?.source === "saved" ? "The model is close to the book on everything posted." : "Book lines arrive once the soccer odds key is added. Until then every match shows the model's fair odds, so you can compare with Hard Rock yourself."}</div>`}</div></div>
     <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit</p>${sparkSVG(T.series || [])}
       <div class="kpis">${btRow || `<div class="kpi"><b>–</b><span>Backtest pending</span></div>`}</div></div></div>`;
@@ -945,13 +959,13 @@ function renderHome() {
 /* ---------- matches ---------- */
 function mkCell(g, k) {
   const p = g.picks?.[k]; if (!p) return "";
-  const right = p.edge != null ? `<span class="gold">${sgn(p.edge)}%</span> vs book` : `fair <b style="display:inline;font-size:13px">${esc(p.fair || "")}</b>`;
-  const lineTxt = k === "btts" ? `Yes ${n(p.yes, 0)}%, fair Yes ${fair(p.yes / 100)} / No ${fair(1 - p.yes / 100)}` : `${n(p.model, 0)}% model${p.book != null ? `, ${n(p.book, 0)}% book` : ""}`;
+  const right = p.ev != null ? `Pinnacle value <span class="${p.ev >= 0 ? "gold" : "dim"}">${sgn(p.ev)}%</span>` : p.edge != null ? `<span class="dim">no Pinnacle price for this line</span>` : `fair <b style="display:inline;font-size:13px">${esc(p.fair || "")}</b>`;
+  const lineTxt = k === "btts" ? `Yes ${n(p.yes, 0)}%, fair Yes ${fair(p.yes / 100)} / No ${fair(1 - p.yes / 100)}` : `${n(p.model, 0)}% model${p.book != null ? `, ${n(p.book, 0)}% book` : ""}${p.sharp != null ? `, ${n(p.sharp, 0)}% Pinnacle` : ""}`;
   const who = k === "1x2" ? p.who : whoOf(g, p.side);
-  const bet = {kind: k, game_id: g.game_id, who, side: p.side, line: ["ah", "total"].includes(k) ? p.line : null, odds: p.odds || p.fair, model_pct: p.model,
+  const bet = {kind: k, game_id: g.game_id, who, side: p.side, line: ["ah", "total"].includes(k) ? p.line : null, odds: p.odds || p.fair, model_pct: p.sharp ?? p.model,
     desc: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`};
   return `<div class="mk${p.play ? " on" : ""}">${PK_NAME[k]}<b>${esc(pickText(k, p))}${p.odds ? ` <small class="dim">${esc(p.odds)}</small>` : ""}</b>${lineTxt}<br>${right}
-    <div class="stake" style="margin-top:4px">${p.play ? stakeTxt(p.model, p.odds) : p.odds ? (p.blocked ? "Lean only: this market lost money in the backtest." : "No play: the gap to the book is too small.") : `Bet it only if your book pays more than ${esc(p.fair || "fair")}.`}</div>
+    <div class="stake" style="margin-top:4px">${p.play ? stakeTxt(p.sharp, p.odds) : p.odds ? (p.ev == null ? "No play: needs Pinnacle's price to check it." : p.ev < (D.rules?.sharp_min_ev ?? 1.5) ? "No play: Pinnacle doesn't rate this price as value." : p.ev > (D.rules?.sharp_max_ev ?? 8) ? "No play: gap too big to trust, likely a stale or wrong line." : p.edge < 0 ? "No play: the model disagrees." : "No play: one play per match (or the day's cap).") : `Bet it only if your book pays more than ${esc(p.fair || "fair")}.`}</div>
     <div style="margin-top:6px">${logBtn(bet)}</div></div>`;
 }
 function renderGames() {
@@ -960,8 +974,8 @@ function renderGames() {
     <div class="fact"><b class="gold">${plays.length}</b>plays on the board</div>
     <div class="fact"><b>${esc(G.find(g => g.book?.book)?.book?.book || "Model only")}</b>lines from</div>
     <div class="fact"><b>${D.odds?.remaining ?? "–"}</b>odds credits left this month</div></div></div>`;
-  h += `<div class="sec-head"><h2>Match plays</h2><span class="aside">Blended 50/50 with the book, ${D.rules?.min_ev?.game ?? 1.5}%+ expected profit at the price</span></div>
-    <p class="sub">Plays come only from markets that made money in the backtest: <b>Premier League Asian handicap and totals, and Championship Asian handicap</b>. They need a ${D.rules?.edge?.ah ?? 3}% to ${D.rules?.max ?? 10}% gap over the book's no-vig price. Treat them as provisional: in testing, picks did not beat the closing line, so they stay plays only while the live record holds up. Moneylines, draws and every La Liga market show the model's lean and fair odds only. Team news lands about an hour before kickoff, so check lineups.</p>
+  h += `<div class="sec-head"><h2>Match plays</h2><span class="aside">Pinnacle value ${D.rules?.sharp_min_ev ?? 1.5}% to ${D.rules?.sharp_max_ev ?? 8}%, model agrees</span></div>
+    <p class="sub">A play needs two things: <b>Pinnacle's fair price</b> (the sharpest book in the world) says your book's price is at least ${D.rules?.sharp_min_ev ?? 1.5}% too generous, and <b>the model agrees</b> on the side. In testing, the model alone did not beat the market, but bets Pinnacle flagged beat the closing line more often than not. One play per match, at most ${D.rules?.daily_cap ?? 4} per league per day. ${PROV() ? "Stakes are capped at 1 unit until about 150 graded plays confirm the edge." : ""} Lines move fast, so bet soon after a play appears, and check lineups.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No match plays right now.</b> ${D.odds?.source === "none" ? "Book lines arrive once the soccer odds key is added. Each match below shows fair odds to compare with your book." : "The model is close to the book everywhere."}</div>`}`;
   let lastDay = "";
   h += `<div class="sec-head"><h2>All matches</h2><span class="aside">Tap a match for every market</span></div><div class="board">`;
@@ -971,7 +985,7 @@ function renderGames() {
     h += `<details class="match${Object.values(P).some(p => p.play) ? " is-play" : ""}" id="g-${g.game_id}"><summary>
       <div class="mhead"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${b.ml_home ? `${fmtO(b.ml_home)} / ${fmtO(b.ml_draw)} / ${fmtO(b.ml_away)}` : `fair ${fair(g.p_home / 100)} / ${fair(g.p_draw / 100)} / ${fair(g.p_away / 100)}`}</span></div>
       <div class="mrow"><div><div class="tm">${esc(g.home)}<span>${n(g.xg_home, 2)} xG</span></div><div class="tm">${esc(g.away)}<span>${n(g.xg_away, 2)} xG</span></div></div><div>${threeWay(g)}</div></div></summary>
-      <div class="m-body"><div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
+      <div class="m-body">${lineupNote(g)}<div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
         ${P["1x2"]?.draw ? `<div class="dim">Draw: ${n(P["1x2"].draw.model, 0)}% model${P["1x2"].draw.book != null ? `, ${n(P["1x2"].draw.book, 0)}% book at ${esc(P["1x2"].draw.odds)}` : `, fair ${esc(P["1x2"].draw.fair)}`}.</div>` : ""}
         <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div></div></details>`;
   }
@@ -1059,20 +1073,25 @@ function renderRecord() {
       <tr class="grp"><td colspan="4">By bet type</td></tr>${["1x2", "ah", "total"].map(k => recRow("kid", PK_NAME[k], BT[k])).join("")}
       <tr class="grp"><td colspan="4">By league</td></tr>${Object.keys(D.leagues).map(k => recRow("kid", esc(D.leagues[k].name), BL[k])).join("")}
       ${recRow("all", "All plays", P)}</tbody></table></div>`;
+  const CV = T.clv || {}, RU = T.rule || {};
+  h += `<h3>Closing line value</h3><p class="sub">Did the play's price beat the last price before kickoff? Measured as the expected return of the locked price at the closing fair chance (Pinnacle's when it posted the same line). Beating the close more often than not is the best early sign of a real edge, long before wins and losses settle down.</p>
+    <div class="strip"><div class="st"><strong class="${CV.n ? (CV.avg > 0 ? "up" : CV.avg < 0 ? "down" : "") : ""}">${CV.n ? sgn(CV.avg, 2) + "%" : "–"}</strong><span>Average closing value${CV.n ? ` (${CV.n} plays)` : ", builds from the first graded plays"}</span></div>
+      <div class="st"><strong>${CV.n ? n(CV.beat, 0) + "%" : "–"}</strong><span>Beat the close</span></div>
+      <div class="st"><strong>${RU.n || 0}</strong><span>Plays under the Pinnacle rule (since Oct 20). ${T.provisional ? `Provisional until ${D.rules?.provisional_n ?? 150} graded with positive CLV.` : "Edge confirmed."}</span></div></div>`;
   h += `<h3>Every pick, every match</h3><p class="sub">The model's lean on every match, play or not. Units only where a book price was posted.</p>
     <div class="strip">${["1x2", "ah", "total", "dnb", "btts"].map(k => `<div class="st"><strong>${K[k]?.w || 0}–${K[k]?.l || 0}</strong><span>${PK_NAME[k]}${K[k]?.units != null ? `, ${units(K[k].units)} where priced` : ""}</span></div>`).join("")}</div>`;
   const C = Object.entries(T.calibration || {});
   h += `<h3>Prop check</h3><p class="sub">How often players hit vs what the model said, for players who played.</p>
     ${C.length ? `<div class="tablewrap"><table><thead><tr><th>Prop</th><th>Graded</th><th>Model said</th><th>Actually hit</th></tr></thead><tbody>${C.map(([k, c]) => `<tr><td>${esc(PSTAT[k] || k)}</td><td>${c.n}</td><td>${n(c.model)}%</td><td>${n(c.actual)}%</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">Nothing graded yet. Results appear the morning after each matchday.</div>`}`;
   const L = (T.plays_list || []).filter(lgOk);
-  if (L.length) h += `<h3>Recent plays</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Play</th><th>Odds</th><th>Score</th><th>Result</th></tr></thead><tbody>${L.map(x => `<tr><td>${x.date.slice(5)}</td><td style="text-align:left"><span class="lgtag">${esc(lgName(x.league))}</span>${esc(x.pick)} <span class="dim">${esc(x.game)}</span></td><td>${esc(x.odds || "")}</td><td>${esc(x.score)}</td><td><span class="res ${x.res.slice(-1)}">${x.res}</span></td></tr>`).join("")}</tbody></table></div>`;
+  if (L.length) h += `<h3>Recent plays</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Play</th><th>Odds</th><th>Score</th><th>Result</th></tr></thead><tbody>${L.map(x => `<tr><td>${x.date.slice(5)}</td><td style="text-align:left"><span class="lgtag">${esc(lgName(x.league))}</span>${esc(x.pick)} <span class="dim">${esc(x.game)}</span></td><td>${esc(x.odds || "")}</td><td>${esc(x.score)}</td><td><span class="res ${x.res.slice(-1)}">${x.res}</span>${x.clv != null ? ` <span class="${x.clv > 0 ? "up" : "down"}" style="font-size:12px">${sgn(x.clv, 1)}%</span>` : ""}</td></tr>`).join("")}</tbody></table></div><p class="note">The small number after each result is its closing line value. Plays posted before Oct 20 used the old model-only rule.</p>`;
   const lgs = Object.keys(D.leagues || {});
-  h += `<h3>Backtest, ${esc(bt.seasons || "last 3 seasons")}</h3><p class="sub">Every Monday the ratings were refit on earlier matches only and the coming week was priced, then compared with the closing line (Pinnacle, the sharpest book). Lower log loss is better. Plays were tested at early Bet365 prices, the kind of price a bettor actually gets.</p>
-    <div class="tablewrap"><table><thead><tr><th>League</th><th>Matches</th><th>Model</th><th>Closing line</th><th>Moneyline plays</th><th>AH plays</th><th>Totals plays</th></tr></thead><tbody>
-    ${lgs.map(k => { const b = bt[k]; if (!b) return ""; const ml = [b.home, b.away].filter(Boolean), mn = ml.reduce((s, x) => s + (x.n || 0), 0), mu = ml.reduce((s, x) => s + (x.units || 0), 0);
-      const tt = [b.over, b.under].filter(Boolean), tn = tt.reduce((s, x) => s + (x.n || 0), 0), tu = tt.reduce((s, x) => s + (x.units || 0), 0);
-      const cell = (nn, u) => nn ? `<span class="${uc(u)}">${units(u)}</span> <span class="dim">${nn} bets</span>` : "–";
-      return `<tr><td style="text-align:left">${esc(D.leagues[k].name)}</td><td>${b.n}</td><td>${n(b.ll_model, 3)}</td><td>${n(b.ll_close, 3)}</td><td>${cell(mn, mu)}</td><td>${cell(b.ah?.n, b.ah?.units)}</td><td>${cell(tn, tu)}</td></tr>`; }).join("")}</tbody></table></div>
+  const cell = x => x && x.n ? `<span class="${x.clv > 0 ? "up" : "down"}">${sgn(x.clv, 2)}%</span><span class="roi">beat close ${n(x.beat_close, 0)}%</span><span class="roi">${x.n} bets, ${units(x.units)}</span>` : "–";
+  h += `<h3>Backtest, ${esc(bt.seasons || "last 3 seasons")}</h3><p class="sub">Every Monday the ratings were refit on earlier matches only and the coming week was priced, then bets were placed at early Bet365 prices and compared with the closing line. <b>Closing value</b> is the best guide: beating the close is what a real edge looks like, while 3 seasons of wins and losses are still mostly luck. Model log loss (lower is better) vs the closing line: ${lgs.map(k => bt[k] ? `${esc(lgName(k))} ${n(bt[k].ll_model, 3)} vs ${n(bt[k].ll_close, 3)}` : "").filter(Boolean).join(", ")}.</p>
+    <div class="tablewrap"><table class="rtype bt"><thead><tr><th>League</th><th>Model only<br><span class="dim" style="font-weight:400">close value</span></th><th>Pinnacle rule<br><span class="dim" style="font-weight:400">close value</span></th></tr></thead><tbody>
+    ${lgs.map(k => { const b = bt[k]; if (!b || !b.model_only) return "";
+      return `<tr class="kid"><td>${esc(D.leagues[k].name)}</td><td>${cell(b.model_only)}</td><td>${cell(b.pinnacle_rule)}</td></tr>`; }).join("")}
+    ${bt.pinnacle_rule_all ? `<tr class="all"><td>All</td><td>${cell(bt.model_only_all)}</td><td>${cell(bt.pinnacle_rule_all)}</td></tr>` : ""}</tbody></table></div>
     <p class="note">${esc(bt.note || "")}</p>`;
   const graded = BETS.map(b => ({b, g: gradeBet(b)}));
   const done = graded.filter(x => ["W", "L", "P"].includes(x.g.res)), mw = done.filter(x => x.g.res === "W").length, ml = done.filter(x => x.g.res === "L").length;

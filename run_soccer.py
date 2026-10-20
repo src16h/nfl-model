@@ -19,6 +19,7 @@ import numpy as np
 from soccermodel import backtest as BT
 from soccermodel import config as C
 from soccermodel import data as D
+from soccermodel import fatigue as F
 from soccermodel import model as M
 from soccermodel import odds as O
 from soccermodel import props as P
@@ -69,39 +70,69 @@ def nv(*odds):
 # ---------------------------------------------------------------------
 # picks and plays for one match
 # ---------------------------------------------------------------------
-def picks(g, G):
-    b = g.get("book") or {}
+def dec(o):
+    o = float(o)
+    return 1 + (o / 100 if o > 0 else 100 / -o)
+
+
+def _side_rows(g, G, b):
+    """Every priced side: market, label, who, line, bet odds, model / bet-book / sharp chances (sharp only when Pinnacle has
+    the same line)."""
+    sh = b.get("sharp") or {}
     ph, pd_, pa = M.p1x2(G)
-    out = {}
-    # 1X2: the side (home or away) with the bigger gap; the draw is shown and only a play if allowed
+    rows = []
     if b.get("ml_home") and b.get("ml_draw") and b.get("ml_away"):
-        bh, bd, ba = nv(b["ml_home"], b["ml_draw"], b["ml_away"])
-        opts = [("home", g["home"], ph, bh, b["ml_home"]), ("away", g["away"], pa, ba, b["ml_away"]), ("draw", "Draw", pd_, bd, b["ml_draw"])]
-        if not C.DRAW_PLAYS:
-            best = max(opts[:2], key=lambda o: o[2] - o[3])
-        else:
-            best = max(opts, key=lambda o: o[2] - o[3])
-        out["1x2"] = {"side": best[1], "who": best[0], "odds": fmt_odds(best[4]), "model": r(100 * best[2]), "book": r(100 * best[3]),
-                      "edge": r(100 * (best[2] - best[3])), "draw": {"model": r(100 * pd_), "book": r(100 * bd), "odds": fmt_odds(b["ml_draw"])}}
-    else:
-        best = ("home", g["home"], ph) if ph >= pa else ("away", g["away"], pa)
-        out["1x2"] = {"side": best[1], "who": best[0], "odds": None, "model": r(100 * best[2]), "book": None, "edge": None,
-                      "fair": fmt_odds(american(best[2])), "draw": {"model": r(100 * pd_), "fair": fmt_odds(american(pd_))}}
-    # draw no bet: fair line only (books price it per match), from the same grid
-    dh = ph / (ph + pa)
-    out["dnb"] = {"side": g["home"] if dh >= 0.5 else g["away"], "model": r(100 * max(dh, 1 - dh)),
-                  "fair": fmt_odds(american(max(dh, 1 - dh))), "odds": None, "book": None, "edge": None}
-    # Asian handicap
+        bp = nv(b["ml_home"], b["ml_draw"], b["ml_away"])
+        sp = nv(sh["ml_home"], sh["ml_draw"], sh["ml_away"]) if sh.get("ml_home") and sh.get("ml_draw") and sh.get("ml_away") else [None] * 3
+        for i, (who, side, pm, o) in enumerate((("home", g["home"], ph, b["ml_home"]), ("draw", "Draw", pd_, b["ml_draw"]),
+                                                 ("away", g["away"], pa, b["ml_away"]))):
+            rows.append({"mkt": "1x2", "who": who, "side": side, "line": None, "odds": o, "pm": pm, "pb": bp[i], "ps": sp[i]})
     L = b.get("ah_home")
     if L is not None and b.get("ah_home_odds") and b.get("ah_away_odds"):
         mh = M.cover(M.ah(G, L))
         bh = nv(b["ah_home_odds"], b["ah_away_odds"])[0]
-        home = (mh - bh) >= ((1 - mh) - (1 - bh))
-        out["ah"] = {"side": g["home"] if home else g["away"], "line": L if home else -L,
-                     "odds": fmt_odds(b["ah_home_odds"] if home else b["ah_away_odds"]),
-                     "model": r(100 * (mh if home else 1 - mh)), "book": r(100 * (bh if home else 1 - bh)),
-                     "edge": r(100 * ((mh - bh) if home else (bh - mh)))}
+        sp = nv(sh["ah_home_odds"], sh["ah_away_odds"])[0] if sh.get("ah_home") == L and sh.get("ah_home_odds") and sh.get("ah_away_odds") else None
+        rows.append({"mkt": "ah", "who": "home", "side": g["home"], "line": L, "odds": b["ah_home_odds"], "pm": mh, "pb": bh, "ps": sp})
+        rows.append({"mkt": "ah", "who": "away", "side": g["away"], "line": -L, "odds": b["ah_away_odds"], "pm": 1 - mh, "pb": 1 - bh,
+                     "ps": None if sp is None else 1 - sp})
+    T = b.get("total")
+    if T is not None and b.get("over_odds") and b.get("under_odds"):
+        mo = M.cover(M.total(G, T))
+        bo = nv(b["over_odds"], b["under_odds"])[0]
+        sp = nv(sh["over_odds"], sh["under_odds"])[0] if sh.get("total") == T and sh.get("over_odds") and sh.get("under_odds") else None
+        rows.append({"mkt": "total", "who": "over", "side": "Over", "line": T, "odds": b["over_odds"], "pm": mo, "pb": bo, "ps": sp})
+        rows.append({"mkt": "total", "who": "under", "side": "Under", "line": T, "odds": b["under_odds"], "pm": 1 - mo, "pb": 1 - bo,
+                     "ps": None if sp is None else 1 - sp})
+    for x in rows:
+        x["gap"] = 100 * (x["pm"] - x["pb"])                       # model vs the bet book
+        x["sev"] = None if x["ps"] is None else 100 * (x["ps"] * dec(x["odds"]) - 1)   # value by Pinnacle's fair price
+        # play rule (Oct 20 2026 backtest): Pinnacle says the price is value AND the model agrees with the side
+        x["play"] = bool(x["sev"] is not None and C.SHARP_MIN_EV <= x["sev"] <= C.SHARP_MAX_EV and x["gap"] >= C.MODEL_AGREE)
+    return rows
+
+
+def picks(g, G):
+    b = g.get("book") or {}
+    ph, pd_, pa = M.p1x2(G)
+    rows = _side_rows(g, G, b)
+    out = {}
+    for mkt in ("1x2", "ah", "total"):
+        rs = [x for x in rows if x["mkt"] == mkt]
+        if not rs:
+            continue
+        plays = [x for x in rs if x["play"]]
+        x = max(plays, key=lambda y: y["sev"]) if plays else max([y for y in rs if y["who"] != "draw"] or rs, key=lambda y: y["gap"])
+        out[mkt] = {"side": x["side"], "who": x["who"], "line": x["line"], "odds": fmt_odds(x["odds"]), "model": r(100 * x["pm"]),
+                    "book": r(100 * x["pb"]), "sharp": None if x["ps"] is None else r(100 * x["ps"]), "edge": r(x["gap"]),
+                    "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"]}
+    if "1x2" in out:
+        d = next(y for y in rows if y["mkt"] == "1x2" and y["who"] == "draw")
+        out["1x2"]["draw"] = {"model": r(100 * pd_), "book": r(100 * d["pb"]), "odds": fmt_odds(d["odds"])}
     else:
+        best = ("home", g["home"], ph) if ph >= pa else ("away", g["away"], pa)
+        out["1x2"] = {"side": best[1], "who": best[0], "odds": None, "model": r(100 * best[2]), "book": None, "edge": None,
+                      "fair": fmt_odds(american(best[2])), "draw": {"model": r(100 * pd_), "fair": fmt_odds(american(pd_))}, "play": False}
+    if "ah" not in out:
         best_l, best_d = 0.0, 9
         for l2 in np.arange(-2.5, 2.51, 0.25):                  # the quarter line closest to 50/50
             c = M.cover(M.ah(G, l2))
@@ -109,40 +140,38 @@ def picks(g, G):
                 best_l, best_d = float(l2), abs(c - 0.5)
         c = M.cover(M.ah(G, best_l))
         home = c >= 0.5
-        out["ah"] = {"side": g["home"] if home else g["away"], "line": best_l if home else -best_l, "odds": None,
-                     "model": r(100 * max(c, 1 - c)), "book": None, "edge": None, "fair": fmt_odds(american(max(c, 1 - c)))}
-    # total
-    T = b.get("total")
-    if T is not None and b.get("over_odds") and b.get("under_odds"):
-        mo = M.cover(M.total(G, T))
-        bo = nv(b["over_odds"], b["under_odds"])[0]
-        over = (mo - bo) >= ((1 - mo) - (1 - bo))
-        out["total"] = {"side": "Over" if over else "Under", "line": T, "odds": fmt_odds(b["over_odds"] if over else b["under_odds"]),
-                        "model": r(100 * (mo if over else 1 - mo)), "book": r(100 * (bo if over else 1 - bo)),
-                        "edge": r(100 * ((mo - bo) if over else (bo - mo)))}
-    else:
+        out["ah"] = {"side": g["home"] if home else g["away"], "who": "home" if home else "away", "line": best_l if home else -best_l,
+                     "odds": None, "model": r(100 * max(c, 1 - c)), "book": None, "edge": None, "fair": fmt_odds(american(max(c, 1 - c))),
+                     "play": False}
+    if "total" not in out:
         mo = M.cover(M.total(G, 2.5))
-        out["total"] = {"side": "Over" if mo >= 0.5 else "Under", "line": 2.5, "odds": None, "model": r(100 * max(mo, 1 - mo)),
-                        "book": None, "edge": None, "fair": fmt_odds(american(max(mo, 1 - mo)))}
-    # both teams to score: fair line only
+        out["total"] = {"side": "Over" if mo >= 0.5 else "Under", "who": "over" if mo >= 0.5 else "under", "line": 2.5, "odds": None,
+                        "model": r(100 * max(mo, 1 - mo)), "book": None, "edge": None, "fair": fmt_odds(american(max(mo, 1 - mo))), "play": False}
+    dh = ph / (ph + pa)
+    out["dnb"] = {"side": g["home"] if dh >= 0.5 else g["away"], "who": "home" if dh >= 0.5 else "away", "model": r(100 * max(dh, 1 - dh)),
+                  "fair": fmt_odds(american(max(dh, 1 - dh))), "odds": None, "book": None, "edge": None, "play": False}
     bt = M.btts(G)
     out["btts"] = {"side": "Yes" if bt >= 0.5 else "No", "model": r(100 * max(bt, 1 - bt)), "fair": fmt_odds(american(max(bt, 1 - bt))),
-                   "yes": r(100 * bt), "odds": None, "book": None, "edge": None}
-    # plays: blend with the book, then demand a real profit at the posted price (shared rules)
-    for k, v in out.items():
-        if v.get("edge") is None or not v.get("odds"):
-            v["play"] = False
-            continue
-        p = BR.adjust_game(v["model"] / 100, v["book"] / 100)
-        ev, need = BR.game_ev(p, int(v["odds"]))
-        v["adj"], v["ev"] = r(100 * p), r(ev)
-        blocked = k in C.BLOCKED or f"{g['league']}:{k}" in C.BLOCKED
-        v["play"] = bool(C.PLAY_EDGE.get(k, 99) <= v["edge"] <= C.PLAY_MAX_EDGE and ev >= need and not blocked)
-        v["blocked"] = bool(blocked)
-    one, ahp = out.get("1x2"), out.get("ah")
-    if one and ahp and one.get("play") and ahp.get("play") and one["side"] == ahp["side"]:   # same team twice: keep the bigger gap
-        (ahp if one["edge"] >= ahp["edge"] else one)["play"] = False
+                   "yes": r(100 * bt), "odds": None, "book": None, "edge": None, "play": False}
     return out
+
+
+def limit_plays(games):
+    """One play per match (the best by Pinnacle value), then at most DAILY_CAP per league per day."""
+    cand = []
+    for g in games:
+        ps = [(k, p) for k, p in g["picks"].items() if p.get("play")]
+        for k, p in ps:
+            p["play"] = False
+        if ps:
+            k, p = max(ps, key=lambda kp: kp[1]["ev"])
+            cand.append((g, k, p))
+    taken = {}
+    for g, k, p in sorted(cand, key=lambda c: -c[2]["ev"]):
+        key = (g["league"], g["date"])
+        if taken.get(key, 0) < C.DAILY_CAP:
+            p["play"] = True
+            taken[key] = taken.get(key, 0) + 1
 
 
 def grade(kind, pk, g, hg, ag):
@@ -198,6 +227,26 @@ def M_units(rr, odds):
 # ---------------------------------------------------------------------
 # tracking
 # ---------------------------------------------------------------------
+def close_prob(g, k, fl):
+    """Closing fair chance for a flagged side, from the last lines saved before kickoff: Pinnacle when it has the same
+    line, else the bet book. None when the line moved (a different handicap or total can't be compared directly)."""
+    b = g.get("book") or {}
+    for src in (b.get("sharp") or {}, b):
+        if k == "1x2" and src.get("ml_home") and src.get("ml_draw") and src.get("ml_away"):
+            p3 = nv(src["ml_home"], src["ml_draw"], src["ml_away"])
+            return {"home": p3[0], "draw": p3[1], "away": p3[2]}.get(fl.get("who")), src is not b
+        if k == "ah" and src.get("ah_home") is not None and src.get("ah_home_odds") and src.get("ah_away_odds"):
+            line_home = fl["line"] if fl.get("who") == "home" else -fl["line"]
+            if abs(src["ah_home"] - line_home) < 1e-9:
+                ph = nv(src["ah_home_odds"], src["ah_away_odds"])[0]
+                return (ph if fl.get("who") == "home" else 1 - ph), src is not b
+        if k == "total" and src.get("total") is not None and src.get("over_odds") and src.get("under_odds"):
+            if abs(src["total"] - fl["line"]) < 1e-9:
+                po = nv(src["over_odds"], src["under_odds"])[0]
+                return (po if fl.get("side") == "Over" else 1 - po), src is not b
+    return None, False
+
+
 def tracking(days, results, boxes):
     picks_all = {k: [] for k in ("1x2", "dnb", "ah", "total", "btts")}
     plays, daily, calib = [], {}, {"goal": [], "sot1": [], "sot2": []}
@@ -213,12 +262,23 @@ def tracking(days, results, boxes):
                 if rr is None:
                     continue
                 picks_all[k].append((rr, u, g["league"]))
-                if pk.get("play"):
-                    text = f"{pk['side']} {pk['line']:+g}" if k == "ah" else (f"{pk['side']} {pk['line']:g}" if k == "total" else
-                                                                             (f"{pk['side']} to win" if k == "1x2" else pk["side"]))
-                    plays.append({"date": dt, "league": g["league"], "kind": k, "pick": text, "game": f"{g['home']} vs {g['away']}",
-                                  "odds": pk.get("odds"), "edge": pk.get("edge"), "res": rr, "units": u or 0.0, "score": f"{hg}-{ag}"})
-                    daily[dt] = daily.get(dt, 0) + (u or 0)
+            flags = g.get("flags")
+            if flags is None:                                   # files written before flags existed
+                flags = {k: pk for k, pk in (g.get("picks") or {}).items() if pk.get("play")}
+            for k, fl in flags.items():
+                if not fl.get("odds"):
+                    continue
+                rr, u = grade(k, fl, g, hg, ag)
+                if rr is None:
+                    continue
+                pc, sharp_close = close_prob(g, k, fl)
+                clv = None if pc is None else r(100 * (pc * dec(fl["odds"]) - 1), 2)
+                text = (f"{fl['side']} {fl['line']:+g}" if k == "ah" else (f"{fl['side']} {fl['line']:g}" if k == "total" else
+                        ("Draw" if fl.get("who") == "draw" else f"{fl['side']} to win")))
+                plays.append({"date": dt, "league": g["league"], "kind": k, "pick": text, "game": f"{g['home']} vs {g['away']}",
+                              "odds": fl.get("odds"), "edge": fl.get("ev", fl.get("edge")), "res": rr, "units": u or 0.0,
+                              "score": f"{hg}-{ag}", "clv": clv, "clv_sharp": sharp_close, "legacy": bool(fl.get("legacy"))})
+                daily[dt] = daily.get(dt, 0) + (u or 0)
         for p in day.get("players", []):
             bx = boxes.get(str(p["game_id"]))
             if not bx:
@@ -249,11 +309,19 @@ def tracking(days, results, boxes):
         if rows:
             cal[k] = {"n": len(rows), "model": r(100 * np.mean([x[0] for x in rows])), "actual": r(100 * np.mean([x[1] for x in rows]))}
     by_league = {lg: rec2([x for x in plays if x["league"] == lg]) for lg in C.LEAGUES}
+    cl = [x["clv"] for x in plays if x["clv"] is not None]
+    clv = {"n": len(cl), "avg": r(float(np.mean(cl)), 2) if cl else None,
+           "beat": r(100 * float(np.mean([c > 0 for c in cl]))) if cl else None,
+           "sharp_share": r(100 * float(np.mean([x["clv_sharp"] for x in plays if x["clv"] is not None]))) if cl else None}
+    rule = [x for x in plays if not x["legacy"]]
+    rcl = [x["clv"] for x in rule if x["clv"] is not None]
+    provisional = len(rule) < C.PROVISIONAL_N or not rcl or float(np.mean(rcl)) <= 0
     return {"picks": {k: rec(v) for k, v in picks_all.items()},
             "picks_by_league": {lg: {k: rec([x for x in v if x[2] == lg]) for k, v in picks_all.items()} for lg in C.LEAGUES},
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:80],
             "by_type": {k: rec2([x for x in plays if x["kind"] == k]) for k in ("1x2", "ah", "total")},
-            "by_league": by_league, "series": series, "calibration": cal}
+            "by_league": by_league, "series": series, "calibration": cal, "clv": clv,
+            "rule": {**rec2(rule), "n": len(rule)}, "provisional": provisional}
 
 
 # ---------------------------------------------------------------------
@@ -282,6 +350,10 @@ def main():
     log.info(f"{len(upcoming)} upcoming matches")
     odds_status = O.run(upcoming, OUT / "odds_state.json", now)
 
+    log.info("schedules (fatigue)")
+    sched = F.live_schedules(frames, upcoming, season)
+    fat_coef = load_json(D.CACHE / "fatigue.json", {})
+
     log.info("player rates")
     rates = {}
     for lg in C.LEAGUES:
@@ -297,20 +369,42 @@ def main():
         if f["home"] not in R.teams and f["home"] not in nb:
             log.warning(f"no rating for {f['home']} ({lg})")
         lh, la = R.lambdas(f["home"], f["away"], nb)
+        kick = datetime.fromisoformat(f["start"].replace("Z", "+00:00"))
+        # fatigue: short rest and midweek cup / European games (effects fitted from history, soccermodel/fatigue.py)
+        rh, ra = F.rest(sched, f["home"], season, kick.date()), F.rest(sched, f["away"], season, kick.date())
+        fh, fa = F.adjust(fat_coef, rh[0], rh[1], ra[0], ra[1])
+        lh, la = lh * fh, la * fa
+        # confirmed lineups (about an hour before kickoff): props use the named XI, team attack moves a little
+        pr, tm = rates[lg]
+        lu, lineups = None, {}
+        if (kick - now).total_seconds() / 3600 <= C.LINEUP_HOURS:
+            lu = P.lineup(lg, f["event_id"])
+        if lu:
+            for side in ("home", "away"):
+                if f[side] in lu:
+                    mult, missing = P.apply_lineup(f[side], lu[f[side]], pr)
+                    lineups[side] = {"confirmed": True, "formation": lu[f[side]].get("formation"), "missing": missing, "mult": r(mult, 3)}
+                    if side == "home":
+                        lh *= mult
+                    else:
+                        la *= mult
         G = M.grid(lh, la, rho[lg])
         ph, pd_, pa = M.p1x2(G)
         gd = datetime.fromisoformat(f["start"].replace("Z", "+00:00")).astimezone(ET).date()
         g = {"game_id": f["event_id"], "league": lg, "date": gd.isoformat(), "start": f["start"], "home": f["home"], "away": f["away"],
              "xg_home": r(lh, 2), "xg_away": r(la, 2), "p_home": r(100 * ph), "p_draw": r(100 * pd_), "p_away": r(100 * pa),
-             "book": f.get("book"),
+             "book": f.get("book"), "rest": {"home": rh[0], "away": ra[0], "home_mid": rh[1], "away_mid": ra[1]},
+             "fatigue": {"home": r(fh, 3), "away": r(fa, 3)}, "lineups": lineups,
              "scores": sorted(({"s": f"{i}-{j}", "p": r(100 * float(G[i, j]))} for i in range(6) for j in range(6)), key=lambda x: -x["p"])[:6]}
         g["picks"] = picks({**g, "book": f.get("book")}, G)
         games.append(g)
-        pr, tm = rates[lg]
         for side, lam, opp in (("home", lh, f["away"]), ("away", la, f["home"])):
             for p in P.match_props(f[side], lam, pr, tm, f["event_id"], opp):
                 p["league"] = lg
                 players.append(p)
+        for r_ in pr.values():                                   # lineup overrides belong to this match only
+            r_.pop("lu", None)
+    limit_plays(games)
 
     # history: today's view of each match, so results can be graded later
     by_day = {}
@@ -327,12 +421,32 @@ def main():
         live = {g["game_id"] for g in v["games"]}
         keep = [{k: g[k] for k in ("game_id", "league", "date", "start", "home", "away", "picks", "book", "p_home", "p_draw", "p_away",
                                    "xg_home", "xg_away")} for g in v["games"]]
+        stamp = now.isoformat(timespec="minutes")
         for x in keep:                                          # first price seen, for closing-line value later
-            prev = next((o for o in old["games"] if o["game_id"] == x["game_id"]), None)
-            x["open_book"] = (prev or {}).get("open_book") or x.get("book")
+            prev = next((o for o in old["games"] if o["game_id"] == x["game_id"]), None) or {}
+            x["open_book"] = prev.get("open_book") or x.get("book")
+            # plays are locked the first time they are flagged: graded at that price, CLV measured from it
+            flags = dict(prev.get("flags") or {})
+            if "flags" not in prev:                            # older files: their posted plays count as flagged
+                for k, pk in (prev.get("picks") or {}).items():
+                    if pk.get("play") and pk.get("odds"):
+                        flags[k] = {x_: pk.get(x_) for x_ in ("side", "who", "line", "odds", "model", "book", "edge")}
+                        flags[k].update({"at": None, "legacy": True})
+            for k, pk in x["picks"].items():
+                if pk.get("play") and k not in flags:
+                    flags[k] = {x_: pk.get(x_) for x_ in ("side", "who", "line", "odds", "model", "book", "sharp", "edge", "ev")}
+                    flags[k]["at"] = stamp
+            x["flags"] = flags
         path.write_text(json.dumps(clean({"date": day, "games": [g for g in old["games"] if g["game_id"] not in live] + keep,
                                           "players": [p for p in old["players"] if p["game_id"] not in live] + v["players"]}),
                                    separators=(",", ":")))
+
+    flagged = {}
+    for day in by_day:
+        for x in load_json(HIST / f"{day}.json", {}).get("games", []):
+            flagged[x["game_id"]] = x.get("flags") or {}
+    for g in games:
+        g["flags"] = flagged.get(g["game_id"], {})
 
     # results and grading
     days = [d for d in (load_json(p, {}) for p in sorted(HIST.glob("*.json"))) if d]
@@ -388,8 +502,8 @@ def main():
                "teams": team_rows, "backtest": bt,
                "model": {lg: {"home": r(ratings[lg].home, 3) if ratings[lg] else None, "rho": rho[lg],
                               "base": r(math.exp(ratings[lg].intercept), 2) if ratings[lg] else None} for lg in C.LEAGUES},
-               "rules": {"edge": C.PLAY_EDGE, "max": C.PLAY_MAX_EDGE, "draw_plays": C.DRAW_PLAYS, **BR.summary(),
-                         "blocked": sorted(C.BLOCKED)}}
+               "rules": {"sharp_min_ev": C.SHARP_MIN_EV, "sharp_max_ev": C.SHARP_MAX_EV, "model_agree": C.MODEL_AGREE,
+                         "daily_cap": C.DAILY_CAP, "provisional_n": C.PROVISIONAL_N, "fatigue": fat_coef}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} matches, {len(players)} players")
 

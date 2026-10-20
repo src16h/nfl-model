@@ -39,7 +39,7 @@ def load(current):
     return frames, teams, new
 
 
-def walk(df, new_by_season, start, end=None, alpha=0.01):
+def walk(df, new_by_season, start, end=None, alpha=None):
     """Predictions for every match from `start` on: rows of match + lh, la."""
     d0 = start - timedelta(days=start.weekday())
     end = end or df["date"].max()
@@ -48,7 +48,7 @@ def walk(df, new_by_season, start, end=None, alpha=0.01):
     while cut <= end:
         wk = df[(df["date"] >= cut) & (df["date"] < cut + timedelta(days=7))]
         if len(wk):
-            R = M.fit(df, cut, new_by_season, alpha=alpha)
+            R = M.fit(df, cut, new_by_season, alpha=C.ALPHA if alpha is None else alpha)
             if R is not None:
                 for _, m in wk.iterrows():
                     lh, la = R.lambdas(m["home"], m["away"], new_by_season.get(int(m["season"]), {}))
@@ -148,6 +148,92 @@ def summarize(res, edge_min=3.0, edge_max=10.0, min_ev=1.5):
             out[k] = {"n": len(sel), "won": round(100 * np.mean([r_["win"] for r_ in sel]), 1), "units": round(units, 1),
                       "roi": round(100 * units / len(sel), 1), "clv": round(float(np.mean([r_["clv"] for r_ in sel])), 2)}
     return out
+
+
+# ---------------------------------------------------------------------------
+# play rules, tested on every candidate bet (Oct 20 2026)
+# ---------------------------------------------------------------------------
+def _units(odds, margin_halves):
+    return sum((odds - 1 if v > 0 else (0 if v == 0 else -1)) for v in margin_halves) / len(margin_halves)
+
+
+def candidates(P, rho, fat=None):
+    """Every side of every market with the early Bet365 price, Bet365 and Pinnacle no-vig chances,
+    Pinnacle's closing no-vig chance (for CLV), and the result in units."""
+    out = []
+    for m in P.itertuples():
+        if not np.isfinite(m.hg):
+            continue
+        lh, la = m.lh, m.la
+        if fat is not None:
+            fh, fa = fat.get(m.Index, (1.0, 1.0))
+            lh, la = lh * fh, la * fa
+        G = M.grid(lh, la, rho)
+        hg, ag = int(m.hg), int(m.ag)
+        base = {"league": m.league, "season": m.season, "date": m.date, "mid": f"{m.date}|{m.home}"}
+        ph, pd_, pa = M.p1x2(G)
+        if all(np.isfinite([m.early_h, m.early_d, m.early_a])):
+            eb = nv3(m.early_h, m.early_d, m.early_a)
+            sp = nv3(m.sharp_h, m.sharp_d, m.sharp_a) if all(np.isfinite([m.sharp_h, m.sharp_d, m.sharp_a])) else (None,) * 3
+            cl = nv3(m.close_h, m.close_d, m.close_a) if all(np.isfinite([m.close_h, m.close_d, m.close_a])) else (None,) * 3
+            y = 0 if hg > ag else (1 if hg == ag else 2)
+            for i, k, pm, odds in ((0, "home", ph, m.early_h), (1, "draw", pd_, m.early_d), (2, "away", pa, m.early_a)):
+                out.append({**base, "mkt": "1x2", "side": k, "pm": pm, "odds": odds, "pb": eb[i], "ps": sp[i], "pc": cl[i],
+                            "units": odds - 1 if y == i else -1.0})
+        if all(np.isfinite([m.early_o25, m.early_u25])):
+            po = M.cover(M.total(G, 2.5))
+            eb = nv2(m.early_o25, m.early_u25)
+            sp = nv2(m.sharp_o25, m.sharp_u25) if all(np.isfinite([m.sharp_o25, m.sharp_u25])) else None
+            cl = nv2(m.close_o25, m.close_u25) if all(np.isfinite([m.close_o25, m.close_u25])) else None
+            yo = hg + ag > 2.5
+            for k, pm, odds, b, s_, c_, win in (("over", po, m.early_o25, eb, sp, cl, yo), ("under", 1 - po, m.early_u25, 1 - eb, None if sp is None else 1 - sp,
+                                                                                           None if cl is None else 1 - cl, not yo)):
+                out.append({**base, "mkt": "total", "side": k, "pm": pm, "odds": odds, "pb": b, "ps": s_, "pc": c_,
+                            "units": odds - 1 if win else -1.0})
+        L = m.early_ah_line
+        if np.isfinite(L) and all(np.isfinite([m.early_ahh, m.early_aha])):
+            mh = M.cover(M.ah(G, L))
+            eb = nv2(m.early_ahh, m.early_aha)
+            sp = nv2(m.sharp_ahh, m.sharp_aha) if all(np.isfinite([m.sharp_ahh, m.sharp_aha])) else None
+            same = np.isfinite(m.close_ah_line) and abs(m.close_ah_line - L) < 1e-9
+            cl = nv2(m.close_ahh, m.close_aha) if same and all(np.isfinite([m.close_ahh, m.close_aha])) else None
+            for k, pm, odds, b, s_, c_ in (("home", mh, m.early_ahh, eb, sp, cl), ("away", 1 - mh, m.early_aha, 1 - eb,
+                                                                                     None if sp is None else 1 - sp, None if cl is None else 1 - cl)):
+                margin = (hg - ag) if k == "home" else (ag - hg)
+                line = L if k == "home" else -L
+                out.append({**base, "mkt": "ah", "side": k, "pm": pm, "odds": odds, "pb": b, "ps": s_, "pc": c_,
+                            "units": _units(odds, [margin + h for h in M.split(line)])})
+    return pd.DataFrame(out)
+
+
+def select(Cd, w=0.5, anchor="book", sharp_ok=False, edge=(3.0, 10.0), min_ev=1.5, one_per_match=False, cap=None):
+    """Apply a play rule. anchor: blend the model with the bet book's no-vig chance ('book') or Pinnacle's ('sharp').
+    sharp_ok: Pinnacle's fair chance must also make the bet price profitable."""
+    d = Cd
+    if anchor == "sharp" or sharp_ok:
+        d = d[d["ps"].notna()]
+    ref = d["ps"] if anchor == "sharp" else d["pb"]
+    p = ref + w * (d["pm"] - ref)
+    ev = 100 * (p * d["odds"] - 1)
+    gap = 100 * (d["pm"] - d["pb"])
+    ok = (gap >= edge[0]) & (gap <= edge[1]) & (ev >= min_ev)
+    if sharp_ok:
+        ok &= 100 * (d["ps"] * d["odds"] - 1) >= 0
+    sel = d[ok].assign(ev=ev[ok])
+    if one_per_match and len(sel):
+        sel = sel.sort_values("ev", ascending=False).drop_duplicates("mid")
+    if cap and len(sel):
+        sel = sel.sort_values("ev", ascending=False).groupby(["league", "date"]).head(cap)
+    return sel
+
+
+def score(sel):
+    if not len(sel):
+        return {"n": 0}
+    clv = sel["pc"] * sel["odds"] - 1
+    return {"n": int(len(sel)), "units": round(float(sel["units"].sum()), 1), "roi": round(100 * float(sel["units"].mean()), 1),
+            "clv": round(100 * float(clv.mean()), 2) if clv.notna().any() else None,
+            "beat_close": round(100 * float((clv > 0).mean()), 1) if clv.notna().any() else None}
 
 
 def main(argv=None):

@@ -108,8 +108,13 @@ def fd_matches(league, seasons, current):
             "early_o25": _first(df, ["B365>2.5", "Avg>2.5"]), "early_u25": _first(df, ["B365<2.5", "Avg<2.5"]),
             "early_ah_line": _first(df, ["AHh"]),
             "early_ahh": _first(df, ["B365AHH", "AvgAHH"]), "early_aha": _first(df, ["B365AHA", "AvgAHA"]),
+            # Pinnacle's early prices (same collection time): the sharp reference
+            "sharp_h": _first(df, ["PSH"]), "sharp_d": _first(df, ["PSD"]), "sharp_a": _first(df, ["PSA"]),
+            "sharp_o25": _first(df, ["P>2.5"]), "sharp_u25": _first(df, ["P<2.5"]),
+            "sharp_ahh": _first(df, ["PAHH"]), "sharp_aha": _first(df, ["PAHA"]),
+            "close_ah_line": _first(df, ["AHCh"]),
         })
-        oc = [c for c in out.columns if c.startswith(("close_", "early_")) and "line" not in c]
+        oc = [c for c in out.columns if c.startswith(("close_", "early_", "sharp_")) and "line" not in c]
         out[oc] = out[oc].where(out[oc] > 1.01)          # a few rows carry 0 or 1.0 for missing prices
         frames.append(out.dropna(subset=["date"]))
     if not frames:
