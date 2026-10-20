@@ -171,6 +171,21 @@ section>h2:first-child,section>.sec-head:first-child,section>.week:first-child,s
 .spark .area{fill:url(#sparkfill)}
 .spark text{fill:var(--faint);font:500 11px var(--sans)}
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+/* record by bet type (Home) */
+.rtype td{padding:9px 14px}
+.rtype tr.grp td{background:var(--raised);font-weight:600}
+.rtype tr.grp td:first-child{font:600 14px var(--sans)}
+.rtype tr.kid td:first-child{padding-left:28px;color:var(--muted)}
+.rtype tr.all td{border-top:1px solid var(--line);border-bottom:0;font-weight:600}
+.rtype tr.all td:first-child{font:600 14px var(--sans)}
+.rtype .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
+.rtype .flag{display:inline-block;margin-left:6px;font:600 10.5px var(--sans);color:var(--loss);border:1px solid currentColor;border-radius:999px;padding:0 6px;vertical-align:1px}
+.multi .l{fill:none;stroke-width:1.8;stroke-linejoin:round}
+.multi .l.all{stroke:var(--gold);stroke-width:2.6}.multi .l.game{stroke:var(--ink)}.multi .l.prop{stroke:var(--brown)}.multi .l.edge{stroke:var(--muted);stroke-dasharray:4 3}
+@media (max-width:640px){.rtype td,.rtype th{padding:8px 9px}.rtype td:first-child{white-space:normal}.rtype tr.kid td:first-child{padding-left:18px}.rtype td{font-size:14px}}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:0;border-top:2px solid;vertical-align:middle;margin-right:5px}
+.legend b{font:600 12px var(--num);margin-left:3px}
 .kpi{background:var(--raised);border:1px solid var(--line-soft);border-radius:var(--r);padding:10px 12px}
 .kpi b{display:block;font:600 22px/1.1 var(--num);--fs:88%}
 .kpi span{font-size:12px;color:var(--muted)}
@@ -827,6 +842,42 @@ function sparkSVG(series) {
     <text x="${W - pad}" y="${H - 3}" text-anchor="end">${esc(series[series.length - 1].date.slice(5))}</text></svg>`;
 }
 
+const TYPE_LINES = [["all", "All plays", "var(--gold)"], ["game", "Game plays", "var(--ink)"], ["prop", "Prop plays", "var(--brown)"], ["edge", "Edge parlays", "var(--muted)"]];
+function multiSVG(T) {
+  const S = {all: T.series || [], ...(T.series_by || {})};
+  if (!S.all.length) return `<div class="pmuted">The trend line starts after the first graded day.</div>`;
+  if (!T.series_by) return sparkSVG(S.all);
+  const W = 320, H = 130, pad = 8, keys = TYPE_LINES.map(t => t[0]).filter(k => S[k]?.length);
+  const vals = keys.flatMap(k => S[k].map(s => s.units)), lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = Math.max(hi - lo, 1), N = S.all.length;
+  const x = i => pad + i * (W - 2 * pad) / Math.max(N, 1), y = v => H - 18 - (v - lo) / span * (H - 30);
+  const path = k => [0, ...S[k].map(s => s.units)].map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  return `<svg class="spark multi" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Cumulative units by bet type">
+    <line class="zero" x1="${pad}" x2="${W - pad}" y1="${y(0)}" y2="${y(0)}"/>
+    ${keys.slice().reverse().map(k => `<path class="l ${k}" d="${path(k)}"/>`).join("")}
+    <text x="${W - pad}" y="${H - 3}" text-anchor="end">${esc(S.all[N - 1].date.slice(5))}</text></svg>
+    <div class="legend">${TYPE_LINES.filter(t => S[t[0]]?.length).map(([k, lab, c]) => { const u = S[k][S[k].length - 1].units;
+      return `<span><i style="border-color:${c}${k === "edge" ? ";border-top-style:dashed" : ""}"></i>${lab}<b class="${uc(u)}">${units(u)}</b></span>`; }).join("")}</div>`;
+}
+const SIDE_NAME = {Over: "Overs", Under: "Unders"};
+function recordByType(T) {
+  const BT = T.by_type || {}, pr = T.plays || {}, pp = T.prop_plays || {}, E = T.edge || {}, A = T.alt || {};
+  const pct = r => r.w + r.l ? `${n(100 * r.w / (r.w + r.l), 0)}%` : "–";
+  const row = (cls, label, r, flag) => `<tr class="${cls}"><td>${label}${flag ? `<span class="flag">${flag}</span>` : ""}</td><td>${r.w || 0}–${r.l || 0}</td><td>${pct(r)}</td>
+    <td class="${r.w + r.l ? uc(r.units) : ""}">${r.w + r.l ? units(r.units) : "–"}${r.w + r.l ? `<span class="roi">ROI ${sgn(r.roi)}%</span>` : ""}</td></tr>`;
+  const worst = r => (r.w + r.l) >= 15 && r.roi <= -15 ? "Leaking" : "";
+  let rows = row("grp", "Game plays", pr);
+  rows += ["ml", "pl", "total"].filter(k => BT.game?.[k]).map(k => row("kid", PK_NAME[k], BT.game[k], worst(BT.game[k]))).join("");
+  rows += row("grp", "Prop plays", pp);
+  rows += Object.entries(BT.prop || {}).sort((a, b) => (b[1].w + b[1].l) - (a[1].w + a[1].l))
+    .map(([k, r]) => { const [st, sd] = k.split("|"); return row("kid", `${st === "sog" ? "Shots" : (STAT[st] || st)} ${SIDE_NAME[sd] || sd}`, r, worst(r)); }).join("");
+  rows += row("grp", "Edge parlays", E);
+  const all = {w: (pr.w || 0) + (pp.w || 0) + (E.w || 0), l: (pr.l || 0) + (pp.l || 0) + (E.l || 0), units: (pr.units || 0) + (pp.units || 0) + (E.units || 0)};
+  all.roi = all.w + all.l ? 100 * all.units / (all.w + all.l) : 0;
+  rows += row("all", "All plays", all);
+  const sgp = A.n ? `<p class="pmuted" style="margin:10px 2px 0">Same-game parlays (not in units, no book price saved): hit ${A.hits} of ${A.n}, ${n(100 * A.hits / A.n, 0)}% vs ${n(A.model, 0)}% the model expected.</p>` : "";
+  return `<div class="tablewrap"><table class="rtype"><thead><tr><th>Bet type</th><th>Record</th><th>Hit</th><th>Units</th></tr></thead><tbody>${rows}</tbody></table></div>${sgp}`;
+}
+
 /* ---------- closing line value and calibration (Record tab) ---------- */
 const moveNote = p => p?.move == null || Math.abs(p.move) < 1 ? "" : p.move > 0
   ? `<div class="t-meta"><b>Line moving toward this play</b> (${sgn(p.move)} pts since it was flagged). The price is getting worse, so bet soon.</div>`
@@ -880,23 +931,24 @@ function ticket(x) {
 /* ---------- home ---------- */
 function renderHome() {
   const G = D.games || [], plays = allPlays(), T = D.tracking || {};
-  const pr = T.plays || {}, pp = T.prop_plays || {};
-  const w = (pr.w || 0) + (pp.w || 0), l = (pr.l || 0) + (pp.l || 0), u = (pr.units || 0) + (pp.units || 0);
+  const pr = T.plays || {}, pp = T.prop_plays || {}, ed = T.edge || {};
+  const w = (pr.w || 0) + (pp.w || 0) + (ed.w || 0), l = (pr.l || 0) + (pp.l || 0) + (ed.l || 0), u = (pr.units || 0) + (pp.units || 0) + (ed.units || 0);
   const today = G.filter(g => g.date === D.today), next = G[0];
   let h = `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)}–${String(D.season + 1).slice(2)} season</div>
       <div class="big">${today.length || G.length}<span>${today.length ? "games tonight" : "games next"}</span></div>
       <div class="line">${next ? `First up <b>${esc(next.away)} at ${esc(next.home)}</b>, ${esc(when(next.start))}` : "No games scheduled."}</div></div>
     <div class="hero-stats"><div class="hs"><b class="gold">${plays.length}</b><span>Plays now</span></div>
-      <div class="hs"><b>${w}–${l}</b><span>Plays record</span></div><div class="hs"><b class="${uc(u)}">${units(w + l ? u : null)}</b><span>Units</span></div></div></div>`;
+      <div class="hs"><b>${w}–${l}</b><span>All plays</span></div><div class="hs"><b class="${uc(u)}">${units(w + l ? u : null)}</b><span>Units</span></div></div></div>`;
   const top = plays.slice(0, 4).map(x => `<div class="bet"><span class="icon">${ico(x.type === "prop" ? "props" : "games")}</span>
       <div><div class="k">${esc(x.sub)}, ${esc(when(x.g?.start))}</div><div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
       <div class="who">${stakeTxt(x.model, x.odds)}</div></div>
       <div class="gapv">+${n(x.edge)}%<small>edge</small></div>${meterHTML(x.model, x.book)}</div>`).join("");
   h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All plays</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book.</p>
       <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" ? "The model agrees with the book on everything posted." : "Book lines for puck lines, totals and props arrive with the NHL odds key."}</div>`}</div></div>
-    <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit</p>${sparkSVG(T.series || [])}
+    <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit, by bet type</p>${multiSVG(T)}
       <div class="kpis"><div class="kpi"><b>${n(D.model?.backtest?.win_logloss, 3)}</b><span>Win log loss (lower is better, ${n(D.model?.backtest?.base_logloss, 3)} = coin flip with home ice)</span></div>
       <div class="kpi"><b>${T.picks?.ml ? `${T.picks.ml.w}–${T.picks.ml.l}` : "0–0"}</b><span>Moneyline picks</span></div></div></div></div>`;
+  if (w + l) h += `<div class="dash"><div class="panel span-12"><h3>Record by bet type <button data-go="record">Record</button></h3><p class="pmuted">Graded automatically, flat 1 unit per play.</p>${recordByType(T)}</div></div>`;
   const EP = edgeToday();
   if (EP.length) h += `<div class="dash"><div class="panel span-12"><h3>Edge parlays <button data-go="parlays">All parlays</button></h3><p class="pmuted">Two prop plays from two different games. Each leg already beats the book.</p>
     <div class="rail">${EP.map(e => `<div class="alt"><div class="hd"><b>${n(e.p, 0)}% to hit</b><span>${esc(e.odds)}</span></div>

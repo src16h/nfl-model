@@ -228,6 +228,7 @@ def tracking(history_days, results):
     picks = {k: [] for k in ("ml", "pl", "total")}
     plays, prop_plays, calib, alts, daily, edges = [], [], {}, [], {}, []
     clv_rows = []
+    daily_t = {"game": {}, "prop": {}, "edge": {}}       # units per day by bet type (Home record chart)
     for day in history_days:
         dt = day["date"]
         for g in day.get("games", []):
@@ -244,6 +245,7 @@ def tracking(history_days, results):
                                   "clv": None if c is None else r(c, 1)})
                     clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
                     daily[dt] = daily.get(dt, 0) + (u or 0)
+                    daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
             ap = g.get("alt_parlay")
             if ap:
                 hits = []
@@ -278,6 +280,7 @@ def tracking(history_days, results):
                           "legs": " + ".join(f"{L['name']} {L['side']} {L['line']:g} {L['stat']}" for L in e["legs"]),
                           "legs_hit": sum(x == "W" for x in rs), "n": len(rs)})
             daily[dt] = daily.get(dt, 0) + u
+            daily_t["edge"][dt] = daily_t["edge"].get(dt, 0) + u
         for p in day.get("players", []):
             res = results.get(str(p["game_id"]))
             if not res:
@@ -295,8 +298,10 @@ def tracking(history_days, results):
                     rr = "P" if v == L else ("W" if (v > L) == (bk["side"] == "Over") else "L")
                     u = payout(bk["odds"]) if rr == "W" else (-1.0 if rr == "L" else 0.0)
                     prop_plays.append({"date": dt, "player": p["name"], "pick": f"{bk['side']} {L:g} {stat}", "odds": fmt_odds(bk["odds"]),
-                                       "edge": bk["edge"], "res": rr, "units": u, "actual": v})
+                                       "edge": bk["edge"], "res": rr, "units": u, "actual": v,
+                                       "stat": stat, "side": bk["side"]})
                     daily[dt] = daily.get(dt, 0) + u
+                    daily_t["prop"][dt] = daily_t["prop"].get(dt, 0) + u
 
     def rec(rows):
         w = sum(1 for x in rows if x[0] == "W"); l = sum(1 for x in rows if x[0] == "L")
@@ -319,6 +324,19 @@ def tracking(history_days, results):
     for dt in sorted(daily):
         run += daily[dt]
         series.append({"date": dt, "units": r(run, 2)})
+    series_by = {}
+    for t, dd in daily_t.items():                        # same dates as `series`, so the lines line up
+        run_t, out = 0.0, []
+        for dt in sorted(daily):
+            run_t += dd.get(dt, 0)
+            out.append({"date": dt, "units": r(run_t, 2)})
+        series_by[t] = out
+    # record by bet type: game plays by market, prop plays by stat and side
+    by_kind = {k: rec2([x for x in plays if x["kind"] == k]) for k in ("ml", "pl", "total")}
+    by_prop = {}
+    for x in prop_plays:
+        by_prop.setdefault(f'{x["stat"]}|{x["side"]}', []).append(x)
+    by_prop = {k: rec2(v) for k, v in sorted(by_prop.items())}
     return {"picks": {k: rec(v) for k, v in picks.items()},
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
             "clv": CLV.summary(clv_rows),
@@ -329,7 +347,8 @@ def tracking(history_days, results):
             "alt_old": alt_rec([a for a in alts if a["v"] < 2]),
             "edge": {**rec2(edges), "model": r(np.mean([e["p"] for e in edges])) if edges else None,
                      "recent": sorted(edges, key=lambda x: x["date"], reverse=True)[:20]},
-            "series": series}
+            "series": series, "series_by": series_by,
+            "by_type": {"game": by_kind, "prop": by_prop}}
 
 
 def prop_bias(hist_dir, results):
