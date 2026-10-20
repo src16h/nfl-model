@@ -764,9 +764,11 @@
       "p": 82.6
      }
     ],
-    "p": 50.0,
+    "p": 43.8,
+    "p_sim": 50.0,
     "pi": 47.5,
-    "fair": "+100"
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -1514,9 +1516,11 @@
       "p": 77.8
      }
     ],
-    "p": 50.0,
+    "p": 43.8,
+    "p_sim": 50.0,
     "pi": 48.3,
-    "fair": "+100"
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -2238,17 +2242,17 @@
     "legs": [
      {
       "kind": "player",
-      "pid": "00-0033280",
-      "name": "Christian McCaffrey",
+      "pid": "00-0031408",
+      "name": "Mike Evans",
       "team": "SF",
-      "pos": "RB",
-      "stat": "rush_yds",
+      "pos": "WR",
+      "stat": "rec_yds",
       "side": "Over",
-      "line": 32.5,
-      "label": "Over 32.5 rush yds",
-      "main": 57.5,
+      "line": 30.5,
+      "label": "Over 30.5 rec yds",
+      "main": 55.5,
       "main_src": "model",
-      "p": 83.2
+      "p": 77.5
      },
      {
       "kind": "player",
@@ -2266,22 +2270,24 @@
      },
      {
       "kind": "player",
-      "pid": "00-0038542",
-      "name": "Bijan Robinson",
+      "pid": "00-0037238",
+      "name": "Drake London",
       "team": "ATL",
-      "pos": "RB",
-      "stat": "rec",
+      "pos": "WR",
+      "stat": "rec_yds",
       "side": "Over",
-      "line": 2.5,
-      "label": "Over 2.5 receptions",
-      "main": 4.5,
+      "line": 52.5,
+      "label": "Over 52.5 rec yds",
+      "main": 77.5,
       "main_src": "model",
-      "p": 73.4
+      "p": 74.0
      }
     ],
-    "p": 49.9,
-    "pi": 49.3,
-    "fair": "+101"
+    "p": 43.6,
+    "p_sim": 49.8,
+    "pi": 46.3,
+    "fair": "+129",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -3004,7 +3010,7 @@
       "label": "Over 27.5 rush yds",
       "main": 52.5,
       "main_src": "model",
-      "p": 87.0
+      "p": 86.4
      },
      {
       "kind": "player",
@@ -3035,9 +3041,11 @@
       "p": 77.3
      }
     ],
-    "p": 49.8,
-    "pi": 49.6,
-    "fair": "+101"
+    "p": 43.4,
+    "p_sim": 49.5,
+    "pi": 49.3,
+    "fair": "+130",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -3787,9 +3795,11 @@
       "p": 78.8
      }
     ],
-    "p": 49.9,
+    "p": 43.7,
+    "p_sim": 49.9,
     "pi": 47.7,
-    "fair": "+100"
+    "fair": "+129",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -4502,40 +4512,42 @@
       "label": "Over 14.5 rush yds",
       "main": 34.5,
       "main_src": "model",
-      "p": 89.7
+      "p": 89.2
      },
      {
       "kind": "player",
-      "pid": "00-0039337",
-      "name": "Malik Nabers",
+      "pid": "00-0037838",
+      "name": "Isaiah Likely",
       "team": "NYG",
-      "pos": "WR",
+      "pos": "TE",
       "stat": "rec_yds",
       "side": "Over",
-      "line": 54.5,
-      "label": "Over 54.5 rec yds",
-      "main": 79.5,
+      "line": 30.5,
+      "label": "Over 30.5 rec yds",
+      "main": 55.5,
       "main_src": "model",
-      "p": 72.2
+      "p": 74.2
      },
      {
       "kind": "player",
-      "pid": "00-0036554",
-      "name": "Nico Collins",
+      "pid": "00-0038618",
+      "name": "Xavier Hutchinson",
       "team": "HOU",
       "pos": "WR",
       "stat": "rec_yds",
       "side": "Over",
-      "line": 24.5,
-      "label": "Over 24.5 rec yds",
-      "main": 44.5,
+      "line": 14.5,
+      "label": "Over 14.5 rec yds",
+      "main": 29.5,
       "main_src": "model",
-      "p": 76.9
+      "p": 74.4
      }
     ],
-    "p": 50.0,
-    "pi": 49.8,
-    "fair": "+100"
+    "p": 43.6,
+    "p_sim": 49.7,
+    "pi": 49.3,
+    "fair": "+129",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -5286,9 +5298,11 @@
       "p": 77.5
      }
     ],
-    "p": 49.9,
+    "p": 43.8,
+    "p_sim": 49.9,
     "pi": 48.1,
-    "fair": "+100"
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -6018,7 +6032,7 @@
       "label": "Over 21.5 rush yds",
       "main": 46.5,
       "main_src": "model",
-      "p": 87.7
+      "p": 87.1
      },
      {
       "kind": "player",
@@ -6049,9 +6063,11 @@
       "p": 79.2
      }
     ],
-    "p": 46.3,
-    "pi": 44.5,
-    "fair": "+116"
+    "p": 39.9,
+    "p_sim": 46.0,
+    "pi": 44.2,
+    "fair": "+151",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -6760,7 +6776,7 @@
       "label": "Over 24.5 rush yds",
       "main": 49.5,
       "main_src": "model",
-      "p": 87.3
+      "p": 86.8
      },
      {
       "kind": "player",
@@ -6805,9 +6821,11 @@
       "p": 81.2
      }
     ],
-    "p": 49.6,
-    "pi": 48.8,
-    "fair": "+102"
+    "p": 43.2,
+    "p_sim": 49.3,
+    "pi": 48.5,
+    "fair": "+132",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -7578,9 +7596,11 @@
       "p": 75.0
      }
     ],
-    "p": 50.0,
+    "p": 43.8,
+    "p_sim": 50.0,
     "pi": 48.3,
-    "fair": "+100"
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -8309,21 +8329,7 @@
       "label": "Over 15.5 rush yds",
       "main": 35.5,
       "main_src": "model",
-      "p": 87.1
-     },
-     {
-      "kind": "player",
-      "pid": "00-0036264",
-      "name": "Jordan Love",
-      "team": "GB",
-      "pos": "QB",
-      "stat": "pass_yds",
-      "side": "Over",
-      "line": 242.5,
-      "label": "Over 242.5 pass yds",
-      "main": 282.5,
-      "main_src": "model",
-      "p": 70.2
+      "p": 86.5
      },
      {
       "kind": "player",
@@ -8333,16 +8339,32 @@
       "pos": "WR",
       "stat": "rec_yds",
       "side": "Over",
-      "line": 19.5,
-      "label": "Over 19.5 rec yds",
+      "line": 24.5,
+      "label": "Over 24.5 rec yds",
       "main": 44.5,
       "main_src": "model",
-      "p": 81.4
+      "p": 75.5
+     },
+     {
+      "kind": "player",
+      "pid": "00-0033106",
+      "name": "Jared Goff",
+      "team": "DET",
+      "pos": "QB",
+      "stat": "pass_yds",
+      "side": "Over",
+      "line": 207.5,
+      "label": "Over 207.5 pass yds",
+      "main": 247.5,
+      "main_src": "model",
+      "p": 73.1
      }
     ],
-    "p": 49.9,
-    "pi": 49.8,
-    "fair": "+100"
+    "p": 43.8,
+    "p_sim": 49.9,
+    "pi": 47.7,
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -9076,26 +9098,28 @@
       "label": "Over 26.5 rush yds",
       "main": 51.5,
       "main_src": "model",
-      "p": 88.4
+      "p": 87.9
      },
      {
       "kind": "player",
-      "pid": "00-0029604",
-      "name": "Kirk Cousins",
+      "pid": "00-0038563",
+      "name": "Tre Tucker",
       "team": "LV",
-      "pos": "QB",
-      "stat": "pass_yds",
+      "pos": "WR",
+      "stat": "rec_yds",
       "side": "Over",
-      "line": 201.5,
-      "label": "Over 201.5 pass yds",
-      "main": 241.5,
+      "line": 26.5,
+      "label": "Over 26.5 rec yds",
+      "main": 46.5,
       "main_src": "model",
-      "p": 74.1
+      "p": 75.0
      }
     ],
-    "p": 49.9,
-    "pi": 49.9,
-    "fair": "+100"
+    "p": 43.8,
+    "p_sim": 50.0,
+    "pi": 50.2,
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -9810,17 +9834,17 @@
      },
      {
       "kind": "player",
-      "pid": "00-0038797",
-      "name": "Emanuel Wilson",
-      "team": "SEA",
-      "pos": "RB",
-      "stat": "rush_yds",
+      "pid": "00-0033873",
+      "name": "Patrick Mahomes",
+      "team": "KC",
+      "pos": "QB",
+      "stat": "pass_yds",
       "side": "Over",
-      "line": 34.5,
-      "label": "Over 34.5 rush yds",
-      "main": 59.5,
+      "line": 172.5,
+      "label": "Over 172.5 pass yds",
+      "main": 222.5,
       "main_src": "model",
-      "p": 80.9
+      "p": 81.5
      },
      {
       "kind": "player",
@@ -9828,18 +9852,20 @@
       "name": "Cooper Kupp",
       "team": "SEA",
       "pos": "WR",
-      "stat": "rec_yds",
+      "stat": "rec",
       "side": "Over",
-      "line": 14.5,
-      "label": "Over 14.5 rec yds",
-      "main": 29.5,
+      "line": 1.5,
+      "label": "Over 1.5 receptions",
+      "main": 3.5,
       "main_src": "model",
-      "p": 73.3
+      "p": 70.9
      }
     ],
-    "p": 50.0,
-    "pi": 49.8,
-    "fair": "+100"
+    "p": 43.8,
+    "p_sim": 49.9,
+    "pi": 48.5,
+    "fair": "+128",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   },
@@ -10559,31 +10585,17 @@
     "legs": [
      {
       "kind": "player",
-      "pid": "00-0033077",
-      "name": "Dak Prescott",
-      "team": "DAL",
-      "pos": "QB",
-      "stat": "pass_yds",
-      "side": "Over",
-      "line": 215.5,
-      "label": "Over 215.5 pass yds",
-      "main": 265.5,
-      "main_src": "model",
-      "p": 76.8
-     },
-     {
-      "kind": "player",
-      "pid": "00-0036358",
-      "name": "CeeDee Lamb",
+      "pid": "00-0037247",
+      "name": "George Pickens",
       "team": "DAL",
       "pos": "WR",
       "stat": "rec_yds",
       "side": "Over",
-      "line": 51.5,
-      "label": "Over 51.5 rec yds",
-      "main": 76.5,
+      "line": 33.5,
+      "label": "Over 33.5 rec yds",
+      "main": 58.5,
       "main_src": "model",
-      "p": 72.2
+      "p": 76.4
      },
      {
       "kind": "player",
@@ -10597,12 +10609,28 @@
       "label": "Over 33.5 rush yds",
       "main": 58.5,
       "main_src": "model",
-      "p": 83.4
+      "p": 82.9
+     },
+     {
+      "kind": "player",
+      "pid": "00-0038393",
+      "name": "Dontayvion Wicks",
+      "team": "PHI",
+      "pos": "WR",
+      "stat": "rec_yds",
+      "side": "Over",
+      "line": 14.5,
+      "label": "Over 14.5 rec yds",
+      "main": 34.5,
+      "main_src": "model",
+      "p": 78.5
      }
     ],
-    "p": 49.4,
-    "pi": 46.3,
-    "fair": "+102"
+    "p": 43.7,
+    "p_sim": 49.8,
+    "pi": 49.7,
+    "fair": "+129",
+    "note": "Only bet it if Hard Rock pays more than the fair odds"
    },
    "flags": {}
   }
