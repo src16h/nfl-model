@@ -1,0 +1,22 @@
+name: Odds market check
+
+# Manual only: lists which markets each book posts for the next 2 NFL, NHL and Premier League events.
+# About 2 credits per sport.
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check markets
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          ODDS_API_KEY_NHL: ${{ secrets.ODDS_API_KEY_NHL }}
+          ODDS_API_KEY_SOCCER: ${{ secrets.ODDS_API_KEY_SOCCER }}
+        run: python tools/probe_markets.py 2
