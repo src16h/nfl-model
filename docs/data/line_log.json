@@ -4212,7 +4212,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_PIT_NO": {
    "game_id": "2026_07_PIT_NO",
@@ -4250,7 +4250,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_SF_ATL": {
    "game_id": "2026_07_SF_ATL",
@@ -4298,10 +4298,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": -3.5,
+     "total": 50.5,
+     "m": -3.4,
+     "t": 52.3,
+     "edge_s": 0.1,
+     "edge_t": 1.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_CIN_BAL": {
    "game_id": "2026_07_CIN_BAL",
@@ -4349,10 +4362,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": 1.5,
+     "total": 49.0,
+     "m": 1.6,
+     "t": 49.1,
+     "edge_s": 0.1,
+     "edge_t": 0.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_TB_CAR": {
    "game_id": "2026_07_TB_CAR",
@@ -4387,10 +4413,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": 3.0,
+     "total": 44.5,
+     "m": 2.9,
+     "t": 44.9,
+     "edge_s": -0.1,
+     "edge_t": 0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_NYG_HOU": {
    "game_id": "2026_07_NYG_HOU",
@@ -4425,10 +4464,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": 10.0,
+     "total": 43.0,
+     "m": 10.2,
+     "t": 44.7,
+     "edge_s": 0.2,
+     "edge_t": 1.7,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_IND_MIN": {
    "game_id": "2026_07_IND_MIN",
@@ -4466,7 +4518,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_MIA_NYJ": {
    "game_id": "2026_07_MIA_NYJ",
@@ -4504,7 +4556,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_CLE_TEN": {
    "game_id": "2026_07_CLE_TEN",
@@ -4539,10 +4591,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": -2.0,
+     "total": 37.5,
+     "m": -1.7,
+     "t": 38.1,
+     "edge_s": 0.3,
+     "edge_t": 0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_DEN_ARI": {
    "game_id": "2026_07_DEN_ARI",
@@ -4580,7 +4645,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_GB_DET": {
    "game_id": "2026_07_GB_DET",
@@ -4618,7 +4683,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_LA_LV": {
    "game_id": "2026_07_LA_LV",
@@ -4653,10 +4718,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": -4.0,
+     "total": 48.5,
+     "m": -4.3,
+     "t": 49.6,
+     "edge_s": -0.3,
+     "edge_t": 1.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_KC_SEA": {
    "game_id": "2026_07_KC_SEA",
@@ -4694,7 +4772,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   },
   "2026_07_DAL_PHI": {
    "game_id": "2026_07_DAL_PHI",
@@ -4729,10 +4807,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-10-21T18:26+00:00",
+     "src": "live:hardrockbet",
+     "spread": -4.5,
+     "total": 44.0,
+     "m": -5.0,
+     "t": 43.4,
+     "edge_s": -0.5,
+     "edge_t": -0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-10-21T12:44+00:00"
+   "last_seen": "2026-10-21T18:26+00:00"
   }
  }
 }
