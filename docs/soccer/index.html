@@ -699,6 +699,67 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
 .picks{padding-top:6px}
 .tag:not(.watch){background:var(--win);color:#fff;border-color:var(--win)}
 .playline{font:600 13px var(--sans);color:var(--win);background:var(--win-soft);border:1px solid var(--win);border-radius:var(--r-sm);padding:6px 10px}
+
+/* Asian handicap tab, market board, richer tiles (Oct 21 2026) */
+.mchip{display:inline-block;font:600 10.5px var(--sans);color:var(--brown);background:var(--beige);border-radius:999px;padding:2px 8px;margin-right:6px;vertical-align:1px;white-space:nowrap}
+.mine{display:inline-block;font:600 10.5px var(--sans);color:var(--gold-text);border:1px solid var(--gold-line);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.plays-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr))}
+.bet.on{border-color:var(--win);background:linear-gradient(90deg,var(--win-soft),transparent 70%)}
+.bet.on .gapv{color:var(--win)}
+.bym td{font-size:14px}.bym td.l{text-align:left;white-space:normal}.bym td .dim{font-size:12.5px}
+.bym tr.on td{background:var(--win-soft)}
+.bym .gp{font-weight:700}.bym .gp.pos{color:var(--win)}.bym .gp.neg{color:var(--faint)}
+.bym .lean b{font:600 15px var(--num)}
+.bym .mob{display:none}
+@media (max-width:640px){.bym .c-x,.bym .c-m{display:none}.bym td,.bym th{padding:9px 7px}.bym .mob{display:block;font:400 12px var(--sans);color:var(--muted);white-space:normal}.bym td.lean{white-space:normal;text-align:left}.bym td.l{font-size:13px}}
+.tmk{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;margin-top:8px;font-size:12px;color:var(--muted)}
+.tmk b{color:var(--ink);font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmk b.on{color:var(--win)}
+.tile.on{border-color:var(--win);box-shadow:inset 3px 0 0 var(--win)}
+.formrow{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.fm{display:inline-flex;gap:2px;vertical-align:-2px;margin:0 6px}
+.fm i{width:16px;height:16px;border-radius:4px;display:grid;place-items:center;font:700 9.5px var(--sans);font-style:normal;color:#fff}
+.fm i.W{background:var(--win)}.fm i.D{background:var(--faint)}.fm i.L{background:var(--loss)}
+details.ahm{border-top:1px solid var(--line-soft)}
+details.ahm:first-of-type{border-top:0}
+details.ahm>summary{list-style:none;cursor:pointer;padding:14px 18px;display:grid;gap:8px}
+details.ahm>summary::-webkit-details-marker{display:none}
+details.ahm>summary:hover,details.ahm[open]>summary{background:var(--raised)}
+details.ahm.is-play{box-shadow:inset 3px 0 0 var(--win)}
+.ahline{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:4px 14px;align-items:center}
+.ahline .t{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ahline .ln{font:600 17px var(--num);min-width:62px;text-align:right}
+.ahline .pr{font:500 14px var(--num);color:var(--muted);min-width:52px;text-align:right}
+.ahline .t.lean::after{content:"model lean";margin-left:8px;font:600 10.5px var(--sans);color:var(--gold-text);border:1px solid var(--gold-line);border-radius:999px;padding:1px 7px;vertical-align:1px}
+.ahsum{font-size:13px;color:var(--muted)}.ahsum b{color:var(--ink);font-weight:600}
+.cmp{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:center;font:500 12.5px var(--num);color:var(--muted)}
+.cmp .bar{position:relative;height:6px;border-radius:999px;background:var(--line-soft)}
+.cmp .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:color-mix(in srgb,var(--gold) 55%,transparent)}
+.cmp .bar u{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);text-decoration:none}
+details.ahm .m-body{padding:4px 18px 18px;display:grid;gap:12px;font-size:14px}
+.ahtab td{font-size:14px;padding:7px 12px}
+.ahtab tr.p{cursor:pointer}
+.ahtab tr.main td{background:var(--gold-soft);font-weight:700}
+.ahtab tr.sel td{box-shadow:inset 0 -2px 0 var(--gold),inset 0 2px 0 var(--gold)}
+.ahtab tr.ml td:first-child::after{content:"= moneyline";margin-left:6px;font:500 11px var(--sans);color:var(--faint)}
+.settle{display:flex;flex-wrap:wrap;gap:6px}
+.settle span{font:500 12.5px var(--num);border:1px solid var(--line-soft);border-radius:999px;padding:3px 10px;color:var(--muted);background:var(--surface)}
+.settle b{color:var(--ink);margin-right:4px;font-family:var(--sans);font-weight:600}
+.pcheck{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.pcheck select,.pcheck input{font:600 14px var(--sans);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.pcheck select{padding-right:32px}
+.pcheck input{width:96px;font:600 15px var(--num)}
+.pcheck input:focus,.pcheck select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
+.vt.thin{border-color:var(--line);color:var(--muted)}
+.mk .pcheck{margin-top:6px}.mk .pcheck input{width:84px;padding:6px 10px;font-size:14px}
+.learn{display:grid;gap:10px;font-size:14px;color:var(--muted)}
+.learn b{color:var(--ink)}
+.learn table{width:auto;min-width:min(100%,520px)}
+.learn td,.learn th{white-space:normal;text-align:left;font:400 13.5px/1.45 var(--sans);padding:8px 12px}
+@media (max-width:640px){.ahtab .c-x{display:none}.ahtab td,.ahtab th{padding:7px 8px}.ahtab th{white-space:normal}}
+nav.sidenav button{white-space:nowrap}
+@media (max-width:640px){.bym td:last-child{white-space:normal;min-width:70px;font-size:12.5px}}
+.ahtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
 </style>
 </head>
 
@@ -708,6 +769,7 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
     <linearGradient id="sparkfill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FF682C" stop-opacity=".22"/><stop offset="1" stop-color="#FF682C" stop-opacity="0"/></linearGradient>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
     <symbol id="i-games" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M21 10.5l-5 0M3 10.5h5M6.5 19.5l2.9-5M17.5 19.5l-2.9-5"/></symbol>
+    <symbol id="i-ah" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 6h6z"/><path d="M5 8h14"/><path d="M8 20h8"/></symbol>
     <symbol id="i-props" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
     <symbol id="i-teams" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></symbol>
     <symbol id="i-record" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M6 15l4-4 3 3 5-6"/><path d="M15 8h3v3"/></symbol>
@@ -724,6 +786,7 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
     <nav class="sidenav" role="tablist" aria-label="Sections">
       <button role="tab" data-tab="home" aria-selected="true"><svg><use href="#i-home"/></svg>Home</button>
       <button role="tab" data-tab="games" aria-selected="false"><svg><use href="#i-games"/></svg>Matches</button>
+      <button role="tab" data-tab="ah" aria-selected="false"><svg><use href="#i-ah"/></svg>Asian handicap</button>
       <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button>
       <button role="tab" data-tab="teams" aria-selected="false"><svg><use href="#i-teams"/></svg>Teams</button>
       <button role="tab" data-tab="record" aria-selected="false"><svg><use href="#i-record"/></svg>Record</button>
@@ -742,6 +805,7 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
   <main class="wrap">
     <section id="home" role="tabpanel"></section>
     <section id="games" role="tabpanel" hidden></section>
+    <section id="ah" role="tabpanel" hidden></section>
     <section id="props" role="tabpanel" hidden></section>
     <section id="teams" role="tabpanel" hidden></section>
     <section id="record" role="tabpanel" hidden></section>
@@ -749,6 +813,7 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
   <nav class="tabbar" role="tablist" aria-label="Sections">
     <button role="tab" data-tab="home" aria-selected="true"><svg><use href="#i-home"/></svg>Home</button>
     <button role="tab" data-tab="games" aria-selected="false"><svg><use href="#i-games"/></svg>Matches</button>
+    <button role="tab" data-tab="ah" aria-selected="false"><svg><use href="#i-ah"/></svg>Handicap</button>
     <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button>
     <button role="tab" data-tab="teams" aria-selected="false"><svg><use href="#i-teams"/></svg>Teams</button>
     <button role="tab" data-tab="record" aria-selected="false"><svg><use href="#i-record"/></svg>Record</button>
@@ -865,6 +930,114 @@ function gradeBet(b) {
   return {res: "O"};
 }
 
+/* ---------- scoreline math (mirrors soccermodel/model.py) ---------- */
+const MAXG = 11, FACT = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800], GRIDS = new Map();
+function dcGrid(lh, la, rho) {
+  const key = `${lh}|${la}|${rho}`; if (GRIDS.has(key)) return GRIDS.get(key);
+  const ph = [], pa = [];
+  for (let k = 0; k < MAXG; k++) { ph.push(Math.exp(-lh) * lh ** k / FACT[k]); pa.push(Math.exp(-la) * la ** k / FACT[k]); }
+  const M = ph.map(a => pa.map(b => a * b));
+  M[0][0] *= 1 - lh * la * rho; M[0][1] *= 1 + lh * rho; M[1][0] *= 1 + la * rho; M[1][1] *= 1 - rho;
+  let s = 0; for (const r of M) for (let j = 0; j < MAXG; j++) { r[j] = Math.max(r[j], 0); s += r[j]; }
+  for (const r of M) for (let j = 0; j < MAXG; j++) r[j] /= s;
+  GRIDS.set(key, M); return M;
+}
+const rhoOf = g => D.model?.[g.league]?.rho ?? 0;
+const modelGrid = g => dcGrid(g.lh ?? g.xg_home, g.la ?? g.xg_away, rhoOf(g));
+const mktGrid = g => g.mkt ? dcGrid(g.mkt.lh, g.mkt.la, rhoOf(g)) : null;
+/* how a line settles for the home side (AH, home line) or the over (totals): full win, half win, push, half loss, full loss */
+function settle(M, kind, line) {
+  const o = {w: 0, hw: 0, p: 0, hl: 0, l: 0}, halves = splitLine(line);
+  for (let i = 0; i < MAXG; i++) for (let j = 0; j < MAXG; j++) {
+    const x = kind === "ah" ? i - j : i + j; let win = 0, loss = 0;
+    for (const h of halves) { const v = kind === "ah" ? x + h : x - h; if (v > 1e-9) win++; else if (v < -1e-9) loss++; }
+    const pr = M[i][j], k = halves.length;
+    if (win === k) o.w += pr; else if (loss === k) o.l += pr; else if (win && !loss) o.hw += pr; else if (loss && !win) o.hl += pr; else o.p += pr;
+  }
+  return o;
+}
+const flipS = o => ({w: o.l, hw: o.hl, p: o.p, hl: o.hw, l: o.w});
+function settleSide(M, kind, who, line) {      /* line from the bettor's side */
+  if (kind === "ah") { const o = settle(M, "ah", who === "home" ? line : -line); return who === "home" ? o : flipS(o); }
+  const o = settle(M, "total", line); return who === "over" ? o : flipS(o);
+}
+const coverOf = o => { const W = o.w + o.hw / 2, L = o.l + o.hl / 2; return W + L > 0 ? W / (W + L) : 0.5; };
+const bttsOf = M => { let s = 0; for (let i = 1; i < MAXG; i++) for (let j = 1; j < MAXG; j++) s += M[i][j]; return s; };
+const nv2 = (a, b) => impl(a) / (impl(a) + impl(b));
+/* chance a bet wins, pushes left out (how prices are quoted): m = model, k = Pinnacle, exact = straight from a Pinnacle price */
+function chances(g, kind, who, line) {
+  const Mm = modelGrid(g), Mk = mktGrid(g), K = g.mkt, sh = g.book?.sharp || {};
+  if (kind === "ah" || kind === "total") {
+    const m = coverOf(settleSide(Mm, kind, who, line));
+    let k = Mk ? coverOf(settleSide(Mk, kind, who, line)) : null, exact = false;
+    if (kind === "ah") {
+      const hl = who === "home" ? line : -line, A = g.ah_main;
+      const pw = who === "home" ? K?.p_home : K?.p_away, po = who === "home" ? K?.p_away : K?.p_home;
+      if (A && Math.abs(hl - A.line) < 1e-9) { k = who === "home" ? A.nv_home / 100 : 1 - A.nv_home / 100; exact = true; }
+      else if (K && Math.abs(line + 0.5) < 1e-9) { k = pw / 100; exact = true; }                 /* -0.5 = to win */
+      else if (K && Math.abs(line - 0.5) < 1e-9) { k = 1 - po / 100; exact = true; }             /* +0.5 = win or draw */
+      else if (K && Math.abs(line) < 1e-9) { k = pw / (pw + po); exact = true; }                 /* 0 = draw no bet */
+    } else if (sh.total != null && Math.abs(sh.total - line) < 1e-9 && sh.over_odds && sh.under_odds) {
+      const po = nv2(sh.over_odds, sh.under_odds); k = who === "over" ? po : 1 - po; exact = true;
+    }
+    return {m, k, exact};
+  }
+  if (kind === "btts") { const m = bttsOf(Mm), k = Mk ? bttsOf(Mk) : null; return who === "yes" ? {m, k, exact: false} : {m: 1 - m, k: k == null ? null : 1 - k, exact: false}; }
+  if (kind === "dnb") { const mh = g.p_home / (g.p_home + g.p_away), kh = K ? K.p_home / (K.p_home + K.p_away) : null;
+    return who === "home" ? {m: mh, k: kh, exact: true} : {m: 1 - mh, k: kh == null ? null : 1 - kh, exact: true}; }
+  return {m: null, k: null, exact: false};
+}
+/* the same rule as the posted plays: Pinnacle says the price is value, the model agrees. Converted lines need 1 point more. */
+function verdict(c, odds) {
+  if (c.k == null || !String(odds ?? "").trim()) return null;
+  const o = oddsNum(odds); if (!isFinite(o) || Math.abs(o) < 100) return {bad: true};
+  const R = D.rules || {}, ev = 100 * (c.k * (payout(odds) + 1) - 1), gap = 100 * (c.m - c.k);
+  const lo = (R.sharp_min_ev ?? 1.5) + (c.exact ? 0 : 1), hi = R.sharp_max_ev ?? 8, agree = gap >= (R.model_agree ?? 0);
+  return {ev, gap, lo, agree, implied: 100 * impl(odds), tier: ev > hi ? "big" : ev >= lo && agree ? "play" : ev > 0 ? "thin" : "none"};
+}
+function verdictLine(v, c) {
+  if (!v) return c.k != null ? `Pinnacle's fair price <b>${fair(c.k)}</b> (${n(100 * c.k, 1)}%${c.exact ? "" : ", converted"}). Model ${n(100 * c.m, 0)}%. Type your book's price to check it.`
+    : `Model fair <b>${fair(c.m)}</b> (${n(100 * c.m, 0)}%). No Pinnacle price for this match yet.`;
+  if (v.bad) return "Use American odds like -110 or +150.";
+  const why = v.tier === "play" ? `Model ${n(100 * c.m, 0)}% agrees.` : v.tier === "big" ? "Gap too big to trust: likely a stale or wrong line." : v.ev > 0 && !v.agree ? `The model disagrees (${n(100 * c.m, 0)}%).` : v.ev > 0 ? `Needs +${n(v.lo)}%${c.exact ? "" : " on a converted line"}.` : "";
+  return `<span class="vt ${v.tier === "play" ? "play" : v.tier === "big" ? "big" : "thin"}">${{play: "Play", thin: "Thin edge", big: "Too big to trust", none: "No value"}[v.tier]}</span> Worth ${sgn(v.ev)}% at Pinnacle's fair ${n(100 * c.k, 1)}%${c.exact ? "" : " (converted)"}; your price implies ${n(v.implied, 1)}%. ${why}`;
+}
+const LS_PRICES = "board.soccer.prices.v1";
+let PRICES = lsGet(LS_PRICES, {});
+const pKey = (gid, kind, who, line) => [gid, kind, who, line ?? ""].join("|");
+const sideName = (g, kind, who) => kind === "btts" ? (who === "yes" ? "Yes" : "No") : kind === "total" ? (who === "over" ? "Over" : "Under") : who === "home" ? g.home : g.away;
+const lineTxt = L => L == null ? "" : L === 0 ? "0" : (L > 0 ? "+" : "−") + Math.abs(L);
+function priceBox(g, kind, who, line) {
+  const key = pKey(g.game_id, kind, who, line), my = PRICES[key]?.odds || "", c = chances(g, kind, who, line), v = verdict(c, my);
+  const side = sideName(g, kind, who), p = {side, who, line, odds: my};
+  const bet = {kind, game_id: g.game_id, who, side, line: ["ah", "total"].includes(kind) ? line : null, odds: my || fair(c.k ?? c.m), model_pct: 100 * (c.k ?? c.m),
+    desc: pickText(kind, p), sub: `${PK_NAME[kind]}, ${g.home} vs ${g.away}`};
+  return `<div class="pcheck" data-pk="${esc(key)}"><span class="dim">Your book's price</span><input class="pin" value="${esc(my)}" placeholder="${esc(fair(c.k ?? c.m))}" inputmode="text" aria-label="Your book's odds for ${esc(bet.desc)}">${logBtn(bet)}</div>
+    <div class="stake">${verdictLine(v, c)}${v?.tier === "play" ? ` ${stakeTxt(100 * c.k, my)}` : ""}</div>`;
+}
+document.addEventListener("change", e => { const box = e.target.closest("[data-pk]"); if (!box || !e.target.matches("input.pin")) return;
+  const v = e.target.value.trim(); if (v) PRICES[box.dataset.pk] = {odds: v, at: new Date().toISOString()}; else delete PRICES[box.dataset.pk];
+  lsSet(LS_PRICES, PRICES); render(); });
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("input.pin")) e.target.blur(); });
+/* plays you found by typing your book's price (AH, BTTS, draw no bet): same rule, saved on this device */
+function myPlays() {
+  const out = [];
+  for (const [key, v] of Object.entries(PRICES)) {
+    if (!v?.odds) continue;
+    const [gid, kind, who, line] = key.split("|"), g = (D.games || []).find(x => String(x.game_id) === gid);
+    if (!g || !lgOk(g) || new Date(g.start) < Date.now()) continue;
+    const L = line === "" ? null : +line, c = chances(g, kind, who, L), vd = verdict(c, v.odds);
+    if (!vd || vd.tier !== "play") continue;
+    const p = {side: sideName(g, kind, who), who, line: L, odds: fmtO(v.odds), model: 100 * c.m, sharp: 100 * c.k, ev: vd.ev, play: true, exact: c.exact};
+    out.push({kind, g, p, edge: vd.ev, model: p.model, sharp: p.sharp, odds: p.odds, mine: true, title: pickText(kind, p), sub: `${PK_NAME[kind]}, ${g.home} vs ${g.away}`});
+  }
+  return out;
+}
+const OPEN = new Set();
+document.addEventListener("toggle", e => { const d = e.target; if (d.id && d.tagName === "DETAILS") (d.open ? OPEN.add(d.id) : OPEN.delete(d.id)); }, true);
+const isOpen = id => OPEN.has(id) ? " open" : "";
+const formHTML = f => f ? `<span class="fm">${[...f.res].map(c => `<i class="${c}">${c}</i>`).join("")}</span>${n(f.gf, 1)} scored, ${n(f.ga, 1)} conceded${f.xgf != null ? ` (xG ${n(f.xgf, 1)} for, ${n(f.xga, 1)} against)` : ""}` : `<span class="dim">no league matches yet</span>`;
+
 /* ---------- shared bits ---------- */
 const lgOk = x => LG === "all" || x.league === LG;
 const lgName = k => D.leagues?.[k]?.short || k;
@@ -890,30 +1063,38 @@ function sparkSVG(series) {
 }
 function pickText(k, p) {
   if (k === "1x2") return p.who === "draw" ? "Draw" : `${p.side} to win`;
-  if (k === "ah") return `${p.side} ${p.line > 0 ? "+" : ""}${p.line}`;
+  if (k === "ah") return `${p.side} ${lineTxt(+p.line)}`;
   if (k === "total") return `${p.side} ${p.line}`;
   if (k === "dnb") return `${p.side} (draw no bet)`;
   if (k === "btts") return `BTTS ${p.side}`;
   return p.side;
 }
 const whoOf = (g, side) => side === g.home ? "home" : side === g.away ? "away" : "draw";
-function allPlays() {
+function allPlays(withMine = true) {
   const out = [];
   for (const g of (D.games || []).filter(lgOk)) for (const [k, p] of Object.entries(g.picks || {})) if (p.play)
     out.push({kind: k, g, p, edge: p.ev, model: p.model, book: p.book, sharp: p.sharp, odds: p.odds, title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`});
+  if (withMine) out.push(...myPlays());
+  return out.sort((a, b) => b.edge - a.edge);
+}
+/* sides Pinnacle rates as value that missed the rule (too small, model disagrees, or the match already has a play) */
+function nearMisses() {
+  const out = [];
+  for (const g of (D.games || []).filter(lgOk)) for (const k of ["1x2", "ah", "total"]) { const p = g.picks?.[k];
+    if (p && !p.play && p.ev != null && p.ev > 0) out.push({kind: k, g, p, edge: p.ev, odds: p.odds, title: pickText(k, p)}); }
   return out.sort((a, b) => b.edge - a.edge);
 }
 const playBet = x => ({kind: x.kind, game_id: x.g.game_id, who: x.p.who || whoOf(x.g, x.p.side), side: x.p.side,
   line: ["ah", "total"].includes(x.kind) ? x.p.line : null, odds: x.odds, model_pct: x.p.sharp ?? x.model, desc: x.title, sub: x.sub});
 function ticket(x) {
   return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${PK_NAME[x.kind]}</b><span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(when(x.g.start))}</span></div>
-    <div class="t-pick">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
+    <div class="t-pick">${esc(x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
     <div class="t-who">${esc(x.g.home)} vs ${esc(x.g.away)}</div>
     ${valueLine(x.p)}${lineupNote(x.g)}
     <div class="t-actions"><span class="stake">${stakeTxt(x.p.sharp, x.odds)}</span>${logBtn(playBet(x))}</div></div>
     <div class="t-side"><div class="t-gap">+${n(x.edge)}<small>%</small></div><div class="t-gl">value vs Pinnacle</div></div></article>`;
 }
-const valueLine = p => p.sharp != null ? `<div class="t-meta">Pinnacle's fair chance <b>${n(p.sharp, 1)}%</b> vs ${n(impl(p.odds) * 100, 1)}% priced in at ${esc(p.odds)}. Model ${n(p.model, 0)}% agrees.</div>` : "";
+const valueLine = p => p.sharp != null ? `<div class="t-meta">Pinnacle's fair chance <b>${n(p.sharp, 1)}%</b>${p.exact === false ? " (converted line)" : ""} vs ${n(impl(p.odds) * 100, 1)}% priced in at ${esc(p.odds)}. Model ${n(p.model, 0)}% agrees.</div>` : "";
 function lineupNote(g) {
   const L = g.lineups || {}, parts = [];
   for (const [side, t] of [["home", g.home], ["away", g.away]]) { const x = L[side]; if (!x) continue;
@@ -931,24 +1112,73 @@ function recRow(cls, label, r) {
 }
 
 /* ---------- home ---------- */
+const BYM = {k: "1x2", all: false};
+const MK_TABS = [["1x2", "Moneyline"], ["ah", "Asian handicap"], ["total", "Total goals"], ["btts", "Both teams to score"], ["dnb", "Draw no bet"]];
+function betRow(x) {
+  return `<div class="bet on"><span class="icon">${ico(x.kind === "ah" ? "ah" : "games")}</span>
+    <div><div class="k"><span class="mchip">${esc(PK_NAME[x.kind])}</span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.g.home)} vs ${esc(x.g.away)}, ${esc(when(x.g.start))}</div>
+      <div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
+      <div class="who logrow">${stakeTxt(x.p.sharp, x.odds)} ${logBtn(playBet(x))}</div></div>
+    <div class="gapv">+${n(x.edge)}%<small>value</small></div>${meterHTML(x.p.sharp, impl(x.odds) * 100)}</div>`;
+}
+/* one row per match for a market: the model's side, Pinnacle's chance for it, the gap, the price and whether it's a play */
+function mktRows(G, k) {
+  return G.map(g => {
+    const p = g.picks?.[k]; if (!p) return null;
+    const mkt = k === "1x2" ? p.sharp : k === "total" ? (p.sharp ?? p.conv) : p.mkt;
+    let status = "", val = null;
+    if (p.play) { status = `<span class="tag">Play</span>`; val = p.ev; }
+    else if (p.ev != null) { val = p.ev; status = `<span class="${p.ev > 0 ? "gold" : "dim"}">${sgn(p.ev)}% value</span>`; }
+    else if (p.ev_conv != null) { val = p.ev_conv; status = `<span class="dim">${sgn(p.ev_conv)}% (Pinnacle ${p.conv_from} converted)</span>`; }
+    else if (k === "btts" || k === "dnb" || (k === "ah" && !p.odds)) {
+      const who = k === "btts" ? p.side.toLowerCase() : p.who, line = k === "ah" ? p.line : null;
+      const my = PRICES[pKey(g.game_id, k, who, line)]?.odds, v = my ? verdict(chances(g, k, who, line), my) : null;
+      if (v && !v.bad) { val = v.ev; status = v.tier === "play" ? `<span class="tag">Play</span> <span class="mine">your price</span>` : `<span class="dim">${sgn(v.ev)}% at ${esc(my)}</span>`; }
+      else status = `<span class="dim">enter price</span>`;
+    }
+    const price = p.odds ? `${esc(p.odds)} <span class="dim">book</span>` : p.pin ? `${esc(p.pin)} <span class="dim">Pinnacle</span>` : `${esc(p.fair || "")} <span class="dim">fair</span>`;
+    const play = p.play || status.includes("tag");
+    return {g, p, mkt, gap: mkt != null ? p.model - mkt : null, val, play, status, price};
+  }).filter(Boolean).sort((a, b) => (b.play - a.play) || ((b.val ?? -99) - (a.val ?? -99)) || ((b.gap ?? -99) - (a.gap ?? -99)));
+}
+function marketBoard(G) {
+  const rows = mktRows(G, BYM.k), shown = BYM.all ? rows : rows.slice(0, 8);
+  const note = {"1x2": "Your book's moneyline vs Pinnacle's no-vig price. Value is what the price is worth at Pinnacle's chance.",
+    ah: "Your book's handicap prices aren't in the odds feed, so the price shown is Pinnacle's. Type your book's price on the Asian handicap tab to check it.",
+    total: "Value where Pinnacle posted the same line. When its line differs, its price is converted to your book's line (shown, never a play).",
+    btts: "Pinnacle-implied BTTS chance from its 1X2 and total. Type your book's price on the match to check it.",
+    dnb: "Draw no bet straight from Pinnacle's 1X2 (exact). Type your book's price on the match to check it."}[BYM.k];
+  return `<div class="mkts">${MK_TABS.map(([k, v]) => `<button data-bym="${k}" aria-pressed="${BYM.k === k}">${v}</button>`).join("")}</div>
+    <div class="tablewrap"><table class="bym"><thead><tr><th>Match</th><th>Model side</th><th class="c-m">Model</th><th class="c-m">Pinnacle</th><th>Gap</th><th class="c-x">Price</th><th>Status</th></tr></thead><tbody>
+    ${shown.map(r => `<tr class="p${r.play ? " on" : ""}" data-game="${r.g.game_id}"><td class="l"><span class="lgtag">${esc(lgName(r.g.league))}</span>${esc(r.g.home)} vs ${esc(r.g.away)}<br><span class="dim">${esc(when(r.g.start))}</span></td>
+      <td class="lean"><b>${esc(pickText(BYM.k, r.p))}</b><span class="mob">${n(r.p.model, 0)}% model${r.mkt != null ? `, ${n(r.mkt, 0)}% Pinnacle` : ""}</span></td><td class="c-m">${n(r.p.model, 0)}%</td><td class="c-m">${r.mkt != null ? n(r.mkt, 0) + "%" : "–"}</td>
+      <td class="gp ${r.gap > 0 ? "pos" : "neg"}">${r.gap != null ? sgn(r.gap, 1) : "–"}</td><td class="c-x">${r.price}</td><td>${r.status}</td></tr>`).join("") || `<tr><td colspan="7" class="l dim">No matches for this filter.</td></tr>`}</tbody></table></div>
+    ${rows.length > 8 ? `<button class="more" data-bymall>${BYM.all ? "Show top 8" : `Show all ${rows.length}`}</button>` : ""}
+    <p class="note">${note} <b>Gap</b> is model minus Pinnacle in percentage points. A lean is not a play: in testing the model alone didn't beat the market, so a play also needs a price that beats Pinnacle's fair odds.</p>`;
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-bym]"); if (b) { BYM.k = b.dataset.bym; BYM.all = false; renderHome(); }
+  if (e.target.closest("[data-bymall]")) { BYM.all = !BYM.all; renderHome(); } });
+function tileMk(g, k, label, txt) { const p = g.picks?.[k]; return p ? `<span>${label}</span><b class="${p.play ? "on" : ""}">${esc(txt(p))}</b>` : ""; }
 function renderHome() {
   const G = (D.games || []).filter(lgOk), plays = allPlays(), T = D.tracking || {}, pr = T.plays || {};
-  const next = G[0], wk = G.filter(g => (new Date(g.start) - Date.now()) / 864e5 < 4);
+  const next = G[0], wk = G.filter(g => (new Date(g.start) - Date.now()) / 864e5 < 4), kinds = {};
+  plays.forEach(x => kinds[x.kind] = (kinds[x.kind] || 0) + 1);
   let h = lgChips() + `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)}–${String(D.season + 1).slice(2)} season</div>
       <div class="big">${wk.length || G.length}<span>${wk.length ? "matches in the next 4 days" : "matches next"}</span></div>
       <div class="line">${next ? `First up <b>${esc(next.home)} vs ${esc(next.away)}</b>, ${esc(when(next.start))}` : "No matches scheduled."}</div></div>
     <div class="hero-stats"><div class="hs"><b class="gold">${plays.length}</b><span>Plays now</span></div>
       <div class="hs"><b>${pr.w || 0}–${pr.l || 0}</b><span>All plays</span></div><div class="hs"><b class="${uc(pr.units)}">${units(pr.w + pr.l ? pr.units : null)}</b><span>Units</span></div></div></div>`;
-  const top = plays.slice(0, 4).map(x => `<div class="bet"><span class="icon">${ico("games")}</span>
-      <div><div class="k"><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.sub)}, ${esc(when(x.g.start))}</div><div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
-      <div class="who">${stakeTxt(x.p.sharp, x.odds)}</div></div>
-      <div class="gapv">+${n(x.edge)}%<small>value</small></div>${meterHTML(x.p.sharp, impl(x.odds) * 100)}</div>`).join("");
-  const bt = D.backtest || {}, lgs = Object.keys(D.leagues || {}).filter(k => LG === "all" || k === LG);
-  const btRow = lgs.map(k => bt[k] ? `<div class="kpi"><b>${n(bt[k].ll_model, 3)}</b><span>${esc(lgName(k))} log loss (closing line ${n(bt[k].ll_close, 3)})</span></div>` : "").join("");
-  h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All matches</button></h3><p class="pmuted">Orange on the meter is how much Pinnacle's fair chance beats the chance priced into your book's odds.</p>
-      <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" || D.odds?.source === "saved" ? "The model is close to the book on everything posted." : "Book lines arrive once the soccer odds key is added. Until then every match shows the model's fair odds, so you can compare with Hard Rock yourself."}</div>`}</div></div>
+  const near = nearMisses().slice(0, 3);
+  const nearHTML = near.length ? `<h3 style="margin:16px 0 6px;font-size:14px">Closest to a play <span class="dim" style="font-weight:400">Pinnacle sees value, but it missed the rule</span></h3>
+    <div class="bets-list">${near.map(x => `<div class="bet"><span class="icon">${ico(x.kind === "ah" ? "ah" : "games")}</span><div><div class="k"><span class="mchip">${esc(PK_NAME[x.kind])}</span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.g.home)} vs ${esc(x.g.away)}, ${esc(when(x.g.start))}</div>
+      <div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div><div class="who">${x.p.ev < (D.rules?.sharp_min_ev ?? 1.5) ? `Needs +${D.rules?.sharp_min_ev ?? 1.5}% value` : x.p.edge < 0 ? "The model disagrees" : x.p.ev > (D.rules?.sharp_max_ev ?? 8) ? "Gap too big to trust" : "The match already has a better play"}</div></div>
+      <div class="gapv" style="color:var(--muted)">+${n(x.edge)}%<small>value</small></div></div>`).join("")}</div>` : "";
+  h += `<div class="dash"><div class="panel span-8"><h3>Plays right now <button data-go="games">All matches</button></h3>
+      <p class="pmuted">${plays.length ? `Every play on the board, any market: ${Object.entries(kinds).map(([k, c]) => `${c} ${PK_NAME[k].toLowerCase()}`).join(", ")}. Orange on the meter is how much Pinnacle's fair chance beats the chance priced into the odds.` : "Every play on the board, any market: moneyline, Asian handicap, totals, BTTS, draw no bet."}</p>
+      <div class="bets-list">${plays.map(betRow).join("") || `<div class="empty"><b>No plays right now.</b> ${D.odds?.source === "odds_api" || D.odds?.source === "saved" ? "Your book's prices are close to Pinnacle's on everything posted." : "Book lines arrive once the soccer odds key is added."} Handicap, BTTS and draw no bet prices aren't in the feed: type your book's price on a match or on the Asian handicap tab and it shows here if it's a play.</div>`}</div>${nearHTML}</div>
     <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit</p>${sparkSVG(T.series || [])}
-      <div class="kpis">${btRow || `<div class="kpi"><b>–</b><span>Backtest pending</span></div>`}</div></div></div>`;
+      <div class="kpis">${Object.keys(D.leagues || {}).filter(k => LG === "all" || k === LG).map(k => D.backtest?.[k] ? `<div class="kpi"><b>${n(D.backtest[k].ll_model, 3)}</b><span>${esc(lgName(k))} log loss (closing line ${n(D.backtest[k].ll_close, 3)})</span></div>` : "").join("") || `<div class="kpi"><b>–</b><span>Backtest pending</span></div>`}</div></div></div>`;
+  h += `<div class="dash"><div class="panel span-12"><h3>Every market, every match <button data-go="ah">Asian handicap</button></h3><p class="pmuted">The model's side in each market next to Pinnacle's fair chance. Plays sort to the top, then the best value.</p>${marketBoard(G)}</div></div>`;
   if (pr.w + pr.l) {
     const BT = T.by_type || {}, BL = T.by_league || {};
     h += `<div class="dash"><div class="panel span-12"><h3>Record by bet type <button data-go="record">Record</button></h3><p class="pmuted">Graded automatically, flat 1 unit per play. Half wins and half losses on quarter lines count as wins and losses.</p>
@@ -956,13 +1186,13 @@ function renderHome() {
       ${["1x2", "ah", "total"].map(k => recRow("kid", PK_NAME[k], BT[k])).join("")}
       ${Object.keys(D.leagues).map(k => recRow("kid", esc(D.leagues[k].name), BL[k])).join("")}${recRow("all", "All plays", pr)}</tbody></table></div></div></div>`;
   }
-  h += `<div class="dash"><div class="panel span-12"><h3>Matches <button data-go="games">Full board</button></h3><p class="pmuted">Tap a match for every market, fair odds and the most likely scores.</p>
-    <div class="slate">${G.slice(0, 24).map(g => { const P = g.picks || {}, pk = P["1x2"];
-      return `<button class="tile" data-game="${g.game_id}"><div class="tt"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${n(g.xg_home, 1)}–${n(g.xg_away, 1)} xG</span></div>
+  h += `<div class="dash"><div class="panel span-12"><h3>Matches <button data-go="games">Full board</button></h3><p class="pmuted">The model's side in every market. Green is a play. Tap a match for prices, form and the most likely scores.</p>
+    <div class="slate">${G.slice(0, 24).map(g => { const on = Object.values(g.picks || {}).some(p => p.play);
+      return `<button class="tile${on ? " on" : ""}" data-game="${g.game_id}"><div class="tt"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${n(g.xg_home, 1)}–${n(g.xg_away, 1)} xG</span></div>
         <div class="tr"><span>${esc(g.home)}</span><b>${esc(g.book?.ml_home ? fmtO(g.book.ml_home) : fair(g.p_home / 100))}</b></div>
         <div class="tr"><span>${esc(g.away)}</span><b>${esc(g.book?.ml_away ? fmtO(g.book.ml_away) : fair(g.p_away / 100))}</b></div>
         ${threeWay(g)}
-        <div class="tp">${Object.values(P).some(p => p.play) ? `<b class="gold">Play</b> ` : "Model lean "}<b>${esc(pk ? pickText("1x2", pk) : "")}</b></div></button>`; }).join("") || `<div class="empty">No matches in the next week.</div>`}</div></div></div>`;
+        <div class="tmk">${tileMk(g, "1x2", "Moneyline", p => `${pickText("1x2", p)} ${n(p.model, 0)}%`)}${tileMk(g, "ah", "Handicap", p => pickText("ah", p))}${tileMk(g, "total", "Goals", p => pickText("total", p))}${tileMk(g, "btts", "BTTS", p => `${p.side} ${n(p.model, 0)}%`)}</div></button>`; }).join("") || `<div class="empty">No matches in the next week.</div>`}</div></div></div>`;
   const R = (D.recent || []).filter(lgOk).slice(0, 12);
   if (R.length) h += `<div class="dash"><div class="panel span-12"><h3>Latest results</h3><div class="recent">${R.map(x => `<div class="r"><span><span class="lgtag">${esc(lgName(x.league))}</span>${esc(x.home)} vs ${esc(x.away)}</span><b>${x.hg}–${x.ag}</b></div>`).join("")}</div></div></div>`;
   $("#home").innerHTML = h;
@@ -971,15 +1201,25 @@ function renderHome() {
 /* ---------- matches ---------- */
 function mkCell(g, k) {
   const p = g.picks?.[k]; if (!p) return "";
-  const right = p.ev != null ? `Pinnacle value <span class="${p.ev >= 0 ? "gold" : "dim"}">${sgn(p.ev)}%</span>` : p.edge != null ? `<span class="dim">no Pinnacle price for this line</span>` : `fair <b style="display:inline;font-size:13px">${esc(p.fair || "")}</b>`;
-  const lineTxt = k === "btts" ? `Yes ${n(p.yes, 0)}%, fair Yes ${fair(p.yes / 100)} / No ${fair(1 - p.yes / 100)}` : `${n(p.model, 0)}% model${p.book != null ? `, ${n(p.book, 0)}% book` : ""}${p.sharp != null ? `, ${n(p.sharp, 0)}% Pinnacle` : ""}`;
-  const who = k === "1x2" ? p.who : whoOf(g, p.side);
+  const who = k === "1x2" ? p.who : k === "btts" ? p.side.toLowerCase() : k === "total" ? p.who : whoOf(g, p.side);
+  if (k === "btts" || k === "dnb" || (k === "ah" && !p.odds)) {
+    /* no price from your book in the feed: model vs Pinnacle, then check your book's price */
+    const line = k === "ah" ? p.line : null, mine = PRICES[pKey(g.game_id, k, who, line)]?.odds, v = mine ? verdict(chances(g, k, who, line), mine) : null;
+    const sub = k === "btts" ? `Yes ${n(p.yes, 0)}% model${p.myes != null ? `, ${n(p.myes, 0)}% Pinnacle-implied` : ""}`
+      : `${n(p.model, 0)}% model${p.mkt != null ? `, ${n(p.mkt, 0)}% Pinnacle${k === "ah" ? ` (${esc(p.pin)})` : ""}` : ""}`;
+    return `<div class="mk${v?.tier === "play" ? " on" : ""}">${PK_NAME[k]}<b>${esc(pickText(k, p))}</b>${sub}${p.mkt != null ? `<br>Model fair <b style="display:inline;font-size:13px">${esc(p.fair)}</b>, Pinnacle fair <b style="display:inline;font-size:13px">${esc(p.mfair)}</b>` : `<br>fair <b style="display:inline;font-size:13px">${esc(p.fair || "")}</b>`}
+      ${priceBox(g, k, who, line)}${k === "ah" ? `<div style="margin-top:6px"><button class="more" style="margin:0" data-ahgo="${g.game_id}">Full handicap ladder</button></div>` : ""}</div>`;
+  }
+  const right = p.ev != null ? `Pinnacle value <span class="${p.ev >= 0 ? "gold" : "dim"}">${sgn(p.ev)}%</span>` : p.ev_conv != null ? `<span class="dim">Pinnacle's ${p.conv_from} converted to ${p.line}: ${sgn(p.ev_conv)}% value (shown only)</span>` : p.edge != null ? `<span class="dim">no Pinnacle price for this line</span>` : `fair <b style="display:inline;font-size:13px">${esc(p.fair || "")}</b>`;
+  const lineTxt2 = `${n(p.model, 0)}% model${p.book != null ? `, ${n(p.book, 0)}% book` : ""}${p.sharp != null ? `, ${n(p.sharp, 0)}% Pinnacle` : p.conv != null ? `, ${n(p.conv, 0)}% Pinnacle (converted)` : ""}`;
   const bet = {kind: k, game_id: g.game_id, who, side: p.side, line: ["ah", "total"].includes(k) ? p.line : null, odds: p.odds || p.fair, model_pct: p.sharp ?? p.model,
     desc: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`};
-  return `<div class="mk${p.play ? " on" : ""}">${PK_NAME[k]}<b>${esc(pickText(k, p))}${p.odds ? ` <small class="dim">${esc(p.odds)}</small>` : ""}</b>${lineTxt}<br>${right}
-    <div class="stake" style="margin-top:4px">${p.play ? stakeTxt(p.sharp, p.odds) : p.odds ? (p.ev == null ? "No play: needs Pinnacle's price to check it." : p.ev < (D.rules?.sharp_min_ev ?? 1.5) ? "No play: Pinnacle doesn't rate this price as value." : p.ev > (D.rules?.sharp_max_ev ?? 8) ? "No play: gap too big to trust, likely a stale or wrong line." : p.edge < 0 ? "No play: the model disagrees." : "No play: one play per match (or the day's cap).") : `Bet it only if your book pays more than ${esc(p.fair || "fair")}.`}</div>
+  return `<div class="mk${p.play ? " on" : ""}">${PK_NAME[k]}<b>${esc(pickText(k, p))}${p.odds ? ` <small class="dim">${esc(p.odds)}</small>` : ""}</b>${lineTxt2}<br>${right}
+    <div class="stake" style="margin-top:4px">${p.play ? stakeTxt(p.sharp, p.odds) : p.odds ? (p.ev == null ? "No play: needs Pinnacle's price at this line to check it." : p.ev < (D.rules?.sharp_min_ev ?? 1.5) ? "No play: Pinnacle doesn't rate this price as value." : p.ev > (D.rules?.sharp_max_ev ?? 8) ? "No play: gap too big to trust, likely a stale or wrong line." : p.edge < 0 ? "No play: the model disagrees." : "No play: one play per match (or the day's cap).") : `Bet it only if your book pays more than ${esc(p.fair || "fair")}.`}</div>
     <div style="margin-top:6px">${logBtn(bet)}</div></div>`;
 }
+document.addEventListener("click", e => { const b = e.target.closest("[data-ahgo]"); if (!b) return; e.preventDefault(); e.stopPropagation();
+  showTab("ah"); const el = document.getElementById("ah-" + b.dataset.ahgo); if (el) { el.open = true; el.scrollIntoView({block: "start"}); } });
 function renderGames() {
   const G = (D.games || []).filter(lgOk), plays = allPlays();
   let h = lgChips() + `<div class="week"><div class="wk">${G.length}<span>matches</span></div><div class="facts">
@@ -994,11 +1234,15 @@ function renderGames() {
   for (const g of G) {
     const d = day(g.start), b = g.book || {}, P = g.picks || {};
     if (d !== lastDay) { h += `<div class="board-head" style="display:block">${esc(d)}</div>`; lastDay = d; }
-    h += `<details class="match${Object.values(P).some(p => p.play) ? " is-play" : ""}" id="g-${g.game_id}"><summary>
+    h += `<details class="match${Object.values(P).some(p => p.play) ? " is-play" : ""}" id="g-${g.game_id}"${isOpen("g-" + g.game_id)}><summary>
       <div class="mhead"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${b.ml_home ? `${fmtO(b.ml_home)} / ${fmtO(b.ml_draw)} / ${fmtO(b.ml_away)}` : `fair ${fair(g.p_home / 100)} / ${fair(g.p_draw / 100)} / ${fair(g.p_away / 100)}`}</span></div>
       <div class="mrow"><div><div class="tm">${esc(g.home)}<span>${n(g.xg_home, 2)} xG</span></div><div class="tm">${esc(g.away)}<span>${n(g.xg_away, 2)} xG</span></div></div><div>${threeWay(g)}</div></div>
       ${Object.entries(P).filter(([k, p]) => p.play).map(([k, p]) => `<div class="playline">Play: ${esc(PK_NAME[k])}, ${esc(pickText(k, p))}${p.odds ? ` ${esc(p.odds)}` : ""}</div>`).join("")}</summary>
-      <div class="m-body">${lineupNote(g)}<div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
+      <div class="m-body">${lineupNote(g)}
+        <div class="formrow"><span><b>${esc(g.home)}</b> form${formHTML(g.form?.home)}</span></div>
+        <div class="formrow"><span><b>${esc(g.away)}</b> form${formHTML(g.form?.away)}</span></div>
+        <div class="dim">Last 6 league matches, oldest first. ${g.mkt ? `Pinnacle (no vig): ${esc(g.home)} ${n(g.mkt.p_home, 0)}%, draw ${n(g.mkt.p_draw, 0)}%, ${esc(g.away)} ${n(g.mkt.p_away, 0)}% vs model ${n(g.p_home, 0)} / ${n(g.p_draw, 0)} / ${n(g.p_away, 0)}. Pinnacle's prices imply ${n(g.mkt.lh, 2)}–${n(g.mkt.la, 2)} expected goals.` : ""}</div>
+        <div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
         ${P["1x2"]?.draw ? `<div class="dim">Draw: ${n(P["1x2"].draw.model, 0)}% model${P["1x2"].draw.book != null ? `, ${n(P["1x2"].draw.book, 0)}% book at ${esc(P["1x2"].draw.odds)}` : `, fair ${esc(P["1x2"].draw.fair)}`}.</div>` : ""}
         <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div></div></details>`;
   }
@@ -1006,6 +1250,104 @@ function renderGames() {
     <p class="note">Expected goals come from team attack and defence ratings built on xG (Premier League, La Liga) or shots on target (Championship), with recent matches counting more. Asian handicap and totals grade quarter lines as two half bets, the way books do.</p>`;
   $("#games").innerHTML = h;
 }
+
+/* ---------- Asian handicap ---------- */
+const AHS = {sort: "time", q: ""}, AHSEL = {};
+function ahLadder(g) {
+  /* home lines from -3 to +3 in quarter steps, kept where either side still has a real chance */
+  const Mm = modelGrid(g), out = [];
+  for (let L = -3; L <= 3.001; L += 0.25) { const l = Math.round(L * 4) / 4, c = chances(g, "ah", "home", l);
+    if (c.m >= 0.06 && c.m <= 0.94) out.push({l, ...c, o: settle(Mm, "ah", l)}); }
+  return out;
+}
+function ahSel(g) {
+  const P = g.picks?.ah || {}, d = AHSEL[g.game_id];
+  return d || {who: P.who || "home", line: P.line ?? (g.ah_main ? g.ah_main.line : 0)};
+}
+function settleChips(o) {
+  const parts = [["Win", o.w], ["Half win", o.hw], ["Refund", o.p], ["Half loss", o.hl], ["Loss", o.l]].filter(x => x[1] >= 0.005);
+  return `<div class="settle">${parts.map(([l, v]) => `<span><b>${l}</b>${n(100 * v, 0)}%</span>`).join("")}</div>`;
+}
+function ahCard(g) {
+  const A = g.ah_main, P = g.picks?.ah || {}, sel = ahSel(g), lad = ahLadder(g), id = "ah-" + g.game_id;
+  const mainL = A ? A.line : (P.who === "home" ? P.line : -P.line);
+  const c1 = chances(g, "ah", "home", mainL);
+  const leanHome = P.who === "home";
+  const mine = PRICES[pKey(g.game_id, "ah", sel.who, sel.line)]?.odds, vSel = mine ? verdict(chances(g, "ah", sel.who, sel.line), mine) : null;
+  const anyPlay = lad.some(r => ["home", "away"].some(w => { const L = w === "home" ? r.l : -r.l, m = PRICES[pKey(g.game_id, "ah", w, L)]?.odds; return m && verdict(chances(g, "ah", w, L), m)?.tier === "play"; }));
+  const ml = g.picks?.["1x2"], b = g.book || {};
+  const mlRow = (who, odds) => { if (!odds || !g.mkt) return ""; const c = chances(g, "ah", who, -0.5), v = verdict(c, odds), play = ml?.play && ml.who === who;
+    return `<span>${esc(who === "home" ? g.home : g.away)} −0.5 at <b>${fmtO(odds)}</b>: ${v && !v.bad ? `<span class="${v.ev > 0 ? "gold" : "dim"}">${sgn(v.ev)}% value</span>` : "–"}${play ? ` <span class="tag">Play</span>` : ""}</span>`; };
+  const selC = chances(g, "ah", sel.who, sel.line), selO = settleSide(modelGrid(g), "ah", sel.who, sel.line);
+  const lines = lad.map(r => sel.who === "home" ? r.l : -r.l).sort((x, y) => x - y);
+  const bet = {kind: "ah", game_id: g.game_id, who: sel.who, side: sel.who === "home" ? g.home : g.away, line: sel.line, odds: mine || fair(selC.k ?? selC.m),
+    model_pct: 100 * (selC.k ?? selC.m), desc: `${sel.who === "home" ? g.home : g.away} ${lineTxt(sel.line)}`, sub: `Asian handicap, ${g.home} vs ${g.away}`};
+  return `<details class="ahm${anyPlay ? " is-play" : ""}" id="${id}"${isOpen(id)}><summary>
+    <div class="mhead"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${A ? `${esc(A.book || "Pinnacle")} main line` : "Model line (no Pinnacle price yet)"}</span></div>
+    <div class="ahline"><span class="t${leanHome ? " lean" : ""}">${esc(g.home)}</span><span class="ln">${lineTxt(mainL)}</span><span class="pr">${A ? esc(A.home) : esc(fair(c1.m))}</span></div>
+    <div class="ahline"><span class="t${leanHome ? "" : " lean"}">${esc(g.away)}</span><span class="ln">${lineTxt(-mainL)}</span><span class="pr">${A ? esc(A.away) : esc(fair(1 - c1.m))}</span></div>
+    ${P.mkt != null ? `<div class="cmp"><span>Model ${n(P.model, 0)}%</span><span class="bar" role="img" aria-label="Model ${n(P.model, 0)}% vs Pinnacle ${n(P.mkt, 0)}%"><i style="width:${P.model}%"></i><u style="left:${P.mkt}%"></u></span><span>Pinnacle ${n(P.mkt, 0)}%</span></div>
+      <div class="ahsum">Model side <b>${esc(pickText("ah", P))}</b>: ${sgn(P.edge)} pts vs Pinnacle's fair ${esc(P.mfair)}. Model fair ${esc(P.fair)}.${Math.abs(P.edge) >= 10 ? " A gap this big usually means the model is missing news (injuries, rotation), not a gift." : ""}${anyPlay ? ` <span class="tag">Play</span> <span class="mine">your price</span>` : ""}</div>`
+      : `<div class="ahsum">Model side <b>${esc(pickText("ah", P))}</b> at ${n(P.model, 0)}%, fair ${esc(P.fair || "")}.</div>`}
+  </summary>
+  <div class="m-body">
+    ${b.ml_home && g.mkt ? `<div><b>Your book's moneyline is the −0.5 line.</b><div class="formrow" style="margin-top:4px">${mlRow("home", b.ml_home)}${mlRow("away", b.ml_away)}</div></div>` : ""}
+    <div class="tablewrap"><table class="ahtab"><thead><tr><th>${esc(g.home)} line</th><th>Model</th><th>Pinnacle</th><th>Gap</th><th>Fair ${esc(g.home)}</th><th class="c-x">Fair ${esc(g.away)}</th></tr></thead><tbody>
+    ${lad.map(r => { const isSel = (sel.who === "home" ? sel.line : -sel.line) === r.l;
+      return `<tr class="p${A && Math.abs(r.l - A.line) < 1e-9 ? " main" : ""}${isSel ? " sel" : ""}" data-ahl="${g.game_id}|${r.l}"><td>${lineTxt(r.l)}${A && Math.abs(r.l - A.line) < 1e-9 ? ` <span class="dim" style="font-weight:400">main</span>` : ""}</td>
+        <td>${n(100 * r.m, 0)}%</td><td>${r.k != null ? `${n(100 * r.k, 0)}%${r.exact ? "" : `<span class="dim">*</span>`}` : "–"}</td>
+        <td class="${r.k != null && r.m > r.k ? "up" : "dim"}">${r.k != null ? sgn(100 * (r.m - r.k), 1) : "–"}</td><td>${fair(r.m)}</td><td class="c-x">${fair(1 - r.m)}</td></tr>`; }).join("")}</tbody></table></div>
+    <p class="note" style="margin:0">Chances are ${esc(g.home)} covering, refunds left out (how prices are quoted). * Pinnacle's price converted from its main line, about ±1 point. −0.5 is the moneyline, 0 is draw no bet, +0.5 is win or draw. Tap a row to check that line.</p>
+    <div><b>Check a price</b>
+      <div class="pcheck" style="margin-top:6px"><select class="ahside" data-gid="${g.game_id}" aria-label="Side"><option value="home"${sel.who === "home" ? " selected" : ""}>${esc(g.home)}</option><option value="away"${sel.who === "away" ? " selected" : ""}>${esc(g.away)}</option></select>
+        <select class="ahlinesel" data-gid="${g.game_id}" aria-label="Line">${lines.map(L => `<option value="${L}"${Math.abs(L - sel.line) < 1e-9 ? " selected" : ""}>${lineTxt(L)}</option>`).join("")}</select></div>
+      <div style="margin-top:8px">How ${esc(bet.desc)} settles, by the model:${settleChips(selO)}</div>
+      <div class="dim" style="margin-top:6px">Model ${n(100 * selC.m, 1)}% (fair ${fair(selC.m)})${selC.k != null ? `, Pinnacle ${n(100 * selC.k, 1)}% (fair ${fair(selC.k)})${selC.exact ? "" : ", converted"}` : ""}.</div>
+      <div style="margin-top:8px">${priceBox(g, "ah", sel.who, sel.line)}</div></div>
+  </div></details>`;
+}
+function renderAH() {
+  let G = (D.games || []).filter(lgOk);
+  if (AHS.q) G = G.filter(g => (g.home + " " + g.away).toLowerCase().includes(AHS.q.toLowerCase()));
+  if (AHS.sort === "gap") G = G.slice().sort((a, b) => (b.picks?.ah?.edge ?? -99) - (a.picks?.ah?.edge ?? -99));
+  const all = (D.games || []).filter(lgOk), withPin = all.filter(g => g.ah_main).length;
+  const gaps = all.map(g => g.picks?.ah?.edge).filter(x => x != null), avgGap = gaps.length ? gaps.reduce((a, b) => a + Math.abs(b), 0) / gaps.length : null;
+  const mineAH = myPlays().filter(x => x.kind === "ah");
+  let h = lgChips() + `<div class="week"><div class="wk">${all.length}<span>matches</span></div><div class="facts">
+    <div class="fact"><b>${withPin}</b>with Pinnacle's handicap line</div>
+    <div class="fact"><b>${avgGap != null ? n(avgGap, 1) + " pts" : "–"}</b>average model vs Pinnacle gap</div>
+    <div class="fact"><b>${mineAH.length}</b>handicap plays from your prices</div></div></div>
+  <details class="fold" id="ah-learn"${isOpen("ah-learn")}><summary>How Asian handicap works <span>3 line types, 3 examples</span></summary><div class="fold-body learn">
+    <p style="margin:0"><b>Asian handicap</b> is soccer's spread. A goal head start (+) or deficit (−) is added to the final score, which takes the draw out of the bet or turns it into a refund.</p>
+    <div class="tablewrap"><table><thead><tr><th>Line type</th><th>Looks like</th><th>What happens</th></tr></thead><tbody>
+      <tr><td><b>Half</b></td><td>−0.5, +1.5</td><td>No refunds. Every result wins or loses.</td></tr>
+      <tr><td><b>Whole</b></td><td>0, −1, +2</td><td>If the adjusted score is level, your stake comes back.</td></tr>
+      <tr><td><b>Quarter</b></td><td>−0.25, −0.75, +1.25</td><td>Your stake is split in two: half on the line below, half on the line above. So you can win or lose half.</td></tr></tbody></table></div>
+    <ol style="margin:0;padding-left:20px;display:grid;gap:6px">
+      <li><b>Arsenal −0.5:</b> Arsenal must win. The same bet as the Arsenal moneyline.</li>
+      <li><b>Arsenal −0.75</b> (half on −0.5, half on −1): win by 2+ is a full win. Win by exactly 1 is a <b>half win</b> (the −0.5 half wins, the −1 half is refunded). A draw or loss loses it all.</li>
+      <li><b>Forest +0.25</b> (half on 0, half on +0.5): a Forest win is a full win, a draw is a <b>half win</b>, a loss loses it all.</li></ol>
+    <p style="margin:0"><b>Reading this tab:</b> <b>Model</b> is the model's chance the side covers. <b>Pinnacle</b> is the sharpest book's fair chance (exact on its posted line, converted elsewhere). A <b>play</b> needs your book's price to beat Pinnacle's fair odds by ${D.rules?.sharp_min_ev ?? 1.5}%+ (1 point more on a converted line) with the model agreeing, the same rule as every posted play. Your book's handicap prices aren't in the odds feed, so type the price you see.</p>
+  </div></details>
+  <div class="sec-head"><h2>Handicap lines</h2><span class="aside">Tap a match for the full ladder and a price check</span></div>
+  <div class="ahtools"><div class="seg" role="group" aria-label="Sort"><button data-ahsort="time" aria-pressed="${AHS.sort === "time"}">Kickoff</button><button data-ahsort="gap" aria-pressed="${AHS.sort === "gap"}">Biggest gap</button></div>
+    <input type="search" id="ahQ" placeholder="Search team" value="${esc(AHS.q)}"></div>`;
+  if (mineAH.length) h += `<div class="tickets" style="margin-bottom:14px">${mineAH.map(ticket).join("")}</div>`;
+  h += `<div class="board">${G.map(ahCard).join("") || `<div class="empty">No matches for this filter.</div>`}</div>
+    <p class="note">The model's chances come from its expected goals for each side and a scoreline grid. Pinnacle's come from fitting the same grid to its 1X2, total and handicap prices: checked on 3,281 closing lines, that fit lands within 0.65 points of Pinnacle's real handicap price on average.</p>`;
+  $("#ah").innerHTML = h;
+  const q = $("#ahQ"); if (q) q.oninput = e => { AHS.q = e.target.value; clearTimeout(AHS.t); AHS.t = setTimeout(() => { renderAH(); const el = $("#ahQ"); el.focus(); el.setSelectionRange(el.value.length, el.value.length); }, 250); };
+}
+document.addEventListener("click", e => {
+  const s = e.target.closest("[data-ahsort]"); if (s) { AHS.sort = s.dataset.ahsort; renderAH(); return; }
+  const r = e.target.closest("tr[data-ahl]"); if (r) { const [gid, l] = r.dataset.ahl.split("|"), cur = AHSEL[gid] || ahSel((D.games || []).find(x => String(x.game_id) === gid));
+    AHSEL[gid] = {who: cur.who, line: cur.who === "home" ? +l : -l}; renderAH(); } });
+document.addEventListener("change", e => {
+  const t = e.target; if (!t.matches(".ahside,.ahlinesel")) return;
+  const g = (D.games || []).find(x => String(x.game_id) === t.dataset.gid), cur = ahSel(g);
+  if (t.matches(".ahside")) AHSEL[t.dataset.gid] = {who: t.value, line: t.value === cur.who ? cur.line : -cur.line};
+  else AHSEL[t.dataset.gid] = {who: cur.who, line: +t.value};
+  renderAH(); });
 
 /* ---------- props ---------- */
 const PU = {stat: "goal", game: "", q: "", open: null, all: false};
@@ -1117,7 +1459,7 @@ function renderRecord() {
   document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { BETS = BETS.filter(x => x.id !== b.dataset.del); lsSet(LS_BETS, BETS); renderRecord(); });
 }
 
-function render() { renderHome(); renderGames(); renderProps(); renderTeams(); renderRecord(); }
+function render() { renderHome(); renderGames(); renderAH(); renderProps(); renderTeams(); renderRecord(); }
 function freshness() {
   const t = new Date(D.generated_at), mins = Math.round((Date.now() - t) / 6e4);
   const txt = mins < 60 ? `Updated ${mins}m ago` : mins < 1440 ? `Updated ${Math.round(mins / 60)}h ago` : `Updated ${t.toLocaleDateString()}`;

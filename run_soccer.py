@@ -20,6 +20,7 @@ from soccermodel import backtest as BT
 from soccermodel import config as C
 from soccermodel import data as D
 from soccermodel import fatigue as F
+from soccermodel import market as MK
 from soccermodel import model as M
 from soccermodel import odds as O
 from soccermodel import props as P
@@ -111,8 +112,11 @@ def _side_rows(g, G, b):
     return rows
 
 
-def picks(g, G):
+def picks(g, G, mk=None):
+    """mk: Pinnacle-implied scorelines (soccermodel/market.py) or None. Plays only come from book prices (the Pinnacle
+    rule in _side_rows); the market numbers here show how the model's leans compare with the sharp price."""
     b = g.get("book") or {}
+    sh = b.get("sharp") or {}
     ph, pd_, pa = M.p1x2(G)
     rows = _side_rows(g, G, b)
     out = {}
@@ -125,6 +129,11 @@ def picks(g, G):
         out[mkt] = {"side": x["side"], "who": x["who"], "line": x["line"], "odds": fmt_odds(x["odds"]), "model": r(100 * x["pm"]),
                     "book": r(100 * x["pb"]), "sharp": None if x["ps"] is None else r(100 * x["ps"]), "edge": r(x["gap"]),
                     "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"]}
+        if mkt == "total" and x["ps"] is None and mk is not None:
+            # Pinnacle posted a different total: convert its price to the bet book's line (approximate, never a play)
+            po = M.cover(M.total(mk["G"], x["line"]))
+            pc = po if x["who"] == "over" else 1 - po
+            out[mkt].update({"conv": r(100 * pc), "ev_conv": r(100 * (pc * dec(x["odds"]) - 1)), "conv_from": sh.get("total")})
     if "1x2" in out:
         d = next(y for y in rows if y["mkt"] == "1x2" and y["who"] == "draw")
         out["1x2"]["draw"] = {"model": r(100 * pd_), "book": r(100 * d["pb"]), "odds": fmt_odds(d["odds"])}
@@ -133,16 +142,27 @@ def picks(g, G):
         out["1x2"] = {"side": best[1], "who": best[0], "odds": None, "model": r(100 * best[2]), "book": None, "edge": None,
                       "fair": fmt_odds(american(best[2])), "draw": {"model": r(100 * pd_), "fair": fmt_odds(american(pd_))}, "play": False}
     if "ah" not in out:
-        best_l, best_d = 0.0, 9
-        for l2 in np.arange(-2.5, 2.51, 0.25):                  # the quarter line closest to 50/50
-            c = M.cover(M.ah(G, l2))
-            if abs(c - 0.5) < best_d:
-                best_l, best_d = float(l2), abs(c - 0.5)
-        c = M.cover(M.ah(G, best_l))
-        home = c >= 0.5
-        out["ah"] = {"side": g["home"] if home else g["away"], "who": "home" if home else "away", "line": best_l if home else -best_l,
-                     "odds": None, "model": r(100 * max(c, 1 - c)), "book": None, "edge": None, "fair": fmt_odds(american(max(c, 1 - c))),
-                     "play": False}
+        if sh.get("ah_home") is not None and sh.get("ah_home_odds") and sh.get("ah_away_odds"):
+            # no bet-book handicap in the feed: lean at Pinnacle's main line, model vs Pinnacle's no-vig chance
+            L = float(sh["ah_home"])
+            mh, kh = M.cover(M.ah(G, L)), nv(sh["ah_home_odds"], sh["ah_away_odds"])[0]
+            home = mh - kh >= 0
+            pm, pk = (mh, kh) if home else (1 - mh, 1 - kh)
+            out["ah"] = {"side": g["home"] if home else g["away"], "who": "home" if home else "away", "line": L if home else -L,
+                         "odds": None, "pin": fmt_odds(sh["ah_home_odds"] if home else sh["ah_away_odds"]), "model": r(100 * pm),
+                         "mkt": r(100 * pk), "book": None, "edge": r(100 * (pm - pk)), "fair": fmt_odds(american(pm)),
+                         "mfair": fmt_odds(american(pk)), "play": False}
+        else:
+            best_l, best_d = 0.0, 9
+            for l2 in np.arange(-2.5, 2.51, 0.25):                  # the quarter line closest to 50/50
+                c = M.cover(M.ah(G, l2))
+                if abs(c - 0.5) < best_d:
+                    best_l, best_d = float(l2), abs(c - 0.5)
+            c = M.cover(M.ah(G, best_l))
+            home = c >= 0.5
+            out["ah"] = {"side": g["home"] if home else g["away"], "who": "home" if home else "away", "line": best_l if home else -best_l,
+                         "odds": None, "model": r(100 * max(c, 1 - c)), "book": None, "edge": None, "fair": fmt_odds(american(max(c, 1 - c))),
+                         "play": False}
     if "total" not in out:
         mo = M.cover(M.total(G, 2.5))
         out["total"] = {"side": "Over" if mo >= 0.5 else "Under", "who": "over" if mo >= 0.5 else "under", "line": 2.5, "odds": None,
@@ -153,7 +173,33 @@ def picks(g, G):
     bt = M.btts(G)
     out["btts"] = {"side": "Yes" if bt >= 0.5 else "No", "model": r(100 * max(bt, 1 - bt)), "fair": fmt_odds(american(max(bt, 1 - bt))),
                    "yes": r(100 * bt), "odds": None, "book": None, "edge": None, "play": False}
+    if mk is not None:
+        # draw no bet straight from Pinnacle's 1X2 (exact), BTTS from its fitted scorelines
+        kdh = mk["p_home"] / (mk["p_home"] + mk["p_away"])
+        k = kdh if out["dnb"]["who"] == "home" else 1 - kdh
+        out["dnb"].update({"mkt": r(100 * k), "mfair": fmt_odds(american(k)), "edge": r(out["dnb"]["model"] - 100 * k)})
+        kb = M.btts(mk["G"])
+        k = kb if out["btts"]["side"] == "Yes" else 1 - kb
+        out["btts"].update({"mkt": r(100 * k), "myes": r(100 * kb), "mfair": fmt_odds(american(k)), "edge": r(out["btts"]["model"] - 100 * k)})
     return out
+
+
+def form(df, team, before, n=6):
+    """Last n league matches: results oldest to newest, goals and xG per match (xG only where Understat has it)."""
+    m = df[((df["home"] == team) | (df["away"] == team)) & (df["date"] < before) & df["hg"].notna()].tail(n)
+    if m.empty:
+        return None
+    res, gf, ga, xf, xa = [], [], [], [], []
+    for _, x in m.iterrows():
+        home = x["home"] == team
+        f, a = (x["hg"], x["ag"]) if home else (x["ag"], x["hg"])
+        res.append("W" if f > a else "D" if f == a else "L")
+        gf.append(f); ga.append(a)
+        hx, ax = x.get("hxg"), x.get("axg")
+        if hx is not None and ax is not None and np.isfinite(hx) and np.isfinite(ax):
+            xf.append(hx if home else ax); xa.append(ax if home else hx)
+    return {"res": "".join(res), "pts": sum(3 if c == "W" else 1 if c == "D" else 0 for c in res), "gf": r(np.mean(gf), 2),
+            "ga": r(np.mean(ga), 2), "xgf": r(np.mean(xf), 2) if xf else None, "xga": r(np.mean(xa), 2) if xa else None}
 
 
 def limit_plays(games):
@@ -390,13 +436,25 @@ def main():
                         la *= mult
         G = M.grid(lh, la, rho[lg])
         ph, pd_, pa = M.p1x2(G)
+        sh = (f.get("book") or {}).get("sharp") or {}
+        try:
+            mk = MK.from_sharp(sh, rho[lg])
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"market fit {f['home']} v {f['away']}: {e}")
+            mk = None
         gd = datetime.fromisoformat(f["start"].replace("Z", "+00:00")).astimezone(ET).date()
         g = {"game_id": f["event_id"], "league": lg, "date": gd.isoformat(), "start": f["start"], "home": f["home"], "away": f["away"],
              "xg_home": r(lh, 2), "xg_away": r(la, 2), "p_home": r(100 * ph), "p_draw": r(100 * pd_), "p_away": r(100 * pa),
              "book": f.get("book"), "rest": {"home": rh[0], "away": ra[0], "home_mid": rh[1], "away_mid": ra[1]},
-             "fatigue": {"home": r(fh, 3), "away": r(fa, 3)}, "lineups": lineups,
+             "fatigue": {"home": r(fh, 3), "away": r(fa, 3)}, "lineups": lineups, "lh": r(lh, 4), "la": r(la, 4),
+             "mkt": {"lh": r(mk["lh"], 4), "la": r(mk["la"], 4), "err": r(100 * mk["err"], 2), "p_home": r(100 * mk["p_home"]),
+                     "p_draw": r(100 * mk["p_draw"]), "p_away": r(100 * mk["p_away"])} if mk else None,
+             "ah_main": {"line": sh["ah_home"], "home": fmt_odds(sh["ah_home_odds"]), "away": fmt_odds(sh["ah_away_odds"]),
+                         "nv_home": r(100 * nv(sh["ah_home_odds"], sh["ah_away_odds"])[0]), "book": sh.get("book")}
+                        if sh.get("ah_home") is not None and sh.get("ah_home_odds") and sh.get("ah_away_odds") else None,
+             "form": {"home": form(frames[lg], f["home"], kick.date()), "away": form(frames[lg], f["away"], kick.date())},
              "scores": sorted(({"s": f"{i}-{j}", "p": r(100 * float(G[i, j]))} for i in range(6) for j in range(6)), key=lambda x: -x["p"])[:6]}
-        g["picks"] = picks({**g, "book": f.get("book")}, G)
+        g["picks"] = picks({**g, "book": f.get("book")}, G, mk)
         games.append(g)
         for side, lam, opp in (("home", lh, f["away"]), ("away", la, f["home"])):
             for p in P.match_props(f[side], lam, pr, tm, f["event_id"], opp):
