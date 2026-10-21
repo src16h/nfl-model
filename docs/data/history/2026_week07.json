@@ -2443,8 +2443,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 154.0,
-   "ml_away": -185.0,
+   "ml_home": 150.0,
+   "ml_away": -180.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -2584,9 +2584,9 @@
      "edge_text": "1.8"
     },
     "moneyline": {
-     "pick": "NO +154",
+     "pick": "NO +150",
      "side": "NO",
-     "odds": "+154",
+     "odds": "+150",
      "edge": 0.0,
      "edge_text": "0.0%",
      "model_pct": 40,
@@ -4785,8 +4785,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 150.0,
-   "ml_away": -180.0,
+   "ml_home": 136.0,
+   "ml_away": -162.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -4933,9 +4933,9 @@
      "edge_text": "1.8"
     },
     "moneyline": {
-     "pick": "ATL +150",
+     "pick": "ATL +136",
      "side": "ATL",
-     "odds": "+150",
+     "odds": "+136",
      "edge": 0.3,
      "edge_text": "0.3%",
      "model_pct": 38,
@@ -7079,8 +7079,8 @@
    ],
    "injuries_away": [],
    "notes": [],
-   "ml_home": -110.0,
-   "ml_away": -110.0,
+   "ml_home": 100.0,
+   "ml_away": -120.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -7222,9 +7222,9 @@
      "edge_text": "0.1"
     },
     "moneyline": {
-     "pick": "BAL -110",
+     "pick": "BAL +100",
      "side": "BAL",
-     "odds": "-110",
+     "odds": "+100",
      "edge": 0.3,
      "edge_text": "0.3%",
      "model_pct": 56,
@@ -9417,8 +9417,8 @@
    ],
    "injuries_away": [],
    "notes": [],
-   "ml_home": -175.0,
-   "ml_away": 145.0,
+   "ml_home": -166.0,
+   "ml_away": 140.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -9554,9 +9554,9 @@
      "edge_text": "0.4"
     },
     "moneyline": {
-     "pick": "TB +145",
+     "pick": "TB +140",
      "side": "TB",
-     "odds": "+145",
+     "odds": "+140",
      "edge": 0.3,
      "edge_text": "0.3%",
      "model_pct": 40,
@@ -11705,8 +11705,8 @@
    "injuries_home": [],
    "injuries_away": [],
    "notes": [],
-   "ml_home": -500.0,
-   "ml_away": 380.0,
+   "ml_home": -520.0,
+   "ml_away": 390.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -11846,9 +11846,9 @@
      "edge_text": "1.7"
     },
     "moneyline": {
-     "pick": "HOU -500",
+     "pick": "HOU -520",
      "side": "HOU",
-     "odds": "-500",
+     "odds": "-520",
      "edge": 0.5,
      "edge_text": "0.5%",
      "model_pct": 81,
@@ -13882,8 +13882,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -290.0,
-   "ml_away": 235.0,
+   "ml_home": -278.0,
+   "ml_away": 225.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -14018,9 +14018,9 @@
      "edge_text": "2.0"
     },
     "moneyline": {
-     "pick": "MIN -290",
+     "pick": "MIN -278",
      "side": "MIN",
-     "odds": "-290",
+     "odds": "-278",
      "edge": 1.2,
      "edge_text": "1.2%",
      "model_pct": 71,
@@ -16122,8 +16122,8 @@
     }
    ],
    "notes": [],
-   "ml_home": -225.0,
-   "ml_away": 185.0,
+   "ml_home": -230.0,
+   "ml_away": 190.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -16255,9 +16255,9 @@
      "edge_text": "1.0"
     },
     "moneyline": {
-     "pick": "MIA +185",
+     "pick": "MIA +190",
      "side": "MIA",
-     "odds": "+185",
+     "odds": "+190",
      "edge": 0.6,
      "edge_text": "0.6%",
      "model_pct": 35,
@@ -20683,8 +20683,8 @@
     }
    ],
    "notes": [],
-   "ml_home": 195.0,
-   "ml_away": -238.0,
+   "ml_home": 190.0,
+   "ml_away": -230.0,
    "win_sigma": 11.42,
    "team_totals": {
     "home": {
@@ -20825,9 +20825,9 @@
      "edge_text": "1.3"
     },
     "moneyline": {
-     "pick": "DEN -238",
+     "pick": "DEN -230",
      "side": "DEN",
-     "odds": "-238",
+     "odds": "-230",
      "edge": 0.6,
      "edge_text": "0.6%",
      "model_pct": 66,
@@ -27422,7 +27422,7 @@
    "final_line": "SEA -2.7",
    "lean_engine": "anchored",
    "indep_margin": 3.9,
-   "indep_total": 40.1,
+   "indep_total": 41.7,
    "market_line": "SEA -2.5",
    "market_spread": 2.5,
    "market_total": 42.5,
@@ -27469,7 +27469,7 @@
    "over_prob": 49.0,
    "qb_home": "Sam Darnold",
    "qb_away": "Patrick Mahomes",
-   "weather": "51\u00b0F, wind 7 mph, 54% rain",
+   "weather": "51\u00b0F, wind 7 mph, 36% rain",
    "why_margin": [
     {
      "factor": "Elo history",
@@ -27487,15 +27487,15 @@
     },
     {
      "factor": "Rain or snow",
-     "pts": -1.2
+     "pts": -0.8
     },
     {
      "factor": "Pace",
      "pts": -0.8
     },
     {
-     "factor": "Machine-learning patterns",
-     "pts": -0.7
+     "factor": "Primetime",
+     "pts": -0.6
     }
    ],
    "why_edge": [],
@@ -29777,7 +29777,7 @@
    "over_prob": 44.0,
    "qb_home": "Tanner McKee",
    "qb_away": "Dak Prescott",
-   "weather": null,
+   "weather": "56\u00b0F, wind 4 mph, 0% rain",
    "why_margin": [
     {
      "factor": "Elo history",
