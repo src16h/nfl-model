@@ -335,7 +335,8 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
                 cons_ev = 100 * (pc * (1 + BR.payout(price)) - 1)
         row["cons_ev"] = None if cons_ev is None else fnum(cons_ev, 1)
         if tier in ("play", "watch") and dec is not None:
-            ok = (dec["play"] and stat in C.PROP_PLAY_STATS and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
+            ok = (dec["play"] and stat in C.PROP_PLAY_STATS and side in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under"))
+                  and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
                   and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
             tier = "play" if ok else "watch"
         elif tier == "play":

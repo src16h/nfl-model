@@ -812,7 +812,10 @@ function sizing(pPct, odds) {
   const pct = Math.min(f * SET.kelly * 100, SET.maxpct), dollars = SET.bankroll * pct / 100;
   return {units: Math.round(dollars / Math.max(SET.unit, 0.01) * 10) / 10, dollars: Math.round(dollars)};
 }
-const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})` : `Suggested bet <b>none</b> at this price`; };
+/* Oct 21 2026: every suggested stake capped at 1 unit through Mon Oct 26 (risk control while the model proves itself) */
+const STAKE_CAP = 1;
+const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; const c = z.units > STAKE_CAP; if (c) { z.units = STAKE_CAP; z.dollars = Math.round(SET.unit * STAKE_CAP); }
+  return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})${c ? ' <span class="dim">(1u cap this week)</span>' : ""}` : `Suggested bet <b>none</b> at this price`; };
 const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side, b.line ?? "", b.legs ? JSON.stringify(b.legs.map(L => [L.pid, L.stat, L.line])) : ""].join("|");
 const hasBet = b => BETS.some(x => betKey(x) === betKey(b));
 const PENDING = {};
@@ -1119,7 +1122,7 @@ function renderHome() {
       <div class="kpis"><div class="kpi"><b>${n(D.model?.backtest?.win_logloss, 3)}</b><span>Win log loss (lower is better). Coin flip with home ice ${n(D.model?.backtest?.base_logloss, 3)}${D.model?.backtest?.market_logloss ? `, the betting line ${n(D.model.backtest.market_logloss, 3)} vs the model's ${n(D.model.backtest.model_vs_market_logloss, 3)} on the same games` : ""}</span></div>
       <div class="kpi"><b>${T.picks?.ml ? `${T.picks.ml.w}–${T.picks.ml.l}` : "0–0"}</b><span>Moneyline picks</span></div></div></div></div>`;
   if (w + l) h += `<div class="dash"><div class="panel span-12"><h3>Record by bet type <button data-go="record">Record</button></h3><p class="pmuted">Graded automatically, flat 1 unit per play.</p>${recordByType(T)}</div></div>`;
-  const EP = edgeToday();
+  const EP = D.edge_paused ? [] : edgeToday();
   if (EP.length) h += `<div class="dash"><div class="panel span-12"><h3>Edge parlays <button data-go="parlays">All parlays</button></h3><p class="pmuted">Two prop plays from two different games. Each leg already beats the book.</p>
     <div class="rail">${EP.map(e => `<div class="alt"><div class="hd"><b>${n(e.p, 0)}% to hit</b><span>${esc(e.odds)}</span></div>
       ${e.legs.map(L => `<div class="l"><b>${esc(L.name)}</b> ${esc(L.side)} ${L.line} ${esc(STAT[L.stat] || L.stat)}</div>`).join("")}<div class="l">${sgn(e.ev)}% expected return at book odds</div></div>`).join("")}</div></div></div>`;
@@ -1253,7 +1256,8 @@ function bindChecker() {
 /* ---------- parlays ---------- */
 function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay), EP = edgeToday();
-  let h = `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">2 prop plays, 2 different games</span></div>
+  let h = `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">${D.edge_paused ? "Paused Oct 21" : "2 prop plays, 2 different games"}</span></div>
+    ${D.edge_paused ? `<div class="empty"><b>Paused, not plays.</b> They went 6-12 (-4.9 units) when the model expected about 46% to hit, and they're built from the prop plays that have been losing. Still built and graded below so the record keeps counting.</div>` : ""}
     <p class="sub">Built from the day's prop plays, the part of the model that has been beating the book. Each leg already has an edge on its own, and because the legs are in different games the book can't add a same-game charge. Up to ${EDGE_MAX} tickets a day, each play used once, most likely to hit first. Odds shown multiply the odds feed's prices, so enter Hard Rock's parlay price before betting.</p>`;
   h += EP.length ? `<div class="tickets">${EP.map((e, i) => `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Edge parlay ${i + 1}</b><span>${n(e.p, 0)}% to hit</span></div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${e.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.side)} ${L.line} ${esc(STAT[L.stat] || L.stat)} <span class="dim">${esc(fmtO(L.odds))}, ${n(L.p, 0)}%, ${esc(L.game)}</span></div>`).join("")}</div>
@@ -1291,6 +1295,7 @@ function edgeToday() {
   return days.length ? days.flatMap(d => E[d].map(e => ({...e, day: d}))) : [];
 }
 function edgeCheck(e, i) {
+  if (D.edge_paused) return `<span class="vt">Paused</span><span class="stake">Not a play while paused</span>`;
   const key = e.day + ":" + i, odds = EDGE_ODDS[key] || "";
   let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Hard Rock odds <input class="odds edgeodds" data-e="${esc(key)}" value="${esc(odds)}" placeholder="${esc(e.odds)}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   const use = odds && Math.abs(oddsNum(odds)) >= 100 ? odds : e.odds;

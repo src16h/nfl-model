@@ -1159,7 +1159,7 @@ def main():
     payload["plays_rules"] = {
         "prop_play": [round(100 * C.PROP_PLAY_MIN), round(100 * C.PROP_PLAY_MAX)],
         "prop_watch_max": round(100 * C.PROP_WATCH_MAX),
-        "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS],
+        "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS], "prop_play_sides": list(getattr(C, "PROP_PLAY_SIDES", ["Over", "Under"])),
         "spread_gap": None, "total_gap": None, "sharp_rule": {"min_ev": BR.SHARP_MIN_EV, "max_ev": BR.SHARP_MAX_EV},
         "alt_rule": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "cap": C.ALT_PLAY_CAP},
         "game_plays": live.get("game_plays"),

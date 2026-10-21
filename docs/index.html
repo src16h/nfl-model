@@ -823,7 +823,10 @@ function sizing(pPct, odds) {                              // fractional Kelly, 
   const pct = Math.min(f * SET.kelly * 100, SET.maxpct), dollars = SET.bankroll * pct / 100;
   return {units: Math.round(dollars / Math.max(SET.unit, 0.01) * 10) / 10, dollars: Math.round(dollars), pct};
 }
-const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})` : `Suggested bet <b>none</b>, no edge at this price`; };
+/* Oct 21 2026: every suggested stake capped at 1 unit through Mon Oct 26 (risk control while the model proves itself) */
+const STAKE_CAP = 1;
+const stakeTxt = (pPct, odds) => { const z = sizing(pPct, odds); if (!z) return ""; const c = z.units > STAKE_CAP; if (c) { z.units = STAKE_CAP; z.dollars = Math.round(SET.unit * STAKE_CAP); }
+  return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars})${c ? ' <span class="dim">(1u cap this week)</span>' : ""}` : `Suggested bet <b>none</b>, no edge at this price`; };
 const betKey = b => [b.kind, b.game_id, b.pid || "", b.stat || "", b.side, b.legs ? JSON.stringify(b.legs.map(L => [L.kind, L.pid, L.stat, L.team, L.side, L.line])) : ""].join("|");
 const hasBet = b => BETS.some(x => betKey(x) === betKey(b) && x.status !== "deleted");
 const PENDING = {};
@@ -1257,7 +1260,7 @@ function renderGames() {
   const pp = rules.prop_play || [4, 7];
   const sb = rules.spread_backtest;
   h += `<div class="rules"><span>${playsRecordLine()}</span>
-    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}; the model's edge (scaled by how much each side has really delivered) must clear the bar, the other books' consensus price must rate your book's price as fair or better, and at most 2 per team per game.</span>
+    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}${(rules.prop_play_sides || []).length === 1 ? `, <b>${esc(rules.prop_play_sides[0])}s only</b> (Overs paused Oct 21: 26-25 as plays vs Unders 41-23)` : ""}; the model's edge (scaled by how much each side has really delivered) must clear the bar, the other books' consensus price must rate your book's price as fair or better, and at most 2 per team per game.</span>
     <span><b>Spread and total plays:</b> Pinnacle's fair price says your book's price is 1.5% to 8% too generous, and the model agrees on the side. When Pinnacle has a different line (say -3.5 vs your -3), its price is moved to your line using how often real games land on each number. Plays lock the moment they appear and are graded at that line and price.</span></div>`;
 
   // watch list: game leans that are not plays
@@ -1399,7 +1402,7 @@ function renderYards() {
     h += `<div class="empty"><b>No prop lines yet.</b> Books post props midweek, and the model loads them about a day before each game.</div>`;
   } else {
     h += `<div class="controls"><input type="search" id="propQ" placeholder="Search player, team, or prop" aria-label="Search props" value="${esc(q)}"></div>`;
-    h += `<p class="sub">${rules.min_ev ? `The model's chance is blended 50/50 with the book's and nudged by how each stat has run so far. A play needs ${rules.min_ev.prop}%+ expected profit at the posted price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+, since books shade Overs)` : `Gap of ${pp[0]} to ${pp[1]}% between the model and the book`}, on ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}. These also show on the Games tab.</p>`;
+    h += `<p class="sub">${rules.min_ev ? `The model's chance is blended 50/50 with the book's and nudged by how each stat has run so far. A play needs ${rules.min_ev.prop}%+ expected profit at the posted price (Overs ${rules.min_ev.prop + rules.over_extra_ev}%+, since books shade Overs)` : `Gap of ${pp[0]} to ${pp[1]}% between the model and the book`}, on ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}${(rules.prop_play_sides || []).length === 1 ? `, ${esc(rules.prop_play_sides[0])}s only for now (Overs went 26-25 as plays, Unders 41-23, so Overs stay leans until they show an edge)` : ""}. These also show on the Games tab.</p>`;
     h += propRows(plays);
     h += `<details class="fold"${q && watch.length ? " open" : ""}><summary>Watch <span>${watch.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${pp[1]} to ${wm}%, plus Anytime TD picks at any gap up to ${wm}%. Not plays. They're graded so we can see if they earn a promotion.</p>${propRows(watch, "watch")}</div></details>`;
     h += `<details class="fold"${q && big.length ? " open" : ""}><summary>Too big to trust <span>${big.length}</span></summary><div class="fold-body"><p class="sub">Gaps of ${wm}%+. These usually mean the model is missing something, like an injury, a role change, or a stale line. Still graded in the background.</p>${propRows(big, "too_big")}</div></details>`;

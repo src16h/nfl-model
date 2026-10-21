@@ -35,7 +35,7 @@ PROP_PLAY_MIN = 0.07             # after removing the slate-wide gap to the book
 PROP_PLAY_MAX = 0.12             # raw gap cap; the bar to be a play is set in betrules.py (blend with the book, profit at the price)
 # markets that may not be plays (checked Oct 2026: points Overs 1-17, puck-line underdogs 0-5, saves far off;
 # totals lean only after the Oct 18 recalibration, until about 150 graded totals show an edge)
-BLOCKED = {("points", "Over"), "saves", "pl_dog", "totals"}
+BLOCKED = {"points", "saves", "pl_dog", "totals"}   # Oct 21 2026: points fully out (111-121, -17u as plays)
 # Oct 20 2026: points Unders fired 38-53 a night (7-12 in one game), claimed +7 points over the book on
 # plays and delivered 0. Three guards:
 PROP_CAP_PER_GAME = {("points", "Under"): 2}   # best N by expected return in each game; the rest are not plays
@@ -90,4 +90,5 @@ def odds_key():
 # edge parlays: 2 prop plays from 2 different games (each leg already beats the book)
 EDGE_LEGS = 2
 EDGE_MAX_PER_DAY = 3             # each play is used once, so these are separate tickets
+EDGE_PAUSED = True               # Oct 21 2026: 6-12 (-4.9u) when the model said 46%. Built, shown as paused, not a play
 EDGE_MIN_EV = 5.0                # parlay expected return in %, at the book's prices

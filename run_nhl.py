@@ -297,6 +297,8 @@ def tracking(history_days, results):
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
                                  "legs": len(hits), "p": ap["p"], "v": ap.get("v", 1), "fair": ap.get("fair")})
         for e in day.get("edge", []):
+            if e.get("paused"):
+                continue
             rs, dec = [], 1.0
             for L in e["legs"]:
                 res = results.get(str(L["game_id"]))
@@ -715,6 +717,9 @@ def main():
         locked = [e for e in old.get("edge", []) if any(l["game_id"] not in live for l in e["legs"])]
         taken = {(l["pid"], l["stat"]) for e in locked for l in e["legs"]}
         fresh = [e for e in edge_new.get(day, []) if not ({(l["pid"], l["stat"]) for l in e["legs"]} & taken)]
+        if getattr(C, "EDGE_PAUSED", False):                     # paused: still built and graded, flagged so they don't count as plays
+            for e in fresh:
+                e["paused"] = True
         edge_final[day] = (locked + fresh)[:max(C.EDGE_MAX_PER_DAY, len(locked))]
         path.write_text(json.dumps(clean({"date": day, "games": old_games + keep, "players": old_players + v["players"],
                                           "edge": edge_final[day]}),
@@ -729,7 +734,7 @@ def main():
     # finished/locked games from today's file so the slate stays complete
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
-               "edge_parlays": edge_final,
+               "edge_parlays": edge_final, "edge_paused": bool(getattr(C, "EDGE_PAUSED", False)),
                "model": {"coefs": model.coefs(), "eng": eng, "eng_check": eng_info, "ot_goal_share": r(model.ot_goal_share, 3),
                          "league": {k: r(v, 2) for k, v in lg.items()}, "train_games": int(len(rows) / 2),
                          "backtest": BACKTEST},

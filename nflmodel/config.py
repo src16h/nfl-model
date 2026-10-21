@@ -143,6 +143,9 @@ PROP_PLAY_MAX = 0.15         # Oct 2026: a candidate becomes a Play only if it c
 PROP_WATCH_MAX = 0.15
 # Prop types allowed to be a Play. Anytime TD stays in Watch until it proves itself.
 PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
+# Sides allowed to be a Play (Oct 21 2026). Yardage plays so far: Unders 41-23 (+13.3u), Overs 26-25 (-1.8u); across every
+# graded lean Overs hit 44% (576) vs Unders 56% (641). Books shade Overs, so Overs stay leans until they show an edge.
+PROP_PLAY_SIDES = ["Under"]
 # A "No TD" pick needs a real No price from the book. Without one it is never flagged.
 TD_NO_NEEDS_PRICE = True
 
