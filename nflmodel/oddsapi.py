@@ -446,14 +446,16 @@ def _alt_rows(ev, b):
             if pt is None or pr is None:
                 continue
             k = m.get("key", "")
+            per = "h1" if k.endswith("_h1") else None             # 1st half: spreads_h1, totals_h1, alternate_*_h1
+            k = k[:-3] if per else k
             if k in ("spreads", "alternate_spreads") and o.get("name") in (hn, an):
                 side = "home" if o["name"] == hn else "away"
-                rows.append({"market": "spread", "team": side, "side": side, "line": pt, "odds": pr})
+                rows.append({"market": "spread", "team": side, "side": side, "line": pt, "odds": pr, "period": per})
             elif k in ("totals", "alternate_totals") and str(o.get("name")).lower() in ("over", "under"):
-                rows.append({"market": "total", "team": None, "side": str(o["name"]).lower(), "line": pt, "odds": pr})
+                rows.append({"market": "total", "team": None, "side": str(o["name"]).lower(), "line": pt, "odds": pr, "period": per})
             elif k in ("team_totals", "alternate_team_totals") and str(o.get("name")).lower() in ("over", "under") and o.get("description") in (hn, an):
                 rows.append({"market": "team_total", "team": "home" if o["description"] == hn else "away",
-                             "side": str(o["name"]).lower(), "line": pt, "odds": pr})
+                             "side": str(o["name"]).lower(), "line": pt, "odds": pr, "period": per})
     return rows
 
 

@@ -22,6 +22,8 @@ ALT_CSS = """
 .altbox input:focus,.altbox select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
 .mine{display:inline-block;font:600 10.5px var(--sans);color:var(--gold-text);border:1px solid var(--gold-line);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
 .vt.thin{border-color:var(--line);color:var(--muted)}
+.mchip{display:inline-block;font:600 10.5px var(--sans);color:var(--brown);background:var(--beige);border-radius:999px;padding:2px 8px;margin-right:6px;vertical-align:1px;white-space:nowrap}
+.bet.on{border-color:var(--gold-line);background:linear-gradient(90deg,var(--gold-soft),transparent 70%)}
 .legteam{display:inline-block;font:600 10px var(--sans);color:var(--brown);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-right:5px;vertical-align:1px}
 .altbox td:first-child{white-space:normal;min-width:120px}
 @media (max-width:640px){.altbox .c-x{display:none}.altbox table td,.altbox table th{padding:7px 6px;font-size:13px}}
@@ -29,7 +31,8 @@ ALT_CSS = """
 """
 
 ALT_JS = r"""
-const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total"};
+const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total", h1_spread: "1st half spread", h1_total: "1st half total"};
+const altMkName = x => x.period === "h1" ? ALT_MK["h1_" + x.market] || "1st half" : ALT_MK[x.market];
 const LS_ALTP = `board.${ALT_CFG.sport}.altprices.v1`;
 let ALTP = lsGet(LS_ALTP, {});
 const ALTSEL = {};
@@ -51,7 +54,7 @@ function altChance(g, b) {
   if (!r) return null;
   let m = r[1] / 100, k = r[2] == null ? null : r[2] / 100;
   if (flip) { m = 1 - m; k = k == null ? null : 1 - k; }
-  const row = (g.alt?.rows || []).find(x => x.market === b.market && (x.team || "") === (b.team || "") && x.side === b.side && Math.abs(x.line - b.line) < 1e-9);
+  const row = (g.alt?.rows || []).find(x => !x.period && x.market === b.market && (x.team || "") === (b.team || "") && x.side === b.side && Math.abs(x.line - b.line) < 1e-9);
   return row && row.exact && row.sharp != null ? {m, k: row.sharp / 100, exact: true} : {m, k, exact: false};
 }
 /* same rule as the posted plays: worth min% to 8% at Pinnacle's fair chance (1 point more on a converted line), model agrees */
@@ -124,7 +127,7 @@ function altPlays() {
   for (const g of D.games || []) {
     if (new Date(g.start) < Date.now()) continue;
     for (const x of g.alt?.plays || []) out.push({type: "alt", kind: "alt", g, p: x, edge: x.ev, model: x.sharp, book: 100 * impl(x.odds), odds: x.odds,
-      title: x.label, sub: `${ALT_MK[x.market]}, ${g.away} at ${g.home}`});
+      title: x.label, sub: `${altMkName(x)}, ${g.away} at ${g.home}`});
   }
   for (const [key, v] of Object.entries(ALTP)) {
     if (!v?.odds) continue;
@@ -139,7 +142,7 @@ function altPlays() {
   }
   return out;
 }
-const altPlayBet = x => ({kind: "alt", game_id: x.g.game_id, market: x.p.market, team: x.p.team || null, side: x.p.side, line: +x.p.line, home: x.g.home,
+const altPlayBet = x => ({kind: "alt", game_id: x.g.game_id, market: x.p.market, period: x.p.period || null, team: x.p.team || null, side: x.p.side, line: +x.p.line, home: x.g.home,
   odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub});
 function altGrade(b, h, a) {
   const L = +b.line, halves = Math.round(L * 4) % 2 ? [L - 0.25, L + 0.25] : [L];

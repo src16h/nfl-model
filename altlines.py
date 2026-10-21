@@ -213,11 +213,14 @@ def evaluate(book_rows, pin_rows, model, mkt, min_ev=SHARP_MIN_EV, max_ev=SHARP_
 
 
 def best_plays(rows, per_game=1):
-    """The best plays by value (one per game by default). Rows must carry game_id."""
+    """The best plays by value. per_game: a number per game, or {period: number} (period None = "full")."""
     by = {}
     for r in sorted([r for r in rows if r["play"]], key=lambda r: -r["ev"]):
-        if len(by.setdefault(r["game_id"], [])) < per_game:
-            by[r["game_id"]].append(r)
+        per = r.get("period") or "full"
+        cap = per_game.get(per, 0) if isinstance(per_game, dict) else per_game
+        k = (r["game_id"], per) if isinstance(per_game, dict) else r["game_id"]
+        if len(by.setdefault(k, [])) < cap:
+            by[k].append(r)
     return [r for v in by.values() for r in v]
 
 
@@ -254,7 +257,9 @@ def grade(b, hs, as_):
 
 
 def label(b, home, away):
-    """'BUF -6.5', 'Over 47.5', 'BUF team total Over 23.5'."""
+    """'BUF -6.5', 'Over 47.5', 'BUF team total Over 23.5' ('1H ' in front for the 1st half)."""
+    if b.get("period") == "h1":
+        return "1H " + label({**b, "period": None}, home, away)
     if b["market"] == "btts":
         return f"BTTS {b['side'].title()}"
     L = float(b["line"])

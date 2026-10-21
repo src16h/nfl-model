@@ -660,6 +660,8 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
 .altbox input:focus,.altbox select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
 .mine{display:inline-block;font:600 10.5px var(--sans);color:var(--gold-text);border:1px solid var(--gold-line);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
 .vt.thin{border-color:var(--line);color:var(--muted)}
+.mchip{display:inline-block;font:600 10.5px var(--sans);color:var(--brown);background:var(--beige);border-radius:999px;padding:2px 8px;margin-right:6px;vertical-align:1px;white-space:nowrap}
+.bet.on{border-color:var(--gold-line);background:linear-gradient(90deg,var(--gold-soft),transparent 70%)}
 .legteam{display:inline-block;font:600 10px var(--sans);color:var(--brown);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-right:5px;vertical-align:1px}
 .altbox td:first-child{white-space:normal;min-width:120px}
 @media (max-width:640px){.altbox .c-x{display:none}.altbox table td,.altbox table th{padding:7px 6px;font-size:13px}}
@@ -880,6 +882,7 @@ function gradeBet(b) {                                   // returns {res: W|L|P|
     const res = rs.includes("L") ? "L" : rs.every(r => r === "W") ? "W" : "P";
     return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0, actual: rs.join(" ")};
   }
+  if (b.kind === "alt" && b.period === "h1") return g.h1h == null ? {res: "O"} : {...altGrade(b, g.h1h, g.h1a), actual: `Halftime ${g.h1a}-${g.h1h}`};
   if (b.kind === "alt") return {...altGrade(b, g.h, g.a), actual: `${g.away} ${g.a}, ${g.home} ${g.h}`};
   const homeM = g.h - g.a, tot = g.h + g.a;
   const wl = r => r > 0 ? "W" : r < 0 ? "L" : "P";
@@ -952,17 +955,18 @@ function meterHTML(model, book) {
 function meterFor(p) {
   if (p.kind === "prop") return meterHTML(p.model_pct ?? p.bet?.model_pct, p.book_pct);
   if (p.kind === "spread" && p.cover_prob != null) return meterHTML(p.cover_prob, 50);
-  if (p.kind === "alt" && p.bet?.model_pct != null && p.odds) return meterHTML(p.bet.model_pct, 100 * impl(p.odds));
+  if (p.kind === "alt" && p.bet?.model_pct != null && p.odds) return meterHTML(p.bet.model_pct, 100 * impl(p.odds)).replace("model vs", "Pinnacle vs").replace("% book", "% priced in");
   if (p.bet?.model_pct != null) return meterHTML(p.bet.model_pct, 50);
   return "";
 }
 const ico = id => `<svg><use href="#i-${id}"/></svg>`;
-const ALT_CFG = {sport: "nfl", spread: "Alt spread", pending: "Hard Rock's alt prices are pulled on the last run before kickoff (after inactives): team totals first, then alt spreads and totals as credits allow. Until then, check a price below."};
+const ALT_CFG = {sport: "nfl", spread: "Alt spread", pending: "Hard Rock's prices are pulled on the last run before kickoff (after inactives): team totals first, then 1st-half lines, alt spreads and alt totals as credits allow. Until then, check a price below."};
 const impl = o => { o = oddsNum(o); return o > 0 ? 100 / (o + 100) : -o / (-o + 100); };
 const fair = p => { if (!(p > 0 && p < 1)) return "–"; const a = p >= .5 ? -Math.round(100 * p / (1 - p)) : Math.round(100 * (1 - p) / p); return a > 0 ? "+" + a : String(a); };
 const fmtO = o => o == null || o === "" ? "–" : (+String(o).replace("+", "") > 0 ? "+" : "") + Math.round(+String(o).replace("+", ""));
 /* ---- ALT-JS start (tools/altjs.py) ---- */
-const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total"};
+const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total", h1_spread: "1st half spread", h1_total: "1st half total"};
+const altMkName = x => x.period === "h1" ? ALT_MK["h1_" + x.market] || "1st half" : ALT_MK[x.market];
 const LS_ALTP = `board.${ALT_CFG.sport}.altprices.v1`;
 let ALTP = lsGet(LS_ALTP, {});
 const ALTSEL = {};
@@ -984,7 +988,7 @@ function altChance(g, b) {
   if (!r) return null;
   let m = r[1] / 100, k = r[2] == null ? null : r[2] / 100;
   if (flip) { m = 1 - m; k = k == null ? null : 1 - k; }
-  const row = (g.alt?.rows || []).find(x => x.market === b.market && (x.team || "") === (b.team || "") && x.side === b.side && Math.abs(x.line - b.line) < 1e-9);
+  const row = (g.alt?.rows || []).find(x => !x.period && x.market === b.market && (x.team || "") === (b.team || "") && x.side === b.side && Math.abs(x.line - b.line) < 1e-9);
   return row && row.exact && row.sharp != null ? {m, k: row.sharp / 100, exact: true} : {m, k, exact: false};
 }
 /* same rule as the posted plays: worth min% to 8% at Pinnacle's fair chance (1 point more on a converted line), model agrees */
@@ -1057,7 +1061,7 @@ function altPlays() {
   for (const g of D.games || []) {
     if (new Date(g.start) < Date.now()) continue;
     for (const x of g.alt?.plays || []) out.push({type: "alt", kind: "alt", g, p: x, edge: x.ev, model: x.sharp, book: 100 * impl(x.odds), odds: x.odds,
-      title: x.label, sub: `${ALT_MK[x.market]}, ${g.away} at ${g.home}`});
+      title: x.label, sub: `${altMkName(x)}, ${g.away} at ${g.home}`});
   }
   for (const [key, v] of Object.entries(ALTP)) {
     if (!v?.odds) continue;
@@ -1072,7 +1076,7 @@ function altPlays() {
   }
   return out;
 }
-const altPlayBet = x => ({kind: "alt", game_id: x.g.game_id, market: x.p.market, team: x.p.team || null, side: x.p.side, line: +x.p.line, home: x.g.home,
+const altPlayBet = x => ({kind: "alt", game_id: x.g.game_id, market: x.p.market, period: x.p.period || null, team: x.p.team || null, side: x.p.side, line: +x.p.line, home: x.g.home,
   odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub});
 function altGrade(b, h, a) {
   const L = +b.line, halves = Math.round(L * 4) % 2 ? [L - 0.25, L + 0.25] : [L];
@@ -1096,7 +1100,7 @@ function nflPlays() {
     gap: x.edge, gap_unit: "%", mine: true, bet: altPlayBet(x)}));
   return [...(D.plays || []), ...mine];
 }
-const kindLabel = p => p.kind === "prop" ? (p.label || "Prop") : p.kind === "alt" ? ALT_MK[p.market] || "Alt line" : p.kind === "spread" ? "Spread" : "Total";
+const kindLabel = p => p.kind === "prop" ? (p.label || "Prop") : p.kind === "alt" ? altMkName(p) || "Alt line" : p.kind === "spread" ? "Spread" : "Total";
 const stakeFor = p => p.kind === "alt" ? altStakeTxt(p.bet.model_pct, p.bet.odds) : stakeTxt(p.bet.model_pct, p.bet.odds);
 
 /* ---------------- Home dashboard ---------------- */
@@ -1130,13 +1134,14 @@ function renderHome() {
     </div></div>
   <div class="dash">`;
 
-  // best bets
-  const top = plays.slice(0, 5);
-  let bets = top.map(p => `<div class="bet"><span class="icon">${ico(p.kind === "prop" ? "props" : "games")}</span>
-      <div><div class="k">${esc(kindLabel(p))}, ${esc(kickoff(p.kickoff))}</div>
+  // every play, any market (Oct 21 2026: no cap, market labeled on each)
+  const top = plays, byKind = {};
+  plays.forEach(p => { const k = kindLabel(p); byKind[k] = (byKind[k] || 0) + 1; });
+  let bets = top.map(p => `<div class="bet on"><span class="icon">${ico(p.kind === "prop" ? "props" : "games")}</span>
+      <div><div class="k"><span class="mchip">${esc(kindLabel(p))}</span>${esc(p.matchup)}, ${esc(kickoff(p.kickoff))}</div>
         <div class="bpk">${p.kind === "prop" ? esc(p.player) + " " : ""}${esc(p.pick)}${p.odds ? `<small>${esc(p.odds)}</small>` : ""}${p.mine ? `<span class="mine">your price</span>` : ""}</div>
-        <div class="who">${esc(p.matchup)}${p.bet ? ` <span class="stake">${stakeFor(p)}</span>` : ""}</div></div>
-      <div class="gapv">${p.gap_unit === "%" ? "+" + n(p.gap) + "%" : n(p.gap) + " pts"}<small>edge</small></div>${meterFor(p)}</div>`).join("");
+        <div class="who logrow">${p.bet ? `<span class="stake">${stakeFor(p)}</span> ${logBtn({...p.bet, desc: p.kind === "prop" ? `${p.player} ${p.pick}` : p.pick, sub: p.kind === "prop" ? `${p.label || ""}, ${p.matchup}` : p.matchup})}` : ""}</div></div>
+      <div class="gapv">${p.gap_unit === "%" ? "+" + n(p.gap) + "%" : n(p.gap) + " pts"}<small>${p.kind === "alt" || p.kind === "spread" || p.kind === "total" ? "value" : "edge"}</small></div>${meterFor(p)}</div>`).join("");
   if (!bets) {
     const leans = up.filter(g => g.picks?.spread).sort((a, b) => (b.picks.spread.edge || 0) - (a.picks.spread.edge || 0)).slice(0, 3);
     bets = `<div class="pmuted">No Plays pass the rules yet. Prop lines load about a day before each game. Closest calls so far:</div>` +
@@ -1144,7 +1149,9 @@ function renderHome() {
         <div class="bpk">${esc(g.picks.spread.pick)}</div><div class="who">${esc(g.away)} at ${esc(g.home)}</div></div>
         <div class="gapv">${n(g.picks.spread.edge)} pts<small>gap</small></div></div>`).join("");
   }
-  h += `<div class="panel span-8"><h3>Best bets right now <button data-go="games">All plays</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book.</p><div class="bets-list">${bets}</div></div>`;
+  const upAlt = up.filter(g => g.alt), pend = up.length - upAlt.length;
+  const altNote = `<p class="pmuted" style="margin-top:10px">Team totals, alt spreads and totals, and 1st-half lines: Hard Rock's prices load on the last run before each kickoff (after inactives) and show here when they pass the Pinnacle rule.${upAlt.length ? ` Checked so far: ${upAlt.reduce((s, g) => s + (g.alt.n || 0), 0)} prices on ${upAlt.length} game${upAlt.length === 1 ? "" : "s"}.` : ""}${pend ? ` ${pend} game${pend === 1 ? "" : "s"} still to load.` : ""} You can also type any price on a game's page.</p>`;
+  h += `<div class="panel span-8"><h3>Plays right now <button data-go="games">All games</button></h3><p class="pmuted">${plays.length ? `Every play on the board: ${Object.entries(byKind).map(([k, c]) => `${c} ${esc(k.toLowerCase())}`).join(", ")}. ` : ""}Orange on the meter is how far Pinnacle's fair chance (props: the model's) beats the price.</p><div class="bets-list">${bets}</div>${altNote}</div>`;
 
   // season trend
   const S = R.series || [];
@@ -2056,7 +2063,7 @@ function trackingHTML() {
   const AP = T.alt_plays || {}, AX = T.alt_mix || {};
   h += `<h3>Alt lines and team totals</h3>${AP.w + AP.l ? `<div class="strip"><div class="st"><strong>${AP.w}–${AP.l}</strong><span>Alt plays, ${n(AP.pct)}%</span></div>
       <div class="st"><strong class="${uc(AP.units)}">${units(AP.units)}</strong><span>Units (ROI ${n(AP.roi)}%)</span></div>
-      ${Object.entries(AP.by_market || {}).filter(([k, r]) => r.w + r.l).map(([k, r]) => `<div class="st"><strong>${r.w}–${r.l}</strong><span>${esc(ALT_MK[k])}, ${units(r.units)}</span></div>`).join("")}</div>`
+      ${Object.entries(AP.by_market || {}).filter(([k, r]) => r.w + r.l).map(([k, r]) => `<div class="st"><strong>${r.w}–${r.l}</strong><span>${esc(ALT_MK[k] || k)}, ${units(r.units)}</span></div>`).join("")}</div>`
     : `<div class="empty">No alt plays graded yet. Started Oct 21.</div>`}
     <p class="sub" style="margin-top:8px">Team-leg alt parlays: ${AX.n ? `${AX.hits}–${AX.n - AX.hits}, hit ${n(100 * AX.hits / AX.n)}% when the model said ${n(AX.model)}%.` : "nothing graded yet."}</p>`;
   const A = T.alt_parlays;

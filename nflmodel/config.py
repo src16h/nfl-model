@@ -223,7 +223,8 @@ ALT_PARLAY_ODDS = (100, 125)       # target fair odds range for the whole parlay
 # Alt lines and team totals (altlines.py, Oct 21 2026): Hard Rock's alt prices, Pinnacle's ride along in the same call.
 # 1 credit per market per game, pulled once per game on the last run before kickoff (after inactives), team totals
 # for every game first, then alt spreads, then alt totals, and never below ALT_MIN_LEFT credits (props come first).
-ALT_MARKETS = ["alternate_team_totals", "alternate_spreads", "alternate_totals"]
+# Oct 21 2026: Pinnacle's own team totals (exact referee for team totals) and Hard Rock's 1st-half spread and total added.
+ALT_MARKETS = ["alternate_team_totals", "team_totals", "spreads_h1", "totals_h1", "alternate_spreads", "alternate_totals"]
 ALT_BOOKS = ["hardrockbet", "pinnacle"]
 ALT_HOURS = 3.5                    # pull for games kicking off within this many hours
 ALT_MIN_LEFT = 90                  # credits always left for next week's props and lines
@@ -231,7 +232,8 @@ ALT_MAX_PER_RUN = 30
 ALT_SPEC = {"spread": (-24.5, 24.5, 0.5), "total": (28.0, 64.0, 0.5), "team_total": (6.5, 40.5, 0.5)}    # price-check ladders
 ALT_LEG_SPEC = {"spread": (-10.5, 17.5, 1.0), "total": (33.5, 57.5, 1.0), "team_total": (10.5, 31.5, 1.0)}  # parlay legs
 ALT_LEG_RANGE_TEAM = (0.70, 0.92)
-ALT_PLAY_CAP = 6                   # alt-line plays per kickoff date, best value first, one per game
+ALT_PLAY_CAP = 8                   # alt-line plays per kickoff date, best value first
+ALT_PER_GAME = {"full": 1, "h1": 1}  # per game: one full-game alt line or team total, one 1st-half bet
 ALT_MAX_TEAM_LEGS = 2
 ALT_PARLAY_LEGS = 4                # preferred number of legs (falls back to 3 or 5)
 ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines), after calibration

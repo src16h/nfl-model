@@ -351,20 +351,38 @@ def build_games(bundle, season, week, now):
                     tg.append(({"market": "total", "team": None, "side": "over", "line": float(shp["total_line"])},
                                AL.nv(shp["over_odds"], shp["under_odds"])))
                 ba = (odds.get("alt") or {}).get(g["game_id"], {})
-                for k_, sides in AL.pairs([x for x in ba.get("sharp", []) if x["market"] == "team_total"]).items():
+                for k_, sides in AL.pairs([x for x in ba.get("sharp", []) if x["market"] == "team_total" and not x.get("period")]).items():
                     if "over" in sides and "under" in sides and abs(k_[2] % 1 - 0.5) < 1e-9:
                         tg.append(({"market": "team_total", "team": k_[1], "side": "over", "line": k_[2]}, AL.nv(sides["over"], sides["under"])))
                 mkt, err = AL.tilt(mdl, tg) if len(tg) >= 2 else (None, None)
                 game["ladder"] = AL.ladders(mdl, mkt, C.ALT_SPEC)
                 game["mkt_err"] = None if err is None else fnum(100 * err, 2)
-                if ba.get("book"):
-                    rws = AL.evaluate(ba["book"], ba.get("sharp"), mdl, mkt)
+                fg = lambda rows: [x for x in rows or [] if not x.get("period")]
+                h1 = lambda rows: [x for x in rows or [] if x.get("period") == "h1"]
+                rws = []
+                if fg(ba.get("book")):
+                    rws = AL.evaluate(fg(ba["book"]), fg(ba.get("sharp")), mdl, mkt)
+                if h1(ba.get("book")) and game.get("h1"):         # 1st half: the model's half projection, re-weighted to Pinnacle's half lines
+                    H = game["h1"]
+                    rng = np.random.default_rng(zlib.crc32(f"h1{g['game_id']}".encode()))
+                    M_ = rng.normal(H["margin"], H["sd_margin"], 20000)
+                    T_ = np.maximum(rng.normal(H["total"], H["sd_total"], 20000), np.abs(M_))
+                    m1 = AL.Dist(np.round((T_ + M_) / 2), np.round((T_ - M_) / 2))
+                    t1 = []
+                    for k_, sides in AL.pairs(h1(ba.get("sharp"))).items():
+                        s_ = next((x for x in ("home", "over") if x in sides and AL.OTHER[x] in sides), None)
+                        if s_ and k_[0] in ("spread", "total"):
+                            t1.append(({"market": k_[0], "team": "home" if k_[0] == "spread" else None, "side": s_, "line": k_[2]},
+                                       AL.nv(sides[s_], sides[AL.OTHER[s_]])))
+                    k1 = AL.tilt(m1, t1)[0] if t1 else None
+                    rws += [{**x, "period": "h1"} for x in AL.evaluate(h1(ba["book"]), h1(ba.get("sharp")), m1, k1)]
+                if rws:
                     for x in rws:
                         x.update({"game_id": g["game_id"], "label": AL.label(x, h, a), "book": ba.get("book_name"), "kickoff": game.get("kickoff")})
                     alt_rows_all.extend(rws)
                     game["alt"] = {"book": ba.get("book_name"), "markets": ba.get("markets"), "n": len(rws), "plays": [],
                                    "rows": sorted(rws, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12]}
-                conv_errs.extend(AL.conv_check(ba.get("sharp"), mkt))
+                conv_errs.extend(AL.conv_check(fg(ba.get("sharp")), mkt))
                 tlegs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE_TEAM) if mkt is not None else []
             except Exception as e:  # noqa: BLE001
                 log.warning(f"alt lines skipped for {g['game_id']}: {str(e)[:120]}")
@@ -410,7 +428,7 @@ def build_games(bundle, season, week, now):
         except Exception as e:  # noqa: BLE001
             log.warning(f"team-leg parlay skipped for {game['game_id']}: {str(e)[:120]}")
     # alt-line plays: one per game, best value first, at most ALT_PLAY_CAP per kickoff date
-    chosen, per_day, keep_ids = AL.best_plays(alt_rows_all), {}, set()
+    chosen, per_day, keep_ids = AL.best_plays(alt_rows_all, C.ALT_PER_GAME), {}, set()
     for x in sorted(chosen, key=lambda x: -x["ev"]):
         dd = str(x.get("kickoff") or "")[:10]
         if per_day.get(dd, 0) < C.ALT_PLAY_CAP:
@@ -799,11 +817,11 @@ def build_plays(games, props, model_info):
         if g.get("state") != "upcoming":
             continue
         for x in (g.get("alt") or {}).get("plays", []):
-            out.append({"kind": "alt", "market": x["market"], "kickoff": g.get("kickoff"), "game_id": g["game_id"],
+            out.append({"kind": "alt", "market": x["market"], "period": x.get("period"), "kickoff": g.get("kickoff"), "game_id": g["game_id"],
                         "matchup": f"{g['away']} at {g['home']}", "pick": x["label"], "odds": x["odds"],
                         "detail": f"Pinnacle {x['sharp']}%{'' if x['exact'] else ' (converted)'} vs {x['book_p']}% at {x.get('book')}, {x['ev']:+.1f}% value. Model {x['model']}%",
                         "gap": x["ev"], "gap_unit": "%", "book": x.get("book"),
-                        "bet": {"kind": "alt", "game_id": g["game_id"], "market": x["market"], "team": x.get("team"), "side": x["side"],
+                        "bet": {"kind": "alt", "game_id": g["game_id"], "market": x["market"], "period": x.get("period"), "team": x.get("team"), "side": x["side"],
                                 "line": x["line"], "home": g["home"], "odds": x["odds"], "model_pct": x["sharp"]}})
     ko = {g["game_id"]: g.get("kickoff") for g in games}
     st = {g["game_id"]: g.get("state") for g in games}
@@ -855,9 +873,9 @@ def lock_flags(old_games, games, now):
         g["flags"] = flags
         alt_flags = dict(p.get("alt_flags") or {})        # alt-line plays: locked the same way
         for x in (g.get("alt") or {}).get("plays", []):
-            k_ = f"{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
+            k_ = f"{x.get('period') or ''}{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
             if k_ not in alt_flags:
-                alt_flags[k_] = {f_: x.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book")}
+                alt_flags[k_] = {f_: x.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book", "period")}
                 alt_flags[k_]["at"] = ts
         g["alt_flags"] = alt_flags
 

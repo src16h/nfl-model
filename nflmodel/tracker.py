@@ -737,8 +737,13 @@ def model_tracking(hist_dir, season, results, snaps=None):
                     mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
             for fl in (hg.get("alt_flags") or {}).values():     # alt-line plays, graded at the locked price
                 import altlines as AL
-                rr, u = AL.grade(fl, g["h"], g["a"])
-                alt_plays.append({"week": week, "game": f"{hg.get('away')} at {hg.get('home')}", "pick": fl.get("label"), "market": fl.get("market"),
+                if fl.get("period") == "h1":
+                    if g.get("h1h") is None:
+                        continue
+                    rr, u = AL.grade(fl, g["h1h"], g["h1a"])
+                else:
+                    rr, u = AL.grade(fl, g["h"], g["a"])
+                alt_plays.append({"week": week, "period": fl.get("period"), "game": f"{hg.get('away')} at {hg.get('home')}", "pick": fl.get("label"), "market": fl.get("market"),
                                   "odds": fl.get("odds"), "ev": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
             # parlay combos locked with the game
             for c in hg.get("sgp_combos") or []:
@@ -831,7 +836,8 @@ def model_tracking(hist_dir, season, results, snaps=None):
         u = sum(x["units"] for x in rows)
         return {"w": w, "l": l_, "pct": fnum(100 * w / (w + l_), 1) if w + l_ else None, "units": fnum(u, 2),
                 "roi": fnum(100 * u / (w + l_), 1) if w + l_ else None}
-    alt_play_out = {**rec(alt_plays), "by_market": {m: rec([x for x in alt_plays if x["market"] == m]) for m in ("spread", "total", "team_total")},
+    alt_play_out = {**rec(alt_plays), "by_market": {**{m: rec([x for x in alt_plays if x["market"] == m and not x.get("period")]) for m in ("spread", "total", "team_total")},
+                                                    **{f"h1_{m}": rec([x for x in alt_plays if x["market"] == m and x.get("period") == "h1"]) for m in ("spread", "total")}},
                     "recent": sorted(alt_plays, key=lambda x: -x["week"])[:40]}
     return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total, "alt_parlays": alt_out,
             "alt_mix": mix_out, "alt_plays": alt_play_out,
