@@ -220,6 +220,29 @@ def run(games, state_path, cache_path, now):
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     status["alt_pulls"] = status.get("alt_pulls", 0) + 1
+            # shadow pulls: paused prop types (gates.py), only with credits left over, so would-be plays can be graded
+            for mkt in getattr(C, "SHADOW_PROP_MARKETS", []):
+                for g in sorted(todo, key=lambda x: x["start"]):
+                    ck = f"{g['game_id']}|{mkt}"
+                    if ck in cache or allowance < 1:
+                        continue
+                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
+                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
+                    rows, used = {}, None
+                    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
+                    for k in [k for k in C.PROP_BOOKS if k in bks]:
+                        for m in bks[k].get("markets", []):
+                            for o in m.get("outcomes", []):
+                                nm = norm_name(o.get("description", ""))
+                                if nm in rows and rows[nm].get("bk") != k:
+                                    continue
+                                r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
+                                r["over" if o["name"] == "Over" else "under"] = o["price"]
+                        used = used or bks[k].get("title")
+                    cache[ck] = {"day": today, "rows": rows, "book": used}
+                    allowance -= 1
+                    state["spent_today"] = state.get("spent_today", 0) + 1
+                    status["shadow_pulls"] = status.get("shadow_pulls", 0) + 1
     except Fatal as e:
         log.warning(f"NHL odds: {e}")
         status["note"] = str(e)

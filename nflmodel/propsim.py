@@ -339,6 +339,13 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
                   and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
                   and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
             tier = "play" if ok else "watch"
+            # shadow plays (gates.py): would have been a play if a paused type were still on
+            if not ok and dec["play"] and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and cons_ev is not None \
+                    and cons_ev >= C.PROP_CONS_MIN_EV:
+                if stat == "rec" and stat not in C.PROP_PLAY_STATS:
+                    row["shadow"] = "nfl_prop_rec"
+                elif stat in C.PROP_PLAY_STATS and side not in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under")):
+                    row["shadow"] = "nfl_prop_overs"
         elif tier == "play":
             tier = "watch"
         row.update({"model_over": fnum(adj * 100, 1), "model_over_raw": fnum(p_over * 100, 1),

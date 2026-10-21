@@ -75,6 +75,9 @@ ODDS_PROP_MARKETS = ["player_shots_on_goal"]   # in priority order
 # 1 credit per market per game, spent only from what's left of the day's allowance after props, soonest games
 # first, once per game per day. Busy nights get team totals only; lighter nights add alt totals and puck lines.
 ALT_MARKETS = ["team_totals", "alternate_totals", "alternate_spreads"]   # in priority order
+# Shadow pulls (gates.py): paused prop types still get book lines when credits are left after everything above,
+# so their would-be plays can be graded and earn their way back.
+SHADOW_PROP_MARKETS = ["player_points"]
 ALT_BOOKS = ["hardrockbet", "pinnacle"]
 ALT_HOURS = 7.0                  # pull for games starting within this many hours (the 5:12pm ET run)
 ALT_SPEC = {"spread": (-3.5, 3.5, 1.0), "total": (3.5, 9.5, 0.5), "team_total": (0.5, 5.5, 0.5)}   # price-check ladders

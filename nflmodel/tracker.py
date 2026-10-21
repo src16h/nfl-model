@@ -340,7 +340,13 @@ def update_props_log(path, rows, season, week, now):
                                                  "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
                                                  "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
                                                  "book": r.get("book"), "cons_ev": r.get("cons_ev"), "at": ts}
-                                                if r.get("tier") == "play" else None)}
+                                                if r.get("tier") == "play" else None),
+            # shadow play (gates.py): a paused bet type's would-be play, locked the same way and graded on the side
+            "shadow": (old or {}).get("shadow") or r.get("shadow"),
+            "shadow_flag": (old or {}).get("shadow_flag") or ({"line": r.get("line"), "lean": r.get("lean"),
+                                                               "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
+                                                               "edge": r["edge"], "book": r.get("book"), "at": ts}
+                                                              if r.get("shadow") and r.get("tier") != "play" else None)}
         index[trio] = key
     _save(path, lg)
 
@@ -489,6 +495,12 @@ def _grade_with_flag(r, s, ts):
                                        "under_odds": fl.get("odds") if fl.get("lean") == "Under" else r.get("under_odds")}, s, ts)
         if fl.get("at"):
             r["flag_result"]["clv"] = prop_clv(r, fl)
+    sf = r.get("shadow_flag")
+    if sf:
+        r["shadow_result"] = _grade_one({**r, "line": sf.get("line"), "lean": sf.get("lean"),
+                                         "over_odds": sf.get("odds") if sf.get("lean") == "Over" else r.get("over_odds"),
+                                         "under_odds": sf.get("odds") if sf.get("lean") == "Under" else r.get("under_odds")}, s, ts)
+        r["shadow_result"]["clv"] = prop_clv(r, sf)
 
 
 def grade_props(path, pbp, schedules, now, snaps=None):
@@ -537,6 +549,35 @@ def grade_props(path, pbp, schedules, now, snaps=None):
                 log.warning(f"could not grade {r.get('player')} {r.get('stat')}: {e}")
         _save(path, lg)
     return prop_summary(lg)
+
+
+def gate_rows(path):
+    """Graded rows for each NFL gate (gates.py): shadow plays while paused, real plays once it's back."""
+    lg = _load(path, {"props": {}})
+    out = {"nfl_prop_overs": ([], []), "nfl_prop_rec": ([], [])}
+
+    def row(res, fl):
+        lr = (res or {}).get("lean_result")
+        if lr not in ("win", "loss", "push"):
+            return None
+        return {"date": str(fl.get("at") or "")[:10], "res": {"win": "W", "loss": "L", "push": "P"}[lr], "units": res.get("profit") or 0.0,
+                "clv": res.get("clv")}
+    for r in lg.get("props", {}).values():
+        sh = r.get("shadow")
+        if sh in out and r.get("shadow_flag") and r.get("shadow_result"):
+            x = row(r["shadow_result"], r["shadow_flag"])
+            if x:
+                out[sh][0].append(x)
+        fl = r.get("flag")
+        if fl and fl.get("at") and r.get("flag_result"):
+            x = row(r["flag_result"], fl)
+            if not x:
+                continue
+            if r.get("stat") == "rec":
+                out["nfl_prop_rec"][1].append(x)
+            elif r.get("stat") in ("pass_yds", "rush_yds", "rec_yds") and fl.get("lean") == "Over":
+                out["nfl_prop_overs"][1].append(x)
+    return out
 
 
 def _rec_block(items):

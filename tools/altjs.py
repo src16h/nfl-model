@@ -24,6 +24,11 @@ ALT_CSS = """
 .vt.thin{border-color:var(--line);color:var(--muted)}
 .mchip{display:inline-block;font:600 10.5px var(--sans);color:var(--brown);background:var(--beige);border-radius:999px;padding:2px 8px;margin-right:6px;vertical-align:1px;white-space:nowrap}
 .bet.on{border-color:var(--gold-line);background:linear-gradient(90deg,var(--gold-soft),transparent 70%)}
+.gates{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.gate{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface);display:grid;gap:6px}
+.gate .gh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gate .gs{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--num)}
+.gbar{height:6px;border-radius:999px;background:var(--line-soft);overflow:hidden}.gbar i{display:block;height:100%;background:var(--gold)}
 .legteam{display:inline-block;font:600 10px var(--sans);color:var(--brown);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-right:5px;vertical-align:1px}
 .altbox td:first-child{white-space:normal;min-width:120px}
 @media (max-width:640px){.altbox .c-x{display:none}.altbox table td,.altbox table th{padding:7px 6px;font-size:13px}}
@@ -156,6 +161,24 @@ function altStakeTxt(pPct, odds) {
   const z = sizing(pPct, odds); if (!z) return "";
   if (z.units > 1) { z.units = 1; z.dollars = Math.round(SET.unit); }
   return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars}) <span class="dim">(1u cap: new market)</span>` : `Suggested bet <b>none</b> at this price`;
+}
+/* paused bet types (gates.py): shadow record and the bar to come back */
+function gatesHTML() {
+  const G = D.gates || []; if (!G.length) return "";
+  const g0 = G[0];
+  return `<h3>Paused bets, tracked in the background</h3><p class="sub">When a bet type is cut, the model keeps finding the bets it would have played, locks them at the price it saw, and grades them. Only bets from the pause date on count, so a comeback is earned on fresh results. A type comes back into plays on its own after about ${g0.min_n} graded at a +${g0.min_roi}% return or better, without losing to the closing line, and is paused again if it then returns ${g0.repause_roi}% or worse over its next ${g0.min_n}.</p>
+    <div class="gates">${G.map(x => { const R = x.record || {}, back = x.status === "active", pct = Math.min(100, 100 * (R.n || 0) / x.min_n);
+      const need = back ? `Back since ${esc(String(x.since).slice(5))}. Paused again if it returns ${x.repause_roi}% or worse over its next ${x.min_n}.`
+        : `${R.n || 0} of ${x.min_n} graded. Needs a +${x.min_roi}% return${R.clv_n >= 15 ? ` (closing value so far ${altSgn(R.clv, 2)}%)` : ""} to come back.`;
+      return `<div class="gate"><div class="gh"><b>${esc(x.label)}</b>${back ? `<span class="tag">Back in plays</span>` : `<span class="vt">Paused</span>`}</div>
+        <div class="dim" style="font-size:12.5px">${esc(x.why)}</div>
+        <div class="gs"><span>${R.n ? `${R.w}–${R.l}` : "0–0"} ${back ? "as plays" : "shadow"}</span><span class="${R.n ? (R.units >= 0 ? "up" : "down") : "dim"}">${R.n ? `${altSgn(R.units, 2)}u, ${altSgn(R.roi)}%` : "no results yet"}</span></div>
+        ${back ? "" : `<div class="gbar"><i style="width:${pct}%"></i></div>`}<div style="font-size:13px">${need}</div></div>`; }).join("")}</div>
+    <p class="note">Record is shadow plays while paused, real plays once back. Shadow plays are never in your units.</p>`;
+}
+function gatesNote() {
+  const back = (D.gates || []).filter(x => x.status === "active");
+  return back.length ? ` <b>Back in plays:</b> ${back.map(x => esc(x.label)).join(", ")}.` : "";
 }
 const altLegTxt = L => L.kind === "team" ? `<span class="legteam">${esc(ALT_MK[L.market] || "Team")}</span>${esc(L.label)}` : `<b>${esc(L.name)}</b> ${esc(L.label)}`;
 """

@@ -27,6 +27,7 @@ from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
 import betrules as BR
 import altlines as AL
+import gates as GT
 from nflmodel.propsim import load_props, evaluate_props, prop_bias, STAT_ALIASES, stat_label, game_shocks, team_points
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
@@ -1079,6 +1080,12 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
     try:
         tracker.update_props_log(OUT / "props_log.json", prop_rows, season, week, now)
         res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now, snaps=bundle.snaps)
+        try:                                   # paused bet types: shadow record and the bar to come back (gates.py)
+            gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec"))
+            rows = tracker.gate_rows(OUT / "props_log.json")
+            res["gates"] = [GT.update(OUT / "gates.json", gst, k, sh, pl, now.date().isoformat()) for k, (sh, pl) in rows.items()]
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"gates skipped: {e}")
     except Exception as e:  # noqa: BLE001
         log.warning(f"prop tracker skipped: {e}")
         res["prop_record"] = {"error": str(e)[:160]}
@@ -1107,6 +1114,13 @@ def main():
     season = C.SEASON or guess_season(now)
     log.info(f"season {season}")
     bundle = D.load_all(season)
+    # paused bet types (gates.py): a type that has earned its way back is a play again from this run on
+    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec"))
+    if GT.active(gst, "nfl_prop_overs"):
+        C.PROP_PLAY_SIDES = ["Over", "Under"]
+    if GT.active(gst, "nfl_prop_rec") and "rec" not in C.PROP_PLAY_STATS:
+        C.PROP_PLAY_STATS = list(C.PROP_PLAY_STATS) + ["rec"]
+    log.info(f"gates: {({k: v['status'] for k, v in gst.items()})}")
     week = C.WEEK or pick_week(bundle.schedules, season, now)
     OUT.mkdir(parents=True, exist_ok=True)
     HIST.mkdir(parents=True, exist_ok=True)
