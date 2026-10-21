@@ -1,0 +1,12 @@
+{
+ "nhl_points": {
+  "status": "paused",
+  "since": "2026-10-21",
+  "history": []
+ },
+ "nhl_edge": {
+  "status": "paused",
+  "since": "2026-10-21",
+  "history": []
+ }
+}
