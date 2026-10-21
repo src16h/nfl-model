@@ -143,6 +143,7 @@ def run(games, state_path, cache_path, now):
     cl = Client(key)
     if not key:
         status["note"] = "no NHL odds key, using the league's free moneylines"
+        Path(cache_path).write_text(json.dumps(cache))
         for g in games:                                   # lines saved by an earlier keyed run still count
             rec = (state.get("lines") or {}).get(f"{g['away']}@{g['home']}")
             if rec:
@@ -201,6 +202,24 @@ def run(games, state_path, cache_path, now):
                     cache[ck] = {"day": today, "rows": rows, "book": used}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
+            # alt lines and team totals: whatever today's allowance has left, soonest games first (altlines.py)
+            alt_todo = [g for g in todo if 0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+                        <= C.ALT_HOURS]
+            for mkt in C.ALT_MARKETS:
+                for g in sorted(alt_todo, key=lambda x: x["start"]):
+                    ck = f"alt:{g['game_id']}:{mkt}"
+                    if ck in cache or allowance < 1:
+                        continue
+                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
+                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.ALT_BOOKS))
+                    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
+                    bet = next((k for k in C.ALT_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
+                    shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
+                    cache[ck] = {"day": today, "book": _alt_rows(ev, bks[bet], mkt) if bet else [],
+                                 "sharp": _alt_rows(ev, bks[shp], mkt) if shp else [], "book_name": bks[bet].get("title") if bet else None}
+                    allowance -= 1
+                    state["spent_today"] = state.get("spent_today", 0) + 1
+                    status["alt_pulls"] = status.get("alt_pulls", 0) + 1
     except Fatal as e:
         log.warning(f"NHL odds: {e}")
         status["note"] = str(e)
@@ -211,9 +230,46 @@ def run(games, state_path, cache_path, now):
     return _props(cache), status
 
 
+def _alt_rows(ev, b, mkt):
+    """Bets in altlines.py form from one book's market."""
+    hn, an = ev["home_team"], ev["away_team"]
+    rows = []
+    for m in b.get("markets", []):
+        for o in m.get("outcomes", []):
+            pt, pr = o.get("point"), o.get("price")
+            if pt is None or pr is None:
+                continue
+            if m["key"] in ("spreads", "alternate_spreads") and o["name"] in (hn, an):
+                side = "home" if o["name"] == hn else "away"
+                rows.append({"market": "spread", "team": side, "side": side, "line": float(pt), "odds": pr})
+            elif m["key"] in ("totals", "alternate_totals") and o["name"] in ("Over", "Under"):
+                rows.append({"market": "total", "team": None, "side": o["name"].lower(), "line": float(pt), "odds": pr})
+            elif m["key"] in ("team_totals", "alternate_team_totals") and o["name"] in ("Over", "Under") and o.get("description") in (hn, an):
+                rows.append({"market": "team_total", "team": "home" if o["description"] == hn else "away", "side": o["name"].lower(),
+                             "line": float(pt), "odds": pr})
+    return rows
+
+
+def alt_lines(cache):
+    """{game_id: {"book": [...], "sharp": [...], "book_name": str}} from today's alt pulls."""
+    out = {}
+    for ck, v in cache.items():
+        if not ck.startswith("alt:"):
+            continue
+        gid = int(ck.split(":")[1])
+        o = out.setdefault(gid, {"book": [], "sharp": [], "book_name": None, "markets": []})
+        o["book"] += v.get("book", [])
+        o["sharp"] += v.get("sharp", [])
+        o["book_name"] = o["book_name"] or v.get("book_name")
+        o["markets"].append(ck.split(":")[2])
+    return out
+
+
 def _props(cache):
     props = {}
     for ck, v in cache.items():
+        if ck.startswith("alt:"):
+            continue
         gid, mkt = ck.split("|")
         for nm, r in v["rows"].items():
             if r.get("line") is None:

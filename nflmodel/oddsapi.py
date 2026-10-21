@@ -435,13 +435,81 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
 
 
 # ---------------------------------------------------------------------
+# alt lines and team totals (altlines.py)
+# ---------------------------------------------------------------------
+def _alt_rows(ev, b):
+    hn, an = ev.get("home_team"), ev.get("away_team")
+    rows = []
+    for m in b.get("markets", []):
+        for o in m.get("outcomes", []):
+            pt, pr = _num(o.get("point")), _num(o.get("price"))
+            if pt is None or pr is None:
+                continue
+            k = m.get("key", "")
+            if k in ("spreads", "alternate_spreads") and o.get("name") in (hn, an):
+                side = "home" if o["name"] == hn else "away"
+                rows.append({"market": "spread", "team": side, "side": side, "line": pt, "odds": pr})
+            elif k in ("totals", "alternate_totals") and str(o.get("name")).lower() in ("over", "under"):
+                rows.append({"market": "total", "team": None, "side": str(o["name"]).lower(), "line": pt, "odds": pr})
+            elif k in ("team_totals", "alternate_team_totals") and str(o.get("name")).lower() in ("over", "under") and o.get("description") in (hn, an):
+                rows.append({"market": "team_total", "team": "home" if o["description"] == hn else "away",
+                             "side": str(o["name"]).lower(), "line": pt, "odds": pr})
+    return rows
+
+
+def fetch_alts(client: Client, todo: pd.DataFrame, matched: dict, now: datetime, cache_path) -> tuple[dict, int]:
+    """Hard Rock's alt lines for games kicking off soon, once per game, within the credit floor."""
+    cache = _load_cache(cache_path)
+    alt = cache.setdefault("alt", {})
+    ids = set(todo["game_id"])
+    alt = {k: v for k, v in alt.items() if k in ids}
+    spent = 0
+    soon = []
+    for _, g in todo.iterrows():
+        ko, ev = g.get("ko"), matched.get(g["game_id"])
+        if ev is not None and ko is not None and pd.notna(ko) and now < ko <= now + timedelta(hours=C.ALT_HOURS):
+            soon.append((ko, g["game_id"], ev))
+    for mkt in C.ALT_MARKETS:
+        for ko, gid, ev in sorted(soon, key=lambda x: x[0]):
+            ent = alt.setdefault(gid, {"markets": {}})
+            if mkt in ent["markets"]:
+                continue
+            if spent + 1 > C.ALT_MAX_PER_RUN or (client.remaining is not None and client.remaining - 1 < C.ALT_MIN_LEFT):
+                break
+            try:
+                data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=1, markets=mkt,
+                                  bookmakers=",".join(C.ALT_BOOKS), oddsFormat="american", dateFormat="iso")
+            except OddsFatal:
+                raise
+            except OddsError as e:
+                log.warning(f"alt lines {mkt} for {gid} skipped: {e}")
+                continue
+            spent += 1
+            bks = {b.get("key"): b for b in (data or {}).get("bookmakers", [])} if isinstance(data, dict) else {}
+            bet = next((k for k in C.ALT_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
+            shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
+            ent["markets"][mkt] = {"fetched_at": now.isoformat(timespec="minutes"),
+                                   "book": _alt_rows(data, bks[bet]) if bet else [], "sharp": _alt_rows(data, bks[shp]) if shp else [],
+                                   "book_name": bks[bet].get("title") if bet else None}
+    cache["alt"] = alt
+    _save_cache(cache_path, cache)
+    out = {}
+    for gid, ent in alt.items():
+        ms = ent.get("markets") or {}
+        if ms:
+            out[gid] = {"book": [r for v in ms.values() for r in v.get("book", [])], "sharp": [r for v in ms.values() for r in v.get("sharp", [])],
+                        "book_name": next((v.get("book_name") for v in ms.values() if v.get("book_name")), None), "markets": list(ms)}
+    return out, spent
+
+
+# ---------------------------------------------------------------------
 # main entry
 # ---------------------------------------------------------------------
 def pull(todo: pd.DataFrame, now: datetime, cache_path) -> dict:
     status = {"enabled": False, "ok": None, "message": "", "credits_remaining": None, "credits_used": None,
               "spent_this_run": 0, "lines": 0, "games_fetched": 0, "games_cached": 0, "prop_rows": 0,
               "book": None, "note": None, "at": now.isoformat(timespec="minutes")}
-    out = {"game_lines": {}, "props_df": pd.DataFrame(), "status": status}
+    out = {"game_lines": {}, "props_df": pd.DataFrame(), "status": status, "alt": {}}
     key = os.environ.get("ODDS_API_KEY", "").strip()
     if not key:
         status["message"] = "Automatic odds are off. Add an Odds API key to load lines on their own."
@@ -489,6 +557,13 @@ def pull(todo: pd.DataFrame, now: datetime, cache_path) -> dict:
             status.update(games_fetched=info["fetched"], games_cached=info["cached"])
             if info["budget_note"]:
                 notes.append(f"{info['skipped']} games not refreshed ({info['budget_note']})")
+        if matched and getattr(C, "ALT_MARKETS", None):
+            try:
+                out["alt"], status["alt_spent"] = fetch_alts(client, todo, matched, now, cache_path)
+            except OddsFatal:
+                raise
+            except Exception as e:  # noqa: BLE001
+                notes.append(f"alt lines skipped ({str(e)[:80]})")
         status["ok"] = True
     except OddsError as e:
         status["ok"] = False

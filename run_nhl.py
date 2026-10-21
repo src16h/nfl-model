@@ -31,6 +31,7 @@ from nhlmodel.util import clean, norm_name, r
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
+import altlines as AL  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nhlmodel")
@@ -241,7 +242,7 @@ def dec_to_american(dec):
 
 def tracking(history_days, results):
     picks = {k: [] for k in ("ml", "pl", "total")}
-    plays, prop_plays, calib, alts, daily, edges = [], [], {}, [], {}, []
+    plays, prop_plays, calib, alts, daily, edges, alt_plays = [], [], {}, [], {}, [], []
     clv_rows = []
     daily_t = {"game": {}, "prop": {}, "edge": {}}       # units per day by bet type (Home record chart)
     for day in history_days:
@@ -272,10 +273,20 @@ def tracking(history_days, results):
                 clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": bool(fl.get("at"))})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
                 daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
-            ap = g.get("alt_parlay")
-            if ap:
+            for fl in (g.get("alt_flags") or {}).values():
+                rr, u = AL.grade(fl, res["h"], res["a"])
+                alt_plays.append({"date": dt, "kind": "alt", "market": fl["market"], "pick": fl.get("label"), "game": f"{g['away']} at {g['home']}",
+                                  "odds": fl.get("odds"), "edge": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
+                daily[dt] = daily.get(dt, 0) + (u or 0)
+                daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
+            for ap in (g.get("alt_parlay"), g.get("alt_mix")):
+                if not ap:
+                    continue
                 hits = []
                 for L in ap["legs"]:
+                    if L.get("kind") == "team":
+                        hits.append(AL.grade(L, res["h"], res["a"])[0] == "W")
+                        continue
                     st = res["p"].get(str(L["pid"]))
                     if st is None:
                         hits.append(None)
@@ -359,6 +370,7 @@ def tracking(history_days, results):
         series_by[t] = out
     # record by bet type: game plays by market, prop plays by stat and side
     by_kind = {k: rec2([x for x in plays if x["kind"] == k]) for k in ("ml", "pl", "total")}
+    by_kind["alt"] = rec2(alt_plays)
     by_prop = {}
     for x in prop_plays:
         by_prop.setdefault(f'{x["stat"]}|{x["side"]}', []).append(x)
@@ -366,9 +378,12 @@ def tracking(history_days, results):
     return {"picks": {k: rec(v) for k, v in picks.items()},
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
             "clv": CLV.summary(clv_rows),
+            "alt_plays": rec2(alt_plays), "alt_plays_list": sorted(alt_plays, key=lambda x: x["date"], reverse=True)[:60],
+            "alt_by_market": {m: rec2([x for x in alt_plays if x["market"] == m]) for m in ("spread", "total", "team_total")},
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
             "calibration": cal,
-            "alt": alt_rec([a for a in alts if a["v"] >= 3]),
+            "alt": alt_rec([a for a in alts if a["v"] in (3, 4)]),
+            "alt_mix": alt_rec([a for a in alts if a["v"] == 5]),
             "alt_hr": alt_rec([a for a in alts if a["v"] == 2]),
             "alt_old": alt_rec([a for a in alts if a["v"] < 2]),
             "edge": {**rec2(edges), "model": r(np.mean([e["p"] for e in edges])) if edges else None,
@@ -475,6 +490,8 @@ def main():
         g["today_et"] = today.isoformat()
     log.info(f"{len(upcoming)} upcoming games")
     book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now)
+    book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
+    alt_rows, conv_errs = [], []
 
     games, players = [], []
     for i, g in enumerate(upcoming):
@@ -521,6 +538,35 @@ def main():
                 "book": {k: v for k, v in (g.get("book") or {}).items() if k != "event"}}
         game["fair_ml_home"] = fmt_odds(american(float((d > 0).mean())))
         game["picks"] = game_picks(game, sim)
+        # alt lines and team totals: the sims re-weighted to Pinnacle's lines price every alt line (altlines.py)
+        ba = book_alt.get(g["game_id"], {})
+        mdl, mkt, mkt_err = AL.Dist(sim["FH"], sim["FA"]), None, None
+        try:
+            sh = (g.get("book") or {}).get("sharp") or {}
+            tg = []
+            if sh.get("ml_home") and sh.get("ml_away"):
+                tg.append(({"market": "spread", "team": "home", "side": "home", "line": 0.0}, AL.nv(sh["ml_home"], sh["ml_away"])))
+            if sh.get("pl_home") is not None and sh.get("pl_home_odds") and sh.get("pl_away_odds"):
+                tg.append(({"market": "spread", "team": "home", "side": "home", "line": float(sh["pl_home"])}, AL.nv(sh["pl_home_odds"], sh["pl_away_odds"])))
+            if sh.get("total") is not None and sh.get("over_odds") and sh.get("under_odds"):
+                tg.append(({"market": "total", "team": None, "side": "over", "line": float(sh["total"])}, AL.nv(sh["over_odds"], sh["under_odds"])))
+            for k_, sides in AL.pairs([x for x in ba.get("sharp", []) if x["market"] == "team_total"]).items():
+                if "over" in sides and "under" in sides:          # Pinnacle's own team totals pin each side's scoring
+                    tg.append(({"market": "team_total", "team": k_[1], "side": "over", "line": k_[2]}, AL.nv(sides["over"], sides["under"])))
+            if len(tg) >= 2:
+                mkt, mkt_err = AL.tilt(mdl, tg)
+            game["ladder"] = AL.ladders(mdl, mkt, C.ALT_SPEC)
+            game["mkt_err"] = None if mkt_err is None else r(100 * mkt_err, 2)
+            if ba.get("book"):
+                ev_rows = AL.evaluate(ba["book"], ba.get("sharp"), mdl, mkt)
+                for x in ev_rows:
+                    x.update({"game_id": g["game_id"], "label": AL.label(x, h, a), "book": ba.get("book_name")})
+                alt_rows += ev_rows
+                game["alt"] = {"book": ba.get("book_name"), "markets": ba.get("markets"), "n": len(ev_rows),
+                               "rows": sorted(ev_rows, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12], "plays": []}
+            conv_errs += AL.conv_check(ba.get("sharp"), mkt)
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"alt lines skipped for {a}@{h}: {e}")
         # players
         rng = np.random.default_rng(77 + i)
         info, arrs = {}, {}
@@ -539,9 +585,31 @@ def main():
             p["game_id"] = g["game_id"]
             p["opp"] = a if p["team"] == h else h
         players += prows
-        game["alt_parlay"] = P.alt_parlay(arrs, info, game, bp)
+        team_legs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE) if mkt is not None else []
+        game["alt_parlay"] = P.alt_parlay(arrs, info, game, bp)              # players only (the record so far)
+        game["alt_mix"] = P.alt_parlay(arrs, info, game, bp, team_legs, need_team=True)   # must include a team leg
         games.append(game)
         log.info(f"{a}@{h}: xG {lam[1]:.2f}-{lam[0]:.2f}, home win {game['win_home']}%, goalies {goalies[a]['name']} / {goalies[h]['name']}")
+
+    # alt-line plays: one per game, best value first, at most ALT_DAILY_CAP a day
+    chosen = AL.best_plays(alt_rows)
+    by_day_n, keep_ids = {}, set()
+    gday = {g["game_id"]: g["date"] for g in games}
+    for x in sorted(chosen, key=lambda x: -x["ev"]):
+        dd = gday.get(x["game_id"])
+        if by_day_n.get(dd, 0) < C.ALT_DAILY_CAP:
+            by_day_n[dd] = by_day_n.get(dd, 0) + 1
+            keep_ids.add(id(x))
+    for x in alt_rows:
+        x["eligible"], x["play"] = x["play"], id(x) in keep_ids
+    for g in games:
+        if g.get("alt"):
+            g["alt"]["plays"] = [x for x in alt_rows if x["game_id"] == g["game_id"] and x["play"]]
+            g["alt"]["rows"] = sorted(g["alt"]["plays"] + [x for x in g["alt"]["rows"] if not x["play"]],
+                                      key=lambda x: (not x["play"], -(x["ev"] if x["ev"] is not None else -99)))[:12]
+    odds_status["alt_check"] = {"n": len(conv_errs), "mae": r(float(np.mean(np.abs(conv_errs))), 2) if conv_errs else None,
+                                "bias": r(float(np.mean(conv_errs)), 2) if conv_errs else None}
+    log.info(f"alt lines: {len(alt_rows)} priced, {len(keep_ids)} plays, conversion check {odds_status['alt_check']}")
 
     # market level check: if the model sits above or below the book on almost every prop of a stat,
     # that is a level problem (league trend, early-season noise), not 40 separate edges. Remove the
@@ -612,7 +680,14 @@ def main():
                 m["flag"] = fl
         keep = []
         for g in v["games"]:
-            lite = {k: g[k] for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "win_home", "book", "goalies")}
+            lite = {k: g.get(k) for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "alt_mix", "win_home", "book", "goalies")}
+            alt_flags = dict((prev or {}).get("alt_flags") or {}) if (prev := next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)) else {}
+            for x in (g.get("alt") or {}).get("plays", []):        # alt plays are locked the first time they're flagged
+                k_ = f"{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
+                if k_ not in alt_flags:
+                    alt_flags[k_] = {f_: x.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book")}
+                    alt_flags[k_]["at"] = now.isoformat(timespec="minutes")
+            lite["alt_flags"] = g["alt_flags"] = alt_flags
             prev = next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)
             lite["open_book"] = (prev or {}).get("open_book") or g.get("book")
             lite["play_at"] = g["play_at"] = CLV.snapshot(g.get("picks"), (prev or {}).get("play_at"), now.isoformat(timespec="minutes"))
@@ -660,6 +735,8 @@ def main():
                          "backtest": BACKTEST},
                "teams": [{"team": t, **{k: r(v, 2) for k, v in f.items() if k not in ("last",)}, **{k: r(v, 2) for k, v in tpow[t].items()}}
                          for t, f in sorted(form.items()) if t in tpow],          # teams with a game this season (drops moved franchises)
+               "alt_rules": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA,
+                             "daily_cap": C.ALT_DAILY_CAP},
                "rules": {"ml": C.ML_PLAY_EDGE, "pl": C.PL_PLAY_EDGE, "total": C.TOTAL_PLAY_EDGE, "max": C.PLAY_MAX_EDGE,
                          "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX], **BR.summary(), "bias": bias, "calibration": real,
                          "blocked": sorted(" ".join(x) if isinstance(x, tuple) else x for x in C.BLOCKED)}}

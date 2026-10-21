@@ -68,7 +68,19 @@ PROP_BOOKS = ["hardrockbet", "draftkings"]
 ODDS_PREKO_HOURS = 2.0           # games starting this soon get a fresh line pull (near-closing prices for CLV)
 ODDS_REGION = "us"
 ODDS_RESERVE = 15                # never spend the last credits of the month
-ODDS_PROP_MARKETS = ["player_shots_on_goal", "player_points"]   # in priority order
+# Oct 21 2026: player points pulls dropped (111-121 and -17 units on 232 plays, Overs 5-17). Their credits now pay for
+# Hard Rock's team totals and alt lines below. Points still show the model's fair line with a price check.
+ODDS_PROP_MARKETS = ["player_shots_on_goal"]   # in priority order
+# Alt lines and team totals (altlines.py): Hard Rock's prices, Pinnacle's ride along in the same call for free.
+# 1 credit per market per game, spent only from what's left of the day's allowance after props, soonest games
+# first, once per game per day. Busy nights get team totals only; lighter nights add alt totals and puck lines.
+ALT_MARKETS = ["team_totals", "alternate_totals", "alternate_spreads"]   # in priority order
+ALT_BOOKS = ["hardrockbet", "pinnacle"]
+ALT_HOURS = 7.0                  # pull for games starting within this many hours (the 5:12pm ET run)
+ALT_SPEC = {"spread": (-3.5, 3.5, 1.0), "total": (3.5, 9.5, 0.5), "team_total": (0.5, 5.5, 0.5)}   # price-check ladders
+ALT_LEG_SPEC = {"spread": (-1.5, 2.5, 1.0), "total": (4.5, 7.5, 1.0), "team_total": (0.5, 3.5, 1.0)}  # parlay legs
+ALT_DAILY_CAP = 4                # alt-line plays per day, best value first, one per game
+ALT_MAX_TEAM_LEGS = 2            # team legs (puck line, total, team total) per alt parlay
 ODDS_LINES_EVERY_HOURS = 5
 
 

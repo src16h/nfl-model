@@ -144,6 +144,23 @@ The soccer page lives at `/soccer/` on the same site, with a league filter.
 
 ---
 
+## Alt lines, team totals and team-leg parlays (all sports, Oct 21 2026)
+
+`altlines.py` prices every market that depends only on the final score: alt spreads and puck lines, alt totals, team totals, BTTS and draw no bet.
+
+- **Two prices for every line:** the model's (its simulated games, or soccer's scoreline grid) and Pinnacle's. Pinnacle's comes from re-weighting the same simulated games until they reproduce its main lines, which keeps hockey's empty-netters and football's 3s and 7s.
+- **Plays:** a book's alt price must be worth 1.5% to 8% at Pinnacle's fair chance with the model agreeing, the same rule as every other play. When Pinnacle didn't post that exact alt line, it needs 1 point more. One per game, capped per day, stakes capped at 1 unit while the market is new. Each run logs how far the conversion lands from the alt lines Pinnacle did post (`alt_check` in the odds status).
+- **Team-leg parlays:** a second alt parlay per game that must carry at least one team leg (up to 2), priced at Pinnacle's chance and combined with player legs from the same simulated games. The player-only parlay is unchanged. Each is tracked separately.
+- **Price checks:** every game has a box to type your book's price for any team total, alt total or alt spread. Passing ones show up on Home, saved on that device.
+- **Credits:**
+  - **NHL:** player points pulls were dropped (111-121, -17 units). Their credits pay for Hard Rock's team totals, then alt totals and puck lines, from whatever the day's allowance has left, once per game on the late-afternoon run.
+  - **NFL:** Hard Rock's alt team totals, alt spreads and alt totals (Pinnacle's ride along) on the last run before each kickoff, never below 90 credits left.
+  - **Soccer:** Hard Rock sends only the 1X2, so BTTS, draw no bet, alt handicaps and totals, and team totals come from the first US book that posts them (labeled), with Pinnacle as the referee, from the day's leftover allowance.
+- **Which markets each book posts:** run the manual "Odds market check" workflow (about 2 credits per sport).
+- **Shared page code:** `tools/altjs.py` writes the identical alt-line code into the NFL and NHL pages.
+
+---
+
 ## How the model works
 
 **1. Team ratings (EPA based).** Every offensive play has an Expected Points Added value. The model fits all plays at once so each team's rating is adjusted for its schedule. It fits separate pass and run ratings, so a strong passing offense gets extra credit against a weak pass defense. Recent weeks count more, and last season fades out as this season builds up. Garbage-time plays are down-weighted.

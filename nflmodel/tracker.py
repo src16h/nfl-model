@@ -671,6 +671,10 @@ def _ncdf(z):
 def _leg_hit(L, g, pl, cols, played=None, gid=None):
     """Grade one parlay leg from results: True / False / None (can't grade)."""
     h, a = g["h"], g["a"]
+    if L["kind"] == "team":                                   # alt-line team legs (altlines.py)
+        import altlines as AL
+        r_ = AL.grade(L, h, a)[0]
+        return None if r_ == "P" else r_ == "W"
     if L["kind"] == "tt":
         v = h if L["team"] == g["home"] else a
         return v > L["line"]
@@ -694,7 +698,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
     cols = results.get("cols") or []
     rg, rp = results.get("games") or {}, results.get("players") or {}
     played = played_set(snaps)
-    mk, tds, combos, alts, alt_legs = [], [], [], [], []
+    mk, tds, combos, alts, alt_legs, mixes, alt_plays = [], [], [], [], [], [], []
     for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
         d = _json.loads(f.read_text())
         week = int(d.get("week") or f.stem.split("week")[-1])
@@ -726,6 +730,16 @@ def model_tracking(hist_dir, season, results, snaps=None):
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
                 if None not in hits:
                     alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
+            amx = hg.get("alt_mix")                               # team-leg alt parlays (since Oct 21 2026)
+            if amx and amx.get("legs"):
+                hits = [_leg_hit(L, g, pl, cols, played, gid) for L in amx["legs"]]
+                if None not in hits:
+                    mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
+            for fl in (hg.get("alt_flags") or {}).values():     # alt-line plays, graded at the locked price
+                import altlines as AL
+                rr, u = AL.grade(fl, g["h"], g["a"])
+                alt_plays.append({"week": week, "game": f"{hg.get('away')} at {hg.get('home')}", "pick": fl.get("label"), "market": fl.get("market"),
+                                  "odds": fl.get("odds"), "ev": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
             # parlay combos locked with the game
             for c in hg.get("sgp_combos") or []:
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in c["legs"]]
@@ -808,5 +822,17 @@ def model_tracking(hist_dir, season, results, snaps=None):
                              for w in sorted({a[0] for a in alts})},
                    "recent": [{"week": a[0], "game": f"{a[3]} at {a[4]}", "hit": bool(a[2]), "legs_hit": int(a[5]), "legs": int(a[6])}
                               for a in sorted(alts, key=lambda a: -a[0])[:16]]}
+    mix_out = {"n": len(mixes), "hits": int(sum(m[2] for m in mixes)), "model": fnum(100 * np.mean([m[1] for m in mixes]), 1) if mixes else None,
+               "recent": [{"week": m[0], "game": f"{m[3]} at {m[4]}", "hit": bool(m[2]), "legs_hit": int(m[5]), "legs": int(m[6])}
+                          for m in sorted(mixes, key=lambda m: -m[0])[:16]]}
+
+    def rec(rows):
+        w = sum(1 for x in rows if x["res"] in ("W", "HW")); l_ = sum(1 for x in rows if x["res"] in ("L", "HL"))
+        u = sum(x["units"] for x in rows)
+        return {"w": w, "l": l_, "pct": fnum(100 * w / (w + l_), 1) if w + l_ else None, "units": fnum(u, 2),
+                "roi": fnum(100 * u / (w + l_), 1) if w + l_ else None}
+    alt_play_out = {**rec(alt_plays), "by_market": {m: rec([x for x in alt_plays if x["market"] == m]) for m in ("spread", "total", "team_total")},
+                    "recent": sorted(alt_plays, key=lambda x: -x["week"])[:40]}
     return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total, "alt_parlays": alt_out,
+            "alt_mix": mix_out, "alt_plays": alt_play_out,
             "weeks": sorted({r[1] for r in mk} | {r[1] for r in tds})}

@@ -29,6 +29,7 @@ from soccermodel.util import clean, r
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 import betrules as BR  # noqa: E402
+import altlines as AL  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("soccermodel")
@@ -184,6 +185,51 @@ def picks(g, G, mk=None):
     return out
 
 
+def alt_parlay(g, G, mk):
+    """Alt-line parlay from the scoreline grids: handicaps, totals, team totals and BTTS. Each leg is priced at Pinnacle's
+    implied chance (the model must rate it at least as high); the ticket's chance comes straight from the grid, so legs
+    that move together (a team total and that team's handicap) are priced together. Most likely ticket at fair +100 to +125."""
+    if mk is None:
+        return None
+    md, kd = AL.Dist.from_grid(G), AL.Dist.from_grid(mk["G"])
+    bets = [{"market": "btts", "team": None, "side": s_, "line": 0.0} for s_ in ("yes", "no")]
+    for L in (-1.5, -0.5, 0.5, 1.5, 2.5):
+        for sd in ("home", "away"):
+            bets.append({"market": "spread", "team": sd, "side": sd, "line": L})
+    for L in (0.5, 1.5, 2.5, 3.5, 4.5):
+        for sd in ("over", "under"):
+            bets.append({"market": "total", "team": None, "side": sd, "line": L})
+    for L in (0.5, 1.5, 2.5):
+        for t in ("home", "away"):
+            for sd in ("over", "under"):
+                bets.append({"market": "team_total", "team": t, "side": sd, "line": L})
+    lo, hi = C.ALT_PARLAY_LEG
+    cands = []
+    for b in bets:
+        pk, pm = kd.p(b), md.p(b)
+        if lo <= pk <= hi and pm >= pk:
+            cands.append((b, md.x(b) > 0, pk, pm))
+    best = None
+    plo, phi = C.ALT_PARLAY_P
+    import itertools
+    for n in (3, 2):
+        for combo in itertools.combinations(range(len(cands)), n):
+            if len({cands[i][0]["market"] + (str(cands[i][0].get("team")) if cands[i][0]["market"] == "team_total" else "") for i in combo}) < n:
+                continue                                    # one handicap, one total, one BTTS, one team total per team
+            hit = np.logical_and.reduce([cands[i][1] for i in combo])
+            pk = float(np.sum(kd.w[hit])); pm = float(np.sum(md.w[hit]))
+            if plo <= pk <= phi and pm >= pk and (best is None or pk > best[1] + 1e-9 or (abs(pk - best[1]) < 1e-9 and pm > best[2])):
+                best = (combo, pk, pm)
+        if best:
+            break
+    if not best:
+        return None
+    combo, pk, pm = best
+    return {"p": r(100 * pk), "p_model": r(100 * pm), "pi": r(100 * float(np.prod([cands[i][2] for i in combo]))), "fair": fmt_odds(american(pk)),
+            "legs": [{**cands[i][0], "label": AL.label(cands[i][0], g["home"], g["away"]), "p": r(100 * cands[i][2]), "p_model": r(100 * cands[i][3])}
+                     for i in combo]}
+
+
 def form(df, team, before, n=6):
     """Last n league matches: results oldest to newest, goals and xG per match (xG only where Understat has it)."""
     m = df[((df["home"] == team) | (df["away"] == team)) & (df["date"] < before) & df["hg"].notna()].tail(n)
@@ -296,6 +342,7 @@ def close_prob(g, k, fl):
 def tracking(days, results, boxes):
     picks_all = {k: [] for k in ("1x2", "dnb", "ah", "total", "btts")}
     plays, daily, calib = [], {}, {"goal": [], "sot1": [], "sot2": []}
+    alt_plays, parlays = [], []
     for day in days:
         dt = day["date"]
         for g in day.get("games", []):
@@ -308,6 +355,17 @@ def tracking(days, results, boxes):
                 if rr is None:
                     continue
                 picks_all[k].append((rr, u, g["league"]))
+            for fl in (g.get("alt_flags") or {}).values():
+                rr, u = AL.grade(fl, hg, ag)
+                alt_plays.append({"date": dt, "league": g["league"], "kind": "alt", "market": fl["market"], "pick": fl.get("label"),
+                                  "game": f"{g['home']} vs {g['away']}", "odds": fl.get("odds"), "edge": fl.get("ev"), "res": rr,
+                                  "units": u or 0.0, "score": f"{hg}-{ag}", "book": fl.get("book"), "exact": fl.get("exact")})
+                daily[dt] = daily.get(dt, 0) + (u or 0)
+            ap = g.get("alt_parlay")
+            if ap and ap.get("legs"):
+                hits = [AL.grade(L, hg, ag)[0] == "W" for L in ap["legs"]]
+                parlays.append({"date": dt, "league": g["league"], "game": f"{g['home']} vs {g['away']}", "hit": all(hits),
+                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"]})
             flags = g.get("flags")
             if flags is None:                                   # files written before flags existed
                 flags = {k: pk for k, pk in (g.get("picks") or {}).items() if pk.get("play")}
@@ -359,6 +417,10 @@ def tracking(days, results, boxes):
     clv = {"n": len(cl), "avg": r(float(np.mean(cl)), 2) if cl else None,
            "beat": r(100 * float(np.mean([c > 0 for c in cl]))) if cl else None,
            "sharp_share": r(100 * float(np.mean([x["clv_sharp"] for x in plays if x["clv"] is not None]))) if cl else None}
+    alt_rec = {**rec2(alt_plays), "by_market": {m: rec2([x for x in alt_plays if x["market"] == m]) for m in ("btts", "spread", "total", "team_total")},
+               "list": sorted(alt_plays, key=lambda x: x["date"], reverse=True)[:60]}
+    par_rec = {"n": len(parlays), "hits": sum(x["hit"] for x in parlays), "model": r(float(np.mean([x["p"] for x in parlays]))) if parlays else None,
+               "recent": sorted(parlays, key=lambda x: x["date"], reverse=True)[:20]}
     rule = [x for x in plays if not x["legacy"]]
     rcl = [x["clv"] for x in rule if x["clv"] is not None]
     provisional = len(rule) < C.PROVISIONAL_N or not rcl or float(np.mean(rcl)) <= 0
@@ -367,7 +429,7 @@ def tracking(days, results, boxes):
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:80],
             "by_type": {k: rec2([x for x in plays if x["kind"] == k]) for k in ("1x2", "ah", "total")},
             "by_league": by_league, "series": series, "calibration": cal, "clv": clv,
-            "rule": {**rec2(rule), "n": len(rule)}, "provisional": provisional}
+            "rule": {**rec2(rule), "n": len(rule)}, "provisional": provisional, "alt_plays": alt_rec, "alt_parlays": par_rec}
 
 
 # ---------------------------------------------------------------------
@@ -406,7 +468,7 @@ def main():
         bx = P.recent_boxes(lg, today - timedelta(days=C.PROP_DAYS), today)
         rates[lg] = P.player_rates(bx)
 
-    games, players = [], []
+    games, players, alt_rows, conv_errs = [], [], [], []
     for f in sorted(upcoming, key=lambda x: x["start"]):
         lg, R = f["league"], ratings.get(f["league"])
         if R is None:
@@ -455,6 +517,19 @@ def main():
              "form": {"home": form(frames[lg], f["home"], kick.date()), "away": form(frames[lg], f["away"], kick.date())},
              "scores": sorted(({"s": f"{i}-{j}", "p": r(100 * float(G[i, j]))} for i in range(6) for j in range(6)), key=lambda x: -x["p"])[:6]}
         g["picks"] = picks({**g, "book": f.get("book")}, G, mk)
+        try:                                             # more markets: BTTS, draw no bet, alt lines, team totals (altlines.py)
+            ab = f.get("alt_book") or {}
+            if ab.get("book"):
+                rws = AL.evaluate(ab["book"], ab.get("sharp"), AL.Dist.from_grid(G), AL.Dist.from_grid(mk["G"]) if mk else None)
+                for x in rws:
+                    x.update({"game_id": f["event_id"], "label": AL.label(x, f["home"], f["away"]), "book": ab.get("book_name"), "date": gd.isoformat()})
+                alt_rows += rws
+                g["alt"] = {"book": ab.get("book_name"), "markets": ab.get("markets"), "n": len(rws), "plays": [],
+                            "rows": sorted(rws, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12]}
+                conv_errs.extend(AL.conv_check(ab.get("sharp"), AL.Dist.from_grid(mk["G"]) if mk else None))
+            g["alt_parlay"] = alt_parlay(g, G, mk)
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"more markets skipped for {f['home']} v {f['away']}: {e}")
         games.append(g)
         for side, lam, opp in (("home", lh, f["away"]), ("away", la, f["home"])):
             for p in P.match_props(f[side], lam, pr, tm, f["event_id"], opp):
@@ -463,6 +538,21 @@ def main():
         for r_ in pr.values():                                   # lineup overrides belong to this match only
             r_.pop("lu", None)
     limit_plays(games)
+    chosen, per_day, keep_ids = AL.best_plays(alt_rows), {}, set()
+    for x in sorted(chosen, key=lambda x: -x["ev"]):
+        if per_day.get(x["date"], 0) < C.ALT_DAILY_CAP:
+            per_day[x["date"]] = per_day.get(x["date"], 0) + 1
+            keep_ids.add(id(x))
+    for x in alt_rows:
+        x["eligible"], x["play"] = x["play"], id(x) in keep_ids
+    for g in games:
+        if g.get("alt"):
+            g["alt"]["plays"] = [x for x in alt_rows if x["game_id"] == g["game_id"] and x["play"]]
+            g["alt"]["rows"] = sorted(g["alt"]["plays"] + [x for x in g["alt"]["rows"] if not x["play"]],
+                                      key=lambda x: (not x["play"], -(x["ev"] if x["ev"] is not None else -99)))[:12]
+    odds_status["alt_check"] = {"n": len(conv_errs), "mae": r(float(np.mean(np.abs(conv_errs))), 2) if conv_errs else None,
+                                "bias": r(float(np.mean(conv_errs)), 2) if conv_errs else None}
+    log.info(f"more markets: {len(alt_rows)} priced, {len(keep_ids)} plays, conversion check {odds_status['alt_check']}")
 
     # history: today's view of each match, so results can be graded later
     by_day = {}
@@ -477,8 +567,8 @@ def main():
         path = HIST / f"{day}.json"
         old = load_json(path, {"date": day, "games": [], "players": []})
         live = {g["game_id"] for g in v["games"]}
-        keep = [{k: g[k] for k in ("game_id", "league", "date", "start", "home", "away", "picks", "book", "p_home", "p_draw", "p_away",
-                                   "xg_home", "xg_away")} for g in v["games"]]
+        keep = [{k: g.get(k) for k in ("game_id", "league", "date", "start", "home", "away", "picks", "book", "p_home", "p_draw", "p_away",
+                                       "xg_home", "xg_away", "alt_parlay")} for g in v["games"]]
         stamp = now.isoformat(timespec="minutes")
         for x in keep:                                          # first price seen, for closing-line value later
             prev = next((o for o in old["games"] if o["game_id"] == x["game_id"]), None) or {}
@@ -495,6 +585,14 @@ def main():
                     flags[k] = {x_: pk.get(x_) for x_ in ("side", "who", "line", "odds", "model", "book", "sharp", "edge", "ev")}
                     flags[k]["at"] = stamp
             x["flags"] = flags
+            alt_flags = dict(prev.get("alt_flags") or {})     # more-markets plays: locked at first flag too
+            live_g = next((g for g in v["games"] if g["game_id"] == x["game_id"]), {})
+            for a_ in (live_g.get("alt") or {}).get("plays", []):
+                k_ = f"{a_['market']}|{a_.get('team')}|{a_['side']}|{a_['line']}"
+                if k_ not in alt_flags:
+                    alt_flags[k_] = {f_: a_.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book")}
+                    alt_flags[k_]["at"] = stamp
+            x["alt_flags"] = alt_flags
         path.write_text(json.dumps(clean({"date": day, "games": [g for g in old["games"] if g["game_id"] not in live] + keep,
                                           "players": [p for p in old["players"] if p["game_id"] not in live] + v["players"]}),
                                    separators=(",", ":")))
@@ -560,6 +658,7 @@ def main():
                "teams": team_rows, "backtest": bt,
                "model": {lg: {"home": r(ratings[lg].home, 3) if ratings[lg] else None, "rho": rho[lg],
                               "base": r(math.exp(ratings[lg].intercept), 2) if ratings[lg] else None} for lg in C.LEAGUES},
+               "alt_rules": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "daily_cap": C.ALT_DAILY_CAP},
                "rules": {"sharp_min_ev": C.SHARP_MIN_EV, "sharp_max_ev": C.SHARP_MAX_EV, "model_agree": C.MODEL_AGREE,
                          "daily_cap": C.DAILY_CAP, "provisional_n": C.PROVISIONAL_N, "fatigue": fat_coef}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))

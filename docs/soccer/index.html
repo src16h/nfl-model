@@ -759,6 +759,7 @@ details.ahm .m-body{padding:4px 18px 18px;display:grid;gap:12px;font-size:14px}
 @media (max-width:640px){.ahtab .c-x{display:none}.ahtab td,.ahtab th{padding:7px 8px}.ahtab th{white-space:normal}}
 nav.sidenav button{white-space:nowrap}
 @media (max-width:640px){.bym td:last-child{white-space:normal;min-width:70px;font-size:12.5px}}
+.rail .alt{cursor:pointer}
 .ahtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
 </style>
 </head>
@@ -836,7 +837,9 @@ const when = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", ho
 const day = iso => iso ? new Date(iso).toLocaleDateString([], {weekday: "short", month: "short", day: "numeric"}) : "";
 const ico = id => `<svg><use href="#i-${id}"/></svg>`;
 const fmtO = o => o == null ? "–" : (+o > 0 ? "+" : "") + Math.round(+o);
-const PK_NAME = {"1x2": "Moneyline", dnb: "Draw no bet", ah: "Asian handicap", total: "Total goals", btts: "Both teams to score"};
+const PK_NAME = {"1x2": "Moneyline", dnb: "Draw no bet", ah: "Asian handicap", total: "Total goals", btts: "Both teams to score", tt: "Team total", alt: "More markets"};
+const ALT_NAME = x => x.market === "btts" ? "Both teams to score" : x.market === "spread" ? (+x.line === 0 ? "Draw no bet" : "Asian handicap") : x.market === "total" ? "Total goals" : "Team total";
+const kname = x => x.kind === "alt" ? ALT_NAME(x.p) : PK_NAME[x.kind];
 const PSTAT = {goal: "Anytime goal", sot1: "1+ shot on target", sot2: "2+ shots on target"};
 let D = null, LG = "all";
 
@@ -924,6 +927,11 @@ function gradeBet(b) {
   if (b.kind === "btts") { const yes = g.hg > 0 && g.ag > 0, w = yes === (b.side === "Yes"); return {res: w ? "W" : "L", units: w ? b.units * pay : -b.units}; }
   if (b.kind === "ah") { const m = b.who === "home" ? g.hg - g.ag : g.ag - g.hg; return halves(splitLine(b.line).map(L => m + L)); }
   if (b.kind === "total") { const t = g.hg + g.ag; return halves(splitLine(b.line).map(L => (t - L) * (b.side === "Over" ? 1 : -1))); }
+  if (b.kind === "tt") { const [team, side] = b.who.split(":"), v = team === "home" ? g.hg : g.ag; return halves(splitLine(b.line).map(L => (v - L) * (side === "over" ? 1 : -1))); }
+  if (b.kind === "alt") { const h = g.hg, a = g.ag;
+    if (b.market === "btts") { const w = (h > 0 && a > 0) === (b.side === "yes"); return {res: w ? "W" : "L", units: w ? b.units * pay : -b.units}; }
+    const xv = L => b.market === "spread" ? (b.side === "home" ? h - a : a - h) + L : b.market === "total" ? (b.side === "over" ? h + a - L : L - h - a) : ((b.team === "home" ? h : a) - L) * (b.side === "over" ? 1 : -1);
+    return halves(splitLine(b.line).map(xv)); }
   if (b.kind === "prop") { const st = g.p?.[String(b.pid)]; if (!g.p) return {res: "O"}; if (!st) return {res: "V", units: 0};
     const v = b.stat === "goal" ? st[0] : st[1], need = b.stat === "sot2" ? 2 : 1, w = (v >= need) === (b.side !== "No");
     return {res: w ? "W" : "L", units: w ? b.units * pay : -b.units}; }
@@ -983,6 +991,13 @@ function chances(g, kind, who, line) {
     return {m, k, exact};
   }
   if (kind === "btts") { const m = bttsOf(Mm), k = Mk ? bttsOf(Mk) : null; return who === "yes" ? {m, k, exact: false} : {m: 1 - m, k: k == null ? null : 1 - k, exact: false}; }
+  if (kind === "tt") { const [team, side] = who.split(":"), f = M => { const r = {w: 0, hw: 0, p: 0, hl: 0, l: 0}, hv = splitLine(line);
+      for (let i = 0; i < MAXG; i++) for (let j = 0; j < MAXG; j++) { const x = team === "home" ? i : j; let w = 0, lo = 0;
+        for (const hh of hv) { const v = (x - hh) * (side === "over" ? 1 : -1); if (v > 1e-9) w++; else if (v < -1e-9) lo++; }
+        const pr = M[i][j]; if (w === hv.length) r.w += pr; else if (lo === hv.length) r.l += pr; else if (w && !lo) r.hw += pr; else if (lo && !w) r.hl += pr; else r.p += pr; }
+      return coverOf(r); };
+    const ex = (g.alt?.rows || []).find(x => x.market === "team_total" && x.team === team && x.side === side && Math.abs(x.line - line) < 1e-9 && x.exact);
+    return {m: f(Mm), k: ex ? ex.sharp / 100 : Mk ? f(Mk) : null, exact: !!ex}; }
   if (kind === "dnb") { const mh = g.p_home / (g.p_home + g.p_away), kh = K ? K.p_home / (K.p_home + K.p_away) : null;
     return who === "home" ? {m: mh, k: kh, exact: true} : {m: 1 - mh, k: kh == null ? null : 1 - kh, exact: true}; }
   return {m: null, k: null, exact: false};
@@ -1005,7 +1020,7 @@ function verdictLine(v, c) {
 const LS_PRICES = "board.soccer.prices.v1";
 let PRICES = lsGet(LS_PRICES, {});
 const pKey = (gid, kind, who, line) => [gid, kind, who, line ?? ""].join("|");
-const sideName = (g, kind, who) => kind === "btts" ? (who === "yes" ? "Yes" : "No") : kind === "total" ? (who === "over" ? "Over" : "Under") : who === "home" ? g.home : g.away;
+const sideName = (g, kind, who) => kind === "tt" ? `${who.startsWith("home") ? g.home : g.away} team total ${who.endsWith("over") ? "Over" : "Under"}` : kind === "btts" ? (who === "yes" ? "Yes" : "No") : kind === "total" ? (who === "over" ? "Over" : "Under") : who === "home" ? g.home : g.away;
 const lineTxt = L => L == null ? "" : L === 0 ? "0" : (L > 0 ? "+" : "−") + Math.abs(L);
 function priceBox(g, kind, who, line) {
   const key = pKey(g.game_id, kind, who, line), my = PRICES[key]?.odds || "", c = chances(g, kind, who, line), v = verdict(c, my);
@@ -1067,6 +1082,8 @@ function pickText(k, p) {
   if (k === "total") return `${p.side} ${p.line}`;
   if (k === "dnb") return `${p.side} (draw no bet)`;
   if (k === "btts") return `BTTS ${p.side}`;
+  if (k === "tt") return `${p.side} ${p.line}`;
+  if (k === "alt") return p.label;
   return p.side;
 }
 const whoOf = (g, side) => side === g.home ? "home" : side === g.away ? "away" : "draw";
@@ -1074,6 +1091,8 @@ function allPlays(withMine = true) {
   const out = [];
   for (const g of (D.games || []).filter(lgOk)) for (const [k, p] of Object.entries(g.picks || {})) if (p.play)
     out.push({kind: k, g, p, edge: p.ev, model: p.model, book: p.book, sharp: p.sharp, odds: p.odds, title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.home} vs ${g.away}`});
+  for (const g of (D.games || []).filter(lgOk)) for (const x of g.alt?.plays || [])
+    out.push({kind: "alt", g, p: x, edge: x.ev, model: x.model, sharp: x.sharp, odds: x.odds, title: x.label, sub: `${ALT_NAME(x)} at ${x.book}, ${g.home} vs ${g.away}`});
   if (withMine) out.push(...myPlays());
   return out.sort((a, b) => b.edge - a.edge);
 }
@@ -1084,10 +1103,10 @@ function nearMisses() {
     if (p && !p.play && p.ev != null && p.ev > 0) out.push({kind: k, g, p, edge: p.ev, odds: p.odds, title: pickText(k, p)}); }
   return out.sort((a, b) => b.edge - a.edge);
 }
-const playBet = x => ({kind: x.kind, game_id: x.g.game_id, who: x.p.who || whoOf(x.g, x.p.side), side: x.p.side,
+const playBet = x => x.kind === "alt" ? {kind: "alt", game_id: x.g.game_id, market: x.p.market, team: x.p.team, side: x.p.side, line: +x.p.line, odds: x.odds, model_pct: x.p.sharp, desc: x.title, sub: x.sub} : ({kind: x.kind, game_id: x.g.game_id, who: x.p.who || whoOf(x.g, x.p.side), side: x.p.side,
   line: ["ah", "total"].includes(x.kind) ? x.p.line : null, odds: x.odds, model_pct: x.p.sharp ?? x.model, desc: x.title, sub: x.sub});
 function ticket(x) {
-  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${PK_NAME[x.kind]}</b><span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(when(x.g.start))}</span></div>
+  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${esc(kname(x))}</b><span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(when(x.g.start))}</span></div>
     <div class="t-pick">${esc(x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
     <div class="t-who">${esc(x.g.home)} vs ${esc(x.g.away)}</div>
     ${valueLine(x.p)}${lineupNote(x.g)}
@@ -1116,7 +1135,7 @@ const BYM = {k: "1x2", all: false};
 const MK_TABS = [["1x2", "Moneyline"], ["ah", "Asian handicap"], ["total", "Total goals"], ["btts", "Both teams to score"], ["dnb", "Draw no bet"]];
 function betRow(x) {
   return `<div class="bet on"><span class="icon">${ico(x.kind === "ah" ? "ah" : "games")}</span>
-    <div><div class="k"><span class="mchip">${esc(PK_NAME[x.kind])}</span><span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.g.home)} vs ${esc(x.g.away)}, ${esc(when(x.g.start))}</div>
+    <div><div class="k"><span class="mchip">${esc(kname(x))}</span>${x.kind === "alt" ? `<span class="lgtag">${esc(x.p.book || "")}</span>` : ""}<span class="lgtag">${esc(lgName(x.g.league))}</span>${esc(x.g.home)} vs ${esc(x.g.away)}, ${esc(when(x.g.start))}</div>
       <div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
       <div class="who logrow">${stakeTxt(x.p.sharp, x.odds)} ${logBtn(playBet(x))}</div></div>
     <div class="gapv">+${n(x.edge)}%<small>value</small></div>${meterHTML(x.p.sharp, impl(x.odds) * 100)}</div>`;
@@ -1174,7 +1193,7 @@ function renderHome() {
       <div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div><div class="who">${x.p.ev < (D.rules?.sharp_min_ev ?? 1.5) ? `Needs +${D.rules?.sharp_min_ev ?? 1.5}% value` : x.p.edge < 0 ? "The model disagrees" : x.p.ev > (D.rules?.sharp_max_ev ?? 8) ? "Gap too big to trust" : "The match already has a better play"}</div></div>
       <div class="gapv" style="color:var(--muted)">+${n(x.edge)}%<small>value</small></div></div>`).join("")}</div>` : "";
   h += `<div class="dash"><div class="panel span-8"><h3>Plays right now <button data-go="games">All matches</button></h3>
-      <p class="pmuted">${plays.length ? `Every play on the board, any market: ${Object.entries(kinds).map(([k, c]) => `${c} ${PK_NAME[k].toLowerCase()}`).join(", ")}. Orange on the meter is how much Pinnacle's fair chance beats the chance priced into the odds.` : "Every play on the board, any market: moneyline, Asian handicap, totals, BTTS, draw no bet."}</p>
+      <p class="pmuted">${plays.length ? `Every play on the board, any market: ${Object.entries(kinds).map(([k, c]) => `${c} ${PK_NAME[k].toLowerCase()}`).join(", ")}. BTTS, draw no bet, alt lines and team totals come from the first US book that posts them (Hard Rock sends only the moneyline for soccer), labeled on each play. Orange on the meter is how much Pinnacle's fair chance beats the chance priced into the odds.` : "Every play on the board, any market: moneyline, Asian handicap, totals, BTTS, draw no bet."}</p>
       <div class="bets-list">${plays.map(betRow).join("") || `<div class="empty"><b>No plays right now.</b> ${D.odds?.source === "odds_api" || D.odds?.source === "saved" ? "Your book's prices are close to Pinnacle's on everything posted." : "Book lines arrive once the soccer odds key is added."} Handicap, BTTS and draw no bet prices aren't in the feed: type your book's price on a match or on the Asian handicap tab and it shows here if it's a play.</div>`}</div>${nearHTML}</div>
     <div class="panel span-4"><h3>Plays, season <button data-go="record">Record</button></h3><p class="pmuted">Cumulative units at flat 1 unit</p>${sparkSVG(T.series || [])}
       <div class="kpis">${Object.keys(D.leagues || {}).filter(k => LG === "all" || k === LG).map(k => D.backtest?.[k] ? `<div class="kpi"><b>${n(D.backtest[k].ll_model, 3)}</b><span>${esc(lgName(k))} log loss (closing line ${n(D.backtest[k].ll_close, 3)})</span></div>` : "").join("") || `<div class="kpi"><b>–</b><span>Backtest pending</span></div>`}</div></div></div>`;
@@ -1186,6 +1205,10 @@ function renderHome() {
       ${["1x2", "ah", "total"].map(k => recRow("kid", PK_NAME[k], BT[k])).join("")}
       ${Object.keys(D.leagues).map(k => recRow("kid", esc(D.leagues[k].name), BL[k])).join("")}${recRow("all", "All plays", pr)}</tbody></table></div></div></div>`;
   }
+  const AP = G.filter(g => g.alt_parlay);
+  if (AP.length) h += `<div class="dash"><div class="panel span-12"><h3>Alt parlays <button data-go="games">All matches</button></h3><p class="pmuted">One per match at fair +100 to +125: handicaps, totals, team totals and BTTS. Each leg is priced at Pinnacle's chance (the model rates every leg at least as high), and legs that move together are priced together from the scoreline grid.</p>
+    <div class="rail">${AP.map(g => `<div class="alt" data-game="${g.game_id}" style="cursor:pointer"><div class="hd"><b>${esc(g.home)} vs ${esc(g.away)}</b><span>${esc(g.alt_parlay.fair)}</span></div>
+      ${g.alt_parlay.legs.map(L => `<div class="l"><b>${esc(L.label)}</b> ${n(L.p, 0)}%</div>`).join("")}<div class="l">${n(g.alt_parlay.p)}% to hit, ${esc(when(g.start))}</div></div>`).join("")}</div></div></div>`;
   h += `<div class="dash"><div class="panel span-12"><h3>Matches <button data-go="games">Full board</button></h3><p class="pmuted">The model's side in every market. Green is a play. Tap a match for prices, form and the most likely scores.</p>
     <div class="slate">${G.slice(0, 24).map(g => { const on = Object.values(g.picks || {}).some(p => p.play);
       return `<button class="tile${on ? " on" : ""}" data-game="${g.game_id}"><div class="tt"><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}</span><span>${n(g.xg_home, 1)}–${n(g.xg_away, 1)} xG</span></div>
@@ -1220,6 +1243,39 @@ function mkCell(g, k) {
 }
 document.addEventListener("click", e => { const b = e.target.closest("[data-ahgo]"); if (!b) return; e.preventDefault(); e.stopPropagation();
   showTab("ah"); const el = document.getElementById("ah-" + b.dataset.ahgo); if (el) { el.open = true; el.scrollIntoView({block: "start"}); } });
+/* more markets: the feed's US-book prices for BTTS, draw no bet, alt lines and team totals, judged against Pinnacle */
+function moreBox(g) {
+  const A = g.alt, ap = g.alt_parlay;
+  let h = "";
+  if (A?.rows?.length) h += `<div><b>More markets at ${esc(A.book || "the book")}</b><div class="tablewrap" style="margin-top:6px"><table class="bym"><thead><tr><th>Bet</th><th>Price</th><th class="c-m">Model</th><th>Pinnacle</th><th>Value</th></tr></thead><tbody>
+    ${A.rows.map(x => `<tr class="${x.play ? "on" : ""}"><td class="l">${esc(x.label)}</td><td>${esc(x.odds)}</td><td class="c-m">${n(x.model, 0)}%</td><td>${x.sharp != null ? `${n(x.sharp, 0)}%${x.exact ? "" : "*"}` : "–"}</td>
+      <td>${x.play ? `<span class="tag">Play</span>` : x.ev != null ? `<span class="${x.ev > 0 ? "gold" : "dim"}">${sgn(x.ev)}%</span>` : "–"}</td></tr>`).join("")}</tbody></table></div>
+    <div class="note" style="margin:4px 0 0">Best ${A.rows.length} of ${A.n} by value. * Pinnacle didn't post that line: converted from its main prices, so it needs 1 point more value.</div></div>`;
+  if (ap) h += `<div><b>Alt parlay</b> <span class="dim">fair ${esc(ap.fair)}, ${n(ap.p, 0)}% to hit by Pinnacle's prices (model ${n(ap.p_model, 0)}%)</span>
+    <div class="settle" style="margin-top:6px">${ap.legs.map(L => `<span><b>${esc(L.label)}</b>${n(L.p, 0)}%</span>`).join("")}</div>
+    <div class="dim" style="margin-top:4px">Only bet it if your book's same-game price beats ${esc(ap.fair)}.</div></div>`;
+  return h + goalsBox(g);
+}
+const GSEL = {};
+function goalsBox(g) {
+  const s = GSEL[g.game_id] || {kind: "total", who: "over", line: 2.5};
+  const lines = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.5, 5.5].filter(L => s.kind === "total" || L <= 3.5);
+  const sides = s.kind === "total" ? [["over", "Over"], ["under", "Under"]] : [[s.who.split(":")[0] + ":over", "Over"], [s.who.split(":")[0] + ":under", "Under"]];
+  const mk = s.kind === "total" ? "total" : "tt:" + s.who.split(":")[0];
+  return `<div id="gb-${g.game_id}"><b>Check a goals price</b>
+    <div class="pcheck" style="margin-top:6px" data-gbg="${g.game_id}"><select class="gbm" aria-label="Market"><option value="total"${mk === "total" ? " selected" : ""}>Total goals</option><option value="tt:home"${mk === "tt:home" ? " selected" : ""}>${esc(g.home)} goals</option><option value="tt:away"${mk === "tt:away" ? " selected" : ""}>${esc(g.away)} goals</option></select>
+      <select class="gbs" aria-label="Side">${sides.map(([k, l]) => `<option value="${k}"${s.who === k ? " selected" : ""}>${l}</option>`).join("")}</select>
+      <select class="gbl" aria-label="Line">${lines.map(L => `<option value="${L}"${Math.abs(L - s.line) < 1e-9 ? " selected" : ""}>${L}</option>`).join("")}</select></div>
+    <div style="margin-top:6px">${priceBox(g, s.kind, s.who, s.line)}</div></div>`;
+}
+document.addEventListener("change", e => {
+  const box = e.target.closest("[data-gbg]"); if (!box) return;
+  const gid = box.dataset.gbg, g = (D.games || []).find(x => String(x.game_id) === gid), s = {...(GSEL[gid] || {kind: "total", who: "over", line: 2.5})};
+  if (e.target.matches(".gbm")) { const v = e.target.value; if (v === "total") { s.kind = "total"; s.who = "over"; s.line = 2.5; } else { s.kind = "tt"; s.who = v.split(":")[1] + ":over"; s.line = 1.5; } }
+  else if (e.target.matches(".gbs")) s.who = e.target.value;
+  else if (e.target.matches(".gbl")) s.line = +e.target.value;
+  GSEL[gid] = s; const el = document.getElementById("gb-" + gid); if (el && g) el.outerHTML = goalsBox(g);
+});
 function renderGames() {
   const G = (D.games || []).filter(lgOk), plays = allPlays();
   let h = lgChips() + `<div class="week"><div class="wk">${G.length}<span>matches</span></div><div class="facts">
@@ -1244,6 +1300,7 @@ function renderGames() {
         <div class="dim">Last 6 league matches, oldest first. ${g.mkt ? `Pinnacle (no vig): ${esc(g.home)} ${n(g.mkt.p_home, 0)}%, draw ${n(g.mkt.p_draw, 0)}%, ${esc(g.away)} ${n(g.mkt.p_away, 0)}% vs model ${n(g.p_home, 0)} / ${n(g.p_draw, 0)} / ${n(g.p_away, 0)}. Pinnacle's prices imply ${n(g.mkt.lh, 2)}–${n(g.mkt.la, 2)} expected goals.` : ""}</div>
         <div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
         ${P["1x2"]?.draw ? `<div class="dim">Draw: ${n(P["1x2"].draw.model, 0)}% model${P["1x2"].draw.book != null ? `, ${n(P["1x2"].draw.book, 0)}% book at ${esc(P["1x2"].draw.odds)}` : `, fair ${esc(P["1x2"].draw.fair)}`}.</div>` : ""}
+        ${moreBox(g)}
         <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div></div></details>`;
   }
   h += `</div>${G.length ? "" : `<div class="empty">No matches in the next week.</div>`}
@@ -1435,6 +1492,11 @@ function renderRecord() {
       <div class="st"><strong>${RU.n || 0}</strong><span>Plays under the Pinnacle rule (since Oct 20). ${T.provisional ? `Provisional until ${D.rules?.provisional_n ?? 150} graded with positive CLV.` : "Edge confirmed."}</span></div></div>`;
   h += `<h3>Every pick, every match</h3><p class="sub">The model's lean on every match, play or not. Units only where a book price was posted.</p>
     <div class="strip">${["1x2", "ah", "total", "dnb", "btts"].map(k => `<div class="st"><strong>${K[k]?.w || 0}–${K[k]?.l || 0}</strong><span>${PK_NAME[k]}${K[k]?.units != null ? `, ${units(K[k].units)} where priced` : ""}</span></div>`).join("")}</div>`;
+  const AQ = T.alt_plays || {}, AR = T.alt_parlays || {};
+  h += `<h3>More markets and alt parlays</h3><p class="sub">BTTS, draw no bet, alt handicaps and totals, team totals at the first US book that posts them, same Pinnacle rule (since Oct 21).</p>
+    <div class="strip"><div class="st"><strong>${AQ.w || 0}–${AQ.l || 0}</strong><span>More-markets plays${AQ.w + AQ.l ? `, ${units(AQ.units)}` : ""}</span></div>
+      ${Object.entries(AQ.by_market || {}).filter(([k, r]) => r.w + r.l).map(([k, r]) => `<div class="st"><strong>${r.w}–${r.l}</strong><span>${esc({btts: "BTTS", spread: "Handicap / DNB", total: "Totals", team_total: "Team totals"}[k])}, ${units(r.units)}</span></div>`).join("")}
+      <div class="st"><strong>${AR.n ? `${AR.hits}–${AR.n - AR.hits}` : "–"}</strong><span>Alt parlays${AR.n ? `, hit ${n(100 * AR.hits / AR.n, 0)}% vs ${n(AR.model, 0)}% expected` : ", nothing graded yet"}</span></div></div>`;
   const C = Object.entries(T.calibration || {});
   h += `<h3>Prop check</h3><p class="sub">How often players hit vs what the model said, for players who played.</p>
     ${C.length ? `<div class="tablewrap"><table><thead><tr><th>Prop</th><th>Graded</th><th>Model said</th><th>Actually hit</th></tr></thead><tbody>${C.map(([k, c]) => `<tr><td>${esc(PSTAT[k] || k)}</td><td>${c.n}</td><td>${n(c.model)}%</td><td>${n(c.actual)}%</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">Nothing graded yet. Results appear the morning after each matchday.</div>`}`;

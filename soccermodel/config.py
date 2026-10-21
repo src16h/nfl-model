@@ -62,6 +62,16 @@ ODDS_PREKO_HOURS = 2.5           # a league with a kickoff this close gets fresh
 ODDS_MARKETS = "h2h,totals,spreads"
 ODDS_RESERVE = 15
 ODDS_EVERY_HOURS = 12            # each league's lines refresh at most this often (plus once near kickoff)
+# More markets (Oct 21 2026, altlines.py): Hard Rock sends only the 1X2 for soccer, so these come from the first US book
+# in ODDS_BOOKS that posts them (DraftKings, FanDuel, BetMGM), labeled on every play, with Pinnacle's own price as the
+# referee in the same call. 1 credit per market per match, once per match, for matches within ALT_HOURS, spent only
+# from what's left of the day's allowance after line pulls, in this order:
+ALT_MARKETS = ["btts", "draw_no_bet", "alternate_spreads", "alternate_totals", "team_totals"]
+ALT_HOURS = 12.0
+ALT_KEEP = 3                     # credits kept back for the next near-kickoff line pull
+ALT_DAILY_CAP = 4                # plays from these markets per day, best first, one per match
+ALT_PARLAY_P = (0.444, 0.50)     # alt parlay: fair +100 to +125, like the NFL and NHL
+ALT_PARLAY_LEG = (0.62, 0.95)    # each leg's Pinnacle-implied chance
 
 
 def odds_key():

@@ -26,6 +26,7 @@ from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
 import betrules as BR
+import altlines as AL
 from nflmodel.propsim import load_props, evaluate_props, prop_bias, STAT_ALIASES, stat_label, game_shocks, team_points
 from nflmodel import oddsapi
 from nflmodel.util import norm_name
@@ -148,7 +149,7 @@ def build_games(bundle, season, week, now):
     qual = qb_quality(qw, season)
 
     games, players, sims = [], [], {}
-    alt_inputs = []
+    alt_inputs, alt_rows_all, conv_errs = [], [], []
     for i, (_, g) in enumerate(todo.iterrows()):
         h, a = g["home_team"], g["away_team"]
         wx = None if is_indoor(g) else forecast(h, g["ko"])
@@ -331,9 +332,45 @@ def build_games(bundle, season, week, now):
             players += rws
             sims.update(sm)
             side_sims[side] = ({pid: v for (gid, pid), v in sm.items()}, rws)
-        alt_inputs.append((game, side_sims))
+        full, tlegs = None, []
         try:
-            write_sgp(game, side_sims, qbs, pnoise)
+            full = {sd: team_points(side_sims[sd][0], qbs[game[sd]].get("pid"), (game.get("team_totals") or {}).get(sd), pnoise[sd])
+                    for sd in ("home", "away")}
+            if any(v is None for v in full.values()):
+                full = None
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"team points skipped for {g['game_id']}: {str(e)[:120]}")
+        if full is not None:
+            try:                                   # alt lines and team totals: the sims re-weighted to Pinnacle (altlines.py)
+                mdl = AL.Dist(full["home"], full["away"])
+                tg = []
+                if shp.get("spread_line") is not None and shp.get("spread_home_odds") and shp.get("spread_away_odds"):
+                    tg.append(({"market": "spread", "team": "home", "side": "home", "line": -float(shp["spread_line"])},
+                               AL.nv(shp["spread_home_odds"], shp["spread_away_odds"])))
+                if shp.get("total_line") is not None and shp.get("over_odds") and shp.get("under_odds"):
+                    tg.append(({"market": "total", "team": None, "side": "over", "line": float(shp["total_line"])},
+                               AL.nv(shp["over_odds"], shp["under_odds"])))
+                ba = (odds.get("alt") or {}).get(g["game_id"], {})
+                for k_, sides in AL.pairs([x for x in ba.get("sharp", []) if x["market"] == "team_total"]).items():
+                    if "over" in sides and "under" in sides and abs(k_[2] % 1 - 0.5) < 1e-9:
+                        tg.append(({"market": "team_total", "team": k_[1], "side": "over", "line": k_[2]}, AL.nv(sides["over"], sides["under"])))
+                mkt, err = AL.tilt(mdl, tg) if len(tg) >= 2 else (None, None)
+                game["ladder"] = AL.ladders(mdl, mkt, C.ALT_SPEC)
+                game["mkt_err"] = None if err is None else fnum(100 * err, 2)
+                if ba.get("book"):
+                    rws = AL.evaluate(ba["book"], ba.get("sharp"), mdl, mkt)
+                    for x in rws:
+                        x.update({"game_id": g["game_id"], "label": AL.label(x, h, a), "book": ba.get("book_name"), "kickoff": game.get("kickoff")})
+                    alt_rows_all.extend(rws)
+                    game["alt"] = {"book": ba.get("book_name"), "markets": ba.get("markets"), "n": len(rws), "plays": [],
+                                   "rows": sorted(rws, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12]}
+                conv_errs.extend(AL.conv_check(ba.get("sharp"), mkt))
+                tlegs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE_TEAM) if mkt is not None else []
+            except Exception as e:  # noqa: BLE001
+                log.warning(f"alt lines skipped for {g['game_id']}: {str(e)[:120]}")
+        alt_inputs.append((game, side_sims, tlegs))
+        try:
+            write_sgp(game, side_sims, qbs, pnoise, full)
         except Exception as e:  # noqa: BLE001
             log.warning(f"parlay draws skipped for {g['game_id']}: {str(e)[:120]}")
 
@@ -363,11 +400,32 @@ def build_games(bundle, season, week, now):
             pass
     from nflmodel import altcal
     altcal.PLAYED = tracker.played_set(bundle.snaps)
-    for game, side_sims in alt_inputs:
+    for game, side_sims, tlegs in alt_inputs:
         try:
             game["alt_parlay"] = build_alt_parlay(game, side_sims, main_lines)
         except Exception as e:  # noqa: BLE001
             log.warning(f"alt parlay skipped for {game['game_id']}: {str(e)[:120]}")
+        try:                                       # the same search, but every ticket carries a team leg
+            game["alt_mix"] = build_alt_parlay(game, side_sims, main_lines, tlegs, need_team=True) if tlegs else None
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"team-leg parlay skipped for {game['game_id']}: {str(e)[:120]}")
+    # alt-line plays: one per game, best value first, at most ALT_PLAY_CAP per kickoff date
+    chosen, per_day, keep_ids = AL.best_plays(alt_rows_all), {}, set()
+    for x in sorted(chosen, key=lambda x: -x["ev"]):
+        dd = str(x.get("kickoff") or "")[:10]
+        if per_day.get(dd, 0) < C.ALT_PLAY_CAP:
+            per_day[dd] = per_day.get(dd, 0) + 1
+            keep_ids.add(id(x))
+    for x in alt_rows_all:
+        x["eligible"], x["play"] = x["play"], id(x) in keep_ids
+    for game in games:
+        if game.get("alt"):
+            game["alt"]["plays"] = [x for x in alt_rows_all if x["game_id"] == game["game_id"] and x["play"]]
+            game["alt"]["rows"] = sorted(game["alt"]["plays"] + [x for x in game["alt"]["rows"] if not x["play"]],
+                                         key=lambda x: (not x["play"], -(x["ev"] if x["ev"] is not None else -99)))[:12]
+    odds["status"]["alt_check"] = {"n": len(conv_errs), "mae": fnum(float(np.mean(np.abs(conv_errs))), 2) if conv_errs else None,
+                                   "bias": fnum(float(np.mean(conv_errs)), 2) if conv_errs else None}
+    log.info(f"alt lines: {len(alt_rows_all)} priced, {len(keep_ids)} plays, conversion check {odds['status']['alt_check']}")
     for r, why in stale:
         props["props"].append({"player": r.get("player"), "stat": r.get("stat"), "line": tracker._s(r.get("line")) or None,
                                "error": f"old line skipped ({why}). Delete it, or put this week's number in the week column"})
@@ -485,7 +543,7 @@ ALT_STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "r
 ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions"}
 
 
-def build_alt_parlay(game, side_sims, main_lines=None):
+def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=False):
     """The model's alt-line parlay: 'alt down' legs (70-92% each, after calibration) from both
     teams whose combined chance lands at fair odds of +100 to +125. Leg chances are corrected
     by leg type from graded weeks (nflmodel/altcal.py: yardage tails ran thin, catches held up).
@@ -524,9 +582,19 @@ def build_alt_parlay(game, side_sims, main_lines=None):
                         cands.append({"pid": r["pid"], "name": r["name"], "team": game[side], "pos": r["pos"], "stat": st,
                                       "line": L, "label": f"Over {L:g} {ALT_LABEL[st]}", "p": p, "p_raw": p_raw, "hit": hit,
                                       "main": main, "main_src": "book" if book is not None else "model"})
+    # team legs (Oct 21 2026): alt spreads, totals and team totals priced from Pinnacle's lines (altlines.team_legs);
+    # their hits come from the same simulated games as the player legs, so the two combine at their real correlation
+    tl_c = [{**t, "pid": "T:" + t["label"], "name": "", "team": t.get("teamname"), "pos": "TEAM", "stat": "team:" + t["market"],
+             "main": None, "main_src": "pinnacle"} for t in team_legs]
+    n_team = len(tl_c)
+    if need_team:
+        if not tl_c:
+            return None
+        cands = tl_c + cands
     if len(cands) < 3:
         return None
     teams = {game["home"], game["away"]}
+    is_team = lambda i: cands[i].get("kind") == "team"
 
     def joint(idx, h):
         """Sim joint chance (keeps how legs move together) with each leg's calibration applied."""
@@ -536,15 +604,18 @@ def build_alt_parlay(game, side_sims, main_lines=None):
         return min(pj, min(cands[i]["p"] for i in idx))
 
     def search(n_legs):
-        beams = [((i,), cands[i]["hit"]) for i in range(len(cands))]
+        beams = [((i,), cands[i]["hit"]) for i in range(len(cands)) if not need_team or i < n_team]
         for _ in range(n_legs - 1):
             nxt = []
             for idx, h in beams:
                 used = {cands[i]["pid"] for i in idx}
                 qb_legs = sum(1 for i in idx if cands[i]["stat"] == "pass_yds")
+                tl = [cands[i] for i in idx if is_team(i)]
                 for j in range(idx[-1] + 1, len(cands)):
                     if cands[j]["pid"] in used:
                         continue
+                    if is_team(j) and (len(tl) >= C.ALT_MAX_TEAM_LEGS or any(x["stat"] == cands[j]["stat"] for x in tl)):
+                        continue                                    # at most 2 team legs, one per market
                     # one QB yards leg at most: the model overrates how much the two
                     # passing games move together (0.20 vs 0.06 in real games)
                     if qb_legs and cands[j]["stat"] == "pass_yds":
@@ -559,9 +630,12 @@ def build_alt_parlay(game, side_sims, main_lines=None):
         best = None
         for idx, h in beams:
             pj = joint(idx, h)
-            if not (p_lo <= pj <= p_hi) or {cands[i]["team"] for i in idx} != teams:
+            cover = set()
+            for i in idx:
+                cover |= teams if cands[i].get("team") is None else {cands[i]["team"]}
+            if not (p_lo <= pj <= p_hi) or cover != teams:
                 continue
-            if sum(1 for i in idx if cands[i]["stat"] != "rec") > C.ALT_MAX_YARD_LEGS:
+            if sum(1 for i in idx if not is_team(i) and cands[i]["stat"] != "rec") > C.ALT_MAX_YARD_LEGS:
                 continue                                            # yardage legs miss more than the sims say
             if sum(1 for i in idx if cands[i]["stat"] == "rush_yds") > C.ALT_MAX_RUSH_LEGS:
                 continue                                            # RB rushing misses most (82% real when the sims say 90%)
@@ -578,10 +652,14 @@ def build_alt_parlay(game, side_sims, main_lines=None):
     if not best:
         return None
     _, idx, pj, pi = best
-    legs = [{"kind": "player", "pid": cands[i]["pid"], "name": cands[i]["name"], "team": cands[i]["team"], "pos": cands[i]["pos"],
+    legs = [{"kind": "team", "market": cands[i]["market"], "team": cands[i]["team_side"], "side": cands[i]["side"], "line": cands[i]["line"],
+             "name": "", "label": cands[i]["label"], "p": round(cands[i]["p"] * 100, 1), "p_model": round(cands[i]["p_model"] * 100, 1),
+             "main_src": "pinnacle"} if is_team(i) else
+            {"kind": "player", "pid": cands[i]["pid"], "name": cands[i]["name"], "team": cands[i]["team"], "pos": cands[i]["pos"],
              "stat": cands[i]["stat"], "side": "Over", "line": cands[i]["line"], "label": cands[i]["label"],
              "main": cands[i]["main"], "main_src": cands[i]["main_src"], "p": round(cands[i]["p"] * 100, 1)} for i in idx]
-    legs.sort(key=lambda L: (L["team"] != game["away"], -L["p"]))
+    legs.sort(key=lambda L: (L["kind"] != "team", L.get("team") != game["away"], -L["p"]))
+    share = sum(1 for L in legs if L["kind"] != "team") / len(legs)     # the ticket correction learned on player legs
     # whole-ticket correction (Oct 20 2026): graded tickets hit 35% when the model said 47% even after the leg
     # calibration, so the ticket's chance moves toward its record on the log-odds scale, fading in with the sample
     raw = pj
@@ -589,7 +667,7 @@ def build_alt_parlay(game, side_sims, main_lines=None):
         ap = (json.loads((OUT / "latest.json").read_text()).get("tracking") or {}).get("alt_parlays") or {}
         n_, m_, a_ = ap.get("n") or 0, (ap.get("model") or 0) / 100, (ap.get("actual") or 0) / 100
         if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
-            shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K)
+            shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K) * share
             lg = np.log(pj / (1 - pj)) + shift
             pj = float(1 / (1 + np.exp(-lg)))
     except Exception:  # noqa: BLE001
@@ -600,16 +678,17 @@ def build_alt_parlay(game, side_sims, main_lines=None):
             "note": "Only bet it if Hard Rock pays more than the fair odds"}
 
 
-def write_sgp(game, side_sims, qbs, pnoise):
+def write_sgp(game, side_sims, qbs, pnoise, full=None):
     """Publish SGP_DRAWS simulated games for one matchup (players + final score)."""
     K = C.SGP_DRAWS
     out = {"game_id": game["game_id"], "home": game["home"], "away": game["away"], "n": K, "players": {}}
-    full = {}
-    for side in ("home", "away"):
-        team = game[side]
-        full[side] = team_points(side_sims[side][0], qbs[team].get("pid"), (game.get("team_totals") or {}).get(side), pnoise[side])
-        if full[side] is None:
-            return
+    if full is None:
+        full = {}
+        for side in ("home", "away"):
+            team = game[side]
+            full[side] = team_points(side_sims[side][0], qbs[team].get("pid"), (game.get("team_totals") or {}).get(side), pnoise[side])
+            if full[side] is None:
+                return
     try:
         lock_combos(game, side_sims, qbs, full)
     except Exception as e:  # noqa: BLE001
@@ -716,6 +795,16 @@ def build_plays(games, props, model_info):
                         "bet": {"kind": "total", "game_id": g["game_id"], "side": g["play_total"], "line": g["market_total"],
                                 "odds": odds_t or "-110", "model_pct": st.get("sharp") if st.get("sharp") is not None else (None if g.get("over_prob") is None else
                                 fnum(g["over_prob"] if g["play_total"] == "Over" else 100 - g["over_prob"], 1))}})
+    for g in games:                                       # alt lines and team totals (altlines.py)
+        if g.get("state") != "upcoming":
+            continue
+        for x in (g.get("alt") or {}).get("plays", []):
+            out.append({"kind": "alt", "market": x["market"], "kickoff": g.get("kickoff"), "game_id": g["game_id"],
+                        "matchup": f"{g['away']} at {g['home']}", "pick": x["label"], "odds": x["odds"],
+                        "detail": f"Pinnacle {x['sharp']}%{'' if x['exact'] else ' (converted)'} vs {x['book_p']}% at {x.get('book')}, {x['ev']:+.1f}% value. Model {x['model']}%",
+                        "gap": x["ev"], "gap_unit": "%", "book": x.get("book"),
+                        "bet": {"kind": "alt", "game_id": g["game_id"], "market": x["market"], "team": x.get("team"), "side": x["side"],
+                                "line": x["line"], "home": g["home"], "odds": x["odds"], "model_pct": x["sharp"]}})
     ko = {g["game_id"]: g.get("kickoff") for g in games}
     st = {g["game_id"]: g.get("state") for g in games}
     for p in props.get("props", []):
@@ -764,6 +853,13 @@ def lock_flags(old_games, games, now):
             flags["total"] = {"side": g["play_total"], "line": g["market_total"], "odds": _fmt_odds_s(st.get("odds")) or "-110",
                               "ev": st.get("ev"), "sharp": st.get("sharp"), "book_pct": st.get("book"), "book": g.get("line_book"), "at": ts}
         g["flags"] = flags
+        alt_flags = dict(p.get("alt_flags") or {})        # alt-line plays: locked the same way
+        for x in (g.get("alt") or {}).get("plays", []):
+            k_ = f"{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
+            if k_ not in alt_flags:
+                alt_flags[k_] = {f_: x.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book")}
+                alt_flags[k_]["at"] = ts
+        g["alt_flags"] = alt_flags
 
 
 def grade_flag(kind, fl, g, hs, as_):
@@ -1047,12 +1143,14 @@ def main():
         "prop_watch_max": round(100 * C.PROP_WATCH_MAX),
         "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS],
         "spread_gap": None, "total_gap": None, "sharp_rule": {"min_ev": BR.SHARP_MIN_EV, "max_ev": BR.SHARP_MAX_EV},
+        "alt_rule": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "cap": C.ALT_PLAY_CAP},
         "game_plays": live.get("game_plays"),
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
         "total_backtest": bucket_record(ab, "total_buckets", C.GAME_PLAY_TOTAL),
         **BR.summary(), **dict(zip(("bias", "calibration"), prop_bias(OUT / "props_log.json", with_real=True))),
         "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE, "td_curve": list(C.TD_CURVE),
     }
+    payload["alt_rules"] = {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "daily_cap": C.ALT_PLAY_CAP}
     payload.update({
         "model": model_info,
         "props": props,

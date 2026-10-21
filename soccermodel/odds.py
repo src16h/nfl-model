@@ -76,6 +76,32 @@ def _parse(ev, book):
     return rec
 
 
+def _alt_rows(ev, b):
+    """Bets in altlines.py form (team names canonical home/away; DNB = handicap 0)."""
+    hn, an = ev.get("home_team"), ev.get("away_team")
+    rows = []
+    for m in b.get("markets", []):
+        k = m.get("key", "")
+        for o in m.get("outcomes", []):
+            pt, pr, nm = o.get("point"), o.get("price"), o.get("name")
+            if pr is None:
+                continue
+            if k == "btts" and nm in ("Yes", "No"):
+                rows.append({"market": "btts", "team": None, "side": nm.lower(), "line": 0.0, "odds": pr})
+            elif k == "draw_no_bet" and nm in (hn, an):
+                sd = "home" if nm == hn else "away"
+                rows.append({"market": "spread", "team": sd, "side": sd, "line": 0.0, "odds": pr})
+            elif k in ("spreads", "alternate_spreads") and nm in (hn, an) and pt is not None:
+                sd = "home" if nm == hn else "away"
+                rows.append({"market": "spread", "team": sd, "side": sd, "line": float(pt), "odds": pr})
+            elif k in ("totals", "alternate_totals") and nm in ("Over", "Under") and pt is not None:
+                rows.append({"market": "total", "team": None, "side": nm.lower(), "line": float(pt), "odds": pr})
+            elif k in ("team_totals", "alternate_team_totals") and nm in ("Over", "Under") and pt is not None and o.get("description") in (hn, an):
+                rows.append({"market": "team_total", "team": "home" if o["description"] == hn else "away", "side": nm.lower(),
+                             "line": float(pt), "odds": pr})
+    return rows
+
+
 def _best_book(ev):
     """Bet book: first book in our preference list (Hard Rock first) that has the 1X2; spreads/totals filled from the
     next books if missing. Pinnacle (else the Betfair exchange) is kept separately as the sharp reference."""
@@ -149,6 +175,31 @@ def run(games, state_path, now):
                 pulled[lg] = now.isoformat()
             state["lines"] = lines
             status["source"] = "odds_api"
+            # more markets (BTTS, draw no bet, alt handicaps and totals, team totals): what the allowance has left
+            alt = {k: v for k, v in (state.get("alt") or {}).items() if k in lines or "|" in k}
+            soon_m = []
+            for g in games:
+                st = datetime.fromisoformat(g["start"].replace("Z", "+00:00"))
+                rec = lines.get(f"{g['league']}|{g['away']}@{g['home']}")
+                if rec and rec.get("event") and now <= st <= now + timedelta(hours=C.ALT_HOURS):
+                    soon_m.append((st, g, rec["event"]))
+            for mkt in C.ALT_MARKETS:
+                for st, g, evid in sorted(soon_m, key=lambda x: x[0]):
+                    key = f"{g['league']}|{g['away']}@{g['home']}"
+                    ent = alt.setdefault(key, {"day": today, "markets": {}})
+                    if mkt in ent["markets"] or allowance - 1 < C.ALT_KEEP:
+                        continue
+                    ev = cl.get(f"/v4/sports/{C.LEAGUES[g['league']]['odds']}/events/{evid}/odds", markets=mkt,
+                                oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS))
+                    allowance -= 1
+                    state["spent_today"] = state.get("spent_today", 0) + 1
+                    bks = {b["key"]: b for b in (ev or {}).get("bookmakers", [])}
+                    bet = next((k for k in C.ODDS_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
+                    shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
+                    ent["markets"][mkt] = {"book": _alt_rows(ev, bks[bet]) if bet else [], "sharp": _alt_rows(ev, bks[shp]) if shp else [],
+                                           "book_name": bks[bet].get("title") if bet else None, "at": now.isoformat(timespec="minutes")}
+                    status["alt_pulls"] = status.get("alt_pulls", 0) + 1
+            state["alt"] = {k: v for k, v in alt.items() if v.get("day", today) >= (now - timedelta(days=2)).strftime("%Y-%m-%d")}
         except Fatal as e:
             log.warning(f"soccer odds: {e}")
             status["note"] = str(e)
@@ -158,6 +209,11 @@ def run(games, state_path, now):
         rec = lines.get(f"{g['league']}|{g['away']}@{g['home']}")
         if rec:
             g["book"] = dict(rec)
+        ent = (state.get("alt") or {}).get(f"{g['league']}|{g['away']}@{g['home']}")
+        if ent and ent.get("markets"):
+            ms = ent["markets"]
+            g["alt_book"] = {"book": [r for v in ms.values() for r in v.get("book", [])], "sharp": [r for v in ms.values() for r in v.get("sharp", [])],
+                             "book_name": next((v.get("book_name") for v in ms.values() if v.get("book_name")), None), "markets": list(ms)}
             if status["source"] == "none":
                 status["source"] = "saved"
     state["remaining"] = cl.remaining if cl.remaining is not None else state.get("remaining")

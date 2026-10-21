@@ -662,6 +662,23 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
 .picks{padding-top:6px}
 .tag:not(.watch){background:var(--win);color:#fff;border-color:var(--win)}
 .playline{font:600 13px var(--sans);color:var(--win);background:var(--win-soft);border:1px solid var(--win);border-radius:var(--r-sm);padding:6px 10px}
+
+/* alt lines and team totals (tools/altjs.py) */
+.altbox{display:grid;gap:8px;border:1px solid var(--line-soft);border-radius:var(--r);padding:12px 14px;background:var(--surface)}
+.altbox>b{color:var(--ink)}
+.altbox table td,.altbox table th{font-size:13.5px;padding:7px 10px}
+.altbox tr.on td{background:var(--win-soft)}
+.altbox .pcheck{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.altbox select,.altbox input{font:600 14px var(--sans);background:var(--raised);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+.altbox select{appearance:none;-webkit-appearance:none;padding-right:14px}
+.altbox input{width:92px;font:600 15px var(--num)}
+.altbox input:focus,.altbox select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft)}
+.mine{display:inline-block;font:600 10.5px var(--sans);color:var(--gold-text);border:1px solid var(--gold-line);border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.vt.thin{border-color:var(--line);color:var(--muted)}
+.legteam{display:inline-block;font:600 10px var(--sans);color:var(--brown);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-right:5px;vertical-align:1px}
+.altbox td:first-child{white-space:normal;min-width:120px}
+@media (max-width:640px){.altbox .c-x{display:none}.altbox table td,.altbox table th{padding:7px 6px;font-size:13px}}
+/* alt css end */
 </style>
 </head>
 <body>
@@ -818,8 +835,10 @@ $("#slipSave").onclick = () => {
   lsSet(LS_BETS, BETS); $("#slip").close(); render(); };
 const STAT_IDX = {sog: 0, goals: 1, assists: 2, points: 3, saves: 0};
 function gradeBet(b) {
+  if (b.kind === "alt") { const g = RES?.[String(b.game_id)]; return g ? altGrade(b, g.h, g.a) : {res: "O"}; }
   if (b.kind === "parlay") {
-    const rs = b.legs.map(L => gradeBet({kind: "prop", game_id: L.game_id ?? b.game_id, pid: L.pid, stat: L.stat, side: L.side || "Over", line: L.line, odds: "-110", units: 1}).res);
+    const rs = b.legs.map(L => L.kind === "team" ? gradeBet({...L, kind: "alt", game_id: L.game_id ?? b.game_id, odds: "-110", units: 1}).res
+      : gradeBet({kind: "prop", game_id: L.game_id ?? b.game_id, pid: L.pid, stat: L.stat, side: L.side || "Over", line: L.line, odds: "-110", units: 1}).res);
     if (rs.includes("O")) return {res: "O"};
     const res = rs.includes("L") ? "L" : rs.every(r => r === "W") ? "W" : "P";
     return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0};
@@ -834,6 +853,136 @@ function gradeBet(b) {
   else { const st = g.p[String(b.pid)]; if (!st) return {res: "V", units: 0}; res = wl((st[STAT_IDX[b.stat]] - b.line) * (b.side === "Over" ? 1 : -1)); }
   return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0};
 }
+
+const ALT_CFG = {sport: "nhl", spread: "Alt puck line", pending: "Hard Rock's alt prices are pulled on the late-afternoon run for games within about 7 hours (team totals first, alt totals and puck lines when the day's credits allow). Until then, check a price below."};
+/* ---- ALT-JS start (tools/altjs.py) ---- */
+const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total"};
+const LS_ALTP = `board.${ALT_CFG.sport}.altprices.v1`;
+let ALTP = lsGet(LS_ALTP, {});
+const ALTSEL = {};
+const altKey = (gid, b) => [gid, b.market, b.team || "", b.side, b.line].join("|");
+const altSgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
+function altLabel(g, b) {
+  const L = +b.line, t = b.team === "home" || b.side === "home" ? g.home : g.away;
+  if (b.market === "spread") return `${t} ${L > 0 ? "+" : ""}${L}`;
+  if (b.market === "total") return `${b.side === "over" ? "Over" : "Under"} ${L}`;
+  return `${b.team === "home" ? g.home : g.away} team total ${b.side === "over" ? "Over" : "Under"} ${L}`;
+}
+function altLad(g, m, team) { const L = g.ladder || {}; return (m === "spread" ? L.spread : m === "total" ? L.total : team === "home" ? L.team_home : L.team_away) || []; }
+/* the bet's chance by the model and by Pinnacle (refunds left out). Exact when Pinnacle posted that line. */
+function altChance(g, b) {
+  let hl = +b.line, flip = false;
+  if (b.market === "spread") { if (b.side === "away") { hl = -hl; flip = true; } }
+  else if (b.side === "under") flip = true;
+  const r = altLad(g, b.market, b.team).find(x => Math.abs(x[0] - hl) < 1e-9);
+  if (!r) return null;
+  let m = r[1] / 100, k = r[2] == null ? null : r[2] / 100;
+  if (flip) { m = 1 - m; k = k == null ? null : 1 - k; }
+  const row = (g.alt?.rows || []).find(x => x.market === b.market && (x.team || "") === (b.team || "") && x.side === b.side && Math.abs(x.line - b.line) < 1e-9);
+  return row && row.exact && row.sharp != null ? {m, k: row.sharp / 100, exact: true} : {m, k, exact: false};
+}
+/* same rule as the posted plays: worth min% to 8% at Pinnacle's fair chance (1 point more on a converted line), model agrees */
+function altVerdict(c, odds) {
+  if (!c || c.k == null || !String(odds ?? "").trim()) return null;
+  const o = oddsNum(odds); if (!isFinite(o) || Math.abs(o) < 100) return {bad: true};
+  const R = D.alt_rules || {}, ev = 100 * (c.k * (payout(odds) + 1) - 1), implied = 100 * impl(odds);
+  const lo = (R.min_ev ?? 1.5) + (c.exact ? 0 : (R.converted_extra ?? 1)), hi = R.max_ev ?? 8, agree = 100 * c.m >= implied;
+  return {ev, lo, agree, implied, tier: ev > hi ? "big" : ev >= lo && agree ? "play" : ev > 0 ? "thin" : "none"};
+}
+function altVerdictTxt(v, c) {
+  if (!c) return "No ladder for this line.";
+  if (!v) return c.k != null ? `Pinnacle's fair ${fair(c.k)} (${n(100 * c.k, 1)}%${c.exact ? "" : ", converted"}), model ${n(100 * c.m, 0)}%. Type your book's price.` : `Model fair ${fair(c.m)} (${n(100 * c.m, 0)}%). Needs Pinnacle's lines to check a price.`;
+  if (v.bad) return "Use American odds like -110 or +150.";
+  const why = v.tier === "play" ? `Model ${n(100 * c.m, 0)}% agrees.` : v.tier === "big" ? "Gap too big to trust: likely a stale or wrong line." : v.ev > 0 && !v.agree ? `The model disagrees (${n(100 * c.m, 0)}%).` : v.ev > 0 ? `Needs +${n(v.lo)}%${c.exact ? "" : " on a converted line"}.` : "";
+  return `<span class="vt ${v.tier === "play" ? "play" : v.tier === "big" ? "big" : "thin"}">${{play: "Play", thin: "Thin edge", big: "Too big to trust", none: "No value"}[v.tier]}</span> Worth ${altSgn(v.ev)}% at Pinnacle's fair ${n(100 * c.k, 1)}%${c.exact ? "" : " (converted)"}; your price implies ${n(v.implied, 1)}%. ${why}`;
+}
+function altLinesFor(g, m, team, side) {
+  return altLad(g, m, team).map(r => m === "spread" && side === "away" ? -r[0] : r[0]).sort((a, b) => a - b);
+}
+function altSel(g) {
+  const s = ALTSEL[g.game_id]; if (s) return s;
+  const ls = altLinesFor(g, "team_total", "home", "over"), hs = ls.filter(L => L % 1 !== 0), use = hs.length ? hs : ls;
+  return {market: "team_total", team: "home", side: "over", line: use.length ? use[Math.floor(use.length / 2)] : 0};
+}
+function altBet(g, s, odds) {
+  const c = altChance(g, s);
+  return {kind: "alt", game_id: g.game_id, market: s.market, team: s.team || null, side: s.side, line: +s.line, home: g.home,
+    odds: odds || (c ? fair(c.k ?? c.m) : "-110"), model_pct: c ? 100 * (c.k ?? c.m) : null, desc: altLabel(g, s), sub: `${ALT_MK[s.market]}, ${g.away} at ${g.home}`};
+}
+function altBox(g) {
+  if (!g.ladder) return "";
+  const A = g.alt || {}, rows = A.rows || [], s = altSel(g), mk = s.market === "team_total" ? `tt_${s.team}` : s.market;
+  const sides = s.market === "spread" ? [["home", g.home], ["away", g.away]] : [["over", "Over"], ["under", "Under"]];
+  const lines = altLinesFor(g, s.market, s.team, s.side), key = altKey(g.game_id, s), odds = ALTP[key]?.odds || "";
+  const c = altChance(g, s), v = altVerdict(c, odds);
+  const tbl = rows.length ? `<div class="tablewrap"><table><thead><tr><th>${esc(A.book || "Book")} price</th><th></th><th class="c-x">Model</th><th>Pinnacle</th><th>Value</th></tr></thead><tbody>
+    ${rows.map(x => `<tr class="${x.play ? "on" : ""}"><td style="text-align:left">${esc(x.label)}</td><td>${esc(x.odds)}</td><td class="c-x">${n(x.model, 0)}%</td><td>${x.sharp != null ? `${n(x.sharp, 0)}%${x.exact ? "" : "*"}` : "–"}</td>
+      <td>${x.play ? `<span class="tag">Play</span>` : x.ev != null ? `<span class="${x.ev > 0 ? "gold" : "dim"}">${altSgn(x.ev)}%</span>` : "–"}</td></tr>`).join("")}</tbody></table></div>
+    <div class="note" style="margin:0">Best ${rows.length} of ${A.n} ${esc(A.book || "")} alt prices by value. * Pinnacle didn't post that line: its main lines converted, so it needs 1 point more value.</div>`
+    : `<div class="dim">${esc(ALT_CFG.pending)}</div>`;
+  return `<div class="altbox" id="alt-${g.game_id}"><b>Alt lines and team totals</b>${tbl}
+    <div><b style="font-size:13.5px">Check a price</b>
+      <div class="pcheck" style="margin-top:6px" data-altg="${g.game_id}">
+        <select class="altm" aria-label="Market"><option value="team_total|home"${mk === "tt_home" ? " selected" : ""}>${esc(g.home)} team total</option><option value="team_total|away"${mk === "tt_away" ? " selected" : ""}>${esc(g.away)} team total</option><option value="total|"${mk === "total" ? " selected" : ""}>Game total</option><option value="spread|"${mk === "spread" ? " selected" : ""}>${esc(ALT_CFG.spread)}</option></select>
+        <select class="alts" aria-label="Side">${sides.map(([k, l]) => `<option value="${k}"${s.side === k ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>
+        <select class="altl" aria-label="Line">${lines.map(L => `<option value="${L}"${Math.abs(L - s.line) < 1e-9 ? " selected" : ""}>${s.market === "spread" && L > 0 ? "+" : ""}${L}</option>`).join("")}</select>
+        <input class="alto" value="${esc(odds)}" placeholder="${esc(c ? fair(c.k ?? c.m) : "-110")}" inputmode="text" aria-label="Your book's odds">${logBtn(altBet(g, s, odds))}</div>
+      <div class="stake" style="margin-top:6px">${altVerdictTxt(v, c)}${v?.tier === "play" ? ` ${altStakeTxt(100 * c.k, odds)}` : ""}</div></div></div>`;
+}
+function altRedraw(gid) {
+  const g = (D.games || []).find(x => String(x.game_id) === String(gid)), el = document.getElementById("alt-" + gid);
+  if (g && el) el.outerHTML = altBox(g);
+}
+document.addEventListener("change", e => {
+  const box = e.target.closest("[data-altg]"); if (!box) return;
+  const gid = box.dataset.altg, g = (D.games || []).find(x => String(x.game_id) === gid), s = {...altSel(g)};
+  if (e.target.matches(".altm")) { const [m, t] = e.target.value.split("|"); s.market = m; s.team = t || null; s.side = m === "spread" ? "home" : "over";
+    const ls = altLinesFor(g, s.market, s.team, s.side), hs = ls.filter(L => L % 1 !== 0), use = hs.length ? hs : ls; s.line = use.length ? use[Math.floor(use.length / 2)] : 0; }
+  else if (e.target.matches(".alts")) { const old = s.side; s.side = e.target.value; if (s.market === "spread" && old !== s.side) s.line = -s.line; }
+  else if (e.target.matches(".altl")) s.line = +e.target.value;
+  else if (e.target.matches(".alto")) { const v = e.target.value.trim(), k = altKey(gid, s); if (v) ALTP[k] = {odds: v, at: new Date().toISOString()}; else delete ALTP[k];
+    lsSet(LS_ALTP, ALTP); ALTSEL[gid] = s; altRedraw(gid); renderHome(); return; }
+  ALTSEL[gid] = s; altRedraw(gid);
+});
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".alto")) e.target.blur(); });
+/* alt plays: the model's (Hard Rock prices in the feed) plus any price you checked that passes */
+function altPlays() {
+  const out = [];
+  for (const g of D.games || []) {
+    if (new Date(g.start) < Date.now()) continue;
+    for (const x of g.alt?.plays || []) out.push({type: "alt", kind: "alt", g, p: x, edge: x.ev, model: x.sharp, book: 100 * impl(x.odds), odds: x.odds,
+      title: x.label, sub: `${ALT_MK[x.market]}, ${g.away} at ${g.home}`});
+  }
+  for (const [key, v] of Object.entries(ALTP)) {
+    if (!v?.odds) continue;
+    const [gid, market, team, side, line] = key.split("|"), g = (D.games || []).find(x => String(x.game_id) === gid);
+    if (!g || new Date(g.start) < Date.now()) continue;
+    const b = {market, team: team || null, side, line: +line}, c = altChance(g, b), vd = altVerdict(c, v.odds);
+    if (!vd || vd.tier !== "play") continue;
+    const lab = altLabel(g, b);
+    if (out.some(x => x.g === g && x.title === lab)) continue;
+    out.push({type: "alt", kind: "alt", g, mine: true, p: {...b, odds: v.odds, model: 100 * c.m, sharp: 100 * c.k, exact: c.exact, ev: vd.ev, label: lab},
+      edge: vd.ev, model: 100 * c.k, book: vd.implied, odds: fmtO(v.odds), title: lab, sub: `${ALT_MK[market]}, ${g.away} at ${g.home}`});
+  }
+  return out;
+}
+const altPlayBet = x => ({kind: "alt", game_id: x.g.game_id, market: x.p.market, team: x.p.team || null, side: x.p.side, line: +x.p.line, home: x.g.home,
+  odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub});
+function altGrade(b, h, a) {
+  const L = +b.line, halves = Math.round(L * 4) % 2 ? [L - 0.25, L + 0.25] : [L];
+  const xv = x => b.market === "spread" ? (b.side === "home" ? h - a : a - h) + x : b.market === "total" ? (b.side === "over" ? h + a - x : x - h - a)
+    : ((b.team === "home" ? h : a) - x) * (b.side === "over" ? 1 : -1);
+  const u = halves.map(x => xv(x)).map(v => v > 0 ? payout(b.odds) : v < 0 ? -1 : 0).reduce((s, x) => s + x, 0) / halves.length;
+  return {res: u > 0 ? "W" : u < 0 ? "L" : "P", units: (b.units || 1) * u};
+}
+/* new market: suggested stake capped at 1 unit until alt plays build a graded record */
+function altStakeTxt(pPct, odds) {
+  const z = sizing(pPct, odds); if (!z) return "";
+  if (z.units > 1) { z.units = 1; z.dollars = Math.round(SET.unit); }
+  return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars}) <span class="dim">(1u cap: new market)</span>` : `Suggested bet <b>none</b> at this price`;
+}
+const altLegTxt = L => L.kind === "team" ? `<span class="legteam">${esc(ALT_MK[L.market] || "Team")}</span>${esc(L.label)}` : `<b>${esc(L.name)}</b> ${esc(L.label)}`;
+/* ---- ALT-JS end ---- */
 
 /* ---------- edge meter ---------- */
 function meterHTML(model, book) {
@@ -882,8 +1031,11 @@ function recordByType(T) {
   rows += row("grp", "Prop plays", pp);
   rows += Object.entries(BT.prop || {}).sort((a, b) => (b[1].w + b[1].l) - (a[1].w + a[1].l))
     .map(([k, r]) => { const [st, sd] = k.split("|"); return row("kid", `${st === "sog" ? "Shots" : (STAT[st] || st)} ${SIDE_NAME[sd] || sd}`, r, worst(r)); }).join("");
+  const AP = T.alt_plays || {}, AM = T.alt_by_market || {};
+  if (AP.w + AP.l) { rows += row("grp", "Alt lines and team totals", AP);
+    rows += Object.entries(AM).filter(([k, r]) => r.w + r.l).map(([k, r]) => row("kid", ALT_MK[k], r, worst(r))).join(""); }
   rows += row("grp", "Edge parlays", E);
-  const all = {w: (pr.w || 0) + (pp.w || 0) + (E.w || 0), l: (pr.l || 0) + (pp.l || 0) + (E.l || 0), units: (pr.units || 0) + (pp.units || 0) + (E.units || 0)};
+  const all = {w: (pr.w || 0) + (pp.w || 0) + (E.w || 0) + (AP.w || 0), l: (pr.l || 0) + (pp.l || 0) + (E.l || 0) + (AP.l || 0), units: (pr.units || 0) + (pp.units || 0) + (E.units || 0) + (AP.units || 0)};
   all.roi = all.w + all.l ? 100 * all.units / (all.w + all.l) : 0;
   rows += row("all", "All plays", all);
   const sgp = A.n ? `<p class="pmuted" style="margin:10px 2px 0">Same-game parlays (not in units, no book price saved): hit ${A.hits} of ${A.n}, ${n(100 * A.hits / A.n, 0)}% vs ${n(A.model, 0)}% the model expected.</p>` : "";
@@ -911,7 +1063,7 @@ function calBlock() {
 }
 
 /* ---------- plays ---------- */
-const PK_NAME = {ml: "Moneyline", pl: "Puck line", total: "Total"};
+const PK_NAME = {ml: "Moneyline", pl: "Puck line", total: "Total", alt: "Alt line"};
 function pickText(k, p) { return k === "ml" ? `${p.side} ML` : k === "pl" ? `${p.side} ${p.line > 0 ? "+" : ""}${p.line}` : `${p.side} ${p.line}`; }
 function allPlays() {
   const out = [];
@@ -924,36 +1076,39 @@ function allPlays() {
       book: m.book.side === "Over" ? m.book.book_over : 100 - m.book.book_over, odds: (m.book.odds > 0 ? "+" : "") + m.book.odds,
       title: `${pl.name} ${m.book.side} ${m.book.line} ${SHORT[st]}`, sub: `${STAT[st]}, ${pl.team} vs ${pl.opp}`});
   }
+  out.push(...altPlays());
   return out.sort((a, b) => b.edge - a.edge);
 }
 function playBet(x) {
+  if (x.type === "alt") return altPlayBet(x);
   if (x.type === "game") return {kind: x.kind, game_id: x.g.game_id, home: x.g.home, side: x.p.side, line: x.kind === "ml" ? null : x.p.line,
     odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub};
   return {kind: "prop", game_id: x.pl.game_id, pid: x.pl.pid, stat: x.stat, side: x.m.book.side, line: x.m.book.line, odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub};
 }
 function ticket(x) {
-  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
-    <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small></div>
+  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "alt" ? ALT_MK[x.p.market] : x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
+    <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away)} at ${esc(x.g.home)}`}</div>
     ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}
-    <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
-    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "game" && x.p.sharp != null ? "value vs Pinnacle" : "gap vs book"}</div></div></article>`;
+    <div class="t-actions"><span class="stake">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.model, x.odds))}</span>${logBtn(playBet(x))}</div></div>
+    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "alt" || (x.type === "game" && x.p.sharp != null) ? "value vs Pinnacle" : "gap vs book"}</div></div></article>`;
 }
 
 /* ---------- home ---------- */
 function renderHome() {
   const G = D.games || [], plays = allPlays(), T = D.tracking || {};
   const pr = T.plays || {}, pp = T.prop_plays || {}, ed = T.edge || {};
-  const w = (pr.w || 0) + (pp.w || 0) + (ed.w || 0), l = (pr.l || 0) + (pp.l || 0) + (ed.l || 0), u = (pr.units || 0) + (pp.units || 0) + (ed.units || 0);
+  const ap = T.alt_plays || {};
+  const w = (pr.w || 0) + (pp.w || 0) + (ed.w || 0) + (ap.w || 0), l = (pr.l || 0) + (pp.l || 0) + (ed.l || 0) + (ap.l || 0), u = (pr.units || 0) + (pp.units || 0) + (ed.units || 0) + (ap.units || 0);
   const today = G.filter(g => g.date === D.today), next = G[0];
   let h = `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)}–${String(D.season + 1).slice(2)} season</div>
       <div class="big">${today.length || G.length}<span>${today.length ? "games tonight" : "games next"}</span></div>
       <div class="line">${next ? `First up <b>${esc(next.away)} at ${esc(next.home)}</b>, ${esc(when(next.start))}` : "No games scheduled."}</div></div>
     <div class="hero-stats"><div class="hs"><b class="gold">${plays.length}</b><span>Plays now</span></div>
       <div class="hs"><b>${w}–${l}</b><span>All plays</span></div><div class="hs"><b class="${uc(u)}">${units(w + l ? u : null)}</b><span>Units</span></div></div></div>`;
-  const top = plays.slice(0, 4).map(x => `<div class="bet"><span class="icon">${ico(x.type === "prop" ? "props" : "games")}</span>
+  const top = plays.slice(0, 6).map(x => `<div class="bet"><span class="icon">${ico(x.type === "prop" ? "props" : "games")}</span>
       <div><div class="k">${esc(x.sub)}, ${esc(when(x.g?.start))}</div><div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
-      <div class="who">${stakeTxt(x.model, x.odds)}</div></div>
+      <div class="who">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.model, x.odds))}</div></div>
       <div class="gapv">+${n(x.edge)}%<small>edge</small></div>${meterHTML(x.model, x.book)}</div>`).join("");
   h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All plays</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book.</p>
       <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" ? "The model agrees with the book on everything posted." : "Book lines for puck lines, totals and props arrive with the NHL odds key."}</div>`}</div></div>
@@ -965,6 +1120,10 @@ function renderHome() {
   if (EP.length) h += `<div class="dash"><div class="panel span-12"><h3>Edge parlays <button data-go="parlays">All parlays</button></h3><p class="pmuted">Two prop plays from two different games. Each leg already beats the book.</p>
     <div class="rail">${EP.map(e => `<div class="alt"><div class="hd"><b>${n(e.p, 0)}% to hit</b><span>${esc(e.odds)}</span></div>
       ${e.legs.map(L => `<div class="l"><b>${esc(L.name)}</b> ${esc(L.side)} ${L.line} ${esc(STAT[L.stat] || L.stat)}</div>`).join("")}<div class="l">${sgn(e.ev)}% expected return at book odds</div></div>`).join("")}</div></div></div>`;
+  const mixes = G.filter(g => g.alt_mix);
+  if (mixes.length) h += `<div class="dash"><div class="panel span-12"><h3>Alt parlays with a team leg <button data-go="parlays">All parlays</button></h3><p class="pmuted">Same target (fair +100 to +125), but each ticket carries a puck line, total or team total priced from Pinnacle's lines.</p>
+    <div class="rail">${mixes.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_mix.fair)}</span></div>
+      ${g.alt_mix.legs.map(L => `<div class="l">${altLegTxt(L)}</div>`).join("")}<div class="l">${n(g.alt_mix.p)}% to hit</div></div>`).join("")}</div></div></div>`;
   const alts = G.filter(g => g.alt_parlay);
   if (alts.length) h += `<div class="dash"><div class="panel span-12"><h3>Same-game parlays <button data-go="parlays">All parlays</button></h3><p class="pmuted">One per game, built for hit rate: only legs the model rates 80%+, no filler leg to chase a price.</p>
     <div class="rail">${alts.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.fair)}</span></div>
@@ -998,12 +1157,12 @@ function renderGames() {
     <div class="fact"><b>${esc(D.odds?.source === "odds_api" ? (G.find(g => g.book?.src)?.book?.src || "Book") : "NHL.com")}</b>lines from</div>
     <div class="fact"><b>${n(D.model?.league?.gf, 2)}</b>league goals per team, regulation</div></div></div>`;
   h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Pinnacle value 1.5% to 8%, model agrees</span></div>
-    <p class="sub">A game play needs two things: <b>Pinnacle's fair price</b> (the sharpest book) says Hard Rock's price is at least 1.5% too generous, and <b>the model agrees</b> on the side. Checked on graded games, the model alone did not beat the market, so it is a veto, not the source of the edge. One play per game. Plays are locked the moment they appear and graded at that price, so bet soon and confirm the starting goalie.</p>
+    <p class="sub">A game play needs two things: <b>Pinnacle's fair price</b> (the sharpest book) says Hard Rock's price is at least 1.5% too generous, and <b>the model agrees</b> on the side. Checked on graded games, the model alone did not beat the market, so it is a veto, not the source of the edge. One play per game. Plays are locked the moment they appear and graded at that price, so bet soon and confirm the starting goalie. <b>Alt lines and team totals</b> follow the same rule using Hard Rock's alt prices (1 point more value when Pinnacle didn't post that exact line), one per game, up to ${D.alt_rules?.daily_cap ?? 4} a day.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No game plays right now.</b> ${D.odds?.source === "odds_api" ? "The model is close to the book on every game." : "Puck lines and totals need the NHL odds key. Moneylines come from NHL.com."}</div>`}`;
   h += `<div class="sec-head"><h2>All games</h2><span class="aside">Tap a game for goalies and form</span></div>
     <div class="board"><div class="board-head"><span>Expected goals</span><span>Win chance</span><span>Moneyline</span><span>Total, model / book</span><span>Puck line</span></div>
     ${G.map(g => { const P = g.picks || {}, b = g.book || {};
-      return `<details class="game${Object.values(P).some(p => p.play) ? " is-play" : ""}" id="g-${g.game_id}"><summary>
+      return `<details class="game${Object.values(P).some(p => p.play) || g.alt?.plays?.length ? " is-play" : ""}" id="g-${g.game_id}"><summary>
         <div class="mu"><div class="row ${g.xg_away > g.xg_home ? "fav" : ""}">${badge(g.away)}<span class="pts">${n(g.xg_away, 2)}</span></div>
           <div class="row ${g.xg_home >= g.xg_away ? "fav" : ""}">${badge(g.home)}<span class="pts">${n(g.xg_home, 2)}</span></div>
           <div class="when">${esc(when(g.start))}</div></div>
@@ -1012,7 +1171,7 @@ function renderGames() {
         <div class="kv"><span class="lbl">Total </span><strong>${n(g.total_mean, 1)} / ${b.total ?? "–"}</strong>model / book</div>
         <div class="kv"><span class="lbl">Puck line </span><strong>${P.pl ? esc(pickText("pl", P.pl)) : "–"}</strong>${P.pl ? `${n(P.pl.model, 0)}% model` : ""}</div>
         <div class="picks">${pickCell("ml", P.ml)}${pickCell("pl", P.pl)}${pickCell("total", P.total)}</div></summary>
-        <div class="g-body">
+        <div class="g-body">${altBox(g)}
           <div>Goalies: ${esc(g.away)} ${goalieLine(g, g.away)}. ${esc(g.home)} ${goalieLine(g, g.home)}.</div>
           <div>Form per game (regulation, recent games count more): ${[g.away, g.home].map(t => { const f = g.form?.[t] || {}; return `<b>${esc(t)}</b> ${n(f.xgf, 2)} xG for, ${n(f.xga, 2)} against, ${n(f.sogf, 1)} shots for, ${n(f.soga, 1)} against`; }).join(". ")}.</div>
           <div>Expected shots on goal: ${esc(g.away)} <b>${n(g.sog_away, 1)}</b>, ${esc(g.home)} <b>${n(g.sog_home, 1)}</b>. Rest: ${esc(g.away)} ${g.rest_away} day${g.rest_away === 1 ? " (back-to-back)" : "s"}, ${esc(g.home)} ${g.rest_home} day${g.rest_home === 1 ? " (back-to-back)" : "s"}.</div>
@@ -1101,6 +1260,16 @@ function renderParlays() {
     : `<div class="empty">No edge parlays yet. They need at least two prop plays from different games, so they show up once the book posts prop lines.</div>`;
   h += `<div class="sec-head"><h2>Same-game parlays</h2><span class="aside">Built for hit rate</span></div>
     <p class="sub">One per game, 3 legs (2 if needed) from both teams, using only alt lines the model rates 80%+. Over the first week, those legs hit about as often as the model said, while riskier filler legs ran about 10 points too high, so there is no filler to reach a price. The model picks the most likely ticket with a fair chance of about 60 to 72% (roughly -150 to -260). Legs that tend to hit together are priced together from the same simulated games. Goalie saves only use the book's posted main line, since Hard Rock Bet has no alt saves. A shorter price is fine, but it is only a play when Hard Rock pays more than the fair odds.</p>`;
+  const GM = (D.games || []).filter(g => g.alt_mix);
+  const mixHTML = `<div class="sec-head"><h2>Alt parlays with a team leg</h2><span class="aside">Puck lines, totals, team totals</span></div>
+    <p class="sub">Same target as above (fair +100 to +125), but every ticket includes at least one team leg: an alt puck line, alt total or team total. Team legs are priced from <b>Pinnacle's lines</b> (its moneyline, puck line, total and team totals, converted to the alt line from the same simulated games), and the model must rate each one at least as high. Up to 2 team legs per ticket. Tracked separately from the player-only tickets.</p>
+    ${GM.length ? `<div class="tickets">${GM.map(g => { const a = g.alt_mix;
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
+        <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
+        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake">${altLegTxt(L)} <span class="dim">${n(L.p, 0)}%${L.kind === "team" ? ` Pinnacle, ${n(L.p_model, 0)}% model` : ""}</span></div>`).join("")}</div>
+        <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
+        <div class="t-actions">${altCheck(g, "alt_mix")}</div></div>
+        <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>` : `<div class="empty">No team-leg parlays yet. They need Pinnacle's lines for the game, posted the day before or the morning of.</div>`}`;
   h += G.length ? `<div class="tickets">${G.map(g => { const a = g.alt_parlay;
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
       <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
@@ -1108,6 +1277,7 @@ function renderParlays() {
       <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
       <div class="t-actions">${altCheck(g)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>` : `<div class="empty">No same-game parlays for the next slate yet. Some games have too few legs the model rates 80%+.</div>`;
+  h += mixHTML;
   $("#parlays").innerHTML = h;
   document.querySelectorAll(".altodds").forEach(i => i.onchange = () => { ALT[i.dataset.g] = i.value; renderParlays(); });
   document.querySelectorAll(".edgeodds").forEach(i => i.onchange = () => { EDGE_ODDS[i.dataset.e] = i.value; renderParlays(); });
@@ -1129,14 +1299,15 @@ function edgeCheck(e, i) {
   return out;
 }
 const ALT = {};
-function altCheck(g) {
-  const a = g.alt_parlay, odds = ALT[g.game_id] || "";
-  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Book odds <input class="odds altodds" data-g="${g.game_id}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+function altCheck(g, key = "alt_parlay") {
+  const a = g[key], ak = key === "alt_parlay" ? String(g.game_id) : `${g.game_id}:mix`, odds = ALT[ak] || "";
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Book odds <input class="odds altodds" data-g="${ak}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   if (odds && Math.abs(oddsNum(odds)) >= 100) {
     const ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= 5 ? "play" : ev >= 0 ? "watch" : "none";
     out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return</span>`;
-    if (tier === "play" || tier === "watch") out += logBtn({kind: "parlay", game_id: g.game_id, side: "", line: null, odds, model_pct: a.p, legs: a.legs.map(L => ({pid: L.pid, stat: L.stat, line: L.line})),
-      desc: `${a.legs.length}-leg alt parlay`, sub: a.legs.map(L => `${L.name} ${L.label}`).join(" + ")});
+    if (tier === "play" || tier === "watch") out += logBtn({kind: "parlay", game_id: g.game_id, side: "", line: null, odds, model_pct: a.p,
+      legs: a.legs.map(L => L.kind === "team" ? {kind: "team", market: L.market, team: L.team, side: L.side, line: L.line} : {pid: L.pid, stat: L.stat, line: L.line}),
+      desc: `${a.legs.length}-leg alt parlay`, sub: a.legs.map(L => `${L.name ? L.name + " " : ""}${L.label}`).join(" + ")});
   }
   return out;
 }
@@ -1181,9 +1352,11 @@ function renderRecord() {
   if (AO.n) h += `<p class="sub">First version (fair +100 to +125, with filler legs): ${AO.hits}–${AO.n - AO.hits}, hit ${n(100 * AO.hits / AO.n)}% when the model said ${n(AO.model)}%. Retired Oct 15.</p>`;
   if (AH.n) h += `<p class="sub">Hit-rate version (fair −150 to −260, 80%+ legs): ${AH.hits}–${AH.n - AH.hits}, hit ${n(100 * AH.hits / AH.n)}% when the model said ${n(AH.model)}%. Oct 15 to 18.</p>`;
   if (!A.n) h += `<div class="empty">Current version: nothing graded yet. Started Oct 18.</div>`;
+  const AX = T.alt_mix || {};
+  h += `<p class="sub">Tickets with a team leg (since Oct 21): ${AX.n ? `${AX.hits}–${AX.n - AX.hits}, hit ${n(100 * AX.hits / AX.n)}% when the model said ${n(AX.model)}%.` : "nothing graded yet."}</p>`;
   if (A.n) h += `<div class="strip"><div class="st"><strong>${A.hits}–${A.n - A.hits}</strong><span>Hit ${n(100 * A.hits / A.n)}% (model said ${n(A.model)}%)</span></div></div>
     <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${A.recent.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.game)}</td><td>${x.legs_hit} of ${x.legs}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
-  const L = [...(T.plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.prop_plays_list || []).map(x => ({...x, what: x.pick, who: x.player}))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40);
+  const L = [...(T.plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.alt_plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.prop_plays_list || []).map(x => ({...x, what: x.pick, who: x.player}))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40);
   if (L.length) h += `<h3>Recent plays</h3><div class="tablewrap"><table><thead><tr><th>Date</th><th>Play</th><th>Odds</th><th>Gap</th><th>vs close</th><th>Result</th></tr></thead><tbody>${L.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.who)} <span class="dim">${esc(x.what)}</span></td><td>${esc(x.odds || "")}</td><td>${n(x.edge)}%</td><td class="${x.clv > 0 ? "up" : x.clv < 0 ? "down" : ""}">${x.clv == null ? "–" : sgn(x.clv)}</td><td><span class="res ${x.res}">${x.res}</span></td></tr>`).join("")}</tbody></table></div>`;
   h += `<div class="sec-head"><h2>My bets</h2><span class="aside">Saved on this device</span></div>
     <div class="strip"><div class="st"><strong>${mw}–${ml}</strong><span>Record</span></div><div class="st"><strong class="${uc(mu)}">${done.length ? units(mu) : "–"}</strong><span>Units</span></div>

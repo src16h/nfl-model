@@ -173,7 +173,7 @@ def american(p):
     return f"-{round(100 * p / (1 - p))}" if p > 0.5 else f"+{round(100 * (1 - p) / p)}"
 
 
-def alt_parlay(arrs, info, game, book):
+def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
     """Model alt-line SGP at fair odds of +100 to +125 (same target as the NFL): legs rated 70%+ after a
     per-leg-type correction learned from graded games (nhlmodel/altcal.py); picks the ticket most likely to hit. Picks the most likely 3-leg (else 2-leg) ticket
     from both teams whose joint chance lands in ALT_TARGET_P, using the simulated games so legs that
@@ -204,6 +204,17 @@ def alt_parlay(arrs, info, game, book):
     booked = [c for c in cands if c["main_src"] == "book"]
     if len(booked) >= 4:                                   # stick to players the book has posted (their alts exist)
         cands = booked
+    # team legs (Oct 21 2026): puck lines, totals and team totals priced from Pinnacle's lines (altlines.team_legs),
+    # their hit arrays come from the same simulated games, so they combine with player legs at their real correlation
+    home, away = game["home"], game["away"]
+    tl_c = [{**t, "pid": "T:" + t["label"], "name": "", "team": t.get("teamname"), "stat": "team:" + t["market"],
+             "main": None, "main_src": "pinnacle"} for t in team_legs]
+    if need_team:
+        if not tl_c:
+            return None
+        cands = tl_c + cands                               # the mixed ticket starts from a team leg
+    else:
+        cands = cands + tl_c
     if len(cands) < 2:
         return None
     lo, hi = C.ALT_TARGET_P
@@ -215,17 +226,20 @@ def alt_parlay(arrs, info, game, book):
         return min(pj, min(cands[i]["p"] for i in idx))
 
     def search(size):
-        beams = [((i,), cands[i]["hit"], cands[i]["p"]) for i in range(len(cands))]
+        beams = [((i,), cands[i]["hit"], cands[i]["p"]) for i in range(len(cands)) if not need_team or i < len(tl_c)]
         for step in range(size - 1):
             last = step == size - 2
             nxt = []
             for idx, h, _p in beams:
                 used = {cands[i]["pid"] for i in idx}
                 saves = sum(cands[i]["stat"] == "saves" for i in idx)
+                tl = [cands[i] for i in idx if cands[i].get("kind") == "team"]
                 for j in range(idx[-1] + 1, len(cands)):
                     c = cands[j]
                     if c["pid"] in used or (saves and c["stat"] == "saves"):
                         continue
+                    if c.get("kind") == "team" and (len(tl) >= C.ALT_MAX_TEAM_LEGS or any(x["stat"] == c["stat"] for x in tl)):
+                        continue                               # at most 2 team legs, one per market
                     hj = h & c["hit"]
                     pj = joint(idx + (j,), hj)
                     if pj >= lo and (not last or pj <= hi):   # adding legs only lowers the chance
@@ -234,7 +248,10 @@ def alt_parlay(arrs, info, game, book):
             beams = nxt if last else nxt[:C.ALT_BEAM]
         best = None
         for idx, h, pj in beams:
-            if lo <= pj <= hi and len({cands[i]["team"] for i in idx}) == 2 and (best is None or pj > best[1]):
+            cover = set()
+            for i in idx:
+                cover |= {home, away} if cands[i].get("team") is None else {cands[i]["team"]}
+            if lo <= pj <= hi and cover == {home, away} and (best is None or pj > best[1]):
                 best = ([cands[i] for i in idx], pj)
         return best
 
@@ -248,7 +265,11 @@ def alt_parlay(arrs, info, game, book):
     legs, pj = best
     pi = float(np.prod([c["p"] for c in legs]))
     label = {"sog": "shots", "points": "points", "saves": "saves"}
-    return {"v": 3, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
-            "legs": [{"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
-                      "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
-                     for c in legs]}
+    def leg(c):
+        if c.get("kind") == "team":
+            return {"kind": "team", "market": c["market"], "team": c["team_side"], "side": c["side"], "line": c["line"], "name": "",
+                    "label": c["label"], "p": r(100 * c["p"]), "p_model": r(100 * c["p_model"]), "main_src": "pinnacle"}
+        return {"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
+                "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
+    return {"v": 5 if need_team else 3, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
+            "legs": [leg(c) for c in legs]}
