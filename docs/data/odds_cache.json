@@ -1191,7 +1191,7 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-10-22T12:44+00:00",
+  "fetched_at": "2026-10-22T22:30+00:00",
   "data": {
    "2026_07_NE_CHI": {
     "spread_line": 3.0,
@@ -1205,14 +1205,14 @@
     "under_odds": -110.0,
     "sharp": {
      "spread_line": 3.0,
-     "spread_home_odds": -105.0,
-     "spread_away_odds": -105.0,
+     "spread_home_odds": -103.0,
+     "spread_away_odds": -107.0,
      "total_line": 50.5,
-     "over_odds": -114.0,
-     "under_odds": 102.0
+     "over_odds": -113.0,
+     "under_odds": 101.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_PIT_NO": {
     "spread_line": -3.0,
@@ -1226,25 +1226,25 @@
     "under_odds": -110.0,
     "sharp": {
      "spread_line": -3.5,
-     "spread_home_odds": -119.0,
-     "spread_away_odds": 106.0,
+     "spread_home_odds": -118.0,
+     "spread_away_odds": 105.0,
      "total_line": 44.5,
-     "over_odds": -112.0,
-     "under_odds": -104.0
+     "over_odds": -113.0,
+     "under_odds": -103.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_SF_ATL": {
     "spread_line": -3.0,
-    "total_line": 50.5,
+    "total_line": 50.0,
     "ml_home": null,
     "ml_away": null,
     "book": "hardrockbet",
-    "spread_home_odds": -115.0,
-    "spread_away_odds": -105.0,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
+    "spread_home_odds": -120.0,
+    "spread_away_odds": 100.0,
+    "over_odds": -115.0,
+    "under_odds": -105.0,
     "sharp": {
      "spread_line": -3.0,
      "spread_home_odds": -118.0,
@@ -1254,10 +1254,10 @@
      "under_odds": -116.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_CIN_BAL": {
-    "spread_line": -1.0,
+    "spread_line": 1.5,
     "total_line": 48.5,
     "ml_home": null,
     "ml_away": null,
@@ -1267,15 +1267,15 @@
     "over_odds": -110.0,
     "under_odds": -110.0,
     "sharp": {
-     "spread_line": -1.0,
-     "spread_home_odds": -109.0,
-     "spread_away_odds": -103.0,
+     "spread_line": 1.5,
+     "spread_home_odds": -107.0,
+     "spread_away_odds": -105.0,
      "total_line": 49.0,
-     "over_odds": 100.0,
-     "under_odds": -116.0
+     "over_odds": -106.0,
+     "under_odds": -110.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_TB_CAR": {
     "spread_line": 3.0,
@@ -1283,20 +1283,20 @@
     "ml_home": null,
     "ml_away": null,
     "book": "hardrockbet",
-    "spread_home_odds": -115.0,
-    "spread_away_odds": -105.0,
+    "spread_home_odds": -105.0,
+    "spread_away_odds": -115.0,
     "over_odds": -110.0,
     "under_odds": -110.0,
     "sharp": {
      "spread_line": 3.0,
-     "spread_home_odds": -111.0,
-     "spread_away_odds": -101.0,
+     "spread_home_odds": 105.0,
+     "spread_away_odds": -118.0,
      "total_line": 45.0,
-     "over_odds": -102.0,
-     "under_odds": -115.0
+     "over_odds": -101.0,
+     "under_odds": -116.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_CLE_TEN": {
     "spread_line": -2.0,
@@ -1317,7 +1317,7 @@
      "under_odds": -104.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_NYG_HOU": {
     "spread_line": 10.5,
@@ -1327,18 +1327,18 @@
     "book": "hardrockbet",
     "spread_home_odds": -110.0,
     "spread_away_odds": -110.0,
-    "over_odds": -115.0,
-    "under_odds": -105.0,
+    "over_odds": -110.0,
+    "under_odds": -110.0,
     "sharp": {
      "spread_line": 10.5,
      "spread_home_odds": -104.0,
      "spread_away_odds": -108.0,
      "total_line": 43.5,
-     "over_odds": 101.0,
-     "under_odds": -118.0
+     "over_odds": 104.0,
+     "under_odds": -121.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_IND_MIN": {
     "spread_line": 6.0,
@@ -1352,14 +1352,14 @@
     "under_odds": -110.0,
     "sharp": {
      "spread_line": 6.5,
-     "spread_home_odds": -104.0,
-     "spread_away_odds": -108.0,
+     "spread_home_odds": -105.0,
+     "spread_away_odds": -107.0,
      "total_line": 41.5,
-     "over_odds": -108.0,
-     "under_odds": -108.0
+     "over_odds": -107.0,
+     "under_odds": -109.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_MIA_NYJ": {
     "spread_line": 4.5,
@@ -1373,59 +1373,59 @@
     "under_odds": -110.0,
     "sharp": {
      "spread_line": 4.5,
-     "spread_home_odds": -102.0,
-     "spread_away_odds": -110.0,
+     "spread_home_odds": -104.0,
+     "spread_away_odds": -108.0,
      "total_line": 39.5,
      "over_odds": -101.0,
      "under_odds": -115.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_DEN_ARI": {
     "spread_line": -4.5,
-    "total_line": 43.5,
+    "total_line": 43.0,
     "ml_home": null,
     "ml_away": null,
     "book": "hardrockbet",
     "spread_home_odds": -110.0,
     "spread_away_odds": -110.0,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
+    "over_odds": -115.0,
+    "under_odds": -105.0,
     "sharp": {
      "spread_line": -4.0,
-     "spread_home_odds": -105.0,
-     "spread_away_odds": -107.0,
-     "total_line": 44.0,
-     "over_odds": 102.0,
-     "under_odds": -119.0
+     "spread_home_odds": -103.0,
+     "spread_away_odds": -109.0,
+     "total_line": 43.0,
+     "over_odds": -104.0,
+     "under_odds": -112.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_GB_DET": {
-    "spread_line": 3.5,
+    "spread_line": 3.0,
     "total_line": 53.5,
     "ml_home": null,
     "ml_away": null,
     "book": "hardrockbet",
-    "spread_home_odds": -105.0,
-    "spread_away_odds": -115.0,
+    "spread_home_odds": -120.0,
+    "spread_away_odds": 100.0,
     "over_odds": -110.0,
     "under_odds": -110.0,
     "sharp": {
      "spread_line": 3.0,
-     "spread_home_odds": -123.0,
-     "spread_away_odds": 109.0,
+     "spread_home_odds": -122.0,
+     "spread_away_odds": 108.0,
      "total_line": 53.5,
      "over_odds": -110.0,
      "under_odds": -106.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_LA_LV": {
-    "spread_line": -4.0,
+    "spread_line": -3.5,
     "total_line": 48.5,
     "ml_home": null,
     "ml_away": null,
@@ -1436,14 +1436,14 @@
     "under_odds": -110.0,
     "sharp": {
      "spread_line": -4.0,
-     "spread_home_odds": -106.0,
-     "spread_away_odds": -106.0,
-     "total_line": 47.5,
-     "over_odds": -117.0,
-     "under_odds": 100.0
+     "spread_home_odds": -117.0,
+     "spread_away_odds": 104.0,
+     "total_line": 48.5,
+     "over_odds": -106.0,
+     "under_odds": -110.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_KC_SEA": {
     "spread_line": 2.5,
@@ -1464,7 +1464,7 @@
      "under_odds": 102.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    },
    "2026_07_DAL_PHI": {
     "spread_line": -4.0,
@@ -1485,9 +1485,4284 @@
      "under_odds": -108.0
     },
     "book_title": "Hard Rock Bet",
-    "updated": "2026-10-22T12:43:14Z"
+    "updated": "2026-10-22T22:29:43Z"
    }
   }
  },
- "alt": {}
+ "alt": {
+  "2026_07_NE_CHI": {
+   "markets": {
+    "alternate_team_totals": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 20.5,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 20.5,
+       "odds": 250.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 31.5,
+       "odds": 195.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 31.5,
+       "odds": -300.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 17.5,
+       "odds": -700.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 17.5,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 22.5,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 22.5,
+       "odds": 185.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 16.5,
+       "odds": -1100.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 16.5,
+       "odds": 525.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 36.5,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 36.5,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 37.5,
+       "odds": 475.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 37.5,
+       "odds": -950.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 27.5,
+       "odds": 100.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 27.5,
+       "odds": -135.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 24.5,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 24.5,
+       "odds": 120.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 25.5,
+       "odds": -155.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 25.5,
+       "odds": 110.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 19.5,
+       "odds": -550.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 19.5,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 21.5,
+       "odds": -325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 21.5,
+       "odds": 200.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 26.5,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 26.5,
+       "odds": 100.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 30.5,
+       "odds": 150.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 30.5,
+       "odds": -210.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 23.5,
+       "odds": -220.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 23.5,
+       "odds": 155.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 35.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 35.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 32.5,
+       "odds": 210.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 32.5,
+       "odds": -325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 34.5,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 34.5,
+       "odds": -525.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 28.5,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 28.5,
+       "odds": -160.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 18.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 18.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 33.5,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 33.5,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 29.5,
+       "odds": 125.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 29.5,
+       "odds": -175.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 21.5,
+       "odds": -175.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 21.5,
+       "odds": 125.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 24.5,
+       "odds": 100.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 24.5,
+       "odds": -140.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 31.5,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 31.5,
+       "odds": -525.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 30.5,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 30.5,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 16.5,
+       "odds": -500.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 16.5,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 20.5,
+       "odds": -210.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 20.5,
+       "odds": 145.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 18.5,
+       "odds": -325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 18.5,
+       "odds": 220.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 22.5,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 22.5,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 25.5,
+       "odds": 105.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 25.5,
+       "odds": -145.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 17.5,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 17.5,
+       "odds": 230.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 33.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 33.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 27.5,
+       "odds": 155.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 27.5,
+       "odds": -225.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 29.5,
+       "odds": 200.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 29.5,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 15.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 15.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 26.5,
+       "odds": 120.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 26.5,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 13.5,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 13.5,
+       "odds": 475.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 19.5,
+       "odds": -300.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 19.5,
+       "odds": 190.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 34.5,
+       "odds": 500.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 34.5,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 14.5,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 14.5,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 28.5,
+       "odds": 180.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 28.5,
+       "odds": -260.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 32.5,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 32.5,
+       "odds": -550.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 23.5,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 23.5,
+       "odds": 100.0,
+       "period": null
+      }
+     ],
+     "sharp": [],
+     "book_name": "Hard Rock Bet"
+    },
+    "team_totals": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [],
+     "sharp": [
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "over",
+       "line": 26.5,
+       "odds": -129.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "home",
+       "side": "under",
+       "line": 26.5,
+       "odds": 110.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "over",
+       "line": 23.5,
+       "odds": -123.0,
+       "period": null
+      },
+      {
+       "market": "team_total",
+       "team": "away",
+       "side": "under",
+       "line": 23.5,
+       "odds": 105.0,
+       "period": null
+      }
+     ],
+     "book_name": null
+    },
+    "spreads_h1": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 5.5,
+       "odds": -400.0,
+       "period": "h1"
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -5.5,
+       "odds": 260.0,
+       "period": "h1"
+      }
+     ],
+     "sharp": [
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -2.5,
+       "odds": -108.0,
+       "period": "h1"
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 2.5,
+       "odds": -104.0,
+       "period": "h1"
+      }
+     ],
+     "book_name": "Hard Rock Bet"
+    },
+    "totals_h1": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 31.5,
+       "odds": 250.0,
+       "period": "h1"
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 31.5,
+       "odds": -375.0,
+       "period": "h1"
+      }
+     ],
+     "sharp": [
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 24.5,
+       "odds": -114.0,
+       "period": "h1"
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 24.5,
+       "odds": -101.0,
+       "period": "h1"
+      }
+     ],
+     "book_name": "Hard Rock Bet"
+    },
+    "alternate_spreads": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 2.0,
+       "odds": -200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -9.5,
+       "odds": 220.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 12.5,
+       "odds": -1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 7.0,
+       "odds": -575.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -2.5,
+       "odds": -135.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -7.5,
+       "odds": 180.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -25.5,
+       "odds": 1600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -15.5,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 18.5,
+       "odds": -5000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -26.0,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -17.5,
+       "odds": 550.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 20.0,
+       "odds": -9000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 1.0,
+       "odds": -180.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -26.5,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -14.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 14.5,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 9.5,
+       "odds": -850.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -18.5,
+       "odds": 600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 19.0,
+       "odds": -7000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -9.0,
+       "odds": 220.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 8.5,
+       "odds": -800.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -13.5,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -12.5,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 10.0,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -15.0,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 4.0,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -11.0,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 7.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -8.5,
+       "odds": 210.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 3.5,
+       "odds": -325.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -3.5,
+       "odds": 105.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -10.5,
+       "odds": 250.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -23.0,
+       "odds": 1200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -24.5,
+       "odds": 1400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -13.0,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -2.0,
+       "odds": -140.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -25.0,
+       "odds": 1600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 18.0,
+       "odds": -5000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -22.5,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -11.5,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -12.0,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -23.5,
+       "odds": 1200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -20.0,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 12.0,
+       "odds": -1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -6.5,
+       "odds": 150.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -19.0,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -21.5,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -20.5,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -10.0,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 14.0,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -6.0,
+       "odds": 140.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -4.0,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 16.5,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 6.5,
+       "odds": -475.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -3.0,
+       "odds": -110.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -7.0,
+       "odds": 170.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 17.0,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -4.5,
+       "odds": 120.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -14.0,
+       "odds": 350.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 5.0,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -16.5,
+       "odds": 450.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 11.5,
+       "odds": -1200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -16.0,
+       "odds": 450.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -24.0,
+       "odds": 1400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 15.0,
+       "odds": -2200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 17.5,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 15.5,
+       "odds": -2200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -22.0,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 8.0,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -5.5,
+       "odds": 130.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 6.0,
+       "odds": -450.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -21.0,
+       "odds": 900.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 2.5,
+       "odds": -210.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 13.5,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 3.0,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -5.0,
+       "odds": 125.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 16.0,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 10.5,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 13.0,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 4.5,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 11.0,
+       "odds": -1200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -8.0,
+       "odds": 200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 9.0,
+       "odds": -850.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -17.0,
+       "odds": 525.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -1.5,
+       "odds": -150.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -18.0,
+       "odds": 600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -19.5,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 5.5,
+       "odds": -400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 19.5,
+       "odds": -7000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 1.5,
+       "odds": -190.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -2.0,
+       "odds": 160.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 9.5,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -12.5,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -7.0,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 2.5,
+       "odds": 110.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 7.5,
+       "odds": -240.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 25.5,
+       "odds": -6000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 15.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -18.5,
+       "odds": 1500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 26.0,
+       "odds": -7000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 17.5,
+       "odds": -950.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -20.0,
+       "odds": 2000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -1.0,
+       "odds": 145.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 26.5,
+       "odds": -8000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 14.5,
+       "odds": -600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -14.5,
+       "odds": 900.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -9.5,
+       "odds": 500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 18.5,
+       "odds": -1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -19.0,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 9.0,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -8.5,
+       "odds": 475.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 13.5,
+       "odds": -475.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 12.5,
+       "odds": -425.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -10.0,
+       "odds": 550.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 15.0,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -4.0,
+       "odds": 250.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 11.0,
+       "odds": -400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -7.5,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 8.5,
+       "odds": -300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -3.5,
+       "odds": 230.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 3.5,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 10.5,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 23.0,
+       "odds": -3000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 24.5,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 13.0,
+       "odds": -475.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 2.0,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 25.0,
+       "odds": -6000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -18.0,
+       "odds": 1600.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 22.5,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 11.5,
+       "odds": -400.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 12.0,
+       "odds": -425.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 23.5,
+       "odds": -3000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 20.0,
+       "odds": -1500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -12.0,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 6.5,
+       "odds": -190.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 19.0,
+       "odds": -1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 21.5,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 20.5,
+       "odds": -1500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 10.0,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -14.0,
+       "odds": 900.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 6.0,
+       "odds": -175.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 4.0,
+       "odds": -140.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -16.5,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -6.5,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 3.0,
+       "odds": -110.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 7.0,
+       "odds": -220.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -17.0,
+       "odds": 1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 4.5,
+       "odds": -150.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 14.0,
+       "odds": -575.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -5.0,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 16.5,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -11.5,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 16.0,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 24.0,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -15.0,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -17.5,
+       "odds": 1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -15.5,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 22.0,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -8.0,
+       "odds": 450.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 5.5,
+       "odds": -160.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -6.0,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 21.0,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -2.5,
+       "odds": 160.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -13.5,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -3.0,
+       "odds": 200.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 5.0,
+       "odds": -155.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -16.0,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -10.5,
+       "odds": 575.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -13.0,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -4.5,
+       "odds": 250.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -11.0,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 8.0,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -9.0,
+       "odds": 500.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 17.0,
+       "odds": -900.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 1.5,
+       "odds": 120.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 18.0,
+       "odds": -1100.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 19.5,
+       "odds": -1300.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -5.5,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -19.5,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -1.5,
+       "odds": 150.0,
+       "period": null
+      }
+     ],
+     "sharp": [
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -3.0,
+       "odds": -103.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 3.5,
+       "odds": -269.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": 1.0,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -1.0,
+       "odds": -149.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -1.5,
+       "odds": -141.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -2.0,
+       "odds": -134.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -2.5,
+       "odds": -126.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -3.5,
+       "odds": 117.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -4.0,
+       "odds": 124.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -4.5,
+       "odds": 131.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -5.0,
+       "odds": 138.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -5.5,
+       "odds": 144.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "home",
+       "side": "home",
+       "line": -7.5,
+       "odds": 201.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 3.0,
+       "odds": -107.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -3.5,
+       "odds": 225.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": -1.0,
+       "odds": 144.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 1.0,
+       "odds": 130.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 1.5,
+       "odds": 124.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 2.0,
+       "odds": 119.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 2.5,
+       "odds": 113.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 3.5,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 4.0,
+       "odds": -140.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 4.5,
+       "odds": -150.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 5.0,
+       "odds": -158.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 5.5,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "spread",
+       "team": "away",
+       "side": "away",
+       "line": 7.5,
+       "odds": -238.0,
+       "period": null
+      }
+     ],
+     "book_name": "Hard Rock Bet"
+    },
+    "alternate_totals": {
+     "fetched_at": "2026-10-22T22:30+00:00",
+     "book": [
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 67.5,
+       "odds": 550.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 38.0,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 50.5,
+       "odds": -120.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 54.5,
+       "odds": 130.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 58.5,
+       "odds": 200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 44.0,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 75.0,
+       "odds": 1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 74.5,
+       "odds": 1200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 36.0,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 62.0,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 70.0,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 57.5,
+       "odds": 180.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 46.5,
+       "odds": -200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 36.5,
+       "odds": -900.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 41.5,
+       "odds": -400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 56.0,
+       "odds": 155.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 43.5,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 42.0,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 32.5,
+       "odds": -1800.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 45.0,
+       "odds": -240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 30.5,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 35.5,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 69.0,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 50.0,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 73.0,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 65.0,
+       "odds": 425.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 60.5,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 71.5,
+       "odds": 850.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 66.0,
+       "odds": 450.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 51.5,
+       "odds": 100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 71.0,
+       "odds": 850.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 56.5,
+       "odds": 160.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 46.0,
+       "odds": -210.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 37.5,
+       "odds": -650.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 55.5,
+       "odds": 145.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 42.5,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 68.5,
+       "odds": 600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 59.0,
+       "odds": 220.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 76.0,
+       "odds": 1500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 41.0,
+       "odds": -450.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 53.0,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 32.0,
+       "odds": -2200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 31.5,
+       "odds": -2200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 70.5,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 35.0,
+       "odds": -1200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 54.0,
+       "odds": 125.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 73.5,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 30.0,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 59.5,
+       "odds": 230.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 37.0,
+       "odds": -850.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 39.5,
+       "odds": -525.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 49.5,
+       "odds": -135.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 34.5,
+       "odds": -1200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 33.5,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 49.0,
+       "odds": -145.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 43.0,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 52.0,
+       "odds": 105.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 74.0,
+       "odds": 1200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 52.5,
+       "odds": 110.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 64.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 47.5,
+       "odds": -170.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 44.5,
+       "odds": -250.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 66.5,
+       "odds": 475.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 58.0,
+       "odds": 195.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 72.0,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 51.0,
+       "odds": -110.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 45.5,
+       "odds": -225.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 61.5,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 62.5,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 61.0,
+       "odds": 260.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 39.0,
+       "odds": -600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 29.5,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 47.0,
+       "odds": -190.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 48.5,
+       "odds": -150.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 53.5,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 40.5,
+       "odds": -425.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 68.0,
+       "odds": 600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 64.0,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 27.5,
+       "odds": -7000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 57.0,
+       "odds": 175.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 31.0,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 60.0,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 65.5,
+       "odds": 450.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 29.0,
+       "odds": -6000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 67.0,
+       "odds": 525.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 38.5,
+       "odds": -600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 69.5,
+       "odds": 700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 28.5,
+       "odds": -6000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 40.0,
+       "odds": -500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 34.0,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 72.5,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 48.0,
+       "odds": -160.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 33.0,
+       "odds": -1800.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 75.5,
+       "odds": 1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 28.0,
+       "odds": -7000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 55.0,
+       "odds": 140.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 63.5,
+       "odds": 350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 63.0,
+       "odds": 350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 67.5,
+       "odds": -950.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 38.0,
+       "odds": 400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 50.5,
+       "odds": 100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 54.5,
+       "odds": -165.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 58.5,
+       "odds": -275.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 44.0,
+       "odds": 210.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 75.0,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 74.5,
+       "odds": -3000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 36.0,
+       "odds": 575.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 62.0,
+       "odds": -425.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 70.0,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 57.5,
+       "odds": -240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 46.5,
+       "odds": 155.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 36.5,
+       "odds": 525.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 41.5,
+       "odds": 275.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 56.0,
+       "odds": -200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 43.5,
+       "odds": 210.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 42.0,
+       "odds": 260.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 32.5,
+       "odds": 900.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 45.0,
+       "odds": 180.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 30.5,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 35.5,
+       "odds": 600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 69.0,
+       "odds": -1200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 50.0,
+       "odds": 105.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 73.0,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 65.0,
+       "odds": -700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 60.5,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 71.5,
+       "odds": -1800.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 66.0,
+       "odds": -750.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 51.5,
+       "odds": -120.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 71.0,
+       "odds": -1800.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 56.5,
+       "odds": -200.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 46.0,
+       "odds": 165.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 37.5,
+       "odds": 425.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 55.5,
+       "odds": -190.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 42.5,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 68.5,
+       "odds": -1100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 59.0,
+       "odds": -300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 76.0,
+       "odds": -5000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 41.0,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 53.0,
+       "odds": -135.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 32.0,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 31.5,
+       "odds": 1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 70.5,
+       "odds": -1400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 35.0,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 54.0,
+       "odds": -155.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 73.5,
+       "odds": -2500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 30.0,
+       "odds": 1300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 59.5,
+       "odds": -325.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 37.0,
+       "odds": 500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 39.5,
+       "odds": 350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 49.5,
+       "odds": 110.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 34.5,
+       "odds": 650.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 33.5,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 49.0,
+       "odds": 115.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 43.0,
+       "odds": 240.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 52.0,
+       "odds": -125.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 74.0,
+       "odds": -3000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 52.5,
+       "odds": -130.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 64.5,
+       "odds": -575.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 47.5,
+       "odds": 135.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 44.5,
+       "odds": 185.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 66.5,
+       "odds": -800.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 58.0,
+       "odds": -260.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 72.0,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 51.0,
+       "odds": -110.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 45.5,
+       "odds": 170.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 61.5,
+       "odds": -400.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 62.5,
+       "odds": -450.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 61.0,
+       "odds": -375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 39.0,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 29.5,
+       "odds": 1300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 47.0,
+       "odds": 145.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 48.5,
+       "odds": 120.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 53.5,
+       "odds": -145.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 40.5,
+       "odds": 300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 68.0,
+       "odds": -1000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 64.0,
+       "odds": -575.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 27.5,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 57.0,
+       "odds": -230.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 31.0,
+       "odds": 1100.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 60.0,
+       "odds": -350.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 65.5,
+       "odds": -700.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 29.0,
+       "odds": 1600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 67.0,
+       "odds": -900.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 38.5,
+       "odds": 375.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 69.5,
+       "odds": -1300.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 28.5,
+       "odds": 1600.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 40.0,
+       "odds": 325.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 34.0,
+       "odds": 750.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 72.5,
+       "odds": -2000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 48.0,
+       "odds": 130.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 33.0,
+       "odds": 900.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 75.5,
+       "odds": -4000.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 28.0,
+       "odds": 1750.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 55.0,
+       "odds": -180.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 63.5,
+       "odds": -500.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 63.0,
+       "odds": -500.0,
+       "period": null
+      }
+     ],
+     "sharp": [
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 50.5,
+       "odds": -113.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 43.5,
+       "odds": -276.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 48.0,
+       "odds": -164.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 48.5,
+       "odds": -153.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 49.0,
+       "odds": -143.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 49.5,
+       "odds": -133.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 50.0,
+       "odds": -124.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 51.0,
+       "odds": -106.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 51.5,
+       "odds": 101.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 52.0,
+       "odds": 108.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 52.5,
+       "odds": 116.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 53.0,
+       "odds": 123.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "over",
+       "line": 57.5,
+       "odds": 208.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 50.5,
+       "odds": 101.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 43.5,
+       "odds": 227.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 48.0,
+       "odds": 141.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 48.5,
+       "odds": 133.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 49.0,
+       "odds": 124.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 49.5,
+       "odds": 116.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 50.0,
+       "odds": 108.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 51.0,
+       "odds": -108.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 51.5,
+       "odds": -116.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 52.0,
+       "odds": -124.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 52.5,
+       "odds": -133.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 53.0,
+       "odds": -142.0,
+       "period": null
+      },
+      {
+       "market": "total",
+       "team": null,
+       "side": "under",
+       "line": 57.5,
+       "odds": -250.0,
+       "period": null
+      }
+     ],
+     "book_name": "Hard Rock Bet"
+    }
+   }
+  }
+ }
 }
