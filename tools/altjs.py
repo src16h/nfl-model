@@ -1,5 +1,6 @@
 """
-The alt-line page code shared by the NFL and NHL pages (docs/index.html, docs/nhl/index.html).
+The alt-line page code shared by the NFL and NHL pages (docs/index.html, docs/nhl/index.html), and the
+bet-type gate panel (GATES_JS) shared by all four pages (NFL, NHL, CFB, soccer).
 
 Run `python tools/altjs.py` after editing ALT_JS: it rewrites the block between the ALT-JS markers in
 both pages, so the two stay identical. Per-page settings come from ALT_CFG, defined on each page.
@@ -24,10 +25,6 @@ ALT_CSS = """
 .vt.thin{border-color:var(--line);color:var(--muted)}
 .mchip{display:inline-block;font:600 10.5px var(--sans);color:var(--brown);background:var(--beige);border-radius:999px;padding:2px 8px;margin-right:6px;vertical-align:1px;white-space:nowrap}
 .bet.on{border-color:var(--gold-line);background:linear-gradient(90deg,var(--gold-soft),transparent 70%)}
-.gates{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
-.gate{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface);display:grid;gap:6px}
-.gate .gh{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.gate .gs{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--num)}
 .gbar{height:6px;border-radius:999px;background:var(--line-soft);overflow:hidden}.gbar i{display:block;height:100%;background:var(--gold)}
 .legteam{display:inline-block;font:600 10px var(--sans);color:var(--brown);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-right:5px;vertical-align:1px}
 .altbox td:first-child{white-space:normal;min-width:120px}
@@ -163,25 +160,82 @@ function altStakeTxt(pPct, odds) {
   return z.units > 0 ? `Suggested bet <b>${z.units}u</b> ($${z.dollars}) <span class="dim">(1u cap: new market)</span>` : `Suggested bet <b>none</b> at this price`;
 }
 /* paused bet types (gates.py): shadow record and the bar to come back */
-function gatesHTML() {
-  const G = D.gates || []; if (!G.length) return "";
-  const g0 = G[0];
-  return `<h3>Paused bets, tracked in the background</h3><p class="sub">When a bet type is cut, the model keeps finding the bets it would have played, locks them at the price it saw, and grades them. Only bets from the pause date on count, so a comeback is earned on fresh results. A type comes back into plays on its own after about ${g0.min_n} graded at a +${g0.min_roi}% return or better, without losing to the closing line, and is paused again if it then returns ${g0.repause_roi}% or worse over its next ${g0.min_n}.</p>
-    <div class="gates">${G.map(x => { const R = x.record || {}, back = x.status === "active", pct = Math.min(100, 100 * (R.n || 0) / x.min_n);
-      const need = back ? `Back since ${esc(String(x.since).slice(5))}. Paused again if it returns ${x.repause_roi}% or worse over its next ${x.min_n}.`
-        : `${R.n || 0} of ${x.min_n} graded. Needs a +${x.min_roi}% return${R.clv_n >= 15 ? ` (closing value so far ${altSgn(R.clv, 2)}%)` : ""} to come back.`;
-      return `<div class="gate"><div class="gh"><b>${esc(x.label)}</b>${back ? `<span class="tag">Back in plays</span>` : `<span class="vt">Paused</span>`}</div>
-        <div class="dim" style="font-size:12.5px">${esc(x.why)}</div>
-        <div class="gs"><span>${R.n ? `${R.w}–${R.l}` : "0–0"} ${back ? "as plays" : "shadow"}</span><span class="${R.n ? (R.units >= 0 ? "up" : "down") : "dim"}">${R.n ? `${altSgn(R.units, 2)}u, ${altSgn(R.roi)}%` : "no results yet"}</span></div>
-        ${back ? "" : `<div class="gbar"><i style="width:${pct}%"></i></div>`}<div style="font-size:13px">${need}</div></div>`; }).join("")}</div>
-    <p class="note">Record is shadow plays while paused, real plays once back. Shadow plays are never in your units.</p>`;
-}
-function gatesNote() {
-  const back = (D.gates || []).filter(x => x.status === "active");
-  return back.length ? ` <b>Back in plays:</b> ${back.map(x => esc(x.label)).join(", ")}.` : "";
-}
 const altLegTxt = L => L.kind === "team" ? `<span class="legteam">${esc(ALT_MK[L.market] || "Team")}</span>${esc(L.label)}` : `<b>${esc(L.name)}</b> ${esc(L.label)}`;
 """
+
+GSTART, GEND = "/* ---- GATES-JS start (tools/altjs.py) ---- */", "/* ---- GATES-JS end ---- */"
+GATES_JS = """
+/* bet-type gates (gates.py): paused types tracked in the background, and game types watched for closing-line value */
+const gSgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
+const gList = () => D.gates || D.tracking?.gates || [];
+const gWatch = x => x.clv_gate && x.status === "active" && !(x.history || []).some(h => h.to === "active");
+function gateCard(x) {
+  const R = x.record || {}, back = x.status === "active", watch = gWatch(x);
+  const pct = watch ? Math.min(100, 100 * (R.ev_n || 0) / (x.clv_pause_n || 30)) : Math.min(100, 100 * (R.n || 0) / x.min_n);
+  const evTxt = R.ev_n ? `${gSgn(R.ev_close, 1)}% at the closing price over ${R.ev_n} priced` : "no closing prices yet";
+  const need = watch ? `Closing-line check: ${evTxt}. Pauses at ${x.clv_pause_n || 30}+ priced plays if that stays below 0%, or if the return reaches ${x.repause_roi}%.`
+    : back ? `Back since ${esc(String(x.since).slice(5))}. Paused again if it returns ${x.repause_roi}% or worse over its next ${x.min_n}${x.clv_gate ? ", or loses to the closing line" : ""}.`
+    : `${R.n || 0} of ${x.min_n} graded. Needs a +${x.min_roi}% return${x.clv_gate ? " and 0% or better at the closing price" : ""} to come back${R.ev_n ? ` (now ${gSgn(R.ev_close, 1)}%)` : R.clv_n >= 15 ? ` (closing value so far ${gSgn(R.clv, 2)})` : ""}.`;
+  const tag = watch ? `<span class="vt thin">On watch</span>` : back ? `<span class="tag">Back in plays</span>` : `<span class="vt">Paused</span>`;
+  return `<div class="gate"><div class="gh"><b>${esc(x.label)}</b>${tag}</div>
+    ${watch ? "" : `<div class="dim" style="font-size:12.5px">${esc(x.why)}</div>`}
+    <div class="gs"><span>${R.n ? `${R.w}–${R.l}` : "0–0"} ${back ? "as plays" : "shadow"}</span><span class="${R.n ? (R.units >= 0 ? "up" : "down") : "dim"}">${R.n ? `${gSgn(R.units, 2)}u, ${gSgn(R.roi)}%` : "no results yet"}</span></div>
+    <div class="gbar"><i style="width:${pct}%"></i></div><div style="font-size:13px">${need}</div></div>`;
+}
+function gatesHTML() {
+  const G = gList(); if (!G.length) return "";
+  const watch = G.filter(gWatch), rest = G.filter(x => !gWatch(x));
+  let h = "";
+  if (rest.length) {
+    const g0 = rest[0];
+    h += `<h3>Paused bets, tracked in the background</h3><p class="sub">When a bet type is cut, the model keeps finding the bets it would have played, locks them at the price it saw, and grades them. Only bets from the pause date on count, so a comeback is earned on fresh results. A type comes back into plays on its own after about ${g0.min_n} graded at a +${g0.min_roi}% return or better, without losing to the closing line.</p>
+    <div class="gates">${rest.map(gateCard).join("")}</div>
+    <p class="note">Record is shadow plays while paused, real plays once back. Shadow plays are never in your units.</p>`;
+  }
+  if (watch.length) h += `<h3>Bet types on watch</h3><p class="sub">Each game bet type is checked against the closing line: the return its plays would make if the closing price is the true chance. A type that stays below 0% over 30+ priced plays is paused automatically, even if it has been winning, because wins without closing-line value usually don't last.</p>
+    <div class="gates">${watch.map(gateCard).join("")}</div>`;
+  return h;
+}
+function propClvHTML() {
+  const C = D.tracking?.prop_clv; if (!C || !C.n) return "";
+  return `<p class="note"><b>Prop plays vs the closing line:</b> ${C.n} checked, ${C.beat} moved our way, ${C.worse} moved against` +
+    (C.ev_close != null ? `, ${gSgn(C.ev_close, 1)}% return at the closing price (same-line plays)` : "") +
+    `. A play is locked when first flagged; the closing line is the book's last line before the game.</p>`;
+}
+function gatesNote() {
+  const G = gList(), back = G.filter(x => x.status === "active" && !gWatch(x)), off = G.filter(x => x.clv_gate && x.status === "paused");
+  return (back.length ? ` <b>Back in plays:</b> ${back.map(x => esc(x.label)).join(", ")}.` : "") +
+         (off.length ? ` <b>Paused:</b> ${off.map(x => esc(x.label)).join(", ")}.` : "");
+}
+"""
+GATES_CSS = """
+/* bet-type gates (tools/altjs.py) */
+.gates{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.gate{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface);display:grid;gap:6px}
+.gate .gh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gate .gs{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--num)}
+.gbar{height:6px;border-radius:999px;background:var(--line-soft);overflow:hidden}.gbar i{display:block;height:100%;background:var(--gold)}
+.vt.thin{border-color:var(--line);color:var(--muted)}
+/* gates css end */
+"""
+
+
+def build_gates():
+    pages = [ROOT / "docs" / "index.html", ROOT / "docs" / "nhl" / "index.html", ROOT / "docs" / "cfb" / "index.html",
+             ROOT / "docs" / "soccer" / "index.html"]
+    for page in pages:
+        s = page.read_text()
+        if GSTART not in s:                      # first run: add the markers just before the page's closing </script>
+            i = s.rindex("</script>")
+            s = s[:i] + GSTART + GEND + "\n" + s[i:]
+        a, b = s.index(GSTART) + len(GSTART), s.index(GEND)
+        s = s[:a] + GATES_JS + s[b:]
+        c0, c1 = "\n/* bet-type gates (tools/altjs.py) */", "/* gates css end */\n"
+        if c0 in s:
+            s = s[:s.index(c0)] + s[s.index(c1) + len(c1):]
+        s = s.replace("</style>", GATES_CSS + "</style>", 1)
+        page.write_text(s)
+        print(f"{page}: gates updated")
 
 
 def build():
@@ -202,3 +256,4 @@ def build():
 
 if __name__ == "__main__":
     build()
+    build_gates()

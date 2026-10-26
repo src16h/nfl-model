@@ -145,6 +145,7 @@ def game_picks(g, sim):
             s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
         dec = BR.decide_sharp(v["model"] / 100, mine, other, s1, s2)
         v["sharp"], v["ev"], v["play"] = dec["sharp"], dec["ev"], dec["play"]
+    GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     ml, pl = out.get("ml"), out.get("pl")
     plays = [x for x in out.values() if x.get("play")]
     if len(plays) > 1:                                  # one play per game: the best value
@@ -245,6 +246,7 @@ def tracking(history_days, results):
     picks = {k: [] for k in ("ml", "pl", "total")}
     plays, prop_plays, calib, alts, daily, edges, alt_plays = [], [], {}, [], {}, [], []
     gate_rows = {"nhl_points": ([], []), "nhl_edge": ([], [])}       # (shadow, real) graded rows for gates.py
+    gate_rows.update({GT.game_gate("nhl", k): ([], []) for k in GT.GAME_KINDS["nhl"]})
     clv_rows = []
     daily_t = {"game": {}, "prop": {}, "edge": {}}       # units per day by bet type (Home record chart)
     for day in history_days:
@@ -273,8 +275,17 @@ def tracking(history_days, results):
                               "odds": fl.get("odds"), "edge": fl.get("ev", fl.get("edge")), "res": rr, "units": u,
                               "clv": None if c is None else r(c, 1), "legacy": bool(fl.get("legacy"))})
                 clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": bool(fl.get("at"))})
+                if k in GT.GAME_KINDS["nhl"]:
+                    gate_rows[GT.game_gate("nhl", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
                 daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
+            for k, fl in (g.get("shadow_flags") or {}).items():     # paused bet types: graded, not counted as plays
+                if not fl.get("odds") or fl.get("side") is None or (k != "ml" and fl.get("line") is None):
+                    continue
+                rr, u = grade_pick(k, fl, g, res)
+                c, e = CLV.measure(fl["odds"], CLV.close("nhl", k, fl, g, g.get("book"), fl.get("line")))
+                if k in GT.GAME_KINDS["nhl"]:
+                    gate_rows[GT.game_gate("nhl", k)][0].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
             for fl in (g.get("alt_flags") or {}).values():
                 rr, u = AL.grade(fl, res["h"], res["a"])
                 alt_plays.append({"date": dt, "kind": "alt", "market": fl["market"], "pick": fl.get("label"), "game": f"{g['away']} at {g['home']}",
@@ -347,9 +358,10 @@ def tracking(history_days, results):
                     u = payout(bk["odds"]) if rr == "W" else (-1.0 if rr == "L" else 0.0)
                     if stat == "points":
                         gate_rows["nhl_points"][1].append({"date": dt, "res": rr, "units": u})
+                    pc, pe, pmv = CLV.prop_clv(bk, m.get("close")) if bk.get("at") else (None, None, None)
                     prop_plays.append({"date": dt, "player": p["name"], "pick": f"{bk['side']} {L:g} {stat}", "odds": fmt_odds(bk["odds"]),
                                        "edge": bk["edge"], "res": rr, "units": u, "actual": v,
-                                       "stat": stat, "side": bk["side"]})
+                                       "stat": stat, "side": bk["side"], "clv": None if pc is None else r(pc, 1), "ev": pe, "move": pmv})
                     daily[dt] = daily.get(dt, 0) + u
                     daily_t["prop"][dt] = daily_t["prop"].get(dt, 0) + u
 
@@ -394,6 +406,7 @@ def tracking(history_days, results):
             "alt_plays": rec2(alt_plays), "alt_plays_list": sorted(alt_plays, key=lambda x: x["date"], reverse=True)[:60],
             "alt_by_market": {m: rec2([x for x in alt_plays if x["market"] == m]) for m in ("spread", "total", "team_total")},
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
+            "prop_clv": CLV.prop_summary(prop_plays),
             "calibration": cal,
             "alt": alt_rec([a for a in alts if a["v"] in (3, 4)]),
             "alt_mix": alt_rec([a for a in alts if a["v"] == 5]),
@@ -482,7 +495,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     HIST.mkdir(parents=True, exist_ok=True)
     # paused bet types (gates.py): a type that has earned its way back is a play again from this run on
-    gst = GT.load(OUT / "gates.json", ("nhl_points", "nhl_edge"))
+    gst = GT.load(OUT / "gates.json", ("nhl_points", "nhl_edge") + GT.game_names("nhl"))
+    C.GAME_PAUSED = GT.paused_kinds(gst, "nhl")
     if GT.active(gst, "nhl_points"):
         C.BLOCKED = (set(C.BLOCKED) - {"points"}) | {("points", "Over")}
         C.ODDS_PROP_MARKETS = list(C.ODDS_PROP_MARKETS) + ["player_points"]
@@ -511,7 +525,11 @@ def main():
         g["date_et"] = datetime.fromisoformat(g["start"].replace("Z", "+00:00")).astimezone(ET).date().isoformat()
         g["today_et"] = today.isoformat()
     log.info(f"{len(upcoming)} upcoming games")
-    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now)
+    close_games = set()                                  # games with a locked prop play: one near-puck-drop props pull (CLV)
+    for p_ in load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []):
+        if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
+            close_games.add(p_["game_id"])
+    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
 
@@ -706,6 +724,7 @@ def main():
                     fl = {x: bk.get(x) for x in ("line", "side", "odds", "book_over", "edge", "ev", "pre")}
                     fl["at"] = now.isoformat(timespec="minutes")
                 m["flag"] = fl
+                m["close"] = CLV.close_snap(bk, pm.get("close"), now.isoformat(timespec="minutes"))   # latest pre-game line
                 sf = pm.get("shadow_flag")                         # shadow plays (gates.py): locked the same way
                 if sf is None and bk.get("shadow") and not bk.get("play"):
                     sf = {x: bk.get(x) for x in ("line", "side", "odds", "edge", "ev")}
@@ -744,6 +763,9 @@ def main():
                     flags[k_] = {x: pk_.get(x) for x in ("side", "line", "odds", "model", "book", "sharp", "ev", "edge")}
                     flags[k_]["at"] = now.isoformat(timespec="minutes")
             lite["flags"] = g["flags"] = flags
+            lite["shadow_flags"] = g["shadow_flags"] = GT.shadow_flags(
+                g.get("picks"), (prev or {}).get("shadow_flags"), now.isoformat(timespec="minutes"),
+                ("side", "line", "odds", "model", "book", "sharp", "ev", "edge"))
             keep.append(lite)
         # edge parlays: keep any ticket with a game already under way (locked), refresh the rest
         locked = [e for e in old.get("edge", []) if any(l["game_id"] not in live for l in e["legs"])]
@@ -763,7 +785,7 @@ def main():
     (OUT / "results.json").write_text(json.dumps(clean(results), separators=(",", ":")))
     track = tracking(days, results)
     gate_rows = track.pop("_gate_rows", {})
-    gst = GT.load(OUT / "gates.json", ("nhl_points", "nhl_edge"))
+    gst = GT.load(OUT / "gates.json", ("nhl_points", "nhl_edge") + GT.game_names("nhl"))
     gates_out = [GT.update(OUT / "gates.json", gst, k, sh, pl, today.isoformat()) for k, (sh, pl) in gate_rows.items()]
 
     # finished/locked games from today's file so the slate stays complete

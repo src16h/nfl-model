@@ -34,6 +34,7 @@ from cfbmodel.util import clean, r
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
+import gates as GT  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("cfbmodel")
@@ -142,6 +143,7 @@ def game_picks(g, star, mkt, pure):
         home = pw >= 0.5
         out["ml"] = {"side": g["home"] if home else g["away"], "odds": None, "model": r(100 * max(pw, 1 - pw)), "book": None, "edge": None,
                      "fair": fmt_odds(american(max(pw, 1 - pw))), "play": False}
+    GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     sp, ml = out.get("spread"), out.get("ml")
     if sp and ml and sp["play"] and ml["play"] and sp["side"] == ml["side"]:     # same team twice: keep the spread
         ml["play"] = False
@@ -245,6 +247,7 @@ def tracking(weeks, results):
     plays, prop_plays, calib, alts, daily = [], [], {}, [], {}
     clv_rows = []
     clv = {"spread": [], "total": []}
+    gate_rows = {GT.game_gate("cfb", k): ([], []) for k in GT.GAME_KINDS["cfb"]}   # (shadow, real) for gates.py
     for wk in weeks:
         for g in wk.get("games", []):
             res = results.get(str(g["game_id"]))
@@ -263,6 +266,11 @@ def tracking(weeks, results):
                                   "clv": None if c is None else r(c, 1)})
                     clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
                     daily[dt] = daily.get(dt, 0) + (u or 0)
+                    if k in GT.GAME_KINDS["cfb"]:
+                        gate_rows[GT.game_gate("cfb", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
+                elif pk.get("shadow") and k in GT.GAME_KINDS["cfb"]:      # paused bet type: graded, not a play
+                    c, e, _ = CLV.play_clv("cfb", k, pk, g, g.get("first_book"))
+                    gate_rows[GT.game_gate("cfb", k)][0].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
             # did the line move our way after we first saw it? (first line vs close, in points)
             fb, P_ = g.get("first_book") or {}, g.get("first_picks") or {}
             sp, tp = P_.get("spread"), P_.get("total")
@@ -294,13 +302,15 @@ def tracking(weeks, results):
                 # so counting only the ones who are would make every over look too good
                 if m["fair"] >= CALIB_MIN.get(stat, 0) and (stat != "td" or m["pf"] >= 0.2):
                     calib.setdefault(stat, []).append((m["pf"], v > m["fair"]))
-                bk = m.get("book")
-                if bk and bk.get("play"):
+                bk = m.get("flag") or (m.get("book") if (m.get("book") or {}).get("play") else None)
+                if bk and bk.get("line") is not None and bk.get("odds") is not None:
                     L = bk["line"]
                     rr = "P" if v == L else ("W" if (v > L) == (bk["side"] == "Over") else "L")
                     u = payout(bk["odds"]) if rr == "W" else (-1.0 if rr == "L" else 0.0)
+                    pc, pe, pmv = CLV.prop_clv(bk, m.get("close")) if bk.get("at") else (None, None, None)
                     prop_plays.append({"date": p["date"], "player": p["name"], "pick": f"{bk['side']} {L:g} {P.LABEL[stat]}", "odds": fmt_odds(bk["odds"]),
-                                       "edge": bk["edge"], "res": rr, "units": u, "actual": v})
+                                       "edge": bk["edge"], "res": rr, "units": u, "actual": v,
+                                       "clv": None if pc is None else r(pc, 1), "ev": pe, "move": pmv})
                     daily[p["date"]] = daily.get(p["date"], 0) + u
 
     def rec(rows):
@@ -325,7 +335,8 @@ def tracking(weeks, results):
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
             "clv": CLV.summary(clv_rows),
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
-            "calibration": cal, "line_move": move,
+            "prop_clv": CLV.prop_summary(prop_plays),
+            "calibration": cal, "line_move": move, "_gate_rows": gate_rows,
             "alt": {"n": len(alts), "hits": sum(a["hit"] for a in alts),
                     "model": r(np.mean([a["p"] for a in alts])) if alts else None,
                     "recent": sorted(alts, key=lambda x: x["date"], reverse=True)[:20]},
@@ -341,6 +352,7 @@ def main():
     today = now.astimezone(ET).date()
     OUT.mkdir(parents=True, exist_ok=True)
     HIST.mkdir(parents=True, exist_ok=True)
+    C.GAME_PAUSED = GT.paused_kinds(GT.load(OUT / "gates.json", GT.game_names("cfb")), "cfb")   # gates.py
 
     cal = D.calendar()
     season = C.SEASON or cal["season"]
@@ -399,7 +411,12 @@ def main():
         g["home_full"] = f"{g['home']['name']} {g['home']['nick']}"
         g["away_full"] = f"{g['away']['name']} {g['away']['nick']}"
         g["p4_home"], g["p4_away"] = g["home"]["id"] in p4, g["away"]["id"] in p4
-    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now)
+    close_games = set()                                  # games with a locked prop play: one near-kickoff props pull (CLV)
+    for f_ in sorted(HIST.glob("*.json"))[-2:]:
+        for p_ in load_json(f_, {}).get("players", []):
+            if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
+                close_games.add(p_["game_id"])
+    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
     with ThreadPoolExecutor(6) as ex:
         ids = sorted({g[s]["id"] for g in upcoming for s in ("home", "away") if g[s]["id"] in p4})
         rosters = dict(zip(ids, ex.map(D.roster, ids)))
@@ -552,6 +569,20 @@ def main():
         path = HIST / f"{wk}.json"
         old = load_json(path, {"week": wk, "games": [], "players": []})
         live = {g["game_id"] for g in v["games"]}
+        stamp = now.isoformat(timespec="minutes")
+        prev_pl = {(x["game_id"], x["pid"]): x for x in old["players"] if x["game_id"] in live}
+        for pl_ in v["players"]:          # prop plays (Oct 26 2026): locked at first flag, graded there; close = latest line
+            pv = prev_pl.get((pl_["game_id"], pl_["pid"])) or {}
+            for st_, m_ in pl_["m"].items():
+                pm_ = (pv.get("m") or {}).get(st_) or {}
+                bk_ = m_.get("book") or {}
+                fl_ = pm_.get("flag")
+                if fl_ is None and bk_.get("play"):
+                    fl_ = {x: bk_.get(x) for x in ("line", "side", "odds", "book_over", "edge", "ev", "pre")}
+                    fl_["at"] = stamp
+                if fl_ is not None:
+                    m_["flag"] = fl_
+                m_["close"] = CLV.close_snap(bk_, pm_.get("close"), stamp)
         keep = []
         for g in v["games"]:
             lite = {k: g[k] for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "teaser_legs", "win_home", "book",
@@ -571,6 +602,9 @@ def main():
     results = build_results(games_t, pg, ids)
     (OUT / "results.json").write_text(json.dumps(clean(results), separators=(",", ":")))
     track = tracking(wks, results)
+    gate_rows = track.pop("_gate_rows", {})
+    gst = GT.load(OUT / "gates.json", GT.game_names("cfb"))
+    track["gates"] = [GT.update(OUT / "gates.json", gst, k, sh, pl, today.isoformat()) for k, (sh, pl) in gate_rows.items()]
 
     # team table: Power 4 teams, ranked among every FBS team
     fbs = sorted({x for x in cur["pts"][2] if x != C.FCS_ID})

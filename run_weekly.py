@@ -302,6 +302,11 @@ def build_games(bundle, season, week, now):
             sharp_to["side"] = "Over" if over else "Under"
             sharp_to["odds"] = lm.get("over_odds" if over else "under_odds")
             play_total = sharp_to["side"] if sharp_to["play"] else None
+        paused = getattr(C, "GAME_PAUSED", set())          # paused bet types (gates.py): tracked as shadow picks
+        shadow_spread = play_spread if "spread" in paused else None
+        shadow_total = play_total if "total" in paused else None
+        play_spread = None if shadow_spread else play_spread
+        play_total = None if shadow_total else play_total
         rep = (ens["report_anchored"] if use_anchor else ens["report_independent"]) if ens is not None else None
         hist_s = stack.lookup_bucket(rep, "spread_buckets", e_sp)
         hist_t = stack.lookup_bucket(rep, "total_buckets", e_to)
@@ -344,6 +349,7 @@ def build_games(bundle, season, week, now):
             "edge_spread": fnum(e_sp), "edge_total": fnum(e_to),
             "lean_side": lean_side, "lean_total": lean_total,
             "play_spread": play_spread, "play_total": play_total, "sharp_spread": sharp_sp, "sharp_total": sharp_to,
+            "shadow_spread": shadow_spread, "shadow_total": shadow_total,
             "spread_odds": {"home": lm.get("spread_home_odds"), "away": lm.get("spread_away_odds")},
             "total_odds": {"over": lm.get("over_odds"), "under": lm.get("under_odds")}, "sharp_lines": shp or None,
             "cover_prob_home": fnum(sim.get("cover_home", np.nan) * 100, 0),
@@ -930,6 +936,15 @@ def lock_flags(old_games, games, now):
             flags["total"] = {"side": g["play_total"], "line": g["market_total"], "odds": _fmt_odds_s(st.get("odds")) or "-110",
                               "ev": st.get("ev"), "sharp": st.get("sharp"), "book_pct": st.get("book"), "book": g.get("line_book"), "at": ts}
         g["flags"] = flags
+        sflags = dict(p.get("shadow_flags") or {})          # paused bet types: locked and graded the same way
+        if g.get("shadow_spread") and "spread" not in sflags:
+            t, sp = g["shadow_spread"], g.get("sharp_spread") or {}
+            sflags["spread"] = {"side": t, "line": -g["market_spread"] if t == g["home"] else g["market_spread"],
+                                "odds": _fmt_odds_s(sp.get("odds")) or "-110", "at": ts}
+        if g.get("shadow_total") and "total" not in sflags:
+            st = g.get("sharp_total") or {}
+            sflags["total"] = {"side": g["shadow_total"], "line": g["market_total"], "odds": _fmt_odds_s(st.get("odds")) or "-110", "at": ts}
+        g["shadow_flags"] = sflags
         alt_flags = dict(p.get("alt_flags") or {})        # alt-line plays: locked the same way
         for x in (g.get("alt") or {}).get("plays", []):
             k_ = f"{x.get('period') or ''}{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
@@ -939,21 +954,28 @@ def lock_flags(old_games, games, now):
         g["alt_flags"] = alt_flags
 
 
-def grade_flag(kind, fl, g, hs, as_):
-    """(result, units, line CLV in points) for a locked play. CLV: the play's line vs the last saved line before kickoff."""
+CLV_PER_POINT = {"spread": 0.03, "total": 0.025}     # cover chance per point of line value, for ev at close
+
+
+def grade_flag(kind, fl, g, hs, as_, close=None):
+    """(result, units, line CLV in points, ev at close %) for a locked play.
+    close: the free nflverse closing line (spread_line: home margin, or total_line); falls back to the last
+    line this model saved before kickoff. ev at close: the play's return if the close (at -110 both ways)
+    is the truth, using CLV_PER_POINT per point of line value."""
     if kind == "spread":
         m = (hs - as_) if fl["side"] == g["home"] else (as_ - hs)
         v = m + fl["line"]
-        close = g.get("market_spread")
+        close = g.get("market_spread") if close is None else close
         clv = None if close is None else fl["line"] - (-close if fl["side"] == g["home"] else close)
     else:
         v = (hs + as_ - fl["line"]) * (1 if fl["side"] == "Over" else -1)
-        close = g.get("market_total")
+        close = g.get("market_total") if close is None else close
         clv = None if close is None else (close - fl["line"]) * (1 if fl["side"] == "Over" else -1)
     rr = "P" if v == 0 else ("W" if v > 0 else "L")
     o = float(str(fl.get("odds") or "-110").replace("+", ""))
     pay = o / 100 if o > 0 else 100 / -o
-    return rr, (pay if rr == "W" else (-1.0 if rr == "L" else 0.0)), clv
+    ev = None if clv is None else 100 * ((0.5 + CLV_PER_POINT[kind] * clv) * (1 + pay) - 1)
+    return rr, (pay if rr == "W" else (-1.0 if rr == "L" else 0.0)), clv, ev
 
 
 def merge_history(path: Path, games, players):
@@ -965,12 +987,21 @@ def merge_history(path: Path, games, players):
     return kept_g + games, kept_p + players
 
 
+def _num(x):
+    try:
+        v = float(x)
+    except (TypeError, ValueError):
+        return None
+    return v if np.isfinite(v) else None
+
+
 def grade(season, sch) -> dict:
     """Live record of the picks this model actually published."""
     res = sch[(sch["season"] == season) & sch["home_score"].notna()].set_index("game_id")
     su, ats, ats_lean, ou_lean, err_m, err_v = [], [], [], [], [], []
     ats_play, ou_play = [], []
     flag_rows = []
+    gate_rows = {GT.game_gate("nfl", k): ([], []) for k in GT.GAME_KINDS["nfl"]}   # (shadow, real) for gates.py
     pick_rows, week_rows = [], {}
     for f in sorted(HIST.glob(f"{season}_week*.json")):
         for g in json.loads(f.read_text()).get("games", []):
@@ -994,12 +1025,20 @@ def grade(season, sch) -> dict:
                     flags["spread"] = {"side": t, "line": -g["market_spread"] if t == g["home"] else g["market_spread"], "odds": "-110", "legacy": True}
                 if g.get("play_total") and g.get("market_total") is not None:
                     flags["total"] = {"side": g["play_total"], "line": g["market_total"], "odds": "-110", "legacy": True}
+            day = str(r.get("gameday") or "")[:10]
+            closes = {"spread": _num(r.get("spread_line")), "total": _num(r.get("total_line"))}   # free nflverse closing lines
             for kind, fl in flags.items():
-                rr, u, clv = grade_flag(kind, fl, g, float(r["home_score"]), float(r["away_score"]))
+                rr, u, clv, ev = grade_flag(kind, fl, g, float(r["home_score"]), float(r["away_score"]), closes.get(kind))
                 flag_rows.append({"kind": kind, "week": int(g.get("week") or 0), "game": f"{g['away']} at {g['home']}",
                                   "pick": f"{fl['side']} {fl['line']:+g}" if kind == "spread" else f"{fl['side']} {fl['line']:g}",
                                   "odds": fl.get("odds"), "res": rr, "units": round(u, 3), "clv_pts": None if clv is None else round(clv, 1),
-                                  "legacy": bool(fl.get("legacy"))})
+                                  "ev_close": None if ev is None else round(ev, 1), "legacy": bool(fl.get("legacy"))})
+                if kind in GT.GAME_KINDS["nfl"]:
+                    gate_rows[GT.game_gate("nfl", kind)][1].append({"date": day, "res": rr, "units": u, "clv": clv, "ev": ev})
+            for kind, fl in (g.get("shadow_flags") or {}).items():
+                rr, u, clv, ev = grade_flag(kind, fl, g, float(r["home_score"]), float(r["away_score"]), closes.get(kind))
+                if kind in GT.GAME_KINDS["nfl"]:
+                    gate_rows[GT.game_gate("nfl", kind)][0].append({"date": day, "res": rr, "units": u, "clv": clv, "ev": ev})
             if act != 0:
                 su.append(int((g["margin"] > 0) == (act > 0)))
             err_m.append(abs(g["margin"] - act))
@@ -1026,7 +1065,10 @@ def grade(season, sch) -> dict:
             "game_plays": {"list": sorted(flag_rows, key=lambda x: -x["week"])[:40],
                            "units": round(sum(x["units"] for x in flag_rows), 2),
                            "clv_pts": round(float(np.mean(cl)), 2) if cl else None,
-                           "beat_close": round(100 * float(np.mean([c > 0 for c in cl])), 1) if cl else None, "n_clv": len(cl)},
+                           "beat_close": round(100 * float(np.mean([c > 0 for c in cl])), 1) if cl else None, "n_clv": len(cl),
+                           "worse_close": round(100 * float(np.mean([c < 0 for c in cl])), 1) if cl else None,
+                           "close_source": "nflverse closing lines"},
+            "_gate_rows": gate_rows,
             "picks": P.summarize(pick_rows),
             "picks_by_week": {str(w): P.summarize(r) for w, r in sorted(week_rows.items())},
             "model_mae": fnum(np.mean(err_m)) if err_m else None,
@@ -1173,7 +1215,8 @@ def main():
     log.info(f"season {season}")
     bundle = D.load_all(season)
     # paused bet types (gates.py): a type that has earned its way back is a play again from this run on
-    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec"))
+    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec") + GT.game_names("nfl"))
+    C.GAME_PAUSED = GT.paused_kinds(gst, "nfl")
     if GT.active(gst, "nfl_prop_overs"):
         C.PROP_PLAY_SIDES = ["Over", "Under"]
     if GT.active(gst, "nfl_prop_rec") and "rec" not in C.PROP_PLAY_STATS:
@@ -1219,6 +1262,14 @@ def main():
 
     payload.update(run_tracking(bundle, games, props["props"], season, week, now))
     live = grade(season, bundle.schedules)
+    try:                                       # game bet type gates (gates.py), shown with the prop gates
+        gst = GT.load(OUT / "gates.json", GT.game_names("nfl"))
+        g_out = [GT.update(OUT / "gates.json", gst, k, sh, pl, now.date().isoformat())
+                 for k, (sh, pl) in live.pop("_gate_rows", {}).items()]
+        payload["gates"] = list(payload.get("gates") or []) + g_out
+    except Exception as e:  # noqa: BLE001
+        live.pop("_gate_rows", None)
+        log.warning(f"game gates skipped: {e}")
     pr = payload.get("prop_record") or {}
     ab = model_info.get("anchored_backtest")
     payload["plays"] = build_plays(all_games, props, model_info)

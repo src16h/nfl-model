@@ -47,6 +47,7 @@ ODDS_REGION = "us"
 ODDS_RESERVE = 15
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds"]   # in priority order
 ODDS_PROP_HOURS = 30             # pull a game's props once, inside this many hours of kickoff
+ODDS_PROP_CLOSE_HOURS = 3.0      # games with a locked prop play get one more pull this close to kickoff (closing line)
 
 
 def odds_key():

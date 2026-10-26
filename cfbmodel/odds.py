@@ -78,8 +78,10 @@ def _load(p, default):
         return default
 
 
-def run(games, state_path, cache_path, now):
-    """Returns ({game_id: {player name key: {stat: {line, over, under, book}}}}, status)."""
+def run(games, state_path, cache_path, now, close_games=()):
+    """Returns ({game_id: {player name key: {stat: {line, over, under, book}}}}, status).
+    close_games: games with a locked prop play; their props get one more pull near kickoff, so the play can be
+    checked against the closing line (clv.prop_clv)."""
     state, cache = _load(state_path, {}), _load(cache_path, {})
     live = {str(g["game_id"]) for g in games}
     cache = {k: v for k, v in cache.items() if k.split("|")[0] in live and v.get("rows")}   # drop played games and empty pulls
@@ -92,7 +94,19 @@ def run(games, state_path, cache_path, now):
     cl = Client(key)
     try:
         soon = [g for g in games if 0 < (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= C.ODDS_PROP_HOURS]
-        need = [g for g in soon if any(f"{g['game_id']}|{m}" not in cache for m in C.ODDS_PROP_MARKETS)]
+        closeset = {str(x) for x in close_games}
+
+        def due(g, m):                                  # never pulled, or one closing pull for a locked play
+            ent = cache.get(f"{g['game_id']}|{m}")
+            if ent is None:
+                return True
+            if str(g["game_id"]) not in closeset or ent.get("closed") or not ent.get("at"):
+                return False
+            to_ko = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+            age = (now - datetime.fromisoformat(ent["at"])).total_seconds() / 3600
+            return 0 < to_ko <= C.ODDS_PROP_CLOSE_HOURS and age >= 6
+
+        need = [g for g in soon if any(due(g, m) for m in C.ODDS_PROP_MARKETS)]
         if need:
             events = cl.get(f"/v4/sports/{SPORT}/events")                       # free call: event ids
             by = {}
@@ -110,7 +124,8 @@ def run(games, state_path, cache_path, now):
             tried = 0
             for g in need:
                 eid = by.get((norm_name(g["home_full"]), norm_name(g["away_full"])))
-                mk = [m for m in C.ODDS_PROP_MARKETS if f"{g['game_id']}|{m}" not in cache]
+                mk = [m for m in C.ODDS_PROP_MARKETS if due(g, m)]
+                closing = {m for m in mk if f"{g['game_id']}|{m}" in cache}
                 if not eid or allowance < len(mk):
                     continue
                 before = cl.spent
@@ -131,7 +146,7 @@ def run(games, state_path, cache_path, now):
                             nm = norm_name(o.get("description", ""))
                             rr = rows.setdefault(nm, {"line": 0.5 if m == "player_anytime_td" else o.get("point")})
                             rr["over" if o["name"] in ("Over", "Yes") else "under"] = o["price"]
-                        cache[f"{g['game_id']}|{m}"] = {"rows": rows, "book": b.get("title"), "at": now.isoformat()}
+                        cache[f"{g['game_id']}|{m}"] = {"rows": rows, "book": b.get("title"), "at": now.isoformat(), "closed": m in closing}
                         break
                 used = cl.spent - before
                 allowance -= used

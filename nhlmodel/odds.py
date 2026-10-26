@@ -124,8 +124,10 @@ def _load(p, default):
         return default
 
 
-def run(games, state_path, cache_path, now):
-    """Fills game['book'] with lines and returns {(game_id): {pid-name-key: {stat: {...}}}} props."""
+def run(games, state_path, cache_path, now, close_games=()):
+    """Fills game['book'] with lines and returns {(game_id): {pid-name-key: {stat: {...}}}} props.
+    close_games: games with a locked prop play; their props get one more pull near puck drop, so the
+    play can be checked against the closing line (clv.prop_clv)."""
     state = _load(state_path, {})
     cache = _load(cache_path, {})
     today = now.astimezone(timezone.utc).strftime("%Y-%m-%d")
@@ -184,7 +186,8 @@ def run(games, state_path, cache_path, now):
             for mkt in C.ODDS_PROP_MARKETS:
                 for g in sorted(todo, key=lambda x: x["start"]):
                     ck = f"{g['game_id']}|{mkt}"
-                    if ck in cache or allowance < 1:
+                    closing = ck in cache and _close_due(cache[ck], g, close_games, now)
+                    if (ck in cache and not closing) or allowance < 1:
                         continue
                     ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
                                 markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
@@ -199,9 +202,11 @@ def run(games, state_path, cache_path, now):
                                 r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
                                 r["over" if o["name"] == "Over" else "under"] = o["price"]
                         used = used or bks[k].get("title")
-                    cache[ck] = {"day": today, "rows": rows, "book": used}
+                    cache[ck] = {"day": today, "rows": rows, "book": used, "at": now.isoformat(), "closed": closing}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
+                    if closing:
+                        status["close_pulls"] = status.get("close_pulls", 0) + 1
             # alt lines and team totals: whatever today's allowance has left, soonest games first (altlines.py)
             alt_todo = [g for g in todo if 0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
                         <= C.ALT_HOURS]
@@ -271,6 +276,18 @@ def _alt_rows(ev, b, mkt):
                 rows.append({"market": "team_total", "team": "home" if o["description"] == hn else "away", "side": o["name"].lower(),
                              "line": float(pt), "odds": pr})
     return rows
+
+
+def _close_due(ent, g, close_games, now):
+    """One near-puck-drop pull for a game with a locked prop play, if its props are an hour old or more."""
+    if not getattr(C, "PROP_CLOSE_PULL", True) or str(g["game_id"]) not in {str(x) for x in close_games} or ent.get("closed"):
+        return False
+    try:
+        to_start = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+        age = (now - datetime.fromisoformat(ent["at"])).total_seconds() / 3600 if ent.get("at") else 99
+    except (ValueError, KeyError):
+        return False
+    return 0 < to_start <= C.ODDS_PREKO_HOURS + 0.5 and age >= 1.0
 
 
 def alt_lines(cache):

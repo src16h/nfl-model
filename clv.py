@@ -160,3 +160,48 @@ def moving(sport, kind, pk, g, snap):
         else:
             d += (pk["line"] - snap["line"]) * per * (1 if pk.get("side") == "Over" else -1)   # Over line went up since: worse price now
     return round(100 * d, 1)
+
+
+# ---------------------------------------------------------------------------------------------------
+# Player props (Oct 26 2026): a prop play is locked at the line and price it was first flagged at
+# ("flag"), and every later pre-game run saves the book's latest line for that player ("close"; the
+# runners re-pull props once near kickoff for games with a locked play). Both carry book_over, the
+# book's no-vig chance of the Over in %.
+# ---------------------------------------------------------------------------------------------------
+def close_snap(book, prev, ts):
+    """Latest pre-game line for a prop, or the previous one when the book has none this run."""
+    if book and book.get("line") is not None and book.get("book_over") is not None:
+        return {"line": book["line"], "book_over": book["book_over"], "at": ts}
+    return prev
+
+
+def prop_clv(flag, close):
+    """(clv in points of no-vig chance, ev at close %, line move) for a locked prop play.
+    Same line: compares the no-vig chance of our side at close vs when flagged. Line moved: clv and ev
+    are None and move is +1 (toward us: Over line went up / Under line went down) or -1."""
+    if not flag or not close or flag.get("book_over") is None or close.get("book_over") is None:
+        return None, None, None
+    try:
+        l0, l1 = float(flag["line"]), float(close["line"])
+    except (TypeError, ValueError, KeyError):
+        return None, None, None
+    over = flag.get("side") == "Over"
+    if abs(l1 - l0) > 1e-9:
+        return None, None, (1 if (l1 > l0) == over else -1)
+    p0 = flag["book_over"] / 100 if over else 1 - flag["book_over"] / 100
+    p1 = close["book_over"] / 100 if over else 1 - close["book_over"] / 100
+    o = price(flag.get("odds"))
+    ev = None if o is None else 100 * (p1 * (1 + BR.payout(o)) - 1)
+    return 100 * (p1 - p0), ev, 0
+
+
+def prop_summary(rows):
+    """rows: dicts with clv, ev, move. What the closing line says about the prop plays."""
+    same = [x for x in rows if x.get("move") == 0]
+    moved = [x for x in rows if x.get("move") in (1, -1)]
+    ev = [x["ev"] for x in same if x.get("ev") is not None]
+    return {"n": len(same) + len(moved), "same_line": len(same),
+            "avg": round(sum(x["clv"] for x in same) / len(same), 2) if same else None,
+            "beat": sum(1 for x in same if x["clv"] > 0.05) + sum(1 for x in moved if x["move"] > 0),
+            "worse": sum(1 for x in same if x["clv"] < -0.05) + sum(1 for x in moved if x["move"] < 0),
+            "ev_close": round(sum(ev) / len(ev), 2) if ev else None}

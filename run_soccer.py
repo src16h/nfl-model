@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 import betrules as BR  # noqa: E402
 import altlines as AL  # noqa: E402
+import gates as GT  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("soccermodel")
@@ -252,6 +253,7 @@ def limit_plays(games):
     """One play per match (the best by Pinnacle value), then at most DAILY_CAP per league per day."""
     cand = []
     for g in games:
+        GT.hold_back(g["picks"], getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
         ps = [(k, p) for k, p in g["picks"].items() if p.get("play")]
         for k, p in ps:
             p["play"] = False
@@ -340,6 +342,7 @@ def close_prob(g, k, fl):
 
 
 def tracking(days, results, boxes):
+    gate_rows = {GT.game_gate("soccer", k): ([], []) for k in GT.GAME_KINDS["soccer"]}   # (shadow, real) for gates.py
     picks_all = {k: [] for k in ("1x2", "dnb", "ah", "total", "btts")}
     plays, daily, calib = [], {}, {"goal": [], "sot1": [], "sot2": []}
     alt_plays, parlays = [], []
@@ -383,6 +386,17 @@ def tracking(days, results, boxes):
                               "odds": fl.get("odds"), "edge": fl.get("ev", fl.get("edge")), "res": rr, "units": u or 0.0,
                               "score": f"{hg}-{ag}", "clv": clv, "clv_sharp": sharp_close, "legacy": bool(fl.get("legacy"))})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
+                if k in GT.GAME_KINDS["soccer"]:     # soccer's clv is already expected return at the closing fair price
+                    gate_rows[GT.game_gate("soccer", k)][1].append({"date": dt, "res": rr, "units": u or 0.0, "ev": clv})
+            for k, fl in (g.get("shadow_flags") or {}).items():     # paused bet types: graded, not counted as plays
+                if not fl.get("odds") or k not in GT.GAME_KINDS["soccer"]:
+                    continue
+                rr, u = grade(k, fl, g, hg, ag)
+                if rr is None:
+                    continue
+                pc, _ = close_prob(g, k, fl)
+                gate_rows[GT.game_gate("soccer", k)][0].append(
+                    {"date": dt, "res": rr, "units": u or 0.0, "ev": None if pc is None else 100 * (pc * dec(fl["odds"]) - 1)})
         for p in day.get("players", []):
             bx = boxes.get(str(p["game_id"]))
             if not bx:
@@ -429,7 +443,8 @@ def tracking(days, results, boxes):
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:80],
             "by_type": {k: rec2([x for x in plays if x["kind"] == k]) for k in ("1x2", "ah", "total")},
             "by_league": by_league, "series": series, "calibration": cal, "clv": clv,
-            "rule": {**rec2(rule), "n": len(rule)}, "provisional": provisional, "alt_plays": alt_rec, "alt_parlays": par_rec}
+            "rule": {**rec2(rule), "n": len(rule)}, "provisional": provisional, "alt_plays": alt_rec, "alt_parlays": par_rec,
+            "_gate_rows": gate_rows}
 
 
 # ---------------------------------------------------------------------
@@ -440,6 +455,7 @@ def main():
     today = now.astimezone(ET).date()
     season = C.SEASON or D.season_of(today)
     OUT.mkdir(parents=True, exist_ok=True)
+    C.GAME_PAUSED = GT.paused_kinds(GT.load(OUT / "gates.json", GT.game_names("soccer")), "soccer")   # gates.py
     HIST.mkdir(parents=True, exist_ok=True)
     bt = load_json(D.CACHE / "backtest.json", {})
 
@@ -585,6 +601,8 @@ def main():
                     flags[k] = {x_: pk.get(x_) for x_ in ("side", "who", "line", "odds", "model", "book", "sharp", "edge", "ev")}
                     flags[k]["at"] = stamp
             x["flags"] = flags
+            x["shadow_flags"] = GT.shadow_flags(x["picks"], prev.get("shadow_flags"), stamp,
+                                                ("side", "who", "line", "odds", "model", "book", "sharp", "edge", "ev"))
             alt_flags = dict(prev.get("alt_flags") or {})     # more-markets plays: locked at first flag too
             live_g = next((g for g in v["games"] if g["game_id"] == x["game_id"]), {})
             for a_ in (live_g.get("alt") or {}).get("plays", []):
@@ -631,6 +649,9 @@ def main():
                     results[gid]["p"] = {str(p["pid"]): [p["goals"], p["sot"]] for p in bx["players"]}   # grades "My bets" props
     (OUT / "results.json").write_text(json.dumps(results, separators=(",", ":")))
     track = tracking(days, results, boxes)
+    gate_rows = track.pop("_gate_rows", {})
+    gst = GT.load(OUT / "gates.json", GT.game_names("soccer"))
+    track["gates"] = [GT.update(OUT / "gates.json", gst, k, sh, pl, today.isoformat()) for k, (sh, pl) in gate_rows.items()]
 
     # recently finished matches, for the results strip
     recent = sorted([{"league": f["league"], "home": f["home"], "away": f["away"], "hg": f["hg"], "ag": f["ag"], "start": f["start"],
