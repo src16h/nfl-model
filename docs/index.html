@@ -1179,12 +1179,12 @@ function renderHome() {
 
   // alt-line parlays
   const mixes = up.filter(g => g.alt_mix);
-  if (mixes.length) h += `<div class="panel span-12"><h3>Alt parlays with a team leg <button data-go="parlays">All parlays</button></h3><p class="pmuted">Same target (fair +100 to +125), but every ticket carries an alt spread, alt total or team total priced from Pinnacle's lines.</p>
-    <div class="rail">${mixes.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_mix.fair)}</span></div>
+  if (mixes.length) h += `<div class="panel span-12"><h3>Alt parlays with a team leg <button data-go="parlays">All parlays</button></h3><p class="pmuted">Same rules (fair -120 to +125), but every ticket carries an alt spread, alt total or team total priced from Pinnacle's lines.</p>
+    <div class="rail">${mixes.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_mix.bet_at || g.alt_mix.fair)}</span></div>
       ${g.alt_mix.legs.map(Lg => `<div class="l">${altLegTxt(Lg)}</div>`).join("")}<div class="l">${n(g.alt_mix.p)}% to hit</div></div>`).join("")}</div></div>`;
   const alts = up.filter(g => g.alt_parlay);
-  if (alts.length) h += `<div class="panel span-12"><h3>Alt-line parlays <button data-go="parlays">Open builder</button></h3><p class="pmuted">One per game at fair odds +100 to +125, with alt lines no further than books go below the main line. Tap one to check your book's price.</p>
-    <div class="rail">${alts.map(g => `<div class="alt tile" data-altgo="${esc(g.game_id)}"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.fair)}</span></div>
+  if (alts.length) h += `<div class="panel span-12"><h3>Alt-line parlays <button data-go="parlays">Open builder</button></h3><p class="pmuted">One per game, 3 legs (4 if needed) at fair odds -120 to +125. The price shown is the bet-at price: take it only at that or better.</p>
+    <div class="rail">${alts.map(g => `<div class="alt tile" data-altgo="${esc(g.game_id)}"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.bet_at || g.alt_parlay.fair)}</span></div>
       ${g.alt_parlay.legs.map(Lg => `<div class="l"><b>${esc(Lg.name)}</b> ${esc(Lg.label)}</div>`).join("")}
       <div class="l">${n(g.alt_parlay.p)}% to hit</div></div>`).join("")}</div></div>`;
 
@@ -1878,25 +1878,25 @@ function bindTeasers() {
 function mixCardsHTML() {
   const games = (D.games || []).filter(g => g.state === "upcoming" && g.alt_mix);
   return `<div class="sec-head" style="margin-top:26px"><h2>Alt parlays with a team leg</h2><span class="aside">Alt spreads, totals, team totals</span></div>
-    <p class="sub">Same target as the model's alt-line parlays (fair +100 to +125), but every ticket includes at least one team leg. Team legs are priced from <b>Pinnacle's spread and total</b>, converted to the alt line from the same simulated games (key numbers kept), and the model must rate each one at least as high. Up to 2 team legs per ticket, one per market. Tracked separately.</p>
+    <p class="sub">Same rules as the model's alt-line parlays (fair -120 to +125), but every ticket includes at least one team leg. Team legs are priced from <b>Pinnacle's spread and total</b>, converted to the alt line from the same simulated games (key numbers kept), and the model must rate each one at least as high. Up to 2 team legs per ticket, one per market. Tracked separately.</p>
     ${games.length ? `<div class="tickets">${games.map(g => { const a = g.alt_mix;
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake">${altLegTxt(L)} <span class="dim">${n(L.p, 0)}%${L.kind === "team" ? ` Pinnacle, ${n(L.p_model, 0)}% model` : ""}</span></div>`).join("")}</div>
-        <div class="t-meta">Chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated. <b>Only bet it if your book pays more than ${esc(a.fair)}.</b></div></div>
-        <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`
+        <div class="t-meta">Chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.bet_at ? ` Fair odds ${esc(a.fair)}; the gap covers the model being a little off.` : ""}</div></div>
+        <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`
       : `<div class="empty">No team-leg parlays yet. They need Pinnacle's spread and total for the game.</div>`}`;
 }
 function altCardsHTML(games) {
-  return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, fair odds +100 to +125</span></div>
-    <p class="sub">The model builds one parlay per game from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Each leg stays within a normal alt range of the book's main line (25 yards for receiving and rushing, 50 for passing, 2 catches), or the model's middle number when the book hasn't posted yet. Odds shown are fair odds. Your book will usually price these shorter, so tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
+  return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, 3 legs, fair odds -120 to +125</span></div>
+    <p class="sub">The model builds one parlay per game, 3 legs (4 if needed), from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Only leg types that have held up in graded weeks are used (see the Record tab), never Questionable players, and only players with a posted book line, staying within a normal alt range of it (25 yards for receiving, 2 catches). <b>Bet it only at the bet-at price or better</b>: it asks for about 7% more than fair, room for the model being a little off. Tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
     <div class="tickets">${games.map(g => { const a = g.alt_parlay;
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}${L.main_src === "model" ? " (model)" : ""}` : ""}</span></div>`).join("")}</div>
-        <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated. <b>Only bet it if your book pays more than ${esc(a.fair)}.</b></div>
+        <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.bet_at ? ` Fair odds ${esc(a.fair)}; the gap covers the model being a little off.` : ""}</div>
         <div class="t-actions"><button class="logbtn" data-altgo="${esc(g.game_id)}">Check my book's price</button></div></div>
-        <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>`;
+        <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`;
 }
 function bindParlays() {
   bindTeasers();
@@ -2085,10 +2085,14 @@ function trackingHTML() {
       ${Object.entries(AP.by_market || {}).filter(([k, r]) => r.w + r.l).map(([k, r]) => `<div class="st"><strong>${r.w}–${r.l}</strong><span>${esc(ALT_MK[k] || k)}, ${units(r.units)}</span></div>`).join("")}</div>`
     : `<div class="empty">No alt plays graded yet. Started Oct 21.</div>`}
     <p class="sub" style="margin-top:8px">Team-leg alt parlays: ${AX.n ? `${AX.hits}–${AX.n - AX.hits}, hit ${n(100 * AX.hits / AX.n)}% when the model said ${n(AX.model)}%.` : "nothing graded yet."}</p>`;
-  const A = T.alt_parlays;
+  const A = T.alt_parlays, V2 = (A?.by_v || {})["2"];
   if (A && A.n) h += `<h3>Model alt-line parlays</h3><div class="strip">
       <div class="st"><strong>${A.hits}–${A.n - A.hits}</strong><span>Parlays hit, ${n(A.actual)}% (model said ${n(A.model)}%)</span></div>
+      <div class="st"><strong>${V2 && V2.n ? `${V2.hits}–${V2.n - V2.hits}` : "–"}</strong><span>${V2 && V2.n ? `New build since Oct 26: ${n(V2.actual)}% (model said ${n(V2.model)}%)` : "New build (Oct 26): nothing graded yet"}</span></div>
       <div class="st"><strong>${n(A.legs_actual)}%</strong><span>Single legs hit (model said ${n(A.legs_model)}%, ${A.legs_n} legs)</span></div></div>
+      ${(T.alt_leg_types || []).length ? `<p class="sub" style="margin-top:10px">Every eligible alt line is graded each week, picked or not. A leg type is left out of tickets while it hits more than 3 points below the model over the last 4 weeks (80+ lines), and comes back on its own once it holds up. Questionable players and players without a posted book line are never used.</p>
+      <div class="tablewrap"><table><thead><tr><th>Leg type</th><th>Lines graded</th><th>Model said</th><th>Hit</th><th>In tickets</th></tr></thead><tbody>${T.alt_leg_types.map(x =>
+        `<tr><td>${esc(x.label)}</td><td>${x.n}</td><td>${n(x.model)}%</td><td class="${x.actual < x.model - 3 ? "down" : ""}">${n(x.actual)}%</td><td>${x.on ? `<span class="tag">Yes</span>` : `<span class="vt">Left out</span>`}</td></tr>`).join("")}</tbody></table></div>` : ""}
       <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Week</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${(A.recent || []).map(r =>
         `<tr><td>${r.week}</td><td>${esc(r.game)}</td><td>${r.legs_hit} of ${r.legs}</td><td><span class="res ${r.hit ? "W" : "L"}">${r.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
   const TT = T.teasers;

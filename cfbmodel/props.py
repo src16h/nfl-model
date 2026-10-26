@@ -271,7 +271,25 @@ def alt_parlay(arrs, info, book, need_teams=2):
     if not best:
         return None
     _, legs, pj, pi = best
-    return {"p": r(100 * pj), "pi": r(100 * pi), "fair": f"+{round(100 * (1 - pj) / pj)}",
+    raw = pj
+    # whole-ticket correction (Oct 26 2026, same as NFL and NHL): toward the tickets' own graded record, fading in
+    try:
+        import json
+        from pathlib import Path
+        tr = (json.loads((Path(__file__).resolve().parents[1] / "docs" / "cfb" / "data" / "latest.json").read_text())
+              .get("tracking") or {}).get("alt") or {}
+        n_, m_ = tr.get("n") or 0, (tr.get("model") or 0) / 100
+        a_ = (tr.get("hits") or 0) / n_ if n_ else 0
+        if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
+            shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K)
+            pj = float(1 / (1 + np.exp(-(np.log(pj / (1 - pj)) + shift))))
+    except Exception:  # noqa: BLE001
+        pass
+    dec = (1 + C.ALT_BET_CUSHION) / pj
+    fair = (1 - pj) / pj * 100
+    return {"p": r(100 * pj), "p_sim": r(100 * raw), "pi": r(100 * pi),
+            "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj))),
+            "bet_at": f"+{round(100 * (dec - 1))}" if dec >= 2 else str(round(-100 / (dec - 1))), "cushion": C.ALT_BET_CUSHION,
             "legs": [{"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
                       "label": f"{c['k']}+ {LABEL[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
                      for c in legs]}

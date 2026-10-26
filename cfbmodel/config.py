@@ -33,6 +33,8 @@ MIN_SHOW = {"pass_yds": 60.0, "rush_yds": 12.0, "rec_yds": 12.0}      # projecti
 # alt-line parlays
 ALT_PARLAY_ODDS = (100, 125)
 ALT_PARLAY_LEGS = 4
+ALT_TICKET_K = 30                # ticket record counts half after this many graded tickets
+ALT_BET_CUSHION = 0.07           # 'bet at': the book must pay enough for +7% at the model's chance
 ALT_LEG_RANGE = (0.66, 0.90)
 ALT_STATS = {"pass_yds": 0.82, "rush_yds": 0.70, "rec_yds": 0.70, "rec": None}   # alt line = this share of the main line (rec: 1 lower)
 

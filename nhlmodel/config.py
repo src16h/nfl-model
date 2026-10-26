@@ -56,6 +56,8 @@ ALT_TARGET_P = (0.444, 0.50)     # joint chance = fair odds +100 to +125, same a
 ALT_SIZES = (4, 3)               # try 4 legs first, then 3
 ALT_BEAM = 400                   # partial tickets kept at each step of the search
 ALT_CAL_K = 300                  # leg calibration counts half after this many graded player-games per leg type
+ALT_TICKET_K = 30                # ticket record counts half after this many graded tickets (props.alt_parlay)
+ALT_BET_CUSHION = 0.07           # "bet at": the book must pay enough for +7% at the model's chance (estimation error)
 ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 0}   # how far below the main line a leg may go
 ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only the posted main line, never a model line
 

@@ -240,7 +240,7 @@ SGP_DRAWS = 1000             # simulated games published per matchup for the par
 # ------------------------------------------------------------
 # v11: model-built alt-line parlay for every game
 # ------------------------------------------------------------
-ALT_PARLAY_ODDS = (100, 125)       # target fair odds range for the whole parlay
+ALT_PARLAY_ODDS = (-120, 125)      # target fair odds range for the whole parlay (Oct 26 2026: was +100 to +125, with 4 legs)
 # Alt lines and team totals (altlines.py, Oct 21 2026): Hard Rock's alt prices, Pinnacle's ride along in the same call.
 # 1 credit per market per game, pulled once per game on the last run before kickoff (after inactives), team totals
 # for every game first, then alt spreads, then alt totals, and never below ALT_MIN_LEFT credits (props come first).
@@ -256,7 +256,14 @@ ALT_LEG_RANGE_TEAM = (0.70, 0.92)
 ALT_PLAY_CAP = 8                   # alt-line plays per kickoff date, best value first
 ALT_PER_GAME = {"full": 1, "h1": 1}  # per game: one full-game alt line or team total, one 1st-half bet
 ALT_MAX_TEAM_LEGS = 2
-ALT_PARLAY_LEGS = 4                # preferred number of legs (falls back to 3 or 5)
+ALT_PARLAY_LEGS = 3                # preferred number of legs (Oct 26 2026: was 4; falls back to ALT_PARLAY_SIZES)
+ALT_PARLAY_SIZES = (3, 4)          # tried in this order
+ALT_TYPE_WEEKS = 4                 # leg-type gate (altcal.type_table): recent graded weeks it looks at
+ALT_TYPE_MIN_N = 80                # alt lines graded before a type can be shut off
+ALT_TYPE_MAX_MISS = 3.0            # shut off a leg type hitting more than this many points below the model
+ALT_NO_QUESTIONABLE = True         # Questionable players: 56% real vs 80% model on alt legs, weeks 5-7
+ALT_BOOK_MAIN_ONLY = True          # legs only for players with a posted book line (model-only lines: 65% vs 77%)
+ALT_BET_CUSHION = 0.07             # "bet at": the book must pay enough for +7% at the model's chance (estimation error)
 ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines), after calibration
 ALT_CAL_K = 60                     # leg calibration counts half after this many graded player-games per leg type
 ALT_MAX_YARD_LEGS = 3              # at most 3 yardage legs (pass/rush/rec yds); catches fill the rest

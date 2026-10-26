@@ -770,12 +770,12 @@ def model_tracking(hist_dir, season, results, snaps=None):
                     if hh is not None:
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
                 if None not in hits:
-                    alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
+                    alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), ap.get("v", 1)))
             amx = hg.get("alt_mix")                               # team-leg alt parlays (since Oct 21 2026)
             if amx and amx.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in amx["legs"]]
                 if None not in hits:
-                    mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits)))
+                    mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), amx.get("v", 1)))
             for fl in (hg.get("alt_flags") or {}).values():     # alt-line plays, graded at the locked price
                 import altlines as AL
                 if fl.get("period") == "h1":
@@ -866,9 +866,18 @@ def model_tracking(hist_dir, season, results, snaps=None):
                    "legs_actual": fnum(100 * np.mean([x[3] for x in alt_legs]), 1) if alt_legs else None,
                    "weeks": {str(w): {"n": sum(1 for a in alts if a[0] == w), "hits": int(sum(a[2] for a in alts if a[0] == w))}
                              for w in sorted({a[0] for a in alts})},
+                   # by build version: v1 = before Oct 26 2026, v2 = leg-type gate, no Questionable, 3 legs
+                   "by_v": {str(v): {"n": sum(1 for a in alts if a[7] == v), "hits": int(sum(a[2] for a in alts if a[7] == v)),
+                                     "model": fnum(100 * np.mean([a[1] for a in alts if a[7] == v]), 1),
+                                     "actual": fnum(100 * np.mean([a[2] for a in alts if a[7] == v]), 1)}
+                            for v in sorted({a[7] for a in alts})},
                    "recent": [{"week": a[0], "game": f"{a[3]} at {a[4]}", "hit": bool(a[2]), "legs_hit": int(a[5]), "legs": int(a[6])}
                               for a in sorted(alts, key=lambda a: -a[0])[:16]]}
     mix_out = {"n": len(mixes), "hits": int(sum(m[2] for m in mixes)), "model": fnum(100 * np.mean([m[1] for m in mixes]), 1) if mixes else None,
+               "by_v": {str(v): {"n": sum(1 for m in mixes if m[7] == v), "hits": int(sum(m[2] for m in mixes if m[7] == v)),
+                                 "model": fnum(100 * np.mean([m[1] for m in mixes if m[7] == v]), 1),
+                                 "actual": fnum(100 * np.mean([m[2] for m in mixes if m[7] == v]), 1)}
+                        for v in sorted({m[7] for m in mixes})},
                "recent": [{"week": m[0], "game": f"{m[3]} at {m[4]}", "hit": bool(m[2]), "legs_hit": int(m[5]), "legs": int(m[6])}
                           for m in sorted(mixes, key=lambda m: -m[0])[:16]]}
 

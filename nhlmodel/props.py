@@ -11,6 +11,8 @@ real ones do, which is what the alt-line parlays use.
 import itertools
 import logging
 
+import json
+
 import numpy as np
 import pandas as pd
 
@@ -264,6 +266,18 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
         return None
     legs, pj = best
     pi = float(np.prod([c["p"] for c in legs]))
+    raw = pj
+    # whole-ticket correction (Oct 26 2026, same as the NFL): the chance moves toward this ticket type's own graded
+    # record on the log-odds scale, fading in with the sample. Player tickets have hit 54% when the model said 48%.
+    try:
+        tr = (json.loads((data / "latest.json").read_text()).get("tracking") or {}).get("alt_mix" if need_team else "alt") or {}
+        n_, m_ = tr.get("n") or 0, (tr.get("model") or 0) / 100
+        a_ = (tr.get("hits") or 0) / n_ if n_ else 0
+        if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
+            shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K)
+            pj = float(1 / (1 + np.exp(-(np.log(pj / (1 - pj)) + shift))))
+    except Exception:  # noqa: BLE001
+        pass
     label = {"sog": "shots", "points": "points", "saves": "saves"}
     def leg(c):
         if c.get("kind") == "team":
@@ -271,5 +285,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
                     "label": c["label"], "p": r(100 * c["p"]), "p_model": r(100 * c["p_model"]), "main_src": "pinnacle"}
         return {"pid": c["pid"], "name": c["name"], "team": c["team"], "stat": c["stat"], "line": c["line"],
                 "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
-    return {"v": 5 if need_team else 3, "p": r(100 * pj), "pi": r(100 * pi), "fair": american(pj),
-            "legs": [leg(c) for c in legs]}
+    dec = (1 + C.ALT_BET_CUSHION) / pj
+    bet = f"+{round(100 * (dec - 1))}" if dec >= 2 else str(round(-100 / (dec - 1)))
+    return {"v": 5 if need_team else 3, "p": r(100 * pj), "p_sim": r(100 * raw), "pi": r(100 * pi), "fair": american(pj),
+            "bet_at": bet, "cushion": C.ALT_BET_CUSHION, "legs": [leg(c) for c in legs]}

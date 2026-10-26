@@ -98,3 +98,81 @@ def adjust(cal, pos, stat, p):
     a, b, w, _ = c
     x = float(_logit(p))
     return float(1 / (1 + np.exp(-((1 - w) * x + w * (a + b * x)))))
+
+
+# ---------------------------------------------------------------------------------------------------
+# Leg-type gate (Oct 26 2026). Checked on 870 alt-down lines in weeks 5-7 (calibration fit on earlier
+# weeks only): catches and WR receiving yards hit about as often as the calibrated model said, while
+# RB rushing (63% vs 81%), QB passing (72% vs 79%) and TE receiving yards (70% vs 78%) kept missing,
+# every single week, and no ranking could pick out the safe ones. A replay of weeks 5-7: tickets built
+# only from the types that hold up hit 60% vs 31% for the old mix.
+#
+# type_table grades every eligible alt-down line each week (the book's main line minus 1 to N steps,
+# calibrated chance 70-92%), whether or not it made a ticket, so an excluded type keeps a record and
+# comes back on its own once it holds up again.
+# ---------------------------------------------------------------------------------------------------
+_TT = {}
+
+
+def type_table(hist_dir, results_path, props_log_path, season, cal):
+    """{group: {"n", "model", "actual", "weeks": {wk: [n, model, actual]}}} over recent graded weeks."""
+    key = (str(hist_dir), season)
+    if key in _TT:
+        return _TT[key]
+    from .tracker import _p_over
+    out = {}
+    try:
+        res = json.loads(Path(results_path).read_text())
+        cols = res["cols"]
+        mains = {}
+        try:
+            for v in json.loads(Path(props_log_path).read_text()).get("props", {}).values():
+                if v.get("line") not in (None, ""):
+                    mains[(v.get("game_id"), v.get("pid"), v.get("stat"))] = float(v["line"])
+        except Exception:  # noqa: BLE001
+            pass
+        files = sorted(Path(hist_dir).glob(f"{season}_week*.json"))[-C.ALT_TYPE_WEEKS:]
+        rows = {}
+        for f in files:
+            wk = int(f.stem.split("week")[-1])
+            for p in json.loads(f.read_text()).get("players", []):
+                mk, pl = p.get("markets"), (res.get("players") or {}).get(p.get("game_id"))
+                if not mk or not pl:
+                    continue
+                if p.get("pid") in pl:
+                    act = dict(zip(cols, pl[p["pid"]]))
+                elif (p.get("game_id"), norm_name(p.get("name"))) in PLAYED:
+                    act = {c: 0.0 for c in cols}
+                else:
+                    continue
+                for st in STATS.get(p.get("pos"), []):
+                    m = mk.get(st)
+                    bm = mains.get((p.get("game_id"), p.get("pid"), st))
+                    if not m or bm is None or bm < C.ALT_MIN_MAIN[st]:
+                        continue
+                    main = float(np.floor(bm) + 0.5)
+                    for k in range(1, int(C.ALT_MAX_DROP[st] // C.ALT_STEP[st]) + 1):
+                        L = main - k * C.ALT_STEP[st]
+                        if L < C.ALT_MIN_LINE[st]:
+                            break
+                        pc = adjust(cal, p["pos"], st, _p_over(m, L))
+                        if C.ALT_LEG_RANGE[0] <= pc <= C.ALT_LEG_RANGE[1]:
+                            rows.setdefault(group(p["pos"], st), []).append((wk, pc, float(act[st] > L)))
+        for g, v in rows.items():
+            v = np.asarray(v, float)
+            weeks = {int(w): [int((v[:, 0] == w).sum()), round(100 * v[v[:, 0] == w, 1].mean(), 1), round(100 * v[v[:, 0] == w, 2].mean(), 1)]
+                     for w in sorted(set(v[:, 0]))}
+            out[g] = {"n": len(v), "model": round(100 * v[:, 1].mean(), 1), "actual": round(100 * v[:, 2].mean(), 1), "weeks": weeks}
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"alt leg type table skipped: {e}")
+    _TT[key] = out
+    return out
+
+
+def allowed(table, g):
+    """A leg type is used unless its recent record clearly misses: enough lines and hitting more than
+    ALT_TYPE_MAX_MISS points below the calibrated model."""
+    t = table.get(g)
+    if not t or t["n"] < C.ALT_TYPE_MIN_N:
+        return True
+    return t["actual"] >= t["model"] - C.ALT_TYPE_MAX_MISS

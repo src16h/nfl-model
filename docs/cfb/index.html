@@ -936,7 +936,7 @@ function renderHome() {
       <div class="kpi"><b>${T.picks?.spread ? `${T.picks.spread.w}–${T.picks.spread.l}` : "0–0"}</b><span>Spread picks this season, every game</span></div></div></div></div>`;
   const alts = G.filter(g => g.alt_parlay);
   if (alts.length) h += `<div class="dash"><div class="panel span-12"><h3>Alt-line parlays <button data-go="parlays">All parlays</button></h3><p class="pmuted">One per game at fair odds +100 to +125, round-number lines under each player's main line.</p>
-    <div class="rail">${alts.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.fair)}</span></div>
+    <div class="rail">${alts.map(g => `<div class="alt"><div class="hd"><b>${esc(g.away)} at ${esc(g.home)}</b><span>${esc(g.alt_parlay.bet_at || g.alt_parlay.fair)}</span></div>
       ${g.alt_parlay.legs.map(L => `<div class="l"><b>${esc(L.name)}</b> ${esc(L.label)}</div>`).join("")}<div class="l">${n(g.alt_parlay.p)}% to hit</div></div>`).join("")}</div></div></div>`;
   h += `<div class="dash"><div class="panel span-12"><h3>Slate <button data-go="games">Full board</button></h3><p class="pmuted">Every game with a Power 4 team. Tap one for quarterbacks, ratings and every line.</p>
     <div class="slate">${G.map(g => { const pw = g.win_home, sp = g.picks?.spread, b = g.book || {};
@@ -1091,7 +1091,7 @@ function altCheck(g) {
   const a = g.alt_parlay, odds = ALT[g.game_id] || "";
   let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Book odds <input class="odds altodds" data-g="${g.game_id}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   if (odds && Math.abs(oddsNum(odds)) >= 100) {
-    const ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= 5 ? "play" : ev >= 0 ? "watch" : "none";
+    const cut = a.cushion != null ? 100 * a.cushion : 5, ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
     out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return</span>`;
     if (tier === "play" || tier === "watch") out += logBtn({kind: "parlay", game_id: g.game_id, side: "", line: null, odds, model_pct: a.p, legs: a.legs.map(L => ({pid: L.pid, stat: L.stat, line: L.line})),
       desc: `${a.legs.length}-leg alt parlay`, sub: a.legs.map(L => `${L.name} ${L.label}`).join(" + ")});
@@ -1160,9 +1160,9 @@ function renderParlays() {
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
       <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%, main ${L.main}${L.main_src === "model" ? " (model)" : ""}</span></div>`).join("")}</div>
-      <div class="t-meta">True chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated</div>
+      <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better.` : ""}</div>
       <div class="t-actions">${altCheck(g)}</div></div>
-      <div class="t-side"><div class="t-gap">${esc(a.fair)}</div><div class="t-gl">fair odds</div></div></article>`; }).join("")}</div>` : `<div class="empty">No alt-line parlays for this slate yet.</div>`;
+      <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No alt-line parlays for this slate yet.</div>`;
   h += teaserHTML();
   $("#parlays").innerHTML = h;
   document.querySelectorAll(".altodds").forEach(i => i.onchange = () => { ALT[i.dataset.g] = i.value; renderParlays(); });

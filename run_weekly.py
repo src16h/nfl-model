@@ -481,6 +481,13 @@ def build_games(bundle, season, week, now):
                 main_lines[(r["pid"], r.get("stat_key") or r.get("stat"))] = float(r["line"])
         except (TypeError, ValueError):
             pass
+    try:                     # book lines saved earlier this week (props log) fill in games this run couldn't pull
+        live_ids = {g["game_id"] for g in games}
+        for v in json.loads((OUT / "props_log.json").read_text()).get("props", {}).values():
+            if v.get("game_id") in live_ids and v.get("line") not in (None, "") and not v.get("result"):
+                main_lines.setdefault((v["pid"], v["stat"]), float(v["line"]))
+    except Exception as e:  # noqa: BLE001
+        log.info(f"saved book lines not used: {e}")
     from nflmodel import altcal
     altcal.PLAYED = tracker.played_set(bundle.snaps)
     for game, side_sims, tlegs in alt_inputs:
@@ -623,6 +630,7 @@ def lock_combos(game, side_sims, qbs, pts):
 
 
 ALT_STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
+ALT_VERSION = 2          # Oct 26 2026: leg-type gate, no Questionable players, book lines only, 3 legs, -120 to +125
 ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions"}
 
 
@@ -632,9 +640,12 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     by leg type from graded weeks (nflmodel/altcal.py: yardage tails ran thin, catches held up).
     It picks the ticket most likely to hit; how much the legs move together breaks ties."""
     from nflmodel import altcal
-    cal = altcal.fit(HIST, OUT / "results.json", int(str(game["game_id"])[:4]))
+    season_ = int(str(game["game_id"])[:4])
+    cal = altcal.fit(HIST, OUT / "results.json", season_)
+    ttab = altcal.type_table(HIST, OUT / "results.json", OUT / "props_log.json", season_, cal)   # leg-type gate
     lo_o, hi_o = C.ALT_PARLAY_ODDS
-    p_lo, p_hi = 100 / (hi_o + 100), 100 / (lo_o + 100)          # +125 -> 44.4%, +100 -> 50%
+    am_p = lambda o: 100 / (o + 100) if o > 0 else -o / (-o + 100)
+    p_lo, p_hi = am_p(hi_o), am_p(lo_o)                           # +125 -> 44.4%, -120 -> 54.5%
     cands = []
     for side in ("home", "away"):
         sims, rows = side_sims[side]
@@ -644,11 +655,15 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
             if taken.get(r["pos"], 0) >= SGP_KEEP.get(r["pos"], 0):
                 continue
             taken[r["pos"]] = taken.get(r["pos"], 0) + 1
+            if C.ALT_NO_QUESTIONABLE and r.get("status") == "Q":
+                continue                                                # Questionable: 56% real vs 80% model
             for st in ALT_STATS.get(r["pos"], []):
                 arr = sims[r["pid"]].get(st)
-                if arr is None:
-                    continue
+                if arr is None or not altcal.allowed(ttab, altcal.group(r["pos"], st)):
+                    continue                                            # leg type shut off by its graded record
                 book = (main_lines or {}).get((r["pid"], st))
+                if book is None and C.ALT_BOOK_MAIN_ONLY:
+                    continue                                            # no posted line: no real alt ladder
                 main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
                 main = float(np.floor(main) + 0.5)                      # books use .5 lines
                 if main < C.ALT_MIN_MAIN[st]:
@@ -728,7 +743,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 best = (score, idx, pj, pi)
         return best
     best = None
-    for n_legs in (C.ALT_PARLAY_LEGS, C.ALT_PARLAY_LEGS - 1, C.ALT_PARLAY_LEGS + 1):
+    for n_legs in C.ALT_PARLAY_SIZES:
         best = search(n_legs)
         if best:
             break
@@ -748,6 +763,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     raw = pj
     try:
         ap = (json.loads((OUT / "latest.json").read_text()).get("tracking") or {}).get("alt_parlays") or {}
+        ap = (ap.get("by_v") or {}).get(str(ALT_VERSION)) or {}      # only tickets built the current way
         n_, m_, a_ = ap.get("n") or 0, (ap.get("model") or 0) / 100, (ap.get("actual") or 0) / 100
         if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
             shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K) * share
@@ -756,9 +772,17 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     except Exception:  # noqa: BLE001
         pass
     fair = (1 - pj) / pj * 100
-    return {"legs": legs, "p": round(pj * 100, 1), "p_sim": round(raw * 100, 1), "pi": round(pi * 100, 1),
+    off = sorted(g for g in ttab if not altcal.allowed(ttab, g))
+    return {"v": ALT_VERSION, "legs": legs, "p": round(pj * 100, 1), "p_sim": round(raw * 100, 1), "pi": round(pi * 100, 1),
             "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj))),
-            "note": "Only bet it if Hard Rock pays more than the fair odds"}
+            "bet_at": bet_at(pj, C.ALT_BET_CUSHION), "types_off": off,
+            "note": "Bet it only at the 'bet at' price or better: that leaves room for the model being a little off"}
+
+
+def bet_at(p, cushion):
+    """Shortest American odds worth betting at chance p, with a cushion for estimation error (+7% = 0.07)."""
+    dec = (1 + cushion) / max(p, 1e-9)
+    return f"+{round(100 * (dec - 1))}" if dec >= 2 else str(round(-100 / (dec - 1)))
 
 
 def write_sgp(game, side_sims, qbs, pnoise, full=None):
@@ -1193,6 +1217,18 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         results = tracker.build_results(bundle.pbp, bundle.schedules, season)
         (OUT / "results.json").write_text(json.dumps(clean_json(results), separators=(",", ":"), allow_nan=False))
         res["tracking"] = clean_json(tracker.model_tracking(HIST, season, results, snaps=bundle.snaps))
+        try:                                   # alt-leg types: graded record and whether the gate lets them in
+            from nflmodel import altcal
+            altcal.PLAYED = tracker.played_set(bundle.snaps)
+            altcal._TT.clear()
+            cal_ = altcal.fit(HIST, OUT / "results.json", season)
+            tt_ = altcal.type_table(HIST, OUT / "results.json", OUT / "props_log.json", season, cal_)
+            names_ = {"rec": "Receptions (any position)", "WR_rec_yds": "WR receiving yards", "TE_rec_yds": "TE receiving yards",
+                      "RB_rush_yds": "RB rushing yards", "QB_pass_yds": "QB passing yards"}
+            res["tracking"]["alt_leg_types"] = [{"group": g, "label": names_.get(g, g), **t, "on": altcal.allowed(tt_, g)}
+                                                for g, t in sorted(tt_.items())]
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"alt leg types skipped: {e}")
         by_week, kn = {}, KeyNumbers(bundle.schedules)
         for f in sorted(HIST.glob(f"{season}_week*.json")):
             d = json.loads(f.read_text())
