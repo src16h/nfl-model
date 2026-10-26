@@ -105,6 +105,18 @@ K_REC = 8.0                  # lower = more week-to-week swing in who gets the y
 K_RUSH = 10.0
 PROP_EDGE = 0.04             # flag a prop when the model differs from the book by 4%+
 
+# defense vs position (dvp.py): moves targets and yards between WR / TE / RB by matchup.
+# Set by tools/backtest_dvp.py (Oct 26 2026): 18,203 player-games 2022-25, tuned on 2022-24, checked on 2025.
+# Small but real: 2025 target error -0.26%, yards error -0.10% vs no matchup; players it boosted most beat
+# their usual targets by about 8%. Position stats are noisy, hence the half / quarter strengths.
+DVP_ON = True
+DVP_PRIOR_SEASON_W = 0.8     # last season's games count this much vs this season's
+DVP_K_TGT = 40.0             # expected targets of "no difference" mixed in (bigger = more cautious)
+DVP_K_YDS = 400.0            # same, in receiving yards
+DVP_STRENGTH = 0.5           # targets: share of the raw factor used (0 = off, 1 = full)
+DVP_STRENGTH_YPT = 0.25      # yards per target: share of the raw factor used
+DVP_CAP = 1.5                # largest raw factor either way
+
 # ---------------------------------------------------------------
 # v3: MARKET-ANCHORED ENGINE
 # ---------------------------------------------------------------

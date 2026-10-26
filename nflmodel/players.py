@@ -5,6 +5,7 @@ Player projections.
 x player role   (target share, carry share, red-zone share)
 x efficiency    (catch rate, yards per target/carry), pulled toward averages
 x opponent      (yards and completion rate the defense allows)
+x matchup       (where the defense gives up targets: WR / TE / RB, dvp.py)
 = projection    then ranges from a skewed (gamma) distribution
 """
 import zlib
@@ -48,7 +49,7 @@ def _pos_of(pid, roster, eff_row):
     return pos, name, None
 
 
-def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None) -> list[dict]:
+def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dvp=None) -> list[dict]:
     """side = 'home' or 'away'. game holds the final projected points and plays."""
     pts = game[f"proj_{side}"]
     margin = game["margin"] if side == "home" else -game["margin"]
@@ -122,6 +123,8 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None) ->
             "rush_td": rush_tds * (0.5 * r["car_share"] + 0.5 * r["rz_car_share"]),
         })
     df = pd.DataFrame(rows)
+    if dvp is not None and len(df):
+        df = dvp.adjust(df, opp)          # shifts targets / yards between positions; team totals unchanged
 
     # Make receiving totals agree with the QB's passing line
     cmp_rate = qrate("qb_cmp", "qb_n", "qb_cmp") * ctx.def_cmp_mult.get(opp, 1.0)
@@ -214,6 +217,9 @@ def _finish(r, game_id, sim=None) -> dict:
         d.update({"targets": fnum(r["targets"]), "rec": fnum(r["rec"]),
                   "rec_yds": fnum(r["rec_yds"], 0), "rec_yds_med": fnum(med, 0),
                   "rec_yds_range": [fnum(lo, 0), fnum(hi, 0)], "rec_td": fnum(r["rec_td"], 2)})
+        mt, my = r.get("dvp_tgt", 1.0), r.get("dvp_yds", 1.0)
+        if pd.notna(mt) and pd.notna(my) and max(abs(mt - 1), abs(my - 1)) >= 0.01:
+            d["matchup"] = {"tgt": fnum(100 * (mt - 1), 1), "yds": fnum(100 * (my - 1), 1)}
     return d
 
 

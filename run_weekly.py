@@ -38,6 +38,7 @@ from nflmodel import usage as U
 from nflmodel.availability import current_roster, load_overrides, injury_table, recently_out_ids
 from nflmodel.qb import expected_qbs
 from nflmodel.adjust import starters_from_snaps, injury_points, Scheme
+from nflmodel import dvp as DV
 from nflmodel.players import project_team
 from nflmodel.util import fnum
 
@@ -146,6 +147,13 @@ def build_games(bundle, season, week, now):
     starters = starters_from_snaps(bundle.snaps, season, week)
     injpts = injury_points(inj, u["usage"], starters)
     scheme = Scheme(bundle.participation, bundle.pbp, season, week)
+    dvp = None
+    if C.DVP_ON:
+        try:
+            dvp = DV.DvP(DV.targets_table(bundle.pbp, DV.pos_map(bundle.rosters)), season, week)
+            dvp = dvp if dvp.ok else None
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"defense vs position skipped: {e}")
     qw = qb_weeks_fast(before(bundle.pbp, season, week), season, week)
     qual = qb_quality(qw, season)
 
@@ -329,7 +337,7 @@ def build_games(bundle, season, week, now):
         shocks, pnoise = game_shocks(zlib.crc32(f"sgp{g['game_id']}".encode()))
         side_sims = {}
         for team, opp, side in ((h, a, "home"), (a, h, "away")):
-            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team], shocks=shocks[side])
+            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team], shocks=shocks[side], dvp=dvp)
             players += rws
             sims.update(sm)
             side_sims[side] = ({pid: v for (gid, pid), v in sm.items()}, rws)
@@ -395,6 +403,10 @@ def build_games(bundle, season, week, now):
 
     teams_tbl = [{k: (fnum(v, 2) if isinstance(v, (float, np.floating)) else v) for k, v in t.items()}
                  for t in ratings_table(ctx)]
+    if dvp is not None:
+        dv = {r["team"]: r for r in dvp.table()}
+        for t in teams_tbl:
+            t.update({k: v for k, v in dv.get(t["team"], {}).items() if k != "team"})
     props_df, stale = tracker.filter_stale(load_props(ROOT / "data" / "props.csv"),
                                            OUT / "props_log.json", week)
     auto = odds["props_df"]

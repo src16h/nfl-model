@@ -1970,6 +1970,8 @@ function renderPlayers() {
       if (p.pass_yds != null) parts.push(`Passing yards: median <b>${n(p.pass_yds_med, 0)}</b>, likely ${n(p.pass_yds_range?.[0], 0)} to ${n(p.pass_yds_range?.[1], 0)}`);
       if (p.rush_yds != null) parts.push(`Rushing yards: median <b>${n(p.rush_yds_med, 0)}</b>, likely ${n(p.rush_yds_range?.[0], 0)} to ${n(p.rush_yds_range?.[1], 0)}`);
       if (p.rec_yds != null) parts.push(`Receiving yards: median <b>${n(p.rec_yds_med, 0)}</b>, likely ${n(p.rec_yds_range?.[0], 0)} to ${n(p.rec_yds_range?.[1], 0)}`);
+      if (p.matchup) { const m = p.matchup, w = v => `${v > 0 ? "+" : ""}${n(v, 0)}%`;
+        parts.push(`Matchup vs ${esc(p.opp)}: targets ${w(m.tgt)}, receiving yards ${w(m.yds)} (how this defense treats ${esc(p.pos)}s, already in the numbers)`); }
       if (p.fpts_med != null) parts.push(`PPR points: median <b>${n(p.fpts_med)}</b>, likely ${n(p.fpts_range?.[0])} to ${n(p.fpts_range?.[1])}`);
       h += `<tr class="detail"><td colspan="${PCOLS.length}">${parts.join("<br>")}<br>Ranges cover 80% of simulated games.</td></tr>`;
     }
@@ -1980,7 +1982,7 @@ function renderPlayers() {
 }
 
 /* ---------------- Teams ---------------- */
-const TCOLS = [["team", "Team"], ["net", "Net"], ["off", "Offense"], ["def", "Defense"], ["off_pass", "Pass off"], ["off_rush", "Run off"], ["def_pass", "Pass def"], ["def_rush", "Run def"], ["pace", "Plays/gm"], ["proe", "Pass rate vs expected"]];
+const TCOLS = [["team", "Team"], ["net", "Net"], ["off", "Offense"], ["def", "Defense"], ["off_pass", "Pass off"], ["off_rush", "Run off"], ["def_pass", "Pass def"], ["def_rush", "Run def"], ["pace", "Plays/gm"], ["proe", "Pass rate vs expected"], ["wr_tgt", "Tgts to WR"], ["te_tgt", "Tgts to TE"], ["rb_tgt", "Tgts to RB"]];
 function renderTeams() {
   const rows = [...D.teams], k = tState.sort;
   rows.sort((a, b) => k === "team" ? tState.dir * a.team.localeCompare(b.team) : tState.dir * (a[k] - b[k]));
@@ -1989,7 +1991,8 @@ function renderTeams() {
   for (const t of rows) {
     h += `<tr><td>${badge(t.team)}</td><td><span class="tbar ${t.net < 0 ? "neg" : ""}" style="width:${Math.round(48 * Math.abs(t.net) / max)}px"></span>${sgn(t.net)}</td>` +
       ["off", "def", "off_pass", "off_rush", "def_pass", "def_rush"].map(c => `<td class="${t[c] < 0 ? "down" : "up"}">${sgn(t[c])}</td>`).join("") +
-      `<td>${n(t.pace)}</td><td>${sgn(t.proe)}%</td></tr>`;
+      `<td>${n(t.pace)}</td><td>${sgn(t.proe)}%</td>` +
+      ["wr_tgt", "te_tgt", "rb_tgt"].map(c => t[c] == null ? "<td>–</td>" : `<td class="${t[c] > 0 ? "down" : "up"}" title="Targets this defense gives up to the position vs normal (positive = soft)">${sgn(t[c])}%</td>`).join("") + "</tr>";
   }
   const tb = $("#ttable"); tb.innerHTML = h + "</tbody>";
   tb.querySelectorAll("th").forEach(th => th.onclick = () => { const c = th.dataset.k; tState.dir = tState.sort === c ? -tState.dir : (c === "team" ? 1 : -1); tState.sort = c; renderTeams(); });
