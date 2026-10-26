@@ -5105,7 +5105,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -4.5,
+    "total": 44.5,
+    "margin": -14.0,
+    "points": 46.0
+   },
    "last_seen": "2026-10-25T19:10+00:00"
   },
   "2026_07_GB_DET": {
@@ -5221,7 +5226,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.5,
+    "total": 55.5,
+    "margin": 3.0,
+    "points": 37.0
+   },
    "last_seen": "2026-10-25T19:10+00:00"
   },
   "2026_07_LA_LV": {
@@ -5311,7 +5321,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.5,
+    "total": 49.5,
+    "margin": -14.0,
+    "points": 56.0
+   },
    "last_seen": "2026-10-25T19:10+00:00"
   },
   "2026_07_KC_SEA": {
@@ -5362,7 +5377,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.0,
+    "total": 43.5,
+    "margin": 17.0,
+    "points": 23.0
+   },
    "last_seen": "2026-10-25T23:24+00:00"
   },
   "2026_07_DAL_PHI": {
@@ -5453,7 +5473,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-10-25T23:24+00:00"
+   "last_seen": "2026-10-26T14:48+00:00"
   }
  }
 }
