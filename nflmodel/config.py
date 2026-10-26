@@ -117,6 +117,12 @@ DVP_STRENGTH = 0.5           # targets: share of the raw factor used (0 = off, 1
 DVP_STRENGTH_YPT = 0.25      # yards per target: share of the raw factor used
 DVP_CAP = 1.5                # largest raw factor either way
 
+# Free charting data (matchups.py). Tested Oct 26 2026 on 2022-25: only these two held up.
+COVERAGE_ON = True           # PFR: missing cover players make the pass defense weaker for props
+COVERAGE_COEF = 0.6          # yards per dropback per yard-per-target the secondary loses (backtest: 1.15 in 2022-24, 0.2 in 2025)
+COVERAGE_MAX = 0.06          # cap: never move passing yards more than 6% either way
+INT_WORTHY_BLEND = 0.5       # FTN: share of the QB interception rate taken from interception-worthy throws
+
 # ---------------------------------------------------------------
 # v3: MARKET-ANCHORED ENGINE
 # ---------------------------------------------------------------

@@ -1972,6 +1972,7 @@ function renderPlayers() {
       if (p.rec_yds != null) parts.push(`Receiving yards: median <b>${n(p.rec_yds_med, 0)}</b>, likely ${n(p.rec_yds_range?.[0], 0)} to ${n(p.rec_yds_range?.[1], 0)}`);
       if (p.matchup) { const m = p.matchup, w = v => `${v > 0 ? "+" : ""}${n(v, 0)}%`;
         parts.push(`Matchup vs ${esc(p.opp)}: targets ${w(m.tgt)}, receiving yards ${w(m.yds)} (how this defense treats ${esc(p.pos)}s, already in the numbers)`); }
+      if (p.secondary != null) parts.push(`${esc(p.opp)} secondary: ${p.secondary > 0 ? "missing usual cover players" : "healthier than usual"}, passing yards ${p.secondary > 0 ? "+" : ""}${n(p.secondary, 0)}% (already in the numbers)`);
       if (p.fpts_med != null) parts.push(`PPR points: median <b>${n(p.fpts_med)}</b>, likely ${n(p.fpts_range?.[0])} to ${n(p.fpts_range?.[1])}`);
       h += `<tr class="detail"><td colspan="${PCOLS.length}">${parts.join("<br>")}<br>Ranges cover 80% of simulated games.</td></tr>`;
     }
@@ -2222,7 +2223,7 @@ function modelDetails(M) {
     h += `<h3>What drives the model</h3><p class="sub">Points of spread moved by a typical swing in each factor, learned from ${M.history_games} games.</p><div class="tablewrap"><table><tbody>${M.weights_margin.slice(0, 8).map(w => `<tr><td>${esc(w.factor)}</td><td>${sgn(w.pts)}</td></tr>`).join("")}</tbody></table></div>`;
     if ((M.weights_edge || []).length) h += `<h3>Where Vegas tends to miss</h3><p class="sub">Small numbers are expected. Vegas is sharp.</p><div class="tablewrap"><table><tbody>${M.weights_edge.filter(w => w.factor !== "Vegas line").slice(0, 8).map(w => `<tr><td>${esc(w.factor)}</td><td>${sgn(w.pts)}</td></tr>`).join("")}</tbody></table></div>`;
   }
-  h += `<h3>Settings and data</h3><p class="sub">Engine: ${esc(M.engine || "–")}. Leans from the ${M.lean_engine === "anchored" ? "market-anchored" : "football-only"} engine. Injury reports in training: ${n(M.injury_coverage, 0)}% of games. Coverage matchups ${D.scheme_enabled ? "on" : "off"}.</p>
+  h += `<h3>Settings and data</h3><p class="sub">Engine: ${esc(M.engine || "–")}. Leans from the ${M.lean_engine === "anchored" ? "market-anchored" : "football-only"} engine. Injury reports in training: ${n(M.injury_coverage, 0)}% of games. Coverage matchups ${D.scheme_enabled ? "on" : "off"}. Props also use defense vs position, cover players out (PFR) and interception-worthy throws (FTN).</p>
   <div class="chips">${Object.entries(D.data_status || {}).map(([k, v]) => `<span class="chip ${v.ok ? "" : "bad"}" title="${esc(v.note)}">${esc(k.replaceAll("_", " "))}</span>`).join("")}</div>
   <p class="note">A red source was unavailable this run. The model fills the gap with defaults.</p>`;
   return h;

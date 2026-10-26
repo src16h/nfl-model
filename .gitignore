@@ -5,3 +5,4 @@ data/cfb_cache/
 data/soccer/bt_pred_*.pkl
 data/soccer/bt_cands.pkl
 data/_dvp_bt/
+data/_mu_bt/

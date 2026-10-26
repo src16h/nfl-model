@@ -46,6 +46,8 @@ class Bundle:
         self.injuries = None
         self.snaps = None
         self.participation = None
+        self.ftn = None
+        self.pfr_def = None
         self.status = {}
 
     def mark(self, name, ok, rows=0, note=""):
@@ -133,4 +135,13 @@ def load_all(season: int) -> Bundle:
             b.participation = None
     else:
         b.mark("coverage_schemes", False, 0, "loader not available")
+
+    # free charting: FTN (interception-worthy throws) and PFR per-defender coverage. Optional.
+    if hasattr(nfl, "load_ftn_charting"):
+        b.ftn, err = _per_season(nfl.load_ftn_charting, [season - 1, season])
+        b.mark("ftn_charting", b.ftn is not None, 0 if b.ftn is None else len(b.ftn), err)
+    if hasattr(nfl, "load_pfr_advstats"):
+        b.pfr_def, err = _per_season(lambda s: nfl.load_pfr_advstats(seasons=s, stat_type="def", summary_level="week"),
+                                     [season - 1, season])
+        b.mark("pfr_coverage", b.pfr_def is not None, 0 if b.pfr_def is None else len(b.pfr_def), err)
     return b

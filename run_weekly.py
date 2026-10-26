@@ -39,6 +39,7 @@ from nflmodel.availability import current_roster, load_overrides, injury_table, 
 from nflmodel.qb import expected_qbs
 from nflmodel.adjust import starters_from_snaps, injury_points, Scheme
 from nflmodel import dvp as DV
+from nflmodel import matchups as MU
 from nflmodel.players import project_team
 from nflmodel.util import fnum
 
@@ -87,6 +88,46 @@ def load_history_rows(pbp, sch, elo_pre, season, week, injuries=None, snaps=None
     fresh = history_rows(pbp, sch, elo_pre, fresh_seasons, max_week_in_last=week,
                          injuries=injuries, snaps=snaps)
     return pd.concat([hist, fresh], ignore_index=True), len(hist) > 0
+
+
+def charting_extras(bundle, inj, season, week):
+    """Free charting data for props: PFR coverage (who is missing from each secondary) and FTN
+    interception-worthy throws. Returns ({'cov': {team: mult}, 'int': {qb: rate}}, notes by defense)."""
+    mx, notes = {}, {}
+    try:
+        if C.COVERAGE_ON and bundle.pfr_def is not None:
+            cov = MU.Coverage(bundle.pfr_def, season, week)
+            if cov.pfr_ok and bundle.rosters is not None:
+                r = bundle.rosters.copy()
+                r["week"] = pd.to_numeric(r.get("week"), errors="coerce")
+                cur = r[(r["season"] == season) & (r["week"] <= week)]
+                cur = cur[cur["week"] == cur["week"].max()] if len(cur) else r[r["season"] == season - 1]
+                to_pfr = r.dropna(subset=["gsis_id", "pfr_id"]).drop_duplicates("gsis_id", keep="last").set_index("gsis_id")["pfr_id"]
+                pfr_team = cur.dropna(subset=["pfr_id"]).drop_duplicates("pfr_id", keep="last").set_index("pfr_id")["team"]
+                out = inj[inj["status"].isin(["OUT", "DOUBTFUL", "IR"])] if inj is not None and len(inj) else inj
+                mult = {}
+                for de in cov.usual.index.get_level_values(0).unique():
+                    gone = set(out.loc[out["team"] == de, "pid"].dropna().map(to_pfr).dropna()) if out is not None and len(out) else set()
+                    if (cur["team"] == de).sum() >= 40:          # left the team (cut, traded) since his last game
+                        gone |= {pid for pid in cov.usual.loc[de].index if pfr_team.get(pid, de) != de}
+                    shift, _, names = cov.shift(de, unavailable=gone, detail=True)
+                    m = float(np.clip(1 + C.COVERAGE_COEF * shift / C.PRIORS["qb_ypa"][0], 1 - C.COVERAGE_MAX, 1 + C.COVERAGE_MAX))
+                    mult[de] = m
+                    if abs(m - 1) >= 0.01 and names:
+                        notes[de] = {"names": names, "pct": 100 * (m - 1)}
+                mx["cov"] = mult
+                log.info(f"coverage: {sum(abs(v - 1) >= 0.01 for v in mult.values())} defenses moved 1%+")
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"coverage skipped: {e}")
+    try:
+        if C.INT_WORTHY_BLEND > 0 and bundle.ftn is not None:
+            iw = MU.qb_int_worthy(bundle.pbp, bundle.ftn, season, week, C.PRIORS["qb_int"][0])
+            if len(iw):
+                mx["int"] = iw.to_dict()
+                log.info(f"interception-worthy rates: {len(iw)} QBs")
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"interception-worthy skipped: {e}")
+    return mx, notes
 
 
 def build_games(bundle, season, week, now):
@@ -154,6 +195,7 @@ def build_games(bundle, season, week, now):
             dvp = dvp if dvp.ok else None
         except Exception as e:  # noqa: BLE001
             log.warning(f"defense vs position skipped: {e}")
+    mx, cov_notes = charting_extras(bundle, inj, season, week)
     qw = qb_weeks_fast(before(bundle.pbp, season, week), season, week)
     qual = qb_quality(qw, season)
 
@@ -265,6 +307,10 @@ def build_games(bundle, season, week, now):
         hist_t = stack.lookup_bucket(rep, "total_buckets", e_to)
 
         notes = []
+        for de, opp_team in ((h, a), (a, h)):
+            cn = cov_notes.get(de)
+            if cn:
+                notes.append(f"{de} secondary missing {', '.join(cn['names'][:3])}: {opp_team} passing yards {cn['pct']:+.0f}% in player props")
         for team in (a, h):
             q = qbs[team]
             if abs(q["adj"]) >= 0.5:
@@ -337,7 +383,7 @@ def build_games(bundle, season, week, now):
         shocks, pnoise = game_shocks(zlib.crc32(f"sgp{g['game_id']}".encode()))
         side_sims = {}
         for team, opp, side in ((h, a, "home"), (a, h, "away")):
-            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team], shocks=shocks[side], dvp=dvp)
+            rws, sm = project_team(team, opp, gp, side, ctx, u, roster, inj, qbs[team], shocks=shocks[side], dvp=dvp, mx=mx)
             players += rws
             sims.update(sm)
             side_sims[side] = ({pid: v for (gid, pid), v in sm.items()}, rws)

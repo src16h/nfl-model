@@ -6,6 +6,7 @@ x player role   (target share, carry share, red-zone share)
 x efficiency    (catch rate, yards per target/carry), pulled toward averages
 x opponent      (yards and completion rate the defense allows)
 x matchup       (where the defense gives up targets: WR / TE / RB, dvp.py)
+x secondary     (cover players out this week vs usual, PFR charting; matchups.py)
 = projection    then ranges from a skewed (gamma) distribution
 """
 import zlib
@@ -49,7 +50,8 @@ def _pos_of(pid, roster, eff_row):
     return pos, name, None
 
 
-def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dvp=None) -> list[dict]:
+def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dvp=None, mx=None) -> list[dict]:
+    """mx: optional {'cov': {defense: passing-yards multiplier}, 'int': {qb pid: interception rate}}."""
     """side = 'home' or 'away'. game holds the final projected points and plays."""
     pts = game[f"proj_{side}"]
     margin = game["margin"] if side == "home" else -game["margin"]
@@ -77,6 +79,8 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
     pass_tds = tds * ctx.pass_td_share.get(team, C.LEAGUE_PASS_TD_SHARE)
     rush_tds = tds - pass_tds
 
+    mx = mx or {}
+    cov_mult = float(mx.get("cov", {}).get(opp, 1.0))
     use = u["usage"]
     use = use[use["team"] == team].copy()
     out_ids = set(inj.loc[inj["status"].isin(["OUT", "DOUBTFUL", "IR"]), "pid"].dropna())
@@ -109,7 +113,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
         cm, ck = _prior("catch_rate", pos if pos in ("WR", "TE", "RB") else "WR")
         ym, yk = _prior("yds_per_target", pos if pos in ("WR", "TE", "RB") else "WR")
         catch = shrink(g("rec_cmp"), g("rec_n"), cm, ck) * ctx.def_cmp_mult.get(opp, 1.0)
-        ypt = shrink(g("rec_yds"), g("rec_n"), ym, yk) * ctx.def_ypa_mult.get(opp, 1.0)
+        ypt = shrink(g("rec_yds"), g("rec_n"), ym, yk) * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult
         car = designed * r["car_share"]
         pm, pk = _prior("ypc", pos if pos in ("RB", "QB", "WR", "TE") else "RB")
         ypc = shrink(g("car_yds"), g("car_n"), pm, pk) * ctx.def_ypc_mult.get(opp, 1.0)
@@ -121,6 +125,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
             "rec_td": pass_tds * (0.5 * r["tgt_share"] + 0.5 * r["rz_tgt_share"]),
             "carries": car, "rush_yds": car * float(ypc),
             "rush_td": rush_tds * (0.5 * r["car_share"] + 0.5 * r["rz_car_share"]),
+            "cov_mult": cov_mult,
         })
     df = pd.DataFrame(rows)
     if dvp is not None and len(df):
@@ -128,8 +133,11 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
 
     # Make receiving totals agree with the QB's passing line
     cmp_rate = qrate("qb_cmp", "qb_n", "qb_cmp") * ctx.def_cmp_mult.get(opp, 1.0)
-    ypa = qrate("qb_yds", "qb_n", "qb_ypa") * ctx.def_ypa_mult.get(opp, 1.0)
+    ypa = qrate("qb_yds", "qb_n", "qb_ypa") * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult
     int_rate = qrate("qb_int", "qb_n", "qb_int")
+    iw = mx.get("int", {}).get(qb_pid) if qb_pid is not None else None
+    if iw is not None and np.isfinite(iw):          # interception-worthy throws are steadier than real INTs
+        int_rate = (1 - C.INT_WORTHY_BLEND) * int_rate + C.INT_WORTHY_BLEND * float(iw)
     if len(df) and df["rec_yds"].sum() > 0:
         team_yds = 0.5 * pass_att * ypa + 0.5 * df["rec_yds"].sum()
         team_cmp = 0.5 * pass_att * cmp_rate + 0.5 * df["rec"].sum()
@@ -157,7 +165,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
             "pid": qb_pid, "name": qb.get("name"), "pos": "QB", "team": team, "opp": opp,
             "status": "Q" if qb_pid in q_ids else "", "tgt_share": 0, "car_share": 0,
             "targets": 0, "rec": 0, "rec_yds": 0, "rec_td": 0, "carries": 0, "rush_yds": 0, "rush_td": 0}
-        base.update({"pos": "QB", "name": qb.get("name") or base["name"],
+        base.update({"pos": "QB", "name": qb.get("name") or base["name"], "cov_mult": cov_mult,
                      "pass_att": pass_att, "pass_cmp": team_cmp, "pass_yds": team_yds,
                      "pass_td": pass_tds, "pass_int": pass_att * int_rate,
                      "carries": base["carries"] + scrambles,
@@ -220,6 +228,9 @@ def _finish(r, game_id, sim=None) -> dict:
         mt, my = r.get("dvp_tgt", 1.0), r.get("dvp_yds", 1.0)
         if pd.notna(mt) and pd.notna(my) and max(abs(mt - 1), abs(my - 1)) >= 0.01:
             d["matchup"] = {"tgt": fnum(100 * (mt - 1), 1), "yds": fnum(100 * (my - 1), 1)}
+    cm = r.get("cov_mult", 1.0)
+    if pd.notna(cm) and abs(cm - 1) >= 0.01 and (r["pos"] == "QB" or r["targets"] >= 0.5):
+        d["secondary"] = fnum(100 * (cm - 1), 1)
     return d
 
 
