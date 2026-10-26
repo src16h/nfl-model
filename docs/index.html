@@ -1219,7 +1219,7 @@ document.addEventListener("click", e => {
     if (d) { d.open = true; d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash"); setTimeout(() => d.scrollIntoView({behavior: "smooth", block: "center"}), 60); } }
   const alt = e.target.closest("#home [data-altgo]");
   if (alt) { const g = (D.games || []).find(x => x.game_id === alt.dataset.altgo); if (!g) return;
-    showTab("parlays"); PX.form = null; PX.odds = ""; PX.pendingLegs = g.alt_parlay.legs.map(Lg => ({kind: "player", pid: Lg.pid, stat: Lg.stat, side: "Over", line: Lg.line})); loadSGP(g.game_id); }
+    showTab("parlays"); PX.form = null; PX.odds = ""; PX.pendingLegs = g.alt_parlay.legs.map(Lg => ({kind: "player", pid: Lg.pid, stat: Lg.stat, side: Lg.side || "Over", line: Lg.line})); loadSGP(g.game_id); }
 });
 
 /* ---------------- Games ---------------- */
@@ -1889,7 +1889,7 @@ function mixCardsHTML() {
 }
 function altCardsHTML(games) {
   return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, 3 legs, fair odds -120 to +125</span></div>
-    <p class="sub">The model builds one parlay per game, 3 legs (4 if needed), from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Only leg types that have held up in graded weeks are used (see the Record tab), never Questionable players, and only players with a posted book line, staying within a normal alt range of it (25 yards for receiving, 2 catches). <b>Bet it only at the bet-at price or better</b>: it asks for about 7% more than fair, room for the model being a little off. Tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
+    <p class="sub">The model builds one parlay per game, 3 legs (4 if needed), from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Legs can be Overs below the book's line (yards, catches, completions, attempts) or Unders above it (catches, completions, attempts, carries). Only leg types that have held up in graded weeks are used (see the Record tab), never Questionable players, and only players with a posted book line, staying within a normal alt range of it. <b>Bet it only at the bet-at price or better</b>: it asks for about 7% more than fair, room for the model being a little off. Tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
     <div class="tickets">${games.map(g => { const a = g.alt_parlay;
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>

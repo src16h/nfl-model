@@ -51,7 +51,8 @@ ABBR_TEAM = {v: k for k, v in TEAM_ABBR.items()}
 # The Odds API market key -> the stat names the model uses
 MARKETS = {
     "player_pass_yds": "pass_yds", "player_pass_tds": "pass_td", "player_pass_completions": "pass_cmp",
-    "player_pass_interceptions": "pass_int", "player_rush_yds": "rush_yds", "player_rush_attempts": "carries",
+    "player_pass_interceptions": "pass_int", "player_pass_attempts": "pass_att",
+    "player_rush_yds": "rush_yds", "player_rush_attempts": "carries",
     "player_receptions": "rec", "player_reception_yds": "rec_yds",
     "player_rush_reception_yds": "rush_rec_yds", "player_anytime_td": "anytime_td",
     "player_tds_over": "tds",
@@ -375,6 +376,8 @@ def _lines_due(ent: dict, todo: pd.DataFrame, now: datetime) -> bool:
 def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: datetime, cache_path):
     """Fetch props for games kicking off soon (once per refresh window), reuse the cache otherwise."""
     markets = list(C.ODDS_PROP_MARKETS)
+    if now.date().isoformat() >= getattr(C, "ODDS_EXTRA_FROM", "9999"):      # count-stat legs (alt parlays)
+        markets += [m for m in getattr(C, "ODDS_EXTRA_PROP_MARKETS", []) if m not in markets]
     cache = _load_cache(cache_path)
     cache["games"] = {k: v for k, v in cache.get("games", {}).items() if k in set(todo["game_id"])}
     fetched = cached = skipped_budget = 0

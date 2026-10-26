@@ -128,6 +128,7 @@ def quantiles(arr):
 STAT_ALIASES = {
     "pass_yds": "pass_yds", "passing_yards": "pass_yds", "pass_tds": "pass_td", "pass_td": "pass_td",
     "completions": "pass_cmp", "pass_cmp": "pass_cmp", "interceptions": "pass_int", "pass_int": "pass_int",
+    "pass_att": "pass_att", "pass_attempts": "pass_att", "attempts": "pass_att",
     "rush_yds": "rush_yds", "rushing_yards": "rush_yds", "carries": "carries", "rush_att": "carries",
     "rec": "rec", "receptions": "rec", "rec_yds": "rec_yds", "receiving_yards": "rec_yds",
     "rush_rec_yds": "rush_rec_yds", "anytime_td": "anytime_td", "fpts": "fpts", "fantasy_points": "fpts",

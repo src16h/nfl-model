@@ -22,13 +22,17 @@ from . import config as C
 from .util import norm_name
 
 log = logging.getLogger("nflmodel")
-STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
+STATS = {"QB": ["pass_yds", "pass_cmp", "pass_att"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
+# Under legs ("alt up", Oct 26 2026): in weeks 5-7 receptions Unders hit 92% when the raw model said 81%, and
+# completions / attempts / carries Unders 80-84% vs 74-78%. The sims give catches and volume too much upside.
+USTATS = {"QB": ["pass_cmp", "pass_att"], "RB": ["rec", "carries"], "WR": ["rec"], "TE": ["rec"]}
 _CACHE = {}
 PLAYED = set()     # (game_id, normalized name) with an offensive snap; set by run_weekly from snap counts
 
 
-def group(pos, stat):
-    return "rec" if stat == "rec" else f"{pos}_{stat}"
+def group(pos, stat, side="Over"):
+    g = "rec" if stat == "rec" else f"{pos}_{stat}"
+    return g if side == "Over" else "U_" + g
 
 
 def _logit(p):
@@ -58,20 +62,23 @@ def fit(hist_dir, results_path, season):
                     act = {c: 0.0 for c in cols}              # played, no touch: books grade the leg a loss
                 else:
                     continue                                  # did not play: books void the leg
-                for st in STATS.get(p.get("pos"), []):
-                    m = mk.get(st)
-                    if not m or (m.get("med") or 0) < C.ALT_MIN_MAIN[st]:
-                        continue
-                    g = group(p["pos"], st)
-                    pgs[g] = pgs.get(g, 0) + 1
-                    if "q" in m:
-                        q = np.asarray(m["q"], float)
-                        lv = 1 - np.arange(1, len(q) + 1) / (len(q) + 1)
-                        pts = [(lv[i], act[st] > q[i]) for i in range(len(q))]
-                    else:
-                        ge = m.get("ge") or []
-                        pts = [(ge[k] / 100, act[st] >= k) for k in range(1, len(ge))]
-                    rows.setdefault(g, []).extend((pp, hh) for pp, hh in pts if 0.55 <= pp <= 0.97)
+                for side, table in (("Over", STATS), ("Under", USTATS)):
+                    for st in table.get(p.get("pos"), []):
+                        m = mk.get(st)
+                        if not m or st not in act or (m.get("med") or 0) < C.ALT_MIN_MAIN[st]:
+                            continue
+                        g = group(p["pos"], st, side)
+                        pgs[g] = pgs.get(g, 0) + 1
+                        if "q" in m:
+                            q = np.asarray(m["q"], float)
+                            lv = 1 - np.arange(1, len(q) + 1) / (len(q) + 1)          # chance of finishing above q[i]
+                            pts = ([(lv[i], act[st] > q[i]) for i in range(len(q))] if side == "Over" else
+                                   [(1 - lv[i], act[st] < q[i]) for i in range(len(q))])
+                        else:
+                            ge = m.get("ge") or []                                  # ge[k]: chance of k or more
+                            pts = ([(ge[k] / 100, act[st] >= k) for k in range(1, len(ge))] if side == "Over" else
+                                   [(1 - ge[k] / 100, act[st] < k) for k in range(1, len(ge))])
+                        rows.setdefault(g, []).extend((pp, hh) for pp, hh in pts if 0.55 <= pp <= 0.97)
         for g, v in rows.items():
             v = np.asarray(v, float)
             x, y = _logit(v[:, 0]), v[:, 1]
@@ -90,9 +97,9 @@ def fit(hist_dir, results_path, season):
     return out
 
 
-def adjust(cal, pos, stat, p):
-    """Model chance -> calibrated chance for one alt leg."""
-    c = cal.get(group(pos, stat))
+def adjust(cal, pos, stat, p, side="Over"):
+    """Model chance -> calibrated chance for one alt leg (Over: alt down, Under: alt up)."""
+    c = cal.get(group(pos, stat, side))
     if not c:
         return p
     a, b, w, _ = c
@@ -145,19 +152,18 @@ def type_table(hist_dir, results_path, props_log_path, season, cal):
                     act = {c: 0.0 for c in cols}
                 else:
                     continue
-                for st in STATS.get(p.get("pos"), []):
-                    m = mk.get(st)
-                    bm = mains.get((p.get("game_id"), p.get("pid"), st))
-                    if not m or bm is None or bm < C.ALT_MIN_MAIN[st]:
-                        continue
-                    main = float(np.floor(bm) + 0.5)
-                    for k in range(1, int(C.ALT_MAX_DROP[st] // C.ALT_STEP[st]) + 1):
-                        L = main - k * C.ALT_STEP[st]
-                        if L < C.ALT_MIN_LINE[st]:
-                            break
-                        pc = adjust(cal, p["pos"], st, _p_over(m, L))
-                        if C.ALT_LEG_RANGE[0] <= pc <= C.ALT_LEG_RANGE[1]:
-                            rows.setdefault(group(p["pos"], st), []).append((wk, pc, float(act[st] > L)))
+                for side, table in (("Over", STATS), ("Under", USTATS)):
+                    for st in table.get(p.get("pos"), []):
+                        m = mk.get(st)
+                        bm = mains.get((p.get("game_id"), p.get("pid"), st))
+                        if not m or st not in act or bm is None or bm < C.ALT_MIN_MAIN[st]:
+                            continue
+                        for L in ladder(st, bm, side):
+                            po = _p_over(m, L)
+                            pc = adjust(cal, p["pos"], st, po if side == "Over" else 1 - po, side)
+                            if C.ALT_LEG_RANGE[0] <= pc <= C.ALT_LEG_RANGE[1]:
+                                hit = act[st] > L if side == "Over" else act[st] < L
+                                rows.setdefault(group(p["pos"], st, side), []).append((wk, pc, float(hit)))
         for g, v in rows.items():
             v = np.asarray(v, float)
             weeks = {int(w): [int((v[:, 0] == w).sum()), round(100 * v[v[:, 0] == w, 1].mean(), 1), round(100 * v[v[:, 0] == w, 2].mean(), 1)]
@@ -167,6 +173,16 @@ def type_table(hist_dir, results_path, props_log_path, season, cal):
         log.warning(f"alt leg type table skipped: {e}")
     _TT[key] = out
     return out
+
+
+def ladder(st, main, side):
+    """Alt lines a book offers around its main line: below it for Overs, above it for Unders."""
+    main = float(np.floor(main) + 0.5)
+    step = C.ALT_STEP[st]
+    if side == "Over":
+        out = [main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] // step) + 1)]
+        return [L for L in out if L >= C.ALT_MIN_LINE[st]]
+    return [main + k * step for k in range(1, int(C.ALT_MAX_RISE.get(st, 0) // step) + 1)]
 
 
 def allowed(table, g):

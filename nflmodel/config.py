@@ -143,6 +143,10 @@ SHARP_BOOKS = ["pinnacle"]   # referee price for game plays; rides in the same c
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
                      "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
+# Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
+# About 3 more credits per game, so they start with the Nov 1 credit reset.
+ODDS_EXTRA_PROP_MARKETS = ["player_pass_completions", "player_pass_attempts", "player_rush_attempts"]
+ODDS_EXTRA_FROM = "2026-11-01"
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
 ODDS_PROPS_CLOSE_HOURS = 3.5 # games with a locked prop play get one more props pull this close to kickoff (closing price)
@@ -268,10 +272,11 @@ ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines)
 ALT_CAL_K = 60                     # leg calibration counts half after this many graded player-games per leg type
 ALT_MAX_YARD_LEGS = 3              # at most 3 yardage legs (pass/rush/rec yds); catches fill the rest
 ALT_MAX_RUSH_LEGS = 1              # at most 1 RB rushing leg while the leg calibration is still learning
-ALT_STEP = {"pass_yds": 10, "rush_yds": 5, "rec_yds": 5, "rec": 1}       # alt lines come in these steps (.5 lines)
-ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2}   # how far below the book's main line books go
-ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5}  # skip players books rarely post
-ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5}  # lowest alt line books offer
+ALT_STEP = {"pass_yds": 10, "rush_yds": 5, "rec_yds": 5, "rec": 1, "pass_cmp": 1, "pass_att": 1, "carries": 1}   # alt line steps (.5 lines)
+ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2, "pass_cmp": 5, "pass_att": 5, "carries": 4}   # how far below the main line books go
+ALT_MAX_RISE = {"rec": 3, "pass_cmp": 5, "pass_att": 5, "carries": 4}      # Under legs: how far ABOVE the main line (alt up)
+ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5, "pass_cmp": 14.5, "pass_att": 22.5, "carries": 9.5}  # skip players books rarely post
+ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5, "pass_cmp": 10.5, "pass_att": 15.5, "carries": 4.5}  # lowest alt line books offer
 
 # 6-point teasers (model only, no extra odds calls)
 TEASER_POINTS = 6

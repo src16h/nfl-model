@@ -726,12 +726,14 @@ def _leg_hit(L, g, pl, cols, played=None, gid=None):
     if L["kind"] == "spread":
         m = (h - a) if L["team"] == g["home"] else (a - h)
         return None if m + L["line"] == 0 else m + L["line"] > 0
+    under = L.get("side") == "Under"                          # Under legs (alt up, Oct 26 2026)
     row = pl.get(L["pid"])
     if row is None:
         if played and (gid, norm_name(L.get("name"))) in played:
-            return 0.0 > L["line"]                          # played, no touch: the leg loses
+            return (0.0 < L["line"]) if under else (0.0 > L["line"])   # played, never touched the ball
         return None
-    return row[cols.index(L["stat"])] > L["line"]
+    v = row[cols.index(L["stat"])]
+    return v < L["line"] if under else v > L["line"]
 
 
 def model_tracking(hist_dir, season, results, snaps=None):

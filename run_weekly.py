@@ -629,9 +629,12 @@ def lock_combos(game, side_sims, qbs, pts):
     game["sgp_combos"] = out
 
 
-ALT_STATS = {"QB": ["pass_yds"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
-ALT_VERSION = 2          # Oct 26 2026: leg-type gate, no Questionable players, book lines only, 3 legs, -120 to +125
-ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions"}
+ALT_STATS = {"QB": ["pass_yds", "pass_cmp", "pass_att"], "RB": ["rush_yds", "rec"], "WR": ["rec_yds", "rec"], "TE": ["rec_yds", "rec"]}
+ALT_VERSION = 2          # Oct 26 2026: leg-type gate, no Questionable players, book lines only, 3 legs, -120 to +125,
+                         # plus Under legs (receptions, completions, attempts, carries) and completions / attempts Overs
+ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds", "rec": "receptions",
+             "pass_cmp": "completions", "pass_att": "pass attempts", "carries": "carries"}
+ALT_YARD_STATS = {"pass_yds", "rush_yds", "rec_yds"}
 
 
 def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=False):
@@ -647,8 +650,8 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     am_p = lambda o: 100 / (o + 100) if o > 0 else -o / (-o + 100)
     p_lo, p_hi = am_p(hi_o), am_p(lo_o)                           # +125 -> 44.4%, -120 -> 54.5%
     cands = []
-    for side in ("home", "away"):
-        sims, rows = side_sims[side]
+    for side_ in ("home", "away"):
+        sims, rows = side_sims[side_]
         keep = sorted([r for r in rows if r.get("markets") and r["pid"] in sims], key=lambda r: -(r.get("fpts") or 0))
         taken = {}
         for r in keep:
@@ -657,29 +660,26 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
             taken[r["pos"]] = taken.get(r["pos"], 0) + 1
             if C.ALT_NO_QUESTIONABLE and r.get("status") == "Q":
                 continue                                                # Questionable: 56% real vs 80% model
-            for st in ALT_STATS.get(r["pos"], []):
-                arr = sims[r["pid"]].get(st)
-                if arr is None or not altcal.allowed(ttab, altcal.group(r["pos"], st)):
-                    continue                                            # leg type shut off by its graded record
-                book = (main_lines or {}).get((r["pid"], st))
-                if book is None and C.ALT_BOOK_MAIN_ONLY:
-                    continue                                            # no posted line: no real alt ladder
-                main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
-                main = float(np.floor(main) + 0.5)                      # books use .5 lines
-                if main < C.ALT_MIN_MAIN[st]:
-                    continue                                            # role too small for a posted prop
-                step, drop = C.ALT_STEP[st], C.ALT_MAX_DROP[st]
-                for k in range(1, int(drop // step) + 1):               # alt lines below the main, never past the cap
-                    L = main - k * step
-                    if L < C.ALT_MIN_LINE[st]:
-                        break
-                    hit = arr > L
-                    p_raw = float(hit.mean())
-                    p = altcal.adjust(cal, r["pos"], st, p_raw)
-                    if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1] and p_raw > 0:
-                        cands.append({"pid": r["pid"], "name": r["name"], "team": game[side], "pos": r["pos"], "stat": st,
-                                      "line": L, "label": f"Over {L:g} {ALT_LABEL[st]}", "p": p, "p_raw": p_raw, "hit": hit,
-                                      "main": main, "main_src": "book" if book is not None else "model"})
+            # Over legs below the book's main line ("alt down") and Under legs above it ("alt up", Oct 26 2026)
+            for side, table in (("Over", ALT_STATS), ("Under", altcal.USTATS)):
+                for st in table.get(r["pos"], []):
+                    arr = sims[r["pid"]].get(st)
+                    if arr is None or not altcal.allowed(ttab, altcal.group(r["pos"], st, side)):
+                        continue                                            # leg type shut off by its graded record
+                    book = (main_lines or {}).get((r["pid"], st))
+                    if book is None and C.ALT_BOOK_MAIN_ONLY:
+                        continue                                            # no posted line: no real alt ladder
+                    main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
+                    if np.floor(main) + 0.5 < C.ALT_MIN_MAIN[st]:
+                        continue                                            # role too small for a posted prop
+                    for L in altcal.ladder(st, main, side):
+                        hit = arr > L if side == "Over" else arr < L
+                        p_raw = float(hit.mean())
+                        p = altcal.adjust(cal, r["pos"], st, p_raw, side)
+                        if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1] and p_raw > 0:
+                            cands.append({"pid": r["pid"], "name": r["name"], "team": game[side_], "pos": r["pos"], "stat": st,
+                                          "side": side, "line": L, "label": f"{side} {L:g} {ALT_LABEL[st]}", "p": p, "p_raw": p_raw,
+                                          "hit": hit, "main": float(np.floor(main) + 0.5), "main_src": "book" if book is not None else "model"})
     # team legs (Oct 21 2026): alt spreads, totals and team totals priced from Pinnacle's lines (altlines.team_legs);
     # their hits come from the same simulated games as the player legs, so the two combine at their real correlation
     tl_c = [{**t, "pid": "T:" + t["label"], "name": "", "team": t.get("teamname"), "pos": "TEAM", "stat": "team:" + t["market"],
@@ -733,7 +733,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 cover |= teams if cands[i].get("team") is None else {cands[i]["team"]}
             if not (p_lo <= pj <= p_hi) or cover != teams:
                 continue
-            if sum(1 for i in idx if not is_team(i) and cands[i]["stat"] != "rec") > C.ALT_MAX_YARD_LEGS:
+            if sum(1 for i in idx if not is_team(i) and cands[i]["stat"] in ALT_YARD_STATS) > C.ALT_MAX_YARD_LEGS:
                 continue                                            # yardage legs miss more than the sims say
             if sum(1 for i in idx if cands[i]["stat"] == "rush_yds") > C.ALT_MAX_RUSH_LEGS:
                 continue                                            # RB rushing misses most (82% real when the sims say 90%)
@@ -754,7 +754,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
              "name": "", "label": cands[i]["label"], "p": round(cands[i]["p"] * 100, 1), "p_model": round(cands[i]["p_model"] * 100, 1),
              "main_src": "pinnacle"} if is_team(i) else
             {"kind": "player", "pid": cands[i]["pid"], "name": cands[i]["name"], "team": cands[i]["team"], "pos": cands[i]["pos"],
-             "stat": cands[i]["stat"], "side": "Over", "line": cands[i]["line"], "label": cands[i]["label"],
+             "stat": cands[i]["stat"], "side": cands[i].get("side", "Over"), "line": cands[i]["line"], "label": cands[i]["label"],
              "main": cands[i]["main"], "main_src": cands[i]["main_src"], "p": round(cands[i]["p"] * 100, 1)} for i in idx]
     legs.sort(key=lambda L: (L["kind"] != "team", L.get("team") != game["away"], -L["p"]))
     share = sum(1 for L in legs if L["kind"] != "team") / len(legs)     # the ticket correction learned on player legs
@@ -1223,8 +1223,11 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
             altcal._TT.clear()
             cal_ = altcal.fit(HIST, OUT / "results.json", season)
             tt_ = altcal.type_table(HIST, OUT / "results.json", OUT / "props_log.json", season, cal_)
-            names_ = {"rec": "Receptions (any position)", "WR_rec_yds": "WR receiving yards", "TE_rec_yds": "TE receiving yards",
-                      "RB_rush_yds": "RB rushing yards", "QB_pass_yds": "QB passing yards"}
+            names_ = {"rec": "Receptions Over (any position)", "WR_rec_yds": "WR receiving yards Over", "TE_rec_yds": "TE receiving yards Over",
+                      "RB_rush_yds": "RB rushing yards Over", "QB_pass_yds": "QB passing yards Over",
+                      "QB_pass_cmp": "QB completions Over", "QB_pass_att": "QB pass attempts Over",
+                      "U_rec": "Receptions Under (any position)", "U_QB_pass_cmp": "QB completions Under",
+                      "U_QB_pass_att": "QB pass attempts Under", "U_RB_carries": "RB carries Under"}
             res["tracking"]["alt_leg_types"] = [{"group": g, "label": names_.get(g, g), **t, "on": altcal.allowed(tt_, g)}
                                                 for g, t in sorted(tt_.items())]
         except Exception as e:  # noqa: BLE001
