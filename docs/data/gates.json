@@ -8,5 +8,15 @@
   "status": "paused",
   "since": "2026-10-21",
   "history": []
+ },
+ "nfl_game_spread": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nfl_game_total": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
  }
 }
