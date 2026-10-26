@@ -8,5 +8,20 @@
   "status": "paused",
   "since": "2026-10-21",
   "history": []
+ },
+ "nhl_game_ml": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nhl_game_pl": {
+  "status": "paused",
+  "since": "2026-10-26",
+  "history": []
+ },
+ "nhl_game_total": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
  }
 }
