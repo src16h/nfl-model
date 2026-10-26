@@ -1,0 +1,17 @@
+{
+ "soccer_game_1x2": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "soccer_game_ah": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "soccer_game_total": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ }
+}
