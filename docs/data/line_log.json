@@ -5472,8 +5472,363 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -4.5,
+    "total": 43.5,
+    "margin": -17.0,
+    "points": 59.0
+   },
    "last_seen": "2026-10-26T22:34+00:00"
+  },
+  "2026_08_CAR_GB": {
+   "game_id": "2026_08_CAR_GB",
+   "season": 2026,
+   "week": 8,
+   "away": "CAR",
+   "home": "GB",
+   "kickoff": "2026-10-29T20:15:00-04:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 3.5,
+     "total": 47.5,
+     "m": 3.3,
+     "t": 47.5,
+     "edge_s": -0.2,
+     "edge_t": -0.0,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_BAL_BUF": {
+   "game_id": "2026_08_BAL_BUF",
+   "season": 2026,
+   "week": 8,
+   "away": "BAL",
+   "home": "BUF",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 3.5,
+     "total": 53.5,
+     "m": 4.1,
+     "t": 54.2,
+     "edge_s": 0.6,
+     "edge_t": 0.7,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_TEN_CIN": {
+   "game_id": "2026_08_TEN_CIN",
+   "season": 2026,
+   "week": 8,
+   "away": "TEN",
+   "home": "CIN",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 10.0,
+     "total": 46.5,
+     "m": 10.0,
+     "t": 47.3,
+     "edge_s": 0.0,
+     "edge_t": 0.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_ARI_DAL": {
+   "game_id": "2026_08_ARI_DAL",
+   "season": 2026,
+   "week": 8,
+   "away": "ARI",
+   "home": "DAL",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 6.5,
+     "total": 54.5,
+     "m": 6.8,
+     "t": 55.5,
+     "edge_s": 0.3,
+     "edge_t": 1.0,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_MIN_DET": {
+   "game_id": "2026_08_MIN_DET",
+   "season": 2026,
+   "week": 8,
+   "away": "MIN",
+   "home": "DET",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 3.0,
+     "total": 46.5,
+     "m": 3.2,
+     "t": 47.5,
+     "edge_s": 0.2,
+     "edge_t": 1.0,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_IND_JAX": {
+   "game_id": "2026_08_IND_JAX",
+   "season": 2026,
+   "week": 8,
+   "away": "IND",
+   "home": "JAX",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 7.5,
+     "total": 46.5,
+     "m": 7.9,
+     "t": 46.8,
+     "edge_s": 0.4,
+     "edge_t": 0.3,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_LV_NYJ": {
+   "game_id": "2026_08_LV_NYJ",
+   "season": 2026,
+   "week": 8,
+   "away": "LV",
+   "home": "NYJ",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": -1.5,
+     "total": 45.5,
+     "m": -2.0,
+     "t": 46.6,
+     "edge_s": -0.5,
+     "edge_t": 1.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_CLE_PIT": {
+   "game_id": "2026_08_CLE_PIT",
+   "season": 2026,
+   "week": 8,
+   "away": "CLE",
+   "home": "PIT",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 3.5,
+     "total": 39.5,
+     "m": 3.6,
+     "t": 40.1,
+     "edge_s": 0.1,
+     "edge_t": 0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_ATL_TB": {
+   "game_id": "2026_08_ATL_TB",
+   "season": 2026,
+   "week": 8,
+   "away": "ATL",
+   "home": "TB",
+   "kickoff": "2026-11-01T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 2.5,
+     "total": 46.5,
+     "m": 2.5,
+     "t": 47.0,
+     "edge_s": -0.0,
+     "edge_t": 0.5,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_LAC_LA": {
+   "game_id": "2026_08_LAC_LA",
+   "season": 2026,
+   "week": 8,
+   "away": "LAC",
+   "home": "LA",
+   "kickoff": "2026-11-01T16:05:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 6.5,
+     "total": 44.5,
+     "m": 6.8,
+     "t": 46.1,
+     "edge_s": 0.3,
+     "edge_t": 1.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_KC_DEN": {
+   "game_id": "2026_08_KC_DEN",
+   "season": 2026,
+   "week": 8,
+   "away": "KC",
+   "home": "DEN",
+   "kickoff": "2026-11-01T16:25:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": -1.5,
+     "total": 41.5,
+     "m": -0.7,
+     "t": 41.4,
+     "edge_s": 0.8,
+     "edge_t": -0.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_NE_MIA": {
+   "game_id": "2026_08_NE_MIA",
+   "season": 2026,
+   "week": 8,
+   "away": "NE",
+   "home": "MIA",
+   "kickoff": "2026-11-01T16:25:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": -7.5,
+     "total": 44.5,
+     "m": -7.7,
+     "t": 44.8,
+     "edge_s": -0.2,
+     "edge_t": 0.3,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_PHI_WAS": {
+   "game_id": "2026_08_PHI_WAS",
+   "season": 2026,
+   "week": 8,
+   "away": "PHI",
+   "home": "WAS",
+   "kickoff": "2026-11-01T20:20:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 4.5,
+     "total": 40.5,
+     "m": 4.6,
+     "t": 40.1,
+     "edge_s": 0.1,
+     "edge_t": -0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
+  },
+  "2026_08_CHI_SEA": {
+   "game_id": "2026_08_CHI_SEA",
+   "season": 2026,
+   "week": 8,
+   "away": "CHI",
+   "home": "SEA",
+   "kickoff": "2026-11-02T20:15:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-10-27T12:46+00:00",
+     "src": "feed",
+     "spread": 3.5,
+     "total": 46.5,
+     "m": 3.7,
+     "t": 47.1,
+     "edge_s": 0.2,
+     "edge_t": 0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-10-27T12:46+00:00"
   }
  }
 }
