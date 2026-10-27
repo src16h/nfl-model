@@ -1,0 +1,17 @@
+{
+ "cfb_game_spread": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "cfb_game_total": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "cfb_game_ml": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ }
+}
