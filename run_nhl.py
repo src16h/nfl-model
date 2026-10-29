@@ -513,10 +513,21 @@ def main():
     model = G.Model().fit(rows)
     eng, eng_info = G.fit_eng(model, rows[rows["season"] >= season - 3])
     form, lg = R.current(state, league, season)
-    tpow = model.team_power(form, lg)
     log.info(f"model coefs {model.coefs()}")
     rates, pos = P.skater_rates(pg, season)
     gskill = P.goalie_skill(gg, pg, season)
+    # today's rosters: trades, waivers and call-ups count the same day
+    rosters = {t: D.current_roster(t) for t in form}
+    log.info(f"live rosters read for {sum(v is not None for v in rosters.values())}/{len(rosters)} teams")
+    g_over = P.load_goalie_overrides(ROOT / "data" / "nhl" / "goalie_overrides.csv")
+    no1 = {}
+    for t in form:
+        pid, tag = P.projected_goalie(t, pg, today + timedelta(days=3), gskill, rosters.get(t), g_over)
+        if pid in gskill:
+            no1[t] = float(np.clip(np.log(gskill[pid]["ratio"]), -0.25, 0.25))
+            if tag.endswith("new arrival"):
+                log.info(f"{t}: No. 1 goalie is new arrival {gskill[pid]['name']}")
+    tpow = model.team_power(form, lg, gk=no1)
 
     sched = D.schedule(today, days=2)
     upcoming = [g for g in sched if g["state"] in ("FUT", "PRE") and
@@ -547,7 +558,7 @@ def main():
         # projected starting goalies
         goalies = {}
         for t in (h, a):
-            pid, status = P.projected_goalie(t, pg, gd, gskill)
+            pid, status = P.projected_goalie(t, pg, gd, gskill, rosters.get(t), g_over)
             sk = gskill.get(pid, {"ratio": 1.0, "name": "Unknown", "gsax": 0, "gp": 0})
             goalies[t] = {"pid": pid, "name": sk["name"], "status": status, "ratio": r(sk["ratio"], 3),
                           "gsax": r(sk["gsax"]), "gp": sk.get("gp")}
@@ -561,7 +572,7 @@ def main():
         X = pd.DataFrame(X)
         lam, mus = model.predict(X)
         # shots: blend the team model with what tonight's skaters usually shoot (steadier early in a season)
-        lineups = {t: P.lineup(t, pg, rates, pos) for t in (h, a)}
+        lineups = {t: P.lineup(t, pg, rates, pos, roster=rosters.get(t)) for t in (h, a)}
         for j, t in enumerate((h, a)):
             ind = sum(p["e_sog"] for p in lineups[t])
             if ind > 0:

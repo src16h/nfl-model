@@ -81,7 +81,7 @@ class Model:
         b = X["gbias"].to_numpy(float) if "gbias" in X else getattr(self, "bias_now", 1.0)
         return self.g.predict(X[GOAL_FEATS]) * X["lg_g"].to_numpy(float) * b, self.s.predict(X[SOG_FEATS]) * X["lg_sog"].to_numpy(float)
 
-    def team_power(self, form, lg):
+    def team_power(self, form, lg, gk=None):
         """Each team's expected regulation goal margin per game against a league-average team on neutral ice,
         from the goal model itself: shot quality (xG for and against) plus finishing and goaltending."""
         lg_fin = lg["gfq"] / lg["xgf"]
@@ -90,10 +90,11 @@ class Model:
         for t in teams:
             f = form[t]
             fin = float(np.log(f["gfq"] / f["xgf"]) - np.log(lg_fin))
-            gk = float(np.log(f["gaq"] / f["xga"]) - np.log(lg_fin))
+            # goaltending: the team's No. 1 goalie today (a trade counts at once), else its season form
+            g_ = float(np.log(f["gaq"] / f["xga"]) - np.log(lg_fin)) if not gk or t not in gk else float(gk[t])
             base = {k: 0.0 for k in GOAL_FEATS}
             rows.append(base | {"x_off": float(np.log(f["xgf"] / lg["xgf"])), "x_fin": fin})     # this team scoring
-            rows.append(base | {"x_def": float(np.log(f["xga"] / lg["xgf"])), "x_gk": gk})       # this team defending
+            rows.append(base | {"x_def": float(np.log(f["xga"] / lg["xgf"])), "x_gk": g_})       # this team defending
         if not rows:
             return {}
         mu = self.g.predict(pd.DataFrame(rows)[GOAL_FEATS]) * lg["gf"] * getattr(self, "bias_now", 1.0)

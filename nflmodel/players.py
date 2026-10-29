@@ -9,6 +9,7 @@ x matchup       (where the defense gives up targets: WR / TE / RB, dvp.py)
 x secondary     (cover players out this week vs usual, PFR charting; matchups.py)
 = projection    then ranges from a skewed (gamma) distribution
 """
+import logging
 import zlib
 import numpy as np
 import pandas as pd
@@ -17,6 +18,8 @@ from scipy import stats
 from . import config as C
 from .util import shrink, fnum
 from .propsim import simulate_team, quantiles
+
+log = logging.getLogger("nflmodel")
 
 
 def _prior(stat, pos):
@@ -81,8 +84,28 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
 
     mx = mx or {}
     cov_mult = float(mx.get("cov", {}).get(opp, 1.0))
-    use = u["usage"]
-    use = use[use["team"] == team].copy()
+    allu = u["usage"]
+    use = allu[allu["team"] == team].copy()
+    if roster is not None:
+        # new arrivals (trade or signing): carry over most of the role they had on their old team
+        # until they have a few weeks of their own here. Shares are re-scaled to the team below.
+        here = set(roster.loc[roster["team"] == team, "gsis_id"])
+        prev = allu[allu["pid"].isin(here) & (allu["team"] != team) & ((allu["tgt_share"] + allu["car_share"]) > 0.03)]
+        add = []
+        for pid, x in prev.groupby("pid"):
+            old = x.loc[(x["tgt_share"] + x["car_share"]).idxmax()]
+            cur = use[use["pid"] == pid]
+            if len(cur) and int(cur["wks"].iloc[0]) >= C.ARRIVAL_WEEKS:
+                continue
+            carry = {c: C.ARRIVAL_SHARE * float(old[c]) for c in ["tgt_share", "car_share", "rz_tgt_share", "rz_car_share"]}
+            if len(cur):
+                for c, v in carry.items():
+                    use.loc[use["pid"] == pid, c] = max(float(cur[c].iloc[0]), v)
+            else:
+                add.append({"team": team, "pid": pid, "wks": 0, **carry})
+            log.info(f"{team}: new arrival {pid} from {old['team']} keeps {C.ARRIVAL_SHARE:.0%} of his old role")
+        if add:
+            use = pd.concat([use, pd.DataFrame(add)], ignore_index=True)
     out_ids = set(inj.loc[inj["status"].isin(["OUT", "DOUBTFUL", "IR"]), "pid"].dropna())
     q_ids = set(inj.loc[inj["status"] == "QUESTIONABLE", "pid"].dropna())
     use = use[~use["pid"].isin(out_ids)]

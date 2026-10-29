@@ -292,3 +292,8 @@ WONG_MAX_TICKETS = 3        # 2-team tickets a week, each leg used once
 WONG_MIN_EV = 2.0           # a ticket is a play only if it shows this much expected profit at the price
 WONG_HIST_WEIGHT = 0.5      # each leg's chance = this share of its historical rate + the rest from the model
 WONG_HIST_FALLBACK = {"low": 74.9, "other": 73.1}   # underdog Wong legs since 2023 (low total / higher total), used if history can't load
+
+# New arrivals (trade or signing): share of a player's old-team targets/carries he keeps
+# until he has ARRIVAL_WEEKS weeks of his own with the new team.
+ARRIVAL_SHARE = 0.80
+ARRIVAL_WEEKS = 3

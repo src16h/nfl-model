@@ -48,6 +48,20 @@ def api(path, max_age_h=0.5):
     return json.loads(_cached(name, f"{API}/{path}", max_age_h).read_text())
 
 
+def current_roster(team):
+    """Today's NHL roster for one club (trades and call-ups show up the same day).
+    Returns {"G": {id: name}, "S": {id: name}} or None if the feed is down."""
+    try:
+        d = api(f"roster/{team}/current", max_age_h=2)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"roster {team} not read: {e}")
+        return None
+    nm = lambda p: f"{p['firstName']['default']} {p['lastName']['default']}"
+    out = {"G": {int(p["id"]): nm(p) for p in d.get("goalies", [])},
+           "S": {int(p["id"]): nm(p) for p in d.get("forwards", []) + d.get("defensemen", [])}}
+    return out if out["G"] else None
+
+
 def team_games(games: pd.DataFrame, since=2021):
     """One row per team per game from data/nhl/games.csv (regulation stats)."""
     g = games[games["season"] >= since].copy()

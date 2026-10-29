@@ -96,3 +96,50 @@ def recently_out_ids(injuries, season, week, lookback=4) -> set:
                  (injuries["week"] >= week - lookback)]
     st = i["report_status"].map(normalize_status)
     return set(i.loc[st.isin(["OUT", "DOUBTFUL"]), "gsis_id"].dropna())
+
+
+ESPN_ABBR = {"WAS": "wsh", "LA": "lar"}          # nflverse code -> ESPN code when they differ
+
+
+def live_roster_overlay(roster: pd.DataFrame | None) -> pd.DataFrame | None:
+    """Fix the weekly roster file with today's ESPN rosters, so a trade or cut counts the same day
+    instead of next week. A player moves team only when his name and position group match exactly
+    one player in the weekly file; anyone ESPN lists nowhere stays as he was (name spellings differ)."""
+    if roster is None or not len(roster):
+        return roster
+    import json
+    import urllib.request
+    live = {}
+    for team in sorted(roster["team"].dropna().unique()):
+        code = ESPN_ABBR.get(team, team.lower())
+        url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{code}/roster"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 nfl-model"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read())
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"ESPN roster {team} not read: {e}")
+            continue
+        for grp in d.get("athletes", []):
+            for a in grp.get("items", []):
+                pg_ = pos_group((a.get("position") or {}).get("abbreviation"))
+                live.setdefault((norm_name(a.get("fullName", "")), pg_), []).append(team)
+    if len(live) < 1000:                                   # feed mostly down: keep the weekly file as is
+        log.warning(f"ESPN live rosters thin ({len(live)} players): not used")
+        return roster
+    r = roster.copy()
+    r["moved_from"] = None
+    key_n = r.groupby(["nname", "pgroup"])["gsis_id"].transform("count")
+    moves = []
+    for i, row in r.iterrows():
+        teams = live.get((row["nname"], row["pgroup"]))
+        if key_n[i] != 1 or not teams or len(set(teams)) != 1:
+            continue
+        new = teams[0]
+        if new != row["team"]:
+            moves.append(f"{row['full_name']} {row['team']}->{new}")
+            r.at[i, "moved_from"], r.at[i, "team"] = row["team"], new
+            r.at[i, "roster_ok"] = True
+    log.info(f"live rosters: {len(live)} players, {len(moves)} team changes since the weekly file"
+             + (f": {', '.join(moves[:25])}" if moves else ""))
+    return r

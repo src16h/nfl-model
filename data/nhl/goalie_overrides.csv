@@ -1,0 +1,4 @@
+# Confirmed starting goalies. The model uses these over its own projection.
+# date = game day (YYYY-MM-DD, Eastern). Leave date blank to apply to every game until you delete the row.
+# Example: 2026-10-30,NJD,Connor Hellebuyck
+date,team,goalie

@@ -35,7 +35,7 @@ from nflmodel.util import before, clean_json
 from nflmodel import picks as P
 from nflmodel import tracker
 from nflmodel import usage as U
-from nflmodel.availability import current_roster, load_overrides, injury_table, recently_out_ids
+from nflmodel.availability import current_roster, live_roster_overlay, load_overrides, injury_table, recently_out_ids
 from nflmodel.qb import expected_qbs
 from nflmodel.adjust import starters_from_snaps, injury_points, Scheme
 from nflmodel import dvp as DV
@@ -179,7 +179,7 @@ def build_games(bundle, season, week, now):
     team_tt = TeamTotals(sch)
 
     u = U.build(bundle.pbp, season, week)
-    roster = current_roster(bundle.rosters, season, week)
+    roster = live_roster_overlay(current_roster(bundle.rosters, season, week))   # same-day trades and cuts
     overrides = load_overrides(ROOT / "data" / "overrides.csv")
     inj = injury_table(bundle.injuries, roster, overrides, season, week)
     teams = sorted(set(todo["home_team"]) | set(todo["away_team"]))

@@ -70,14 +70,17 @@ def goalie_skill(gg: pd.DataFrame, pg: pd.DataFrame, season: int):
     return out
 
 
-def lineup(team, pg, rates, pos, n_recent=3):
-    """Skaters from the team's most recent game, with expected ice time and rates."""
+def lineup(team, pg, rates, pos, n_recent=3, roster=None):
+    """Skaters from the team's most recent game, with expected ice time and rates.
+    With today's roster: players traded or sent down since then are dropped."""
     t = pg[(pg["team"] == team) & (pg["pos"] != "G")]
     if t.empty:
         return []
     recent_ids = sorted(t["game_id"].unique())[-n_recent:]
     last = t[t["game_id"] == recent_ids[-1]]
     rec = t[t["game_id"].isin(recent_ids)].groupby("pid")["toi"].mean().to_dict()
+    if roster and roster.get("S"):
+        last = last[last["pid"].astype(int).isin(roster["S"])]
     out = []
     for p in last.itertuples(index=False):
         rt = rates.get(int(p.pid))
@@ -90,24 +93,73 @@ def lineup(team, pg, rates, pos, n_recent=3):
     return out
 
 
-def projected_goalie(team, pg, game_date, gskill):
-    """Most likely starter: the goalie with the most recent starts, but the other one
-    when the team played yesterday and the usual starter went then."""
-    gl = pg[(pg["team"] == team) & (pg["pos"] == "G") & (pg["starter"] == 1)].sort_values(["date", "game_id"])
-    if gl.empty:
+def load_goalie_overrides(path):
+    """data/nhl/goalie_overrides.csv: date,team,goalie (a confirmed starter; blank date = every game)."""
+    try:
+        o = pd.read_csv(path, comment="#", dtype=str).dropna(subset=["team", "goalie"])
+        o["team"] = o["team"].str.strip().str.upper()
+        o["nname"] = o["goalie"].map(norm_name)
+        o["date"] = o.get("date", pd.Series("", index=o.index)).fillna("").str.strip()
+        return o
+    except Exception:  # noqa: BLE001
+        return pd.DataFrame(columns=["date", "team", "goalie", "nname"])
+
+
+def projected_goalie(team, pg, game_date, gskill, roster=None, overrides=None):
+    """Most likely starter.
+    Candidates: goalies on today's NHL roster (so trades count the same day), else anyone who
+    dressed for the team lately. Each candidate is judged on his OWN recent games on any team
+    (share of the last 20 games he dressed that he started), so a starter who just arrived by trade
+    is the No. 1 right away. Near-ties go to the better goalie. The No. 2 goes on a back-to-back
+    when the No. 1 started yesterday. A manual override (confirmed starter) beats all of this."""
+    gd = pd.Timestamp(game_date)
+    G = pg[pg["pos"] == "G"].sort_values(["date", "game_id"])
+    tg = G[G["team"] == team]
+    if roster and roster.get("G"):
+        cands = set(roster["G"])
+    else:
+        recent = sorted(tg["game_id"].unique())[-5:]
+        cands = set(tg[tg["game_id"].isin(recent)]["pid"].astype(int))
+    if overrides is not None and len(overrides):
+        o = overrides[(overrides["team"] == team) & overrides["date"].isin(["", gd.date().isoformat()])]
+        for nn in o["nname"]:
+            pool = {**{p: v.get("name", "") for p, v in gskill.items()}, **((roster or {}).get("G", {}))}
+            hit = [p for p, n in pool.items() if norm_name(n) == nn and (not cands or p in cands)]
+            if hit:
+                return int(hit[0]), "Confirmed (manual)"
+    if not cands:
         return None, "Projected"
-    last10 = gl.tail(10)
-    counts = last10["pid"].value_counts()
-    main = int(counts.index[0])
-    last = gl.iloc[-1]
-    b2b = (pd.Timestamp(game_date) - pd.Timestamp(last["date"])).days <= 1
-    if b2b and int(last["pid"]) == main:
-        others = [int(x) for x in counts.index[1:]]
-        if not others:                                  # use any other goalie on the roster lately
-            others = [int(x) for x in pg[(pg["team"] == team) & (pg["pos"] == "G")]["pid"].unique() if int(x) != main]
-        if others:
-            return others[0], "Projected, back-to-back"
-    return main, "Projected"
+    score, new = {}, set()
+    for pid in cands:
+        x = G[G["pid"] == pid]
+        if x.empty:
+            score[pid] = 0.0
+            continue
+        last = x.iloc[-1]
+        # the team has played 3+ games without him dressing: hurt or out of the rotation
+        missed = tg[tg["date"] > last["date"]]["game_id"].nunique()
+        if missed >= 3:
+            score[pid] = -1.0
+            continue
+        # share of his own last 20 dressed games (any team) that he started, recent games count more
+        st = x.tail(20)["starter"].to_numpy(float)
+        w = 0.5 ** (np.arange(len(st))[::-1] / 8.0)
+        score[pid] = float((st * w).sum() / w.sum())
+        here = x[x["team"] == team]
+        if len(here) and (x["team"] != team).any() and (gd - pd.Timestamp(here["date"].iloc[0])).days <= 14:
+            new.add(pid)                                    # joined this team in the last two weeks
+    ratio = lambda p: gskill.get(p, {}).get("ratio", 1.05)
+    order = sorted(cands, key=lambda p: (-score[p], ratio(p)))
+    if len(order) > 1 and score[order[0]] - score[order[1]] < 0.10 and ratio(order[1]) < ratio(order[0]):
+        order[0], order[1] = order[1], order[0]           # near-even split: lean to the better goalie
+    main = order[0]
+    tag = "Projected, new arrival" if main in new else "Projected"
+    ts = tg[tg["starter"] == 1]
+    if len(ts) and len(order) > 1:
+        lastg = ts.iloc[-1]
+        if (gd - pd.Timestamp(lastg["date"])).days <= 1 and int(lastg["pid"]) == main:
+            return int(order[1]), "Projected, back-to-back"
+    return int(main), tag
 
 
 def _dist(x, maxk):

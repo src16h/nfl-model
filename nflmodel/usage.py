@@ -93,6 +93,12 @@ def build(pbp_all: pd.DataFrame, season: int, week: int) -> dict:
     }).fillna(0.0)
     usage.index.names = ["team", "pid"]
     usage = usage.reset_index()
+    # weeks each player has touched the ball for each team this season (spots new arrivals)
+    cs = ev[(ev["season"] == season) & ev["kind"].isin(["tgt", "car"])]
+    wks = cs.groupby(["posteam", "pid"])["week"].nunique()
+    wks.index.names = ["team", "pid"]
+    usage = usage.merge(wks.rename("wks").reset_index(), on=["team", "pid"], how="left")
+    usage["wks"] = usage["wks"].fillna(0).astype(int)
 
     # Efficiency: two seasons, current weighted fully, last season 60%
     ew = np.where(ev["season"] == season, 1.0, np.where(ev["season"] == season - 1, 0.6, 0.0))

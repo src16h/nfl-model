@@ -107,7 +107,15 @@ def expected_qbs(teams, u: dict, roster, inj_table, overrides, recent_out, seaso
             recent = cur[cur["week"].isin(recent_wks)].groupby("pid")["dropbacks"].sum()
             e_lead = est.reindex(avail).dropna()
             r_lead = recent.reindex(avail).dropna()
-            if len(e_lead) and e_lead.idxmax() in recent_out and \
+            # starters who just arrived by trade: started elsewhere this season, no snaps here yet
+            sq = qw[(qw["season"] == season) & (qw["posteam"] != team) & qw["pid"].isin(avail) & ~qw["pid"].isin(set(cur["pid"]))]
+            per_g = sq.groupby("pid")["dropbacks"].mean()
+            arrived = [p for p, v in per_g.items() if v >= 25]
+            rs = r_lead.idxmax() if len(r_lead) else (e_lead.idxmax() if len(e_lead) else None)
+            best_new = max(arrived, key=quality) if arrived else None
+            if best_new is not None and (rs is None or quality(best_new) > quality(rs)):
+                expected, why = best_new, "acquired starter (traded in)"
+            elif len(e_lead) and e_lead.idxmax() in recent_out and \
                     (not len(r_lead) or r_lead.idxmax() != e_lead.idxmax()):
                 expected, why = e_lead.idxmax(), "returning from injury"
             elif len(r_lead):
