@@ -23,5 +23,30 @@
   "status": "active",
   "since": "2026-10-20",
   "history": []
+ },
+ "nhl_prop_sog_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nhl_prop_sog_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nhl_prop_goals_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nhl_prop_assists_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nhl_prop_assists_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
  }
 }
