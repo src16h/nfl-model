@@ -418,19 +418,35 @@ def tracking(history_days, results):
             "by_type": {"game": by_kind, "prop": by_prop}}
 
 
-def cap_props(players):
-    """Keep only the best N plays of a stat and side in each game (C.PROP_CAP_PER_GAME).
-    Same-game Unders win and lose together, so 10 of them in one game is one big bet, not 10."""
-    for (stat, side), cap in C.PROP_CAP_PER_GAME.items():
-        by_game = {}
-        for p in players:
-            b = p["m"].get(stat, {}).get("book")
-            if b and b.get("play") and b.get("side") == side:
-                by_game.setdefault(p["game_id"], []).append(b)
+def cap_props(players, games=None):
+    """Same-direction props move together (a high-event night lifts every Over, a slow one every Under), so many
+    of them in one game, or one night, is one big bet. Oct 19: 38 points Unders, -13u. Oct 29: 33 shots Unders
+    (6 in one game), 11-21, -11.4u, after the model leaned Under on 171 of 183 shots props.
+    Keep the best by expected return: C.PROP_CAP_GAME per stat and side in each game, C.PROP_CAP_NIGHT per stat
+    and side each night, and C.PROP_CAP_ONEWAY a night when the model leans one way on most of a stat's props."""
+    gdate = {g["game_id"]: g.get("date") for g in (games or [])}
+    def cap_out(bs, n):
+        for b in sorted(bs, key=lambda x: -(x.get("ev") or 0))[n:]:
+            b["play"] = False
+            b["capped"] = True
+    plays, leans = {}, {}
+    for p in players:
+        for stat, m in p["m"].items():
+            b = m.get("book")
+            if not b or not b.get("side"):
+                continue
+            day = gdate.get(p["game_id"])
+            leans.setdefault((day, stat), []).append(b["side"])
+            if b.get("play"):
+                plays.setdefault((day, stat, b["side"]), {}).setdefault(p["game_id"], []).append(b)
+    for (day, stat, side), by_game in plays.items():
+        cap_g = C.PROP_CAP_PER_GAME.get((stat, side), C.PROP_CAP_GAME)
         for bs in by_game.values():
-            for b in sorted(bs, key=lambda x: -(x.get("ev") or 0))[cap:]:
-                b["play"] = False
-                b["capped"] = True
+            cap_out(bs, cap_g)
+        alive = [b for bs in by_game.values() for b in bs if b.get("play")]
+        ls = leans.get((day, stat), [])
+        oneway = len(ls) >= 20 and sum(x == side for x in ls) / len(ls) >= C.PROP_ONEWAY_SHARE
+        cap_out(alive, C.PROP_CAP_ONEWAY if oneway else C.PROP_CAP_NIGHT)
 
 
 def prop_bias(hist_dir, results):
@@ -693,7 +709,7 @@ def main():
                                     side_k=st in C.PROP_SIDE_K_STATS)
                 if d2 and d2["play"]:
                     b["shadow"] = "nhl_points"
-    cap_props(players)
+    cap_props(players, games)
     edge_new = edge_parlays(players, games)
     level = {k: r(v, 3) for k, v in level.items()}
     log.info(f"prop level vs book (model minus book, over %): {level}")

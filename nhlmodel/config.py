@@ -39,6 +39,11 @@ BLOCKED = {"points", "saves", "pl_dog", "totals"}   # Oct 21 2026: points fully 
 # Oct 20 2026: points Unders fired 38-53 a night (7-12 in one game), claimed +7 points over the book on
 # plays and delivered 0. Three guards:
 PROP_CAP_PER_GAME = {("points", "Under"): 2}   # best N by expected return in each game; the rest are not plays
+# Oct 29 2026: 33 shots Unders in one night (6 in one game) went 11-21, -11.4u. Caps now cover every stat and side.
+PROP_CAP_GAME = 2                # plays per stat and side in one game
+PROP_CAP_NIGHT = 8               # plays per stat and side in one night
+PROP_ONEWAY_SHARE = 0.80         # if the model leans one way on this share of a stat's props tonight, it's a level
+PROP_CAP_ONEWAY = 4              # call, not many edges: keep only this many that night
 PROP_BIAS_DECAY = 0.90           # bias nudge: each older day counts 10% less (half-life about a week)
 PROP_SIDE_K_STATS = {"points"}   # these stats scale the edge by how much the PLAYS on that side really delivered
 PROP_SIDE_K_MIN = 50             # graded plays on a side before that counts
