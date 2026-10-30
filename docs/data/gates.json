@@ -18,5 +18,10 @@
   "status": "active",
   "since": "2026-10-20",
   "history": []
+ },
+ "nfl_prop_pass_under": {
+  "status": "paused",
+  "since": "2026-10-29",
+  "history": []
  }
 }
