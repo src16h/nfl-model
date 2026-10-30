@@ -554,7 +554,7 @@ def grade_props(path, pbp, schedules, now, snaps=None):
 def gate_rows(path):
     """Graded rows for each NFL gate (gates.py): shadow plays while paused, real plays once it's back."""
     lg = _load(path, {"props": {}})
-    out = {"nfl_prop_overs": ([], []), "nfl_prop_rec": ([], [])}
+    out = {"nfl_prop_overs": ([], []), "nfl_prop_rec": ([], []), "nfl_prop_pass_under": ([], [])}
 
     def row(res, fl):
         lr = (res or {}).get("lean_result")
@@ -575,6 +575,8 @@ def gate_rows(path):
                 continue
             if r.get("stat") == "rec":
                 out["nfl_prop_rec"][1].append(x)
+            elif r.get("stat") == "pass_yds" and fl.get("lean") == "Under":
+                out["nfl_prop_pass_under"][1].append(x)
             elif r.get("stat") in ("pass_yds", "rush_yds", "rec_yds") and fl.get("lean") == "Over":
                 out["nfl_prop_overs"][1].append(x)
     return out
@@ -585,9 +587,18 @@ def _rec_block(items):
     l = sum(1 for r in items if r["result"]["lean_result"] == "loss")
     p = sum(1 for r in items if r["result"]["lean_result"] == "push")
     units = sum(r["result"]["profit"] or 0 for r in items)
+    imps = []                                           # break-even for the prices actually bet
+    for r in items:
+        fl = r.get("flag") or {}
+        o = fl.get("odds") if fl.get("odds") not in (None, "") else (r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"))
+        try:
+            imps.append(1 / (1 + _payout(o)))
+        except (TypeError, ValueError, ZeroDivisionError):
+            pass
+    be = float(np.mean(imps)) if imps else None
     return {"w": w, "l": l, "push": p, "units": fnum(units, 2),
             "roi": fnum(100 * units / (w + l), 1) if (w + l) else None,
-            **(record_stats(w, l) or {"n": 0})}
+            **(record_stats(w, l, be) or {"n": 0})}
 
 
 def prop_summary(lg):

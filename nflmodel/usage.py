@@ -117,7 +117,7 @@ def build(pbp_all: pd.DataFrame, season: int, week: int) -> dict:
     car = agg("car", ["yds", "td"]).add_prefix("car_")
     att = agg("att", ["cmp", "yds", "td", "int"]).add_prefix("qb_")
     db = agg(["att", "sack", "scr"], ["epa"]).add_prefix("db_")
-    scr = agg("scr", ["yds"]).add_prefix("scr_")
+    scr = agg("scr", ["yds", "td"]).add_prefix("scr_")
     eff = pd.concat([rec, car, att, db, scr], axis=1).fillna(0.0)
 
     names = ev.dropna(subset=["name"]).sort_values(["season", "week"]).groupby("pid")["name"].last()

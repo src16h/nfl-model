@@ -82,7 +82,12 @@ PRIORS = {
     "qb_int": (0.024, 300),
     "qb_scramble_rate": (0.035, 150),
     "qb_scramble_ypa": (7.0, 30),
+    # Oct 29 2026: rushing TDs per designed carry. QBs score on 8.3% of designed runs (sneaks, keepers) vs 3.2% for
+    # everyone else (2024-25). Splitting team rushing TDs by carry share alone gave QBs about a third of their real TDs.
+    "td_per_car": {"QB": (0.083, 60), "RB": (0.032, 120), "WR": (0.03, 30), "TE": (0.05, 20)},
+    "qb_scramble_td": (0.035, 80),   # TDs per scramble (2024-25: 3.5%); scrambles had yards but no TDs before
 }
+TD_CAR_POWER = 0.7           # how strongly a player's TD-per-carry rate tilts his share of team rushing TDs
 DEF_SHRINK_K = 250           # plays before a defense's allowed stats are trusted
 
 # Spread of outcomes for yardage ranges (coefficient of variation)
@@ -168,6 +173,12 @@ PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct
 # Sides allowed to be a Play (Oct 21 2026). Yardage plays so far: Unders 41-23 (+13.3u), Overs 26-25 (-1.8u); across every
 # graded lean Overs hit 44% (576) vs Unders 56% (641). Books shade Overs, so Overs stay leans until they show an edge.
 PROP_PLAY_SIDES = ["Under"]
+# Oct 29 2026 review (weeks 4-7, graded leans): receiving-yard Unders with a model gap of 4-10% went 51-33 (+15%),
+# 10%+ went 93-89 (-3%). Big gaps there are usually missing news (role change, injury), so they stay Watch.
+PROP_EDGE_CAP = {("rec_yds", "Under"): 0.10}
+# Paused prop types (gates.py tracks them as shadow plays and brings them back once they earn it).
+# Passing-yard Unders: 13-20 (-25%) as leans; back after 60 graded shadow plays at +3% or better.
+PROP_PAUSED_TYPES = {("pass_yds", "Under"): "nfl_prop_pass_under"}
 # A "No TD" pick needs a real No price from the book. Without one it is never flagged.
 TD_NO_NEEDS_PRICE = True
 

@@ -28,7 +28,7 @@ def _norm_factor(x):
 
 
 def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
-                  scr_car, scr_yds, seed=0, pass_att=None, shocks=None) -> dict:
+                  scr_car, scr_yds, seed=0, pass_att=None, shocks=None, scr_td=0.0) -> dict:
     """pool: one row per non-QB-scramble player with mean rec, rec_yds, rec_td,
     carries, rush_yds, rush_td. Returns pid -> {stat: array}."""
     N = C.PLAYER_SIMS
@@ -97,6 +97,8 @@ def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
             sy = rng.gamma(1.5, max(scr_yds, 0.1) / 1.5, N)
             q["rush_yds"] = q["rush_yds"] + sy
             q["carries"] = q["carries"] + rng.poisson(scr_car, N)
+        if scr_td > 0:                                  # scramble TDs (Oct 29 2026)
+            q["rush_td"] = q["rush_td"] + rng.poisson(scr_td * _norm_factor(Fr ** 1.2))
         q["pass_yds"] = rec_yds.sum(axis=1)
         q["pass_cmp"] = rec_n.sum(axis=1).astype(float)
         # QB first quarter: full-game passing yards x a first-quarter share that varies
@@ -336,9 +338,14 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
                 cons_ev = 100 * (pc * (1 + BR.payout(price)) - 1)
         row["cons_ev"] = None if cons_ev is None else fnum(cons_ev, 1)
         if tier in ("play", "watch") and dec is not None:
+            capped_ = abs(edge) >= getattr(C, "PROP_EDGE_CAP", {}).get((stat, side), 9.9)
+            paused_ = getattr(C, "PROP_PAUSED_TYPES", {}).get((stat, side))
             ok = (dec["play"] and stat in C.PROP_PLAY_STATS and side in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under"))
-                  and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side
+                  and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and not capped_
                   and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
+            if ok and paused_:                         # paused type: graded as a shadow play, not a play
+                ok = False
+                row["shadow"] = paused_
             tier = "play" if ok else "watch"
             # shadow plays (gates.py): would have been a play if a paused type were still on
             if not ok and dec["play"] and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and cons_ev is not None \

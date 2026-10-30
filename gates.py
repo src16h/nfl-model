@@ -19,6 +19,8 @@ GATES = {
     # NFL
     "nfl_prop_overs": {"label": "NFL prop Overs (yardage)", "min_n": 40, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-21",
                        "why": "Paused Oct 21: 26-25 as plays (-1.8u) while Unders went 41-23 (+13.3u)"},
+    "nfl_prop_pass_under": {"label": "NFL passing-yard Unders", "min_n": 60, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-29",
+                            "why": "Paused Oct 29: 13-20 (-25%) as leans in weeks 4-7 while rushing and receiving Unders won"},
     "nfl_prop_rec": {"label": "NFL receptions props", "min_n": 40, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-21",
                      "why": "Cut earlier in October: 15-23 as plays, heavy juice"},
     # NHL

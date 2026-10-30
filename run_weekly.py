@@ -1205,7 +1205,7 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         tracker.update_props_log(OUT / "props_log.json", prop_rows, season, week, now)
         res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now, snaps=bundle.snaps)
         try:                                   # paused bet types: shadow record and the bar to come back (gates.py)
-            gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec"))
+            gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under"))
             rows = tracker.gate_rows(OUT / "props_log.json")
             res["gates"] = [GT.update(OUT / "gates.json", gst, k, sh, pl, now.date().isoformat()) for k, (sh, pl) in rows.items()]
         except Exception as e:  # noqa: BLE001
@@ -1254,7 +1254,8 @@ def main():
     log.info(f"season {season}")
     bundle = D.load_all(season)
     # paused bet types (gates.py): a type that has earned its way back is a play again from this run on
-    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec") + GT.game_names("nfl"))
+    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under") + GT.game_names("nfl"))
+    C.PROP_PAUSED_TYPES = {k: v for k, v in C.PROP_PAUSED_TYPES.items() if not GT.active(gst, v)}
     C.GAME_PAUSED = GT.paused_kinds(gst, "nfl")
     if GT.active(gst, "nfl_prop_overs"):
         C.PROP_PLAY_SIDES = ["Over", "Under"]

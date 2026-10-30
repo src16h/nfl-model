@@ -126,6 +126,17 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
         tot = use[c].sum()
         use[c] = use[c] / tot if tot > 0 else 0.0
 
+    def td_tilt(pos, td, n):
+        m, k = C.PRIORS["td_per_car"].get(pos, C.PRIORS["td_per_car"]["RB"])
+        rate = (td + m * k) / (n + k)
+        return (rate / C.PRIORS["td_per_car"]["RB"][0]) ** C.TD_CAR_POWER
+
+    # QB scramble TDs come out of the team's rushing TDs; the rest go to designed carries
+    st_m, st_k = C.PRIORS["qb_scramble_td"]
+    scr_td_rate = float(shrink(qrow.get("scr_td", 0), qrow.get("scr_n", 0), st_m, st_k)) if qrow is not None else st_m
+    scr_tds = min(scrambles * scr_td_rate, 0.5 * rush_tds)
+    rush_tds = rush_tds - scr_tds
+
     rows = []
     for _, r in use.iterrows():
         pid = r["pid"]
@@ -147,10 +158,12 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
             "targets": tgt, "rec": tgt * float(catch), "rec_yds": tgt * float(ypt),
             "rec_td": pass_tds * (0.5 * r["tgt_share"] + 0.5 * r["rz_tgt_share"]),
             "carries": car, "rush_yds": car * float(ypc),
-            "rush_td": rush_tds * (0.5 * r["car_share"] + 0.5 * r["rz_car_share"]),
+            "rush_td": (0.5 * r["car_share"] + 0.5 * r["rz_car_share"]) * td_tilt(pos, g("car_td"), g("car_n")),   # weight, scaled below
             "cov_mult": cov_mult,
         })
     df = pd.DataFrame(rows)
+    if len(df) and df["rush_td"].sum() > 0:                # weights -> expected designed-run TDs
+        df["rush_td"] = rush_tds * df["rush_td"] / df["rush_td"].sum()
     if dvp is not None and len(df):
         df = dvp.adjust(df, opp)          # shifts targets / yards between positions; team totals unchanged
 
@@ -177,7 +190,7 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
     if len(df):
         seed = zlib.crc32(f"{game['game_id']}{team}".encode())
         sims = simulate_team(df, qb_pid, pass_tds, rush_tds, pass_att * int_rate,
-                             scrambles, scrambles * scr_ypa, seed=seed, pass_att=pass_att, shocks=shocks)
+                             scrambles, scrambles * scr_ypa, seed=seed, pass_att=pass_att, shocks=shocks, scr_td=scr_tds)
         # simulated passing volume follows receivers; keep the mean consistent
         team_cmp = float(df["rec"].sum())
 
@@ -192,7 +205,8 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
                      "pass_att": pass_att, "pass_cmp": team_cmp, "pass_yds": team_yds,
                      "pass_td": pass_tds, "pass_int": pass_att * int_rate,
                      "carries": base["carries"] + scrambles,
-                     "rush_yds": base["rush_yds"] + scrambles * scr_ypa})
+                     "rush_yds": base["rush_yds"] + scrambles * scr_ypa,
+                     "rush_td": base["rush_td"] + scr_tds})
         df = df[df["pid"] != qb_pid] if len(df) else df
         df = pd.concat([df, pd.DataFrame([base])], ignore_index=True)
 
@@ -217,13 +231,21 @@ def _rng(sim, key, mean, cv):
     return _gamma_range(mean, cv)
 
 
+def _td_cal(p, line):
+    from .propsim import td_scale
+    return td_scale(p, line) if 0 < p < 1 else p
+
+
 def _finish(r, game_id, sim=None) -> dict:
     tdp = float(sim["anytime_td"].mean()) if sim is not None else r["td_prob"]
     lam = r["rush_td"] + r["rec_td"]
     td2 = float((sim["tds"] >= 2).mean()) if sim is not None and "tds" in sim else 1 - np.exp(-lam) * (1 + lam)
     d = {"game_id": game_id, "pid": r["pid"], "name": r["name"], "pos": r["pos"],
          "team": r["team"], "opp": r["opp"], "status": r["status"],
-         "fpts": fnum(r["fpts_ppr"]), "td_prob": fnum(tdp * 100, 1), "td2_prob": fnum(td2 * 100, 1),
+         "fpts": fnum(r["fpts_ppr"]),
+         # Oct 29 2026: the TD board shows the calibrated chance (same curve the TD props use); raw kept for refits
+         "td_prob": fnum(_td_cal(tdp, 0.5) * 100, 1), "td2_prob": fnum(_td_cal(td2, 1.5) * 100, 1),
+         "td_raw": fnum(tdp * 100, 1), "td2_raw": fnum(td2 * 100, 1),
          "td_exp": fnum(lam, 2)}
     if sim is not None:
         med, lo, hi = quantiles(sim["fpts"])

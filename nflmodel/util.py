@@ -135,20 +135,23 @@ def wilson(w, n, z=1.96):
     return float((c - m) / d), float((c + m) / d)
 
 
-def record_stats(w, l):
-    """Win rate + 95% range + a plain-English verdict. None if no games."""
+def record_stats(w, l, be=None):
+    """Win rate + 95% range + a plain-English verdict. None if no games.
+    be: break-even win rate for the prices actually bet (Oct 29 2026: plus-odds bets like anytime TDs were judged
+    against -110's 52.4%, so a profitable 42-107 long-shot record read "would lose money")."""
     n = int(w + l)
     if n == 0:
         return None
+    BREAK_EVEN_ = BREAK_EVEN if be is None else be
     lo, hi = wilson(w, n)
     pct = w / n
-    if lo > BREAK_EVEN:
+    if lo > BREAK_EVEN_:
         v, note = "above", "Clear edge, even the low end beats break-even"
-    elif hi < BREAK_EVEN:
+    elif hi < BREAK_EVEN_:
         v, note = "below", "Below break-even, would lose money"
-    elif pct >= BREAK_EVEN:
+    elif pct >= BREAK_EVEN_:
         v, note = "unclear", "Above break-even, but could be luck"
     else:
         v, note = "unclear", "Can't tell apart from a coin flip"
     return {"n": n, "pct": round(100 * pct, 1), "ci_lo": round(100 * lo, 1),
-            "ci_hi": round(100 * hi, 1), "verdict": v, "note": note}
+            "ci_hi": round(100 * hi, 1), "verdict": v, "note": note, "break_even": round(100 * BREAK_EVEN_, 1)}
