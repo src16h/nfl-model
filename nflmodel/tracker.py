@@ -753,6 +753,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
     rg, rp = results.get("games") or {}, results.get("players") or {}
     played = played_set(snaps)
     mk, tds, combos, alts, alt_legs, mixes, alt_plays = [], [], [], [], [], [], []
+    ladders = []
     for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
         d = _json.loads(f.read_text())
         week = int(d.get("week") or f.stem.split("week")[-1])
@@ -784,6 +785,12 @@ def model_tracking(hist_dir, season, results, snaps=None):
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
                 if None not in hits:
                     alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), ap.get("v", 1)))
+            lad = hg.get("alt_ladder")                            # ladder-style tickets (Oct 30 2026): 4-5 safer legs
+            if lad and lad.get("legs"):
+                hits = [_leg_hit(L, g, pl, cols, played, gid) for L in lad["legs"]]
+                if None not in hits:
+                    ladders.append((week, lad["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits),
+                                    [{"label": f"{L.get('name') or ''} {L.get('label', '')}".strip(), "hit": bool(h)} for L, h in zip(lad["legs"], hits)]))
             amx = hg.get("alt_mix")                               # team-leg alt parlays (since Oct 21 2026)
             if amx and amx.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in amx["legs"]]
@@ -893,6 +900,19 @@ def model_tracking(hist_dir, season, results, snaps=None):
                         for v in sorted({m[7] for m in mixes})},
                "recent": [{"week": m[0], "game": f"{m[3]} at {m[4]}", "hit": bool(m[2]), "legs_hit": int(m[5]), "legs": int(m[6])}
                           for m in sorted(mixes, key=lambda m: -m[0])[:16]]}
+    lad_out = None
+    if ladders:
+        srt = sorted(ladders, key=lambda x: x[0])
+        best = cur = 0
+        for x in srt:
+            cur = cur + 1 if x[2] else 0
+            best = max(best, cur)
+        lad_out = {"n": len(ladders), "hits": int(sum(x[2] for x in ladders)),
+                   "model": fnum(100 * np.mean([x[1] for x in ladders]), 1), "actual": fnum(100 * np.mean([x[2] for x in ladders]), 1),
+                   "legs_n": int(sum(x[6] for x in ladders)), "legs_hit": int(sum(x[5] for x in ladders)),
+                   "one_short": int(sum(1 for x in ladders if x[5] == x[6] - 1)), "streak": cur, "best_streak": best,
+                   "recent": [{"week": x[0], "game": f"{x[3]} at {x[4]}", "hit": bool(x[2]), "legs_hit": int(x[5]), "legs": int(x[6]), "detail": x[7]}
+                              for x in sorted(ladders, key=lambda x: -x[0])[:16]]}
 
     def rec(rows):
         w = sum(1 for x in rows if x["res"] in ("W", "HW")); l_ = sum(1 for x in rows if x["res"] in ("L", "HL"))
@@ -903,5 +923,5 @@ def model_tracking(hist_dir, season, results, snaps=None):
                                                     **{f"h1_{m}": rec([x for x in alt_plays if x["market"] == m and x.get("period") == "h1"]) for m in ("spread", "total")}},
                     "recent": sorted(alt_plays, key=lambda x: -x["week"])[:40]}
     return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total, "alt_parlays": alt_out,
-            "alt_mix": mix_out, "alt_plays": alt_play_out,
+            "alt_mix": mix_out, "alt_plays": alt_play_out, "alt_ladder": lad_out,
             "weeks": sorted({r[1] for r in mk} | {r[1] for r in tds})}

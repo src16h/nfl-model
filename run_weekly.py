@@ -493,6 +493,7 @@ def build_games(bundle, season, week, now):
     for game, side_sims, tlegs in alt_inputs:
         try:
             game["alt_parlay"] = build_alt_parlay(game, side_sims, main_lines)
+            game["alt_ladder"] = build_alt_parlay(game, side_sims, main_lines, cfg=LADDER)
         except Exception as e:  # noqa: BLE001
             log.warning(f"alt parlay skipped for {game['game_id']}: {str(e)[:120]}")
         try:                                       # the same search, but every ticket carries a team leg
@@ -637,7 +638,10 @@ ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds
 ALT_YARD_STATS = {"pass_yds", "rush_yds", "rec_yds"}
 
 
-def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=False):
+LADDER = {"odds": (-120, 120), "leg": (0.86, 0.97), "sizes": (5, 4), "max_yard": 4, "max_rush": 1, "v": "L1", "sides": ("Over",), "deep": 1.6}
+
+
+def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=False, cfg=None):
     """The model's alt-line parlay: 'alt down' legs (70-92% each, after calibration) from both
     teams whose combined chance lands at fair odds of +100 to +125. Leg chances are corrected
     by leg type from graded weeks (nflmodel/altcal.py: yardage tails ran thin, catches held up).
@@ -646,7 +650,11 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     season_ = int(str(game["game_id"])[:4])
     cal = altcal.fit(HIST, OUT / "results.json", season_)
     ttab = altcal.type_table(HIST, OUT / "results.json", OUT / "props_log.json", season_, cal)   # leg-type gate
-    lo_o, hi_o = C.ALT_PARLAY_ODDS
+    cfg = dict({"odds": C.ALT_PARLAY_ODDS, "leg": C.ALT_LEG_RANGE, "sizes": C.ALT_PARLAY_SIZES, "max_yard": C.ALT_MAX_YARD_LEGS,
+                "max_rush": C.ALT_MAX_RUSH_LEGS, "v": ALT_VERSION}, **(cfg or {}))
+    # ladder style (Oct 30 2026, cfg=LADDER): 4-5 near-sure legs ("30+ rushing yards" style), about even money, so
+    # each win can roll into the next; same leg-type gate and calibration as the regular build
+    lo_o, hi_o = cfg["odds"]
     am_p = lambda o: 100 / (o + 100) if o > 0 else -o / (-o + 100)
     p_lo, p_hi = am_p(hi_o), am_p(lo_o)                           # +125 -> 44.4%, -120 -> 54.5%
     cands = []
@@ -662,6 +670,8 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 continue                                                # Questionable: 56% real vs 80% model
             # Over legs below the book's main line ("alt down") and Under legs above it ("alt up", Oct 26 2026)
             for side, table in (("Over", ALT_STATS), ("Under", altcal.USTATS)):
+                if side not in cfg.get("sides", ("Over", "Under")):
+                    continue
                 for st in table.get(r["pos"], []):
                     arr = sims[r["pid"]].get(st)
                     if arr is None or not altcal.allowed(ttab, altcal.group(r["pos"], st, side)):
@@ -672,11 +682,11 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                     main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
                     if np.floor(main) + 0.5 < C.ALT_MIN_MAIN[st]:
                         continue                                            # role too small for a posted prop
-                    for L in altcal.ladder(st, main, side):
+                    for L in altcal.ladder(st, main, side, cfg.get("deep", 1.0)):
                         hit = arr > L if side == "Over" else arr < L
                         p_raw = float(hit.mean())
                         p = altcal.adjust(cal, r["pos"], st, p_raw, side)
-                        if C.ALT_LEG_RANGE[0] <= p <= C.ALT_LEG_RANGE[1] and p_raw > 0:
+                        if cfg["leg"][0] <= p <= cfg["leg"][1] and p_raw > 0:
                             cands.append({"pid": r["pid"], "name": r["name"], "team": game[side_], "pos": r["pos"], "stat": st,
                                           "side": side, "line": L, "label": f"{side} {L:g} {ALT_LABEL[st]}", "p": p, "p_raw": p_raw,
                                           "hit": hit, "main": float(np.floor(main) + 0.5), "main_src": "book" if book is not None else "model"})
@@ -733,9 +743,9 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 cover |= teams if cands[i].get("team") is None else {cands[i]["team"]}
             if not (p_lo <= pj <= p_hi) or cover != teams:
                 continue
-            if sum(1 for i in idx if not is_team(i) and cands[i]["stat"] in ALT_YARD_STATS) > C.ALT_MAX_YARD_LEGS:
+            if sum(1 for i in idx if not is_team(i) and cands[i]["stat"] in ALT_YARD_STATS) > cfg["max_yard"]:
                 continue                                            # yardage legs miss more than the sims say
-            if sum(1 for i in idx if cands[i]["stat"] == "rush_yds") > C.ALT_MAX_RUSH_LEGS:
+            if sum(1 for i in idx if cands[i]["stat"] == "rush_yds") > cfg["max_rush"]:
                 continue                                            # RB rushing misses most (82% real when the sims say 90%)
             pi = float(np.prod([cands[i]["p"] for i in idx]))
             score = pj + 0.01 * pj / pi                             # hit chance first; correlation breaks ties
@@ -743,7 +753,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 best = (score, idx, pj, pi)
         return best
     best = None
-    for n_legs in C.ALT_PARLAY_SIZES:
+    for n_legs in cfg["sizes"]:
         best = search(n_legs)
         if best:
             break
@@ -763,7 +773,8 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
     raw = pj
     try:
         ap = (json.loads((OUT / "latest.json").read_text()).get("tracking") or {}).get("alt_parlays") or {}
-        ap = (ap.get("by_v") or {}).get(str(ALT_VERSION)) or {}      # only tickets built the current way
+        ap = ((ap.get("by_v") or {}).get(str(cfg["v"])) or {}) if cfg["v"] == ALT_VERSION else \
+            ((json.loads((OUT / "latest.json").read_text()).get("tracking") or {}).get("alt_ladder") or {})   # each build learns from its own record
         n_, m_, a_ = ap.get("n") or 0, (ap.get("model") or 0) / 100, (ap.get("actual") or 0) / 100
         if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
             shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K) * share
@@ -773,7 +784,7 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
         pass
     fair = (1 - pj) / pj * 100
     off = sorted(g for g in ttab if not altcal.allowed(ttab, g))
-    return {"v": ALT_VERSION, "legs": legs, "p": round(pj * 100, 1), "p_sim": round(raw * 100, 1), "pi": round(pi * 100, 1),
+    return {"v": cfg["v"], "legs": legs, "p": round(pj * 100, 1), "p_sim": round(raw * 100, 1), "pi": round(pi * 100, 1),
             "fair": f"+{round(fair)}" if fair >= 100 else str(round(-100 * pj / (1 - pj))),
             "bet_at": bet_at(pj, C.ALT_BET_CUSHION), "types_off": off,
             "note": "Bet it only at the 'bet at' price or better: that leaves room for the model being a little off"}
@@ -976,6 +987,31 @@ def lock_flags(old_games, games, now):
                 alt_flags[k_] = {f_: x.get(f_) for f_ in ("market", "team", "side", "line", "odds", "model", "sharp", "exact", "ev", "label", "book", "period")}
                 alt_flags[k_]["at"] = ts
         g["alt_flags"] = alt_flags
+        lock_tickets(g, p, now)
+
+
+def lock_tickets(g, prev, now):
+    """Parlay tickets lock the first time they're posted within PARLAY_LOCK_HOURS of kickoff (Oct 30 2026: every
+    run rebuilt them and only the last version was graded, as on the NHL page Oct 29). A locked ticket only changes
+    if one of its players is ruled out or doubtful."""
+    ts = now.isoformat(timespec="minutes")
+    try:
+        to_ko = (datetime.fromisoformat(g["kickoff"]) - now).total_seconds() / 3600 if g.get("kickoff") else 99
+    except (TypeError, ValueError):
+        to_ko = 99
+    out = {str(x.get("name")) for x in (g.get("injuries_home") or []) + (g.get("injuries_away") or [])
+           if str(x.get("status", "")).upper().startswith(("OUT", "DOUBT", "IR"))}
+    for key in ("alt_parlay", "alt_ladder"):
+        old = (prev or {}).get(key)
+        if old and old.get("locked_at"):
+            gone = [L.get("name") for L in old.get("legs", []) if L.get("name") in out]
+            if not gone:
+                g[key] = old
+            elif g.get(key):
+                g[key] = dict(g[key], locked_at=ts, replaced=f"new ticket: {', '.join(gone)} ruled out")
+            continue
+        if g.get(key) and to_ko <= C.PARLAY_LOCK_HOURS:
+            g[key] = dict(g[key], locked_at=ts)
 
 
 CLV_PER_POINT = {"spread": 0.03, "total": 0.025}     # cover chance per point of line value, for ev at close

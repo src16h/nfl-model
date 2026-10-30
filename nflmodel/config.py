@@ -255,6 +255,7 @@ SGP_DRAWS = 1000             # simulated games published per matchup for the par
 # ------------------------------------------------------------
 # v11: model-built alt-line parlay for every game
 # ------------------------------------------------------------
+PARLAY_LOCK_HOURS = 30            # parlay tickets lock when first posted within this many hours of kickoff (props are pulled then)
 ALT_PARLAY_ODDS = (-120, 125)      # target fair odds range for the whole parlay (Oct 26 2026: was +100 to +125, with 4 legs)
 # Alt lines and team totals (altlines.py, Oct 21 2026): Hard Rock's alt prices, Pinnacle's ride along in the same call.
 # 1 credit per market per game, pulled once per game on the last run before kickoff (after inactives), team totals

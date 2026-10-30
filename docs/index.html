@@ -1765,7 +1765,7 @@ function renderParlays() {
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
     <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
   const alts = up.filter(g => g.alt_parlay);
-  if (!PX.gid) h = (alts.length ? altCardsHTML(alts) : "") + mixCardsHTML() + teaserHTML() + h;
+  if (!PX.gid) h = parlaySwitchHTML() + (PX.view === "build" ? (alts.length ? altCardsHTML(alts) : `<div class="empty">No Oct 26 build tickets posted yet.</div>`) : ladderCardsHTML(up)) + mixCardsHTML() + teaserHTML() + h;
   if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
   if (PX.loading) { $("#parlays").innerHTML = h + `<div class="empty">Loading simulated games…</div>`; bindParlays(); return; }
   if (PX.err) { $("#parlays").innerHTML = h + `<div class="empty">${esc(PX.err)}</div>`; bindParlays(); return; }
@@ -1894,6 +1894,27 @@ function mixCardsHTML() {
         <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`
       : `<div class="empty">No team-leg parlays yet. They need Pinnacle's spread and total for the game.</div>`}`;
 }
+function parlaySwitchHTML() {
+  if (!PX.view) { try { PX.view = localStorage.getItem("board.pxview") || "ladder"; } catch (e) { PX.view = "ladder"; } }
+  return `<div class="seg" role="group" aria-label="Parlay style" style="margin-top:22px"><button data-pxview="ladder" aria-pressed="${PX.view !== "build"}">Ladder style</button><button data-pxview="build" aria-pressed="${PX.view === "build"}">Oct 26 build</button></div>`;
+}
+function ladderCardsHTML(up) {
+  const games = up.filter(g => g.alt_ladder), R = ((D.tracking || {}).alt_ladder) || null;
+  let rec = `<div class="empty">No graded ladder tickets yet. The record starts with this week's games.</div>`;
+  if (R && R.n) rec = `<div class="tablewrap"><table><thead><tr><th>Tickets</th><th>Hit</th><th>Model said</th><th>Missed by 1 leg</th><th>Legs hit</th><th>Streak</th></tr></thead><tbody><tr>
+      <td>${R.n}</td><td><b>${R.hits}-${R.n - R.hits}</b> (${n(R.actual)}%)</td><td>${n(R.model)}%</td><td>${R.one_short}</td><td>${R.legs_hit} of ${R.legs_n}</td><td>${R.streak} now, best ${R.best_streak}</td></tr></tbody></table></div>
+    ${(R.recent || []).length ? `<details class="fold"><summary>Recent tickets <span>${R.recent.length}</span></summary><div class="fold-body"><div class="tablewrap"><table><thead><tr><th>Week</th><th>Game</th><th>Result</th><th>Legs</th></tr></thead><tbody>${R.recent.map(x => `<tr><td>${x.week}</td><td>${esc(x.game)}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "W" : "L"}</span></td><td>${(x.detail || []).map(d => `<span style="color:var(--${d.hit ? "win" : "loss"})">${esc(d.label)}</span>`).join(", ")}</td></tr>`).join("")}</tbody></table></div></div></details>` : ""}`;
+  return `<div class="sec-head" style="margin-top:20px"><h2>Ladder-style parlays</h2><span class="aside">One per game, 4 to 5 safe legs, fair odds -120 to +120</span></div>
+    <p class="sub">Built like the alt-yardage tickets that hit often: <b>low alt lines on players who get steady work</b> (for example 30+ rushing yards for a lead back, 3+ catches for a starting receiver). Each leg rates about <b>86 to 97%</b>, 5 legs when it can (4 if not), at most 1 rushing leg, legs that tend to hit together, never Questionable players. Same leg-type gate and price rule as the Oct 26 build. Tickets lock 30 hours before kickoff and only change if a player is ruled out. <b>Bet it at the bet-at price or better.</b></p>
+    ${rec}
+    ${games.length ? `<div class="tickets" style="margin-top:14px">${games.map(g => { const a = g.alt_ladder;
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg ladder parlay</b><span>${esc(kickoff(g.kickoff))}${a.locked_at ? " · locked" : ""}</span></div>
+        <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
+        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}` : ""}</span></div>`).join("")}</div>
+        <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.replaced ? ` ${esc(a.replaced)}.` : ""}</div></div>
+        <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`
+      : `<div class="empty" style="margin-top:14px">No ladder tickets posted yet. They need 4 or more safe alt legs in one game.</div>`}`;
+}
 function altCardsHTML(games) {
   return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, 3 legs, fair odds -120 to +125</span></div>
     <p class="sub">The model builds one parlay per game, 3 legs (4 if needed), from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Legs can be Overs below the book's line (yards, catches, completions, attempts) or Unders above it (catches, completions, attempts, carries). Only leg types that have held up in graded weeks are used (see the Record tab), never Questionable players, and only players with a posted book line, staying within a normal alt range of it. <b>Bet it only at the bet-at price or better</b>: it asks for about 7% more than fair, room for the model being a little off. Tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
@@ -1907,6 +1928,7 @@ function altCardsHTML(games) {
 }
 function bindParlays() {
   bindTeasers();
+  document.querySelectorAll("[data-pxview]").forEach(b => b.onclick = () => { PX.view = b.dataset.pxview; try { localStorage.setItem("board.pxview", PX.view); } catch (e) {} renderParlays(); });
   document.querySelectorAll("[data-altgo]").forEach(b => b.onclick = () => {
     const g = (D.games || []).find(x => x.game_id === b.dataset.altgo); if (!g || !g.alt_parlay) return;
     PX.form = null; PX.odds = "";

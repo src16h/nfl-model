@@ -175,12 +175,13 @@ def type_table(hist_dir, results_path, props_log_path, season, cal):
     return out
 
 
-def ladder(st, main, side):
-    """Alt lines a book offers around its main line: below it for Overs, above it for Unders."""
+def ladder(st, main, side, deep=1.0):
+    """Alt lines a book offers around its main line: below it for Overs, above it for Unders.
+    deep > 1 reaches further below (ladder-style tickets: books post milestone lines like 25+ or 30+ yards)."""
     main = float(np.floor(main) + 0.5)
     step = C.ALT_STEP[st]
     if side == "Over":
-        out = [main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] // step) + 1)]
+        out = [main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] * deep // step) + 1)]
         return [L for L in out if L >= C.ALT_MIN_LINE[st]]
     return [main + k * step for k in range(1, int(C.ALT_MAX_RISE.get(st, 0) // step) + 1)]
 
