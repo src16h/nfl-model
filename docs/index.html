@@ -1271,7 +1271,7 @@ function renderGames() {
   const pp = rules.prop_play || [4, 7];
   const sb = rules.spread_backtest;
   h += `<div class="rules"><span>${playsRecordLine()}</span>
-    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}${(rules.prop_play_sides || []).length === 1 ? `, <b>${esc(rules.prop_play_sides[0])}s only</b> (Overs paused Oct 21: 26-25 as plays vs Unders 41-23)` : ""}; the model's edge (scaled by how much each side has really delivered) must clear the bar, the other books' consensus price must rate your book's price as fair or better, and at most 2 per team per game.</span>
+    <span><b>Prop plays:</b> ${esc((rules.prop_play_stats || []).join(", ").toLowerCase())}${(rules.prop_play_sides || []).length === 1 ? `, <b>${esc(rules.prop_play_sides[0])}s only</b> (Overs paused Oct 21: 26-25 as plays vs Unders 41-23)` : ""}; the model's edge (scaled by how much each side has really delivered) must clear the bar, your book's price must beat a typical book's (within 2.5% of the other books' fair price), and at most 2 per team per game.</span>
     <span><b>Spread and total plays:</b> Pinnacle's fair price says your book's price is 1.5% to 8% too generous, and the model agrees on the side. When Pinnacle has a different line (say -3.5 vs your -3), its price is moved to your line using how often real games land on each number. Plays lock the moment they appear and are graded at that line and price.</span></div>`;
 
   // watch list: game leans that are not plays

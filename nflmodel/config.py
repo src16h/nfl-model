@@ -176,7 +176,7 @@ PROP_MODEL_WEIGHT = 0.4      # NFL props: model's share vs the book (Oct 18 2026
 # Prop plays (Oct 20 2026): the book was a better forecaster than the model on props, so a play also needs the
 # market's consensus (other US books' no-vig price at the same line) to rate your book's price as fair or better,
 # and at most PROP_CAP_TEAM plays per team per game.
-PROP_CONS_MIN_EV = 0.0           # % expected return at your book's price using the consensus chance
+PROP_CONS_MIN_EV = -2.5          # % expected return at your book's price vs the consensus fair chance. 0 blocked every prop for two weeks (Oct 21-29: best -1.3%); -2.5 means Hard Rock beats a typical book's price (about half the usual margin)
 PROP_CONS_MIN_BOOKS = 2          # other books that must post the same line
 PROP_CAP_TEAM = 2
 ALT_TICKET_K = 30                # alt-parlay record counts half after this many graded tickets
