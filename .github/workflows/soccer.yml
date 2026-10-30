@@ -2,19 +2,21 @@ name: Soccer model
 
 on:
   schedule:
-    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
-    # Each run before kickoff picks up confirmed lineups (posted about an hour before) and near-closing prices for CLV.
-    - cron: "40 13 * * *"       # daily 9:40am ET: grades yesterday, fresh lines and props
-    - cron: "40 17 * * 2,3"     # Tue/Wed 1:40pm ET: before 7:45pm UK midweek kickoffs (lineups out)
-    - cron: "50 17 * * 5"       # Fri 1:50pm ET: before Friday night games in England and Spain
-    - cron: "45 10 * * 6"       # Sat 6:45am ET: before the 12:30pm UK early game
-    - cron: "15 13 * * 6"       # Sat 9:15am ET: lineups for the 3pm UK games (Premier League, Championship)
-    - cron: "45 15 * * 6"       # Sat 11:45am ET: lineups for 5:30pm UK and La Liga afternoon
-    - cron: "15 18 * * 6"       # Sat 2:15pm ET: La Liga evening
-    - cron: "15 12 * * 0"       # Sun 8:15am ET: lineups for the 2pm UK games
-    - cron: "45 14 * * 0"       # Sun 10:45am ET: 4:30pm UK and La Liga afternoon
-    - cron: "15 18 * * 0"       # Sun 2:15pm ET: La Liga evening
-    - cron: "15 18 * * 1"       # Mon 2:15pm ET: Monday night games
+    # Times are UTC, set for UK winter time (GMT = UTC) and Spain (CET = UTC+1), Oct 25 2026 to Mar 28 2027.
+    # Move every line 1 hour earlier when the UK and Spain go back to summer time (Mar 28 2027).
+    # Pre-kickoff runs land about 45 to 55 minutes before kickoff, after the lineups are posted.
+    - cron: "40 13 * * *"       # daily: grades yesterday, fresh lines and props
+    - cron: "55 18 * * 2,3"     # Tue/Wed: before 7:45pm UK midweek kickoffs (19:45 UTC)
+    - cron: "20 19 * * 2,3"     # Tue/Wed: before 9pm Spain midweek kickoffs (20:00 UTC)
+    - cron: "10 19 * * 5"       # Fri: before Friday night games in England (20:00) and Spain (21:00 CET)
+    - cron: "45 11 * * 6"       # Sat: before the 12:30pm UK early game
+    - cron: "15 14 * * 6"       # Sat: lineups for the 3pm UK games (Premier League, Championship)
+    - cron: "45 16 * * 6"       # Sat: 5:30pm UK and La Liga late afternoon
+    - cron: "15 19 * * 6"       # Sat: La Liga 9pm CET
+    - cron: "15 13 * * 0"       # Sun: lineups for the 2pm UK games
+    - cron: "45 15 * * 0"       # Sun: 4:30pm UK and La Liga afternoon
+    - cron: "15 19 * * 0"       # Sun: La Liga 9pm CET
+    - cron: "15 19 * * 1"       # Mon: Monday night games (8pm UK / 9pm Spain)
   workflow_dispatch:
 
 permissions:
