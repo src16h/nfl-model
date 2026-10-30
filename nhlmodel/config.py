@@ -40,6 +40,7 @@ BLOCKED = {"points", "saves", "pl_dog", "totals"}   # Oct 21 2026: points fully 
 # plays and delivered 0. Three guards:
 PROP_CAP_PER_GAME = {("points", "Under"): 2}   # best N by expected return in each game; the rest are not plays
 # Oct 29 2026: 33 shots Unders in one night (6 in one game) went 11-21, -11.4u. Caps now cover every stat and side.
+PARLAY_LOCK_HOUR = 17          # ET: same-game parlays lock at the first run from this hour (or within 3h of puck drop)
 PROP_CAP_GAME = 2                # plays per stat and side in one game
 PROP_CAP_NIGHT = 8               # plays per stat and side in one night
 PROP_ONEWAY_SHARE = 0.80         # if the model leans one way on this share of a stat's props tonight, it's a level

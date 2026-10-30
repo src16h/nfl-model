@@ -424,6 +424,31 @@ def tracking(history_days, results):
             "by_type": {"game": by_kind, "prop": by_prop}}
 
 
+def lock_parlays(g, prev, players, now):
+    """Same-game parlay tickets are locked the first time they're posted for the evening (Oct 30 2026). Before,
+    every run rebuilt them and only the last version was graded: on Oct 29 the four versions hit 3, 5, 4 and 6 of
+    11, and the record showed 6. A locked ticket only changes if one of its players drops out of the lineup."""
+    ts = now.isoformat(timespec="minutes")
+    try:
+        to_start = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+    except (KeyError, ValueError):
+        to_start = 99
+    evening = now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR or to_start <= 3
+    dressed = {p["pid"] for p in players if p.get("game_id") == g["game_id"]}
+    for key in ("alt_parlay", "alt_mix"):
+        old = (prev or {}).get(key)
+        if old and old.get("locked_at"):
+            gone = [L.get("name") for L in old.get("legs", []) if L.get("pid") is not None and L["pid"] not in dressed]
+            if not gone:
+                g[key] = old                                   # keep the ticket you were shown
+                continue
+            if g.get(key):                                     # a leg's player is out: post a new ticket, say why
+                g[key] = dict(g[key], locked_at=ts, replaced=f"replaced {old['locked_at'][11:16]} ticket: {', '.join(gone)} out")
+            continue
+        if g.get(key) and evening:
+            g[key] = dict(g[key], locked_at=ts)
+
+
 def cap_props(players, games=None):
     """Same-direction props move together (a high-event night lifts every Over, a slow one every Under), so many
     of them in one game, or one night, is one big bet. Oct 19: 38 points Unders, -13u. Oct 29: 33 shots Unders
@@ -769,6 +794,7 @@ def main():
                     m["shadow_flag"] = sf
         keep = []
         for g in v["games"]:
+            lock_parlays(g, next((x for x in old["games"] if x["game_id"] == g["game_id"]), None), players, now)
             lite = {k: g.get(k) for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "alt_mix", "win_home", "book", "goalies")}
             alt_flags = dict((prev or {}).get("alt_flags") or {}) if (prev := next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)) else {}
             for x in (g.get("alt") or {}).get("plays", []):        # alt plays are locked the first time they're flagged
