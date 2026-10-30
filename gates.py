@@ -65,6 +65,40 @@ GATES["nhl_game_pl"].update({
     "why": "Paused Oct 26: 1-6 (-5.1u) as plays, and both priced plays lost to the closing line"})
 
 
+# ---------------------------------------------------------------------------------------------------
+# Prop types (Oct 30 2026): every stat and side gets its own gate, like game bet types, so a type that keeps losing
+# is paused automatically instead of waiting for someone to notice (Oct 29: 33 NHL shots Unders, 11-21, -11.4u).
+# Same bars as game types: 30+ priced plays losing at the close, or 25+ plays returning -8% or worse.
+# ---------------------------------------------------------------------------------------------------
+PROP_KINDS = {"nhl": [("sog", "Over"), ("sog", "Under"), ("goals", "Over"), ("assists", "Over"), ("assists", "Under")]}
+_STAT_LABEL = {"sog": "shots on goal", "goals": "goals", "assists": "assists", "pass_yds": "passing yards",
+               "rush_yds": "rushing yards", "rec_yds": "receiving yards", "rec": "receptions", "anytime_td": "anytime TD",
+               "tds": "2+ TDs"}
+
+
+def prop_gate(sport, stat, side):
+    return f"{sport}_prop_{stat}_{side}"
+
+
+for _sp, _kinds in PROP_KINDS.items():
+    for _st, _sd in _kinds:
+        _n = prop_gate(_sp, _st, _sd)
+        if _n in GATES:
+            continue
+        GATES[_n] = {"label": f"{_sp.upper()} {_STAT_LABEL[_st]} {_sd}s", "min_n": 25, "min_roi": 3.0, "repause_roi": -8.0,
+                     "since": RULES_SINCE, "start": "active", "clv_gate": True, "auto": True,
+                     "why": "Prop type: pauses if 30+ priced plays lose to the closing line, or the return drops to -8%"}
+
+
+def prop_names(sport):
+    return tuple(prop_gate(sport, st, sd) for st, sd in PROP_KINDS[sport])
+
+
+def paused_props(st, sport):
+    """(stat, side) prop types to hold back this run (they become shadow plays)."""
+    return {(a, b) for a, b in PROP_KINDS[sport] if (st.get(prop_gate(sport, a, b)) or {}).get("status") == "paused"}
+
+
 def game_names(sport):
     return tuple(game_gate(sport, k) for k in GAME_KINDS[sport])
 

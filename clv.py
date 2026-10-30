@@ -171,7 +171,7 @@ def moving(sport, kind, pk, g, snap):
 def close_snap(book, prev, ts):
     """Latest pre-game line for a prop, or the previous one when the book has none this run."""
     if book and book.get("line") is not None and book.get("book_over") is not None:
-        return {"line": book["line"], "book_over": book["book_over"], "at": ts}
+        return {"line": book["line"], "book_over": book["book_over"], "at": ts, "pulled": book.get("pulled")}
     return prev
 
 
@@ -180,6 +180,10 @@ def prop_clv(flag, close):
     Same line: compares the no-vig chance of our side at close vs when flagged. Line moved: clv and ev
     are None and move is +1 (toward us: Over line went up / Under line went down) or -1."""
     if not flag or not close or flag.get("book_over") is None or close.get("book_over") is None:
+        return None, None, None
+    # Oct 30 2026: only a price fetched AFTER the flag counts as a close. Until then the "close" was often the
+    # same cached price saved again (0 of 55 NHL closes differed), which reads as losing the vig to the close.
+    if not close.get("pulled") or not flag.get("pulled") or str(close["pulled"]) <= str(flag["pulled"]):
         return None, None, None
     try:
         l0, l1 = float(flag["line"]), float(close["line"])

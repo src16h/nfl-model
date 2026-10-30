@@ -314,7 +314,8 @@ def _props(cache):
         for nm, r in v["rows"].items():
             if r.get("line") is None:
                 continue
-            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(r, book=r.get("book") or v.get("book"))
+            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(r, book=r.get("book") or v.get("book"),
+                                                                                  pulled=v.get("at"))   # when this price was fetched
     return props
 
 

@@ -660,6 +660,12 @@ details.game.is-play>summary,details.match.is-play>summary{background:linear-gra
 .gate .gs{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--num)}
 .gbar{height:6px;border-radius:999px;background:var(--line-soft);overflow:hidden}.gbar i{display:block;height:100%;background:var(--gold)}
 .vt.thin{border-color:var(--line);color:var(--muted)}
+.sc-sum{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.sc-sum span,.sc-tag{display:inline-block;font:600 11.5px var(--sans);padding:2px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.sc-ok{color:var(--win)}.sc-new{color:var(--muted)}.sc-warn{color:var(--gold-text)}.sc-off{color:var(--loss)}
+table.sc td,table.sc th{white-space:normal;padding:9px 10px}table.sc td:first-child{min-width:0}
+table.sc .sc-tag{font-size:10.5px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
 /* gates css end */
 </style>
 </head>
@@ -945,6 +951,7 @@ function renderHome() {
         <div class="tr">${badge(g.home)}<span class="dim">${g.home_rank ? "#" + g.home_rank + " " : ""}${n(g.fin_home, 0)}</span><b>${b.spread != null ? esc(fmtLine(b.spread)) : ""}</b></div>
         <div class="wp"><span class="a">${n(100 - pw, 0)}%</span><span class="bar"><i style="width:${100 - pw}%;background:${tc(g.away)};--tl:${tl(g.away)}"></i><i style="width:${pw}%;background:${tc(g.home)};--tl:${tl(g.home)}"></i></span><span class="h">${n(pw, 0)}%</span></div>
         <div class="tp">${sp?.edge != null ? `Model side <b>${esc(pickText("spread", sp))}</b>${sp.play ? ` <span class="tag">Play</span>` : ""}` : `Model line <b>${esc(g.home)} ${esc(fmtLine(g.model_spread))}</b>`}</div></button>`; }).join("")}</div></div></div>`;
+  h += scorecardHTML();
   $("#home").innerHTML = h;
 }
 
@@ -1289,6 +1296,30 @@ function propClvHTML() {
   return `<p class="note"><b>Prop plays vs the closing line:</b> ${C.n} checked, ${C.beat} moved our way, ${C.worse} moved against` +
     (C.ev_close != null ? `, ${gSgn(C.ev_close, 1)}% return at the closing price (same-line plays)` : "") +
     `. A play is locked when first flagged; the closing line is the book's last line before the game.</p>`;
+}
+/* scorecard (Oct 30 2026): every bet type in one table, sorted by how it's doing since the current rules */
+function scStatus(x) {
+  const R = x.record || {};
+  if (x.status !== "active") return ["Paused", "sc-off", 3];
+  if ((R.n || 0) < x.min_n) return ["Proving", "sc-new", 1];
+  const clvBad = R.ev_n >= 15 && R.ev_close < 0;
+  if ((R.roi || 0) > 0 && !clvBad) return ["Earning", "sc-ok", 0];
+  return ["Struggling", "sc-warn", 2];
+}
+function scorecardHTML() {
+  const G = gList(); if (!G.length) return "";
+  const all = G.map(x => ({x, s: scStatus(x)})).sort((a, b) => a.s[2] - b.s[2] || ((b.x.record || {}).units || 0) - ((a.x.record || {}).units || 0));
+  const rows = all.filter(r => (r.x.record || {}).n || r.s[0] === "Paused"), idle = all.filter(r => !rows.includes(r));
+  const cnt = k => all.filter(r => r.s[0] === k).length;
+  return `<div class="dash"><div class="panel span-12"><h3>Scorecard</h3><p class="pmuted">Every bet type under the current rules. <b>Earning</b>: past its sample, winning, not losing to the closing line. <b>Proving</b>: too few results yet, stake small. <b>Struggling</b>: losing money or losing to the close; pauses on its own if it keeps up. <b>Paused</b>: not a play, tracked in the background until it earns its way back.</p>
+    <div class="sc-sum"><span class="sc-ok">${cnt("Earning")} earning</span><span class="sc-new">${cnt("Proving")} proving</span><span class="sc-warn">${cnt("Struggling")} struggling</span><span class="sc-off">${cnt("Paused")} paused</span></div>
+    ${rows.length ? `<div class="tablewrap"><table class="sc"><thead><tr><th>Bet type</th><th>Record</th><th>Close</th></tr></thead><tbody>
+    ${rows.map(({x, s}) => { const R = x.record || {};
+      return `<tr><td>${esc(x.label)} <span class="sc-tag ${s[1]}">${s[0]}</span><span class="roi">${x.status === "active" ? "since " : "shadow since "}${esc(String(x.since).slice(5))}, ${R.n || 0} of ${x.min_n} graded</span></td>
+        <td>${R.n ? `${R.w}–${R.l}` : "0–0"}<span class="roi ${R.n ? (R.units >= 0 ? "up" : "down") : ""}">${R.n ? `${gSgn(R.units, 1)}u, ${gSgn(R.roi, 0)}%` : ""}</span></td>
+        <td>${R.ev_n ? `<span class="${R.ev_close >= 0 ? "up" : "down"}">${gSgn(R.ev_close, 1)}%</span><span class="roi">${R.ev_n} priced</span>` : `<span class="dim">–</span>`}</td></tr>`; }).join("")}
+    </tbody></table></div>` : ""}
+    ${idle.length ? `<p class="note">No plays yet: ${idle.map(r => esc(r.x.label)).join(", ")}.</p>` : ""}</div></div>`;
 }
 function gatesNote() {
   const G = gList(), back = G.filter(x => x.status === "active" && !gWatch(x)), off = G.filter(x => x.clv_gate && x.status === "paused");
