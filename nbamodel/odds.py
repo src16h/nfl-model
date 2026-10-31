@@ -167,8 +167,15 @@ def run(games, state_path, cache_path, now, close_games=()):
                 if not h or not a:
                     continue
                 rec = _lines_for(ev)
-                if rec:
-                    lines[f"{a}@{h}"] = rec
+                try:                                          # only games in the next 2 days: the feed also lists
+                    ct = datetime.fromisoformat(str(ev.get("commence_time")).replace("Z", "+00:00"))   # rematches weeks out
+                except ValueError:
+                    ct = None
+                if rec and ct is not None and (ct - now).total_seconds() > 48 * 3600:
+                    continue
+                k_ = f"{a}@{h}"
+                if rec and (k_ not in lines or str(rec.get("commence")) < str(lines[k_].get("commence"))):
+                    lines[k_] = rec                           # same pair twice: keep the sooner game
             state["lines"], state["lines_at"] = lines, now.isoformat()
         for g in games:
             rec = lines.get(f"{g['away']}@{g['home']}")
