@@ -90,7 +90,7 @@ main.wrap{min-width:0;max-width:1180px;width:100%;margin:0 auto;padding:8px 32px
   .topbar .brand{padding:0}
   .topbar .mark{width:28px;height:28px;border-radius:7px}.topbar .mark svg{width:16px;height:16px}
   .topbar h1{font-size:19px}
-  .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:20;padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 6px);background:rgba(22,17,19,.92);backdrop-filter:saturate(1.4) blur(16px);-webkit-backdrop-filter:saturate(1.4) blur(16px);border-top:1px solid var(--line-soft)}
+  .tabbar{display:grid;grid-template-columns:repeat(7,1fr);position:fixed;left:0;right:0;bottom:0;z-index:20;padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 6px);background:rgba(22,17,19,.92);backdrop-filter:saturate(1.4) blur(16px);-webkit-backdrop-filter:saturate(1.4) blur(16px);border-top:1px solid var(--line-soft)}
   :root[data-theme="light"] .tabbar{background:rgba(255,255,255,.92)}
   .tabbar button{flex-direction:column;gap:3px;padding:6px 2px;font-size:10.5px;justify-content:center;text-align:center;border-radius:8px}
   .tabbar button svg{width:21px;height:21px}
@@ -786,6 +786,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
     <symbol id="i-games" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M21 10.5l-5 0M3 10.5h5M6.5 19.5l2.9-5M17.5 19.5l-2.9-5"/></symbol>
     <symbol id="i-ah" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M5 8l-3 6h6z"/><path d="M19 8l-3 6h6z"/><path d="M5 8h14"/><path d="M8 20h8"/></symbol>
+    <symbol id="i-parlays" viewBox="0 0 24 24"><path d="M9 15l6-6"/><path d="M10.5 6.5l1.8-1.8a4 4 0 015.7 5.7l-1.8 1.8"/><path d="M13.5 17.5l-1.8 1.8a4 4 0 01-5.7-5.7l1.8-1.8"/></symbol>
     <symbol id="i-props" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
     <symbol id="i-teams" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></symbol>
     <symbol id="i-record" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M6 15l4-4 3 3 5-6"/><path d="M15 8h3v3"/></symbol>
@@ -803,7 +804,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
       <button role="tab" data-tab="home" aria-selected="true"><svg><use href="#i-home"/></svg>Home</button>
       <button role="tab" data-tab="games" aria-selected="false"><svg><use href="#i-games"/></svg>Matches</button>
       <button role="tab" data-tab="ah" aria-selected="false"><svg><use href="#i-ah"/></svg>Asian handicap</button>
-      <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button>
+      <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button><button role="tab" data-tab="parlays" aria-selected="false"><svg><use href="#i-parlays"/></svg>Parlays</button>
       <button role="tab" data-tab="teams" aria-selected="false"><svg><use href="#i-teams"/></svg>Teams</button>
       <button role="tab" data-tab="record" aria-selected="false"><svg><use href="#i-record"/></svg>Record</button>
     </nav>
@@ -823,6 +824,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <section id="games" role="tabpanel" hidden></section>
     <section id="ah" role="tabpanel" hidden></section>
     <section id="props" role="tabpanel" hidden></section>
+    <section id="parlays" role="tabpanel" hidden></section>
     <section id="teams" role="tabpanel" hidden></section>
     <section id="record" role="tabpanel" hidden></section>
   </main>
@@ -830,7 +832,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <button role="tab" data-tab="home" aria-selected="true"><svg><use href="#i-home"/></svg>Home</button>
     <button role="tab" data-tab="games" aria-selected="false"><svg><use href="#i-games"/></svg>Matches</button>
     <button role="tab" data-tab="ah" aria-selected="false"><svg><use href="#i-ah"/></svg>Handicap</button>
-    <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button>
+    <button role="tab" data-tab="props" aria-selected="false"><svg><use href="#i-props"/></svg>Props</button><button role="tab" data-tab="parlays" aria-selected="false"><svg><use href="#i-parlays"/></svg>Parlays</button>
     <button role="tab" data-tab="teams" aria-selected="false"><svg><use href="#i-teams"/></svg>Teams</button>
     <button role="tab" data-tab="record" aria-selected="false"><svg><use href="#i-record"/></svg>Record</button>
   </nav>
@@ -906,6 +908,84 @@ const oddsNum = o => { const s = String(o ?? "").trim(), v = +s.replace(/^\+/, "
   if (/[¢c]$/i.test(s) || (!/^[+-]/.test(s) && v > 0 && v < 100)) { const p = Math.min(0.99, v < 1 ? v : v / 100); return Math.round(dkAmer(p + DK_FEE(p))); }   // cents: DK's fee added
   return v; };
 /* ---- DK-JS end ---- */
+/* ---------- cross-game alt parlays (crossgame.py, Oct 30 2026) ---------- */
+const XODDS = {};
+const xWhen = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+const X_STYLE = {spreads: "Handicaps", mix: "Handicaps + totals"};
+function crossHTML() {
+  const X = D.cross_parlays; if (!X) return "";
+  const T = X.tracking || {}, R = X.rules || {}, TK = X.tickets || [];
+  const hc = R.shift != null ? 100 / (1 + Math.exp(-(Math.log(4) + R.shift))) - 80 : null;
+  const rec = T.n ? `${T.hits}-${T.n - T.hits}, ${n(T.actual, 0)}% hit vs ${n(T.model, 0)}% expected` : "New Oct 30, no graded tickets yet";
+  let h = `<div class="sec-head"><h2>Cross-game alt parlays</h2><span class="aside">${esc(rec)}</span></div>
+    <p class="sub">One alt leg from each of ${R.legs || 3} different games, like a book's alternate-handicap parlay. Each leg's chance comes from <b>Pinnacle's lines</b>, and the model must agree. Different games don't move together, so the ticket's chance is the legs multiplied. Every leg gets a calibration haircut that follows the legs' graded hit rate${hc != null ? ` (now ${sgn(hc)} points on an 80% leg${T.legs_n ? `, legs ${n(T.legs_actual, 0)}% hit vs ${n(T.legs_model, 0)}% expected over ${T.legs_n}` : ""})` : ""}. <b>Bet it only at the "bet at" price or better.</b> Books often charge more than that on alt parlays, so many days the right call is no bet.</p>`;
+  if (!TK.length) return h + `<div class="empty">No cross-game tickets yet. They need at least 3 games with Pinnacle's lines posted.</div>`;
+  h += `<div class="tickets">${TK.map(t => {
+    const k = `${t.slate}|${t.style}`;
+    return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${esc(X_STYLE[t.style] || t.style)}, ${t.legs.length} games</b><span>${n(t.p, 0)}% to hit${t.locked_at ? ", locked" : ""}</span></div>
+      <div style="display:grid;gap:3px;margin:6px 0 2px">${t.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${esc(L.matchup)}, ${esc(xWhen(L.start))}. ${n(L.p, 0)}% (Pinnacle ${n(L.p_pin, 0)}%, model ${n(L.p_model, 0)}%)${L.book_odds ? `, ${esc(L.book_odds)}` : ""}</span></div>`).join("")}</div>
+      <div class="t-meta">Fair odds ${esc(t.fair)}; bet it at ${esc(t.min_odds)} or better.${t.book_odds ? ` ${esc(t.book || "Book")} pays about ${esc(t.book_odds)} for these legs: ${sgn(t.ev)}% expected return.` : ""}</div>
+      <div class="t-actions">${crossCheck(t, k)}</div></div>
+      <div class="t-side"><div class="t-gap">${esc(t.min_odds)}</div><div class="t-gl">bet at or better</div></div></article>`; }).join("")}</div>`;
+  const RC = T.recent || [];
+  if (RC.length) h += `<p class="sub" style="margin-top:10px"><b>Recent:</b> ${RC.map(r => `${esc(r.slate)} ${esc(X_STYLE[r.style] || r.style)} ${r.result === "W" ? "hit" : r.result === "P" ? "push" : `missed (${r.legs_hit}/${r.legs.length} legs)`}`).join("; ")}</p>`;
+  return h;
+}
+function crossCheck(t, k) {
+  const odds = XODDS[k] || "";
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Your book's odds <input class="odds xodds" data-x="${esc(k)}" value="${esc(odds)}" placeholder="${esc(t.book_odds || "+100")}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  const use = odds && Math.abs(oddsNum(odds)) >= 100 ? odds : t.book_odds;
+  if (!use) return out;
+  const cut = (D.cross_parlays.rules || {}).min_ev ?? 3, ev = (t.p / 100 * (payout(use) + 1) - 1) * 100;
+  const tier = ev > 25 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
+  out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Check the lines", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return${odds ? "" : " at the feed's price"}</span>`;
+  if (tier === "play" || tier === "watch") out += logBtn({kind: "parlay", game_id: t.legs[0].game_id, side: "", line: null, odds: use, model_pct: t.p,
+    legs: t.legs.map(L => ({kind: "team", market: L.market, team: L.team, side: L.side, line: L.line, game_id: L.game_id})),
+    desc: "Cross-game alt parlay", sub: t.legs.map(L => L.label).join(" + ")});
+  return out;
+}
+function bindCross(rerender) {
+  document.querySelectorAll(".xodds").forEach(i => i.onchange = () => { XODDS[i.dataset.x] = i.value; rerender(); });
+}
+
+/* ---------- parlays (Oct 31 2026) ---------- */
+const SGP_ODDS = {};
+function sgpTicket(g) {
+  const a = g.alt_parlay, k = String(g.game_id), odds = SGP_ODDS[k] || "";
+  let chk = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds sgpodds" data-s="${esc(k)}" value="${esc(odds)}" placeholder="${esc(a.bet_at || "+110")}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  if (odds && Math.abs(oddsNum(odds)) >= 100) {
+    const cut = 100 * (a.cushion ?? 0.07), ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
+    chk += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Check the lines", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return</span>`;
+    if (tier === "play" || tier === "watch") chk += logBtn({kind: "parlay", game_id: g.game_id, side: "", line: null, odds, model_pct: a.p,
+      legs: a.legs.map(L => ({kind: "team", market: L.market, team: L.team, side: L.side, line: L.line, game_id: g.game_id})),
+      desc: `${a.legs.length}-leg alt parlay`, sub: `${g.home} vs ${g.away}: ${a.legs.map(L => L.label).join(" + ")}`});
+  }
+  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span><span class="lgtag">${esc(lgName(g.league))}</span>${esc(when(g.start))}${a.locked_at ? ", locked" : ""}</span></div>
+    <div class="t-pick" style="font-size:22px">${esc(g.home)} vs ${esc(g.away)}</div>
+    <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${n(L.p, 0)}% Pinnacle, ${n(L.p_model, 0)}% model</span></div>`).join("")}</div>
+    <div class="t-meta">${n(a.p)}% to hit by Pinnacle's prices (model ${n(a.p_model)}%, ${n(a.pi)}% if the legs were unrelated). Fair odds ${esc(a.fair)}${a.bet_at ? `; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK)` : ""}.</div>
+    <div class="t-actions">${chk}</div></div>
+    <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`;
+}
+function parlayRecordHTML() {
+  const AR = D.tracking?.alt_parlays || {}, X = D.cross_parlays?.tracking || {};
+  return `<div class="strip"><div class="st"><strong>${AR.n ? `${AR.hits}–${AR.n - AR.hits}` : "–"}</strong><span>Same-game alt parlays${AR.n ? `, hit ${n(100 * AR.hits / AR.n, 0)}% vs ${n(AR.model, 0)}% expected` : ", nothing graded yet"}</span></div>
+      <div class="st"><strong>${AR.legs_n ? `${n(AR.legs_actual, 0)}%` : "–"}</strong><span>Legs hit${AR.legs_n ? ` vs ${n(AR.legs_model, 0)}% expected (${AR.legs_n} legs)` : ""}</span></div>
+      <div class="st"><strong>${X.n ? `${X.hits}–${X.n - X.hits}` : "–"}</strong><span>Cross-game parlays${X.n ? `, hit ${n(X.actual, 0)}% vs ${n(X.model, 0)}% expected` : ", new Oct 31"}</span></div></div>
+    ${(AR.recent || []).length ? `<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Match</th><th>Legs</th><th>Score</th><th>Result</th></tr></thead><tbody>${AR.recent.filter(lgOk).map(x => `<tr><td>${esc(x.date.slice(5))}</td><td style="text-align:left"><span class="lgtag">${esc(lgName(x.league))}</span>${esc(x.game)}${x.fair ? ` <span class="dim">fair ${esc(x.fair)}</span>` : ""}</td><td style="text-align:left">${x.leg_labels ? x.leg_labels.map((l, i) => `<span class="${x.leg_hits?.[i] ? "up" : "down"}">${esc(l)}</span>`).join(", ") : `${x.legs_hit} of ${x.legs}`}</td><td>${esc(x.score || "")}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "W" : "L"}</span></td></tr>`).join("")}</tbody></table></div>` : ""}`;
+}
+function renderParlays() {
+  const G = (D.games || []).filter(g => g.alt_parlay && lgOk(g) && new Date(g.start) > Date.now() - 2 * 3600e3).sort((a, b) => a.start.localeCompare(b.start));
+  let h = crossHTML();
+  h += `<div class="sec-head"><h2>Same-game alt parlays</h2><span class="aside">${G.length} matches</span></div>
+    <p class="sub">One per match: 2 or 3 legs from handicaps, totals, team totals and both teams to score, each priced at <b>Pinnacle's</b> chance with the model rating it at least as high, at fair odds of about +100 to +125. The ticket's chance comes from the scoreline grid, so legs that move together (a team total and that team's handicap) are priced together. Tickets lock 3 hours before kickoff, so the graded ticket is the one you saw. <b>Bet it only at the "bet at" price or better</b>: it asks for 7% more than fair, room for the estimate being a little off.</p>
+    ${G.length ? `<div class="tickets">${G.map(sgpTicket).join("")}</div>` : `<div class="empty">No same-game parlays right now. They need Pinnacle's lines for the match, posted a day or two before kickoff.</div>`}
+    <div class="sec-head"><h2>Parlay record</h2><span class="aside">Graded automatically</span></div>${parlayRecordHTML()}`;
+  $("#parlays").innerHTML = h;
+  bindCross(renderParlays);
+  document.querySelectorAll(".sgpodds").forEach(i => i.onchange = () => { SGP_ODDS[i.dataset.s] = i.value; renderParlays(); });
+}
+
 const payout = o => { o = oddsNum(o); return o > 0 ? o / 100 : 100 / -o; };
 const impl = o => { o = oddsNum(o); return o > 0 ? 100 / (o + 100) : -o / (-o + 100); };
 const fair = p => { if (!(p > 0 && p < 1)) return "–"; const a = p >= .5 ? -Math.round(100 * p / (1 - p)) : Math.round(100 * (1 - p) / p); return a > 0 ? "+" + a : String(a); };
@@ -944,6 +1024,12 @@ $("#slipSave").onclick = () => {
   lsSet(LS_BETS, BETS); $("#slip").close(); render(); };
 function splitLine(L) { return Math.round(L * 4) % 2 ? [L - 0.25, L + 0.25] : [L]; }
 function gradeBet(b) {
+  if (b.kind === "parlay") {                      // each leg graded on its own match; a pushed leg drops out
+    const rs = (b.legs || []).map(L => gradeBet({...L, kind: "alt", game_id: L.game_id ?? b.game_id, odds: "-110", units: 1}).res);
+    if (rs.includes("O")) return {res: "O"};
+    const res = rs.includes("L") ? "L" : rs.every(r => r === "W") ? "W" : rs.some(r => r === "W") ? "W" : "P";
+    return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0, actual: rs.join(" ")};
+  }
   const g = RES?.[String(b.game_id)]; if (!g) return {res: "O"};
   const pay = payout(b.odds);
   const halves = vs => { const parts = vs.map(v => v > 0 ? pay : v < 0 ? -1 : 0), u = parts.reduce((s, x) => s + x, 0) / parts.length;
@@ -1524,6 +1610,7 @@ function renderRecord() {
     <div class="strip"><div class="st"><strong>${AQ.w || 0}–${AQ.l || 0}</strong><span>More-markets plays${AQ.w + AQ.l ? `, ${units(AQ.units)}` : ""}</span></div>
       ${Object.entries(AQ.by_market || {}).filter(([k, r]) => r.w + r.l).map(([k, r]) => `<div class="st"><strong>${r.w}–${r.l}</strong><span>${esc({btts: "BTTS", spread: "Handicap / DNB", total: "Totals", team_total: "Team totals"}[k])}, ${units(r.units)}</span></div>`).join("")}
       <div class="st"><strong>${AR.n ? `${AR.hits}–${AR.n - AR.hits}` : "–"}</strong><span>Alt parlays${AR.n ? `, hit ${n(100 * AR.hits / AR.n, 0)}% vs ${n(AR.model, 0)}% expected` : ", nothing graded yet"}</span></div></div>`;
+  h += `<h3>Parlays <button data-go="parlays" style="font:inherit;font-size:13px;background:none;border:0;color:var(--gold);cursor:pointer;padding:0 0 0 6px">Parlays tab ›</button></h3><p class="sub">Same-game alt parlays (graded since Oct 21) and cross-game parlays (since Oct 31), at fair odds near +100 to +125. A good sign is legs hitting about as often as expected; the ticket record needs months to settle.</p>${parlayRecordHTML()}`;
   const C = Object.entries(T.calibration || {});
   h += `<h3>Prop check</h3><p class="sub">How often players hit vs what the model said, for players who played.</p>
     ${C.length ? `<div class="tablewrap"><table><thead><tr><th>Prop</th><th>Graded</th><th>Model said</th><th>Actually hit</th></tr></thead><tbody>${C.map(([k, c]) => `<tr><td>${esc(PSTAT[k] || k)}</td><td>${c.n}</td><td>${n(c.model)}%</td><td>${n(c.actual)}%</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">Nothing graded yet. Results appear the morning after each matchday.</div>`}`;
@@ -1549,7 +1636,7 @@ function renderRecord() {
   document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { BETS = BETS.filter(x => x.id !== b.dataset.del); lsSet(LS_BETS, BETS); renderRecord(); });
 }
 
-function render() { renderHome(); renderGames(); renderAH(); renderProps(); renderTeams(); renderRecord(); }
+function render() { renderHome(); renderGames(); renderAH(); renderProps(); renderParlays(); renderTeams(); renderRecord(); }
 function freshness() {
   const t = new Date(D.generated_at), mins = Math.round((Date.now() - t) / 6e4);
   const txt = mins < 60 ? `Updated ${mins}m ago` : mins < 1440 ? `Updated ${Math.round(mins / 60)}h ago` : `Updated ${t.toLocaleDateString()}`;

@@ -72,6 +72,8 @@ ALT_KEEP = 3                     # credits kept back for the next near-kickoff l
 ALT_DAILY_CAP = 4                # plays from these markets per day, best first, one per match
 ALT_PARLAY_P = (0.444, 0.50)     # alt parlay: fair +100 to +125, like the NFL and NHL
 ALT_PARLAY_LEG = (0.62, 0.95)    # each leg's Pinnacle-implied chance
+ALT_BET_CUSHION = 0.07           # "bet at": 7% over fair, like NHL and NBA
+PARLAY_LOCK_HOURS = 3.0          # parlay tickets lock this close to kickoff (Oct 31 2026)
 
 
 def odds_key():

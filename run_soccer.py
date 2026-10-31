@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT))
 import betrules as BR  # noqa: E402
 import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
+import crossgame as XG  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("soccermodel")
@@ -226,9 +227,27 @@ def alt_parlay(g, G, mk):
     if not best:
         return None
     combo, pk, pm = best
+    dec = (1 + C.ALT_BET_CUSHION) / pk                       # "bet at": room for the estimate being a little off (as NHL/NBA)
     return {"p": r(100 * pk), "p_model": r(100 * pm), "pi": r(100 * float(np.prod([cands[i][2] for i in combo]))), "fair": fmt_odds(american(pk)),
+            "bet_at": fmt_odds(round((dec - 1) * 100) if dec >= 2 else round(-100 / (dec - 1))), "cushion": C.ALT_BET_CUSHION,
             "legs": [{**cands[i][0], "label": AL.label(cands[i][0], g["home"], g["away"]), "p": r(100 * cands[i][2]), "p_model": r(100 * cands[i][3])}
                      for i in combo]}
+
+
+def cross_legs(g, G, mk):
+    """Legs for the cross-game parlays (crossgame.py): alt handicaps and totals, each priced at Pinnacle's implied chance
+    (its 1X2, handicap and total re-weighted onto the scoreline grid), the model rating it at least as high."""
+    if mk is None:
+        return []
+    md, kd = AL.Dist.from_grid(G), AL.Dist.from_grid(mk["G"])
+    bets = [{"market": "spread", "team": sd, "side": sd, "line": L} for L in (-1.5, -0.5, 0.5, 1.5, 2.5) for sd in ("home", "away")]
+    bets += [{"market": "total", "team": None, "side": sd, "line": L} for L in (0.5, 1.5, 2.5, 3.5, 4.5) for sd in ("over", "under")]
+    out = []
+    for b in bets:
+        pk, pm = kd.p(b), md.p(b)
+        if 0.70 <= pk <= 0.92 and pm >= pk:
+            out.append({**b, "team_side": b["team"], "label": AL.label(b, g["home"], g["away"]), "p": pk, "p_model": pm})
+    return out
 
 
 def form(df, team, before, n=6):
@@ -368,7 +387,8 @@ def tracking(days, results, boxes):
             if ap and ap.get("legs"):
                 hits = [AL.grade(L, hg, ag)[0] == "W" for L in ap["legs"]]
                 parlays.append({"date": dt, "league": g["league"], "game": f"{g['home']} vs {g['away']}", "hit": all(hits),
-                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"]})
+                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "score": f"{hg}-{ag}",
+                                "leg_labels": [L.get("label") for L in ap["legs"]], "leg_p": [L.get("p") for L in ap["legs"]], "leg_hits": hits})
             flags = g.get("flags")
             if flags is None:                                   # files written before flags existed
                 flags = {k: pk for k, pk in (g.get("picks") or {}).items() if pk.get("play")}
@@ -433,7 +453,10 @@ def tracking(days, results, boxes):
            "sharp_share": r(100 * float(np.mean([x["clv_sharp"] for x in plays if x["clv"] is not None]))) if cl else None}
     alt_rec = {**rec2(alt_plays), "by_market": {m: rec2([x for x in alt_plays if x["market"] == m]) for m in ("btts", "spread", "total", "team_total")},
                "list": sorted(alt_plays, key=lambda x: x["date"], reverse=True)[:60]}
+    lp = [(p_, h_) for x in parlays for p_, h_ in zip(x.get("leg_p") or [], x.get("leg_hits") or []) if p_ is not None]
     par_rec = {"n": len(parlays), "hits": sum(x["hit"] for x in parlays), "model": r(float(np.mean([x["p"] for x in parlays]))) if parlays else None,
+               "legs_n": len(lp), "legs_model": r(float(np.mean([a for a, _ in lp]))) if lp else None,
+               "legs_actual": r(100 * float(np.mean([b for _, b in lp]))) if lp else None,
                "recent": sorted(parlays, key=lambda x: x["date"], reverse=True)[:20]}
     rule = [x for x in plays if not x["legacy"]]
     rcl = [x["clv"] for x in rule if x["clv"] is not None]
@@ -485,6 +508,7 @@ def main():
         rates[lg] = P.player_rates(bx)
 
     games, players, alt_rows, conv_errs = [], [], [], []
+    cross_in, cross_book = [], None
     for f in sorted(upcoming, key=lambda x: x["start"]):
         lg, R = f["league"], ratings.get(f["league"])
         if R is None:
@@ -544,6 +568,11 @@ def main():
                             "rows": sorted(rws, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12]}
                 conv_errs.extend(AL.conv_check(ab.get("sharp"), AL.Dist.from_grid(mk["G"]) if mk else None))
             g["alt_parlay"] = alt_parlay(g, G, mk)
+            cl_ = cross_legs(g, G, mk)
+            if cl_:
+                cross_in.append({"game_id": f["event_id"], "slate": g["date"], "start": g["start"], "matchup": f"{f['home']} vs {f['away']}",
+                                 "league": f["league"], "legs": cl_, "book_rows": ab.get("book")})
+                cross_book = cross_book or ab.get("book_name")
         except Exception as e:  # noqa: BLE001
             log.warning(f"more markets skipped for {f['home']} v {f['away']}: {e}")
         games.append(g)
@@ -583,6 +612,17 @@ def main():
         path = HIST / f"{day}.json"
         old = load_json(path, {"date": day, "games": [], "players": []})
         live = {g["game_id"] for g in v["games"]}
+        for g in v["games"]:                                    # alt parlays lock within PARLAY_LOCK_HOURS of kickoff (Oct 31 2026),
+            pv = next((o for o in old["games"] if o["game_id"] == g["game_id"]), None) or {}   # so the graded ticket is the one shown
+            if (pv.get("alt_parlay") or {}).get("locked_at"):
+                g["alt_parlay"] = pv["alt_parlay"]
+            elif g.get("alt_parlay"):
+                try:
+                    to_ko = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
+                except (KeyError, ValueError):
+                    to_ko = 99
+                if to_ko <= C.PARLAY_LOCK_HOURS:
+                    g["alt_parlay"] = dict(g["alt_parlay"], locked_at=now.isoformat(timespec="minutes"))
         keep = [{k: g.get(k) for k in ("game_id", "league", "date", "start", "home", "away", "picks", "book", "p_home", "p_draw", "p_away",
                                        "xg_home", "xg_away", "alt_parlay")} for g in v["games"]]
         stamp = now.isoformat(timespec="minutes")
@@ -648,6 +688,12 @@ def main():
                     boxes[gid] = {str(p["pid"]): {"goals": p["goals"], "sot": p["sot"]} for p in bx["players"]}
                     results[gid]["p"] = {str(p["pid"]): [p["goals"], p["sot"]] for p in bx["players"]}   # grades "My bets" props
     (OUT / "results.json").write_text(json.dumps(results, separators=(",", ":")))
+    try:                                                        # cross-game alt parlays: one leg from each of 3 matches
+        cross = XG.run(OUT / "cross_parlays.json", cross_in, {k: (v["hg"], v["ag"]) for k, v in results.items() if v.get("hg") is not None},
+                       now, lambda now_, first: (first - now_).total_seconds() <= C.PARLAY_LOCK_HOURS * 3600, cross_book, log)
+    except Exception as e:  # noqa: BLE001
+        cross = None
+        log.warning(f"cross-game parlays skipped: {e}")
     track = tracking(days, results, boxes)
     gate_rows = track.pop("_gate_rows", {})
     gst = GT.load(OUT / "gates.json", GT.game_names("soccer"))
@@ -676,7 +722,7 @@ def main():
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "leagues": {k: {"name": v["name"], "short": v["short"], "xg": bool(v["understat"])} for k, v in C.LEAGUES.items()},
                "games": games, "players": players, "recent": recent[:30], "odds": odds_status, "tracking": track,
-               "teams": team_rows, "backtest": bt,
+               "teams": team_rows, "backtest": bt, "cross_parlays": cross,
                "model": {lg: {"home": r(ratings[lg].home, 3) if ratings[lg] else None, "rho": rho[lg],
                               "base": r(math.exp(ratings[lg].intercept), 2) if ratings[lg] else None} for lg in C.LEAGUES},
                "alt_rules": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "daily_cap": C.ALT_DAILY_CAP},
