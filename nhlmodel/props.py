@@ -239,10 +239,14 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
     cands = []
     for pid, stats in arrs.items():
         p = info[pid]
+        pb = (book or {}).get(norm_name(p["name"]), {})
+        if not any(v and v.get("line") is not None for v in pb.values()):
+            continue                                   # Oct 31 2026: DraftKings lists alt props only for the ~15-18 regulars a game,
+                                                       # the players the book posts lines for; nobody else can be a leg
         for st, x in stats.items():
             if st not in C.ALT_MAX_DROP:
                 continue
-            b = (book or {}).get(norm_name(p["name"]), {}).get(st)
+            b = pb.get(st)
             main = float(b["line"]) if b and b.get("line") is not None else _fair(_dist(x, MAXK[st]))
             src = "book" if b and b.get("line") is not None else "model"
             if st in C.ALT_MAIN_LINE_ONLY and src != "book":
@@ -255,9 +259,9 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
                     cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": k - 0.5,
                                   "p": ph, "p_raw": raw, "main": main, "main_src": src, "hit": hit})
-    booked = [c for c in cands if c["main_src"] == "book"]
-    if len(booked) >= 4:                                   # stick to players the book has posted (their alts exist)
-        cands = booked
+    # shots legs only off the book's own shots line (DraftKings' ladder runs 0.5, 1.5, 2.5... for listed players);
+    # points legs (Over 0.5, on DraftKings for every listed player) may use the model's line since points lines aren't pulled
+    cands = [c for c in cands if c["main_src"] == "book" or c["stat"] == "points"]
     # team legs (Oct 21 2026): puck lines, totals and team totals priced from Pinnacle's lines (altlines.team_legs),
     # their hit arrays come from the same simulated games, so they combine with player legs at their real correlation
     home, away = game["home"], game["away"]
