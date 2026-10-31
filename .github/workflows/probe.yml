@@ -4,6 +4,10 @@ name: Odds market check
 # About 2 credits per sport.
 on:
   workflow_dispatch:
+    inputs:
+      probe:
+        description: "markets (default) or kalshi"
+        default: markets
 
 jobs:
   probe:
@@ -19,4 +23,8 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           ODDS_API_KEY_NHL: ${{ secrets.ODDS_API_KEY_NHL }}
           ODDS_API_KEY_SOCCER: ${{ secrets.ODDS_API_KEY_SOCCER }}
-        run: python tools/probe_markets.py 2
+          ODDS_API_KEY_NBA: ${{ secrets.ODDS_API_KEY_NBA }}
+          ODDS_API_KEY_CFB: ${{ secrets.ODDS_API_KEY_CFB }}
+          PROBE: ${{ inputs.probe }}
+        run: |
+          if [ "$PROBE" = "kalshi" ]; then python tools/probe_kalshi.py; else python tools/probe_markets.py 2; fi
