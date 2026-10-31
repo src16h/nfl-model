@@ -193,9 +193,10 @@ def ladder(stat, main):
     start, step = C.ALT_LADDER[stat]
     out, L = [], start
     while L <= main + 1e-9:
-        out.append(L)
+        if L >= main - C.ALT_RUNGS_BELOW * step - 1e-9:      # within 2 steps of the posted line itself (Kalshi drops rungs
+            out.append(L)                                   # far below it, e.g. no 1.5 assists for a 6.5-assist guard)
         L += step
-    return out[-(C.ALT_RUNGS_BELOW + 1):]
+    return out
 
 
 def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
