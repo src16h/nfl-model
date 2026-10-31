@@ -186,6 +186,18 @@ def summarize(arrs, info, book):
     return rows
 
 
+def ladder(stat, main):
+    """Alt lines on the prediction-market ladder (Kalshi's NBA ladders, checked Oct 31 2026: points 9.5, 14.5, 19.5...;
+    rebounds and assists 1.5, 3.5, 5.5...; threes 0.5, 1.5, 2.5...), from C.ALT_RUNGS_BELOW rungs under the book's main
+    line up to the main line."""
+    start, step = C.ALT_LADDER[stat]
+    out, L = [], start
+    while L <= main + 1e-9:
+        out.append(L)
+        L += step
+    return out[-(C.ALT_RUNGS_BELOW + 1):]
+
+
 def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
     """Model alt-line SGP at fair odds of +100 to +125 (same target as the NHL and NFL): 'alt down' player legs
     (Overs below the main line) rated 70%+, from both teams, plus Pinnacle-priced team legs when asked.
@@ -196,21 +208,20 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
         p = info[pid]
         if p.get("avail", 1.0) < 0.99:
             continue                                   # anyone on the injury report: a leg could be voided
+        if p.get("exp_min", 0) < C.ALT_MIN_MINUTES:
+            continue                                   # NBA rules (Oct 2026) pull many low-minute player markets
         for st in ("pts", "reb", "ast", "fg3m"):
             x = stats[st]
             b = (book or {}).get(norm_name(p["name"]), {}).get(st)
-            main = float(b["line"]) if b and b.get("line") is not None else _fair(_dist(x, MAXK[st]))
-            src = "book" if b and b.get("line") is not None else "model"
-            k_main = int(main + 0.5)
-            for kk in range(max(1, k_main - C.ALT_DROP[st]), k_main + 1):
-                hit = x >= kk
+            if not b or b.get("line") is None:
+                continue                               # only players the book posts (Oct 31 2026: no model-only lines)
+            main = float(b["line"])
+            for L in ladder(st, main):                 # only lines the prediction markets actually list
+                hit = x > L
                 ph = float(hit.mean())
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
-                    cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": kk - 0.5,
-                                  "p": ph, "p_raw": ph, "main": main, "main_src": src, "hit": hit})
-    booked = [c for c in cands if c["main_src"] == "book"]
-    if len(booked) >= 4:
-        cands = booked
+                    cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": L,
+                                  "p": ph, "p_raw": ph, "main": main, "main_src": "book", "hit": hit})
     # keep each player's best few legs so the search stays small
     cands.sort(key=lambda c: -c["p"])
     per, keep = {}, []
