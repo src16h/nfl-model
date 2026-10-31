@@ -47,6 +47,7 @@ ODDS_KEY_ENV = "ODDS_API_KEY_CFB"
 ODDS_BOOK = "hardrockbet,draftkings"   # Hard Rock first (where you bet), DraftKings fallback, same credits
 ODDS_REGION = "us"
 ODDS_RESERVE = 15
+GAME_LINES_EVERY_HOURS = 3.0     # game lines at the DK stand-in price (Hard Rock + Kalshi), 3 credits a pull
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds"]   # in priority order
 ODDS_PROP_HOURS = 30             # pull a game's props once, inside this many hours of kickoff
 ODDS_PROP_CLOSE_HOURS = 3.0      # games with a locked prop play get one more pull this close to kickoff (closing line)

@@ -816,7 +816,18 @@ const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } ca
 let SET = {bankroll: 1000, unit: 10, kelly: 0.25, maxpct: 3, ...lsGet(LS_SET, {})};
 let BETS = lsGet(LS_BETS, []);
 let RES = null;
-const oddsNum = o => +String(o ?? "").replace("+", "");
+/* ---- DK-JS (Oct 31 2026): DraftKings Predictions prices. Contracts pay $1; DK adds about 1-3 cents a contract ---- */
+const DK_FEE = p => p < 0.20 ? 0.01 : p < 0.97 ? 0.02 : 0.03;
+const dkAmer = c => c >= 0.5 ? -100 * c / (1 - c) : 100 * (1 - c) / c;
+const dkCost = o => { const v = +String(o ?? "").replace("+", ""); return !isFinite(v) || Math.abs(v) < 100 ? null : (v > 0 ? 100 / (v + 100) : -v / (-v + 100)); };
+const cents = o => { const c = dkCost(o); return c == null ? "" : `${Math.max(1, Math.floor(100 * (c - DK_FEE(c)) + 1e-9))}¢`; };
+const payUpTo = (pct, edge = 1.5) => { if (pct == null || !isFinite(+pct)) return ""; const c = +pct / 100 / (1 + edge / 100), o = Math.round(dkAmer(c));
+  return `<div class="t-meta dkpay">DK Predictions: pay up to <b>${Math.floor(100 * (c - DK_FEE(c)))}¢</b> a contract (${o > 0 ? "+" : ""}${o} with DK's fee)</div>`; };
+const oddsNum = o => { const s = String(o ?? "").trim(), v = +s.replace(/^\+/, "").replace(/[¢c]$/i, "");
+  if (!s || !isFinite(v)) return NaN;
+  if (/[¢c]$/i.test(s) || (!/^[+-]/.test(s) && v > 0 && v < 100)) { const p = Math.min(0.99, v < 1 ? v : v / 100); return Math.round(dkAmer(p + DK_FEE(p))); }   // cents: DK's fee added
+  return v; };
+/* ---- DK-JS end ---- */
 const payout = o => { o = oddsNum(o); return o > 0 ? o / 100 : 100 / -o; };
 const impl = o => { o = oddsNum(o); return o > 0 ? 100 / (o + 100) : -o / (-o + 100); };
 const fair = p => { if (!(p > 0 && p < 1)) return "–"; const a = p >= .5 ? -Math.round(100 * p / (1 - p)) : Math.round(100 * (1 - p) / p); return a > 0 ? "+" + a : String(a); };
@@ -876,7 +887,7 @@ function gradeBet(b) {
   return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0};
 }
 
-const ALT_CFG = {sport: "nba", spread: "Alt spread", pending: "Hard Rock's alt prices are pulled for games within about 6 hours (team totals first, alt spreads and totals when the day's credits allow, and only with the NBA odds key). Until then, check a price with the ladder below."};
+const ALT_CFG = {sport: "nba", spread: "Alt spread", pending: "Alt prices (Hard Rock and Kalshi, blended as the DK stand-in) are pulled for games within about 6 hours (team totals first, alt spreads and totals when the day's credits allow, and only with the NBA odds key). Until then, check a price with the ladder below."};
 /* ---- ALT-JS start (tools/altjs.py) ---- */
 const ALT_MK = {spread: ALT_CFG.spread, total: "Alt total", team_total: "Team total", h1_spread: "1st half spread", h1_total: "1st half total"};
 const altMkName = x => x.period === "h1" ? ALT_MK["h1_" + x.market] || "1st half" : ALT_MK[x.market];
@@ -1113,7 +1124,7 @@ function ticket(x) {
   return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "alt" ? ALT_MK[x.p.market] : x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
     <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away)} at ${esc(x.g.home)}`}</div>
-    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}
+    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}${payUpTo(x.type === "prop" ? (x.m?.book?.adj ?? x.model) : (x.p?.sharp ?? x.model))}
     <div class="t-actions"><span class="stake">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.model, x.odds))}</span>${logBtn(playBet(x))}</div></div>
     <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "alt" || (x.type === "game" && x.p.sharp != null) ? "value vs Pinnacle" : "gap vs book"}</div></div></article>`;
 }
@@ -1182,7 +1193,7 @@ function renderGames() {
     <div class="fact"><b>${esc(D.odds?.source === "odds_api" ? (G.find(g => g.book?.src)?.book?.src || "Book") : "ESPN (DraftKings)")}</b>lines from</div>
     <div class="fact"><b>${n(D.model?.league, 1)}</b>league points per team</div></div></div>`;
   h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Pinnacle value 1.5% to 8%, model agrees</span></div>
-    <p class="sub">A game play needs two things: <b>Pinnacle's fair price</b> (the sharpest book) says Hard Rock's price is at least 1.5% too generous, and <b>the model agrees</b> on the side. Checked on graded games, the model alone did not beat the market, so it is a veto, not the source of the edge. One play per game. Plays are locked the moment they appear and graded at that price, so bet soon and check the injury report. <b>Alt lines and team totals</b> follow the same rule using Hard Rock's alt prices (1 point more value when Pinnacle didn't post that exact line), one per game, up to ${D.alt_rules?.daily_cap ?? 4} a day.</p>
+    <p class="sub">A game play needs two things: <b>Pinnacle's fair price</b> (the sharpest book) says the DK stand-in price (Hard Rock and Kalshi blended, DK's fee added) is at least 1.5% too generous, and <b>the model agrees</b> on the side. Checked on graded games, the model alone did not beat the market, so it is a veto, not the source of the edge. One play per game. Plays are locked the moment they appear and graded at that price, so bet soon and check the injury report. <b>Alt lines and team totals</b> follow the same rule using the DK stand-in's alt prices (1 point more value when Pinnacle didn't post that exact line), one per game, up to ${D.alt_rules?.daily_cap ?? 4} a day.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No game plays right now.</b> ${D.odds?.source === "odds_api" ? "The model is close to the book on every game." : "Plays need Pinnacle's price, which comes with the NBA odds key. ESPN's DraftKings lines show the model's leans until then."}</div>`}`;
   h += `<div class="sec-head"><h2>All games</h2><span class="aside">Tap a game for injuries and ratings</span></div>
     <div class="board"><div class="board-head"><span>Projected score</span><span>Win chance</span><span>Moneyline</span><span>Total, model / book</span><span>Spread</span></div>
@@ -1276,7 +1287,7 @@ function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay), EP = edgeToday();
   let h = `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">${D.edge_paused ? "Paused" : "2 prop plays, 2 different games"}</span></div>
     ${D.edge_paused ? `<div class="empty"><b>Paused, not plays.</b> Their graded return fell below the bar. Still built and graded below so the record keeps counting.</div>` : ""}
-    <p class="sub">Built from the day's prop plays, the part of the model that has been beating the book. Each leg already has an edge on its own, and because the legs are in different games the book can't add a same-game charge. Up to ${EDGE_MAX} tickets a day, each play used once, most likely to hit first. Odds shown multiply the odds feed's prices, so enter Hard Rock's parlay price before betting.</p>`;
+    <p class="sub">Built from the day's prop plays, the part of the model that has been beating the book. Each leg already has an edge on its own, and because the legs are in different games the book can't add a same-game charge. Up to ${EDGE_MAX} tickets a day, each play used once, most likely to hit first. Odds shown multiply the odds feed's prices, so enter DK's parlay price before betting.</p>`;
   h += EP.length ? `<div class="tickets">${EP.map((e, i) => `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Edge parlay ${i + 1}</b><span>${n(e.p, 0)}% to hit</span></div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${e.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.side)} ${L.line} ${esc(STAT[L.stat] || L.stat)} <span class="dim">${esc(fmtO(L.odds))}, ${n(L.p, 0)}%, ${esc(L.game)}</span></div>`).join("")}</div>
       <div class="t-meta">Fair odds ${esc(e.fair)}. At ${esc(e.odds)}: ${sgn(e.ev)}% expected return</div>
@@ -1292,14 +1303,14 @@ function renderParlays() {
       return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake">${altLegTxt(L)} <span class="dim">${n(L.p, 0)}%${L.kind === "team" ? ` Pinnacle, ${n(L.p_model, 0)}% model` : ""}</span></div>`).join("")}</div>
-        <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better.` : ""}</div>
+        <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK).` : ""}</div>
         <div class="t-actions">${altCheck(g, "alt_mix")}</div></div>
         <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No team-leg parlays yet. They need Pinnacle's lines for the game, posted the day before or the morning of.</div>`}`;
   h += G.length ? `<div class="tickets">${G.map(g => { const a = g.alt_parlay;
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
       <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%, main ${L.main}${L.main_src === "model" ? " (model)" : ""}</span></div>`).join("")}</div>
-      <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better.` : ""}</div>
+      <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK).` : ""}</div>
       <div class="t-actions">${altCheck(g)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No same-game parlays for the next slate yet. Some games have too few legs the model rates 70%+.</div>`;
   h += mixHTML;
@@ -1324,7 +1335,7 @@ function crossHTML() {
     const k = `${t.slate}|${t.style}`;
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${esc(X_STYLE[t.style] || t.style)}, ${t.legs.length} games</b><span>${n(t.p, 0)}% to hit${t.locked_at ? ", locked" : ""}</span></div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${t.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${esc(L.matchup)}, ${esc(xWhen(L.start))}. ${n(L.p, 0)}% (Pinnacle ${n(L.p_pin, 0)}%, model ${n(L.p_model, 0)}%)${L.book_odds ? `, ${esc(L.book_odds)}` : ""}</span></div>`).join("")}</div>
-      <div class="t-meta">Fair odds ${esc(t.fair)}; bet it at ${esc(t.min_odds)} or better.${t.book_odds ? ` ${esc(t.book || "Book")} pays about ${esc(t.book_odds)} for these legs: ${sgn(t.ev)}% expected return.` : ""}</div>
+      <div class="t-meta">Fair odds ${esc(t.fair)}; bet it at ${esc(t.min_odds)} or better (${cents(t.min_odds)} or less on DK).${t.book_odds ? ` ${esc(t.book || "Book")} pays about ${esc(t.book_odds)} for these legs: ${sgn(t.ev)}% expected return.` : ""}</div>
       <div class="t-actions">${crossCheck(t, k)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(t.min_odds)}</div><div class="t-gl">bet at or better</div></div></article>`; }).join("")}</div>`;
   const RC = T.recent || [];
@@ -1333,7 +1344,7 @@ function crossHTML() {
 }
 function crossCheck(t, k) {
   const odds = XODDS[k] || "";
-  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Your book's odds <input class="odds xodds" data-x="${esc(k)}" value="${esc(odds)}" placeholder="${esc(t.book_odds || "+100")}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds xodds" data-x="${esc(k)}" value="${esc(odds)}" placeholder="${esc(t.book_odds || "+100")}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   const use = odds && Math.abs(oddsNum(odds)) >= 100 ? odds : t.book_odds;
   if (!use) return out;
   const cut = (D.cross_parlays.rules || {}).min_ev ?? 3, ev = (t.p / 100 * (payout(use) + 1) - 1) * 100;
@@ -1355,7 +1366,7 @@ function edgeToday() {
 function edgeCheck(e, i) {
   if (D.edge_paused) return `<span class="vt">Paused</span><span class="stake">Not a play while paused</span>`;
   const key = e.day + ":" + i, odds = EDGE_ODDS[key] || "";
-  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Hard Rock odds <input class="odds edgeodds" data-e="${esc(key)}" value="${esc(odds)}" placeholder="${esc(e.odds)}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds edgeodds" data-e="${esc(key)}" value="${esc(odds)}" placeholder="${esc(e.odds)}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   const use = odds && Math.abs(oddsNum(odds)) >= 100 ? odds : e.odds;
   const ev = (e.p / 100 * (payout(use) + 1) - 1) * 100, tier = ev > 40 ? "big" : ev >= 5 ? "play" : ev >= 0 ? "watch" : "none";
   out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Check the lines", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return${odds ? "" : " at feed odds"}</span>`;
@@ -1367,7 +1378,7 @@ function edgeCheck(e, i) {
 const ALT = {};
 function altCheck(g, key = "alt_parlay") {
   const a = g[key], ak = key === "alt_parlay" ? String(g.game_id) : `${g.game_id}:mix`, odds = ALT[ak] || "";
-  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Book odds <input class="odds altodds" data-g="${ak}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds altodds" data-g="${ak}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   if (odds && Math.abs(oddsNum(odds)) >= 100) {
     const cut = a.cushion != null ? 100 * a.cushion : 5, ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
     out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return</span>`;

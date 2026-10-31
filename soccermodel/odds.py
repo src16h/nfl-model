@@ -19,6 +19,10 @@ from pathlib import Path
 from . import config as C
 from .teams import canon
 
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import standin as SI  # noqa: E402
+
 log = logging.getLogger("soccermodel")
 BASE = "https://api.the-odds-api.com"
 
@@ -113,7 +117,7 @@ def _best_book(ev):
             sharp = {x: r[x] for x in r if x not in ("event", "commence", "home", "away")}
             break
     bet_books = [k for k in C.ODDS_BOOKS if k not in C.SHARP_BOOKS]
-    order = [k for k in bet_books if k in books] + [k for k in books if k not in C.ODDS_BOOKS]
+    order = [k for k in bet_books if k in books] + [k for k in books if k not in C.ODDS_BOOKS and k != SI.KALSHI]
     if not order:                                     # only sharp books posted: bet off them
         order = [k for k in C.SHARP_BOOKS if k in books]
     rec = None
@@ -127,7 +131,15 @@ def _best_book(ev):
             if f[0] not in rec and f[0] in r:
                 rec.update({x: r[x] for x in f})
                 rec.setdefault("book_extra", r["book"])
-    if rec is not None and sharp:
+    ks = _parse(ev, books[SI.KALSHI]) if SI.KALSHI in books else None          # DK Predictions stand-in (standin.py)
+    if rec is None and not (ks and "ml_home" in ks):
+        return None
+    hr_name = (rec or {}).get("book")
+    rec = SI.apply(rec, ks, [(None, "ml_home", "ml_draw", "ml_away"), ("ah_home", "ah_home_odds", "ah_away_odds"),
+                             ("total", "over_odds", "under_odds")])
+    rec.update({"event": ev["id"], "commence": ev.get("commence_time"), "home": canon(ev["home_team"]), "away": canon(ev["away_team"]),
+                "hr_book": hr_name, "book": SI.LABEL + (f" ({hr_name} + Kalshi)" if ks and hr_name else " (Kalshi)" if ks else f" ({hr_name} only)")})
+    if sharp:
         rec["sharp"] = sharp
     return rec
 
@@ -163,7 +175,7 @@ def run(games, state_path, now):
                 if not due or allowance < 3:
                     continue
                 data = cl.get(f"/v4/sports/{C.LEAGUES[lg]['odds']}/odds", markets=C.ODDS_MARKETS,
-                              oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS))
+                              oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS + [SI.KALSHI]))
                 spent = 3
                 allowance -= spent
                 state["spent_today"] = state.get("spent_today", 0) + spent
@@ -190,14 +202,15 @@ def run(games, state_path, now):
                     if mkt in ent["markets"] or allowance - 1 < C.ALT_KEEP:
                         continue
                     ev = cl.get(f"/v4/sports/{C.LEAGUES[g['league']]['odds']}/events/{evid}/odds", markets=mkt,
-                                oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS))
+                                oddsFormat="american", bookmakers=",".join(C.ODDS_BOOKS + [SI.KALSHI]))
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     bks = {b["key"]: b for b in (ev or {}).get("bookmakers", [])}
                     bet = next((k for k in C.ODDS_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
                     shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
-                    ent["markets"][mkt] = {"book": _alt_rows(ev, bks[bet]) if bet else [], "sharp": _alt_rows(ev, bks[shp]) if shp else [],
-                                           "book_name": bks[bet].get("title") if bet else None, "at": now.isoformat(timespec="minutes")}
+                    blended = SI.rows(_alt_rows(ev, bks[bet]) if bet else [], _alt_rows(ev, bks[SI.KALSHI]) if SI.KALSHI in bks else [])
+                    ent["markets"][mkt] = {"book": blended, "sharp": _alt_rows(ev, bks[shp]) if shp else [],
+                                           "book_name": SI.LABEL if blended else None, "at": now.isoformat(timespec="minutes")}
                     status["alt_pulls"] = status.get("alt_pulls", 0) + 1
             state["alt"] = {k: v for k, v in alt.items() if v.get("day", today) >= (now - timedelta(days=2)).strftime("%Y-%m-%d")}
         except Fatal as e:

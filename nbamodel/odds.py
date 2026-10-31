@@ -21,6 +21,10 @@ from zoneinfo import ZoneInfo
 from . import config as C
 from .util import norm_name
 
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import standin as SI  # noqa: E402
+
 log = logging.getLogger("nbamodel")
 BASE = "https://api.the-odds-api.com"
 SPORT = "basketball_nba"
@@ -100,8 +104,13 @@ def _lines_for(ev):
         for f in (("spread", "spread_home_odds", "spread_away_odds"), ("total", "over_odds", "under_odds")):
             if f[0] not in rec and f[0] in r:
                 rec.update({x: r[x] for x in f})
-    if rec is None:
+    ks = _parse_book(ev, books[SI.KALSHI]) if SI.KALSHI in books else None     # DK Predictions stand-in (standin.py)
+    if rec is None and not (ks and "ml_home" in ks):
         return None
+    hr_name = (rec or {}).get("book")
+    rec = SI.apply(rec, ks, [(None, "ml_home", "ml_away"), ('spread', 'spread_home_odds', 'spread_away_odds'), ("total", "over_odds", "under_odds")])
+    rec.update({"event": ev["id"], "commence": ev.get("commence_time"), "hr_book": hr_name,
+                "book": SI.LABEL + (" (Hard Rock + Kalshi)" if ks and hr_name else " (Kalshi)" if ks else f" ({hr_name} only)")})
     for k in C.SHARP_BOOKS:
         if k in books:
             sh = _parse_book(ev, books[k])
@@ -160,7 +169,7 @@ def run(games, state_path, cache_path, now, close_games=()):
         if due:
             # one call, up to 10 books = same credits as one book: Hard Rock (where you bet) first, Pinnacle kept as the referee
             data = cl.get(f"/v4/sports/{SPORT}/odds", markets="h2h,spreads,totals", oddsFormat="american",
-                          bookmakers=",".join(C.ODDS_BOOKS + C.SHARP_BOOKS))
+                          bookmakers=",".join(C.ODDS_BOOKS + C.SHARP_BOOKS + [SI.KALSHI]))
             lines = {}
             for ev in data:
                 h, a = _team(ev["home_team"], games), _team(ev["away_team"], games)
@@ -223,12 +232,14 @@ def run(games, state_path, cache_path, now, close_games=()):
                     if ck in cache or allowance < 1:
                         continue
                     ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
-                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.ALT_BOOKS))
+                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.ALT_BOOKS + [SI.KALSHI]))
                     bks = {b["key"]: b for b in ev.get("bookmakers", [])}
                     bet = next((k for k in C.ALT_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
                     shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
-                    cache[ck] = {"day": today, "book": _alt_rows(ev, bks[bet], mkt) if bet else [],
-                                 "sharp": _alt_rows(ev, bks[shp], mkt) if shp else [], "book_name": bks[bet].get("title") if bet else None}
+                    blended = SI.rows(_alt_rows(ev, bks[bet], mkt) if bet else [],
+                                      _alt_rows(ev, bks[SI.KALSHI], mkt) if SI.KALSHI in bks else [])   # DK stand-in
+                    cache[ck] = {"day": today, "book": blended,
+                                 "sharp": _alt_rows(ev, bks[shp], mkt) if shp else [], "book_name": SI.LABEL if blended else None}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     status["alt_pulls"] = status.get("alt_pulls", 0) + 1

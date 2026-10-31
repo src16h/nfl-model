@@ -32,6 +32,63 @@ PROP_STAT = {"player_pass_yds": "pass_yds", "player_rush_yds": "rush_yds", "play
 BOOK_ORDER = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us", "espnbet", "betrivers", "fanatics", "bovada"]
 
 
+import sys as _sys  # noqa: E402
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import standin as SI  # noqa: E402
+
+GAME_BOOKS = ["hardrockbet", "kalshi", "pinnacle"]      # DK Predictions stand-in (Hard Rock + Kalshi), Pinnacle for reference
+
+
+def _book_lines(ev, b):
+    hn, an = ev["home_team"], ev["away_team"]
+    rec = {}
+    for m in b.get("markets", []):
+        out = {o["name"]: o for o in m.get("outcomes", [])}
+        if m["key"] == "h2h" and hn in out and an in out:
+            rec["ml_home"], rec["ml_away"] = out[hn]["price"], out[an]["price"]
+        elif m["key"] == "spreads" and hn in out and an in out and out[hn].get("point") is not None:
+            rec["spread"], rec["spread_home_odds"], rec["spread_away_odds"] = float(out[hn]["point"]), out[hn]["price"], out[an]["price"]
+        elif m["key"] == "totals" and "Over" in out and "Under" in out and out["Over"].get("point") is not None:
+            rec["total"], rec["over_odds"], rec["under_odds"] = float(out["Over"]["point"]), out["Over"]["price"], out["Under"]["price"]
+    return rec
+
+
+def game_lines(cl, games, state, now):
+    """Oct 31 2026: game lines at the DK Predictions stand-in price (Hard Rock + Kalshi, standin.py), one call for every
+    game (3 credits), at most every GAME_LINES_EVERY_HOURS. Replaces ESPN's DraftKings line on each game it finds
+    (ESPN's opening line is kept for the line-move display)."""
+    last = state.get("game_lines_at")
+    age = (now - datetime.fromisoformat(last)).total_seconds() / 3600 if last else 99
+    soon = [g for g in games if 0 < (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= 24 * 7]
+    if soon and (age >= C.GAME_LINES_EVERY_HOURS or not state.get("game_lines")):
+        data = cl.get(f"/v4/sports/{SPORT}/odds", markets="h2h,spreads,totals", oddsFormat="american", bookmakers=",".join(GAME_BOOKS))
+        lines = {}
+        for ev in data:
+            bks = {b["key"]: b for b in ev.get("bookmakers", [])}
+            hr = _book_lines(ev, bks["hardrockbet"]) if "hardrockbet" in bks else None
+            ks = _book_lines(ev, bks[SI.KALSHI]) if SI.KALSHI in bks else None
+            if not hr and not ks:
+                continue
+            rec = SI.apply(hr or None, ks, [(None, "ml_home", "ml_away"), ("spread", "spread_home_odds", "spread_away_odds"),
+                                            ("total", "over_odds", "under_odds")])
+            rec["book"] = SI.LABEL + (" (Hard Rock + Kalshi)" if hr and ks else " (Kalshi)" if ks else " (Hard Rock only)")
+            if "pinnacle" in bks:
+                rec["sharp"] = _book_lines(ev, bks["pinnacle"])
+            lines[f"{norm_name(ev['home_team'])}|{norm_name(ev['away_team'])}"] = rec
+        state["game_lines"], state["game_lines_at"] = lines, now.isoformat()
+    lines = state.get("game_lines") or {}
+    n = 0
+    for g in games:
+        rec = lines.get(f"{norm_name(g.get('home_full'))}|{norm_name(g.get('away_full'))}")
+        if rec and (rec.get("spread") is not None or rec.get("ml_home") is not None):
+            base = g.get("odds") or {}
+            g["odds"] = {**base, **{k: rec.get(k) for k in ("spread", "total", "ml_home", "ml_away", "spread_home_odds", "spread_away_odds",
+                                                           "over_odds", "under_odds")},
+                         "book": rec["book"], "sharp": rec.get("sharp"), "standin": rec.get("standin"), "espn_book": base.get("book")}
+            n += 1
+    return n
+
+
 class Fatal(Exception):
     pass
 
@@ -93,6 +150,14 @@ def run(games, state_path, cache_path, now, close_games=()):
         return _props(cache), status
     cl = Client(key)
     try:
+        try:
+            status["game_lines"] = game_lines(cl, games, state, now)
+            if status["game_lines"]:
+                status["source"] = "odds_api"
+        except Fatal:
+            raise
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"CFB game lines (DK stand-in) skipped: {e}")
         soon = [g for g in games if 0 < (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= C.ODDS_PROP_HOURS]
         closeset = {str(x) for x in close_games}
 

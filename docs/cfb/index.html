@@ -788,7 +788,18 @@ const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } ca
 let SET = {bankroll: 1000, unit: 10, kelly: 0.25, maxpct: 3, ...lsGet(LS_SET, {})};
 let BETS = lsGet(LS_BETS, []);
 let RES = null;
-const oddsNum = o => +String(o ?? "").replace("+", "");
+/* ---- DK-JS (Oct 31 2026): DraftKings Predictions prices. Contracts pay $1; DK adds about 1-3 cents a contract ---- */
+const DK_FEE = p => p < 0.20 ? 0.01 : p < 0.97 ? 0.02 : 0.03;
+const dkAmer = c => c >= 0.5 ? -100 * c / (1 - c) : 100 * (1 - c) / c;
+const dkCost = o => { const v = +String(o ?? "").replace("+", ""); return !isFinite(v) || Math.abs(v) < 100 ? null : (v > 0 ? 100 / (v + 100) : -v / (-v + 100)); };
+const cents = o => { const c = dkCost(o); return c == null ? "" : `${Math.max(1, Math.floor(100 * (c - DK_FEE(c)) + 1e-9))}¢`; };
+const payUpTo = (pct, edge = 1.5) => { if (pct == null || !isFinite(+pct)) return ""; const c = +pct / 100 / (1 + edge / 100), o = Math.round(dkAmer(c));
+  return `<div class="t-meta dkpay">DK Predictions: pay up to <b>${Math.floor(100 * (c - DK_FEE(c)))}¢</b> a contract (${o > 0 ? "+" : ""}${o} with DK's fee)</div>`; };
+const oddsNum = o => { const s = String(o ?? "").trim(), v = +s.replace(/^\+/, "").replace(/[¢c]$/i, "");
+  if (!s || !isFinite(v)) return NaN;
+  if (/[¢c]$/i.test(s) || (!/^[+-]/.test(s) && v > 0 && v < 100)) { const p = Math.min(0.99, v < 1 ? v : v / 100); return Math.round(dkAmer(p + DK_FEE(p))); }   // cents: DK's fee added
+  return v; };
+/* ---- DK-JS end ---- */
 const payout = o => { o = oddsNum(o); return o > 0 ? o / 100 : 100 / -o; };
 const impl = o => { o = oddsNum(o); return o > 0 ? 100 / (o + 100) : -o / (-o + 100); };
 const fair = p => { if (!(p > 0 && p < 1)) return "–"; const a = p >= .5 ? -Math.round(100 * p / (1 - p)) : Math.round(100 * (1 - p) / p); return a > 0 ? "+" + a : String(a); };
@@ -915,7 +926,7 @@ function ticket(x) {
   return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
     <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small></div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away_name)} at ${esc(x.g.home_name)}`}</div>
-    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}
+    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}${payUpTo(x.type === "prop" ? (x.m?.book?.adj ?? x.model) : (x.p?.sharp ?? x.model))}
     <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
     <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "game" && x.p.ev != null ? `edge, ${sgn(x.p.ev)}% return at ${esc(x.odds)}` : "gap vs book"}</div></div></article>`;
 }
@@ -1096,7 +1107,7 @@ function bindChecker() {
 const ALT = {};
 function altCheck(g) {
   const a = g.alt_parlay, odds = ALT[g.game_id] || "";
-  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Book odds <input class="odds altodds" data-g="${g.game_id}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds altodds" data-g="${g.game_id}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   if (odds && Math.abs(oddsNum(odds)) >= 100) {
     const cut = a.cushion != null ? 100 * a.cushion : 5, ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
     out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Too big to trust", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return</span>`;
@@ -1167,7 +1178,7 @@ function renderParlays() {
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(when(g.start))}</span></div>
       <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
       <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%, main ${L.main}${L.main_src === "model" ? " (model)" : ""}</span></div>`).join("")}</div>
-      <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better.` : ""}</div>
+      <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK).` : ""}</div>
       <div class="t-actions">${altCheck(g)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No alt-line parlays for this slate yet.</div>`;
   h += teaserHTML();

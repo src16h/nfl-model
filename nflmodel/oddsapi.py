@@ -28,6 +28,10 @@ import numpy as np
 import pandas as pd
 
 from . import config as C
+
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import standin as SI  # noqa: E402
 from .util import clean_json, norm_name
 
 log = logging.getLogger("nflmodel")
@@ -218,7 +222,9 @@ def _parse_lines(ev: dict, home_abbr: str):
     for b in ev.get("bookmakers", []):                      # the referee: Pinnacle's own lines, kept separately
         if b.get("key") in C.SHARP_BOOKS:
             sharp = _one_book(b, home_full) or None
-    for b in sorted([b for b in ev.get("bookmakers", []) if b.get("key") not in C.SHARP_BOOKS], key=lambda b: _rank(b.get("key"))):
+    kal = next((b for b in ev.get("bookmakers", []) if b.get("key") == SI.KALSHI), None)
+    for b in sorted([b for b in ev.get("bookmakers", []) if b.get("key") not in C.SHARP_BOOKS and b.get("key") != SI.KALSHI],
+                    key=lambda b: _rank(b.get("key"))):
         one = _one_book(b, home_full)
         if spread is None and "spread_line" in one:
             prices.update({k: one[k] for k in ("spread_home_odds", "spread_away_odds")})
@@ -242,18 +248,25 @@ def _parse_lines(ev: dict, home_abbr: str):
                     if str(o.get("name", "")).lower() == "over" and p is not None:
                         total, book_t = p, b
     book = book_s or book_t
-    if book is None:
+    ks = _one_book(kal, home_full) if kal else None                  # DK Predictions stand-in (standin.py)
+    if book is None and not ks:
         return None
-    return {"spread_line": spread, "total_line": total, "ml_home": ml_home, "ml_away": ml_away,
-            "book": book.get("key"), **prices, "sharp": sharp,
-            "book_title": book.get("title") or book.get("key"), "updated": updated}
+    rec = {"spread_line": spread, "total_line": total, "ml_home": ml_home, "ml_away": ml_away, **prices} if book is not None else None
+    hr_name = (book.get("title") or book.get("key")) if book is not None else None
+    rec = SI.apply(rec, ks, [(None, "ml_home", "ml_away"), ("spread_line", "spread_home_odds", "spread_away_odds"),
+                             ("total_line", "over_odds", "under_odds")])
+    for k_ in ("spread_line", "total_line", "ml_home", "ml_away"):
+        rec.setdefault(k_, None)
+    label = SI.LABEL + (f" ({hr_name} + Kalshi)" if ks and hr_name else " (Kalshi)" if ks else f" ({hr_name} only)")
+    return {**rec, "book": book.get("key") if book is not None else SI.KALSHI, "sharp": sharp, "hr_book": hr_name,
+            "book_title": label, "updated": updated or (kal or {}).get("last_update")}
 
 
 def fetch_game_lines(client: Client, todo: pd.DataFrame) -> dict:
     markets = "spreads,totals" + (",h2h" if getattr(C, "ODDS_MONEYLINE_LIVE", False) else "")
-    # up to 10 named books cost the same as one region: the US books in ODDS_BOOKS (Hard Rock first) plus Pinnacle
+    # up to 10 named books cost the same as one region: Pinnacle, Kalshi (DK stand-in) and the US books in ODDS_BOOKS
     data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=markets.count(",") + 1, markets=markets,
-                      bookmakers=",".join((C.ODDS_BOOKS + C.SHARP_BOOKS)[:10]), oddsFormat="american", dateFormat="iso")
+                      bookmakers=",".join((C.SHARP_BOOKS + [SI.KALSHI] + C.ODDS_BOOKS)[:10]), oddsFormat="american", dateFormat="iso")
     if not isinstance(data, list):
         raise OddsError("unexpected game lines response")
     by_pair = {frozenset((g["home_team"], g["away_team"])): g for _, g in todo.iterrows()}
@@ -483,7 +496,7 @@ def fetch_alts(client: Client, todo: pd.DataFrame, matched: dict, now: datetime,
                 break
             try:
                 data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=1, markets=mkt,
-                                  bookmakers=",".join(C.ALT_BOOKS), oddsFormat="american", dateFormat="iso")
+                                  bookmakers=",".join(C.ALT_BOOKS + [SI.KALSHI]), oddsFormat="american", dateFormat="iso")
             except OddsFatal:
                 raise
             except OddsError as e:
@@ -493,9 +506,10 @@ def fetch_alts(client: Client, todo: pd.DataFrame, matched: dict, now: datetime,
             bks = {b.get("key"): b for b in (data or {}).get("bookmakers", [])} if isinstance(data, dict) else {}
             bet = next((k for k in C.ALT_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
             shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
+            blended = SI.rows(_alt_rows(data, bks[bet]) if bet else [], _alt_rows(data, bks[SI.KALSHI]) if SI.KALSHI in bks else [])
             ent["markets"][mkt] = {"fetched_at": now.isoformat(timespec="minutes"),
-                                   "book": _alt_rows(data, bks[bet]) if bet else [], "sharp": _alt_rows(data, bks[shp]) if shp else [],
-                                   "book_name": bks[bet].get("title") if bet else None}
+                                   "book": blended, "sharp": _alt_rows(data, bks[shp]) if shp else [],
+                                   "book_name": SI.LABEL if blended else None}
     cache["alt"] = alt
     _save_cache(cache_path, cache)
     out = {}
