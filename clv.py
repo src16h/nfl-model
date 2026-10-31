@@ -19,7 +19,7 @@ import betrules as BR
 
 # win chance per point (CFB) or per goal (NHL total) when the line itself moved; NHL is about how often
 # a game lands on one exact total
-PER_POINT = {"cfb_spread": 0.03, "cfb_total": 0.025, "nhl_total": 0.12}
+PER_POINT = {"cfb_spread": 0.03, "cfb_total": 0.025, "nhl_total": 0.12, "nba_total": 0.022}
 
 
 def price(o):

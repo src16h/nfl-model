@@ -28,6 +28,9 @@ GATES = {
                    "why": "Paused Oct 21: points props went 111-121 (-17u). Book lines are pulled only when the day's credits allow"},
     "nhl_edge": {"label": "NHL edge parlays", "min_n": 20, "min_roi": 5.0, "repause_roi": -10.0, "since": "2026-10-21", "hit_check": True,
                  "why": "Paused Oct 21: 6-12 (-4.9u) when the model expected about 46%"},
+    # NBA (Oct 30 2026)
+    "nba_edge": {"label": "NBA edge parlays", "min_n": 20, "min_roi": 5.0, "repause_roi": -10.0, "since": "2026-10-30", "hit_check": True,
+                 "start": "active", "why": "Edge parlays pause if 20+ tickets return -10% or worse"},
 }
 CLV_MIN_N = 15
 
@@ -45,7 +48,7 @@ CLV_PAUSE_EV = 0.0
 RULES_SINCE = "2026-10-20"           # current play rules (Pinnacle must agree) started here in every sport
 
 GAME_KINDS = {"nhl": ("ml", "pl", "total"), "cfb": ("spread", "total", "ml"), "soccer": ("1x2", "ah", "total"),
-              "nfl": ("spread", "total")}
+              "nfl": ("spread", "total"), "nba": ("ml", "spread", "total")}
 _KIND_LABEL = {"ml": "moneyline", "pl": "puck line", "total": "totals", "spread": "spreads", "1x2": "match result",
                "ah": "Asian handicap"}
 
@@ -70,10 +73,11 @@ GATES["nhl_game_pl"].update({
 # is paused automatically instead of waiting for someone to notice (Oct 29: 33 NHL shots Unders, 11-21, -11.4u).
 # Same bars as game types: 30+ priced plays losing at the close, or 25+ plays returning -8% or worse.
 # ---------------------------------------------------------------------------------------------------
-PROP_KINDS = {"nhl": [("sog", "Over"), ("sog", "Under"), ("goals", "Over"), ("assists", "Over"), ("assists", "Under")]}
+PROP_KINDS = {"nhl": [("sog", "Over"), ("sog", "Under"), ("goals", "Over"), ("assists", "Over"), ("assists", "Under")],
+              "nba": [(s, d) for s in ("pts", "reb", "ast", "fg3m", "pra") for d in ("Over", "Under")]}
 _STAT_LABEL = {"sog": "shots on goal", "goals": "goals", "assists": "assists", "pass_yds": "passing yards",
                "rush_yds": "rushing yards", "rec_yds": "receiving yards", "rec": "receptions", "anytime_td": "anytime TD",
-               "tds": "2+ TDs"}
+               "tds": "2+ TDs", "pts": "points", "reb": "rebounds", "ast": "assists", "fg3m": "threes", "pra": "pts+reb+ast"}
 
 
 def prop_gate(sport, stat, side):
