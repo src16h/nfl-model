@@ -434,10 +434,13 @@ def lock_parlays(g, prev, players, now):
         to_start = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
     except (KeyError, ValueError):
         to_start = 99
-    evening = now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR or to_start <= 3
+    same_day = g.get("date") == now.astimezone(ET).date().isoformat()      # Oct 31 2026: the evening run locked tomorrow's
+    evening = (same_day and now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR) or to_start <= 3   # tickets before their props existed
     dressed = {p["pid"] for p in players if p.get("game_id") == g["game_id"]}
     for key in ("alt_parlay", "alt_mix"):
         old = (prev or {}).get(key)
+        if old and old.get("locked_at") and any(L.get("stat") == "sog" and L.get("main_src") == "model" for L in old.get("legs", [])):
+            old = None                                 # built on the model's own shots line (before Oct 31): rebuild it
         if old and old.get("locked_at"):
             gone = [L.get("name") for L in old.get("legs", []) if L.get("pid") is not None and L["pid"] not in dressed]
             if not gone:
