@@ -33,6 +33,7 @@ import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
 import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
+import crossgame as XG  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nhlmodel")
@@ -591,6 +592,7 @@ def main():
     book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
+    cross_in, cross_book = [], None
 
     games, players = [], []
     for i, g in enumerate(upcoming):
@@ -685,6 +687,10 @@ def main():
             p["opp"] = a if p["team"] == h else h
         players += prows
         team_legs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE) if mkt is not None else []
+        if team_legs:                                    # cross-game alt parlays (crossgame.py): one leg from each of 3 games
+            cross_in.append({"game_id": g["game_id"], "slate": game["date"], "start": g["start"], "matchup": f"{a} at {h}",
+                             "legs": team_legs, "book_rows": ba.get("book")})
+            cross_book = cross_book or ba.get("book_name")
         game["alt_parlay"] = P.alt_parlay(arrs, info, game, bp)              # players only (the record so far)
         game["alt_mix"] = P.alt_parlay(arrs, info, game, bp, team_legs, need_team=True)   # must include a team leg
         games.append(game)
@@ -844,6 +850,14 @@ def main():
     days = [d for d in days if d]
     ids = {g["game_id"] for d in days for g in d.get("games", [])}
     results = build_results(games_t, pg, ids)
+    try:
+        lock_x = lambda now_, first: (first - now_).total_seconds() <= 3 * 3600 or (
+            first.astimezone(ET).date() == now_.astimezone(ET).date() and now_.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR)
+        cross = XG.run(OUT / "cross_parlays.json", cross_in, {k: (v["h"], v["a"]) for k, v in results.items()}, now, lock_x,
+                       cross_book, log)
+    except Exception as e:  # noqa: BLE001
+        cross = None
+        log.warning(f"cross-game parlays skipped: {e}")
     (OUT / "results.json").write_text(json.dumps(clean(results), separators=(",", ":")))
     track = tracking(days, results)
     gate_rows = track.pop("_gate_rows", {})
@@ -853,7 +867,7 @@ def main():
     # finished/locked games from today's file so the slate stays complete
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
-               "edge_parlays": edge_final, "edge_paused": bool(getattr(C, "EDGE_PAUSED", False)), "gates": gates_out,
+               "edge_parlays": edge_final, "cross_parlays": cross, "edge_paused": bool(getattr(C, "EDGE_PAUSED", False)), "gates": gates_out,
                "model": {"coefs": model.coefs(), "eng": eng, "eng_check": eng_info, "ot_goal_share": r(model.ot_goal_share, 3),
                          "league": {k: r(v, 2) for k, v in lg.items()}, "train_games": int(len(rows) / 2),
                          "backtest": BACKTEST},

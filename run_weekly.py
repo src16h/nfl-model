@@ -27,6 +27,7 @@ from nflmodel.qb import qb_weeks_fast, qb_quality
 from nflmodel.geo import forecast, is_indoor
 import betrules as BR
 import altlines as AL
+import crossgame as XG
 import gates as GT
 from nflmodel.propsim import load_props, evaluate_props, prop_bias, STAT_ALIASES, stat_label, game_shocks, team_points
 from nflmodel import oddsapi
@@ -47,6 +48,7 @@ ROOT = Path(__file__).parent
 OUT = ROOT / "docs" / "data"
 HIST = OUT / "history"
 ET = ZoneInfo("America/New_York")
+CROSS_IN, CROSS_BOOK = [], []        # cross-game alt parlay inputs, filled by build_games (crossgame.py)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("nflmodel")
 
@@ -445,6 +447,12 @@ def build_games(bundle, season, week, now):
                                    "rows": sorted(rws, key=lambda x: -(x["ev"] if x["ev"] is not None else -99))[:12]}
                 conv_errs.extend(AL.conv_check(fg(ba.get("sharp")), mkt))
                 tlegs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE_TEAM) if mkt is not None else []
+                if tlegs and game.get("kickoff"):
+                    CROSS_IN.append({"game_id": g["game_id"], "start": game["kickoff"], "matchup": f"{a} at {h}", "legs": tlegs,
+                                     "slate": datetime.fromisoformat(game["kickoff"]).astimezone(ET).date().isoformat(),
+                                     "book_rows": fg(ba.get("book"))})
+                    if ba.get("book_name"):
+                        CROSS_BOOK.append(ba["book_name"])
             except Exception as e:  # noqa: BLE001
                 log.warning(f"alt lines skipped for {g['game_id']}: {str(e)[:120]}")
         alt_inputs.append((game, side_sims, tlegs))
@@ -1349,6 +1357,14 @@ def main():
     pr = payload.get("prop_record") or {}
     ab = model_info.get("anchored_backtest")
     payload["plays"] = build_plays(all_games, props, model_info)
+    try:                                       # cross-game alt parlays: one alt spread or total from each of 3 games
+        fin = {k: (v["h"], v["a"]) for k, v in (json.loads((OUT / "results.json").read_text()).get("games") or {}).items()
+               if v.get("h") is not None and v.get("a") is not None}
+        payload["cross_parlays"] = XG.run(OUT / "cross_parlays.json", CROSS_IN, fin, now,
+                                          lambda now_, first: (first - now_).total_seconds() <= C.PARLAY_LOCK_HOURS * 3600,
+                                          CROSS_BOOK[0] if CROSS_BOOK else None, log)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"cross-game parlays skipped: {e}")
     try:
         payload["teasers"] = clean_json(TZ.board(all_games, bundle.schedules))
     except Exception as e:  # noqa: BLE001

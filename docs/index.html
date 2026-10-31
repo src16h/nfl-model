@@ -896,7 +896,9 @@ function gradeBet(b) {                                   // returns {res: W|L|P|
   const g = RES?.games?.[b.game_id];
   if (!g) return {res: "O"};
   if (b.kind === "parlay") {
-    const rs = (b.legs || []).map(L => gradeLeg(L, b.game_id, g));
+    const rs = (b.legs || []).map(L => {                 // cross-game tickets carry each leg's own game
+      const gg = L.game_id && L.game_id !== b.game_id ? RES?.games?.[L.game_id] : g;
+      return gg ? gradeLeg(L, L.game_id || b.game_id, gg) : "O"; });
     if (rs.includes("O")) return {res: "O"};
     const res = rs.includes("L") ? "L" : rs.every(r => r === "W") ? "W" : "P";
     return {res, units: res === "W" ? b.units * payout(b.odds) : res === "L" ? -b.units : 0, actual: rs.join(" ")};
@@ -1765,7 +1767,7 @@ function renderParlays() {
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
     <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
   const alts = up.filter(g => g.alt_parlay);
-  if (!PX.gid) h = parlaySwitchHTML() + (PX.view === "build" ? (alts.length ? altCardsHTML(alts) : `<div class="empty">No Oct 26 build tickets posted yet.</div>`) : ladderCardsHTML(up)) + mixCardsHTML() + teaserHTML() + h;
+  if (!PX.gid) h = crossHTML() + parlaySwitchHTML() + (PX.view === "build" ? (alts.length ? altCardsHTML(alts) : `<div class="empty">No Oct 26 build tickets posted yet.</div>`) : ladderCardsHTML(up)) + mixCardsHTML() + teaserHTML() + h;
   if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
   if (PX.loading) { $("#parlays").innerHTML = h + `<div class="empty">Loading simulated games…</div>`; bindParlays(); return; }
   if (PX.err) { $("#parlays").innerHTML = h + `<div class="empty">${esc(PX.err)}</div>`; bindParlays(); return; }
@@ -1926,7 +1928,47 @@ function altCardsHTML(games) {
         <div class="t-actions"><button class="logbtn" data-altgo="${esc(g.game_id)}">Check my book's price</button></div></div>
         <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`;
 }
+/* ---------- cross-game alt parlays (crossgame.py, Oct 30 2026) ---------- */
+const XODDS = {};
+const xWhen = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+const X_STYLE = {spreads: "Alt spreads", mix: "Spreads + totals"};
+function crossHTML() {
+  const X = D.cross_parlays; if (!X) return "";
+  const T = X.tracking || {}, R = X.rules || {}, TK = X.tickets || [];
+  const hc = R.shift != null ? 100 / (1 + Math.exp(-(Math.log(4) + R.shift))) - 80 : null;
+  const rec = T.n ? `${T.hits}-${T.n - T.hits}, ${n(T.actual, 0)}% hit vs ${n(T.model, 0)}% expected` : "New Oct 30, no graded tickets yet";
+  let h = `<div class="sec-head"><h2>Cross-game alt parlays</h2><span class="aside">${esc(rec)}</span></div>
+    <p class="sub">One alt leg from each of ${R.legs || 3} different games, like a book's alternate-spread parlay. Each leg's chance comes from <b>Pinnacle's lines</b>, and the model must agree. Different games don't move together, so the ticket's chance is the legs multiplied. Every leg gets a calibration haircut that follows the legs' graded hit rate${hc != null ? ` (now ${sgn(hc)} points on an 80% leg${T.legs_n ? `, legs ${n(T.legs_actual, 0)}% hit vs ${n(T.legs_model, 0)}% expected over ${T.legs_n}` : ""})` : ""}. <b>Bet it only at the "bet at" price or better.</b> Books often charge more than that on alt parlays, so many days the right call is no bet.</p>`;
+  if (!TK.length) return h + `<div class="empty">No cross-game tickets yet. They need at least 3 games with Pinnacle's lines posted.</div>`;
+  h += `<div class="tickets">${TK.map(t => {
+    const k = `${t.slate}|${t.style}`;
+    return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${esc(X_STYLE[t.style] || t.style)}, ${t.legs.length} games</b><span>${n(t.p, 0)}% to hit${t.locked_at ? ", locked" : ""}</span></div>
+      <div style="display:grid;gap:3px;margin:6px 0 2px">${t.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${esc(L.matchup)}, ${esc(xWhen(L.start))}. ${n(L.p, 0)}% (Pinnacle ${n(L.p_pin, 0)}%, model ${n(L.p_model, 0)}%)${L.book_odds ? `, ${esc(L.book_odds)}` : ""}</span></div>`).join("")}</div>
+      <div class="t-meta">Fair odds ${esc(t.fair)}; bet it at ${esc(t.min_odds)} or better.${t.book_odds ? ` ${esc(t.book || "Book")} pays about ${esc(t.book_odds)} for these legs: ${sgn(t.ev)}% expected return.` : ""}</div>
+      <div class="t-actions">${crossCheck(t, k)}</div></div>
+      <div class="t-side"><div class="t-gap">${esc(t.min_odds)}</div><div class="t-gl">bet at or better</div></div></article>`; }).join("")}</div>`;
+  const RC = T.recent || [];
+  if (RC.length) h += `<p class="sub" style="margin-top:10px"><b>Recent:</b> ${RC.map(r => `${esc(r.slate)} ${esc(X_STYLE[r.style] || r.style)} ${r.result === "W" ? "hit" : r.result === "P" ? "push" : `missed (${r.legs_hit}/${r.legs.length} legs)`}`).join("; ")}</p>`;
+  return h;
+}
+function crossCheck(t, k) {
+  const odds = XODDS[k] || "";
+  let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">Your book's odds <input class="odds xodds" data-x="${esc(k)}" value="${esc(odds)}" placeholder="${esc(t.book_odds || "+100")}" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
+  const use = odds && Math.abs(oddsNum(odds)) >= 100 ? odds : t.book_odds;
+  if (!use) return out;
+  const cut = (D.cross_parlays.rules || {}).min_ev ?? 3, ev = (t.p / 100 * (payout(use) + 1) - 1) * 100;
+  const tier = ev > 25 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
+  out += `<span class="vt ${tier === "play" ? "play" : tier === "big" ? "big" : ""}">${{play: "Play", watch: "Thin edge", big: "Check the lines", none: "No play"}[tier]}</span><span class="stake">${sgn(ev)}% expected return${odds ? "" : " at the feed's price"}</span>`;
+  if (tier === "play" || tier === "watch") out += logBtn({kind: "parlay", game_id: t.legs[0].game_id, side: "", line: null, odds: use, model_pct: t.p,
+    legs: t.legs.map(L => ({kind: "team", market: L.market, team: L.team, side: L.side, line: L.line, game_id: L.game_id})),
+    desc: "Cross-game alt parlay", sub: t.legs.map(L => L.label).join(" + ")});
+  return out;
+}
+function bindCross(rerender) {
+  document.querySelectorAll(".xodds").forEach(i => i.onchange = () => { XODDS[i.dataset.x] = i.value; rerender(); });
+}
 function bindParlays() {
+  bindCross(renderParlays);
   bindTeasers();
   document.querySelectorAll("[data-pxview]").forEach(b => b.onclick = () => { PX.view = b.dataset.pxview; try { localStorage.setItem("board.pxview", PX.view); } catch (e) {} renderParlays(); });
   document.querySelectorAll("[data-altgo]").forEach(b => b.onclick = () => {
