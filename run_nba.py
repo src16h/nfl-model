@@ -440,10 +440,25 @@ def lock_parlays(g, prev, players, now):
         to_start = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
     except (KeyError, ValueError):
         to_start = 99
-    evening = now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR or to_start <= 3
+    same_day = g.get("date") == now.astimezone(ET).date().isoformat()      # Oct 31 2026: lock only today's tickets in the
+    evening = (same_day and now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR) or to_start <= 3   # evening, after props are pulled
     dressed = {p["pid"] for p in players if p.get("game_id") == g["game_id"]}
+
+    def bettable(t):                                   # every player leg off a posted book line, on the ladder (props.ladder)
+        for L in t.get("legs", []):
+            if L.get("kind") == "team":
+                continue
+            st = L.get("stat")
+            if L.get("main_src") != "book" or st not in C.ALT_LADDER:
+                return False
+            start, step = C.ALT_LADDER[st]
+            if abs(((float(L["line"]) - start) / step) - round((float(L["line"]) - start) / step)) > 1e-6 or float(L["line"]) < start:
+                return False
+        return True
     for key in ("alt_parlay", "alt_mix"):
         old = (prev or {}).get(key)
+        if old and old.get("locked_at") and not bettable(old):
+            old = None                                 # locked before the Oct 31 rules (model lines, off the ladder): rebuild
         if old and old.get("locked_at"):
             gone = [L.get("name") for L in old.get("legs", []) if L.get("pid") is not None and L["pid"] not in dressed]
             if not gone:
