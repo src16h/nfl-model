@@ -66,3 +66,6 @@ ANCHOR_EARLY_DAYS = 3.0
 ANCHOR_EARLY_WEEKS = 3           # through this week the model leans on last season, so its weight is halved
 MAX_GAP_SPREAD = 8.0             # raw model-vs-book gaps bigger than this lost money in testing
 MAX_GAP_TOTAL = 10.0
+EARLY_TOTAL_GAP = 4.0            # early totals (Oct 31 2026): model 4+ points from the line...
+EARLY_TOTAL_DAYS = 3.0           # ...3+ days before kickoff. 234-170 (57.9%) vs the opening line, 2023-2026
+LEANS_RETIRED = "2026-11-01"     # "every pick" leans graded only before this date (the old rule)

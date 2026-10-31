@@ -67,6 +67,40 @@ def summary(H, p4_ids, season_now):
                      "pct_toward": round(100 * toward.sum() / max(toward.sum() + away.sum(), 1), 1)}}
 
 
+def early_totals(H, p4_ids, gap=None):
+    """Early totals (Oct 31 2026): the model's total, corrected by its average miss vs the closing total over the two
+    seasons before (no peeking), against the OPENING total. A play when they're `gap`+ points apart."""
+    gap = gap or C.EARLY_TOTAL_GAP
+    x = H[(H["team_id"].isin(p4_ids) | H["opp_id"].isin(p4_ids)) & H["total"].notna()]
+    by, W, L = {}, 0, 0
+    for S in sorted(x["season"].unique()):
+        prior = x[(x["season"] < S) & (x["season"] >= S - 2)]
+        g = x[(x["season"] == S) & x["open_total"].notna()]
+        if prior.empty or g.empty:
+            continue
+        d = g["et"] - float((prior["et"] - prior["total"]).mean()) - g["open_total"]
+        res = g["tt"] - g["open_total"]
+        sel = d.abs() >= gap
+        rc = _rec(d[sel], res[sel])
+        if rc["w"] + rc["l"]:
+            rc["move"] = round(float((np.sign(d[sel]) * (g["total"] - g["open_total"])[sel]).mean()), 2)
+            by[int(S)] = rc
+            W, L = W + rc["w"], L + rc["l"]
+    return {"gap": gap, "by_season": by, "w": W, "l": L, "pct": round(100 * W / (W + L), 1) if W + L else None}
+
+
+def close_weight(H, p4_ids, season_now):
+    """How much the model's disagreement with the closing spread / total predicts the result (0 = nothing)."""
+    x = H[(H["team_id"].isin(p4_ids) | H["opp_id"].isin(p4_ids)) & H["spread"].notna() & H["total"].notna() & (H["season"] < season_now)]
+    if len(x) < 200:
+        return None
+    out = {}
+    for k, mkt, mdl, y in (("spread", -x["spread"], x["em"], x["m"]), ("total", x["total"], x["et"], x["tt"])):
+        A = np.c_[mkt, mdl - mkt, np.ones(len(x))]
+        out[k] = round(float(np.linalg.lstsq(A, y, rcond=None)[0][1]), 2)
+    return out
+
+
 def teaser_history(games, pts=6, since=2021):
     """How every teased side and total did at the closing line."""
     g = games[(games["season"] >= since) & games["spread"].notna() & games["total"].notna() & games["hs"].notna()]

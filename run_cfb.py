@@ -143,11 +143,60 @@ def game_picks(g, star, mkt, pure):
         home = pw >= 0.5
         out["ml"] = {"side": g["home"] if home else g["away"], "odds": None, "model": r(100 * max(pw, 1 - pw)), "book": None, "edge": None,
                      "fair": fmt_odds(american(max(pw, 1 - pw))), "play": False}
+    plays_v2(g, b, out)
     GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     sp, ml = out.get("spread"), out.get("ml")
     if sp and ml and sp["play"] and ml["play"] and sp["side"] == ml["side"]:     # same team twice: keep the spread
         ml["play"] = False
     return out
+
+
+def plays_v2(g, b, out):
+    """Play rules from Oct 31 2026. The walk-forward test (tools/cfb_edge_check.py, 2021-2026) showed the model's own
+    number adds nothing to the CLOSING spread or total (the final margin follows the line, weight on the model 0.00),
+    so the old rule, a model edge at the book's price, went 33-53 on spreads and 39-48 on totals as leans.
+      1. Early totals (the one edge that held up): 3+ days before kickoff, the model's total (bias-corrected on past
+         seasons) 4+ points from the line. Against the opening line that went 234-170 (57.9%) from 2023 to 2026, 55-62%
+         every season, and the line moved toward the model 1 to 2 points a week. Locked at the line first flagged.
+      2. Everything else (spreads, moneylines, late totals): only when Pinnacle's fair price says the DK stand-in price
+         is worth 1.5% to 8% (betrules.decide_sharp), and the model agrees on the side, as in the other sports."""
+    sh = b.get("sharp") or {}
+    try:
+        days = (utc(g["start"]) - datetime.now(timezone.utc)).total_seconds() / 86400
+    except (KeyError, ValueError):
+        days = 0
+    for k, pk in out.items():
+        if not pk.get("odds") or pk.get("edge") is None:
+            pk["play"] = False
+            continue
+        home = pk["side"] == g["home"]
+        if k == "total":
+            over = pk["side"] == "Over"
+            gap = abs(g.get("gap_total") or 0)
+            if days >= C.EARLY_TOTAL_DAYS and C.EARLY_TOTAL_GAP <= gap <= C.MAX_GAP_TOTAL:
+                pk.update({"play": True, "early": True, "ev": None, "sharp": None,
+                           "why": f"Early total: model {gap:.1f} points {'over' if over else 'under'} the line, {days:.0f} days out"})
+                continue
+            mine, other = (b.get("over_odds"), b.get("under_odds")) if over else (b.get("under_odds"), b.get("over_odds"))
+            same = sh.get("total") is not None and b.get("total") is not None and abs(sh["total"] - b["total"]) < 1e-9
+            s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
+        elif k == "spread":
+            mine, other = (b.get("spread_home_odds"), b.get("spread_away_odds")) if home else (b.get("spread_away_odds"), b.get("spread_home_odds"))
+            same = sh.get("spread") is not None and b.get("spread") is not None and abs(sh["spread"] - b["spread"]) < 1e-9
+            s1, s2 = ((sh.get("spread_home_odds"), sh.get("spread_away_odds")) if home else (sh.get("spread_away_odds"), sh.get("spread_home_odds"))) if same else (None, None)
+        else:
+            mine, other = (b.get("ml_home"), b.get("ml_away")) if home else (b.get("ml_away"), b.get("ml_home"))
+            s1, s2 = ((sh.get("ml_home"), sh.get("ml_away")) if home else (sh.get("ml_away"), sh.get("ml_home")))
+        if mine is None or other is None:
+            pk["play"] = False
+            continue
+        dec = BR.decide_sharp(pk["model"] / 100, mine, other, s1, s2)
+        pk["sharp"], pk["ev"], pk["play"] = dec["sharp"], dec["ev"], dec["play"]
+    plays = [x for x in out.values() if x.get("play") and not x.get("early")]
+    if len(plays) > 1:                                    # one Pinnacle play per game: the best value
+        best = max(plays, key=lambda x: x.get("ev") or 0)
+        for x in plays:
+            x["play"] = x is best
 
 
 def prop_bias(hist_dir, results):
@@ -245,6 +294,7 @@ def grade_pick(kind, pk, g, res):
 def tracking(weeks, results):
     picks = {k: [] for k in ("spread", "total", "ml")}
     plays, prop_plays, calib, alts, daily = [], [], {}, [], {}
+    early = []                                            # early totals (Oct 31 2026)
     clv_rows = []
     clv = {"spread": [], "total": []}
     gate_rows = {GT.game_gate("cfb", k): ([], []) for k in GT.GAME_KINDS["cfb"]}   # (shadow, real) for gates.py
@@ -258,7 +308,11 @@ def tracking(weeks, results):
                 if pk.get("edge") is None:
                     continue
                 rr, u = grade_pick(k, pk, g, res)
-                picks[k].append((rr, u, pk.get("edge")))
+                if dt < C.LEANS_RETIRED:                          # old "every pick" leans: frozen at the old rule
+                    picks[k].append((rr, u, pk.get("edge")))
+                if pk.get("early"):
+                    early.append({"date": dt, "game": f"{g['away']} at {g['home']}", "pick": pick_text(k, pk), "odds": pk.get("odds"),
+                                  "res": rr, "units": u or 0.0})
                 if pk.get("play"):
                     c, e, exact = CLV.play_clv("cfb", k, pk, g, g.get("first_book"))
                     plays.append({"date": dt, "kind": k, "pick": pick_text(k, pk), "game": f"{g['away']} at {g['home']}",
@@ -331,7 +385,8 @@ def tracking(weeks, results):
         series.append({"date": dt, "units": r(run, 2)})
     move = {k: {"n": len(v), "avg": r(np.mean(v), 2) if v else None, "our_way": int(sum(x > 0 for x in v)), "against": int(sum(x < 0 for x in v))}
             for k, v in clv.items()}
-    return {"picks": {k: rec(v) for k, v in picks.items()},
+    return {"picks": {k: rec(v) for k, v in picks.items()}, "leans_retired": C.LEANS_RETIRED,
+            "early_totals": {**rec2(early), "recent": sorted(early, key=lambda x: x["date"], reverse=True)[:20]},
             "plays": rec2(plays), "plays_list": sorted(plays, key=lambda x: x["date"], reverse=True)[:60],
             "clv": CLV.summary(clv_rows),
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
@@ -392,6 +447,9 @@ def main():
     bias_m, bias_t = float((recent["em"] + recent["spread"]).mean()), float((recent["et"] - recent["total"]).mean())
     walk = BT.walk(F, games_t)
     backtest = BT.summary(walk, p4, season)
+    if backtest:
+        backtest["early_totals"] = BT.early_totals(walk, p4)
+        backtest["close_weight"] = BT.close_weight(walk, p4, season)
     cur = Rt[(int(season), 99)]
     log.info(f"points model {model.coefs()['pts']}")
     log.info(f"model vs book, last 2 seasons: spread {bias_m:+.2f}, total {bias_t:+.2f}; backtest {backtest and {k: backtest[k] for k in ('mae_model', 'mae_line', 'spread_all', 'total_all')}}")
@@ -435,6 +493,7 @@ def main():
         book = {k: b.get(k) for k in ("spread", "total", "ml_home", "ml_away", "spread_home_odds", "spread_away_odds", "over_odds", "under_odds",
                                       "open_spread", "open_total")}
         book["src"] = b.get("book")
+        book["sharp"] = b.get("sharp")                       # Pinnacle (cfbmodel/odds.game_lines), the referee for plays
         has_s, has_t = book["spread"] is not None, book["total"] is not None
         gap_s = (em - bias_m + book["spread"]) if has_s else 0.0          # + = model likes the home team more than the book
         gap_t = (et - bias_t - book["total"]) if has_t else 0.0
@@ -588,6 +647,16 @@ def main():
             lite = {k: g[k] for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "teaser_legs", "win_home", "book",
                                       "model_spread", "model_total", "gap_spread", "gap_total")}
             prev = next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)
+            et_ = (prev or {}).get("early_total")                 # early totals: locked at the line first flagged (Oct 31 2026)
+            tk_ = (g.get("picks") or {}).get("total") or {}
+            if et_ is None and tk_.get("early") and tk_.get("play"):
+                et_ = {x: tk_.get(x) for x in ("side", "line", "odds", "model", "book", "edge", "gap", "why")}
+                et_["at"] = stamp
+            if et_ is not None:
+                lite["early_total"] = g["early_total"] = et_
+                if g.get("state", "upcoming") != "final":
+                    g["picks"]["total"] = lite["picks"]["total"] = {**tk_, **{x: et_[x] for x in ("side", "line", "odds") if et_.get(x) is not None},
+                                                                    "play": True, "early": True, "locked_at": et_["at"], "why": et_.get("why")}
             lite["first_book"] = (prev or {}).get("first_book") or (g["book"] if g["book"].get("spread") is not None else None)
             lite["first_picks"] = (prev or {}).get("first_picks") or ({k: g["picks"][k] for k in ("spread", "total")} if g["book"].get("spread") is not None else None)
             lite["play_at"] = g["play_at"] = CLV.snapshot(g.get("picks"), (prev or {}).get("play_at"), now.isoformat(timespec="minutes"))
@@ -646,7 +715,7 @@ def main():
                          "sd": {"margin": r(scores.sd_m), "total": r(scores.sd_t)}, "train_games": int(len(Ftrain) / 2),
                          "league": {"pts": r(cur["pts"][0]), "epa_p": r(cur["epa_p"][0], 3), "epa_r": r(cur["epa_r"][0], 3)}},
                "rules": {
-                         "max_gap": [C.MAX_GAP_SPREAD, C.MAX_GAP_TOTAL], "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX],
+                         "max_gap": [C.MAX_GAP_SPREAD, C.MAX_GAP_TOTAL], "early_total": {"gap": C.EARLY_TOTAL_GAP, "days": C.EARLY_TOTAL_DAYS}, "prop": [100 * C.PROP_PLAY_MIN, 100 * C.PROP_PLAY_MAX],
                          **BR.summary(), "bias": bias, "calibration": real}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} games, {len(players)} players")

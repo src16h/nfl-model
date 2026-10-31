@@ -923,12 +923,12 @@ function playBet(x) {
   return {kind: "prop", game_id: x.pl.game_id, pid: x.pl.pid, stat: x.stat, side: x.m.book.side, line: x.m.book.line, odds: x.odds, model_pct: x.model, desc: x.title, sub: x.sub};
 }
 function ticket(x) {
-  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "game" ? PK_NAME[x.kind] : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}</span></div>
+  return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${x.type === "game" ? (x.p?.early ? "Early total" : PK_NAME[x.kind]) : STAT[x.stat]}</b><span>${esc(when(x.g?.start))}${x.p?.locked_at ? ", locked" : ""}</span></div>
     <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small></div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away_name)} at ${esc(x.g.home_name)}`}</div>
-    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}${payUpTo(x.type === "prop" ? (x.m?.book?.adj ?? x.model) : (x.p?.sharp ?? x.model))}
+    ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}${x.p?.early ? `<div class="t-meta">${esc(x.p.why || "")}. Bet it early: the line usually moves toward the model by kickoff.</div>${payUpTo(55, 0)}` : payUpTo(x.type === "prop" ? (x.m?.book?.adj ?? x.model) : (x.p?.sharp ?? x.model))}
     <div class="t-actions"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn(playBet(x))}</div></div>
-    <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "game" && x.p.ev != null ? `edge, ${sgn(x.p.ev)}% return at ${esc(x.odds)}` : "gap vs book"}</div></div></article>`;
+    <div class="t-side"><div class="t-gap">${x.p?.early ? n(Math.abs(x.g?.gap_total ?? 0), 1) : n(x.edge)}<small>${x.p?.early ? " pts" : "%"}</small></div><div class="t-gl">${x.p?.early ? "model vs the line" : x.type === "game" && x.p.ev != null ? `edge, ${sgn(x.p.ev)}% return at ${esc(x.odds)}` : "gap vs book"}</div></div></article>`;
 }
 
 /* ---------- home ---------- */
@@ -984,18 +984,19 @@ function realityHTML() {
       <div class="st"><strong>${n(B.mae_model_late)} / ${n(B.mae_line_late)}</strong><span>Average miss in points after week 4: model / closing line</span></div></div>
     <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Model's gap from the line</th><th>Spread record</th><th>Hit</th><th>Total record</th><th>Hit</th></tr></thead><tbody>${B.buckets.map(row).join("")}</tbody></table></div>
     <ul class="takeaways"><li><b>Closing lines are sharper than the model.</b> On spreads it has been a coin flip against the close, so the site only lets the model move the book's number a little (${n(100 * D.model.anchor.spread, 0)}% model on spreads and ${n(100 * D.model.anchor.total, 0)}% on totals, a bit more when kickoff is ${D.model.anchor.early_days}+ days away).</li>
-      <li><b>The value is in timing.</b> When the model disagreed with the opening line, the line moved toward it about ${n(B.open.pct_toward, 0)}% of the time. Plays are worth more early in the week than on Saturday morning.</li>
-      <li><b>Very big gaps are a warning.</b> Gaps of 9+ points on a spread lost in testing. They usually mean an injury or quarterback change the model can't see, so they are never marked as plays.</li></ul></div></details>`;
+      <li><b>The value is in timing, on totals.</b> Against the opening total, when the model was 4+ points off, it went ${B.early_totals ? `${B.early_totals.w}-${B.early_totals.l} (${n(B.early_totals.pct)}%)` : "about 58%"}, every season above break-even, and the line moved toward it by kickoff. That is the early-totals play. Spreads against the open were a coin flip in 2023 and 2024, so they are not played early.</li>
+      <li><b>Very big gaps are a warning.</b> Gaps of 9+ points on a spread lost in testing. They usually mean an injury or quarterback change the model can't see.</li></ul></div></details>`;
 }
 function renderGames() {
   const G = (D.games || []).filter(live), plays = allPlays().filter(x => x.type === "game");
   const lined = G.filter(g => g.book?.spread != null);
   let h = `<div class="week"><div class="wk">${G.length}<span>games</span></div><div class="facts">
     <div class="fact"><b class="gold">${plays.length}</b>game plays on the board</div>
-    <div class="fact"><b>${esc(lined[0]?.book?.src || "DraftKings")}</b>lines from (free ESPN feed)</div>
+    <div class="fact"><b>${esc(lined[0]?.book?.src || "DraftKings")}</b>lines from</div>
     <div class="fact"><b>${lined.length}</b>games with a posted line</div></div></div>`;
-  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Profitable at the posted price, vig included</span></div>
-    <p class="sub">The model starts from the book's line and moves it a little toward its own number, then that chance is blended 50/50 with the book's. A play is a bet that still shows a positive expected return at the book's actual price after that, with the model's raw number no more than ${D.rules.max_gap[0]} points off the spread (${D.rules.max_gap[1]} on totals). Expect only a few each week: beating -110 takes about 52.4%. College lines move on injury and quarterback news the model can't see, so check the news before betting.</p>
+  const ET_ = D.model?.backtest?.early_totals, CW = D.model?.backtest?.close_weight;
+  h += `<div class="sec-head"><h2>Game plays</h2><span class="aside">Early totals, or Pinnacle value</span></div>
+    <p class="sub">Two kinds of play since Oct 31. <b>Early totals:</b> 3+ days before kickoff, when the model's total is ${D.rules.early_total?.gap ?? 4}+ points off the line, bet it then. Against the opening line that has gone ${ET_ ? `${ET_.w}-${ET_.l} (${n(ET_.pct)}%)` : "about 58%"} in testing, and the line usually moves 1 to 2 points toward the model by kickoff, so these are locked at the line they first appear at. <b>Everything else</b> (spreads, moneylines, late totals): only when <b>Pinnacle's fair price</b> says the DK stand-in price is worth 1.5% to 8%, and the model agrees on the side. The model's own spread number adds nothing to the closing line${CW ? ` (weight ${n(CW.spread, 2)} on spreads, ${n(CW.total, 2)} on totals, where 0 means nothing)` : ""}, so it no longer makes spread picks by itself. College lines move on injury and quarterback news the model can't see, so check the news before betting.</p>
     ${plays.length ? `<div class="tickets">${plays.map(ticket).join("")}</div>` : `<div class="empty"><b>No game plays right now.</b> The model is close to the book on every game with a posted line.</div>`}
     ${realityHTML()}`;
   h += `<div class="sec-head"><h2>All games</h2><span class="aside">Tap a game for quarterbacks, ratings and line movement</span></div>
@@ -1223,7 +1224,11 @@ function renderRecord() {
       <div class="st"><strong>${PP.w || 0}–${PP.l || 0}</strong><span>Prop plays, ${n(PP.pct)}%</span></div>
       <div class="st"><strong class="${uc(PP.units)}">${units(PP.w + PP.l ? PP.units : null)}</strong><span>Prop plays, units</span></div></div>`;
   h += clvBlock() + calBlock();
-  h += `<h3>Every pick, every game</h3><div class="strip">${KINDS.map(k => `<div class="st"><strong>${K[k]?.w || 0}–${K[k]?.l || 0}</strong><span>${PK_NAME[k]} picks${K[k]?.units != null ? `, ${units(K[k].units)}` : ""}</span></div>`).join("")}</div>`;
+  const ETr = T.early_totals || {}, ETb = B.early_totals;
+  h += `<h3>Early totals</h3><p class="sub">The model's total 4+ points off the line, 3+ days before kickoff, locked at that line. Started Oct 31.${ETb ? ` Testing against the opening line: ${Object.entries(ETb.by_season || {}).map(([s, x]) => `${s} ${x.w}-${x.l}`).join(", ")}.` : ""}</p>
+    <div class="strip"><div class="st"><strong>${ETr.w || 0}–${ETr.l || 0}</strong><span>Early totals, live${ETr.w + ETr.l ? `, ${units(ETr.units)}` : ""}</span></div>
+      <div class="st"><strong>${ETb ? `${n(ETb.pct)}%` : "–"}</strong><span>In testing (${ETb ? `${ETb.w}-${ETb.l}` : ""}), break-even 52.4%</span></div></div>`;
+  h += `<h3>Old leans, every game (retired Oct 31)</h3><p class="sub">The old rule's lean on every game, before Nov 1. These were never all plays: testing showed the model's own number adds nothing to the closing spread or total, which is why they were retired.</p><div class="strip">${KINDS.map(k => `<div class="st"><strong>${K[k]?.w || 0}–${K[k]?.l || 0}</strong><span>${PK_NAME[k]} leans${K[k]?.units != null ? `, ${units(K[k].units)}` : ""}</span></div>`).join("")}</div>`;
   const M = T.line_move || {};
   h += `<h3>Line movement check</h3><p class="sub">The fastest honest test of a model. For every game where the model was 3 or more points off the first line it saw, did the line then move toward the model's side by kickoff? Sharp bettors move lines, so landing on their side more often than not is a real signal, and it shows up in weeks instead of seasons.</p>
     <div class="strip">${["spread", "total"].map(k => { const m = M[k] || {}; return `<div class="st"><strong>${m.n ? `${m.our_way}–${m.against}` : "–"}</strong><span>${PK_NAME[k]}s: moved our way vs against${m.n ? `, average ${sgn(m.avg, 2)} points` : ""}</span></div>`; }).join("")}
