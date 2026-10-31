@@ -209,8 +209,9 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
         p = info[pid]
         if p.get("avail", 1.0) < 0.99:
             continue                                   # anyone on the injury report: a leg could be voided
-        if p.get("exp_min", 0) < C.ALT_MIN_MINUTES:
-            continue                                   # NBA rules (Oct 2026) pull many low-minute player markets
+        play_ = stats["play"]
+        if p.get("exp_min", 0) < C.ALT_MIN_MINUTES or (play_.any() and float(stats["min"][play_].mean()) < C.ALT_MIN_MINUTES):
+            continue                                   # 20+ usual AND projected minutes tonight (NBA rules pull low-minute markets)
         for st in ("pts", "reb", "ast", "fg3m"):
             x = stats[st]
             b = (book or {}).get(norm_name(p["name"]), {}).get(st)
