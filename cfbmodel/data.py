@@ -69,6 +69,8 @@ def scoreboard(year, week, seasontype=2):
     js = _get(f"{SITE}/scoreboard?groups=80&limit=400&seasontype={seasontype}&week={week}&dates={year}")
     out = []
     for e in js.get("events", []):
+        if not e.get("competitions") or not e.get("season") or not e.get("status"):
+            continue                                       # ESPN sometimes sends a half-built event; skip it
         c = e["competitions"][0]
         g = {"game_id": int(e["id"]), "season": int(e["season"]["year"]), "stype": int(e["season"]["type"]),
              "week": int((e.get("week") or {}).get("number") or week), "start": e["date"],
