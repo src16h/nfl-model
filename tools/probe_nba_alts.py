@@ -8,18 +8,22 @@ import urllib.parse
 import urllib.request
 
 BASE = "https://api.the-odds-api.com"
-MK = "player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_threes_alternate"
+import sys as _s
+SPORT = os.environ.get("PROBE_SPORT", "basketball_nba")
+KEY = "ODDS_API_KEY_NHL" if SPORT == "icehockey_nhl" else "ODDS_API_KEY_NBA"
+MK = os.environ.get("PROBE_MARKETS") or "player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_threes_alternate"
+N_EV = int(os.environ.get("PROBE_EVENTS", "2"))
 
 
 def get(path, **p):
-    p["apiKey"] = os.environ["ODDS_API_KEY_NBA"]
+    p["apiKey"] = os.environ[KEY]
     with urllib.request.urlopen(f"{BASE}{path}?{urllib.parse.urlencode(p, safe=',')}", timeout=25) as r:
         return json.loads(r.read().decode()), r.headers.get("x-requests-remaining"), r.headers.get("x-requests-last")
 
 
-evs, _, _ = get("/v4/sports/basketball_nba/events")
-for ev in evs[:2]:
-    d, rem, last = get(f"/v4/sports/basketball_nba/events/{ev['id']}/odds", markets=MK, oddsFormat="american",
+evs, _, _ = get(f"/v4/sports/{SPORT}/events")
+for ev in evs[:N_EV]:
+    d, rem, last = get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", markets=MK, oddsFormat="american",
                        bookmakers="hardrockbet,kalshi,draftkings")
     print(f"\n{ev['away_team']} at {ev['home_team']}: cost {last}, left {rem}")
     for b in d.get("bookmakers", []):
