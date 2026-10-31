@@ -1,0 +1,72 @@
+{
+ "nba_edge": {
+  "status": "active",
+  "since": "2026-10-30",
+  "history": []
+ },
+ "nba_game_ml": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_game_spread": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_game_total": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_pts_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_pts_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_reb_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_reb_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_ast_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_ast_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_fg3m_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_fg3m_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_pra_Over": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ },
+ "nba_prop_pra_Under": {
+  "status": "active",
+  "since": "2026-10-20",
+  "history": []
+ }
+}
