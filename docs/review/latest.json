@@ -1,0 +1,2131 @@
+{
+ "generated_at": "2026-10-31T15:07+00:00",
+ "sports": {
+  "NFL": {
+   "age_h": 0.6,
+   "credits_left": null,
+   "odds_source": null,
+   "records": [
+    {
+     "what": "alt_plays",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    },
+    {
+     "what": "alt_plays / by_market / team_total",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    },
+    {
+     "what": "plays_record / props",
+     "w": 85,
+     "l": 76,
+     "n": 161,
+     "pct": 52.8,
+     "units": -0.03,
+     "roi": -0.0,
+     "z": -0.0
+    },
+    {
+     "what": "live_record / picks / spread",
+     "w": 26,
+     "l": 29,
+     "n": 55,
+     "pct": 47.3,
+     "units": -5.36,
+     "roi": -9.7,
+     "z": -0.76
+    },
+    {
+     "what": "live_record / picks / total",
+     "w": 31,
+     "l": 29,
+     "n": 60,
+     "pct": 51.7,
+     "units": -0.82,
+     "roi": -1.4,
+     "z": -0.11
+    },
+    {
+     "what": "live_record / picks / moneyline",
+     "w": 35,
+     "l": 24,
+     "n": 59,
+     "pct": 59.3,
+     "units": 4.2,
+     "roi": 7.1,
+     "z": 0.58
+    },
+    {
+     "what": "live_record / picks_by_week / 4 / spread",
+     "w": 5,
+     "l": 9,
+     "n": 14,
+     "pct": 35.7,
+     "units": -4.45,
+     "roi": -31.8,
+     "z": -1.25
+    },
+    {
+     "what": "live_record / picks_by_week / 4 / total",
+     "w": 6,
+     "l": 10,
+     "n": 16,
+     "pct": 37.5,
+     "units": -4.55,
+     "roi": -28.4,
+     "z": -1.2
+    },
+    {
+     "what": "live_record / picks_by_week / 4 / moneyline",
+     "w": 9,
+     "l": 7,
+     "n": 16,
+     "pct": 56.2,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "live_record / picks_by_week / 5 / spread",
+     "w": 8,
+     "l": 6,
+     "n": 14,
+     "pct": 57.1,
+     "units": 1.27,
+     "roi": 9.1,
+     "z": 0.36
+    },
+    {
+     "what": "live_record / picks_by_week / 5 / total",
+     "w": 8,
+     "l": 7,
+     "n": 15,
+     "pct": 53.3,
+     "units": 0.27,
+     "roi": 1.8,
+     "z": 0.07
+    },
+    {
+     "what": "live_record / picks_by_week / 5 / moneyline",
+     "w": 10,
+     "l": 4,
+     "n": 14,
+     "pct": 71.4,
+     "units": 5.51,
+     "roi": 39.4,
+     "z": 1.55
+    },
+    {
+     "what": "live_record / picks_by_week / 6 / spread",
+     "w": 5,
+     "l": 9,
+     "n": 14,
+     "pct": 35.7,
+     "units": -4.45,
+     "roi": -31.8,
+     "z": -1.25
+    },
+    {
+     "what": "live_record / picks_by_week / 6 / total",
+     "w": 9,
+     "l": 5,
+     "n": 14,
+     "pct": 64.3,
+     "units": 3.18,
+     "roi": 22.7,
+     "z": 0.89
+    },
+    {
+     "what": "live_record / picks_by_week / 6 / moneyline",
+     "w": 6,
+     "l": 8,
+     "n": 14,
+     "pct": 42.9,
+     "units": -3.6,
+     "roi": -25.7,
+     "z": -1.01
+    },
+    {
+     "what": "live_record / picks_by_week / 7 / spread",
+     "w": 8,
+     "l": 4,
+     "n": 12,
+     "pct": 66.7,
+     "units": 3.27,
+     "roi": 27.2,
+     "z": 0.99
+    },
+    {
+     "what": "live_record / picks_by_week / 7 / total",
+     "w": 7,
+     "l": 7,
+     "n": 14,
+     "pct": 50.0,
+     "units": -0.64,
+     "roi": -4.6,
+     "z": -0.18
+    },
+    {
+     "what": "live_record / picks_by_week / 7 / moneyline",
+     "w": 10,
+     "l": 4,
+     "n": 14,
+     "pct": 71.4,
+     "units": 3.28,
+     "roi": 23.4,
+     "z": 0.92
+    },
+    {
+     "what": "live_record / picks_by_week / 8 / spread",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    },
+    {
+     "what": "live_record / picks_by_week / 8 / total",
+     "w": 1,
+     "l": 0,
+     "n": 1,
+     "pct": 100.0,
+     "units": 0.91,
+     "roi": 91.0,
+     "z": 0.96
+    },
+    {
+     "what": "live_record / picks_by_week / 8 / moneyline",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    }
+   ],
+   "said_vs_hit": [
+    {
+     "what": "tds / Anytime TD",
+     "n": 892,
+     "said": 23.1,
+     "hit": 25.2,
+     "gap": 2.1,
+     "z": 1.49
+    },
+    {
+     "what": "tds / Anytime TD / bins / 0",
+     "n": 189,
+     "said": 5.1,
+     "hit": 9.5,
+     "gap": 4.4,
+     "z": 2.75
+    },
+    {
+     "what": "tds / Anytime TD / bins / 1",
+     "n": 257,
+     "said": 14.8,
+     "hit": 15.6,
+     "gap": 0.8,
+     "z": 0.36
+    },
+    {
+     "what": "tds / Anytime TD / bins / 2",
+     "n": 268,
+     "said": 26.9,
+     "hit": 31.7,
+     "gap": 4.8,
+     "z": 1.77
+    },
+    {
+     "what": "tds / Anytime TD / bins / 3",
+     "n": 113,
+     "said": 40.9,
+     "hit": 39.8,
+     "gap": -1.1,
+     "z": -0.24
+    },
+    {
+     "what": "tds / Anytime TD / bins / 4",
+     "n": 43,
+     "said": 57.1,
+     "hit": 48.8,
+     "gap": -8.3,
+     "z": -1.1
+    },
+    {
+     "what": "tds / Anytime TD / bins / 5",
+     "n": 22,
+     "said": 70.4,
+     "hit": 72.7,
+     "gap": 2.3,
+     "z": 0.24
+    },
+    {
+     "what": "tds / 2+ TDs",
+     "n": 654,
+     "said": 5.1,
+     "hit": 4.4,
+     "gap": -0.7,
+     "z": -0.81
+    },
+    {
+     "what": "tds / 2+ TDs / bins / 0",
+     "n": 563,
+     "said": 2.6,
+     "hit": 2.7,
+     "gap": 0.1,
+     "z": 0.15
+    },
+    {
+     "what": "tds / 2+ TDs / bins / 1",
+     "n": 54,
+     "said": 13.5,
+     "hit": 13.0,
+     "gap": -0.5,
+     "z": -0.11
+    },
+    {
+     "what": "tds / 2+ TDs / bins / 2",
+     "n": 29,
+     "said": 27.0,
+     "hit": 17.2,
+     "gap": -9.8,
+     "z": -1.19
+    },
+    {
+     "what": "tds / 2+ TDs / bins / 3",
+     "n": 8,
+     "said": 40.2,
+     "hit": 25.0,
+     "gap": -15.2,
+     "z": -0.88
+    },
+    {
+     "what": "combos / QB + WR1 overs",
+     "n": 85,
+     "said": 31.6,
+     "hit": 35.3,
+     "gap": 3.7,
+     "z": 0.73
+    },
+    {
+     "what": "combos / QB over + opponent team total over",
+     "n": 87,
+     "said": 25.3,
+     "hit": 27.6,
+     "gap": 2.3,
+     "z": 0.49
+    },
+    {
+     "what": "combos / QB over + team covers",
+     "n": 81,
+     "said": 27.7,
+     "hit": 25.9,
+     "gap": -1.8,
+     "z": -0.36
+    },
+    {
+     "what": "combos / QB over + team total over",
+     "n": 87,
+     "said": 29.6,
+     "hit": 27.6,
+     "gap": -2.0,
+     "z": -0.41
+    },
+    {
+     "what": "combos / RB1 anytime TD + team wins",
+     "n": 87,
+     "said": 31.0,
+     "hit": 31.0,
+     "gap": 0.0,
+     "z": 0.0
+    },
+    {
+     "what": "combos / RB1 rush over + team wins",
+     "n": 87,
+     "said": 27.2,
+     "hit": 28.7,
+     "gap": 1.5,
+     "z": 0.31
+    },
+    {
+     "what": "combos / WR1 over + team total over",
+     "n": 86,
+     "said": 26.2,
+     "hit": 25.6,
+     "gap": -0.6,
+     "z": -0.13
+    },
+    {
+     "what": "combos / team total over + game over",
+     "n": 88,
+     "said": 37.5,
+     "hit": 42.0,
+     "gap": 4.5,
+     "z": 0.87
+    },
+    {
+     "what": "combo_total",
+     "n": 688,
+     "said": 29.5,
+     "hit": 30.5,
+     "gap": 1.0,
+     "z": 0.58
+    },
+    {
+     "what": "alt_parlays (tickets)",
+     "n": 41,
+     "said": 46.7,
+     "hit": 39.0,
+     "gap": -7.7,
+     "z": -0.99
+    },
+    {
+     "what": "alt_parlays (legs)",
+     "n": 172,
+     "said": 82.6,
+     "hit": 78.5,
+     "gap": -4.1,
+     "z": -1.42
+    },
+    {
+     "what": "alt_parlays / by_v / 1 (tickets)",
+     "n": 39,
+     "said": 46.3,
+     "hit": 38.5,
+     "gap": -7.8,
+     "z": -0.98
+    },
+    {
+     "what": "alt_parlays / by_v / 2 (tickets)",
+     "n": 2,
+     "said": 54.4,
+     "hit": 50.0,
+     "gap": -4.4,
+     "z": -0.12
+    },
+    {
+     "what": "alt_mix (tickets)",
+     "n": 9,
+     "said": 47.1,
+     "hit": 44.4,
+     "gap": -2.7,
+     "z": -0.16
+    },
+    {
+     "what": "alt_mix / by_v / 1 (tickets)",
+     "n": 9,
+     "said": 47.1,
+     "hit": 44.4,
+     "gap": -2.7,
+     "z": -0.16
+    },
+    {
+     "what": "alt_leg_types / QB passing yards Over",
+     "n": 184,
+     "said": 78.5,
+     "hit": 71.7,
+     "gap": -6.8,
+     "z": -2.25
+    },
+    {
+     "what": "alt_leg_types / RB rushing yards Over",
+     "n": 196,
+     "said": 79.9,
+     "hit": 66.3,
+     "gap": -13.6,
+     "z": -4.75
+    },
+    {
+     "what": "alt_leg_types / TE receiving yards Over",
+     "n": 91,
+     "said": 76.7,
+     "hit": 71.4,
+     "gap": -5.3,
+     "z": -1.2
+    },
+    {
+     "what": "alt_leg_types / Receptions Under (any position)",
+     "n": 382,
+     "said": 82.4,
+     "hit": 82.7,
+     "gap": 0.3,
+     "z": 0.15
+    },
+    {
+     "what": "alt_leg_types / WR receiving yards Over",
+     "n": 184,
+     "said": 78.3,
+     "hit": 79.9,
+     "gap": 1.6,
+     "z": 0.53
+    },
+    {
+     "what": "alt_leg_types / Receptions Over (any position)",
+     "n": 184,
+     "said": 80.0,
+     "hit": 79.9,
+     "gap": -0.1,
+     "z": -0.03
+    },
+    {
+     "what": "teasers (legs)",
+     "n": 240,
+     "said": 68.6,
+     "hit": 67.5,
+     "gap": -1.1,
+     "z": -0.37
+    }
+   ],
+   "gates": [
+    {
+     "name": "nfl_prop_overs",
+     "label": "NFL prop Overs (yardage)",
+     "status": "paused",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nfl_prop_rec",
+     "label": "NFL receptions props",
+     "status": "paused",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nfl_prop_pass_under",
+     "label": "NFL passing-yard Unders",
+     "status": "paused",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nfl_game_spread",
+     "label": "NFL spreads",
+     "status": "active",
+     "record": {
+      "n": 2,
+      "w": 0,
+      "l": 2,
+      "units": -2.0,
+      "roi": -100.0,
+      "clv_n": 3,
+      "clv": 0.17,
+      "ev_n": 3,
+      "ev_close": -0.56
+     }
+    },
+    {
+     "name": "nfl_game_total",
+     "label": "NFL totals",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    }
+   ],
+   "backtest": null
+  },
+  "NHL": {
+   "age_h": 0.6,
+   "credits_left": 29,
+   "odds_source": "odds_api",
+   "records": [
+    {
+     "what": "picks / ml",
+     "w": 69,
+     "l": 92,
+     "n": 161,
+     "pct": 42.9,
+     "units": -25.81,
+     "roi": -16.0,
+     "z": -2.14
+    },
+    {
+     "what": "picks / pl",
+     "w": 76,
+     "l": 85,
+     "n": 161,
+     "pct": 47.2,
+     "units": -17.04,
+     "roi": -10.6,
+     "z": -1.41
+    },
+    {
+     "what": "picks / total",
+     "w": 78,
+     "l": 83,
+     "n": 161,
+     "pct": 48.4,
+     "units": -11.49,
+     "roi": -7.1,
+     "z": -0.95
+    },
+    {
+     "what": "plays",
+     "w": 31,
+     "l": 30,
+     "n": 61,
+     "pct": 50.8,
+     "units": 4.12,
+     "roi": 6.7,
+     "z": 0.55
+    },
+    {
+     "what": "alt_plays",
+     "w": 1,
+     "l": 2,
+     "n": 3,
+     "pct": 33.3,
+     "units": -1.13,
+     "roi": -37.7,
+     "z": -0.69
+    },
+    {
+     "what": "alt_by_market / team_total",
+     "w": 1,
+     "l": 2,
+     "n": 3,
+     "pct": 33.3,
+     "units": -1.13,
+     "roi": -37.7,
+     "z": -0.69
+    },
+    {
+     "what": "prop_plays",
+     "w": 220,
+     "l": 210,
+     "n": 430,
+     "pct": 51.2,
+     "units": -11.68,
+     "roi": -2.7,
+     "z": -0.59
+    },
+    {
+     "what": "edge",
+     "w": 6,
+     "l": 12,
+     "n": 18,
+     "pct": 33.3,
+     "units": -4.9,
+     "roi": -27.2,
+     "z": -1.21
+    },
+    {
+     "what": "by_type / game / ml",
+     "w": 14,
+     "l": 12,
+     "n": 26,
+     "pct": 53.8,
+     "units": 6.43,
+     "roi": 24.7,
+     "z": 1.33
+    },
+    {
+     "what": "by_type / game / pl",
+     "w": 1,
+     "l": 6,
+     "n": 7,
+     "pct": 14.3,
+     "units": -5.11,
+     "roi": -73.0,
+     "z": -2.03
+    },
+    {
+     "what": "by_type / game / total",
+     "w": 16,
+     "l": 12,
+     "n": 28,
+     "pct": 57.1,
+     "units": 2.8,
+     "roi": 10.0,
+     "z": 0.56
+    },
+    {
+     "what": "by_type / game / alt",
+     "w": 1,
+     "l": 2,
+     "n": 3,
+     "pct": 33.3,
+     "units": -1.13,
+     "roi": -37.7,
+     "z": -0.69
+    },
+    {
+     "what": "by_type / prop / points|Over",
+     "w": 5,
+     "l": 17,
+     "n": 22,
+     "pct": 22.7,
+     "units": -7.2,
+     "roi": -32.7,
+     "z": -1.61
+    },
+    {
+     "what": "by_type / prop / points|Under",
+     "w": 106,
+     "l": 104,
+     "n": 210,
+     "pct": 50.5,
+     "units": -10.14,
+     "roi": -4.8,
+     "z": -0.73
+    },
+    {
+     "what": "by_type / prop / sog|Over",
+     "w": 22,
+     "l": 14,
+     "n": 36,
+     "pct": 61.1,
+     "units": 4.78,
+     "roi": 13.3,
+     "z": 0.84
+    },
+    {
+     "what": "by_type / prop / sog|Under",
+     "w": 87,
+     "l": 75,
+     "n": 162,
+     "pct": 53.7,
+     "units": 0.88,
+     "roi": 0.5,
+     "z": 0.07
+    }
+   ],
+   "said_vs_hit": [
+    {
+     "what": "calibration / sog",
+     "n": 5452,
+     "said": 49.3,
+     "hit": 48.2,
+     "gap": -1.1,
+     "z": -1.62
+    },
+    {
+     "what": "calibration / goals",
+     "n": 5452,
+     "said": 15.3,
+     "hit": 15.5,
+     "gap": 0.2,
+     "z": 0.41
+    },
+    {
+     "what": "calibration / assists",
+     "n": 5452,
+     "said": 22.5,
+     "hit": 24.8,
+     "gap": 2.3,
+     "z": 4.07
+    },
+    {
+     "what": "calibration / points",
+     "n": 5452,
+     "said": 32.7,
+     "hit": 35.7,
+     "gap": 3.0,
+     "z": 4.72
+    },
+    {
+     "what": "calibration / saves",
+     "n": 290,
+     "said": 50.1,
+     "hit": 32.1,
+     "gap": -18.0,
+     "z": -6.13
+    },
+    {
+     "what": "alt (tickets)",
+     "n": 80,
+     "said": 50.6,
+     "hit": 57.5,
+     "gap": 6.9,
+     "z": 1.23
+    },
+    {
+     "what": "alt_mix (tickets)",
+     "n": 62,
+     "said": 48.3,
+     "hit": 48.4,
+     "gap": 0.1,
+     "z": 0.02
+    },
+    {
+     "what": "alt_hr (tickets)",
+     "n": 23,
+     "said": 66.0,
+     "hit": 56.5,
+     "gap": -9.5,
+     "z": -0.96
+    },
+    {
+     "what": "alt_old (tickets)",
+     "n": 48,
+     "said": 46.2,
+     "hit": 39.6,
+     "gap": -6.6,
+     "z": -0.92
+    }
+   ],
+   "gates": [
+    {
+     "name": "nhl_points",
+     "label": "NHL points props (Unders)",
+     "status": "paused",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_edge",
+     "label": "NHL edge parlays",
+     "status": "paused",
+     "record": {
+      "n": 13,
+      "w": 6,
+      "l": 7,
+      "units": 5.78,
+      "roi": 44.5,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null,
+      "model": 36.7,
+      "hit": 46.2
+     }
+    },
+    {
+     "name": "nhl_game_ml",
+     "label": "NHL moneyline",
+     "status": "active",
+     "record": {
+      "n": 3,
+      "w": 2,
+      "l": 1,
+      "units": 1.96,
+      "roi": 65.3,
+      "clv_n": 3,
+      "clv": 0.36,
+      "ev_n": 3,
+      "ev_close": -2.85
+     }
+    },
+    {
+     "name": "nhl_game_pl",
+     "label": "NHL puck line",
+     "status": "paused",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_game_total",
+     "label": "NHL totals",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_prop_sog_Over",
+     "label": "NHL shots on goal Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_prop_sog_Under",
+     "label": "NHL shots on goal Unders",
+     "status": "active",
+     "record": {
+      "n": 87,
+      "w": 48,
+      "l": 39,
+      "units": 3.85,
+      "roi": 4.4,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_prop_goals_Over",
+     "label": "NHL goals Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_prop_assists_Over",
+     "label": "NHL assists Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nhl_prop_assists_Under",
+     "label": "NHL assists Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    }
+   ],
+   "backtest": {
+    "seasons": "2023-24 to 2025-26",
+    "win_logloss": 0.668,
+    "base_logloss": 0.689,
+    "market_logloss": 0.6338,
+    "model_vs_market_logloss": 0.6409,
+    "note": "Puck-line and overtime rates land within about 1 to 3 points of real results each season. Totals were recalibrated Oct 18 2026 (scoring catch-up, linked home/away goals, shot-volume effect): this season the model has 45.0% of games over 6.5 vs 44.6% real. Totals show a lean but are not plays until about 150 graded totals show an edge."
+   }
+  },
+  "NBA": {
+   "age_h": 0.6,
+   "credits_left": 488,
+   "odds_source": "odds_api",
+   "records": [],
+   "said_vs_hit": [],
+   "gates": [
+    {
+     "name": "nba_edge",
+     "label": "NBA edge parlays",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_game_ml",
+     "label": "NBA moneyline",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_game_spread",
+     "label": "NBA spreads",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_game_total",
+     "label": "NBA totals",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_pts_Over",
+     "label": "NBA points Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_pts_Under",
+     "label": "NBA points Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_reb_Over",
+     "label": "NBA rebounds Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_reb_Under",
+     "label": "NBA rebounds Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_ast_Over",
+     "label": "NBA assists Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_ast_Under",
+     "label": "NBA assists Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_fg3m_Over",
+     "label": "NBA threes Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_fg3m_Under",
+     "label": "NBA threes Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_pra_Over",
+     "label": "NBA pts+reb+ast Overs",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "nba_prop_pra_Under",
+     "label": "NBA pts+reb+ast Unders",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    }
+   ],
+   "backtest": {
+    "games": 1397,
+    "margin_mae": {
+     "model": 11.42,
+     "market": 10.96
+    },
+    "total_mae": {
+     "model": 15.14,
+     "market": 14.47
+    },
+    "sd": {
+     "margin": 14.57,
+     "total": 19.03,
+     "margin_vs_close": 14.06,
+     "total_vs_close": 18.25
+    },
+    "spread_best_model_weight": 0.0,
+    "total_best_model_weight": 0.0,
+    "spread_ats": [
+     {
+      "gap": 0,
+      "w": 697,
+      "l": 700,
+      "pct": 49.9
+     },
+     {
+      "gap": 1,
+      "w": 534,
+      "l": 548,
+      "pct": 49.4
+     },
+     {
+      "gap": 2,
+      "w": 399,
+      "l": 409,
+      "pct": 49.4
+     },
+     {
+      "gap": 3,
+      "w": 278,
+      "l": 283,
+      "pct": 49.6
+     },
+     {
+      "gap": 4,
+      "w": 171,
+      "l": 191,
+      "pct": 47.2
+     },
+     {
+      "gap": 5,
+      "w": 119,
+      "l": 123,
+      "pct": 49.2
+     },
+     {
+      "gap": 6,
+      "w": 73,
+      "l": 73,
+      "pct": 50.0
+     }
+    ],
+    "total_ats": [
+     {
+      "gap": 0,
+      "w": 684,
+      "l": 713,
+      "pct": 49.0
+     },
+     {
+      "gap": 1,
+      "w": 572,
+      "l": 578,
+      "pct": 49.7
+     },
+     {
+      "gap": 2,
+      "w": 464,
+      "l": 455,
+      "pct": 50.5
+     },
+     {
+      "gap": 3,
+      "w": 372,
+      "l": 357,
+      "pct": 51.0
+     },
+     {
+      "gap": 4,
+      "w": 272,
+      "l": 276,
+      "pct": 49.6
+     },
+     {
+      "gap": 5,
+      "w": 214,
+      "l": 216,
+      "pct": 49.8
+     },
+     {
+      "gap": 6,
+      "w": 154,
+      "l": 163,
+      "pct": 48.6
+     }
+    ],
+    "by_season": {
+     "2025": {
+      "games": 1318,
+      "spread_pct": 50.0,
+      "total_pct": 48.7,
+      "margin_mae": 11.38,
+      "market_mae": 10.96
+     },
+     "2026": {
+      "games": 79,
+      "spread_pct": 48.1,
+      "total_pct": 53.2,
+      "margin_mae": 12.1,
+      "market_mae": 10.99
+     }
+    },
+    "adjust": {
+     "b2b": 0.972,
+     "loss_own": 0.1883,
+     "loss_opp": 0.1104
+    },
+    "fit_seasons": [
+     2023,
+     2024
+    ],
+    "test_seasons": [
+     2025,
+     2026
+    ]
+   }
+  },
+  "CFB": {
+   "age_h": 0.3,
+   "credits_left": 140,
+   "odds_source": "odds_api",
+   "records": [
+    {
+     "what": "picks / spread",
+     "w": 33,
+     "l": 53,
+     "n": 86,
+     "pct": 38.4,
+     "units": -22.98,
+     "roi": -26.7,
+     "z": -2.61
+    },
+    {
+     "what": "picks / total",
+     "w": 39,
+     "l": 48,
+     "n": 87,
+     "pct": 44.8,
+     "units": -12.74,
+     "roi": -14.6,
+     "z": -1.44
+    },
+    {
+     "what": "picks / ml",
+     "w": 34,
+     "l": 47,
+     "n": 81,
+     "pct": 42.0,
+     "units": -10.01,
+     "roi": -12.4,
+     "z": -1.17
+    },
+    {
+     "what": "plays",
+     "w": 1,
+     "l": 2,
+     "n": 3,
+     "pct": 33.3,
+     "units": -1.05,
+     "roi": -34.9,
+     "z": -0.64
+    },
+    {
+     "what": "prop_plays",
+     "w": 68,
+     "l": 65,
+     "n": 133,
+     "pct": 51.1,
+     "units": -5.46,
+     "roi": -4.1,
+     "z": -0.5
+    }
+   ],
+   "said_vs_hit": [
+    {
+     "what": "calibration / pass_yds",
+     "n": 154,
+     "said": 50.0,
+     "hit": 53.2,
+     "gap": 3.2,
+     "z": 0.79
+    },
+    {
+     "what": "calibration / pass_td",
+     "n": 154,
+     "said": 48.5,
+     "hit": 47.4,
+     "gap": -1.1,
+     "z": -0.27
+    },
+    {
+     "what": "calibration / td",
+     "n": 680,
+     "said": 37.3,
+     "hit": 36.2,
+     "gap": -1.1,
+     "z": -0.59
+    },
+    {
+     "what": "calibration / rush_yds",
+     "n": 229,
+     "said": 49.5,
+     "hit": 45.9,
+     "gap": -3.6,
+     "z": -1.09
+    },
+    {
+     "what": "calibration / rec",
+     "n": 380,
+     "said": 49.0,
+     "hit": 56.1,
+     "gap": 7.1,
+     "z": 2.77
+    },
+    {
+     "what": "calibration / rec_yds",
+     "n": 264,
+     "said": 49.6,
+     "hit": 57.6,
+     "gap": 8.0,
+     "z": 2.6
+    },
+    {
+     "what": "alt (tickets)",
+     "n": 49,
+     "said": 46.3,
+     "hit": 49.0,
+     "gap": 2.7,
+     "z": 0.38
+    },
+    {
+     "what": "teasers (legs)",
+     "n": 348,
+     "said": 65.6,
+     "hit": 67.2,
+     "gap": 1.6,
+     "z": 0.63
+    }
+   ],
+   "gates": [
+    {
+     "name": "cfb_game_spread",
+     "label": "CFB spreads",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "cfb_game_total",
+     "label": "CFB totals",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    },
+    {
+     "name": "cfb_game_ml",
+     "label": "CFB moneyline",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    }
+   ],
+   "backtest": {
+    "seasons": "2021 to 2025",
+    "n": 2610,
+    "mae_model": 12.83,
+    "mae_line": 11.86,
+    "mae_model_late": 12.47,
+    "mae_line_late": 11.91,
+    "tot_model": 12.39,
+    "tot_line": 12.14,
+    "spread_all": {
+     "w": 1280,
+     "l": 1298,
+     "pct": 49.7
+    },
+    "total_all": {
+     "w": 1333,
+     "l": 1256,
+     "pct": 51.5
+    },
+    "buckets": [
+     {
+      "lo": 0,
+      "hi": 3,
+      "spread": {
+       "w": 623,
+       "l": 601,
+       "pct": 50.9
+      },
+      "total": {
+       "w": 775,
+       "l": 747,
+       "pct": 50.9
+      }
+     },
+     {
+      "lo": 3,
+      "hi": 6,
+      "spread": {
+       "w": 355,
+       "l": 369,
+       "pct": 49.0
+      },
+      "total": {
+       "w": 400,
+       "l": 377,
+       "pct": 51.5
+      }
+     },
+     {
+      "lo": 6,
+      "hi": 9,
+      "spread": {
+       "w": 168,
+       "l": 171,
+       "pct": 49.6
+      },
+      "total": {
+       "w": 120,
+       "l": 105,
+       "pct": 53.3
+      }
+     },
+     {
+      "lo": 9,
+      "hi": 99,
+      "spread": {
+       "w": 134,
+       "l": 157,
+       "pct": 46.0
+      },
+      "total": {
+       "w": 38,
+       "l": 27,
+       "pct": 58.5
+      }
+     }
+    ],
+    "open": {
+     "n": 1251,
+     "spread": {
+      "w": 339,
+      "l": 326,
+      "pct": 51.0
+     },
+     "moved_toward": 331,
+     "moved_away": 216,
+     "pct_toward": 60.5
+    },
+    "early_totals": {
+     "gap": 4.0,
+     "by_season": {
+      "2023": {
+       "w": 39,
+       "l": 27,
+       "pct": 59.1,
+       "move": 1.07
+      },
+      "2024": {
+       "w": 78,
+       "l": 48,
+       "pct": 61.9,
+       "move": 1.28
+      },
+      "2025": {
+       "w": 76,
+       "l": 61,
+       "pct": 55.5,
+       "move": 1.36
+      },
+      "2026": {
+       "w": 41,
+       "l": 34,
+       "pct": 54.7,
+       "move": 1.92
+      }
+     },
+     "w": 234,
+     "l": 170,
+     "pct": 57.9
+    },
+    "close_weight": {
+     "spread": 0.01,
+     "total": -0.03
+    }
+   }
+  },
+  "Soccer": {
+   "age_h": 0.1,
+   "credits_left": 125,
+   "odds_source": "odds_api",
+   "records": [
+    {
+     "what": "picks / 1x2",
+     "w": 10,
+     "l": 31,
+     "n": 41,
+     "pct": 24.4,
+     "units": -4.6,
+     "roi": -11.2,
+     "z": -0.76
+    },
+    {
+     "what": "picks / dnb",
+     "w": 21,
+     "l": 11,
+     "n": 32,
+     "pct": 65.6,
+     "units": 0.0,
+     "roi": 0.0,
+     "z": 0.0
+    },
+    {
+     "what": "picks / ah",
+     "w": 16,
+     "l": 22,
+     "n": 38,
+     "pct": 42.1,
+     "units": 0.88,
+     "roi": 2.3,
+     "z": 0.15
+    },
+    {
+     "what": "picks / total",
+     "w": 21,
+     "l": 20,
+     "n": 41,
+     "pct": 51.2,
+     "units": -2.56,
+     "roi": -6.2,
+     "z": -0.42
+    },
+    {
+     "what": "picks / btts",
+     "w": 21,
+     "l": 20,
+     "n": 41,
+     "pct": 51.2,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "picks_by_league / epl / 1x2",
+     "w": 1,
+     "l": 10,
+     "n": 11,
+     "pct": 9.1,
+     "units": -6.0,
+     "roi": -54.5,
+     "z": -1.9
+    },
+    {
+     "what": "picks_by_league / epl / dnb",
+     "w": 4,
+     "l": 4,
+     "n": 8,
+     "pct": 50.0,
+     "units": 0.0,
+     "roi": 0.0,
+     "z": 0.0
+    },
+    {
+     "what": "picks_by_league / epl / ah",
+     "w": 2,
+     "l": 8,
+     "n": 10,
+     "pct": 20.0,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "picks_by_league / epl / total",
+     "w": 6,
+     "l": 5,
+     "n": 11,
+     "pct": 54.5,
+     "units": 0.22,
+     "roi": 2.0,
+     "z": 0.07
+    },
+    {
+     "what": "picks_by_league / epl / btts",
+     "w": 4,
+     "l": 7,
+     "n": 11,
+     "pct": 36.4,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "picks_by_league / champ / 1x2",
+     "w": 6,
+     "l": 11,
+     "n": 17,
+     "pct": 35.3,
+     "units": -2.25,
+     "roi": -13.2,
+     "z": -0.57
+    },
+    {
+     "what": "picks_by_league / champ / dnb",
+     "w": 10,
+     "l": 3,
+     "n": 13,
+     "pct": 76.9,
+     "units": 0.0,
+     "roi": 0.0,
+     "z": 0.0
+    },
+    {
+     "what": "picks_by_league / champ / ah",
+     "w": 9,
+     "l": 7,
+     "n": 16,
+     "pct": 56.2,
+     "units": 0.88,
+     "roi": 5.5,
+     "z": 0.23
+    },
+    {
+     "what": "picks_by_league / champ / total",
+     "w": 7,
+     "l": 10,
+     "n": 17,
+     "pct": 41.2,
+     "units": -3.87,
+     "roi": -22.8,
+     "z": -0.99
+    },
+    {
+     "what": "picks_by_league / champ / btts",
+     "w": 11,
+     "l": 6,
+     "n": 17,
+     "pct": 64.7,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "picks_by_league / laliga / 1x2",
+     "w": 3,
+     "l": 10,
+     "n": 13,
+     "pct": 23.1,
+     "units": 3.65,
+     "roi": 28.1,
+     "z": 1.07
+    },
+    {
+     "what": "picks_by_league / laliga / dnb",
+     "w": 7,
+     "l": 4,
+     "n": 11,
+     "pct": 63.6,
+     "units": 0.0,
+     "roi": 0.0,
+     "z": 0.0
+    },
+    {
+     "what": "picks_by_league / laliga / ah",
+     "w": 5,
+     "l": 7,
+     "n": 12,
+     "pct": 41.7,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "picks_by_league / laliga / total",
+     "w": 8,
+     "l": 5,
+     "n": 13,
+     "pct": 61.5,
+     "units": 1.1,
+     "roi": 8.5,
+     "z": 0.32
+    },
+    {
+     "what": "picks_by_league / laliga / btts",
+     "w": 6,
+     "l": 7,
+     "n": 13,
+     "pct": 46.2,
+     "units": null,
+     "roi": null,
+     "z": null
+    },
+    {
+     "what": "plays",
+     "w": 6,
+     "l": 5,
+     "n": 11,
+     "pct": 54.5,
+     "units": 5.8,
+     "roi": 52.8,
+     "z": 1.84
+    },
+    {
+     "what": "by_type / 1x2",
+     "w": 2,
+     "l": 4,
+     "n": 6,
+     "pct": 33.3,
+     "units": 3.0,
+     "roi": 50.0,
+     "z": 1.29
+    },
+    {
+     "what": "by_type / ah",
+     "w": 4,
+     "l": 1,
+     "n": 5,
+     "pct": 80.0,
+     "units": 2.8,
+     "roi": 56.1,
+     "z": 1.32
+    },
+    {
+     "what": "by_league / champ",
+     "w": 4,
+     "l": 1,
+     "n": 5,
+     "pct": 80.0,
+     "units": 2.8,
+     "roi": 56.1,
+     "z": 1.32
+    },
+    {
+     "what": "by_league / laliga",
+     "w": 2,
+     "l": 4,
+     "n": 6,
+     "pct": 33.3,
+     "units": 3.0,
+     "roi": 50.0,
+     "z": 1.29
+    },
+    {
+     "what": "rule",
+     "w": 3,
+     "l": 4,
+     "n": 7,
+     "pct": 42.9,
+     "units": 3.88,
+     "roi": 55.5,
+     "z": 1.55
+    },
+    {
+     "what": "alt_plays",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    },
+    {
+     "what": "alt_plays / by_market / team_total",
+     "w": 0,
+     "l": 1,
+     "n": 1,
+     "pct": 0.0,
+     "units": -1.0,
+     "roi": -100.0,
+     "z": -1.05
+    }
+   ],
+   "said_vs_hit": [
+    {
+     "what": "calibration / goal",
+     "n": 986,
+     "said": 9.8,
+     "hit": 8.0,
+     "gap": -1.8,
+     "z": -1.9
+    },
+    {
+     "what": "calibration / sot1",
+     "n": 986,
+     "said": 26.4,
+     "hit": 24.6,
+     "gap": -1.8,
+     "z": -1.28
+    },
+    {
+     "what": "calibration / sot2",
+     "n": 986,
+     "said": 5.8,
+     "hit": 6.0,
+     "gap": 0.2,
+     "z": 0.27
+    },
+    {
+     "what": "alt_parlays (tickets)",
+     "n": 20,
+     "said": 47.6,
+     "hit": 50.0,
+     "gap": 2.4,
+     "z": 0.21
+    },
+    {
+     "what": "alt_parlays (legs)",
+     "n": 60,
+     "said": 74.2,
+     "hit": 71.7,
+     "gap": -2.5,
+     "z": -0.44
+    }
+   ],
+   "gates": [
+    {
+     "name": "soccer_game_1x2",
+     "label": "Soccer match result",
+     "status": "active",
+     "record": {
+      "n": 6,
+      "w": 2,
+      "l": 4,
+      "units": 3.0,
+      "roi": 50.0,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 6,
+      "ev_close": -6.15
+     }
+    },
+    {
+     "name": "soccer_game_ah",
+     "label": "Soccer Asian handicap",
+     "status": "active",
+     "record": {
+      "n": 5,
+      "w": 4,
+      "l": 1,
+      "units": 2.8,
+      "roi": 56.1,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 1,
+      "ev_close": -2.49
+     }
+    },
+    {
+     "name": "soccer_game_total",
+     "label": "Soccer totals",
+     "status": "active",
+     "record": {
+      "n": 0,
+      "w": 0,
+      "l": 0,
+      "units": 0,
+      "roi": null,
+      "clv_n": 0,
+      "clv": null,
+      "ev_n": 0,
+      "ev_close": null
+     }
+    }
+   ],
+   "backtest": null
+  }
+ },
+ "flags": [
+  {
+   "sport": "CFB",
+   "level": "high",
+   "what": "losing: picks / spread",
+   "why": "33-53, -22.98u, -26.7% (z -2.61)"
+  },
+  {
+   "sport": "CFB",
+   "level": "high",
+   "what": "said vs hit: calibration / rec",
+   "why": "said 49.0%, hit 56.1% over 380 (z 2.77)"
+  },
+  {
+   "sport": "CFB",
+   "level": "high",
+   "what": "said vs hit: calibration / rec_yds",
+   "why": "said 49.6%, hit 57.6% over 264 (z 2.6)"
+  },
+  {
+   "sport": "NFL",
+   "level": "high",
+   "what": "said vs hit: alt_leg_types / RB rushing yards Over",
+   "why": "said 79.9%, hit 66.3% over 196 (z -4.75)"
+  },
+  {
+   "sport": "NHL",
+   "level": "high",
+   "what": "losing: picks / ml",
+   "why": "69-92, -25.81u, -16.0% (z -2.14)"
+  },
+  {
+   "sport": "NHL",
+   "level": "high",
+   "what": "said vs hit: calibration / saves",
+   "why": "said 50.1%, hit 32.1% over 290 (z -6.13)"
+  },
+  {
+   "sport": "CFB",
+   "level": "medium",
+   "what": "losing: picks / total",
+   "why": "39-48, -12.74u, -14.6% (z -1.44)"
+  },
+  {
+   "sport": "CFB",
+   "level": "medium",
+   "what": "losing: picks / ml",
+   "why": "34-47, -10.01u, -12.4% (z -1.17)"
+  },
+  {
+   "sport": "NFL",
+   "level": "medium",
+   "what": "losing: live_record / picks / spread",
+   "why": "26-29, -5.36u, -9.7% (z -0.76)"
+  },
+  {
+   "sport": "NFL",
+   "level": "medium",
+   "what": "said vs hit: tds / Anytime TD / bins / 4",
+   "why": "said 57.1%, hit 48.8% over 43 (z -1.1)"
+  },
+  {
+   "sport": "NFL",
+   "level": "medium",
+   "what": "said vs hit: tds / 2+ TDs / bins / 2",
+   "why": "said 27.0%, hit 17.2% over 29 (z -1.19)"
+  },
+  {
+   "sport": "NHL",
+   "level": "medium",
+   "what": "odds credits low",
+   "why": "29 left this month"
+  },
+  {
+   "sport": "NHL",
+   "level": "medium",
+   "what": "losing: picks / pl",
+   "why": "76-85, -17.04u, -10.6% (z -1.41)"
+  },
+  {
+   "sport": "NHL",
+   "level": "medium",
+   "what": "said vs hit: alt_hr (tickets)",
+   "why": "said 66.0%, hit 56.5% over 23 (z -0.96)"
+  },
+  {
+   "sport": "Soccer",
+   "level": "medium",
+   "what": "losing: picks / 1x2",
+   "why": "10-31, -4.6u, -11.2% (z -0.76)"
+  }
+ ]
+}
