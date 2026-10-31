@@ -198,7 +198,8 @@ def run(games, state_path, cache_path, now, close_games=()):
         allowance = int(daily) - 6 - state.get("spent_today", 0)          # keep room for line pulls
         et_hour = now.astimezone(ZoneInfo("America/New_York")).hour
         todo = [g for g in games if g.get("book", {}).get("event") and g["date_et"] == g["today_et"]]
-        if et_hour >= 13:                                  # props are posted by early afternoon
+        soon_start = any(0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= 4 for g in todo)
+        if et_hour >= 13 or soon_start:                    # props are posted by early afternoon; matinees need them sooner (Oct 31 2026)
             for mkt in C.ODDS_PROP_MARKETS:
                 for g in sorted(todo, key=lambda x: x["start"]):
                     ck = f"{g['game_id']}|{mkt}"
