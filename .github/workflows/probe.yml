@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       probe:
-        description: "markets (default) or kalshi"
+        description: "markets (default), kalshi or nbaalt"
         default: markets
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
           ODDS_API_KEY_CFB: ${{ secrets.ODDS_API_KEY_CFB }}
           PROBE: ${{ inputs.probe }}
         run: |
-          if [ "$PROBE" = "kalshi" ]; then python tools/probe_kalshi.py; else python tools/probe_markets.py 2; fi
+          if [ "$PROBE" = "kalshi" ]; then python tools/probe_kalshi.py; elif [ "$PROBE" = "nbaalt" ]; then python tools/probe_nba_alts.py; else python tools/probe_markets.py 2; fi
