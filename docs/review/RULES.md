@@ -8,7 +8,9 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
    Odds credits left on each key. Data freshness (the review flags stale data).
 2. **Last week's changes.** Read `docs/review/CHANGES.md`. For each change due for a look, compare before and after
    and keep, adjust or undo it. Note the outcome in that entry.
-3. **The scorecard.** Run `python tools/weekly_review.py` and read `docs/review/latest.md`. Every flag gets a look.
+3. **The scorecard.** Run `python tools/weekly_review.py` and read `docs/review/latest.md`. Every flag gets a look,
+   including every prop diagnosis (a single prop type can also be checked with
+   `python tools/prop_diagnose.py <nfl|nhl|nba|cfb> <stat> <Over|Under>`).
 4. **Deeper checks** where flagged, and on the first review of each month for every sport:
    - CFB: `python tools/cfb_edge_check.py` (model weight vs the close; early totals vs the open)
    - NBA: `python tools/nba_backtest.py`, `python tools/nba_props_check.py 2025 6`
@@ -26,6 +28,15 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
 - **Pause a bet type** (or tighten it): 25+ graded plays, return -8% or worse, and either z <= -1.5 or closing-line
   value negative over 30+ priced plays. Prefer the gates in `gates.py` (they pause and restore on their own); check they
   are doing it before adding a manual rule.
+- **Never just pause a prop type.** Every prop type that is losing (20+ plays, -8% or worse) or paused gets a
+  diagnosis (`tools/prop_diagnose.py`, included in the scorecard): projection bias, calibration, edge size, plays vs
+  all leans, price paid, line movement, line size / role, zeros, clustering, trend. Read the causes and check them
+  against the data:
+  - when a cause is clear and fixable (a level bias, overconfidence, heavy juice, low-line players, too many plays a
+    night), fix that cause in the model or the play rule, log it, and let the gate's shadow plays test the fix before
+    the type comes back;
+  - when no cause stands out, it is the model having no edge there: keep it paused and say so in the report;
+  - write the diagnosis and the decision in CHANGES.md either way.
 - **Recalibrate** a probability (props, parlay legs, a leg type): said vs hit gap of 5+ points over 100+ graded, or 8+
   points over 20+ tickets. Move halfway toward the real rate, not all the way.
 - **Loosen a rule or un-pause:** only with 40+ graded results over 3+ weeks, return positive, and closing-line value

@@ -15,10 +15,13 @@ flagged items, and only then changes anything (see docs/review/RULES.md).
 """
 import json
 import math
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import prop_diagnose as PD  # noqa: E402
 OUT = ROOT / "docs" / "review"
 SPORTS = {"NFL": "docs/data", "NHL": "docs/nhl/data", "NBA": "docs/nba/data", "CFB": "docs/cfb/data", "Soccer": "docs/soccer/data"}
 
@@ -146,6 +149,19 @@ def review():
             if g.get("status") == "paused" and (rc.get("n") or 0) >= 25 and (num(rc.get("roi")) or 0) > 3:
                 rep["flags"].append({"sport": sport, "level": "info", "what": f"paused but winning: {g.get('label')}",
                                      "why": f"{rc.get('w')}-{rc.get('l')} as shadow plays, {rc.get('roi')}%"})
+    # prop types that are losing or paused: not just paused, diagnosed (tools/prop_diagnose.py)
+    rep["diagnoses"] = []
+    for sport, key in (("NFL", "nfl"), ("NHL", "nhl"), ("NBA", "nba"), ("CFB", "cfb")):
+        try:
+            gst = load(ROOT / SPORTS[sport] / "gates.json") or {}
+            for st, sd in PD.candidates(key, gst):
+                d = PD.diagnose(key, st, sd)
+                rep["diagnoses"].append(d)
+                if not d.get("error"):
+                    rep["flags"].append({"sport": sport, "level": "medium", "what": f"diagnosed: {st} {sd}s",
+                                         "why": f"plays {d['plays']['w']}-{d['plays']['l']} ({d['plays']['roi']}%); top cause: {d['causes'][0][:140]}"})
+        except Exception as e:  # noqa: BLE001
+            rep["flags"].append({"sport": sport, "level": "medium", "what": "prop diagnosis failed", "why": str(e)[:160]})
     order = {"high": 0, "medium": 1, "info": 2}
     rep["flags"].sort(key=lambda f: (order.get(f["level"], 3), f["sport"]))
     return rep
@@ -159,6 +175,9 @@ def markdown(rep):
         lines += [f"| {f['level']} | {f['sport']} | {f['what']} | {f['why']} |" for f in rep["flags"]]
     else:
         lines.append("No flags.")
+    if rep.get("diagnoses"):
+        lines += ["", "## Prop diagnoses", "Every prop type that is losing (20+ plays, -8% or worse) or paused, with what's driving it.", ""]
+        lines += [PD.markdown(d) for d in rep["diagnoses"]]
     for sport, S in rep["sports"].items():
         lines += ["", f"## {sport}", f"Updated {S['age_h']} hours ago, odds from {S['odds_source']}, credits left {S['credits_left']}.", ""]
         rs = sorted([r for r in S["records"] if r["n"] >= 5], key=lambda r: -r["n"])[:40]
