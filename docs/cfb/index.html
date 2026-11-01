@@ -740,8 +740,12 @@ const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
 const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
 const units = u => u == null ? "–" : `${u >= 0 ? "+" : ""}${Number(u).toFixed(2)}u`;
 const uc = u => u == null ? "" : (u >= 0 ? "up" : "down");
+// Nov 1 2026: a game stays on the board after it starts (tagged "Started") until the model drops it
+// at the final score; this 8-hour cap only matters if the page hasn't been refreshed since
+const started = iso => !!iso && new Date(iso).getTime() <= Date.now();
+const gone = iso => !!iso && Date.now() - new Date(iso).getTime() > 8 * 3600e3;
 const TBD = new Set();
-const when = iso => { if (!iso) return ""; const d = new Date(iso);
+const when = iso => { if (!iso) return ""; const d = new Date(iso); if (started(iso) && !TBD.has(iso)) return "Started";
   return TBD.has(iso) ? d.toLocaleDateString("en-US", {weekday: "short", month: "numeric", day: "numeric", timeZone: "UTC"}) + ", time TBD" : d.toLocaleString([], {weekday: "short", month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit"}); };
 const fmtLine = v => v == null ? "–" : Math.abs(v) < 0.25 ? "PK" : (v > 0 ? "+" : "") + (Math.round(v * 10) / 10);
 const fmtO = o => o == null ? "–" : (+o > 0 ? "+" : "") + Math.round(+o);
@@ -903,7 +907,7 @@ function calBlock() {
 const PK_NAME = {spread: "Spread", total: "Total", ml: "Moneyline"};
 const KINDS = ["spread", "total", "ml"];
 function pickText(k, p) { return k === "ml" ? `${p.side} ML` : k === "spread" ? `${p.side} ${fmtLine(p.line)}` : `${p.side} ${p.line}`; }
-const live = g => new Date(g.start).getTime() > Date.now();
+const live = g => !gone(g.start);   // on the board until final (Nov 1 2026), not just until kickoff
 function allPlays() {
   const out = [];
   for (const g of D.games || []) { if (!live(g)) continue;
@@ -936,7 +940,7 @@ function renderHome() {
   const G = (D.games || []).filter(live), plays = allPlays(), T = D.tracking || {}, B = D.model?.backtest || {};
   const pr = T.plays || {}, pp = T.prop_plays || {};
   const w = (pr.w || 0) + (pp.w || 0), l = (pr.l || 0) + (pp.l || 0), u = (pr.units || 0) + (pp.units || 0);
-  const next = G[0], sat = G;
+  const next = G.find(g => !started(g.start)) || G[0], sat = G;
   let h = `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)} season, ${esc(D.week_label)}. Power 4 only</div>
       <div class="big">${sat.length || G.length}<span>games this week</span></div>
       <div class="line">${next ? `First up <b>${esc(next.away_name)} at ${esc(next.home_name)}</b>, ${esc(when(next.start))}` : "No games on the board right now."}</div></div>
@@ -1137,7 +1141,7 @@ function tzLog(legs, pct, size) {
 }
 function teaserHTML() {
   const Z = D.teasers; if (!Z || !Z.legs || !Z.legs.length) return "";
-  const now = Date.now(), legs = Z.legs.filter(L => !L.kickoff || new Date(L.kickoff).getTime() > now);
+  const now = Date.now(), legs = Z.legs.filter(L => !gone(L.kickoff));
   if (!legs.length) return "";
   const be2 = Z.breakeven["2"], H = Z.history || {};
   const card = b => { const c = tzCall(b.p, b.size);
@@ -1146,7 +1150,7 @@ function teaserHTML() {
       <div class="t-meta">All legs hit <b>${n(b.p)}%</b>. At ${esc(c.odds)}: ${c.ev == null ? "enter a price" : `expected return <b>${sgn(c.ev)}%</b>`}</div>
       <div class="t-actions">${tzTag(c.tier)}${tzLog(b.legs, b.p, b.size)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(fair(b.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
-  const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now))[0]).filter(Boolean);
+  const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(L => !gone(L.kickoff)))[0]).filter(Boolean);
   const sel = TZS.sel.map(k => legs.find(L => tzKey(L) === k)).filter(Boolean);
   let mine = `<div class="verdict">Tap up to 4 legs in the table, one per game, to price your own teaser.</div>`;
   if (sel.length >= 2) {

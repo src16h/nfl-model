@@ -31,6 +31,7 @@ import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
 import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
+import carryover as CO  # noqa: E402
 import crossgame as XG  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -878,6 +879,8 @@ def main():
     gst = GT.load(OUT / "gates.json", ("nba_edge",) + GT.game_names("nba") + GT.prop_names("nba"))
     gates_out = [GT.update(OUT / "gates.json", gst, k, sh, pl, today.isoformat()) for k, (sh, pl) in gate_rows.items()]
 
+    # Nov 1 2026: games that have started stay on the page (plays, props, parlays) until final
+    games, players = CO.carry_started(OUT / "latest.json", games, players, results.keys(), now)
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
                "edge_parlays": edge_final, "cross_parlays": cross, "edge_paused": bool(getattr(C, "EDGE_PAUSED", False)), "gates": gates_out,

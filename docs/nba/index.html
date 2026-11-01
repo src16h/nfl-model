@@ -770,7 +770,11 @@ const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
 const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
 const units = u => u == null ? "–" : `${u >= 0 ? "+" : ""}${Number(u).toFixed(2)}u`;
 const uc = u => u == null ? "" : (u >= 0 ? "up" : "down");
-const when = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+// Nov 1 2026: a game stays on the board after it starts (tagged "Started") until the model drops it
+// at the final score; this 8-hour cap only matters if the page hasn't been refreshed since
+const started = iso => !!iso && new Date(iso).getTime() <= Date.now();
+const gone = iso => !!iso && Date.now() - new Date(iso).getTime() > 8 * 3600e3;
+const when = iso => !iso ? "" : started(iso) ? "Started" : new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
 const TEAM = {ATL:"#E03A3E",BOS:"#007A33",BKN:"#777D84",CHA:"#1D1160",CHI:"#CE1141",CLE:"#860038",DAL:"#00538C",DEN:"#0E2240",
   DET:"#C8102E",GSW:"#1D428A",HOU:"#CE1141",IND:"#002D62",LAC:"#C8102E",LAL:"#552583",MEM:"#5D76A9",MIA:"#98002E",MIL:"#00471B",
   MIN:"#236192",NOP:"#0C2340",NYK:"#F58426",OKC:"#007AC1",ORL:"#0077C0",PHI:"#006BB6",PHX:"#E56020",POR:"#E03A3E",SAC:"#5A2D81",
@@ -983,14 +987,14 @@ document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.ma
 function altPlays() {
   const out = [];
   for (const g of D.games || []) {
-    if (new Date(g.start) < Date.now()) continue;
+    if (gone(g.start)) continue;
     for (const x of g.alt?.plays || []) out.push({type: "alt", kind: "alt", g, p: x, edge: x.ev, model: x.sharp, book: 100 * impl(x.odds), odds: x.odds,
       title: x.label, sub: `${altMkName(x)}, ${g.away} at ${g.home}`});
   }
   for (const [key, v] of Object.entries(ALTP)) {
     if (!v?.odds) continue;
     const [gid, market, team, side, line] = key.split("|"), g = (D.games || []).find(x => String(x.game_id) === gid);
-    if (!g || new Date(g.start) < Date.now()) continue;
+    if (!g || gone(g.start)) continue;
     const b = {market, team: team || null, side, line: +line}, c = altChance(g, b), vd = altVerdict(c, v.odds);
     if (!vd || vd.tier !== "play") continue;
     const lab = altLabel(g, b);
@@ -1135,7 +1139,7 @@ function renderHome() {
   const pr = T.plays || {}, pp = T.prop_plays || {}, ed = T.edge || {};
   const ap = T.alt_plays || {};
   const w = (pr.w || 0) + (pp.w || 0) + (ed.w || 0) + (ap.w || 0), l = (pr.l || 0) + (pp.l || 0) + (ed.l || 0) + (ap.l || 0), u = (pr.units || 0) + (pp.units || 0) + (ed.units || 0) + (ap.units || 0);
-  const today = G.filter(g => g.date === D.today), next = G[0];
+  const today = G.filter(g => g.date === D.today), next = G.find(g => !started(g.start)) || G[0];
   let h = `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)}–${String(D.season + 1).slice(2)} season</div>
       <div class="big">${today.length || G.length}<span>${today.length ? "games tonight" : "games next"}</span></div>
       <div class="line">${next ? `First up <b>${esc(next.away)} at ${esc(next.home)}</b>, ${esc(when(next.start))}` : "No games scheduled."}</div></div>
@@ -1321,7 +1325,7 @@ function renderParlays() {
 }
 /* ---------- cross-game alt parlays (crossgame.py, Oct 30 2026) ---------- */
 const XODDS = {};
-const xWhen = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+const xWhen = iso => !iso ? "" : started(iso) ? "started" : new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
 const X_STYLE = {spreads: "Alt spreads", mix: "Spreads + totals"};
 function crossHTML() {
   const X = D.cross_parlays; if (!X) return "";

@@ -850,7 +850,11 @@ const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
 const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
 const units = u => u == null ? "–" : `${u >= 0 ? "+" : ""}${Number(u).toFixed(2)}u`;
 const uc = u => u == null ? "" : (u >= 0 ? "up" : "down");
-const when = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+// Nov 1 2026: a game stays on the board after it starts (tagged "Started") until the model drops it
+// at the final score; this 8-hour cap only matters if the page hasn't been refreshed since
+const started = iso => !!iso && new Date(iso).getTime() <= Date.now();
+const gone = iso => !!iso && Date.now() - new Date(iso).getTime() > 8 * 3600e3;
+const when = iso => !iso ? "" : started(iso) ? "Started" : new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
 const day = iso => iso ? new Date(iso).toLocaleDateString([], {weekday: "short", month: "short", day: "numeric"}) : "";
 const ico = id => `<svg><use href="#i-${id}"/></svg>`;
 const fmtO = o => o == null ? "–" : (+o > 0 ? "+" : "") + Math.round(+o);
@@ -910,7 +914,7 @@ const oddsNum = o => { const s = String(o ?? "").trim(), v = +s.replace(/^\+/, "
 /* ---- DK-JS end ---- */
 /* ---------- cross-game alt parlays (crossgame.py, Oct 30 2026) ---------- */
 const XODDS = {};
-const xWhen = iso => iso ? new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"}) : "";
+const xWhen = iso => !iso ? "" : started(iso) ? "started" : new Date(iso).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
 const X_STYLE = {spreads: "Handicaps", mix: "Handicaps + totals"};
 function crossHTML() {
   const X = D.cross_parlays; if (!X) return "";
@@ -975,7 +979,7 @@ function parlayRecordHTML() {
     ${(AR.recent || []).length ? `<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Match</th><th>Legs</th><th>Score</th><th>Result</th></tr></thead><tbody>${AR.recent.filter(lgOk).map(x => `<tr><td>${esc(x.date.slice(5))}</td><td style="text-align:left"><span class="lgtag">${esc(lgName(x.league))}</span>${esc(x.game)}${x.fair ? ` <span class="dim">fair ${esc(x.fair)}</span>` : ""}</td><td style="text-align:left">${x.leg_labels ? x.leg_labels.map((l, i) => `<span class="${x.leg_hits?.[i] ? "up" : "down"}">${esc(l)}</span>`).join(", ") : `${x.legs_hit} of ${x.legs}`}</td><td>${esc(x.score || "")}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "W" : "L"}</span></td></tr>`).join("")}</tbody></table></div>` : ""}`;
 }
 function renderParlays() {
-  const G = (D.games || []).filter(g => g.alt_parlay && lgOk(g) && new Date(g.start) > Date.now() - 2 * 3600e3).sort((a, b) => a.start.localeCompare(b.start));
+  const G = (D.games || []).filter(g => g.alt_parlay && lgOk(g) && !gone(g.start)).sort((a, b) => a.start.localeCompare(b.start));
   let h = crossHTML();
   h += `<div class="sec-head"><h2>Same-game alt parlays</h2><span class="aside">${G.length} matches</span></div>
     <p class="sub">One per match: 2 or 3 legs from handicaps, totals, team totals and both teams to score, each priced at <b>Pinnacle's</b> chance with the model rating it at least as high, at fair odds of about +100 to +125. The ticket's chance comes from the scoreline grid, so legs that move together (a team total and that team's handicap) are priced together. Tickets lock 3 hours before kickoff, so the graded ticket is the one you saw. <b>Bet it only at the "bet at" price or better</b>: it asks for 7% more than fair, room for the estimate being a little off.</p>
@@ -1152,7 +1156,7 @@ function myPlays() {
   for (const [key, v] of Object.entries(PRICES)) {
     if (!v?.odds) continue;
     const [gid, kind, who, line] = key.split("|"), g = (D.games || []).find(x => String(x.game_id) === gid);
-    if (!g || !lgOk(g) || new Date(g.start) < Date.now()) continue;
+    if (!g || !lgOk(g) || gone(g.start)) continue;
     const L = line === "" ? null : +line, c = chances(g, kind, who, L), vd = verdict(c, v.odds);
     if (!vd || vd.tier !== "play") continue;
     const p = {side: sideName(g, kind, who), who, line: L, odds: fmtO(v.odds), model: 100 * c.m, sharp: 100 * c.k, ev: vd.ev, play: true, exact: c.exact};
@@ -1292,7 +1296,7 @@ document.addEventListener("click", e => { const b = e.target.closest("[data-bym]
 function tileMk(g, k, label, txt) { const p = g.picks?.[k]; return p ? `<span>${label}</span><b class="${p.play ? "on" : ""}">${esc(txt(p))}</b>` : ""; }
 function renderHome() {
   const G = (D.games || []).filter(lgOk), plays = allPlays(), T = D.tracking || {}, pr = T.plays || {};
-  const next = G[0], wk = G.filter(g => (new Date(g.start) - Date.now()) / 864e5 < 4), kinds = {};
+  const next = G.find(g => !started(g.start)) || G[0], wk = G.filter(g => (new Date(g.start) - Date.now()) / 864e5 < 4), kinds = {};
   plays.forEach(x => kinds[x.kind] = (kinds[x.kind] || 0) + 1);
   let h = lgChips() + `<div class="home-hero"><div><div class="eyebrow">${esc(D.season)}–${String(D.season + 1).slice(2)} season</div>
       <div class="big">${wk.length || G.length}<span>${wk.length ? "matches in the next 4 days" : "matches next"}</span></div>

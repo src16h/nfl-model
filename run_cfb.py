@@ -35,6 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
 import gates as GT  # noqa: E402
+import carryover as CO  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("cfbmodel")
@@ -706,6 +707,8 @@ def main():
     shown = {t["team"] for t in teams} | {g[s] for g in games for s in ("home", "away")}
     post = bool(upcoming) and upcoming[0]["stype"] == 3
     wk_label = "Bowl season" if post else next((w["label"] for w in reg if w["week"] == wk_now), f"Week {wk_now}")
+    # Nov 1 2026: games that have started stay on the page (plays, props, parlays) until final
+    games, players = CO.carry_started(OUT / "latest.json", games, players, results.keys(), now)
     payload = {"generated_at": now.isoformat(), "season": season, "week": wk_now, "week_label": wk_label, "today": today.isoformat(),
                "games": games, "players": players, "odds": odds_status, "tracking": track, "prop_level": level,
                "teasers": TZ.board(games, BT.teaser_history(games_t, C.TEASER_POINTS)),

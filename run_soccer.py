@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT))
 import betrules as BR  # noqa: E402
 import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
+import carryover as CO  # noqa: E402
 import crossgame as XG  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -719,6 +720,8 @@ def main():
             team_rows.append({"league": lg, "team": t, "att": r(v["att"], 2), "def": r(v["def"], 2), "net": r(v["att"] - v["def"], 2),
                               "new": nb.get(t)})
 
+    # Nov 1 2026: games that have started stay on the page (plays, props, parlays) until final
+    games, players = CO.carry_started(OUT / "latest.json", games, players, results.keys(), now)
     payload = {"generated_at": now.isoformat(), "season": season, "today": today.isoformat(),
                "leagues": {k: {"name": v["name"], "short": v["short"], "xg": bool(v["understat"])} for k, v in C.LEAGUES.items()},
                "games": games, "players": players, "recent": recent[:30], "odds": odds_status, "tracking": track,
