@@ -197,12 +197,13 @@ def wong_plays(games, price=None, rates=None):
 
 
 def board(games, schedules):
-    live = [g for g in games if g.get("state", "upcoming") == "upcoming" and g.get("teaser_legs")]
+    # Nov 1 2026: started games stay on the board until final (legs marked "started")
+    live = [g for g in games if g.get("state", "upcoming") in ("upcoming", "locked") and g.get("teaser_legs")]
     legs = []
     for g in live:
         for L in g["teaser_legs"]:
             legs.append({"game_id": g["game_id"], "matchup": f"{g['away']} at {g['home']}",
-                         "kickoff": g.get("kickoff"), **L})
+                         "kickoff": g.get("kickoff"), "started": g.get("state") == "locked", **L})
     legs.sort(key=lambda L: -L["p"])
     prices = C.TEASER_PRICES
     hist = history(schedules)

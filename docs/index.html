@@ -780,6 +780,12 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
   <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
 <script>
 const $ = s => document.querySelector(s);
+// Nov 1 2026: bets stay on the board from kickoff until the game is final, tagged "Started"
+const onBoard = g => !!g && g.state !== "final";
+const isStarted = g => !!g && g.state === "locked";
+const legOn = L => onBoard((D.games || []).find(g => g.game_id === L.game_id)) || (!L.game_id && (!L.kickoff || new Date(L.kickoff).getTime() > Date.now()));
+const whenTxt = g => isStarted(g) ? "Started" : kickoff(g.kickoff);
+const startedTag = `<span class="qtag" style="color:var(--muted)">Started</span>`;
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
 const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
@@ -1105,7 +1111,7 @@ document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.ma
 function altPlays() {
   const out = [];
   for (const g of D.games || []) {
-    if (new Date(g.start) < Date.now()) continue;
+    if (!onBoard(g)) continue;
     for (const x of g.alt?.plays || []) out.push({type: "alt", kind: "alt", g, p: x, edge: x.ev, model: x.sharp, book: 100 * impl(x.odds), odds: x.odds,
       title: x.label, sub: `${altMkName(x)}, ${g.away} at ${g.home}`});
   }
@@ -1224,7 +1230,7 @@ function renderHome() {
   // slate
   h += `<div class="panel span-12"><h3>This week's slate <button data-go="games">Full board</button></h3><p class="pmuted">Tap a game for the full breakdown.</p><div class="slate">${up.map(g => {
     const wpH = g.win_prob_home, wpA = wpH == null ? null : 100 - wpH, sp = g.picks?.spread;
-    return `<button class="tile" data-game="${esc(g.game_id)}"><div class="tt"><span>${esc(kickoff(g.kickoff))}</span>${g.play_spread || g.play_total ? `<span class="tag">Play</span>` : ""}</div>
+    return `<button class="tile" data-game="${esc(g.game_id)}"><div class="tt"><span>${esc(whenTxt(g))}</span>${g.play_spread || g.play_total ? `<span class="tag">Play</span>` : ""}</div>
       <div class="tr">${badge(g.away)}<span class="dim">${n(g.proj_away, 0)}</span><b>${esc(g.market_line || "")}</b></div>
       <div class="tr">${badge(g.home)}<span class="dim">${n(g.proj_home, 0)}</span><b>${g.market_total == null ? "" : "O/U " + n(g.market_total)}</b></div>
       ${wpH == null ? "" : `<div class="wp"><span class="a">${n(wpA, 0)}%</span><span class="bar"><i style="width:${wpA}%;background:${tc(g.away)};--tl:${tl(g.away)}"></i><i style="width:${wpH}%;background:${tc(g.home)};--tl:${tl(g.home)}"></i></span><span class="h">${n(wpH, 0)}%</span></div>`}
@@ -1267,7 +1273,7 @@ function ticket(p) {
   meta.push(esc(p.detail));
   if (p.book) meta.push(esc(p.book));
   return `<article class="ticket">
-    <div class="t-main"><div class="t-kind">${kind}<span>${esc(kickoff(p.kickoff))}</span></div>
+    <div class="t-main"><div class="t-kind">${kind}<span>${p.started || isStarted((D.games || []).find(g => g.game_id === p.game_id)) ? "Started" : esc(kickoff(p.kickoff))}</span></div>
       <div class="t-pick">${esc(p.pick)}${odds}${p.mine ? `<span class="mine">your price</span>` : ""}</div><div class="t-who">${who}</div><div class="t-meta">${meta.join(". ")}</div>
       ${meterFor(p)}${payUpTo(p.bet?.model_pct)}
       ${p.bet ? `<div class="t-actions"><span class="stake">${stakeFor(p)}</span>${logBtn({...p.bet,
@@ -1311,7 +1317,7 @@ function renderGames() {
   // watch list: game leans that are not plays
   const watch = [];
   D.games.forEach(g => {
-    if (g.state !== "upcoming") return;
+    if (!onBoard(g)) return;
     if (g.lean_side && !g.play_spread) { const home = g.lean_side === g.home; watch.push(`<tr><td>${esc(g.away)} at ${esc(g.home)}</td><td>${esc(g.lean_side)} ${fmtLine(home ? -g.market_spread : g.market_spread)}</td><td>${n(Math.abs(g.edge_spread))} pts</td><td>Spread</td></tr>`); }
     if (g.lean_total && !g.play_total) watch.push(`<tr><td>${esc(g.away)} at ${esc(g.home)}</td><td>${esc(g.lean_total)} ${n(g.market_total)}</td><td>${n(Math.abs(g.edge_total))} pts</td><td>Total</td></tr>`);
   });
@@ -1347,7 +1353,7 @@ function gameRow(g) {
   const favHome = (g.margin ?? 0) > 0;
   const wpH = g.win_prob_home == null ? null : Number(g.win_prob_home), wpA = wpH == null ? null : 100 - wpH;
   const isPlay = !!(g.play_spread || g.play_total);
-  const playTag = isPlay ? `<span class="tag">Play</span>` : (g.lean_side || g.lean_total) && g.state === "upcoming" ? `<span class="tag watch">Watch</span>` : "";
+  const playTag = isPlay ? `<span class="tag">Play</span>` : (g.lean_side || g.lean_total) && onBoard(g) ? `<span class="tag watch">Watch</span>` : "";
   const inj = [...(g.injuries_away || []).map(x => `${g.away} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`), ...(g.injuries_home || []).map(x => `${g.home} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`)];
   const why = whyLines(g);
   const wp = wpH == null ? "" : `<div class="wp" aria-label="Win chance: ${esc(g.away)} ${n(wpA, 0)}%, ${esc(g.home)} ${n(wpH, 0)}%">
@@ -1364,10 +1370,10 @@ function gameRow(g) {
     <div class="kv"><span class="k">Win chance</span><strong>${esc(favHome ? g.home : g.away)} ${n(favHome ? wpH : wpA, 0)}%</strong></div>
     ${wp}
     ${picksRow(g)}
-  </summary><div class="g-body">${g.state === "upcoming" ? altBox(g) : ""}
+  </summary><div class="g-body">${onBoard(g) ? altBox(g) : ""}
     <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
     ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows the model's win chance minus the win chance the Vegas spread implies${g.picks.moneyline && g.picks.moneyline.vegas_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs Vegas ${g.picks.moneyline.vegas_pct}%)` : ""}, on the same team as the spread pick. Odds are the price only. Orange means it is also a Play.</div>` : ""}
-    ${g.state === "upcoming" && g.picks ? (() => { const P = g.picks, mu = `${g.away} at ${g.home}`, wpH = g.win_prob_home;
+    ${onBoard(g) && g.picks ? (() => { const P = g.picks, mu = `${g.away} at ${g.home}`, wpH = g.win_prob_home;
       const sp = P.spread && {kind: "spread", game_id: g.game_id, side: P.spread.side, line: P.spread.line, odds: "-110", desc: P.spread.pick, sub: mu,
         model_pct: g.cover_prob_home == null ? null : (P.spread.side === g.home ? g.cover_prob_home : 100 - g.cover_prob_home)};
       const to = P.total && {kind: "total", game_id: g.game_id, side: P.total.side, line: P.total.line, odds: "-110", desc: P.total.pick, sub: mu,
@@ -1470,7 +1476,7 @@ function tdRows() {
   props.forEach(p => { pm[key(p.pid, p.stat_key || p.stat)] = p; });
   const games = {};
   (D.games || []).forEach(g => games[g.game_id] = g);
-  return (D.players || []).filter(p => p.td_prob != null && games[p.game_id] && games[p.game_id].state === "upcoming").map(p => {
+  return (D.players || []).filter(p => p.td_prob != null && onBoard(games[p.game_id])).map(p => {
     const a = pm[key(p.pid, "anytime_td")], b = pm[key(p.pid, "tds")];
     return {...p, kick: games[p.game_id].kickoff, any: a, two: b,
       td_prob: a?.model_over ?? p.td_prob, td2_prob: b?.model_over ?? p.td2_prob,
@@ -1513,7 +1519,7 @@ function renderTD() {
       .forEach(r => { if (!byGame.has(r.game_id)) byGame.set(r.game_id, []); byGame.get(r.game_id).push(r); });
     h += `<div class="atd">${[...byGame.entries()].map(([gid, rs]) => { const g = D.games.find(x => x.game_id === gid) || {};
       return `<div class="gh">${esc(g.away || "")} at ${esc(g.home || "")}<span>${rs.length} play${rs.length > 1 ? "s" : ""}</span></div>` + rs.map(r => `<div class="r${r.any_edge < 2 ? " thin" : ""}">
-        <span class="nm"><b>${esc(r.name)}</b>${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} ${esc(r.team)}. Model ${n(r.td_prob, 0)}%, book ${n(r.any.book_over, 0)}%. Fair ${fairOdds(r.td_prob)}</span></span>
+        <span class="nm"><b>${esc(r.name)}</b>${isStarted(D.games.find(x => x.game_id === r.game_id)) ? startedTag : ""}${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} ${esc(r.team)}. Model ${n(r.td_prob, 0)}%, book ${n(r.any.book_over, 0)}%. Fair ${fairOdds(r.td_prob)}</span></span>
         <span class="od">${esc(r.any.over_odds || "–")}</span>
         <span class="gp">+${n(r.any_edge)}%<small>gap</small></span>
         <span class="act"><span class="stake">${stakeTxt(r.td_prob, r.any.over_odds)}</span>${logBtn({kind: "prop", game_id: r.game_id, pid: r.pid, player: r.name,
@@ -1622,7 +1628,7 @@ function myPlays(games) {
   const out = [];
   for (const [k, e] of Object.entries(mUI.lines)) {
     const [pid, gid, mkt] = k.split("|"), g = games[gid];
-    if (!g || g.state !== "upcoming") continue;
+    if (!onBoard(g)) continue;
     const p = (D.players || []).find(x => x.pid === pid && x.game_id === gid), m = p?.markets?.[mkt];
     const j = m ? judge(m, e) : null;
     if (j && !j.bad && j.tier === "play") out.push({p, mkt, j});
@@ -1632,9 +1638,9 @@ function myPlays(games) {
 
 function renderMore() {
   const games = {}; (D.games || []).forEach(g => games[g.game_id] = g);
-  const teamRows = () => Object.values(games).filter(g => g.state === "upcoming" && g.team_totals).flatMap(g => [["away", g.away, g.home], ["home", g.home, g.away]]
+  const teamRows = () => Object.values(games).filter(g => onBoard(g) && g.team_totals).flatMap(g => [["away", g.away, g.home], ["home", g.home, g.away]]
     .filter(([side]) => g.team_totals[side]).map(([side, t, o]) => ({pid: "TEAM_" + t, game_id: g.game_id, name: `${t} team total`, team: t, opp: o, pos: "Team", markets: {team_total: g.team_totals[side]}})));
-  const all = mUI.mkt === "team_total" ? teamRows() : (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && games[p.game_id] && games[p.game_id].state === "upcoming");
+  const all = mUI.mkt === "team_total" ? teamRows() : (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && onBoard(games[p.game_id]));
   const rows = all.filter(p => (!mUI.game || p.game_id === mUI.game) && (!mUI.q || `${p.name} ${p.team} ${p.opp}`.toLowerCase().includes(mUI.q)))
     .sort((a, b) => b.markets[mUI.mkt].mean - a.markets[mUI.mkt].mean);
   const step = ["pass_cmp", "pass_att", "carries", "q1_rec", "rec", "team_total"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") || ["rush_yds", "rec_yds"].includes(mUI.mkt) ? 5 : 10);
@@ -1645,7 +1651,7 @@ function renderMore() {
       <span class="w">${esc(x.p.team)} vs ${esc(x.p.opp)}. Model ${n(x.j.model, 0)}%, book ${n(x.j.book, 0)}%. Expected return ${sgn(x.j.ev)}%</span>
       <span class="e">+${n(x.j.gap)}%<small>gap</small></span></div>`).join("")}</div>` : ""; })()}
     <div class="mkts" role="group" aria-label="Market">${MKTS.map(([k, l]) => `<button aria-pressed="${mUI.mkt === k}" data-m="${k}">${l}</button>`).join("")}</div>
-    <div class="controls"><select id="mGame" aria-label="Game"><option value="">All games</option>${Object.values(games).filter(g => g.state === "upcoming").map(g => `<option value="${esc(g.game_id)}" ${mUI.game === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}</option>`).join("")}</select>
+    <div class="controls"><select id="mGame" aria-label="Game"><option value="">All games</option>${Object.values(games).filter(onBoard).map(g => `<option value="${esc(g.game_id)}" ${mUI.game === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}${isStarted(g) ? " (started)" : ""}</option>`).join("")}</select>
     <input type="search" id="mQ" placeholder="Search player or team" aria-label="Search markets" value="${esc(mUI.q)}"></div>`;
   if (!rows.length) { $("#propBody").innerHTML = h + `<div class="empty"><b>No players for this market yet.</b> Pick another market or clear the filters.</div>`; bindMore(); return; }
   const isCount = !!rows[0].markets[mUI.mkt].ge;
@@ -1695,7 +1701,7 @@ const erf = x => { const t = 1 / (1 + 0.3275911 * Math.abs(x)), y = 1 - (((((1.0
 const ncdf = z => 0.5 * (1 + erf(z / Math.SQRT2));
 const h1UI = {open: null};
 function firstHalf(games) {
-  const up = games.filter(g => g.state === "upcoming" && g.h1);
+  const up = games.filter(g => onBoard(g) && g.h1);
   if (!up.length) return "";
   let rows = "";
   for (const g of up) {
@@ -1812,10 +1818,10 @@ function addLegForm() {
   return h + `<button class="btn primary" id="lfAdd">Add leg</button></div>`;
 }
 function renderParlays() {
-  const up = (D.games || []).filter(g => g.state === "upcoming");
+  const up = (D.games || []).filter(onBoard);
   let h = `<div class="sec-head" style="margin-top:26px"><h2>Same-game parlays</h2><span class="aside">${C_SGP_NOTE}</span></div>
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
-    <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(kickoff(g.kickoff))}</option>`).join("")}</select></div>`;
+    <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(whenTxt(g))}</option>`).join("")}</select></div>`;
   const alts = up.filter(g => g.alt_parlay);
   if (!PX.gid) h = crossHTML() + parlaySwitchHTML() + (PX.view === "build" ? (alts.length ? altCardsHTML(alts) : `<div class="empty">No Oct 26 build tickets posted yet.</div>`) : ladderCardsHTML(up)) + mixCardsHTML() + teaserHTML() + h;
   if (!PX.gid) { $("#parlays").innerHTML = h + `<div class="empty"><b>Pick a game to start.</b> Then add 2 to 4 legs: player props, the spread, total, moneyline, or a team total.</div>`; bindParlays(); return; }
@@ -1876,23 +1882,23 @@ function tzLog(legs, pct, size) {
 function teaserHTML() {
   const Z = D.teasers; if (!Z || !Z.legs || !Z.legs.length) return "";
   const now = Date.now();
-  const legs = Z.legs.filter(L => !L.kickoff || new Date(L.kickoff).getTime() > now);
+  const legs = Z.legs.filter(legOn);
   if (!legs.length) return "";
   const be2 = Z.breakeven["2"], H = Z.history || {}, W = H.wong || {};
   const recent = Object.entries(H.wong_by_season || {}).filter(([y]) => +y >= new Date().getFullYear() - 3 && +y < new Date().getFullYear());
   const rw = recent.reduce((a, [, x]) => [a[0] + x.w, a[1] + x.n], [0, 0]);
   const card = (b) => { const c = tzCall(b.p, b.size);
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Best ${b.size}-team teaser</b><span>${Z.points} points, legs from different games</span></div>
-      <div style="display:grid;gap:4px;margin:8px 0 2px">${b.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}</span> <span class="dim">${n(L.p, 0)}%</span>${L.wong ? ` <span class="tag">3 and 7</span>` : ""}</div>`).join("")}</div>
+      <div style="display:grid;gap:4px;margin:8px 0 2px">${b.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}${L.started ? " (started)" : ""}</span> <span class="dim">${n(L.p, 0)}%</span>${L.wong ? ` <span class="tag">3 and 7</span>` : ""}</div>`).join("")}</div>
       <div class="t-meta">All legs hit <b>${n(b.p)}%</b>. At ${esc(c.odds)}: ${c.ev == null ? "enter a price" : `expected return <b>${sgn(c.ev)}%</b>`}</div>
       <div class="t-actions">${tzTag(c.tier)}${tzLog(b.legs, b.p, b.size)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(tzAm(b.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
-  const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now))[0]).filter(Boolean);
+  const best = ["2", "3"].map(k => (Z.best[k] || []).filter(b => b.legs.every(legOn))[0]).filter(Boolean);
   const WR = Z.wong_rules || {}, HD = H.wong_dog || {}, HL = H.wong_dog_low || {}, HF = H.wong_fav || {};
-  const wong = (Z.wong_plays || []).filter(t => t.legs.every(L => !L.kickoff || new Date(L.kickoff).getTime() > now));
+  const wong = (Z.wong_plays || []).filter(t => t.legs.every(legOn));
   const wcard = t => { const c = tzCall(t.p, 2); const play = t.play && c.ev != null && c.ev >= (WR.min_ev ?? 2);
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Wong teaser${play ? "" : " (watch)"}</b><span>2 underdogs teased past 7</span></div>
-      <div style="display:grid;gap:4px;margin:8px 0 2px">${t.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}${L.total != null ? `, total ${L.total}` : ""}</span> <span class="dim">${n(L.p_use, 0)}%</span>${L.low_total ? ` <span class="tag">Low total</span>` : ""}</div>`).join("")}</div>
+      <div style="display:grid;gap:4px;margin:8px 0 2px">${t.legs.map(L => `<div class="t-who"><b style="font:600 19px var(--num);letter-spacing:-.015em">${esc(L.label)}</b> <span>was ${esc(L.was)}, ${esc(L.matchup)}${L.started ? " (started)" : ""}${L.total != null ? `, total ${L.total}` : ""}</span> <span class="dim">${n(L.p_use, 0)}%</span>${L.low_total ? ` <span class="tag">Low total</span>` : ""}</div>`).join("")}</div>
       <div class="t-meta">Both legs hit <b>${n(t.p)}%</b> (half history, half model; model alone ${n(t.p_model)}%). At ${esc(c.odds)}: ${c.ev == null ? "enter a price" : `expected return <b>${sgn(c.ev)}%</b>`}</div>
       <div class="t-actions">${tzTag(play ? "play" : c.ev != null && c.ev >= 0 ? "watch" : "none")}${play ? tzLog(t.legs, t.p, 2) : ""}</div></div>
       <div class="t-side"><div class="t-gap">${esc(tzAm(t.p / 100))}</div><div class="t-gl">fair odds</div></div></article>`; };
@@ -1935,11 +1941,11 @@ function bindTeasers() {
   [2, 3].forEach(s => { const el = $("#tzP" + s); if (el) el.onchange = e => { TZS.price[s] = e.target.value.trim(); try { localStorage.setItem("board.tzprice", JSON.stringify(TZS.price)); } catch (er) {} renderParlays(); }; });
 }
 function mixCardsHTML() {
-  const games = (D.games || []).filter(g => g.state === "upcoming" && g.alt_mix);
+  const games = (D.games || []).filter(g => onBoard(g) && g.alt_mix);
   return `<div class="sec-head" style="margin-top:26px"><h2>Alt parlays with a team leg</h2><span class="aside">Alt spreads, totals, team totals</span></div>
     <p class="sub">Same rules as the model's alt-line parlays (fair -120 to +125), but every ticket includes at least one team leg. Team legs are priced from <b>Pinnacle's spread and total</b>, converted to the alt line from the same simulated games (key numbers kept), and the model must rate each one at least as high. Up to 2 team legs per ticket, one per market. Tracked separately.</p>
     ${games.length ? `<div class="tickets">${games.map(g => { const a = g.alt_mix;
-      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(whenTxt(g))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake">${altLegTxt(L)} <span class="dim">${n(L.p, 0)}%${L.kind === "team" ? ` Pinnacle, ${n(L.p_model, 0)}% model` : ""}</span></div>`).join("")}</div>
         <div class="t-meta">Chance ${n(a.p)}%, ${n(a.pi)}% if the legs were unrelated. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK)` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.bet_at ? ` Fair odds ${esc(a.fair)}; the gap covers the model being a little off.` : ""}</div></div>
@@ -1960,7 +1966,7 @@ function ladderCardsHTML(up) {
     <p class="sub">Built like the alt-yardage tickets that hit often: <b>low alt lines on players who get steady work</b> (for example 30+ rushing yards for a lead back, 3+ catches for a starting receiver). Each leg rates about <b>86 to 97%</b>, 5 legs when it can (4 if not), at most 1 rushing leg, legs that tend to hit together, never Questionable players. Same leg-type gate and price rule as the Oct 26 build. Tickets lock 30 hours before kickoff and only change if a player is ruled out. <b>Bet it at the bet-at price or better.</b></p>
     ${rec}
     ${games.length ? `<div class="tickets" style="margin-top:14px">${games.map(g => { const a = g.alt_ladder;
-      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg ladder parlay</b><span>${esc(kickoff(g.kickoff))}${a.locked_at ? " · locked" : ""}</span></div>
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg ladder parlay</b><span>${esc(whenTxt(g))}${a.locked_at ? " · locked" : ""}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}` : ""}</span></div>`).join("")}</div>
         <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK)` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.replaced ? ` ${esc(a.replaced)}.` : ""}</div></div>
@@ -1971,7 +1977,7 @@ function altCardsHTML(games) {
   return `<div class="sec-head" style="margin-top:26px"><h2>Model alt-line parlays</h2><span class="aside">One per game, 3 legs, fair odds -120 to +125</span></div>
     <p class="sub">The model builds one parlay per game, 3 legs (4 if needed), from half-point alt lines it rates about 70 to 92% each, choosing legs that tend to hit together. Legs can be Overs below the book's line (yards, catches, completions, attempts) or Unders above it (catches, completions, attempts, carries). Only leg types that have held up in graded weeks are used (see the Record tab), never Questionable players, and only players with a posted book line, staying within a normal alt range of it. <b>Bet it only at the bet-at price or better</b>: it asks for about 7% more than fair, room for the model being a little off. Tap <b>Check my book's price</b> to enter the real odds and get the call.</p>
     <div class="tickets">${games.map(g => { const a = g.alt_parlay;
-      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(kickoff(g.kickoff))}</span></div>
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg alt parlay</b><span>${esc(whenTxt(g))}</span></div>
         <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
         <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%${L.main != null ? `, main ${n(L.main)}${L.main_src === "model" ? " (model)" : ""}` : ""}</span></div>`).join("")}</div>
         <div class="t-meta">Chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated. <b>${a.bet_at ? `Bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK)` : `Only bet it if your book pays more than ${esc(a.fair)}`}.</b>${a.bet_at ? ` Fair odds ${esc(a.fair)}; the gap covers the model being a little off.` : ""}</div>
@@ -1993,7 +1999,7 @@ function crossHTML() {
   h += `<div class="tickets">${TK.map(t => {
     const k = `${t.slate}|${t.style}`;
     return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${esc(X_STYLE[t.style] || t.style)}, ${t.legs.length} games</b><span>${n(t.p, 0)}% to hit${t.locked_at ? ", locked" : ""}</span></div>
-      <div style="display:grid;gap:3px;margin:6px 0 2px">${t.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${esc(L.matchup)}, ${esc(xWhen(L.start))}. ${n(L.p, 0)}% (Pinnacle ${n(L.p_pin, 0)}%, model ${n(L.p_model, 0)}%)${L.book_odds ? `, ${esc(L.book_odds)}` : ""}</span></div>`).join("")}</div>
+      <div style="display:grid;gap:3px;margin:6px 0 2px">${t.legs.map(L => `<div class="stake"><b>${esc(L.label)}</b> <span class="dim">${esc(L.matchup)}, ${L.start && new Date(L.start) < Date.now() ? "started" : esc(xWhen(L.start))}. ${n(L.p, 0)}% (Pinnacle ${n(L.p_pin, 0)}%, model ${n(L.p_model, 0)}%)${L.book_odds ? `, ${esc(L.book_odds)}` : ""}</span></div>`).join("")}</div>
       <div class="t-meta">Fair odds ${esc(t.fair)}; bet it at ${esc(t.min_odds)} or better (${cents(t.min_odds)} or less on DK).${t.book_odds ? ` ${esc(t.book || "Book")} pays about ${esc(t.book_odds)} for these legs: ${sgn(t.ev)}% expected return.` : ""}</div>
       <div class="t-actions">${crossCheck(t, k)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(t.min_odds)}</div><div class="t-gl">bet at or better</div></div></article>`; }).join("")}</div>`;

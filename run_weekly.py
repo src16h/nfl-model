@@ -891,8 +891,9 @@ def _fmt_odds_s(o):
 def build_plays(games, props, model_info):
     """The short list: what the model would actually bet right now."""
     out = []
+    on = lambda g: g.get("state") in ("upcoming", "locked")   # Nov 1 2026: plays stay up until the game is final
     for g in games:
-        if g.get("state") != "upcoming":
+        if not on(g):
             continue
         matchup = f"{g['away']} at {g['home']}"
         if g.get("play_spread"):
@@ -922,7 +923,7 @@ def build_plays(games, props, model_info):
                                 "odds": odds_t or "-110", "model_pct": st.get("sharp") if st.get("sharp") is not None else (None if g.get("over_prob") is None else
                                 fnum(g["over_prob"] if g["play_total"] == "Over" else 100 - g["over_prob"], 1))}})
     for g in games:                                       # alt lines and team totals (altlines.py)
-        if g.get("state") != "upcoming":
+        if not on(g):
             continue
         for x in (g.get("alt") or {}).get("plays", []):
             out.append({"kind": "alt", "market": x["market"], "period": x.get("period"), "kickoff": g.get("kickoff"), "game_id": g["game_id"],
@@ -934,7 +935,7 @@ def build_plays(games, props, model_info):
     ko = {g["game_id"]: g.get("kickoff") for g in games}
     st = {g["game_id"]: g.get("state") for g in games}
     for p in props.get("props", []):
-        if p.get("tier") != "play" or st.get(p.get("game_id")) != "upcoming":
+        if p.get("tier") != "play" or st.get(p.get("game_id")) not in ("upcoming", "locked"):
             continue
         odds = p.get("over_odds") if p["lean"] == "Over" else p.get("under_odds")
         out.append({"kind": "prop", "kickoff": ko.get(p["game_id"]), "game_id": p["game_id"],
@@ -949,6 +950,9 @@ def build_plays(games, props, model_info):
                             "stat": p.get("stat_key") or p.get("stat"), "label": p.get("label"), "side": p["lean"],
                             "line": 0.5 if (p.get("stat_key") or p.get("stat")) == "anytime_td" else float(p["line"]),
                             "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"])}})
+    for x in out:                                         # started games: locked at their last pre-kickoff numbers
+        if st.get(x["game_id"]) == "locked":
+            x["started"] = True
     out.sort(key=lambda x: (x.get("kickoff") or "", x["kind"] != "spread", -(x.get("gap") or 0)))
     return out
 
@@ -1044,6 +1048,40 @@ def grade_flag(kind, fl, g, hs, as_, close=None):
     pay = o / 100 if o > 0 else 100 / -o
     ev = None if clv is None else 100 * ((0.5 + CLV_PER_POINT[kind] * clv) * (1 + pay) - 1)
     return rr, (pay if rr == "W" else (-1.0 if rr == "L" else 0.0)), clv, ev
+
+
+def carry_started_props(props, all_games, live_ids):
+    """Props for games that have kicked off aren't priced again, so keep the rows from the last
+    pre-kickoff run (Nov 1 2026): prop plays and the props board stay up until the game is final."""
+    started = {g["game_id"] for g in all_games if g.get("state") == "locked" and g["game_id"] not in live_ids}
+    if not started:
+        return
+    try:
+        old = json.loads((OUT / "latest.json").read_text()).get("props") or {}
+    except Exception:  # noqa: BLE001
+        return
+    have = {(p.get("game_id"), p.get("pid"), p.get("stat_key") or p.get("stat")) for p in props.get("props", [])}
+    for p in old.get("props", []):
+        k = (p.get("game_id"), p.get("pid"), p.get("stat_key") or p.get("stat"))
+        if p.get("game_id") in started and k not in have:
+            props.setdefault("props", []).append(p)
+            have.add(k)
+    # games that started before this carry-over existed: rebuild their rows from the props log
+    try:
+        lg = json.loads((OUT / "props_log.json").read_text()).get("props", {})
+    except Exception:  # noqa: BLE001
+        lg = {}
+    for r in lg.values():
+        k = (r.get("game_id"), r.get("pid"), r.get("stat"))
+        if r.get("game_id") in started and k not in have and r.get("model_over") is not None:
+            props.setdefault("props", []).append({**{c: r.get(c) for c in (
+                "player", "stat", "line", "over_odds", "under_odds", "source", "book", "team", "opp", "pos", "game_id", "pid",
+                "median", "cons_over", "cons_ev", "model_over", "book_over", "edge", "lean", "ev", "tier", "pre")},
+                "stat_key": r.get("stat"), "label": stat_label(r.get("stat")), "cons_n": None})
+            have.add(k)
+    for p in old.get("pairs", []) or []:
+        if isinstance(p, dict) and p.get("game_id") in started:
+            props.setdefault("pairs", []).append(p)
 
 
 def merge_history(path: Path, games, players):
@@ -1320,11 +1358,6 @@ def main():
         return
 
     wk, games, players, teams_tbl, model_info, report, scheme_ok, props = build_games(bundle, season, week, now)
-    if SGP_DIR.exists():                      # parlay draws only for games still to be played
-        live_ids = {g["game_id"] for g in games}
-        for f in SGP_DIR.glob("*.json"):
-            if f.stem not in live_ids:
-                f.unlink()
     hpath = HIST / f"{season}_week{week:02d}.json"
     lock_flags((json.loads(hpath.read_text()) if hpath.exists() else {}).get("games", []), games, now)
     all_games, all_players = merge_history(hpath, games, players)
@@ -1341,6 +1374,11 @@ def main():
         if "picks" not in g or "vegas_pct" not in ((g["picks"] or {}).get("moneyline") or {"vegas_pct": 0}):
             g["picks"] = P.build(g, g.get("ml_home"), g.get("ml_away"))
     all_games.sort(key=lambda g: g.get("kickoff") or "")
+    if SGP_DIR.exists():                      # parlay draws stay up until the game is final (Nov 1 2026)
+        keep_ids = {g["game_id"] for g in all_games if g.get("state") != "final"}
+        for f in SGP_DIR.glob("*.json"):
+            if f.stem not in keep_ids:
+                f.unlink()
     hpath.write_text(json.dumps(clean_json({"season": season, "week": week, "games": all_games,
                                             "players": all_players}), indent=1, allow_nan=False))
 
@@ -1356,6 +1394,7 @@ def main():
         log.warning(f"game gates skipped: {e}")
     pr = payload.get("prop_record") or {}
     ab = model_info.get("anchored_backtest")
+    carry_started_props(props, all_games, {g["game_id"] for g in games})   # after logging, so they aren't re-logged
     payload["plays"] = build_plays(all_games, props, model_info)
     try:                                       # cross-game alt parlays: one alt spread or total from each of 3 games
         fin = {k: (v["h"], v["a"]) for k, v in (json.loads((OUT / "results.json").read_text()).get("games") or {}).items()
