@@ -1,14 +1,14 @@
 name: College football model
 
 on:
-  schedule:
+  schedule:   # UTC times set for Eastern Standard Time (EST, UTC-5) until Mar 14 2027
     # Times are UTC: ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
     # GitHub can start runs 5 to 30 minutes late.
-    - cron: "20 13 * * *"     # every day 9:20am ET: grades finished games, fresh lines
-    - cron: "20 21 * * 2-5"   # Tue to Fri 5:20pm ET: before weeknight games
-    - cron: "5 15 * * 6"      # Saturday 11:05am ET: before the noon kickoffs
-    - cron: "5 19 * * 6"      # Saturday 3:05pm ET: before the afternoon games
-    - cron: "35 22 * * 6"     # Saturday 6:35pm ET: before the night games
+    - cron: "20 14 * * *"     # every day 9:20am ET: grades finished games, fresh lines
+    - cron: "20 22 * * 2-5"   # Tue to Fri 5:20pm ET: before weeknight games
+    - cron: "5 16 * * 6"      # Saturday 11:05am ET: before the noon kickoffs
+    - cron: "5 20 * * 6"      # Saturday 3:05pm ET: before the afternoon games
+    - cron: "35 23 * * 6"     # Saturday 6:35pm ET: before the night games
   workflow_dispatch:
 
 permissions:

@@ -1,14 +1,14 @@
 name: Weekly NFL model
 
 on:
-  schedule:
+  schedule:   # UTC times set for Eastern Standard Time (EST, UTC-5) until Mar 14 2027
     # Two runs a day. Times are UTC: ET is UTC minus 4 until Nov 1, then minus 5
     # (after that, runs land an hour earlier in ET). GitHub can start runs 5 to 30 minutes late.
-    - cron: "7 12 * * 1-6"   # Mon to Sat, 8am ET: overnight injury news, grades finished games
-    - cron: "7 22 * * 1-6"   # Mon to Sat, 6pm ET: before Thursday and Monday night games
-    - cron: "45 15 * * 0"    # Sunday 11:45am ET: after inactives, before 1pm kickoffs
-    - cron: "40 18 * * 0"    # Sunday 2:40pm ET: inactives and near-closing lines for the 4pm games
-    - cron: "7 23 * * 0"     # Sunday 7pm ET: before the Sunday night game
+    - cron: "7 13 * * 1-6"   # Mon to Sat, 8am ET: overnight injury news, grades finished games
+    - cron: "7 23 * * 1-6"   # Mon to Sat, 6pm ET: before Thursday and Monday night games
+    - cron: "45 16 * * 0"    # Sunday 11:45am ET: after inactives, before 1pm kickoffs
+    - cron: "40 19 * * 0"    # Sunday 2:40pm ET: inactives and near-closing lines for the 4pm games
+    - cron: "7 0 * * 1"     # Sunday 7pm ET: before the Sunday night game
   workflow_dispatch:        # adds a "Run workflow" button in the Actions tab
 
 permissions:
