@@ -1287,6 +1287,21 @@ function bindChecker() {
 }
 
 /* ---------- parlays ---------- */
+// Ladder-style parlays (Nov 1 2026, same idea as the NFL's): 4-5 near-sure player legs, about even money
+function ladderHTML() {
+  const GL = (D.games || []).filter(g => g.alt_ladder), R = (D.tracking || {}).alt_ladder || {};
+  const rec = R.n ? `${R.hits}–${R.n - R.hits}, hit ${n(100 * R.hits / R.n)}% when the model said ${n(R.model)}%` : "New Nov 1, nothing graded yet";
+  return `<div class="sec-head"><h2>Ladder-style parlays</h2><span class="aside">One per game, 4 to 5 safe legs, fair -150 to +120</span></div>
+    <p class="sub">Built from near-sure legs on regulars DraftKings lists (mostly <b>Over 0.5 or 1.5 shots</b>), each rated 86% to 97% after the same leg-type correction as the tickets above. The whole ticket lands around even money, so a win can roll into the next one. Tracked separately: ${rec}.</p>
+    ${GL.length ? `<div class="tickets">${GL.map(g => { const a = g.alt_ladder;
+      return `<article class="ticket"><div class="t-main"><div class="t-kind"><b>${a.legs.length}-leg ladder parlay</b><span>${esc(when(g.start))}${a.locked_at ? " · locked" : ""}</span></div>
+        <div class="t-pick" style="font-size:22px">${esc(g.away)} at ${esc(g.home)}</div>
+        <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%, main ${L.main}</span></div>`).join("")}</div>
+        <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK).` : ""}</div>
+        <div class="t-actions">${altCheck(g, "alt_ladder")}</div></div>
+        <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>`
+    : `<div class="empty">No ladder tickets yet. They need DraftKings' player lines, which post the day of the game, and enough near-sure legs to reach about even money.</div>`}`;
+}
 function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay), EP = edgeToday();
   let h = `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">${D.edge_paused ? "Paused Oct 21" : "2 prop plays, 2 different games"}</span></div>
@@ -1317,7 +1332,7 @@ function renderParlays() {
       <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better (${cents(a.bet_at)} or less on DK).` : ""}</div>
       <div class="t-actions">${altCheck(g)}</div></div>
       <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No same-game parlays for the next slate yet. Some games have too few legs the model rates 80%+.</div>`;
-  h += mixHTML;
+  h += ladderHTML() + mixHTML;
   $("#parlays").innerHTML = crossHTML() + h;
   bindCross(renderParlays);
   document.querySelectorAll(".altodds").forEach(i => i.onchange = () => { ALT[i.dataset.g] = i.value; renderParlays(); });
@@ -1381,7 +1396,7 @@ function edgeCheck(e, i) {
 }
 const ALT = {};
 function altCheck(g, key = "alt_parlay") {
-  const a = g[key], ak = key === "alt_parlay" ? String(g.game_id) : `${g.game_id}:mix`, odds = ALT[ak] || "";
+  const a = g[key], ak = key === "alt_parlay" ? String(g.game_id) : key === "alt_mix" ? `${g.game_id}:mix` : `${g.game_id}:lad`, odds = ALT[ak] || "";
   let out = `<span class="fld" style="display:inline-flex;align-items:center;gap:7px;font-size:13px">DK odds or ¢ <input class="odds altodds" data-g="${ak}" value="${esc(odds)}" placeholder="+110" style="width:80px;font:600 15px var(--num);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface);color:var(--ink)"></span>`;
   if (odds && Math.abs(oddsNum(odds)) >= 100) {
     const cut = a.cushion != null ? 100 * a.cushion : 5, ev = (a.p / 100 * (payout(odds) + 1) - 1) * 100, tier = ev > 30 ? "big" : ev >= cut ? "play" : ev >= 0 ? "watch" : "none";
@@ -1433,8 +1448,9 @@ function renderRecord() {
   if (AO.n) h += `<p class="sub">First version (fair +100 to +125, with filler legs): ${AO.hits}–${AO.n - AO.hits}, hit ${n(100 * AO.hits / AO.n)}% when the model said ${n(AO.model)}%. Retired Oct 15.</p>`;
   if (AH.n) h += `<p class="sub">Hit-rate version (fair −150 to −260, 80%+ legs): ${AH.hits}–${AH.n - AH.hits}, hit ${n(100 * AH.hits / AH.n)}% when the model said ${n(AH.model)}%. Oct 15 to 18.</p>`;
   if (!A.n) h += `<div class="empty">Current version: nothing graded yet. Started Oct 18.</div>`;
-  const AX = T.alt_mix || {};
+  const AX = T.alt_mix || {}, AL_ = T.alt_ladder || {};
   h += `<p class="sub">Tickets with a team leg (since Oct 21): ${AX.n ? `${AX.hits}–${AX.n - AX.hits}, hit ${n(100 * AX.hits / AX.n)}% when the model said ${n(AX.model)}%.` : "nothing graded yet."}</p>`;
+  h += `<p class="sub">Ladder-style tickets (since Nov 1): ${AL_.n ? `${AL_.hits}–${AL_.n - AL_.hits}, hit ${n(100 * AL_.hits / AL_.n)}% when the model said ${n(AL_.model)}%.` : "nothing graded yet."}</p>`;
   if (A.n) h += `<div class="strip"><div class="st"><strong>${A.hits}–${A.n - A.hits}</strong><span>Hit ${n(100 * A.hits / A.n)}% (model said ${n(A.model)}%)</span></div></div>
     <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Game</th><th>Legs hit</th><th>Result</th></tr></thead><tbody>${A.recent.map(x => `<tr><td>${x.date.slice(5)}</td><td>${esc(x.game)}</td><td>${x.legs_hit} of ${x.legs}</td><td><span class="res ${x.hit ? "W" : "L"}">${x.hit ? "Hit" : "Miss"}</span></td></tr>`).join("")}</tbody></table></div>`;
   const L = [...(T.plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.alt_plays_list || []).map(x => ({...x, what: x.pick, who: x.game})), ...(T.prop_plays_list || []).map(x => ({...x, what: x.pick, who: x.player}))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40);

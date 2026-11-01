@@ -92,6 +92,11 @@ ALT_SPEC = {"spread": (-3.5, 3.5, 1.0), "total": (3.5, 9.5, 0.5), "team_total": 
 ALT_LEG_SPEC = {"spread": (-1.5, 2.5, 1.0), "total": (4.5, 7.5, 1.0), "team_total": (0.5, 3.5, 1.0)}  # parlay legs
 ALT_DAILY_CAP = 4                # alt-line plays per day, best value first, one per game
 ALT_MAX_TEAM_LEGS = 2            # team legs (puck line, total, team total) per alt parlay
+# Ladder-style parlay (Nov 1 2026, same idea as the NFL's): 4-5 near-sure player legs (Over 0.5 / 1.5 shots for
+# regulars DraftKings lists), whole ticket about even money (-150 to +120), so a win can roll into the next.
+# Its own record (tracking "alt_ladder", v 7). "aim" points the search at the odds window (see props.alt_parlay).
+LADDER = {"leg": (0.86, 0.97), "target": (0.4545, 0.60), "sizes": (5, 4), "drop": {"sog": 2, "points": 0},
+          "v": 7, "aim": True, "track": "alt_ladder"}
 ODDS_LINES_EVERY_HOURS = 5
 
 

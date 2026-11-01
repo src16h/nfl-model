@@ -227,7 +227,7 @@ def american(p):
     return f"-{round(100 * p / (1 - p))}" if p > 0.5 else f"+{round(100 * (1 - p) / p)}"
 
 
-def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
+def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False, cfg=None):
     """Model alt-line SGP at fair odds of +100 to +125 (same target as the NFL): legs rated 70%+ after a
     per-leg-type correction learned from graded games (nhlmodel/altcal.py); picks the ticket most likely to hit. Picks the most likely 3-leg (else 2-leg) ticket
     from both teams whose joint chance lands in ALT_TARGET_P, using the simulated games so legs that
@@ -236,6 +236,9 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
     from . import altcal
     data = Path(__file__).resolve().parents[1] / "docs" / "nhl" / "data"
     cal = altcal.fit(data / "history", data / "results.json")
+    cfg = cfg or {}
+    leg_lo, leg_hi = cfg.get("leg", C.ALT_LEG_RANGE)
+    drop = cfg.get("drop", C.ALT_MAX_DROP)
     cands = []
     for pid, stats in arrs.items():
         p = info[pid]
@@ -244,7 +247,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
             continue                                   # Oct 31 2026: DraftKings lists alt props only for the ~15-18 regulars a game,
                                                        # the players the book posts lines for; nobody else can be a leg
         for st, x in stats.items():
-            if st not in C.ALT_MAX_DROP:
+            if st not in drop:
                 continue
             b = pb.get(st)
             main = float(b["line"]) if b and b.get("line") is not None else _fair(_dist(x, MAXK[st]))
@@ -252,11 +255,11 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
             if st in C.ALT_MAIN_LINE_ONLY and src != "book":
                 continue                                   # main line only, and only the book's real one
             k_main = int(main + 0.5)
-            for k in range(max(1, k_main - C.ALT_MAX_DROP[st]), k_main + 1):
+            for k in range(max(1, k_main - drop[st]), k_main + 1):
                 hit = x >= k
                 raw = float(hit.mean())
                 ph = altcal.adjust(cal, st, k - 0.5, raw) if raw > 0 else 0.0   # corrected by leg type from graded games
-                if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
+                if leg_lo <= ph <= leg_hi:
                     cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": k - 0.5,
                                   "p": ph, "p_raw": raw, "main": main, "main_src": src, "hit": hit})
     # shots legs only off the book's own shots line (DraftKings' ladder runs 0.5, 1.5, 2.5... for listed players);
@@ -275,7 +278,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
         cands = cands + tl_c
     if len(cands) < 2:
         return None
-    lo, hi = C.ALT_TARGET_P
+    lo, hi = cfg.get("target", C.ALT_TARGET_P)
 
     def joint(idx, h):
         pj = float(h.mean())
@@ -302,7 +305,13 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
                     pj = joint(idx + (j,), hj)
                     if pj >= lo and (not last or pj <= hi):   # adding legs only lowers the chance
                         nxt.append((idx + (j,), hj, pj))
-            nxt.sort(key=lambda t: -t[2])
+            if cfg.get("aim") and nxt and not last:
+                # ladder (Nov 1 2026): with near-sure legs the most likely partial tickets all finish above the odds
+                # window, so aim each step at the window's middle (that chance spread evenly over the legs)
+                tgt = np.log(np.sqrt(lo * hi)) * (step + 2) / size
+                nxt.sort(key=lambda t: abs(np.log(t[2]) - tgt))
+            else:
+                nxt.sort(key=lambda t: -t[2])
             beams = nxt if last else nxt[:C.ALT_BEAM]
         best = None
         for idx, h, pj in beams:
@@ -314,7 +323,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
         return best
 
     best = None
-    for size in C.ALT_SIZES:
+    for size in cfg.get("sizes", C.ALT_SIZES):
         best = search(size)
         if best:
             break
@@ -326,7 +335,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
     # whole-ticket correction (Oct 26 2026, same as the NFL): the chance moves toward this ticket type's own graded
     # record on the log-odds scale, fading in with the sample. Player tickets have hit 54% when the model said 48%.
     try:
-        tr = (json.loads((data / "latest.json").read_text()).get("tracking") or {}).get("alt_mix" if need_team else "alt") or {}
+        tr = (json.loads((data / "latest.json").read_text()).get("tracking") or {}).get(cfg.get("track") or ("alt_mix" if need_team else "alt")) or {}
         n_, m_ = tr.get("n") or 0, (tr.get("model") or 0) / 100
         a_ = (tr.get("hits") or 0) / n_ if n_ else 0
         if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
@@ -343,5 +352,5 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
                 "label": f"Over {c['line']:g} {label[c['stat']]}", "p": r(100 * c["p"]), "main": c["main"], "main_src": c["main_src"]}
     dec = (1 + C.ALT_BET_CUSHION) / pj
     bet = f"+{round(100 * (dec - 1))}" if dec >= 2 else str(round(-100 / (dec - 1)))
-    return {"v": 5 if need_team else 3, "p": r(100 * pj), "p_sim": r(100 * raw), "pi": r(100 * pi), "fair": american(pj),
+    return {"v": cfg.get("v") or (5 if need_team else 3), "p": r(100 * pj), "p_sim": r(100 * raw), "pi": r(100 * pi), "fair": american(pj),
             "bet_at": bet, "cushion": C.ALT_BET_CUSHION, "legs": [leg(c) for c in legs]}

@@ -646,7 +646,8 @@ ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds
 ALT_YARD_STATS = {"pass_yds", "rush_yds", "rec_yds"}
 
 
-LADDER = {"odds": (-120, 120), "leg": (0.86, 0.97), "sizes": (5, 4), "max_yard": 4, "max_rush": 1, "v": "L1", "sides": ("Over",), "deep": 1.6,
+LADDER = {"odds": (-150, 120),   # Nov 1 2026: was -120 to +120, too tight to post most weeks
+           "leg": (0.86, 0.97), "sizes": (5, 4), "max_yard": 4, "max_rush": 1, "v": "L1", "sides": ("Over",), "deep": 1.6,
           "aim": True}   # Nov 1 2026: search aims at the odds window (no ladder had been built since launch)
 
 

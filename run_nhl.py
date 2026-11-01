@@ -295,7 +295,7 @@ def tracking(history_days, results):
                                   "odds": fl.get("odds"), "edge": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
                 daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
-            for ap in (g.get("alt_parlay"), g.get("alt_mix")):
+            for ap in (g.get("alt_parlay"), g.get("alt_mix"), g.get("alt_ladder")):
                 if not ap:
                     continue
                 hits = []
@@ -418,6 +418,7 @@ def tracking(history_days, results):
             "calibration": cal,
             "alt": alt_rec([a for a in alts if a["v"] in (3, 4)]),
             "alt_mix": alt_rec([a for a in alts if a["v"] == 5]),
+            "alt_ladder": alt_rec([a for a in alts if a["v"] == 7]),
             "alt_hr": alt_rec([a for a in alts if a["v"] == 2]),
             "alt_old": alt_rec([a for a in alts if a["v"] < 2]),
             "edge": {**rec2(edges), "model": r(np.mean([e["p"] for e in edges])) if edges else None,
@@ -438,7 +439,7 @@ def lock_parlays(g, prev, players, now):
     same_day = g.get("date") == now.astimezone(ET).date().isoformat()      # Oct 31 2026: the evening run locked tomorrow's
     evening = (same_day and now.astimezone(ET).hour >= C.PARLAY_LOCK_HOUR) or to_start <= 3   # tickets before their props existed
     dressed = {p["pid"] for p in players if p.get("game_id") == g["game_id"]}
-    for key in ("alt_parlay", "alt_mix"):
+    for key in ("alt_parlay", "alt_mix", "alt_ladder"):
         old = (prev or {}).get(key)
         if old and old.get("locked_at") and any(L.get("stat") == "sog" and L.get("main_src") == "model" for L in old.get("legs", [])):
             old = None                                 # built on the model's own shots line (before Oct 31): rebuild it
@@ -697,6 +698,7 @@ def main():
             cross_book = cross_book or ba.get("book_name")
         game["alt_parlay"] = P.alt_parlay(arrs, info, game, bp)              # players only (the record so far)
         game["alt_mix"] = P.alt_parlay(arrs, info, game, bp, team_legs, need_team=True)   # must include a team leg
+        game["alt_ladder"] = P.alt_parlay(arrs, info, game, bp, cfg=C.LADDER)               # ladder style (Nov 1 2026)
         games.append(game)
         log.info(f"{a}@{h}: xG {lam[1]:.2f}-{lam[0]:.2f}, home win {game['win_home']}%, goalies {goalies[a]['name']} / {goalies[h]['name']}")
 
@@ -805,7 +807,7 @@ def main():
         keep = []
         for g in v["games"]:
             lock_parlays(g, next((x for x in old["games"] if x["game_id"] == g["game_id"]), None), players, now)
-            lite = {k: g.get(k) for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "alt_mix", "win_home", "book", "goalies")}
+            lite = {k: g.get(k) for k in ("game_id", "date", "start", "home", "away", "picks", "alt_parlay", "alt_mix", "alt_ladder", "win_home", "book", "goalies")}
             alt_flags = dict((prev or {}).get("alt_flags") or {}) if (prev := next((x for x in old["games"] if x["game_id"] == g["game_id"]), None)) else {}
             for x in (g.get("alt") or {}).get("plays", []):        # alt plays are locked the first time they're flagged
                 k_ = f"{x['market']}|{x.get('team')}|{x['side']}|{x['line']}"
