@@ -646,7 +646,8 @@ ALT_LABEL = {"pass_yds": "pass yds", "rush_yds": "rush yds", "rec_yds": "rec yds
 ALT_YARD_STATS = {"pass_yds", "rush_yds", "rec_yds"}
 
 
-LADDER = {"odds": (-120, 120), "leg": (0.86, 0.97), "sizes": (5, 4), "max_yard": 4, "max_rush": 1, "v": "L1", "sides": ("Over",), "deep": 1.6}
+LADDER = {"odds": (-120, 120), "leg": (0.86, 0.97), "sizes": (5, 4), "max_yard": 4, "max_rush": 1, "v": "L1", "sides": ("Over",), "deep": 1.6,
+          "aim": True}   # Nov 1 2026: search aims at the odds window (no ladder had been built since launch)
 
 
 def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=False, cfg=None):
@@ -740,8 +741,16 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                     pj = joint(idx + (j,), hj)
                     if pj >= p_lo:                                  # adding legs only lowers the chance
                         nxt.append((idx + (j,), hj, pj))
-            # keep the most promising: most likely to hit, then legs that move together
-            nxt.sort(key=lambda t: -(t[2] + 0.01 * t[2] / np.prod([cands[i]["p"] for i in t[0]])))
+            if cfg.get("aim"):
+                # ladder (Nov 1 2026): its legs are so safe that the "most likely" partial tickets all finish
+                # above the odds window (-150 to -200) and the ones that fit were cut before being checked.
+                # Aim each step at the window's middle instead (that chance spread evenly over the legs).
+                k_ = len(nxt[0][0]) if nxt else 1
+                tgt = np.log(np.sqrt(p_lo * p_hi)) * k_ / n_legs
+                nxt.sort(key=lambda t: abs(np.log(t[2]) - tgt) - 0.002 * t[2] / np.prod([cands[i]["p"] for i in t[0]]))
+            else:
+                # keep the most promising: most likely to hit, then legs that move together
+                nxt.sort(key=lambda t: -(t[2] + 0.01 * t[2] / np.prod([cands[i]["p"] for i in t[0]])))
             beams = [(t[0], t[1]) for t in nxt[:400]]
         best = None
         for idx, h in beams:
