@@ -303,6 +303,23 @@ def filter_stale(props: pd.DataFrame, path, week: int):
     return (pd.DataFrame(keep) if keep else props.iloc[0:0]), stale
 
 
+def _td_is_play(over_odds, model_over, book_over):
+    """Same rule as the Touchdowns tab's Anytime TD plays list: a Yes price is posted,
+    the model's chance beats the book's, and the gap is under the 'too big to trust' cap."""
+    m, b = _float(model_over), _float(book_over)
+    if not over_odds or m is None or b is None:
+        return False
+    gap = m - b
+    return 0 < gap < 100 * C.PROP_WATCH_MAX
+
+
+def _td_flag(r, ts):
+    if not _td_is_play(r.get("over_odds"), r.get("model_over"), r.get("book_over")):
+        return None
+    return {"odds": r.get("over_odds"), "model_over": r["model_over"], "book_over": r["book_over"],
+            "edge": r["edge"], "book": r.get("book"), "at": ts}
+
+
 def update_props_log(path, rows, season, week, now):
     """Save every prop the model evaluated (pre-kickoff games only reach here).
     One record per player per prop type: if the line moves before kickoff, the record
@@ -341,6 +358,9 @@ def update_props_log(path, rows, season, week, now):
                                                  "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
                                                  "book": r.get("book"), "cons_ev": r.get("cons_ev"), "at": ts}
                                                 if r.get("tier") == "play" else None),
+            # Anytime TD play (Nov 1 2026): locked the first time the book posts a Yes price and the model's
+            # chance beats the book's, so the TD history shows the price when it was suggested, not the close
+            "td_flag": (old or {}).get("td_flag") or (_td_flag(r, ts) if r["stat_key"] == "anytime_td" else None),
             # shadow play (gates.py): a paused bet type's would-be play, locked the same way and graded on the side
             "shadow": (old or {}).get("shadow") or r.get("shadow"),
             "shadow_flag": (old or {}).get("shadow_flag") or ({"line": r.get("line"), "lean": r.get("lean"),
@@ -601,6 +621,41 @@ def _rec_block(items):
             **(record_stats(w, l, be) or {"n": 0})}
 
 
+def td_history(props):
+    """Every Anytime TD play (Yes) the model suggested, newest first, graded at 1 unit.
+    Price and chances come from the moment it was first suggested (td_flag). Picks from
+    before Nov 1 2026 had no lock, so they use the last price saved before kickoff ('locked': False)."""
+    rows = []
+    for r in props:
+        if r.get("stat") != "anytime_td":
+            continue
+        fl = r.get("td_flag")
+        if fl:
+            src, locked = fl, True
+        elif _td_is_play(r.get("over_odds"), r.get("model_over"), r.get("book_over")):
+            src, locked = {"odds": r.get("over_odds"), "model_over": r.get("model_over"), "book_over": r.get("book_over"),
+                           "edge": r.get("edge"), "book": r.get("book"), "at": r.get("updated_at")}, False
+        else:
+            continue
+        res = r.get("result") or {}
+        oc = res.get("outcome")
+        status = "pending" if not res else ("void" if oc == "Void" else ("win" if oc == "Over" else "loss"))
+        pay = _payout(src.get("odds"))
+        m = _float(src.get("model_over"))
+        rows.append({
+            "week": r.get("week"), "game_id": r.get("game_id"), "player": r.get("player"), "pos": r.get("pos"),
+            "team": r.get("team"), "opp": r.get("opp"), "odds": src.get("odds"), "book": src.get("book"),
+            "model": src.get("model_over"), "book_pct": src.get("book_over"), "gap": fnum(_float(src.get("edge")), 1),
+            # expected return per unit at the price taken, if the model's chance is right
+            "ev": fnum(100 * ((m / 100) * (1 + pay) - 1), 1) if m is not None else None,
+            "at": src.get("at"), "locked": locked,
+            "close": r.get("over_odds") if locked and r.get("over_odds") != src.get("odds") else None,
+            "result": status,
+            "units": fnum(pay if status == "win" else (-1.0 if status == "loss" else 0.0), 2)})
+    rows.sort(key=lambda x: (-(x["week"] or 0), str(x["game_id"]), -(x["gap"] or 0)))
+    return rows
+
+
 def prop_summary(lg):
     props = list(lg.get("props", {}).values())
     done = [r for r in props if r.get("result")]
@@ -676,6 +731,8 @@ def prop_summary(lg):
     out["line_moves"] = mv
     out["sources"] = {"auto": sum(1 for r in graded if str(r.get("source", "")).startswith("auto")),
                       "manual": sum(1 for r in graded if not str(r.get("source", "")).startswith("auto"))}
+
+    out["td_history"] = td_history(props)
 
     recent = sorted(graded, key=lambda r: r["result"]["graded_at"], reverse=True)[:40]
     out["recent"] = [{"player": r["player"], "team": r["team"], "week": r["week"], "stat": r["stat"],

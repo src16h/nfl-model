@@ -2266,10 +2266,59 @@ function calBlock() {
     <div class="tablewrap"><table><thead><tr><th>Stat</th><th>Graded</th><th>Edge claimed</th><th>Edge real</th><th>Kept</th></tr></thead><tbody>
     ${[["_all", R._all], ...rows].map(([k, c]) => `<tr><td>${k === "_all" ? "<b>All props</b>" : esc(LABELS[k] || (k === "tds" ? "2+ TDs" : k))}</td><td>${c.n}</td><td>${sgn(c.claimed)}%</td><td class="${c.realized >= c.claimed ? "up" : c.realized < c.claimed / 2 ? "down" : ""}">${sgn(c.realized)}%</td><td><b>${n(100 * c.k, 0)}%</b></td></tr>`).join("")}</tbody></table></div>`;
 }
+// Anytime TD history: every TD play the model suggested, with the price at the time
+const tdhUI = {week: "", res: "", min: 0};
+function tdHistoryHTML() {
+  const all = (D.prop_record || {}).td_history || [];
+  if (!all.length) return "";
+  const weeks = [...new Set(all.map(r => r.week))].sort((a, b) => b - a);
+  const rows = all.filter(r => (!tdhUI.week || r.week === +tdhUI.week) && (!tdhUI.res || r.result === tdhUI.res) && (r.gap ?? 0) >= tdhUI.min);
+  const g = rows.filter(r => r.result === "win" || r.result === "loss");
+  const w = g.filter(r => r.result === "win").length, l = g.length - w;
+  const u = g.reduce((s, r) => s + (r.units || 0), 0);
+  const exp = g.length ? g.reduce((s, r) => s + (r.model || 0), 0) / g.length : null;
+  const pend = rows.filter(r => r.result === "pending").length;
+  const resTag = r => r.result === "win" ? `<b class="up">Won</b>` : r.result === "loss" ? `<b class="down">Lost</b>` : r.result === "void" ? `<span class="m">Void</span>` : `<span class="m">Pending</span>`;
+  const seg = (id, opts, cur) => `<div class="seg" id="${id}" role="group">${opts.map(([v, lab]) => `<button aria-pressed="${String(cur) === String(v)}" data-v="${v}">${lab}</button>`).join("")}</div>`;
+  let h = `<h2 id="tdHistory">Anytime TD history</h2>
+    <p class="sub">Every Anytime TD play the model suggested (model chance beats the book's), graded at 1 unit. <b>Odds</b> is the price when the play first showed up, and <b>Model</b> and <b>Book</b> are the chances at that moment. Win rates sit well under 50% at these prices, so judge by units.</p>
+    <div class="strip">
+      <div class="st"><strong>${w}–${l}</strong><span>Record${g.length ? `, ${n(100 * w / g.length)}% hit` : ""}</span></div>
+      <div class="st"><strong>${exp == null ? "–" : n(exp) + "%"}</strong><span>Model expected hit rate</span></div>
+      <div class="st"><strong class="${uc(g.length ? u : null)}">${g.length ? units(u) : "–"}</strong><span>Units${g.length ? ` (ROI ${sgn(+(100 * u / g.length).toFixed(1))}%)` : ""}</span></div>
+      <div class="st"><strong>${pend}</strong><span>Pending</span></div>
+    </div>
+    <div class="controls" style="margin-top:12px">
+      <select id="tdhWeek" aria-label="Week"><option value="">All weeks</option>${weeks.map(x => `<option value="${x}" ${String(tdhUI.week) === String(x) ? "selected" : ""}>Week ${x}</option>`).join("")}</select>
+      ${seg("tdhRes", [["", "All"], ["win", "Won"], ["loss", "Lost"], ["pending", "Pending"]], tdhUI.res)}
+      ${seg("tdhMin", [[0, "Any gap"], [2, "2%+"], [5, "5%+"]], tdhUI.min)}
+    </div>`;
+  if (!rows.length) return h + `<p class="sub">No TD plays match these filters.</p>`;
+  const byWeek = new Map(); rows.forEach(r => { if (!byWeek.has(r.week)) byWeek.set(r.week, []); byWeek.get(r.week).push(r); });
+  const latest = [...byWeek.keys()][0];
+  h += [...byWeek.entries()].map(([wk, rs]) => {
+    const gg = rs.filter(r => r.result === "win" || r.result === "loss"), ww = gg.filter(r => r.result === "win").length;
+    const uu = gg.reduce((s, r) => s + (r.units || 0), 0);
+    return `<details class="fold"${wk === latest || tdhUI.week ? " open" : ""}><summary>Week ${wk} <span>${ww}–${gg.length - ww}${gg.length ? `, <b class="${uc(uu)}">${units(uu)}</b>` : ""} · ${rs.length} plays</span></summary><div class="fold-body"><div class="tablewrap"><table>
+      <thead><tr><th>Player</th><th>Odds</th><th>Model</th><th>Book</th><th>Fair</th><th>Gap</th><th>Result</th><th>Units</th></tr></thead><tbody>
+      ${rs.map(r => `<tr><td><b>${esc(r.player)}</b><span class="m" style="display:block;font-size:12px;color:var(--muted)">${esc(r.pos || "")} ${esc(r.team)} vs ${esc(r.opp)}</span></td>
+        <td>${esc(r.odds || "–")}${r.locked ? "" : "*"}${r.close ? `<span class="m" style="display:block;font-size:11.5px;color:var(--muted)">close ${esc(r.close)}</span>` : ""}</td>
+        <td>${n(r.model)}%</td><td>${n(r.book_pct)}%</td><td>${fairOdds(r.model)}</td><td>+${n(r.gap)}%</td>
+        <td>${resTag(r)}</td><td class="${r.result === "win" || r.result === "loss" ? uc(r.units) : ""}">${r.result === "win" || r.result === "loss" ? units(r.units) : "–"}</td></tr>`).join("")}
+      </tbody></table></div></div></details>`; }).join("");
+  if (rows.some(r => !r.locked)) h += `<p class="note">* Picks from before Nov 1 weren't price-locked, so they show the last price saved before kickoff. From Nov 1 on, every play keeps the price from when it was first suggested, and "close" shows where the line ended if it moved.</p>`;
+  return h;
+}
+function bindTDHistory() {
+  const wk = $("#tdhWeek"); if (wk) wk.onchange = () => { tdhUI.week = wk.value; renderRecord(); };
+  document.querySelectorAll("#tdhRes button").forEach(b => b.onclick = () => { tdhUI.res = b.dataset.v; renderRecord(); });
+  document.querySelectorAll("#tdhMin button").forEach(b => b.onclick = () => { tdhUI.min = +b.dataset.v; renderRecord(); });
+}
+
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = reportHTML() + trackingHTML() + myBetsHTML() + clvHTML() + calBlock() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = reportHTML() + trackingHTML() + myBetsHTML() + tdHistoryHTML() + clvHTML() + calBlock() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>
@@ -2310,6 +2359,7 @@ function renderRecord() {
   h += `<details class="fold"><summary>Model details <span>backtests, line movement, settings</span></summary><div class="fold-body">${modelDetails(M)}</div></details>`;
   $("#record").innerHTML = h;
   bindRecord();
+  bindTDHistory();
 }
 
 function modelDetails(M) {
