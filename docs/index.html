@@ -375,6 +375,20 @@ tr.small td{color:var(--faint)}
 .chip::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;background:var(--win);vertical-align:1px}
 .chip.bad::before{background:var(--loss)}
 
+/* anytime TD plays list */
+.atd{display:grid;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);margin-bottom:6px}
+.atd .gh{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:var(--raised);font-size:12.5px;font-weight:600;color:var(--ink);border-top:1px solid var(--line)}
+.atd .gh:first-child{border-top:0}
+.atd .gh span{color:var(--muted);font-weight:500}
+.atd .r{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:4px 14px;align-items:center;padding:11px 16px;border-top:1px solid var(--line-soft)}
+.atd .r .nm b{font-weight:600}
+.atd .r .nm .m{display:block;font-size:12px;color:var(--muted)}
+.atd .r .od{font:600 16px/1 var(--num);text-align:right}
+.atd .r .gp{font:700 16px/1 var(--num);color:var(--win);text-align:right;min-width:56px}
+.atd .r .gp small{display:block;font:500 11px var(--sans);color:var(--muted);margin-top:3px}
+.atd .r .act{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.atd .r.thin .gp{color:var(--muted)}
+.atd .r.thin{opacity:.8}
 /* touchdowns */
 .tdtable th.grp{text-align:center;border-bottom:1px solid var(--line-soft);color:var(--ink);font-weight:600}
 .tdtable th.grp+th.grp,.tdtable td.gs,.tdtable th.gs{border-left:1px solid var(--line)}
@@ -788,7 +802,7 @@ const tl = t => { const h = tc(t).slice(1), r = parseInt(h.slice(0, 2), 16) / 25
 const badge = t => `<span class="badge" style="--tc:${tc(t)};--tl:${tl(t)}">${esc(t)}</span>`;
 let D = null, pState = {sort: "fpts", dir: -1, pos: "", team: "", q: ""}, openP = null, tState = {sort: "net", dir: -1};
 const propUI = {q: "", all: {watch: false, too_big: false}, view: "yards"};
-const tdUI = {game: "", pos: "", q: "", sort: "td_prob"};
+const tdUI = {game: "", pos: "", q: "", sort: "td_prob", min: 0};
 const TD_STATS = ["anytime_td", "tds"];
 const isTD = p => TD_STATS.includes(p.stat_key || p.stat);
 
@@ -1474,25 +1488,52 @@ function renderTD() {
   let h = `<div class="sec-head"><h2>Touchdowns</h2><span class="aside">${priced ? `${priced} players with book odds` : "Book odds load about a day before each game"}</span></div>
     <p class="sub">The model's chance each player scores (rushing or receiving), and the fair odds that chance is worth. When your book pays more than the fair odds, the bet has value. Gap is model chance minus the book's chance.</p>`;
 
-  // biggest gaps vs book
-  const gaps = [];
-  all.forEach(r => {
-    if (r.any && r.any_edge > 0) gaps.push({r, kind: "Anytime TD", odds: r.any.over_odds, model: r.td_prob, book: r.any.book_over, edge: r.any_edge});
-    if (r.two && r.two_edge > 0) gaps.push({r, kind: "2+ TDs", odds: r.two.over_odds, model: r.td2_prob, book: r.two.book_over, edge: r.two_edge});
-  });
   const cap = (D.plays_rules || {}).prop_watch_max || 15;
-  const trust = gaps.filter(x => x.edge < cap).sort((x, y) => y.edge - x.edge), wild = gaps.filter(x => x.edge >= cap);
-  if (trust.length || wild.length) {
-    h += `<h3>Biggest gaps vs the book</h3>${trust.length ? `<div class="gaps">${trust.slice(0, 6).map(x => `<div class="gapcard">
-      <span class="k">${esc(x.kind)}</span>
-      <span class="p">${esc(x.r.name)}<small>${esc(x.odds || "")}</small></span>
-      <span class="w">${esc(x.r.pos)} ${esc(x.r.team)} vs ${esc(x.r.opp)}. Model ${n(x.model, 0)}%, book ${n(x.book, 0)}%</span>
-      <span class="e">+${n(x.edge)}%<small>gap</small></span>
-      <span class="w" style="grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px"><span class="stake">${stakeTxt(x.model, x.odds)}</span>${logBtn({kind: "prop", game_id: x.r.game_id, pid: x.r.pid, player: x.r.name,
-        stat: x.kind === "Anytime TD" ? "anytime_td" : "tds", label: x.kind, side: "Over", line: x.kind === "Anytime TD" ? 0.5 : 1.5, odds: x.odds || "-110", model_pct: x.model,
-        desc: `${x.r.name} ${x.kind === "Anytime TD" ? "anytime TD" : "2+ TDs"}`, sub: `${x.r.team} vs ${x.r.opp}`})}</span></div>`).join("")}</div>` : `<p class="sub">No gaps under ${cap}% right now.</p>`}
-      ${wild.length ? `<p class="note"><b>Too big to trust (${cap}%+):</b> ${wild.map(x => `${esc(x.r.name)}, ${esc(x.kind)} +${n(x.edge)}%`).join(", ")}. Gaps this large usually mean the model is missing something, like a role change or goal-line back.</p>` : ""}
-      <p class="note">Not Plays. TD bets swing a lot and books take a bigger cut on them, so judge these over many weeks on the Record tab.</p>`;
+  const inView = r => (!tdUI.game || r.game_id === tdUI.game) && (!tdUI.pos || r.pos === tdUI.pos) &&
+    (!tdUI.q || `${r.name} ${r.team} ${r.opp}`.toLowerCase().includes(tdUI.q));
+
+  // filters first, so they apply to the plays list and the board
+  h += `<div class="controls" style="margin-top:14px">
+    <select id="tdGame" aria-label="Game"><option value="">All games</option>${gameOpts.map(r => { const g = D.games.find(x => x.game_id === r.game_id); return `<option value="${esc(r.game_id)}" ${tdUI.game === r.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}</option>`; }).join("")}</select>
+    <div class="seg" id="tdPos" role="group" aria-label="Position">${["", "RB", "WR", "TE", "QB"].map(v => `<button aria-pressed="${tdUI.pos === v}" data-v="${v}">${v || "All"}</button>`).join("")}</div>
+    <input type="search" id="tdQ" placeholder="Search player or team" aria-label="Search touchdown board" value="${esc(tdUI.q)}"></div>`;
+
+  // every Anytime TD play: book odds posted and the model's chance beats the book's
+  const atdAll = all.filter(r => r.any && r.any_edge > 0);
+  const atd = atdAll.filter(r => inView(r) && r.any_edge < cap && r.any_edge >= tdUI.min);
+  const atdWild = atdAll.filter(r => inView(r) && r.any_edge >= cap);
+  h += `<div class="sec-head" style="margin-top:22px"><h3 style="margin:0">Anytime TD plays</h3><span class="aside">${atd.length} of ${atdAll.length}</span></div>
+    <p class="sub">Every player whose model chance to score beats the book's. Grouped by game, biggest gap first.</p>
+    <div class="seg" id="tdMin" role="group" aria-label="Minimum gap" style="margin-bottom:12px">${[[0, "Any gap"], [2, "2%+"], [5, "5%+"]].map(([v, l]) => `<button aria-pressed="${tdUI.min === v}" data-v="${v}">${l}</button>`).join("")}</div>`;
+  if (!atdAll.length) h += `<div class="empty"><b>No Anytime TD odds yet.</b> Book odds load about a day before each game. The board below has every player's fair odds until then.</div>`;
+  else if (!atd.length) h += `<p class="sub">No Anytime TD plays match these filters.</p>`;
+  else {
+    const byGame = new Map();
+    atd.slice().sort((x, y) => String(x.kick).localeCompare(String(y.kick)) || y.any_edge - x.any_edge)
+      .forEach(r => { if (!byGame.has(r.game_id)) byGame.set(r.game_id, []); byGame.get(r.game_id).push(r); });
+    h += `<div class="atd">${[...byGame.entries()].map(([gid, rs]) => { const g = D.games.find(x => x.game_id === gid) || {};
+      return `<div class="gh">${esc(g.away || "")} at ${esc(g.home || "")}<span>${rs.length} play${rs.length > 1 ? "s" : ""}</span></div>` + rs.map(r => `<div class="r${r.any_edge < 2 ? " thin" : ""}">
+        <span class="nm"><b>${esc(r.name)}</b>${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} ${esc(r.team)}. Model ${n(r.td_prob, 0)}%, book ${n(r.any.book_over, 0)}%. Fair ${fairOdds(r.td_prob)}</span></span>
+        <span class="od">${esc(r.any.over_odds || "–")}</span>
+        <span class="gp">+${n(r.any_edge)}%<small>gap</small></span>
+        <span class="act"><span class="stake">${stakeTxt(r.td_prob, r.any.over_odds)}</span>${logBtn({kind: "prop", game_id: r.game_id, pid: r.pid, player: r.name,
+          stat: "anytime_td", label: "Anytime TD", side: "Over", line: 0.5, odds: r.any.over_odds || "-110", model_pct: r.td_prob,
+          desc: `${r.name} anytime TD`, sub: `${r.team} vs ${r.opp}`})}</span></div>`).join(""); }).join("")}</div>`;
+  }
+  if (atdWild.length) h += `<p class="note"><b>Too big to trust (${cap}%+):</b> ${atdWild.map(r => `${esc(r.name)} +${n(r.any_edge)}%`).join(", ")}. Gaps this large usually mean the model is missing something, like a role change or goal-line back.</p>`;
+  if (atdAll.length) h += `<p class="note">Not official Plays. TD bets swing a lot and books take a bigger cut, so small gaps (grayed, under 2%) are close to a coin flip on value. Judge these over many weeks on the Record tab.</p>`;
+
+  // 2+ TDs: top gaps only
+  const two = all.filter(r => r.two && r.two_edge > 0 && r.two_edge < cap && inView(r)).sort((x, y) => y.two_edge - x.two_edge);
+  if (two.length) {
+    h += `<h3>Biggest 2+ TD gaps</h3><div class="gaps">${two.slice(0, 6).map(r => `<div class="gapcard">
+      <span class="k">2+ TDs</span>
+      <span class="p">${esc(r.name)}<small>${esc(r.two.over_odds || "")}</small></span>
+      <span class="w">${esc(r.pos)} ${esc(r.team)} vs ${esc(r.opp)}. Model ${n(r.td2_prob, 0)}%, book ${n(r.two.book_over, 0)}%</span>
+      <span class="e">+${n(r.two_edge)}%<small>gap</small></span>
+      <span class="w" style="grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px"><span class="stake">${stakeTxt(r.td2_prob, r.two.over_odds)}</span>${logBtn({kind: "prop", game_id: r.game_id, pid: r.pid, player: r.name,
+        stat: "tds", label: "2+ TDs", side: "Over", line: 1.5, odds: r.two.over_odds || "-110", model_pct: r.td2_prob,
+        desc: `${r.name} 2+ TDs`, sub: `${r.team} vs ${r.opp}`})}</span></div>`).join("")}</div>`;
   }
 
   const acc = (D.prop_record || {}).td_accuracy || {};
@@ -1500,10 +1541,7 @@ function renderTD() {
     return `<b>${name}:</b> ${better ? "model more accurate than the book" : "book more accurate than the model"} on ${a.n} graded props. Model averaged ${n(a.model_avg, 0)}%, book ${n(a.book_avg, 0)}%, actual ${n(a.actual, 0)}%. `; };
   const accTxt = accLine("anytime_td", "Anytime TD") + accLine("tds", "2+ TDs");
   if (accTxt) h += `<p class="note">${accTxt}Trust the gaps more once the model beats the book here over several weeks.</p>`;
-  h += `<div class="controls" style="margin-top:20px">
-    <select id="tdGame" aria-label="Game"><option value="">All games</option>${gameOpts.map(r => { const g = D.games.find(x => x.game_id === r.game_id); return `<option value="${esc(r.game_id)}" ${tdUI.game === r.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}</option>`; }).join("")}</select>
-    <div class="seg" id="tdPos" role="group" aria-label="Position">${["", "RB", "WR", "TE", "QB"].map(v => `<button aria-pressed="${tdUI.pos === v}" data-v="${v}">${v || "All"}</button>`).join("")}</div>
-    <input type="search" id="tdQ" placeholder="Search player or team" aria-label="Search touchdown board" value="${esc(tdUI.q)}"></div>`;
+  h += `<h3 style="margin-top:26px">Full TD board</h3>`;
   if (!rows.length) { h += `<div class="empty"><b>No players match.</b> Clear the filters to see the full board.</div>`; $("#propBody").innerHTML = h; bindTD(); return; }
 
   const maxp = Math.max(...rows.map(r => r.td_prob || 0), 1);
@@ -1517,10 +1555,10 @@ function renderTD() {
   h += `<div class="tablewrap"><table class="tdtable"><thead>
     <tr><th rowspan="2" style="vertical-align:bottom">Player</th><th class="grp" colspan="${small ? 3 : 4}">Anytime TD</th><th class="grp" colspan="${small ? 3 : 4}">2+ TDs</th></tr>
     <tr>${th("td_prob", "Model")}${small ? "" : "<th>Fair</th>"}<th>Book</th>${th("any_edge", "Gap")}<th class="gs sort ${tdUI.sort === "td2_prob" ? "sorted" : ""}" data-k="td2_prob">Model</th>${small ? "" : "<th>Fair</th>"}<th>Book</th>${th("two_edge", "Gap")}</tr></thead><tbody>
-    ${rows.slice(0, 150).map(r => `<tr><td><div class="who">${badge(r.team)}<div><b>${esc(r.name)}</b>${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} vs ${esc(r.opp)}</span></div></div></td>
+    ${rows.map(r => `<tr><td><div class="who">${badge(r.team)}<div><b>${esc(r.name)}</b>${r.status ? `<span class="qtag">${esc(r.status)}</span>` : ""}<span class="m">${esc(r.pos)} vs ${esc(r.opp)}</span></div></div></td>
       ${cell(r.td_prob, r.any, r.any_edge, true)}${cell(r.td2_prob, r.two, r.two_edge, false)}</tr>`).join("")}
     </tbody></table></div>
-    <p class="note">${small ? "Turn your phone sideways for fair odds. " : "Fair odds have no book cut. "}${rows.length > 150 ? `Showing the top 150 of ${rows.length}. ` : ""}Sort by tapping Model or Gap.</p>`;
+    <p class="note">${small ? "Turn your phone sideways for fair odds. " : "Fair odds have no book cut. "}Sort by tapping Model or Gap.</p>`;
   $("#propBody").innerHTML = h;
   bindTD();
 }
@@ -1528,6 +1566,7 @@ window.matchMedia("(max-width:640px)").addEventListener("change", () => { if (!D
 function bindTD() {
   const g = $("#tdGame"); if (g) g.onchange = e => { tdUI.game = e.target.value; renderTD(); };
   document.querySelectorAll("#tdPos button").forEach(b => b.onclick = () => { tdUI.pos = b.dataset.v; renderTD(); });
+  document.querySelectorAll("#tdMin button").forEach(b => b.onclick = () => { tdUI.min = +b.dataset.v; renderTD(); });
   const q = $("#tdQ"); if (q) q.oninput = e => { tdUI.q = e.target.value.toLowerCase(); const pos = e.target.selectionStart; renderTD(); const nq = $("#tdQ"); nq.focus(); nq.setSelectionRange(pos, pos); };
   document.querySelectorAll(".tdtable th[data-k]").forEach(t => t.onclick = () => { tdUI.sort = t.dataset.k; renderTD(); });
 }
