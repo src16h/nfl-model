@@ -5623,7 +5623,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.0,
+    "total": 54.5,
+    "margin": 26.0,
+    "points": 46.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_TEN_CIN": {
@@ -5726,7 +5731,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 13.5,
+    "total": 45.5,
+    "margin": 7.0,
+    "points": 79.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_ARI_DAL": {
@@ -5803,7 +5813,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 7.0,
+    "total": 54.5,
+    "margin": -3.0,
+    "points": 63.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_MIN_DET": {
@@ -5841,7 +5856,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.0,
+    "total": 46.5,
+    "margin": 4.0,
+    "points": 34.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_IND_JAX": {
@@ -6022,7 +6042,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 10.0,
+    "total": 45.5,
+    "margin": 35.0,
+    "points": 49.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_LV_NYJ": {
@@ -6086,7 +6111,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 1.5,
+    "total": 46.5,
+    "margin": -5.0,
+    "points": 71.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_CLE_PIT": {
@@ -6150,7 +6180,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.5,
+    "total": 38.5,
+    "margin": 21.0,
+    "points": 33.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_ATL_TB": {
@@ -6344,7 +6379,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 2.5,
+    "total": 42.5,
+    "margin": 16.0,
+    "points": 16.0
+   },
    "last_seen": "2026-11-01T00:59+00:00"
   },
   "2026_08_LAC_LA": {
@@ -6835,7 +6875,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-01T20:51+00:00"
+   "last_seen": "2026-11-01T23:01+00:00"
   },
   "2026_08_CHI_SEA": {
    "game_id": "2026_08_CHI_SEA",
@@ -6899,7 +6939,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-01T20:51+00:00"
+   "last_seen": "2026-11-01T23:01+00:00"
   }
  }
 }
