@@ -11777,7 +11777,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": "watch"
   },
@@ -12863,11 +12864,11 @@
    "logged_at": "2026-10-03T18:54+00:00",
    "updated_at": "2026-10-03T18:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "tier": "watch"
   },
@@ -13176,7 +13177,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": null
   },
@@ -22476,7 +22478,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": null
   },
@@ -23010,7 +23013,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": null
   },
@@ -23402,7 +23406,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": null
   },
@@ -24222,7 +24227,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": null
   },
@@ -24615,7 +24621,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": "too_big"
   },
@@ -24939,7 +24946,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "tier": "too_big"
   },
@@ -34516,7 +34524,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_MIN_NO|00-0035229|anytime_td": {
@@ -34992,7 +35001,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": {
     "line": "40.5",
@@ -35010,7 +35020,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_MIN_NO|00-0039424|rec_yds": {
@@ -35454,7 +35465,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": {
     "line": "3.5",
@@ -35472,7 +35484,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_MIN_NO|00-0033293|rec": {
@@ -35880,7 +35893,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_MIN_NO|00-0035229|tds": {
@@ -38416,7 +38430,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_IND_PIT|00-0040128|anytime_td": {
@@ -39898,7 +39913,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_IND_PIT|00-0040128|tds": {
@@ -43422,7 +43438,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_NYG_WAS|00-0031503|pass_yds": {
@@ -44802,7 +44819,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_DEN_LAC|00-0036158|anytime_td": {
@@ -45006,7 +45024,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_DEN_LAC|00-0040727|anytime_td": {
@@ -45500,7 +45519,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_DEN_LAC|00-0034348|rec_yds": {
@@ -45808,7 +45828,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_DEN_LAC|00-0034348|rec": {
@@ -46388,7 +46409,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_DEN_LAC|00-0038454|tds": {
@@ -54546,7 +54568,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_05_BUF_LA|00-0034827|tds": {
@@ -54580,7 +54603,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_SEA_DEN|00-0038543|anytime_td": {
@@ -61052,7 +61076,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BAL_CLE|00-0041037|anytime_td": {
@@ -62402,7 +62427,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BAL_CLE|00-0041037|tds": {
@@ -62878,7 +62904,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_TEN_IND|00-0035261|anytime_td": {
@@ -63524,7 +63551,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": {
     "line": "48.5",
@@ -63542,7 +63570,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_TEN_IND|00-0030279|rec_yds": {
@@ -63848,7 +63877,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_TEN_IND|00-0041438|rec": {
@@ -64478,7 +64508,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_TEN_IND|00-0038997|tds": {
@@ -73006,7 +73037,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_PIT_TB|00-0038951|tds": {
@@ -73040,7 +73072,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_ARI_LA|00-0037840|anytime_td": {
@@ -75572,11 +75605,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    }
   },
   "2026_06_LAC_KC|00-0033873|pass_yds": {
@@ -77360,11 +77393,11 @@
    "logged_at": "2026-10-17T22:25+00:00",
    "updated_at": "2026-10-18T16:04+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    }
   },
   "2026_06_BUF_LV|00-0034857|anytime_td": {
@@ -77568,7 +77601,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BUF_LV|00-0037261|anytime_td": {
@@ -78044,7 +78078,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BUF_LV|00-0038563|rec_yds": {
@@ -78334,7 +78369,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BUF_LV|00-0038563|rec": {
@@ -78896,7 +78932,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-20T19:23+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    }
   },
   "2026_06_BUF_LV|00-0037261|tds": {
@@ -86405,11 +86442,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-24T22:26+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -87922,11 +87959,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-24T22:26+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.901,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -88496,11 +88533,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-24T22:26+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -88660,11 +88697,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-24T22:26+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -88701,11 +88738,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-24T22:26+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -89197,7 +89234,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -89607,7 +89645,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -90017,7 +90056,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -90714,7 +90754,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -91325,11 +91366,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -92719,11 +92760,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -93338,7 +93379,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -95347,7 +95389,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -95794,11 +95837,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -96573,11 +96616,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.847,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -97106,11 +97149,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -97680,11 +97723,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -98336,11 +98379,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -99894,11 +99937,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -100144,7 +100187,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -100755,11 +100799,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -101784,7 +101828,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -102395,11 +102440,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -102891,7 +102936,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -103010,11 +103056,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -103051,11 +103097,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -103096,7 +103142,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -103133,11 +103180,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -103629,7 +103676,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -103670,7 +103718,8 @@
     "outcome": "Void",
     "lean_result": "void",
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -103957,7 +104006,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -104203,7 +104253,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -104408,7 +104459,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -104900,7 +104952,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -104937,11 +104990,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -105019,11 +105072,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -105060,11 +105113,11 @@
    "logged_at": "2026-10-24T12:39+00:00",
    "updated_at": "2026-10-25T16:08+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -105105,7 +105158,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-25T23:24+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -110066,7 +110120,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-26T14:48+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -110107,7 +110162,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-26T14:48+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -117200,7 +117256,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-30T05:11+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -119004,7 +119061,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-10-30T05:11+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -124550,11 +124608,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -125288,11 +125346,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -125780,11 +125838,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -126395,11 +126453,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -127256,11 +127314,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -127379,11 +127437,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -127830,11 +127888,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -128322,11 +128380,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.763,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -128937,11 +128995,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -129060,11 +129118,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -131606,7 +131664,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -131848,11 +131907,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -132176,11 +132235,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -132545,11 +132604,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -132996,11 +133055,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.676,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -133451,7 +133510,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "shadow": null,
@@ -133734,11 +133794,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -133980,11 +134040,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -134718,11 +134778,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -136645,11 +136705,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -136932,11 +136992,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137014,11 +137074,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137096,11 +137156,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137178,11 +137238,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137465,11 +137525,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137588,11 +137648,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.893,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -137916,11 +137976,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -138039,11 +138099,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.719,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -138695,11 +138755,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -138736,11 +138796,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -138777,11 +138837,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -138859,11 +138919,11 @@
    "logged_at": "2026-10-31T12:48+00:00",
    "updated_at": "2026-11-01T00:59+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-01T23:01+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "shadow": null,
@@ -139162,7 +139222,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "td_flag": null,
@@ -139689,7 +139750,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 25.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -139725,7 +139792,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 32.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.84,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -141698,7 +141771,8 @@
     "outcome": "Void",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "graded_at": "2026-11-02T22:17+00:00",
+    "snap_checked": true
    },
    "flag": null,
    "td_flag": null,
@@ -142967,7 +143041,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 41.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.813,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -143003,7 +143083,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 32.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -145790,7 +145876,13 @@
    "first_lean": null,
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 20.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -145826,7 +145918,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-01T20:51+00:00",
-   "result": null,
+   "result": {
+    "actual": 32.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -148663,11 +148761,11 @@
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "td_flag": null,
@@ -148795,7 +148893,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
-   "result": null,
+   "result": {
+    "actual": 34.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.952,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -148831,7 +148935,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
-   "result": null,
+   "result": {
+    "actual": 29.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-02T22:17+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -149372,11 +149482,11 @@
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "td_flag": null,
@@ -149834,11 +149944,11 @@
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
-    "lean_result": "void",
-    "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.699,
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "td_flag": null,
@@ -150716,11 +150826,11 @@
    "logged_at": "2026-11-01T00:59+00:00",
    "updated_at": "2026-11-02T00:54+00:00",
    "result": {
-    "actual": null,
-    "outcome": "Void",
+    "actual": 0.0,
+    "outcome": "Under",
     "lean_result": null,
     "profit": 0.0,
-    "graded_at": "2026-11-02T05:50+00:00"
+    "graded_at": "2026-11-02T22:17+00:00"
    },
    "flag": null,
    "td_flag": null,
@@ -150798,7 +150908,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -150834,7 +150944,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": {
@@ -150877,7 +150987,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -150913,7 +151023,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -150949,7 +151059,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": {
@@ -150992,7 +151102,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": {
@@ -151035,7 +151145,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151071,7 +151181,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151107,7 +151217,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151135,7 +151245,7 @@
    "tier": "too_big",
    "median": null,
    "pre": 28.9,
-   "ev": 27.4,
+   "ev": 25.1,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151143,7 +151253,7 @@
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151179,7 +151289,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151215,7 +151325,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151243,7 +151353,7 @@
    "tier": "watch",
    "median": null,
    "pre": 17.9,
-   "ev": 13.4,
+   "ev": 12.3,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151251,7 +151361,7 @@
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": {
@@ -151286,7 +151396,7 @@
    "tier": "watch",
    "median": null,
    "pre": 19.5,
-   "ev": 30.1,
+   "ev": 27.6,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151294,7 +151404,7 @@
    "first_line": null,
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": {
@@ -151337,7 +151447,7 @@
    "first_line": null,
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151365,7 +151475,7 @@
    "tier": "watch",
    "median": 36.0,
    "pre": 57.2,
-   "ev": 3.3,
+   "ev": 2.4,
    "cons_over": 50.5,
    "cons_ev": -7.1,
    "source": "auto:draftkings",
@@ -151373,7 +151483,7 @@
    "first_line": "32.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151401,7 +151511,7 @@
    "tier": "watch",
    "median": 28.0,
    "pre": 49.0,
-   "ev": 0.7,
+   "ev": 0.1,
    "cons_over": 53.1,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151409,7 +151519,7 @@
    "first_line": "29.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151437,7 +151547,7 @@
    "tier": "watch",
    "median": 22.0,
    "pre": 52.6,
-   "ev": -0.6,
+   "ev": -1.2,
    "cons_over": 49.0,
    "cons_ev": -6.5,
    "source": "auto:draftkings",
@@ -151445,7 +151555,7 @@
    "first_line": "20.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151473,7 +151583,7 @@
    "tier": "watch",
    "median": 19.0,
    "pre": 49.3,
-   "ev": 1.3,
+   "ev": 0.5,
    "cons_over": 53.1,
    "cons_ev": -4.8,
    "source": "auto:draftkings",
@@ -151481,7 +151591,7 @@
    "first_line": "19.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151517,7 +151627,7 @@
    "first_line": "237.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151544,8 +151654,8 @@
    "lean": "Under",
    "tier": "watch",
    "median": 226.0,
-   "pre": 48.8,
-   "ev": -4.2,
+   "pre": 49.3,
+   "ev": -4.7,
    "cons_over": 50.0,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151553,7 +151663,7 @@
    "first_line": "234.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151580,8 +151690,8 @@
    "lean": "Over",
    "tier": "too_big",
    "median": 119.0,
-   "pre": 55.3,
-   "ev": 0.2,
+   "pre": 55.4,
+   "ev": -1.1,
    "cons_over": 50.0,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151589,7 +151699,7 @@
    "first_line": "97.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151616,8 +151726,8 @@
    "lean": "Under",
    "tier": "watch",
    "median": 47.9,
-   "pre": 46.6,
-   "ev": -1.7,
+   "pre": 46.7,
+   "ev": -2.5,
    "cons_over": 50.0,
    "cons_ev": -6.1,
    "source": "auto:draftkings",
@@ -151625,7 +151735,7 @@
    "first_line": "52.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151652,8 +151762,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 51.2,
-   "pre": 52.0,
-   "ev": -2.4,
+   "pre": 52.1,
+   "ev": -3.1,
    "cons_over": 49.0,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151661,7 +151771,7 @@
    "first_line": "43.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151697,7 +151807,7 @@
    "first_line": "41.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151733,7 +151843,7 @@
    "first_line": "28.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151769,7 +151879,7 @@
    "first_line": "28.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151796,8 +151906,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 5.0,
-   "pre": 37.5,
-   "ev": 10.2,
+   "pre": 37.6,
+   "ev": 7.2,
    "cons_over": 50.0,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -151805,7 +151915,7 @@
    "first_line": "19.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151841,7 +151951,7 @@
    "first_line": "18.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151868,8 +151978,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 18.9,
-   "pre": 50.3,
-   "ev": -4.2,
+   "pre": 50.4,
+   "ev": -4.4,
    "cons_over": 49.5,
    "cons_ev": -5.1,
    "source": "auto:draftkings",
@@ -151877,7 +151987,7 @@
    "first_line": "16.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151904,8 +152014,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 0.0,
-   "pre": 31.6,
-   "ev": 16.2,
+   "pre": 31.7,
+   "ev": 12.1,
    "cons_over": 49.7,
    "cons_ev": -6.3,
    "source": "auto:draftkings",
@@ -151913,7 +152023,7 @@
    "first_line": "7.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151940,8 +152050,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 8.0,
-   "pre": 48.6,
-   "ev": 0.8,
+   "pre": 48.9,
+   "ev": 1.3,
    "cons_over": 46.0,
    "cons_ev": -1.1,
    "source": "auto:draftkings",
@@ -151949,7 +152059,7 @@
    "first_line": "7.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -151985,7 +152095,7 @@
    "first_line": "4.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152012,8 +152122,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 5.0,
-   "pre": 49.6,
-   "ev": 1.9,
+   "pre": 49.9,
+   "ev": 2.4,
    "cons_over": 43.7,
    "cons_ev": -6.5,
    "source": "auto:draftkings",
@@ -152021,7 +152131,7 @@
    "first_line": "4.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152057,7 +152167,7 @@
    "first_line": "3.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152093,7 +152203,7 @@
    "first_line": "3.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152120,8 +152230,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 3.0,
-   "pre": 42.5,
-   "ev": -3.0,
+   "pre": 42.8,
+   "ev": -2.4,
    "cons_over": 40.7,
    "cons_ev": -5.6,
    "source": "auto:draftkings",
@@ -152129,7 +152239,7 @@
    "first_line": "3.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152156,8 +152266,8 @@
    "lean": "Under",
    "tier": "watch",
    "median": 3.0,
-   "pre": 53.2,
-   "ev": -3.4,
+   "pre": 53.6,
+   "ev": -4.1,
    "cons_over": 55.5,
    "cons_ev": -6.6,
    "source": "auto:draftkings",
@@ -152165,7 +152275,7 @@
    "first_line": "2.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152201,7 +152311,7 @@
    "first_line": "2.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152228,8 +152338,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 0.0,
-   "pre": 45.1,
-   "ev": 14.7,
+   "pre": 45.5,
+   "ev": 11.5,
    "cons_over": 60.1,
    "cons_ev": -6.2,
    "source": "auto:draftkings",
@@ -152237,7 +152347,7 @@
    "first_line": "1.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152264,8 +152374,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 0.0,
-   "pre": 26.3,
-   "ev": 7.0,
+   "pre": 26.6,
+   "ev": 5.0,
    "cons_over": 39.8,
    "cons_ev": -5.4,
    "source": "auto:draftkings",
@@ -152273,7 +152383,7 @@
    "first_line": "1.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152301,7 +152411,7 @@
    "tier": "too_big",
    "median": 21.0,
    "pre": 57.0,
-   "ev": 8.2,
+   "ev": 2.1,
    "cons_over": 47.7,
    "cons_ev": -6.9,
    "source": "auto:draftkings",
@@ -152309,7 +152419,7 @@
    "first_line": "17.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152337,7 +152447,7 @@
    "tier": "watch",
    "median": 4.0,
    "pre": 44.9,
-   "ev": 2.8,
+   "ev": -0.3,
    "cons_over": 50.9,
    "cons_ev": -6.7,
    "source": "auto:draftkings",
@@ -152345,7 +152455,7 @@
    "first_line": "4.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152372,8 +152482,8 @@
    "lean": "Over",
    "tier": "too_big",
    "median": 78.2,
-   "pre": 54.2,
-   "ev": 0.6,
+   "pre": 53.6,
+   "ev": -1.8,
    "cons_over": 50.0,
    "cons_ev": -4.5,
    "source": "auto:draftkings",
@@ -152381,7 +152491,7 @@
    "first_line": "60.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152408,8 +152518,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 9.3,
-   "pre": 28.4,
-   "ev": 33.8,
+   "pre": 28.0,
+   "ev": 34.6,
    "cons_over": 49.9,
    "cons_ev": -6.3,
    "source": "auto:draftkings",
@@ -152417,7 +152527,7 @@
    "first_line": "32.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152453,7 +152563,7 @@
    "first_line": "22.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152480,8 +152590,8 @@
    "lean": "Over",
    "tier": "too_big",
    "median": 58.7,
-   "pre": 64.8,
-   "ev": 15.2,
+   "pre": 64.3,
+   "ev": 7.9,
    "cons_over": 49.5,
    "cons_ev": -4.7,
    "source": "auto:draftkings",
@@ -152489,7 +152599,7 @@
    "first_line": "18.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152516,8 +152626,8 @@
    "lean": "Under",
    "tier": "too_big",
    "median": 7.4,
-   "pre": 38.1,
-   "ev": 18.7,
+   "pre": 37.6,
+   "ev": 19.7,
    "cons_over": 50.3,
    "cons_ev": -4.7,
    "source": "auto:draftkings",
@@ -152525,7 +152635,7 @@
    "first_line": "12.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152552,8 +152662,8 @@
    "lean": "Over",
    "tier": "watch",
    "median": 6.2,
-   "pre": 48.4,
-   "ev": 0.3,
+   "pre": 47.8,
+   "ev": 1.4,
    "cons_over": 49.8,
    "cons_ev": -8.4,
    "source": "auto:draftkings",
@@ -152561,7 +152671,7 @@
    "first_line": "5.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152597,7 +152707,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152625,7 +152735,7 @@
    "tier": "watch",
    "median": 1.0,
    "pre": 18.1,
-   "ev": 13.7,
+   "ev": 12.2,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -152633,7 +152743,7 @@
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152669,7 +152779,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152705,7 +152815,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152741,7 +152851,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152777,7 +152887,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152813,7 +152923,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152849,7 +152959,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152885,7 +152995,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152913,7 +153023,7 @@
    "tier": "watch",
    "median": 0.0,
    "pre": 6.0,
-   "ev": 90.3,
+   "ev": 80.5,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:draftkings",
@@ -152921,7 +153031,7 @@
    "first_line": "1.5",
    "first_lean": "Over",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152957,7 +153067,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -152993,7 +153103,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -153029,7 +153139,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -153065,7 +153175,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -153101,7 +153211,7 @@
    "first_line": "1.5",
    "first_lean": null,
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
@@ -153128,8 +153238,8 @@
    "lean": "Under",
    "tier": "watch",
    "median": 3.1,
-   "pre": 40.0,
-   "ev": 6.9,
+   "pre": 39.5,
+   "ev": 7.8,
    "cons_over": null,
    "cons_ev": null,
    "source": "auto:fanduel",
@@ -153137,7 +153247,7 @@
    "first_line": "4.5",
    "first_lean": "Under",
    "logged_at": "2026-11-01T20:51+00:00",
-   "updated_at": "2026-11-02T05:50+00:00",
+   "updated_at": "2026-11-02T22:17+00:00",
    "result": null,
    "flag": null,
    "td_flag": null,
