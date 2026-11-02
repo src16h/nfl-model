@@ -2601,113 +2601,17 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-11-01T20:51+00:00",
+  "fetched_at": "2026-11-02T00:54+00:00",
   "data": {
-   "2026_08_LAC_LA": {
-    "spread_line": 6.5,
-    "total_line": 46.0,
-    "ml_home": null,
-    "ml_away": null,
-    "spread_home_odds": -115.0,
-    "spread_away_odds": -105.0,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
-    "standin": {},
-    "book": "hardrockbet",
-    "sharp": {
-     "spread_line": 6.5,
-     "spread_home_odds": -107.0,
-     "spread_away_odds": -103.0,
-     "total_line": 46.0,
-     "over_odds": -110.0,
-     "under_odds": -102.0
-    },
-    "hr_book": "Hard Rock Bet",
-    "book_title": "DK stand-in (Hard Rock Bet only)",
-    "updated": "2026-11-01T20:50:25Z"
-   },
-   "2026_08_KC_DEN": {
-    "spread_line": -1.0,
-    "total_line": 41.5,
-    "ml_home": null,
-    "ml_away": null,
-    "spread_home_odds": -110.0,
-    "spread_away_odds": -110.0,
-    "over_odds": -113,
-    "under_odds": -107,
-    "standin": {
-     "spread_home_odds": "hardrock",
-     "spread_away_odds": "hardrock",
-     "over_odds": "blend",
-     "under_odds": "blend"
-    },
-    "hr_prices": {
-     "over_odds": -110.0,
-     "under_odds": -110.0
-    },
-    "kalshi_prices": {
-     "spread_home_odds": 108.0,
-     "spread_away_odds": -113.0,
-     "over_odds": -108.0,
-     "under_odds": 104.0
-    },
-    "book": "hardrockbet",
-    "sharp": {
-     "spread_line": -1.0,
-     "spread_home_odds": -117.0,
-     "spread_away_odds": 106.0,
-     "total_line": 41.5,
-     "over_odds": -113.0,
-     "under_odds": 101.0
-    },
-    "hr_book": "Hard Rock Bet",
-    "book_title": "DK stand-in (Hard Rock Bet + Kalshi)",
-    "updated": "2026-11-01T20:50:25Z"
-   },
-   "2026_08_NE_MIA": {
-    "spread_line": -7.0,
-    "total_line": 41.0,
-    "ml_home": null,
-    "ml_away": null,
-    "spread_home_odds": -115.0,
-    "spread_away_odds": -105.0,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
-    "standin": {
-     "spread_home_odds": "hardrock",
-     "spread_away_odds": "hardrock",
-     "over_odds": "hardrock",
-     "under_odds": "hardrock"
-    },
-    "hr_prices": {},
-    "kalshi_prices": {
-     "spread_home_odds": -117.0,
-     "spread_away_odds": 113.0,
-     "over_odds": 104.0,
-     "under_odds": -108.0
-    },
-    "book": "hardrockbet",
-    "sharp": {
-     "spread_line": -6.5,
-     "spread_home_odds": 103.0,
-     "spread_away_odds": -114.0,
-     "total_line": 41.5,
-     "over_odds": 104.0,
-     "under_odds": -117.0
-    },
-    "hr_book": "Hard Rock Bet",
-    "book_title": "DK stand-in (Hard Rock Bet + Kalshi)",
-    "updated": "2026-11-01T20:50:25Z"
-   },
    "2026_08_PHI_WAS": {
     "spread_line": 5.5,
     "total_line": 40.0,
     "ml_home": null,
     "ml_away": null,
-    "spread_home_odds": -116,
-    "spread_away_odds": -105,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
+    "spread_home_odds": -114,
+    "spread_away_odds": -107,
+    "over_odds": -115.0,
+    "under_odds": -105.0,
     "standin": {
      "spread_home_odds": "blend",
      "spread_away_odds": "blend",
@@ -2719,23 +2623,23 @@
      "spread_away_odds": -105.0
     },
     "kalshi_prices": {
-     "spread_home_odds": -108.0,
-     "spread_away_odds": 104.0,
-     "over_odds": 100.0,
-     "under_odds": -104.0
+     "spread_home_odds": -104.0,
+     "spread_away_odds": 100.0,
+     "over_odds": -104.0,
+     "under_odds": 100.0
     },
     "book": "hardrockbet",
     "sharp": {
-     "spread_line": 6.0,
-     "spread_home_odds": 100.0,
-     "spread_away_odds": -110.0,
+     "spread_line": 5.5,
+     "spread_home_odds": -105.0,
+     "spread_away_odds": -105.0,
      "total_line": 40.5,
-     "over_odds": -103.0,
-     "under_odds": -109.0
+     "over_odds": -104.0,
+     "under_odds": -108.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "DK stand-in (Hard Rock Bet + Kalshi)",
-    "updated": "2026-11-01T20:50:25Z"
+    "updated": "2026-11-02T00:54:18Z"
    },
    "2026_08_CHI_SEA": {
     "spread_line": 3.0,
@@ -2765,15 +2669,15 @@
     "book": "hardrockbet",
     "sharp": {
      "spread_line": 3.0,
-     "spread_home_odds": -108.0,
-     "spread_away_odds": -104.0,
+     "spread_home_odds": -110.0,
+     "spread_away_odds": -102.0,
      "total_line": 46.5,
      "over_odds": -108.0,
      "under_odds": -108.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "DK stand-in (Hard Rock Bet + Kalshi)",
-    "updated": "2026-11-01T20:50:25Z"
+    "updated": "2026-11-02T00:54:18Z"
    }
   }
  },
