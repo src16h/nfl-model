@@ -17,6 +17,7 @@ Nothing here can break the main run: failures are logged and skipped.
 import json
 import math
 import logging
+import re
 from pathlib import Path
 
 import numpy as np
@@ -380,9 +381,10 @@ def player_game_stats(pbp: pd.DataFrame, game_ids) -> pd.DataFrame:
     yds = p["yards_gained"].fillna(0)
 
     pa = p[(p["pass_attempt"] == 1) & p["passer_player_id"].notna()]
-    passing = pa.assign(py=np.where(pa["complete_pass"] == 1, yds[pa.index], 0.0)).groupby(
+    passing = pa.assign(py=np.where(pa["complete_pass"] == 1, yds[pa.index], 0.0),
+                        att=(pa["sack"] != 1).astype(float)).groupby(          # official attempts leave out sacks
         ["game_id", "passer_player_id"]).agg(
-        pass_yds=("py", "sum"), pass_cmp=("complete_pass", "sum"),
+        pass_yds=("py", "sum"), pass_cmp=("complete_pass", "sum"), pass_att=("att", "sum"),
         pass_td=("pass_touchdown", "sum"), pass_int=("interception", "sum"))
     passing.index.names = ["game_id", "pid"]
 
@@ -401,7 +403,7 @@ def player_game_stats(pbp: pd.DataFrame, game_ids) -> pd.DataFrame:
     rushing.index.names = ["game_id", "pid"]
 
     st = pd.concat([passing, receiving, rushing], axis=1).fillna(0.0)
-    for c in ["pass_yds", "pass_cmp", "pass_td", "pass_int", "rec", "rec_yds", "rec_td",
+    for c in ["pass_yds", "pass_cmp", "pass_att", "pass_td", "pass_int", "rec", "rec_yds", "rec_td",
               "carries", "rush_yds", "rush_td"]:
         if c not in st.columns:
             st[c] = 0.0
@@ -490,6 +492,41 @@ def played_set(snaps):
     return {(g, norm_name(p)) for g, p in zip(sn["game_id"], sn["player"])}
 
 
+class SnapIndex:
+    """Who took part in each game, for grading props the way books do: a player who took any snap (offense or
+    special teams) and never touched the ball loses an Over; only a player with no snaps at all is a void.
+    Snap counts arrive a day or more after a game, so a game with no snap rows yet can't be graded as a void."""
+
+    def __init__(self, snaps):
+        self.games, self.names, self.last = set(), set(), {}
+        if snaps is None or not len(snaps):
+            return
+        sn = snaps.to_pandas() if hasattr(snaps, "to_pandas") else snaps
+        self.games = set(sn["game_id"])
+        tot = (pd.to_numeric(sn["offense_snaps"], errors="coerce").fillna(0)
+               + pd.to_numeric(sn["st_snaps"], errors="coerce").fillna(0))
+        sn = sn[tot > 0]
+        for g, p, t in zip(sn["game_id"], sn["player"], sn["team"]):
+            self.names.add((g, norm_name(p)))
+            ln = _last_name(p)
+            self.last.setdefault((g, t, ln), set()).add(norm_name(p))
+
+    def has_game(self, gid):
+        return gid in self.games
+
+    def played(self, gid, name, team=None):
+        if (gid, norm_name(name)) in self.names:
+            return True
+        # odds feeds use nicknames ("Bam Knight" vs "Zonovan Knight"): fall back to a unique last name on his team
+        return bool(team) and len(self.last.get((gid, team, _last_name(name)), ())) == 1
+
+
+def _last_name(name):
+    parts = [w for w in re.sub(r"[.'\-]", " ", str(name or "")).lower().split()
+             if w not in ("jr", "sr", "ii", "iii", "iv", "v")]
+    return parts[-1] if parts else ""
+
+
 def prop_clv(r, fl):
     """Closing line value of a locked prop play, in %: its price's expected return at the closing no-vig chance
     (the last line saved before kickoff, same line only). None when the line moved or a side's price is missing."""
@@ -547,26 +584,45 @@ def grade_props(path, pbp, schedules, now, snaps=None):
         changed = True
     if changed:
         _save(path, lg)
-    played = played_set(snaps)
+    sx = SnapIndex(snaps)
     final_ids = set(schedules.loc[schedules["home_score"].notna(), "game_id"])
     in_pbp = set(pbp["game_id"].unique())
-    pending = [r for r in props.values()
-               if not r.get("result") and r["game_id"] in final_ids and r["game_id"] in in_pbp]
+
+    def open_(r):
+        # ungraded, or a void that was never checked against that game's snap counts (Nov 2 2026 fix:
+        # voids graded before snaps were published stayed voids even when the player played)
+        res = r.get("result")
+        return not res or (res.get("outcome") == "Void" and not res.get("snap_checked"))
+    pending = [r for r in props.values() if open_(r) and r["game_id"] in final_ids and r["game_id"] in in_pbp]
     if pending:
         stats = player_game_stats(pbp, {r["game_id"] for r in pending})
         ts = now.isoformat(timespec="minutes")
+        waiting = 0
         for r in pending:
             idx = (r["game_id"], r["pid"])
             try:
                 if idx in stats.index:
                     s_ = stats.loc[idx]
-                elif (r["game_id"], norm_name(r.get("player"))) in played:
+                elif sx.played(r["game_id"], r.get("player"), r.get("team")):
                     s_ = pd.Series(ZERO)
+                elif sx.has_game(r["game_id"]):
+                    s_ = None                                   # snaps are in and he took none: a real void
                 else:
-                    s_ = None
+                    waiting += 1                                # no snap counts for this game yet: grade later
+                    if r.get("result"):                         # an old unchecked void goes back to pending
+                        r["result"] = None
+                        r.pop("flag_result", None)
+                        r.pop("shadow_result", None)
+                    continue
                 _grade_with_flag(r, s_, ts)
+                if s_ is None:
+                    for k in ("result", "flag_result", "shadow_result"):
+                        if r.get(k):
+                            r[k]["snap_checked"] = True
             except Exception as e:  # noqa: BLE001
                 log.warning(f"could not grade {r.get('player')} {r.get('stat')}: {e}")
+        if waiting:
+            log.info(f"{waiting} props wait for snap counts before they can be graded")
         _save(path, lg)
     return prop_summary(lg)
 
