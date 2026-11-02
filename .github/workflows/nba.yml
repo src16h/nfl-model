@@ -1,12 +1,12 @@
 name: Daily NBA model
 
 on:
-  schedule:
-    # Times are UTC. ET is UTC minus 4 until Nov 1, then minus 5 (runs land an hour earlier in ET after that).
-    - cron: "22 15 * * *"   # 11:22am ET: grades last night, morning lines and injuries
-    - cron: "22 21 * * *"   # 5:22pm ET: fresh lines, player props and alt lines before 7pm tips
-    - cron: "45 22 * * *"   # 6:45pm ET: near-closing lines (CLV) and late injury news
-    - cron: "40 0 * * *"    # 8:40pm ET: late injury news before the 10pm West Coast tips
+  schedule:   # UTC times set for Eastern Standard Time (EST, UTC-5) until Mar 14 2027
+    # Times are UTC. Shift every cron one hour earlier when daylight time starts (Mar 14 2027).
+    - cron: "22 16 * * *"   # 11:22am ET: grades last night, morning lines and injuries
+    - cron: "22 22 * * *"   # 5:22pm ET: fresh lines, player props and alt lines before 7pm tips
+    - cron: "45 23 * * *"   # 6:45pm ET: near-closing lines (CLV) and late injury news
+    - cron: "40 1 * * *"    # 8:40pm ET: late injury news before the 10pm West Coast tips
   workflow_dispatch:
 
 permissions:
