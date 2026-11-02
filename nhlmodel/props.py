@@ -333,10 +333,13 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False, cfg=None):
     pi = float(np.prod([c["p"] for c in legs]))
     raw = pj
     # whole-ticket correction (Oct 26 2026, same as the NFL): the chance moves toward this ticket type's own graded
-    # record on the log-odds scale, fading in with the sample. Player tickets have hit 54% when the model said 48%.
+    # record on the log-odds scale, fading in with the sample. Fades in slowly: ALT_TICKET_K.
     try:
         tr = (json.loads((data / "latest.json").read_text()).get("tracking") or {}).get(cfg.get("track") or ("alt_mix" if need_team else "alt")) or {}
-        n_, m_ = tr.get("n") or 0, (tr.get("model") or 0) / 100
+        # Nov 2 2026: compare the record with the uncorrected sim chance. "model" holds the already-corrected chance,
+        # which mixed corrected and raw tickets; with the light shrink below it chased a hot start (58% hit vs 49%
+        # expected through Oct 28) and then went 10-16.
+        n_, m_ = tr.get("n") or 0, (tr.get("model_raw") or tr.get("model") or 0) / 100
         a_ = (tr.get("hits") or 0) / n_ if n_ else 0
         if n_ >= 10 and 0 < m_ < 1 and 0 < a_ < 1:
             shift = (np.log(a_ / (1 - a_)) - np.log(m_ / (1 - m_))) * n_ / (n_ + C.ALT_TICKET_K)

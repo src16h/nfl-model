@@ -311,7 +311,8 @@ def tracking(history_days, results):
                     hits.append(v > L["line"])
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
-                                 "legs": len(hits), "p": ap["p"], "v": ap.get("v", 1), "fair": ap.get("fair")})
+                                 "legs": len(hits), "p": ap["p"], "p_raw": ap.get("p_sim", ap["p"]), "v": ap.get("v", 1),
+                                 "fair": ap.get("fair")})
         for e in day.get("edge", []):
             rs, dec = [], 1.0
             for L in e["legs"]:
@@ -386,6 +387,8 @@ def tracking(history_days, results):
     def alt_rec(rows):
         return {"n": len(rows), "hits": sum(a["hit"] for a in rows),
                 "model": r(np.mean([a["p"] for a in rows])) if rows else None,
+                # the simulation's chance before the record correction: what props.alt_parlay corrects against
+                "model_raw": r(np.mean([a.get("p_raw", a["p"]) for a in rows])) if rows else None,
                 "recent": sorted(rows, key=lambda x: x["date"], reverse=True)[:20]}
     cal = {}
     for st, rows in calib.items():
