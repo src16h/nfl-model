@@ -187,13 +187,13 @@ def summarize(arrs, info, book):
 
 
 def ladder(stat, main):
-    """Alt lines on the prediction-market ladder (Kalshi's NBA ladders, checked Oct 31 2026: points 9.5, 14.5, 19.5...;
+    """Alt lines on the standard alt ladder (checked at Hard Rock, Kalshi and DraftKings Oct 31 2026: points 9.5, 14.5, 19.5...;
     rebounds and assists 1.5, 3.5, 5.5...; threes 0.5, 1.5, 2.5...), from C.ALT_RUNGS_BELOW rungs under the book's main
     line up to the main line."""
     start, step = C.ALT_LADDER[stat]
     out, L = [], start
     while L <= main + 1e-9:
-        if L >= main - C.ALT_RUNGS_BELOW * step - 1e-9:      # within 2 steps of the posted line itself (Kalshi drops rungs
+        if L >= main - C.ALT_RUNGS_BELOW * step - 1e-9:      # within 2 steps of the posted line itself (books drop rungs
             out.append(L)                                   # far below it, e.g. no 1.5 assists for a 6.5-assist guard)
         L += step
     return out
@@ -218,7 +218,7 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False):
             if not b or b.get("line") is None:
                 continue                               # only players the book posts (Oct 31 2026: no model-only lines)
             main = float(b["line"])
-            for L in ladder(st, main):                 # only lines the prediction markets actually list
+            for L in ladder(st, main):                 # only lines the books actually list
                 hit = x > L
                 ph = float(hit.mean())
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:

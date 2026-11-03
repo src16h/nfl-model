@@ -36,7 +36,7 @@ import sys as _sys  # noqa: E402
 _sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import standin as SI  # noqa: E402
 
-GAME_BOOKS = ["hardrockbet", "kalshi", "pinnacle"]      # DK Predictions stand-in (Hard Rock + Kalshi), Pinnacle for reference
+GAME_BOOKS = ["hardrockbet", "pinnacle"]      # Hard Rock (the bet price), Pinnacle the referee (Nov 3 2026: Kalshi dropped)
 
 
 def _book_lines(ev, b):
@@ -54,8 +54,8 @@ def _book_lines(ev, b):
 
 
 def game_lines(cl, games, state, now):
-    """Oct 31 2026: game lines at the DK Predictions stand-in price (Hard Rock + Kalshi, standin.py), one call for every
-    game (3 credits), at most every GAME_LINES_EVERY_HOURS. Replaces ESPN's DraftKings line on each game it finds
+    """Oct 31 2026: game lines at Hard Rock's price (Nov 3 2026: Hard Rock only), one call for every
+    game (2 credits), at most every GAME_LINES_EVERY_HOURS. Replaces ESPN's DraftKings line on each game it finds
     (ESPN's opening line is kept for the line-move display)."""
     last = state.get("game_lines_at")
     age = (now - datetime.fromisoformat(last)).total_seconds() / 3600 if last else 99
@@ -66,12 +66,10 @@ def game_lines(cl, games, state, now):
         for ev in data:
             bks = {b["key"]: b for b in ev.get("bookmakers", [])}
             hr = _book_lines(ev, bks["hardrockbet"]) if "hardrockbet" in bks else None
-            ks = _book_lines(ev, bks[SI.KALSHI]) if SI.KALSHI in bks else None
-            if not hr and not ks:
+            if not hr:
                 continue
-            rec = SI.apply(hr or None, ks, [(None, "ml_home", "ml_away"), ("spread", "spread_home_odds", "spread_away_odds"),
-                                            ("total", "over_odds", "under_odds")])
-            rec["book"] = SI.LABEL + (" (Hard Rock + Kalshi)" if hr and ks else " (Kalshi)" if ks else " (Hard Rock only)")
+            rec = SI.apply(hr)
+            rec["book"] = "Hard Rock"
             if "pinnacle" in bks:
                 rec["sharp"] = _book_lines(ev, bks["pinnacle"])
             lines[f"{norm_name(ev['home_team'])}|{norm_name(ev['away_team'])}"] = rec
@@ -157,7 +155,7 @@ def run(games, state_path, cache_path, now, close_games=()):
         except Fatal:
             raise
         except Exception as e:  # noqa: BLE001
-            log.warning(f"CFB game lines (DK stand-in) skipped: {e}")
+            log.warning(f"CFB game lines (Hard Rock) skipped: {e}")
         soon = [g for g in games if 0 < (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= C.ODDS_PROP_HOURS]
         closeset = {str(x) for x in close_games}
 

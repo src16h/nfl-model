@@ -16,8 +16,8 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
    - NBA: `python tools/nba_backtest.py`, `python tools/nba_props_check.py 2025 6`
    - NFL / NHL / Soccer: the backtest and calibration numbers each run already publishes (Record tabs, `latest.json`)
    - Parlays in every sport: tickets said vs hit, legs said vs hit, by leg type where tracked
-   - Bettable markets: legs and plays must be on lines DraftKings Predictions actually lists (Kalshi ladders are the
-     guide; `tools/probe_nba_alts.py`, `tools/probe_kalshi.py`). Anything not bettable is a bug.
+   - Bettable markets: legs and plays must be on lines Hard Rock actually lists (`tools/probe_nba_alts.py` and the
+     "Odds market check" workflow show its ladders). Anything not bettable is a bug.
 5. **Changes**, within the limits below. Then run each changed sport's workflow and confirm it succeeds and the page
    still loads.
 6. **Report**: `docs/review/latest.md` plus a short summary of what changed and why.
@@ -48,8 +48,8 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
 - At most 3 changes per sport per week. Small steps.
 - No change to secrets, to odds-credit budgets beyond what the month allows, or to workflow schedules unless a run is
   failing or credits run out.
-- The DraftKings Predictions stand-in (Hard Rock + Kalshi, `standin.py`) and Pinnacle as the referee stay unless the
-  data says otherwise.
+- Hard Rock as the bet price (`standin.py`, no prediction markets) and Pinnacle as the referee stay. The owner bets on
+  Hard Rock; don't bring Kalshi or DraftKings Predictions back.
 - If something looks wrong but the evidence is thin, write it under "Watch" in CHANGES.md instead of changing it.
 
 ## CHANGES.md entry format

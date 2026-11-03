@@ -248,7 +248,7 @@ def _parse_lines(ev: dict, home_abbr: str):
                     if str(o.get("name", "")).lower() == "over" and p is not None:
                         total, book_t = p, b
     book = book_s or book_t
-    ks = _one_book(kal, home_full) if kal else None                  # DK Predictions stand-in (standin.py)
+    ks = None                                                        # Hard Rock only (standin.py, Nov 3 2026)
     if book is None and not ks:
         return None
     rec = {"spread_line": spread, "total_line": total, "ml_home": ml_home, "ml_away": ml_away, **prices} if book is not None else None
@@ -257,16 +257,16 @@ def _parse_lines(ev: dict, home_abbr: str):
                              ("total_line", "over_odds", "under_odds")])
     for k_ in ("spread_line", "total_line", "ml_home", "ml_away"):
         rec.setdefault(k_, None)
-    label = SI.LABEL + (f" ({hr_name} + Kalshi)" if ks and hr_name else " (Kalshi)" if ks else f" ({hr_name} only)")
+    label = hr_name
     return {**rec, "book": book.get("key") if book is not None else SI.KALSHI, "sharp": sharp, "hr_book": hr_name,
             "book_title": label, "updated": updated or (kal or {}).get("last_update")}
 
 
 def fetch_game_lines(client: Client, todo: pd.DataFrame) -> dict:
     markets = "spreads,totals" + (",h2h" if getattr(C, "ODDS_MONEYLINE_LIVE", False) else "")
-    # up to 10 named books cost the same as one region: Pinnacle, Kalshi (DK stand-in) and the US books in ODDS_BOOKS
+    # up to 10 named books cost the same as one region: Pinnacle and the US books in ODDS_BOOKS
     data = client.get(f"/v4/sports/{SPORT}/odds", est_cost=markets.count(",") + 1, markets=markets,
-                      bookmakers=",".join((C.SHARP_BOOKS + [SI.KALSHI] + C.ODDS_BOOKS)[:10]), oddsFormat="american", dateFormat="iso")
+                      bookmakers=",".join((C.SHARP_BOOKS + C.ODDS_BOOKS)[:10]), oddsFormat="american", dateFormat="iso")
     if not isinstance(data, list):
         raise OddsError("unexpected game lines response")
     by_pair = {frozenset((g["home_team"], g["away_team"])): g for _, g in todo.iterrows()}
@@ -496,7 +496,7 @@ def fetch_alts(client: Client, todo: pd.DataFrame, matched: dict, now: datetime,
                 break
             try:
                 data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=1, markets=mkt,
-                                  bookmakers=",".join(C.ALT_BOOKS + [SI.KALSHI]), oddsFormat="american", dateFormat="iso")
+                                  bookmakers=",".join(C.ALT_BOOKS), oddsFormat="american", dateFormat="iso")
             except OddsFatal:
                 raise
             except OddsError as e:
@@ -506,10 +506,10 @@ def fetch_alts(client: Client, todo: pd.DataFrame, matched: dict, now: datetime,
             bks = {b.get("key"): b for b in (data or {}).get("bookmakers", [])} if isinstance(data, dict) else {}
             bet = next((k for k in C.ALT_BOOKS if k in bks and k not in C.SHARP_BOOKS), None)
             shp = next((k for k in C.SHARP_BOOKS if k in bks), None)
-            blended = SI.rows(_alt_rows(data, bks[bet]) if bet else [], _alt_rows(data, bks[SI.KALSHI]) if SI.KALSHI in bks else [])
+            blended = SI.rows(_alt_rows(data, bks[bet]) if bet else [])
             ent["markets"][mkt] = {"fetched_at": now.isoformat(timespec="minutes"),
                                    "book": blended, "sharp": _alt_rows(data, bks[shp]) if shp else [],
-                                   "book_name": SI.LABEL if blended else None}
+                                   "book_name": bks[bet].get("title") if bet else None}
     cache["alt"] = alt
     _save_cache(cache_path, cache)
     out = {}

@@ -2,6 +2,10 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-03 (by hand)
+- All sports | prediction market removed: plays, alt lines and parlays judged at Hard Rock's own price again (no Kalshi blend, no DK cents or fee); pages show Hard Rock odds and take American odds only | the owner bets on Hard Rock | prices match what Hard Rock pays; CFB game-line pull drops to 2 credits | look again on 2026-11-10
+- Undoes the 2026-10-31 "DraftKings Predictions stand-in" entry below.
+
 ## 2026-10-31 (set up by hand, before the first weekly review)
 - All sports | plays judged at a DraftKings Predictions stand-in price (Hard Rock + Kalshi + DK fee, standin.py), Pinnacle still the referee | DK Predictions has no odds feed | fewer plays, priced closer to what DK pays | look again on 2026-11-10
 - CFB | new play rules: early totals (3+ days out, 4+ pts off the line) and Pinnacle value only; old leans retired | model weight vs the close 0.01 spreads / -0.03 totals; early totals vs the open 234-170 (57.9%) 2023-2026 | early totals near 55-58% | look again on 2026-11-17

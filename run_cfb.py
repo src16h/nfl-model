@@ -159,7 +159,7 @@ def plays_v2(g, b, out):
       1. Early totals (the one edge that held up): 3+ days before kickoff, the model's total (bias-corrected on past
          seasons) 4+ points from the line. Against the opening line that went 234-170 (57.9%) from 2023 to 2026, 55-62%
          every season, and the line moved toward the model 1 to 2 points a week. Locked at the line first flagged.
-      2. Everything else (spreads, moneylines, late totals): only when Pinnacle's fair price says the DK stand-in price
+      2. Everything else (spreads, moneylines, late totals): only when Pinnacle's fair price says Hard Rock's price
          is worth 1.5% to 8% (betrules.decide_sharp), and the model agrees on the side, as in the other sports."""
     sh = b.get("sharp") or {}
     try:
