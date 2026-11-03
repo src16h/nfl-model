@@ -67,6 +67,8 @@ ALT_TICKET_K = 250               # ticket record counts half after this many gra
 ALT_BET_CUSHION = 0.07           # "bet at": the book must pay enough for +7% at the model's chance (estimation error)
 ALT_MAX_DROP = {"sog": 1, "points": 0, "saves": 0}   # how far below the main line a leg may go
 ALT_MAIN_LINE_ONLY = {"saves"}   # Hard Rock Bet has no alt goalie saves: only the posted main line, never a model line
+ALT_MIN_TOI_F = 16.0             # Nov 3 2026: forwards need 16+ projected minutes to be a parlay leg. Over 0.5 shots legs from
+                                 # players averaging <14 min hit 75% (said 81%, n=28); 17+ min hit 87% (said 84%, n=174)
 
 # odds (separate free key for hockey)
 ODDS_KEY_ENV = "ODDS_API_KEY_NHL"

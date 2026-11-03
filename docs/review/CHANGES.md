@@ -3,6 +3,7 @@
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
 ## 2026-11-03 (by hand)
+- NHL | same-game parlay shot legs: forwards need 16+ projected minutes (defensemen and goalies exempt) | Over 0.5 shots legs Oct 25-Nov 2: players averaging <14 min hit 75.0% (said 81.0%, n=28), 14-17 min 80.8% (said 82.6%, n=130), 17+ min 86.8% (said 83.9%, n=174); tickets 3 for 16 since Oct 31 (said ~53%) | fewer depth-forward misses, legs closer to what they say | look again on 2026-11-17
 - All sports | prediction market removed: plays, alt lines and parlays judged at Hard Rock's own price again (no Kalshi blend, no DK cents or fee); pages show Hard Rock odds and take American odds only | the owner bets on Hard Rock | prices match what Hard Rock pays; CFB game-line pull drops to 2 credits | look again on 2026-11-10
 - Undoes the 2026-10-31 "DraftKings Predictions stand-in" entry below.
 

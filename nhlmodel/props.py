@@ -246,6 +246,9 @@ def alt_parlay(arrs, info, game, book, team_legs=(), need_team=False, cfg=None):
         if not any(v and v.get("line") is not None for v in pb.values()):
             continue                                   # Oct 31 2026: DraftKings lists alt props only for the ~15-18 regulars a game,
                                                        # the players the book posts lines for; nobody else can be a leg
+        if p.get("pos") not in ("D", "G") and (p.get("toi") or 0) < C.ALT_MIN_TOI_F:
+            continue                                   # Nov 3 2026: depth forwards (under 16 projected minutes) miss shot legs
+                                                       # more than the model says; defensemen and goalies are exempt
         for st, x in stats.items():
             if st not in drop:
                 continue
