@@ -455,6 +455,8 @@ def lock_parlays(g, prev, players, now):
             start, step = C.ALT_LADDER[st]
             if abs(((float(L["line"]) - start) / step) - round((float(L["line"]) - start) / step)) > 1e-6 or float(L["line"]) < start:
                 return False
+            if L.get("main") is not None and float(L["line"]) < float(L["main"]) - C.ALT_MAX_DROP.get(st, 99) - 1e-9:
+                return False                           # deeper than Hard Rock's ladder goes (Nov 3 2026)
         return True
     for key in ("alt_parlay", "alt_mix"):
         old = (prev or {}).get(key)

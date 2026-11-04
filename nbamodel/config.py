@@ -68,6 +68,11 @@ ALT_TICKET_K = 30
 ALT_BET_CUSHION = 0.07
 ALT_LADDER = {"pts": (9.5, 5.0), "reb": (1.5, 2.0), "ast": (1.5, 2.0), "fg3m": (0.5, 1.0)}   # (lowest line, step) on Hard Rock's alt ladders
 ALT_RUNGS_BELOW = 2              # alt legs go at most 2 rungs below the book's main line
+# Nov 3 2026 review: Hard Rock's lowest alt rung sits only so far under its main line (probe "nbamain", 2 games,
+# 96 player lines): points 2-9 under, rebounds and assists 1-4, threes 0-2. The 2-rung rule put 21 of 162 possible legs
+# on rungs Hard Rock doesn't list (e.g. 9.5 points under a 19.5 main, 1.5 rebounds under 5.5). Legs now stay within
+# this many points/boards/assists/threes of the main line (1 of 127 legs off the ladder in the same probe).
+ALT_MAX_DROP = {"pts": 8.0, "reb": 2.0, "ast": 2.0, "fg3m": 1.0}
 ALT_MIN_MINUTES = 20.0           # alt legs only for players expected to play 20+ minutes (the ones with posted ladders)
 ALT_MAX_TEAM_LEGS = 2
 ALT_SPEC = {"spread": (-15.5, 15.5, 1.0), "total": (200.5, 250.5, 1.0), "team_total": (95.5, 130.5, 1.0)}

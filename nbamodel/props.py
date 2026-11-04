@@ -193,7 +193,7 @@ def ladder(stat, main):
     start, step = C.ALT_LADDER[stat]
     out, L = [], start
     while L <= main + 1e-9:
-        if L >= main - C.ALT_RUNGS_BELOW * step - 1e-9:      # within 2 steps of the posted line itself (books drop rungs
+        if L >= max(main - C.ALT_RUNGS_BELOW * step, main - C.ALT_MAX_DROP.get(stat, 99)) - 1e-9:   # near the posted line (books drop rungs
             out.append(L)                                   # far below it, e.g. no 1.5 assists for a 6.5-assist guard)
         L += step
     return out
