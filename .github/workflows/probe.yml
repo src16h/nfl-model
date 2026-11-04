@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       probe:
-        description: "markets (default), kalshi, nbaalt or nhlsog"
+        description: "markets (default), kalshi, nbaalt, nhlsog, nbamain or nhlmain (Hard Rock main line vs lowest alt rung)"
         default: markets
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
           ODDS_API_KEY_CFB: ${{ secrets.ODDS_API_KEY_CFB }}
           PROBE: ${{ inputs.probe }}
         run: |
-          if [ "$PROBE" = "kalshi" ]; then python tools/probe_kalshi.py; elif [ "$PROBE" = "nbaalt" ]; then python tools/probe_nba_alts.py; elif [ "$PROBE" = "nhlsog" ]; then PROBE_SPORT=icehockey_nhl PROBE_MARKETS=player_shots_on_goal_alternate,player_points_alternate PROBE_EVENTS=1 python tools/probe_nba_alts.py; else python tools/probe_markets.py 2; fi
+          if [ "$PROBE" = "kalshi" ]; then python tools/probe_kalshi.py; elif [ "$PROBE" = "nbaalt" ]; then python tools/probe_nba_alts.py; elif [ "$PROBE" = "nbamain" ]; then PROBE_EVENTS=2 PROBE_MAIN=player_points,player_rebounds,player_assists,player_threes python tools/probe_nba_alts.py; elif [ "$PROBE" = "nhlmain" ]; then PROBE_SPORT=icehockey_nhl PROBE_MARKETS=player_shots_alternate,player_points PROBE_EVENTS=1 PROBE_MAIN=player_shots_on_goal python tools/probe_nba_alts.py; elif [ "$PROBE" = "nhlsog" ]; then PROBE_SPORT=icehockey_nhl PROBE_MARKETS=player_shots_on_goal_alternate,player_points_alternate PROBE_EVENTS=1 python tools/probe_nba_alts.py; else python tools/probe_markets.py 2; fi
