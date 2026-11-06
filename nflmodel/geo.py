@@ -106,10 +106,59 @@ def precip_from_text(text) -> float:
 
 
 def forecast(home, kickoff_utc: datetime) -> dict | None:
-    """Hourly forecast at the home stadium for kickoff + 90 minutes."""
+    """Hourly forecast at the home stadium over the game window (kickoff to +3 hours).
+    Nov 5 2026: averaged over the whole game instead of one hour, and adds rain amount, snowfall and gusts,
+    so a downpour and a passing shower no longer look the same (the TB-ATL 16-0 rain game, week 8)."""
     s = STADIUMS.get(home)
     if s is None or kickoff_utc is None:
         return None
+    day = kickoff_utc.strftime("%Y-%m-%d")
+    url = ("https://api.open-meteo.com/v1/forecast?"
+           f"latitude={s[0]}&longitude={s[1]}"
+           "&hourly=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation_probability,precipitation,snowfall"
+           "&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=mm&timezone=UTC"
+           f"&start_date={day}&end_date={day}")
+    try:
+        with urllib.request.urlopen(url, timeout=10) as r:
+            d = json.loads(r.read().decode())
+        H = d["hourly"]
+        hrs = H["time"]
+        k0 = kickoff_utc.astimezone(timezone.utc).hour
+        idx = [k for k in range(len(hrs)) if k0 <= int(hrs[k][11:13]) <= k0 + 3] or \
+              [min(range(len(hrs)), key=lambda k: abs(int(hrs[k][11:13]) - (k0 + 1)))]
+        def avg(key):
+            v = [H[key][k] for k in idx if key in H and H[key][k] is not None]
+            return sum(v) / len(v) if v else None
+        def mx(key):
+            v = [H[key][k] for k in idx if key in H and H[key][k] is not None]
+            return max(v) if v else None
+        return {"temp": avg("temperature_2m"), "wind": avg("wind_speed_10m"), "gust": mx("wind_gusts_10m"),
+                "precip": avg("precipitation_probability"), "rain_mm": avg("precipitation"), "snow_cm": avg("snowfall")}
+    except Exception as e:  # noqa: BLE001
+        log.info(f"weather unavailable for {home}: {str(e)[:80]}")
+        return None
+
+
+def player_weather(wx, indoor) -> dict:
+    """Forecast -> the weather terms the player sims use (fit on 2014-25 play-by-play, tools/nfl_weather_fit.py).
+    rain/light/snow are expected weights 0-1: rain chance x how hard it falls."""
+    if indoor or not wx:
+        return {}
+    def f(k, d=0.0):
+        try:
+            v = float(wx.get(k))
+            return d if math.isnan(v) else v
+        except (TypeError, ValueError):
+            return d
+    prob = min(max(f("precip") / 100, 0.0), 1.0)
+    mm = wx.get("rain_mm")
+    snow = f("snow_cm") > 0.05 or (f("temp", 60) <= 34 and prob >= 0.3)
+    # real rain = 0.5mm+ an hour; a lighter amount counts as light rain; no amount given -> treat the chance as real rain
+    hard = 1.0 if mm is None else min(max((float(mm) - 0.1) / 0.4, 0.0), 1.0)
+    wet = prob if (mm is None or float(mm) >= 0.05 or prob >= 0.5) else 0.0
+    return {"w10": max(f("wind") - 10, 0.0), "cold": max(40 - f("temp", 60), 0.0),
+            "rain": 0.0 if snow else wet * hard, "light": 0.0 if snow else wet * (1 - hard),
+            "snow": wet if snow else 0.0}
     day = kickoff_utc.strftime("%Y-%m-%d")
     url = ("https://api.open-meteo.com/v1/forecast?"
            f"latitude={s[0]}&longitude={s[1]}"

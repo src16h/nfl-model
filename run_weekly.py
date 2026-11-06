@@ -24,7 +24,8 @@ from nflmodel.games import (fit_calibration, backtest_report, apply_cal, simulat
 from nflmodel import elo, stack
 from nflmodel.features import game_row, history_rows, injury_effects, NO_INJ
 from nflmodel.qb import qb_weeks_fast, qb_quality
-from nflmodel.geo import forecast, is_indoor
+from nflmodel.geo import forecast, is_indoor, player_weather
+from nflmodel.players import wx_shift
 import betrules as BR
 import altlines as AL
 import crossgame as XG
@@ -329,11 +330,21 @@ def build_games(bundle, season, week, now):
             except Exception:  # noqa: BLE001
                 pass
         weather = None
+        pw = player_weather(wx, is_indoor(g))
+        wxs = wx_shift(pw)
+        wx_flag = None
         if is_indoor(g):
             weather = "Indoors"
         elif wx:
+            snowy = pw.get("snow", 0) > 0
             weather = f"{wx['temp']:.0f}°F, wind {wx['wind']:.0f} mph" + (
-                f", {wx['precip']:.0f}% rain" if wx.get("precip") is not None else "")
+                f" (gusts {wx['gust']:.0f})" if wx.get("gust") is not None and wx["gust"] >= wx["wind"] + 8 else "") + (
+                f", {wx['precip']:.0f}% {'snow' if snowy else 'rain'}" if wx.get("precip") is not None else "") + (
+                f", {wx['rain_mm']:.1f} mm/hr" if wx.get("rain_mm") is not None and wx["rain_mm"] >= 0.1 else "")
+            if wxs["pyds"] <= C.WX_ROUGH_PYDS:              # Nov 5 2026: weather flag on the page
+                wx_flag = {"level": "severe" if wxs["pyds"] <= C.WX_SEVERE_PYDS else "rough",
+                           "pass_yds": round(wxs["pyds"], 1), "att": round(wxs["att"], 1), "car": round(wxs["car"], 1),
+                           "ypa": round(wxs["ypa"], 2)}
         game = {
             "game_id": g["game_id"], "week": int(week), "state": "upcoming",
             "kickoff": g["ko"].isoformat() if g["ko"] else None,
@@ -357,7 +368,7 @@ def build_games(bundle, season, week, now):
             "cover_prob_home": fnum(sim.get("cover_home", np.nan) * 100, 0),
             "over_prob": fnum(sim.get("over", np.nan) * 100, 0),
             "qb_home": qbs[h]["name"], "qb_away": qbs[a]["name"],
-            "weather": weather,
+            "weather": weather, "wx_flag": wx_flag,
             "why_margin": [{"factor": f, "pts": fnum(v)} for f, v in why_m],
             "why_total": [{"factor": f, "pts": fnum(v)} for f, v in why_t],
             "why_edge": [{"factor": f, "pts": fnum(v)} for f, v in why_edge],
@@ -387,7 +398,7 @@ def build_games(bundle, season, week, now):
             log.warning(f"teaser legs skipped: {e}")
         games.append(game)
         gp = dict(game, plays_home=feat["plays_home"], plays_away=feat["plays_away"],
-                  proj_home=ph, proj_away=pa, margin=margin)
+                  proj_home=ph, proj_away=pa, margin=margin, wx_player=pw)
         shocks, pnoise = game_shocks(zlib.crc32(f"sgp{g['game_id']}".encode()))
         side_sims = {}
         for team, opp, side in ((h, a, "home"), (a, h, "away")):
@@ -480,7 +491,8 @@ def build_games(bundle, season, week, now):
     prop_bias_tbl, prop_real_tbl = prop_bias(OUT / "props_log.json", with_real=True)
     log.info(f"prop bias from graded results: {prop_bias_tbl}")
     log.info(f"prop calibration from graded results: {prop_real_tbl}")
-    props = evaluate_props(props_df, players, sims, prop_bias_tbl, prop_real_tbl)
+    wx_hold = {g["game_id"] for g in games if g.get("wx_flag")}
+    props = evaluate_props(props_df, players, sims, prop_bias_tbl, prop_real_tbl, wx_hold=wx_hold)
     # alt-line parlays: anchored to the book's main line (or the model's middle number if not posted)
     main_lines = {}
     for r in props.get("props", []):
@@ -683,6 +695,8 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                 if side not in cfg.get("sides", ("Over", "Under")):
                     continue
                 for st in table.get(r["pos"], []):
+                    if side == "Over" and game.get("wx_flag") and st in C.WX_HOLD_STATS:
+                        continue                                            # weather hold (Nov 5 2026)
                     arr = sims[r["pid"]].get(st)
                     if arr is None or not altcal.allowed(ttab, altcal.group(r["pos"], st, side)):
                         continue                                            # leg type shut off by its graded record

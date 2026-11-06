@@ -309,3 +309,21 @@ WONG_HIST_FALLBACK = {"low": 74.9, "other": 73.1}   # underdog Wong legs since 2
 # until he has ARRIVAL_WEEKS weeks of his own with the new team.
 ARRIVAL_SHARE = 0.80
 ARRIVAL_WEEKS = 3
+
+
+# Nov 5 2026: weather in the player sims. Per team-game shifts, fit on 2014-25 outdoor games
+# (opponent-adjusted; tools/nfl_weather_fit.py). Out of sample (fit 2014-21, test 2022-25), the
+# passing-yards miss in rough-weather games went from -18.6 to -2.4 per team.
+# Terms: w10 = mph of wind over 10, cold = degrees under 40F, rain / light / snow = expected 0-1 weights.
+WX_PLAYER = {
+    "att":  {"w10": -0.070, "rain": -0.86, "light": -0.45, "snow": -2.60, "snow_w10": -0.035, "cold": -0.035},
+    "car":  {"w10": +0.050, "rain": +1.00, "light": +0.45, "snow": +0.80, "snow_w10": +0.145, "cold": +0.027},
+    "ypa":  {"w10": -0.031, "rain": -0.40, "light": -0.29, "snow": +0.00, "snow_w10": -0.200, "cold": -0.016},
+    "cmp":  {"w10": -0.0012, "rain": -0.025, "light": -0.018, "snow": -0.014, "snow_w10": -0.0074, "cold": -0.0011},
+}
+WX_LG_YPA, WX_LG_CMP, WX_LG_ATT = 7.15, 0.64, 34.1
+WX_ROUGH_PYDS = -10      # expected passing yards lost per team: "rough" flag at this, "severe" at the next
+WX_SEVERE_PYDS = -20
+# passing and receiving Overs held off the play list and out of alt parlays in flagged games
+# (2026 weeks 1-8, the 5 flagged games: these Overs hit 47 of 112, 42%, with the book expecting 50%)
+WX_HOLD_STATS = {"pass_yds", "pass_cmp", "pass_att", "pass_td", "rec", "rec_yds", "q1_rec", "q1_rec_yds", "q1_pass_yds"}

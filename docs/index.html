@@ -579,6 +579,10 @@ h3{font:600 16px/1.3 var(--sans);letter-spacing:-.01em}
 /* status pills (Play / Watch / results) */
 .tag{background:var(--gold-soft);color:var(--gold-text);border:1px solid var(--gold-line);padding:4px 10px;font-weight:600}
 .tag.watch{background:var(--ground-2);border-color:var(--line);color:var(--muted)}
+.tag.wx{background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.45);color:#7FB4F5;margin-left:6px}
+.tag.wx.severe{background:rgba(96,165,250,.22);color:#A9CCF8}
+:root[data-theme="light"] .tag.wx{color:#2563B0}
+.wxnote{color:var(--ink)}
 .vt{padding:4px 10px}
 .vt.play{background:var(--gold-soft);border-color:var(--gold-line);color:var(--gold-text)}
 .res{font-weight:600;padding:4px 9px}
@@ -1349,7 +1353,8 @@ function gameRow(g) {
   const favHome = (g.margin ?? 0) > 0;
   const wpH = g.win_prob_home == null ? null : Number(g.win_prob_home), wpA = wpH == null ? null : 100 - wpH;
   const isPlay = !!(g.play_spread || g.play_total);
-  const playTag = isPlay ? `<span class="tag">Play</span>` : (g.lean_side || g.lean_total) && onBoard(g) ? `<span class="tag watch">Watch</span>` : "";
+  const playTag = (isPlay ? `<span class="tag">Play</span>` : (g.lean_side || g.lean_total) && onBoard(g) ? `<span class="tag watch">Watch</span>` : "")
+    + (g.wx_flag ? `<span class="tag wx${g.wx_flag.level === "severe" ? " severe" : ""}">${g.wx_flag.level === "severe" ? "Severe weather" : "Weather"}</span>` : "");
   const inj = [...(g.injuries_away || []).map(x => `${g.away} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`), ...(g.injuries_home || []).map(x => `${g.home} ${x.name} (${x.pos}, ${String(x.status).toLowerCase()})`)];
   const why = whyLines(g);
   const wp = wpH == null ? "" : `<div class="wp" aria-label="Win chance: ${esc(g.away)} ${n(wpA, 0)}%, ${esc(g.home)} ${n(wpH, 0)}%">
@@ -1367,6 +1372,7 @@ function gameRow(g) {
     ${wp}
     ${picksRow(g)}
   </summary><div class="g-body">${onBoard(g) ? altBox(g) : ""}
+    ${g.wx_flag ? `<div class="wxnote"><b>${g.wx_flag.level === "severe" ? "Severe weather" : "Rough weather"}:</b> the player projections take off about ${n(Math.abs(g.wx_flag.pass_yds), 0)} passing yards per team (${n(g.wx_flag.att, 1)} attempts, ${n(g.wx_flag.ypa, 2)} yards per attempt) and add ${n(g.wx_flag.car, 1)} carries. Passing and receiving Overs in this game are held off the play list and out of the alt parlays.</div>` : ""}
     <div><b>QBs:</b> ${esc(g.qb_away)} / ${esc(g.qb_home)}${g.weather ? ` &nbsp; <b>Weather:</b> ${esc(g.weather)}` : ""}${g.line_book ? ` &nbsp; <b>Line from:</b> ${esc(g.line_book)}` : ""}</div>
     ${g.picks ? `<div><b>Pick numbers:</b> spread and total show the gap in points between the model and Vegas. Moneyline shows the model's win chance minus the win chance the Vegas spread implies${g.picks.moneyline && g.picks.moneyline.vegas_pct != null ? ` (model ${g.picks.moneyline.model_pct}% vs Vegas ${g.picks.moneyline.vegas_pct}%)` : ""}, on the same team as the spread pick. Odds are the price only. Orange means it is also a Play.</div>` : ""}
     ${onBoard(g) && g.picks ? (() => { const P = g.picks, mu = `${g.away} at ${g.home}`, wpH = g.win_prob_home;

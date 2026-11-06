@@ -53,6 +53,19 @@ def _pos_of(pid, roster, eff_row):
     return pos, name, None
 
 
+def wx_shift(pw: dict) -> dict:
+    """Weather terms (geo.player_weather) -> per-team shifts in attempts, carries, yards per attempt, completion rate,
+    plus the passing yards that adds up to. Empty or indoor -> no shift."""
+    if not pw:
+        return {"att": 0.0, "car": 0.0, "ypa": 0.0, "cmp": 0.0, "pyds": 0.0}
+    x = dict(pw, snow_w10=pw.get("snow", 0.0) * pw.get("w10", 0.0))
+    out = {k: float(sum(c * x.get(t, 0.0) for t, c in C.WX_PLAYER[k].items())) for k in ("att", "car", "ypa", "cmp")}
+    out["att"] = max(out["att"], -0.35 * C.WX_LG_ATT)              # guard rails for extreme forecasts
+    out["ypa"] = max(out["ypa"], -0.40 * C.WX_LG_YPA)
+    out["pyds"] = (C.WX_LG_ATT + out["att"]) * (C.WX_LG_YPA + out["ypa"]) - C.WX_LG_ATT * C.WX_LG_YPA
+    return out
+
+
 def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dvp=None, mx=None) -> list[dict]:
     """mx: optional {'cov': {defense: passing-yards multiplier}, 'int': {qb pid: interception rate}}."""
     """side = 'home' or 'away'. game holds the final projected points and plays."""
@@ -77,6 +90,12 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
     pass_att = dropbacks * (1 - sack_rate - scr_rate)
     scrambles = dropbacks * scr_rate
     designed = plays - dropbacks
+    # weather (Nov 5 2026): fewer and less efficient passes, more carries (game["wx_player"], geo.player_weather)
+    wx = wx_shift(game.get("wx_player") or {})
+    pass_att = max(pass_att + wx["att"], 0.5 * pass_att)
+    designed = max(designed + wx["car"], 0.0)
+    ypa_mult = (C.WX_LG_YPA + wx["ypa"]) / C.WX_LG_YPA
+    cmp_mult = (C.WX_LG_CMP + wx["cmp"]) / C.WX_LG_CMP
     team_tgts = pass_att * C.TARGETS_PER_ATTEMPT
     tds = pts * C.TD_PER_POINT
     pass_tds = tds * ctx.pass_td_share.get(team, C.LEAGUE_PASS_TD_SHARE)
@@ -146,8 +165,8 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
         tgt = team_tgts * r["tgt_share"]
         cm, ck = _prior("catch_rate", pos if pos in ("WR", "TE", "RB") else "WR")
         ym, yk = _prior("yds_per_target", pos if pos in ("WR", "TE", "RB") else "WR")
-        catch = shrink(g("rec_cmp"), g("rec_n"), cm, ck) * ctx.def_cmp_mult.get(opp, 1.0)
-        ypt = shrink(g("rec_yds"), g("rec_n"), ym, yk) * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult
+        catch = shrink(g("rec_cmp"), g("rec_n"), cm, ck) * ctx.def_cmp_mult.get(opp, 1.0) * cmp_mult
+        ypt = shrink(g("rec_yds"), g("rec_n"), ym, yk) * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult * ypa_mult
         car = designed * r["car_share"]
         pm, pk = _prior("ypc", pos if pos in ("RB", "QB", "WR", "TE") else "RB")
         ypc = shrink(g("car_yds"), g("car_n"), pm, pk) * ctx.def_ypc_mult.get(opp, 1.0)
@@ -168,8 +187,8 @@ def project_team(team, opp, game, side, ctx, u, roster, inj, qb, shocks=None, dv
         df = dvp.adjust(df, opp)          # shifts targets / yards between positions; team totals unchanged
 
     # Make receiving totals agree with the QB's passing line
-    cmp_rate = qrate("qb_cmp", "qb_n", "qb_cmp") * ctx.def_cmp_mult.get(opp, 1.0)
-    ypa = qrate("qb_yds", "qb_n", "qb_ypa") * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult
+    cmp_rate = qrate("qb_cmp", "qb_n", "qb_cmp") * ctx.def_cmp_mult.get(opp, 1.0) * cmp_mult
+    ypa = qrate("qb_yds", "qb_n", "qb_ypa") * ctx.def_ypa_mult.get(opp, 1.0) * cov_mult * ypa_mult
     int_rate = qrate("qb_int", "qb_n", "qb_int")
     iw = mx.get("int", {}).get(qb_pid) if qb_pid is not None else None
     if iw is not None and np.isfinite(iw):          # interception-worthy throws are steadier than real INTs

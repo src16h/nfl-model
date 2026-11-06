@@ -246,7 +246,8 @@ def td_scale(p, line):
     return float(poisson.sf(n - 1, new_rate))
 
 
-def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None, real: dict = None) -> dict:
+def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = None, real: dict = None, wx_hold=()) -> dict:
+    """wx_hold: game ids with a rough or severe weather flag; passing and receiving Overs there stay off the play list."""
     if not len(props):
         return {"props": [], "pairs": []}
     pending = []
@@ -343,6 +344,9 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
             ok = (dec["play"] and stat in C.PROP_PLAY_STATS and side in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under"))
                   and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and not capped_
                   and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
+            if ok and side == "Over" and stat in C.WX_HOLD_STATS and row.get("game_id") in wx_hold:
+                ok = False                             # weather hold (Nov 5 2026): rough-weather passing Overs hit 42% in 2026
+                row["wx_hold"] = True
             if ok and paused_:                         # paused type: graded as a shadow play, not a play
                 ok = False
                 row["shadow"] = paused_
