@@ -139,7 +139,7 @@ def run(games, state_path, cache_path, now, close_games=()):
     play can be checked against the closing line (clv.prop_clv)."""
     state = _load(state_path, {})
     cache = _load(cache_path, {})
-    today = now.astimezone(timezone.utc).strftime("%Y-%m-%d")
+    today = now.astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")   # ET day: a 9pm run must not spend tomorrow's budget (Nov 5 2026)
     month = today[:7]
     if state.get("month") != month:
         state.update({"month": month, "remaining": state.get("remaining") if state.get("month") else None})
@@ -197,13 +197,24 @@ def run(games, state_path, cache_path, now, close_games=()):
         daily = max(0, (rem - C.ODDS_RESERVE)) / days_left
         allowance = int(daily) - 6 - state.get("spent_today", 0)          # keep room for line pulls
         et_hour = now.astimezone(ZoneInfo("America/New_York")).hour
-        todo = [g for g in games if g.get("book", {}).get("event") and g["date_et"] == g["today_et"]]
+        _st = lambda g: datetime.fromisoformat(g["start"].replace("Z", "+00:00"))
+        todo = [g for g in games if g.get("book", {}).get("event") and g["date_et"] == g["today_et"] and _st(g) > now]   # started games: no pulls
+        # floor (Nov 5 2026): every game still to play gets its main prop market and its main alt market, even when the
+        # daily share is used up, as long as the month's reserve holds. Those two come first; the rest gets what's left.
+        need_p = [g for g in todo if f"{g['game_id']}|{C.ODDS_PROP_MARKETS[0]}" not in cache]
+        need_a = [g for g in todo if (_st(g) - now).total_seconds() / 3600 <= C.ALT_HOURS and f"alt:{g['game_id']}:{C.ALT_MARKETS[0]}" not in cache]
+        spare = max(0, rem - C.ODDS_RESERVE - 6)
+        floor = min(len(need_p) + len(need_a), spare)
+        if allowance < floor:
+            status["floor"] = {"allowance": allowance, "raised_to": floor}
+            allowance = floor
+        hold = len(need_a)                                 # kept for main alt lines while the other prop markets pull
         if et_hour >= 11:                                  # props are posted by late morning
             for mkt in C.ODDS_PROP_MARKETS:
                 for g in sorted(todo, key=lambda x: x["start"]):
                     ck = f"{g['game_id']}|{mkt}"
                     closing = ck in cache and _close_due(cache[ck], g, close_games, now)
-                    if (ck in cache and not closing) or allowance < 1:
+                    if (ck in cache and not closing) or allowance - (0 if mkt == C.ODDS_PROP_MARKETS[0] else hold) < 1:
                         continue
                     ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
                                 markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
@@ -242,6 +253,8 @@ def run(games, state_path, cache_path, now, close_games=()):
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     status["alt_pulls"] = status.get("alt_pulls", 0) + 1
+                    if mkt == C.ALT_MARKETS[0]:
+                        hold = max(0, hold - 1)
             # shadow pulls: paused prop types (gates.py), only with credits left over, so would-be plays can be graded
             for mkt in getattr(C, "SHADOW_PROP_MARKETS", []):
                 for g in sorted(todo, key=lambda x: x["start"]):
@@ -265,6 +278,11 @@ def run(games, state_path, cache_path, now, close_games=()):
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     status["shadow_pulls"] = status.get("shadow_pulls", 0) + 1
+        if et_hour >= 11:
+            dark = [f"{g['away']}@{g['home']}" for g in todo if f"{g['game_id']}|{C.ODDS_PROP_MARKETS[0]}" not in cache]
+            if dark:
+                status["note"] = f"No props pulled yet for {', '.join(dark)}: out of odds credits ({rem} left this month)"
+                log.warning(status["note"])
     except Fatal as e:
         log.warning(f"NBA odds: {e}")
         status["note"] = str(e)
