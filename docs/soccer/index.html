@@ -843,6 +843,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <div class="slip-f"><label>Line<input id="slipLine" inputmode="decimal"></label><label>Odds<input id="slipOdds" inputmode="decimal"></label><label>Units<input id="slipUnits" inputmode="decimal"></label></div>
     <div class="stake" id="slipNote"></div></div>
   <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
+<script src="../boxscore.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1413,7 +1414,7 @@ function renderGames() {
         <div class="mkgrid">${["1x2", "ah", "total", "dnb", "btts"].map(k => mkCell(g, k)).join("")}</div>
         ${P["1x2"]?.draw ? `<div class="dim">Draw: ${n(P["1x2"].draw.model, 0)}% model${P["1x2"].draw.book != null ? `, ${n(P["1x2"].draw.book, 0)}% book at ${esc(P["1x2"].draw.odds)}` : `, fair ${esc(P["1x2"].draw.fair)}`}.</div>` : ""}
         ${moreBox(g)}
-        <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div></div></details>`;
+        <div>Most likely scores<div class="scores">${(g.scores || []).map(s => `<span><b>${esc(s.s)}</b>${n(s.p, 0)}%</span>`).join("")}</div></div>${window.BOX ? BOX.soccer(g, D.players) : ""}</div></details>`;
   }
   h += `</div>${G.length ? "" : `<div class="empty">No matches in the next week.</div>`}
     <p class="note">Expected goals come from team attack and defence ratings built on xG (Premier League, La Liga) or shots on target (Championship), with recent matches counting more. Asian handicap and totals grade quarter lines as two half bets, the way books do.</p>`;

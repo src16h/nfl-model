@@ -733,6 +733,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <div class="slip-f"><label>Line<input id="slipLine" inputmode="decimal"></label><label>Odds<input id="slipOdds" inputmode="decimal"></label><label>Units<input id="slipUnits" inputmode="decimal"></label></div>
     <div class="stake" id="slipNote"></div></div>
   <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
+<script src="../boxscore.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1020,6 +1021,7 @@ function renderGames() {
           <div>Ratings per play vs an average team (higher is better, defense too): ${[g.away, g.home].map(t => `<b>${esc(t)}</b> pass offense ${sgn(f(t).epa_p, 2)}, run offense ${sgn(f(t).epa_r, 2)}, pass defense ${sgn(f(t).d_epa_p, 2)}, run defense ${sgn(f(t).d_epa_r, 2)}`).join(". ")}.</div>
           ${Object.keys(tp).length ? `<div>Expected yards: ${Object.entries(tp).map(([t, v]) => `<b>${esc(t)}</b> ${n(v.pass_yds, 0)} passing on ${n(v.pass_att, 0)} attempts, ${n(v.rush_yds, 0)} rushing on ${n(v.rush_att, 0)} carries`).join(". ")}.</div>` : ""}
           ${KINDS.map(k => P[k] && P[k].edge != null ? `<div class="logrow">${PK_NAME[k]}: <b>${esc(pickText(k, P[k]))} ${esc(P[k].odds || "")}</b> <span class="stake">${stakeTxt(P[k].model, P[k].odds)}</span>${logBtn({kind: k, game_id: g.game_id, home: g.home, side: P[k].side, line: k === "ml" ? null : P[k].line, odds: P[k].odds, model_pct: P[k].model, desc: pickText(k, P[k]), sub: `${PK_NAME[k]}, ${g.away} at ${g.home}`})}</div>` : "").join("")}
+          ${window.BOX ? BOX.cfb(g, D.players) : ""}
         </div></details>`; }).join("")}</div>
     <p class="note">Model's score is football only: opponent-adjusted team ratings, no betting lines. Win chance and every pick use the anchored number. Spread and total lines are shown for the home team. Games against FCS teams treat the opponent as an average FCS team.</p>`;
   $("#games").innerHTML = h;

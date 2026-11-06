@@ -763,6 +763,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <div class="slip-f"><label>Line<input id="slipLine" inputmode="decimal"></label><label>Odds<input id="slipOdds" inputmode="decimal"></label><label>Units<input id="slipUnits" inputmode="decimal"></label></div>
     <div class="stake" id="slipNote"></div></div>
   <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
+<script src="../boxscore.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1210,6 +1211,7 @@ function renderGames() {
           <div>Form per game (regulation, recent games count more): ${[g.away, g.home].map(t => { const f = g.form?.[t] || {}; return `<b>${esc(t)}</b> ${n(f.xgf, 2)} xG for, ${n(f.xga, 2)} against, ${n(f.sogf, 1)} shots for, ${n(f.soga, 1)} against`; }).join(". ")}.</div>
           <div>Expected shots on goal: ${esc(g.away)} <b>${n(g.sog_away, 1)}</b>, ${esc(g.home)} <b>${n(g.sog_home, 1)}</b>. Rest: ${esc(g.away)} ${g.rest_away} day${g.rest_away === 1 ? " (back-to-back)" : "s"}, ${esc(g.home)} ${g.rest_home} day${g.rest_home === 1 ? " (back-to-back)" : "s"}.</div>
           ${["ml", "pl", "total"].map(k => P[k] && P[k].edge != null ? `<div class="logrow">${PK_NAME[k]}: <b>${esc(pickText(k, P[k]))} ${esc(P[k].odds || "")}</b> <span class="stake">${stakeTxt(P[k].model, P[k].odds)}</span>${logBtn({kind: k, game_id: g.game_id, home: g.home, side: P[k].side, line: k === "ml" ? null : P[k].line, odds: P[k].odds, model_pct: P[k].model, desc: pickText(k, P[k]), sub: `${PK_NAME[k]}, ${g.away} at ${g.home}`})}</div>` : "").join("")}
+          ${window.BOX ? BOX.nhl(g, D.players) : ""}
         </div></details>`; }).join("")}</div>
     <p class="note">Win chance includes overtime and the shootout. Totals and puck lines count overtime and shootout goals the way books grade them. The model's 1-goal and 2-goal win rates are tuned to real NHL finishes, empty-netters included.</p>`;
   $("#games").innerHTML = h;

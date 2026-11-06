@@ -778,6 +778,7 @@ table.sc .roi{display:block;font:400 11.5px var(--sans);color:var(--faint)}
     <div class="slip-f"><label>Line<input id="slipLine" inputmode="decimal"></label><label>Odds<input id="slipOdds" inputmode="decimal"></label><label>Units<input id="slipUnits" inputmode="decimal"></label></div>
     <div class="stake" id="slipNote"></div></div>
   <div class="slip-a"><button class="btn" id="slipCancel">Cancel</button><button class="btn primary" id="slipSave">Save bet</button></div></dialog>
+<script src="boxscore.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 // Nov 1 2026: bets stay on the board from kickoff until the game is final, tagged "Started"
@@ -1381,6 +1382,7 @@ function gameRow(g) {
     ${(g.notes || []).map(x => `<div>${esc(x)}</div>`).join("")}
     ${inj.length ? `<div class="inj"><b>Key injuries:</b> ${esc(inj.join(", "))}</div>` : ""}
     ${g.final_line && g.model_line && g.final_line !== g.model_line ? `<div>Football-only model (no Vegas input): ${esc(g.model_line)}, total ${n(g.indep_total)}</div>` : ""}
+    ${window.BOX ? BOX.nfl(g, D.players) : ""}
   </div></details>`;
 }
 
