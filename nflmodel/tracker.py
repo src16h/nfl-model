@@ -367,7 +367,10 @@ def update_props_log(path, rows, season, week, now):
             "shadow_flag": (old or {}).get("shadow_flag") or ({"line": r.get("line"), "lean": r.get("lean"),
                                                                "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
                                                                "edge": r["edge"], "book": r.get("book"), "at": ts}
-                                                              if r.get("shadow") and r.get("tier") != "play" else None)}
+                                                              if r.get("shadow") and r.get("tier") != "play" else None),
+            # weather hold (Nov 5 2026): an Over that would have been a play, held for rough weather; graded as if bet
+            "wx_hold": (old or {}).get("wx_hold") or ({"line": r.get("line"), "odds": r.get("over_odds"), "edge": r["edge"],
+                                                       "book": r.get("book"), "at": ts} if r.get("wx_hold") else None)}
         index[trio] = key
     _save(path, lg)
 
@@ -1038,3 +1041,91 @@ def model_tracking(hist_dir, season, results, snaps=None):
     return {"markets": markets, "tds": td_out, "combos": cb, "combo_total": combo_total, "alt_parlays": alt_out,
             "alt_mix": mix_out, "alt_plays": alt_play_out, "alt_ladder": lad_out,
             "weeks": sorted({r[1] for r in mk} | {r[1] for r in tds})}
+
+
+# ---------------------------------------------------------------------
+# Weather tracker (Nov 5 2026): rough-weather games, their totals, and the passing Overs held out of plays
+WX_PASS_STATS = ("pass_yds", "pass_cmp", "pass_att", "pass_td", "rec", "rec_yds")
+_WET = "rain|snow|shower|drizzle|sleet|storm|flurr"
+
+
+def _tot_rec(rows):
+    u = sum(1 for x in rows if x["vs_close"] < 0)
+    o = sum(1 for x in rows if x["vs_close"] > 0)
+    return {"n": len(rows), "under": u, "over": o, "push": len(rows) - u - o,
+            "avg_vs_close": fnum(float(np.mean([x["vs_close"] for x in rows])), 1) if rows else None}
+
+
+def weather_record(hist_dir, season, results, props_path, pbp, schedules):
+    """1) flagged games: forecast crossed the weather flag (saved wx_flag, or the saved forecast text re-read for
+    weeks before the flag existed); final total vs the last saved total.
+    2) passing and receiving Overs in those games: how often they hit vs the book, and the held plays graded as if bet.
+    3) every game it actually rained or snowed in (play-by-play weather text) vs the closing total, next to dry games."""
+    from .geo import player_weather, parse_weather_text
+    from .players import wx_shift
+    fin = (results or {}).get("games") or {}
+    flagged = []
+    for f in sorted(Path(hist_dir).glob(f"{season}_week*.json")):
+        try:
+            d = json.loads(f.read_text())
+        except Exception:  # noqa: BLE001
+            continue
+        for g in d.get("games", []):
+            fl = g.get("wx_flag")
+            if fl is None and g.get("weather") and g["weather"] != "Indoors":
+                sh = wx_shift(player_weather(parse_weather_text(g["weather"]), False))
+                if sh["pyds"] <= C.WX_ROUGH_PYDS:
+                    fl = {"level": "severe" if sh["pyds"] <= C.WX_SEVERE_PYDS else "rough", "pass_yds": round(sh["pyds"], 1),
+                          "retro": True}
+            r = fin.get(g["game_id"])
+            if not fl or not r or r.get("h") is None or g.get("market_total") is None:
+                continue
+            tot = float(r["h"]) + float(r["a"])
+            flagged.append({"game_id": g["game_id"], "week": int(d.get("week") or 0), "matchup": f"{g['away']} at {g['home']}",
+                            "weather": g.get("weather"), "level": fl["level"], "pass_yds": fl.get("pass_yds"), "retro": bool(fl.get("retro")),
+                            "final": f"{int(r['a'])}-{int(r['h'])}", "total": tot, "line": g["market_total"],
+                            "vs_close": round(tot - float(g["market_total"]), 1)})
+    ids = {x["game_id"] for x in flagged}
+    overs, held = [], []
+    try:
+        lg = json.loads(Path(props_path).read_text()).get("props", {})
+    except Exception:  # noqa: BLE001
+        lg = {}
+    for v in lg.values():
+        res = v.get("result") or {}
+        if v.get("game_id") not in ids or v.get("stat") not in WX_PASS_STATS or res.get("outcome") not in ("Over", "Under"):
+            continue
+        overs.append((res["outcome"] == "Over", (v.get("book_over") or 50) / 100, (v.get("model_over") or 50) / 100))
+        h = v.get("wx_hold")
+        if h and h.get("line") not in (None, "") and res.get("actual") is not None:
+            win = float(res["actual"]) > float(h["line"])
+            held.append(_payout(h.get("odds")) if win else -1.0)
+    ov = {"n": len(overs), "hits": sum(o[0] for o in overs),
+          "pct": fnum(100 * np.mean([o[0] for o in overs]), 1) if overs else None,
+          "book": fnum(100 * np.mean([o[1] for o in overs]), 1) if overs else None,
+          "model": fnum(100 * np.mean([o[2] for o in overs]), 1) if overs else None}
+    hd = {"n": len(held), "w": sum(1 for x in held if x > 0), "l": sum(1 for x in held if x <= 0),
+          "units": fnum(float(sum(held)), 2) if held else 0.0}
+    rain, dry = [], []
+    try:
+        sc = schedules[(schedules["season"] == season) & (schedules["game_type"] == "REG")]
+        sc = sc[pd.notna(sc["home_score"]) & pd.notna(sc["total_line"]) & ~sc["roof"].isin(["dome", "closed"])]
+        wt = pbp[pbp["season"] == season].groupby("game_id", observed=True)["weather"].first().astype(str).str.lower()
+        wet = wt[wt.str.contains(_WET) & ~wt.str.contains("no chance|0% chance|indoor|dome")]
+        for _, g in sc.iterrows():
+            row = {"game_id": g["game_id"], "week": int(g["week"]), "matchup": f"{g['away_team']} at {g['home_team']}",
+                   "final": f"{int(g['away_score'])}-{int(g['home_score'])}", "line": float(g["total_line"]),
+                   "vs_close": round(float(g["home_score"] + g["away_score"] - g["total_line"]), 1)}
+            if g["game_id"] in wet.index:
+                row["weather"] = str(wet[g["game_id"]])[:60]
+                rain.append(row)
+            else:
+                dry.append(row)
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"weather tracker: rain games skipped: {e}")
+    return {"flagged": dict(_tot_rec(flagged), games=sorted(flagged, key=lambda x: x["week"])),
+            "overs": ov, "held": hd,
+            "rain": dict(_tot_rec(rain), games=sorted(rain, key=lambda x: x["week"])), "dry": _tot_rec(dry),
+            "history": {"rain_light_wind": {"n": 183, "avg_vs_close": -0.6, "under_pct": 55},
+                        "wind_15_19_dry": {"n": 202, "avg_vs_close": -2.2, "under_pct": 57},
+                        "rain_wind_15": {"n": 34, "avg_vs_close": -2.9, "under_pct": 56}}}

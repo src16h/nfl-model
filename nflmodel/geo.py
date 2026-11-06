@@ -177,3 +177,17 @@ def player_weather(wx, indoor) -> dict:
     except Exception as e:  # noqa: BLE001
         log.info(f"weather unavailable for {home}: {str(e)[:80]}")
         return None
+
+
+def parse_weather_text(s) -> dict | None:
+    """The page's weather text ("76°F, wind 16 mph, 51% rain, 2.0 mm/hr") back into a forecast dict."""
+    import re
+    if not s or s == "Indoors":
+        return None
+    t = re.search(r"(-?\d+)°F", s); w = re.search(r"wind (\d+)", s); r = re.search(r"(\d+)% (rain|snow)", s)
+    mm = re.search(r"([\d.]+) mm/hr", s)
+    out = {"temp": float(t.group(1)) if t else 60.0, "wind": float(w.group(1)) if w else 0.0,
+           "precip": float(r.group(1)) if r else 0.0, "rain_mm": float(mm.group(1)) if mm else None}
+    if r and r.group(2) == "snow":
+        out["snow_cm"] = 0.5
+    return out

@@ -2327,7 +2327,7 @@ function bindTDHistory() {
 function renderRecord() {
   const L = D.live_record || {}, M = D.model || {}, R = D.prop_record || {}, PR = D.plays_record || {}, rules = D.plays_rules || {};
   const pp = R.plays || PR.props || {};
-  let h = reportHTML() + trackingHTML() + myBetsHTML() + tdHistoryHTML() + clvHTML() + calBlock() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
+  let h = reportHTML() + trackingHTML() + weatherHTML() + myBetsHTML() + tdHistoryHTML() + clvHTML() + calBlock() + `<h2>Plays record</h2><p class="sub">Only the picks shown as plays, at flat 1 unit. Break-even is 52.4% at standard odds. Green means even the low end of the likely range beats break-even.</p>
   <div class="strip">
     <div class="st"><strong class="${pp.n >= MIN_N ? "v-" + pp.verdict : ""}">${pp.n ? `${pp.w}–${pp.l}` : "0–0"}</strong><span>Prop plays${pp.n ? `, ${n(pp.pct)}%` : ""}</span></div>
     <div class="st"><strong class="${uc(pp.units)}">${units(pp.units)}</strong><span>Prop plays, units${pp.roi != null ? ` (ROI ${sgn(pp.roi)}%)` : ""}</span></div>
@@ -2369,6 +2369,29 @@ function renderRecord() {
   $("#record").innerHTML = h;
   bindRecord();
   bindTDHistory();
+}
+
+/* weather tracker (Nov 5 2026): rough-weather games, held passing Overs, rain games vs the close */
+function weatherHTML() {
+  const W = D.tracking?.weather;
+  if (!W) return "";
+  const F = W.flagged || {}, O = W.overs || {}, H = W.held || {}, R = W.rain || {}, Dr = W.dry || {}, Hi = W.history || {};
+  const ou = x => x && x.n ? `${x.under}–${x.over}${x.push ? `–${x.push}` : ""}` : "0–0";
+  const vs = v => v == null ? "–" : `${v > 0 ? "+" : ""}${n(v)}`;
+  const short = w => String(w || "").replace(/\s*temp:.*$/i, "").replace(/ from hurricane \w+/i, "").replace(/^./, c => c.toUpperCase());
+  const tbl = (rows, wx) => `<div class="tablewrap"><table><thead><tr><th>Wk</th><th>Game</th><th>Final</th><th>Total</th><th>vs close</th></tr></thead><tbody>${
+    rows.map(g => `<tr><td>${g.week}</td><td style="white-space:normal;text-align:left">${esc(g.matchup)}<span style="display:block;color:var(--faint);font-size:12px">${esc(wx === "rain" ? short(g.weather) : g.weather || "")}${g.level === "severe" ? ", severe" : ""}</span></td><td>${esc(g.final)}</td><td>${n(g.line)}</td><td>${vs(g.vs_close)}</td></tr>`).join("")}</tbody></table></div>`;
+  const rl = Hi.rain_light_wind || {};
+  return `<h2>Weather games</h2><p class="sub">Games where the forecast crossed the weather flag (player projections lose 10+ passing yards per team), plus every game it actually rained. Totals are Under–Over against the closing number.</p>
+  <div class="strip">
+    <div class="st"><strong>${ou(F)}</strong><span>Flagged games, Under–Over${F.n ? `, ${vs(F.avg_vs_close)} pts vs close` : ""}</span></div>
+    <div class="st"><strong>${O.n ? `${n(O.pct, 0)}%` : "–"}</strong><span>Passing and receiving Overs hit in flagged games${O.n ? ` (${O.hits} of ${O.n}; book expected ${n(O.book, 0)}%)` : ""}</span></div>
+    <div class="st"><strong>${H.n ? `${H.w}–${H.l}` : "0–0"}</strong><span>Held Over plays, graded as if bet${H.n ? `, <b class="${uc(-H.units)}">${units(-H.units)} saved</b>` : ""}</span></div>
+    <div class="st"><strong>${ou(R)}</strong><span>Games it rained, Under–Over${R.n ? `, ${vs(R.avg_vs_close)} pts vs close` : ""}</span></div>
+  </div>
+  <p class="note">Dry outdoor games this season: ${vs(Dr.avg_vs_close)} pts vs the close (${Dr.n || 0} games). Over 2014-25, rain with light wind ran ${vs(rl.avg_vs_close)} pts vs the close with ${rl.under_pct ?? "–"}% Unders (${rl.n ?? "–"} games), so Vegas usually prices rain. The flag mostly matters for player props. Flags before Nov 5 are re-read from the saved forecast.</p>
+  ${F.games?.length ? `<details class="fold"><summary>Flagged games <span>${F.n}</span></summary><div class="fold-body">${tbl(F.games, "weather")}</div></details>` : ""}
+  ${R.games?.length ? `<details class="fold"><summary>Games it actually rained <span>${R.n}</span></summary><div class="fold-body">${tbl(R.games, "rain")}</div></details>` : ""}`;
 }
 
 function modelDetails(M) {

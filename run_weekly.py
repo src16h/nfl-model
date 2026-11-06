@@ -1347,6 +1347,11 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
                     g["teaser_legs"] = TZ.game_legs(g, kn)
             by_week[int(d.get("week") or f.stem.split("week")[-1])] = gs
         res["tracking"]["teasers"] = clean_json(TZ.tracking(by_week, results.get("games") or {}))
+        try:                                   # rough-weather games, held passing Overs, rain games vs the close (Nov 5 2026)
+            res["tracking"]["weather"] = clean_json(tracker.weather_record(HIST, season, results, OUT / "props_log.json",
+                                                                             bundle.pbp, bundle.schedules))
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"weather tracker skipped: {e}")
     except Exception as e:  # noqa: BLE001
         log.warning(f"results / tracking skipped: {e}")
     return res
