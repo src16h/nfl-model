@@ -7243,7 +7243,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.0,
+    "total": 44.5,
+    "margin": -5.0,
+    "points": 47.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_DAL_IND": {
@@ -7346,7 +7351,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -4.5,
+    "total": 51.5,
+    "margin": -4.0,
+    "points": 50.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_NYJ_KC": {
@@ -7462,7 +7472,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 9.5,
+    "total": 47.5,
+    "margin": 23.0,
+    "points": 47.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_DET_MIA": {
@@ -7604,7 +7619,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -6.5,
+    "total": 49.5,
+    "margin": -10.0,
+    "points": 28.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_CLE_NO": {
@@ -7681,7 +7701,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 4.5,
+    "total": 43.5,
+    "margin": 1.0,
+    "points": 45.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_NYG_PHI": {
@@ -7849,7 +7874,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.0,
+    "total": 38.5,
+    "margin": -8.0,
+    "points": 30.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_LA_WAS": {
@@ -7978,7 +8008,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -4.5,
+    "total": 48.5,
+    "margin": -7.0,
+    "points": 33.0
+   },
    "last_seen": "2026-11-08T17:41+00:00"
   },
   "2026_09_HOU_LAC": {
@@ -8443,7 +8478,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T20:46+00:00"
+   "last_seen": "2026-11-08T23:06+00:00"
   },
   "2026_09_ARI_SEA": {
    "game_id": "2026_09_ARI_SEA",
@@ -8701,7 +8736,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T20:46+00:00"
+   "last_seen": "2026-11-08T23:06+00:00"
   }
  }
 }
