@@ -7109,7 +7109,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.0,
+    "total": 52.5,
+    "margin": -17.0,
+    "points": 51.0
+   },
    "last_seen": "2026-11-08T02:16+00:00"
   },
   "2026_09_DEN_CAR": {
@@ -8087,10 +8092,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-08T20:46+00:00",
+     "src": "live:hardrockbet",
+     "spread": -5.5,
+     "total": 40.0,
+     "m": -5.9,
+     "t": 41.6,
+     "edge_s": -0.4,
+     "edge_t": 1.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   },
   "2026_09_LV_SF": {
    "game_id": "2026_09_LV_SF",
@@ -8180,7 +8198,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   },
   "2026_09_GB_NE": {
    "game_id": "2026_09_GB_NE",
@@ -8319,10 +8337,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-08T20:46+00:00",
+     "src": "live:hardrockbet",
+     "spread": 3.5,
+     "total": 44.5,
+     "m": 3.6,
+     "t": 45.6,
+     "edge_s": 0.1,
+     "edge_t": 1.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   },
   "2026_09_BUF_MIN": {
    "game_id": "2026_09_BUF_MIN",
@@ -8412,7 +8443,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   },
   "2026_09_ARI_SEA": {
    "game_id": "2026_09_ARI_SEA",
@@ -8551,10 +8582,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-08T20:46+00:00",
+     "src": "live:hardrockbet",
+     "spread": 9.0,
+     "total": 39.5,
+     "m": 9.4,
+     "t": 40.3,
+     "edge_s": 0.4,
+     "edge_t": 0.8,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   },
   "2026_09_TB_CHI": {
    "game_id": "2026_09_TB_CHI",
@@ -8657,7 +8701,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-08T17:41+00:00"
+   "last_seen": "2026-11-08T20:46+00:00"
   }
  }
 }
