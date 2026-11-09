@@ -307,7 +307,7 @@ MARKET_POS = {
     "pass_yds": ("QB",), "rush_yds": ("RB", "QB"), "rec_yds": ("WR", "TE", "RB"), "rec": ("WR", "TE", "RB"),
     "rush_rec_yds": ("RB", "WR", "TE"), "pass_cmp": ("QB",), "pass_att": ("QB",),
     "carries": ("RB", "QB"), "q1_pass_yds": ("QB",), "q1_rec_yds": ("WR", "TE", "RB"),
-    "q1_rec": ("WR", "TE", "RB"),
+    "q1_rec": ("WR", "TE", "RB"), "pass_long": ("QB",),
 }
 
 

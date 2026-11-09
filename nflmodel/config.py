@@ -147,7 +147,8 @@ SHARP_BOOKS = ["pinnacle"]   # referee price for game plays; rides in the same c
 # Which prop types to load. Each one costs about 1 credit per game. Add more from
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
-                     "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
+                     "player_receptions", "player_anytime_td", "player_tds_over",   # tds_over = 2+ TDs
+                     "player_pass_longest_completion"]   # Nov 9 2026: QB longest completion (about 1 credit per game)
 # Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
 # About 3 more credits per game, so they start with the Nov 1 credit reset.
 ODDS_EXTRA_PROP_MARKETS = ["player_pass_completions", "player_pass_attempts", "player_rush_attempts"]
@@ -169,7 +170,7 @@ PROP_PLAY_MIN = 0.04
 PROP_PLAY_MAX = 0.15         # Oct 2026: a candidate becomes a Play only if it clears betrules.py (blend with the book, profit at the price)
 PROP_WATCH_MAX = 0.15
 # Prop types allowed to be a Play. Anytime TD stays in Watch until it proves itself.
-PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
+PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds", "pass_long"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
 # Sides allowed to be a Play (Oct 21 2026). Yardage plays so far: Unders 41-23 (+13.3u), Overs 26-25 (-1.8u); across every
 # graded lean Overs hit 44% (576) vs Unders 56% (641). Books shade Overs, so Overs stay leans until they show an edge.
 PROP_PLAY_SIDES = ["Under"]
@@ -178,7 +179,12 @@ PROP_PLAY_SIDES = ["Under"]
 PROP_EDGE_CAP = {("rec_yds", "Under"): 0.10}
 # Paused prop types (gates.py tracks them as shadow plays and brings them back once they earn it).
 # Passing-yard Unders: 13-20 (-25%) as leans; back after 60 graded shadow plays at +3% or better.
-PROP_PAUSED_TYPES = {("pass_yds", "Under"): "nfl_prop_pass_under"}
+PROP_PAUSED_TYPES = {("pass_yds", "Under"): "nfl_prop_pass_under",
+                     # Longest completion (added Nov 9 2026): both sides start as shadow plays and become plays once
+                     # they clear the gates.py bar on fresh bets (no graded history for this prop yet).
+                     ("pass_long", "Under"): "nfl_prop_long_under", ("pass_long", "Over"): "nfl_prop_long_over"}
+# Prop types allowed to play on a side outside PROP_PLAY_SIDES (filled in by run_weekly.py when a gate comes back).
+PROP_EXTRA_OK = set()
 # A "No TD" pick needs a real No price from the book. Without one it is never flagged.
 TD_NO_NEEDS_PRICE = True
 
@@ -220,6 +226,11 @@ Q1_CATCH_SHARE = 0.22            # chance a given catch happens in the 1st quart
 Q1_PASS_SHARE = 0.218           # QB: share of passing yards thrown in the 1st quarter
 Q1_PASS_KAPPA = 10.3            # how much that share moves game to game (beta concentration)
 Q1_YPC_SHAPE = 1.3               # spread of yards on a single catch (fit to 2023-25 Q1 games)
+# Longest completion (Nov 9 2026): spread of yards across one receiver's catches (lognormal sigma). Fit on 1,903 QB
+# games in 2023-26: 0.83-0.85 matches real over rates at every line from 20.5 to 55.5 within about 2 points; an
+# end-to-end replay (1,390 QB games, simulated from each team's earlier games) had real Overs 2-3 points high at 0.83.
+CATCH_YDS_SIGMA = 0.85
+CATCH_MAX_SPLIT = 20             # catches per receiver beyond this are folded into the first 20 (never happens in practice)
 # first half, from 2022-25 games: halftime margin = 0.63 x full-game margin,
 # halftime total = 0.49 x full-game total + 1.0
 H1_MARGIN_SLOPE = 0.628
@@ -326,4 +337,5 @@ WX_ROUGH_PYDS = -10      # expected passing yards lost per team: "rough" flag at
 WX_SEVERE_PYDS = -20
 # passing and receiving Overs held off the play list and out of alt parlays in flagged games
 # (2026 weeks 1-8, the 5 flagged games: these Overs hit 47 of 112, 42%, with the book expecting 50%)
-WX_HOLD_STATS = {"pass_yds", "pass_cmp", "pass_att", "pass_td", "rec", "rec_yds", "q1_rec", "q1_rec_yds", "q1_pass_yds"}
+WX_HOLD_STATS = {"pass_yds", "pass_cmp", "pass_att", "pass_td", "rec", "rec_yds", "q1_rec", "q1_rec_yds", "q1_pass_yds",
+                 "pass_long"}

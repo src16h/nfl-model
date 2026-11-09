@@ -59,7 +59,7 @@ MARKETS = {
     "player_rush_yds": "rush_yds", "player_rush_attempts": "carries",
     "player_receptions": "rec", "player_reception_yds": "rec_yds",
     "player_rush_reception_yds": "rush_rec_yds", "player_anytime_td": "anytime_td",
-    "player_tds_over": "tds",
+    "player_tds_over": "tds", "player_pass_longest_completion": "pass_long",
 }
 
 

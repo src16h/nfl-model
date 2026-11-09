@@ -84,15 +84,31 @@ def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
     q1_yds = np.where(q1_n > 0, rng.gamma(np.maximum(q1_n, 1) * C.Q1_YPC_SHAPE,
                                           np.maximum(ypc, 0.5) / C.Q1_YPC_SHAPE), 0.0)
 
+    # longest catch (Nov 9 2026): each receiver's yards are split across his catches with a lognormal weight per
+    # catch, and the biggest piece is his longest. Fit on 1,903 QB games (2023-26, given the real catches and yards
+    # per receiver): sigma 0.85 (config) matches the real longest-completion over rates within about 2 points at every line.
+    long_j = np.zeros((N, k))
+    sig = C.CATCH_YDS_SIGMA
+    rng_l = np.random.default_rng(np.random.SeedSequence([int(seed) % (2 ** 32), 7919]))   # own stream: other stats stay unchanged
+    for j in range(k):
+        nj = rec_n[:, j].astype(int)
+        m = int(min(nj.max(), C.CATCH_MAX_SPLIT)) if nj.size else 0
+        if m <= 0:
+            continue
+        G = np.exp(sig * rng_l.standard_normal((N, m)))
+        G[np.arange(m)[None, :] >= nj[:, None]] = 0.0
+        tot = G.sum(axis=1)
+        long_j[:, j] = np.where(tot > 0, G.max(axis=1) / np.maximum(tot, 1e-12), 0.0) * np.maximum(rec_yds[:, j], 0.0)
+
     out = {}
     for j, pid in enumerate(pids):
-        out[pid] = {"rec": rec_n[:, j], "rec_yds": rec_yds[:, j], "rec_td": rec_td[:, j],
+        out[pid] = {"rec": rec_n[:, j], "rec_yds": rec_yds[:, j], "rec_td": rec_td[:, j], "rec_long": long_j[:, j],
                     "carries": car_n[:, j].astype(float), "rush_yds": rush_yds[:, j], "rush_td": rush_tdm[:, j],
                     "q1_rec": q1_n[:, j].astype(float), "q1_rec_yds": q1_yds[:, j]}
 
     if qb_pid is not None:
         q = out.setdefault(qb_pid, {s: np.zeros(N) for s in ["rec", "rec_yds", "rec_td", "carries", "rush_yds", "rush_td",
-                                                              "q1_rec", "q1_rec_yds"]})
+                                                              "q1_rec", "q1_rec_yds", "rec_long"]})
         if scr_car > 0:
             sy = rng.gamma(1.5, max(scr_yds, 0.1) / 1.5, N)
             q["rush_yds"] = q["rush_yds"] + sy
@@ -101,6 +117,7 @@ def simulate_team(pool: pd.DataFrame, qb_pid, pass_td, rush_td, int_mean,
             q["rush_td"] = q["rush_td"] + rng.poisson(scr_td * _norm_factor(Fr ** 1.2))
         q["pass_yds"] = rec_yds.sum(axis=1)
         q["pass_cmp"] = rec_n.sum(axis=1).astype(float)
+        q["pass_long"] = long_j.max(axis=1) if k else np.zeros(N)    # longest completion: the longest catch thrown to anyone
         # QB first quarter: full-game passing yards x a first-quarter share that varies
         # game to game (2022-25: mean 21.8%, beta spread fit on real team-games)
         sh = rng.beta(C.Q1_PASS_SHARE * C.Q1_PASS_KAPPA, (1 - C.Q1_PASS_SHARE) * C.Q1_PASS_KAPPA, N)
@@ -134,6 +151,7 @@ STAT_ALIASES = {
     "rush_yds": "rush_yds", "rushing_yards": "rush_yds", "carries": "carries", "rush_att": "carries",
     "rec": "rec", "receptions": "rec", "rec_yds": "rec_yds", "receiving_yards": "rec_yds",
     "rush_rec_yds": "rush_rec_yds", "anytime_td": "anytime_td", "fpts": "fpts", "fantasy_points": "fpts",
+    "pass_long": "pass_long", "longest_completion": "pass_long", "longest_pass": "pass_long", "long_cmp": "pass_long",
     "tds": "tds", "td2": "tds", "two_plus_td": "tds",
 }
 
@@ -152,7 +170,7 @@ STAT_LABELS = {
     "pass_yds": "Passing yards", "pass_td": "Passing TDs", "pass_cmp": "Completions", "pass_att": "Pass attempts",
     "pass_int": "Interceptions", "rush_yds": "Rushing yards", "carries": "Rush attempts", "rec": "Receptions",
     "rec_yds": "Receiving yards", "rush_rec_yds": "Rush + rec yards", "anytime_td": "Anytime TD",
-    "tds": "2+ TDs",
+    "tds": "2+ TDs", "pass_long": "Longest completion",
     "fpts": "Fantasy points",
 }
 
@@ -341,7 +359,10 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         if tier in ("play", "watch") and dec is not None:
             capped_ = abs(edge) >= getattr(C, "PROP_EDGE_CAP", {}).get((stat, side), 9.9)
             paused_ = getattr(C, "PROP_PAUSED_TYPES", {}).get((stat, side))
-            ok = (dec["play"] and stat in C.PROP_PLAY_STATS and side in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under"))
+            side_ok = side in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under")) or (stat, side) in getattr(C, "PROP_EXTRA_OK", ())
+            if paused_:                                # a paused type is judged on its own side rules (shadow play)
+                side_ok = True
+            ok = (dec["play"] and stat in C.PROP_PLAY_STATS and side_ok
                   and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and not capped_
                   and cons_ev is not None and cons_ev >= C.PROP_CONS_MIN_EV)
             if ok and side == "Over" and stat in C.WX_HOLD_STATS and row.get("game_id") in wx_hold:
@@ -354,9 +375,12 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
             # shadow plays (gates.py): would have been a play if a paused type were still on
             if not ok and dec["play"] and abs(edge) < C.PROP_WATCH_MAX and dec["side"] == side and cons_ev is not None \
                     and cons_ev >= C.PROP_CONS_MIN_EV:
-                if stat == "rec" and stat not in C.PROP_PLAY_STATS:
+                if row.get("shadow"):                  # already a paused type's shadow play (its own gate)
+                    pass
+                elif stat == "rec" and stat not in C.PROP_PLAY_STATS:
                     row["shadow"] = "nfl_prop_rec"
-                elif stat in C.PROP_PLAY_STATS and side not in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under")):
+                elif stat in C.PROP_PLAY_STATS and side not in getattr(C, "PROP_PLAY_SIDES", ("Over", "Under")) \
+                        and (stat, side) not in getattr(C, "PROP_EXTRA_OK", ()) and not paused_:
                     row["shadow"] = "nfl_prop_overs"
         elif tier == "play":
             tier = "watch"

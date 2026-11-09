@@ -223,7 +223,7 @@ def q1_and_half(pbp: pd.DataFrame, game_ids) -> tuple[dict, dict]:
 
 
 RESULT_COLS = ["pass_yds", "pass_cmp", "pass_att", "pass_td", "pass_int", "rec", "rec_yds", "rec_td",
-               "carries", "rush_yds", "rush_td", "rush_rec_yds", "tds", "q1_rec", "q1_rec_yds", "q1_pass_yds"]
+               "carries", "rush_yds", "rush_td", "rush_rec_yds", "tds", "q1_rec", "q1_rec_yds", "q1_pass_yds", "pass_long"]
 
 
 def build_results(pbp: pd.DataFrame, schedules: pd.DataFrame, season: int) -> dict:
@@ -385,10 +385,12 @@ def player_game_stats(pbp: pd.DataFrame, game_ids) -> pd.DataFrame:
 
     pa = p[(p["pass_attempt"] == 1) & p["passer_player_id"].notna()]
     passing = pa.assign(py=np.where(pa["complete_pass"] == 1, yds[pa.index], 0.0),
+                        pl=np.where(pa["complete_pass"] == 1, yds[pa.index], np.nan),   # longest completion
                         att=(pa["sack"] != 1).astype(float)).groupby(          # official attempts leave out sacks
         ["game_id", "passer_player_id"]).agg(
         pass_yds=("py", "sum"), pass_cmp=("complete_pass", "sum"), pass_att=("att", "sum"),
-        pass_td=("pass_touchdown", "sum"), pass_int=("interception", "sum"))
+        pass_td=("pass_touchdown", "sum"), pass_int=("interception", "sum"), pass_long=("pl", "max"))
+    passing["pass_long"] = passing["pass_long"].fillna(0.0)          # no completions: longest is 0
     passing.index.names = ["game_id", "pid"]
 
     tg = p[(p["pass_attempt"] == 1) & p["receiver_player_id"].notna()]
@@ -407,7 +409,7 @@ def player_game_stats(pbp: pd.DataFrame, game_ids) -> pd.DataFrame:
 
     st = pd.concat([passing, receiving, rushing], axis=1).fillna(0.0)
     for c in ["pass_yds", "pass_cmp", "pass_att", "pass_td", "pass_int", "rec", "rec_yds", "rec_td",
-              "carries", "rush_yds", "rush_td"]:
+              "carries", "rush_yds", "rush_td", "pass_long"]:
         if c not in st.columns:
             st[c] = 0.0
     st["rush_rec_yds"] = st["rush_yds"] + st["rec_yds"]
@@ -482,7 +484,7 @@ def backfill(lg) -> bool:
 
 
 ZERO = {"pass_yds": 0.0, "pass_cmp": 0.0, "pass_td": 0.0, "pass_int": 0.0, "rec": 0.0, "rec_yds": 0.0, "rec_td": 0.0,
-        "carries": 0.0, "rush_yds": 0.0, "rush_td": 0.0, "rush_rec_yds": 0.0, "fpts": 0.0, "pass_att": 0.0}
+        "carries": 0.0, "rush_yds": 0.0, "rush_td": 0.0, "rush_rec_yds": 0.0, "fpts": 0.0, "pass_att": 0.0, "pass_long": 0.0}
 
 
 def played_set(snaps):
@@ -633,7 +635,8 @@ def grade_props(path, pbp, schedules, now, snaps=None):
 def gate_rows(path):
     """Graded rows for each NFL gate (gates.py): shadow plays while paused, real plays once it's back."""
     lg = _load(path, {"props": {}})
-    out = {"nfl_prop_overs": ([], []), "nfl_prop_rec": ([], []), "nfl_prop_pass_under": ([], [])}
+    out = {"nfl_prop_overs": ([], []), "nfl_prop_rec": ([], []), "nfl_prop_pass_under": ([], []),
+           "nfl_prop_long_under": ([], []), "nfl_prop_long_over": ([], [])}
 
     def row(res, fl):
         lr = (res or {}).get("lean_result")
@@ -652,7 +655,9 @@ def gate_rows(path):
             x = row(r["flag_result"], fl)
             if not x:
                 continue
-            if r.get("stat") == "rec":
+            if r.get("stat") == "pass_long":
+                out["nfl_prop_long_under" if fl.get("lean") == "Under" else "nfl_prop_long_over"][1].append(x)
+            elif r.get("stat") == "rec":
                 out["nfl_prop_rec"][1].append(x)
             elif r.get("stat") == "pass_yds" and fl.get("lean") == "Under":
                 out["nfl_prop_pass_under"][1].append(x)

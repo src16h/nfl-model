@@ -1208,7 +1208,8 @@ def grade(season, sch) -> dict:
 MARKET_NAMES = {"team_total": "Team totals", "h1_spread": "1st half margin", "h1_total": "1st half total",
                 "pass_yds": "Passing yards", "pass_cmp": "Completions", "pass_att": "Pass attempts", "rush_yds": "Rushing yards",
                 "carries": "Rush attempts", "rec": "Receptions", "rec_yds": "Receiving yards", "rush_rec_yds": "Rush + rec yards",
-                "q1_pass_yds": "1st quarter pass yards", "q1_rec_yds": "1st quarter rec yards", "q1_rec": "1st quarter receptions"}
+                "q1_pass_yds": "1st quarter pass yards", "q1_rec_yds": "1st quarter rec yards", "q1_rec": "1st quarter receptions",
+                "pass_long": "Longest completion"}
 
 
 def weekly_report(live, clv, props_path, week, tracking=None):
@@ -1311,7 +1312,7 @@ def run_tracking(bundle, games, prop_rows, season, week, now):
         tracker.update_props_log(OUT / "props_log.json", prop_rows, season, week, now)
         res["prop_record"] = tracker.grade_props(OUT / "props_log.json", bundle.pbp, bundle.schedules, now, snaps=bundle.snaps)
         try:                                   # paused bet types: shadow record and the bar to come back (gates.py)
-            gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under"))
+            gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under", "nfl_prop_long_under", "nfl_prop_long_over"))
             rows = tracker.gate_rows(OUT / "props_log.json")
             res["gates"] = [GT.update(OUT / "gates.json", gst, k, sh, pl, now.date().isoformat()) for k, (sh, pl) in rows.items()]
         except Exception as e:  # noqa: BLE001
@@ -1365,11 +1366,13 @@ def main():
     log.info(f"season {season}")
     bundle = D.load_all(season)
     # paused bet types (gates.py): a type that has earned its way back is a play again from this run on
-    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under") + GT.game_names("nfl"))
+    gst = GT.load(OUT / "gates.json", ("nfl_prop_overs", "nfl_prop_rec", "nfl_prop_pass_under", "nfl_prop_long_under", "nfl_prop_long_over") + GT.game_names("nfl"))
     C.PROP_PAUSED_TYPES = {k: v for k, v in C.PROP_PAUSED_TYPES.items() if not GT.active(gst, v)}
     C.GAME_PAUSED = GT.paused_kinds(gst, "nfl")
     if GT.active(gst, "nfl_prop_overs"):
         C.PROP_PLAY_SIDES = ["Over", "Under"]
+    if GT.active(gst, "nfl_prop_long_over"):          # longest-completion Overs earned their way back
+        C.PROP_EXTRA_OK = set(C.PROP_EXTRA_OK) | {("pass_long", "Over")}
     if GT.active(gst, "nfl_prop_rec") and "rec" not in C.PROP_PLAY_STATS:
         C.PROP_PLAY_STATS = list(C.PROP_PLAY_STATS) + ["rec"]
     log.info(f"gates: {({k: v['status'] for k, v in gst.items()})}")

@@ -21,6 +21,10 @@ GATES = {
                        "why": "Paused Oct 21: 26-25 as plays (-1.8u) while Unders went 41-23 (+13.3u)"},
     "nfl_prop_pass_under": {"label": "NFL passing-yard Unders", "min_n": 60, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-29",
                             "why": "Paused Oct 29: 13-20 (-25%) as leans in weeks 4-7 while rushing and receiving Unders won"},
+    "nfl_prop_long_under": {"label": "NFL longest completion Unders", "min_n": 30, "min_roi": 3.0, "repause_roi": -5.0,
+                            "since": "2026-11-09", "why": "New Nov 9 2026: no graded history yet, so it starts as shadow plays"},
+    "nfl_prop_long_over": {"label": "NFL longest completion Overs", "min_n": 30, "min_roi": 3.0, "repause_roi": -5.0,
+                           "since": "2026-11-09", "why": "New Nov 9 2026: no graded history yet, and books shade Overs"},
     "nfl_prop_rec": {"label": "NFL receptions props", "min_n": 40, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-21",
                      "why": "Cut earlier in October: 15-23 as plays, heavy juice"},
     # NHL
@@ -75,7 +79,7 @@ GATES["nhl_game_pl"].update({
 # ---------------------------------------------------------------------------------------------------
 PROP_KINDS = {"nhl": [("sog", "Over"), ("sog", "Under"), ("goals", "Over"), ("assists", "Over"), ("assists", "Under")],
               "nba": [(s, d) for s in ("pts", "reb", "ast", "fg3m", "pra") for d in ("Over", "Under")]}
-_STAT_LABEL = {"sog": "shots on goal", "goals": "goals", "assists": "assists", "pass_yds": "passing yards",
+_STAT_LABEL = {"sog": "shots on goal", "goals": "goals", "assists": "assists", "pass_yds": "passing yards", "pass_long": "longest completion",
                "rush_yds": "rushing yards", "rec_yds": "receiving yards", "rec": "receptions", "anytime_td": "anytime TD",
                "tds": "2+ TDs", "pts": "points", "reb": "rebounds", "ast": "assists", "fg3m": "threes", "pra": "pts+reb+ast"}
 

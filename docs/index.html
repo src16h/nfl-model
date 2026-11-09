@@ -796,7 +796,7 @@ const n = (v, d = 1) => v == null || isNaN(v) ? "–" : Number(v).toFixed(d);
 const sgn = (v, d = 1) => v == null || isNaN(v) ? "–" : (v > 0 ? "+" : "") + Number(v).toFixed(d);
 const LABELS = {pass_yds:"Passing yards", pass_td:"Passing TDs", pass_cmp:"Completions", pass_att:"Pass attempts", pass_int:"Interceptions",
   rush_yds:"Rushing yards", carries:"Rush attempts", rec:"Receptions", rec_yds:"Receiving yards", rush_rec_yds:"Rush + rec yards",
-  anytime_td:"Anytime TD", fpts:"Fantasy points"};
+  anytime_td:"Anytime TD", fpts:"Fantasy points", pass_long:"Longest completion"};
 const label = k => LABELS[String(k || "").toLowerCase()] || String(k || "").replaceAll("_", " ").replace(/^./, c => c.toUpperCase());
 const rec = r => !r || !(r[0] + r[1]) ? "0–0" : `${r[0]}–${r[1]}`;
 const pctOf = r => !r || !(r[0] + r[1]) ? null : 100 * r[0] / (r[0] + r[1]);
@@ -1583,7 +1583,7 @@ function bindTD() {
 /* ---------------- More markets (model only) ---------------- */
 const MKTS = [["team_total", "Team totals"], ["pass_yds", "Passing yards"], ["rush_yds", "Rushing yards"], ["rec_yds", "Receiving yards"], ["rec", "Receptions"],
   ["rush_rec_yds", "Rush + rec yards"], ["pass_cmp", "Completions"], ["pass_att", "Pass attempts"],
-  ["carries", "Rush attempts"], ["q1_pass_yds", "1st quarter pass yards"], ["q1_rec_yds", "1st quarter rec yards"], ["q1_rec", "1st quarter receptions"]];
+  ["carries", "Rush attempts"], ["q1_pass_yds", "1st quarter pass yards"], ["q1_rec_yds", "1st quarter rec yards"], ["q1_rec", "1st quarter receptions"], ["pass_long", "Longest completion"]];
 const mUI = {mkt: "team_total", game: "", q: "", open: null, lines: {}};
 const PGRID = Array.from({length: 25}, (_, i) => (2 + 4 * i) / 100);
 function pOver(m, L) {                       // chance the stat finishes above line L
@@ -1646,7 +1646,7 @@ function renderMore() {
   const all = mUI.mkt === "team_total" ? teamRows() : (D.players || []).filter(p => p.markets && p.markets[mUI.mkt] && onBoard(games[p.game_id]));
   const rows = all.filter(p => (!mUI.game || p.game_id === mUI.game) && (!mUI.q || `${p.name} ${p.team} ${p.opp}`.toLowerCase().includes(mUI.q)))
     .sort((a, b) => b.markets[mUI.mkt].mean - a.markets[mUI.mkt].mean);
-  const step = ["pass_cmp", "pass_att", "carries", "q1_rec", "rec", "team_total"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") || ["rush_yds", "rec_yds"].includes(mUI.mkt) ? 5 : 10);
+  const step = ["pass_cmp", "pass_att", "carries", "q1_rec", "rec", "team_total"].includes(mUI.mkt) ? 1 : (mUI.mkt.startsWith("q1") || ["rush_yds", "rec_yds", "pass_long"].includes(mUI.mkt) ? 5 : 10);
   let h = `<div class="sec-head"><h2>More markets</h2><span class="aside">Model lines only, no book odds loaded</span></div>
     <p class="sub">Fair lines from the same simulations as every other prop, including alternate lines for the main props. Compare to your book: if your book's line is lower than the fair line, the over has value, and if higher, the under. Tap a player and enter your book's line and odds: the model marks it Play, Watch, or No play with the same rules as your other props.</p>
     ${(() => { const mp = myPlays(games); const lab = Object.fromEntries(MKTS); return mp.length ? `<h3>Your plays from entered lines</h3><div class="gaps myplays">${mp.map(x => `<div class="gapcard">
@@ -2193,7 +2193,7 @@ function reportHTML() {
 
 const MKT_NAME = {team_total: "Team totals", h1_spread: "1st half margin", h1_total: "1st half total", pass_yds: "Passing yards", pass_cmp: "Completions",
   pass_att: "Pass attempts", rush_yds: "Rushing yards", carries: "Rush attempts", rec: "Receptions", rec_yds: "Receiving yards", rush_rec_yds: "Rush + rec yards",
-  q1_pass_yds: "1st quarter pass yards", q1_rec_yds: "1st quarter rec yards", q1_rec: "1st quarter receptions"};
+  q1_pass_yds: "1st quarter pass yards", q1_rec_yds: "1st quarter rec yards", q1_rec: "1st quarter receptions", pass_long: "Longest completion"};
 function trackingHTML() {
   const T = D.tracking; if (!T) return "";
   const M = Object.entries(T.markets || {}).sort((a, b) => b[1].n - a[1].n);
