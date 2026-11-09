@@ -5418,3 +5418,4 @@ game_id,season,type,date,start,home,away,hs,as,neutral,close_spread,close_total,
 401909944,2026,reg,2026-11-07,2026-11-08T03:00:00+00:00,POR,SAS,103,125,False,5.5,228.5,4.5,,180.0,-217.0,Draft Kings
 401909945,2026,reg,2026-11-08,2026-11-08T20:30:00+00:00,CHI,PHI,121,127,False,9.5,238.5,9.5,,331.0,-423.0,Draft Kings
 401909946,2026,reg,2026-11-08,2026-11-08T23:00:00+00:00,DET,LAL,116,121,False,5.5,227.5,-8.5,,4500.0,,Draft Kings - Live Odds
+401909947,2026,reg,2026-11-08,2026-11-09T00:00:00+00:00,MIN,UTA,115,100,False,-12.5,222.5,-10.5,,-700.0,504.0,DraftKings
