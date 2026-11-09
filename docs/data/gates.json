@@ -23,5 +23,15 @@
   "status": "paused",
   "since": "2026-10-29",
   "history": []
+ },
+ "nfl_prop_long_under": {
+  "status": "paused",
+  "since": "2026-11-09",
+  "history": []
+ },
+ "nfl_prop_long_over": {
+  "status": "paused",
+  "since": "2026-11-09",
+  "history": []
  }
 }
