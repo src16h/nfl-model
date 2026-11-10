@@ -1417,7 +1417,7 @@ Updated 1.2 hours ago, odds from odds_api, credits left 314.
 Gates: NHL points props (Unders) paused; NHL edge parlays paused; NHL moneyline active; NHL puck line paused; NHL totals active; NHL shots on goal Overs active; NHL shots on goal Unders active; NHL goals Overs active; NHL assists Overs active; NHL assists Unders active
 
 ## NBA
-Updated 10.7 hours ago, odds from odds_api, credits left 311.
+Updated 10.8 hours ago, odds from odds_api, credits left 311.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1477,7 +1477,7 @@ Updated 0.4 hours ago, odds from odds_api, credits left 337.
 Gates: CFB spreads active; CFB totals active; CFB moneyline active
 
 ## Soccer
-Updated 17.5 hours ago, odds from odds_api, credits left 381.
+Updated 17.6 hours ago, odds from odds_api, credits left 381.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|

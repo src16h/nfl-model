@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-10T19:34+00:00",
+ "generated_at": "2026-11-10T19:35+00:00",
  "sports": {
   "NFL": {
    "age_h": 0.4,
@@ -1189,7 +1189,7 @@
    }
   },
   "NBA": {
-   "age_h": 10.7,
+   "age_h": 10.8,
    "credits_left": 311,
    "odds_source": "odds_api",
    "records": [
@@ -2158,7 +2158,7 @@
    }
   },
   "Soccer": {
-   "age_h": 17.5,
+   "age_h": 17.6,
    "credits_left": 381,
    "odds_source": "odds_api",
    "records": [
