@@ -147,8 +147,9 @@ SHARP_BOOKS = ["pinnacle"]   # referee price for game plays; rides in the same c
 # Which prop types to load. Each one costs about 1 credit per game. Add more from
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
-                     "player_receptions", "player_anytime_td", "player_tds_over",   # tds_over = 2+ TDs
-                     "player_pass_longest_completion"]   # Nov 9 2026: QB longest completion (about 1 credit per game)
+                     "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
+# Nov 10 2026 (owner, credits): QB longest completion (added Nov 9) no longer pulled or played; its two gates stay
+# paused with no new shadow plays. Add "player_pass_longest_completion" back here and "pass_long" to PROP_PLAY_STATS.
 # Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
 # About 3 more credits per game, so they start with the Nov 1 credit reset.
 # Nov 10 2026 (credits): rush attempts dropped (only fed carries Under legs, which Hard Rock doesn't offer as alts).
@@ -172,7 +173,7 @@ PROP_PLAY_MIN = 0.04
 PROP_PLAY_MAX = 0.15         # Oct 2026: a candidate becomes a Play only if it clears betrules.py (blend with the book, profit at the price)
 PROP_WATCH_MAX = 0.15
 # Prop types allowed to be a Play. Anytime TD stays in Watch until it proves itself.
-PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds", "pass_long"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
+PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds"]   # receptions removed Oct 2026: 15-23 as plays, heavy juice
 # Sides allowed to be a Play (Oct 21 2026). Yardage plays so far: Unders 41-23 (+13.3u), Overs 26-25 (-1.8u); across every
 # graded lean Overs hit 44% (576) vs Unders 56% (641). Books shade Overs, so Overs stay leans until they show an edge.
 PROP_PLAY_SIDES = ["Under"]

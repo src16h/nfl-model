@@ -2,6 +2,9 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-10 (by hand, owner request: drop longest completion)
+- NFL | QB longest completion prop removed: no longer pulled from the odds feed (ODDS_PROP_MARKETS) and not a play stat (PROP_PLAY_STATS); its gates stay paused with no new shadow plays | owner request to save credits; added Nov 9, both sides still paused shadow plays with no graded record | 1 credit per game saved (about 14 a weekend, plus closing pulls) | n/a
+
 ## 2026-11-10 (by hand, owner correction: completions / attempts)
 - NFL | completions and pass-attempt Over legs back in the alt tickets, every x.5 down to 5 below Hard Rock's main line, never deeper (config ALT_NO_LADDER now carries only; ALT_COUNT_MAX_DROP); completions and attempts main lines pulled again (ODDS_EXTRA_PROP_MARKETS, about 2 credits a game; rush attempts stay dropped) | owner: Hard Rock lets him bet these alt Overs in the app (e.g. J.J. McCarthy Over 12.5 completions under a 17.5 main), no alt Unders; the odds feed doesn't carry that ladder, which is why the probe missed it. Owner also confirmed: no alt lines on combined rushing + receiving yards (never used in alt legs); separate rushing / receiving milestones are fine | completions Over legs return (graded 79.4% vs 79.8% said over 97); attempts Over stay off by the gate (70.9% vs 78.2% over 86) until they hold up; corrects the "no completions / attempts alt legs" part of this morning's ladder change | look again on 2026-11-17
 
