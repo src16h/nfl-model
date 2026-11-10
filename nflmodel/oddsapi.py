@@ -399,8 +399,14 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
     try:                                                   # games with a locked prop play: refreshed near kickoff (CLV)
         plg = json.loads((Path(cache_path).parent / "props_log.json").read_text()).get("props", {})
         play_games = {r.get("game_id") for r in plg.values() if r.get("flag") and not r.get("result")}
+        # Nov 10 2026 (credits): the near-closing pull asks only for the markets that hold a locked play, not all of them
+        stat_mkt = {v: k for k, v in MARKETS.items()}
+        play_mkts = {}
+        for r in plg.values():
+            if r.get("flag") and not r.get("result") and stat_mkt.get(r.get("stat")) in markets:
+                play_mkts.setdefault(r.get("game_id"), set()).add(stat_mkt[r.get("stat")])
     except Exception:  # noqa: BLE001
-        play_games = set()
+        play_games, play_mkts = set(), {}
     try:
         for _, g in order.iterrows():
             gid, ko, ev = g["game_id"], g.get("ko"), matched.get(g["game_id"])
@@ -409,18 +415,21 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
             ent = cache["games"].get(gid)
             in_window = ko is not None and pd.notna(ko) and now < ko <= now + timedelta(hours=C.ODDS_HOURS_AHEAD)
             stale = True
+            closing_only = False
             if ent:
                 try:
                     age = now - datetime.fromisoformat(ent["fetched_at"])
                     stale = age >= timedelta(hours=C.ODDS_REFRESH_HOURS)
                     near = ko is not None and pd.notna(ko) and ko - now <= timedelta(hours=C.ODDS_PROPS_CLOSE_HOURS)
                     if gid in play_games and near and age >= timedelta(hours=6):
+                        closing_only = not stale and bool(play_mkts.get(gid))
                         stale = True                       # one near-closing pull so prop plays get a closing price
                 except (ValueError, KeyError):
                     stale = True
             if in_window and stale:
-                over_cap = client.spent + len(markets) > C.ODDS_MAX_CREDITS_PER_RUN
-                below_reserve = client.remaining is not None and client.remaining - len(markets) < C.ODDS_CREDIT_RESERVE
+                mk_now = sorted(play_mkts[gid]) if closing_only else markets
+                over_cap = client.spent + len(mk_now) > C.ODDS_MAX_CREDITS_PER_RUN
+                below_reserve = client.remaining is not None and client.remaining - len(mk_now) < C.ODDS_CREDIT_RESERVE
                 if over_cap or below_reserve:
                     skipped_budget += 1
                     budget_note = ("stopped at this run's credit limit" if over_cap
@@ -429,8 +438,8 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                         cached += 1
                     continue
                 try:
-                    data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=len(markets),
-                                      regions="us", markets=",".join(markets), oddsFormat="american", dateFormat="iso")
+                    data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=len(mk_now),
+                                      regions="us", markets=",".join(mk_now), oddsFormat="american", dateFormat="iso")
                 except OddsFatal:
                     raise
                 except OddsError as e:
@@ -438,8 +447,12 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                     if ent:
                         cached += 1
                     continue
+                new_rows = parse_props(data if isinstance(data, dict) else {}, gid)
+                if closing_only:                   # keep the other markets' rows from the earlier full pull
+                    got = {MARKETS[m] for m in mk_now}
+                    new_rows = [r for r in ent.get("rows", []) if r.get("stat") not in got] + new_rows
                 cache["games"][gid] = {"fetched_at": now.isoformat(timespec="minutes"), "event_id": ev["id"],
-                                       "rows": parse_props(data if isinstance(data, dict) else {}, gid)}
+                                       "rows": new_rows}
                 fetched += 1
             elif ent:
                 cached += 1

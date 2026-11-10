@@ -151,7 +151,9 @@ ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds
                      "player_pass_longest_completion"]   # Nov 9 2026: QB longest completion (about 1 credit per game)
 # Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
 # About 3 more credits per game, so they start with the Nov 1 credit reset.
-ODDS_EXTRA_PROP_MARKETS = ["player_pass_completions", "player_pass_attempts", "player_rush_attempts"]
+# Nov 10 2026 (credits): dropped. Hard Rock has no alt ladder for completions / attempts and alt Unders are off, so
+# these main lines no longer feed any bettable leg (they cost 3 credits per game, plus the closing re-pull).
+ODDS_EXTRA_PROP_MARKETS = []
 ODDS_EXTRA_FROM = "2026-11-01"
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
@@ -275,7 +277,8 @@ ALT_PARLAY_ODDS = (-120, 125)      # target fair odds range for the whole parlay
 # 1 credit per market per game, pulled once per game on the last run before kickoff (after inactives), team totals
 # for every game first, then alt spreads, then alt totals, and never below ALT_MIN_LEFT credits (props come first).
 # Oct 21 2026: Pinnacle's own team totals (exact referee for team totals) and Hard Rock's 1st-half spread and total added.
-ALT_MARKETS = ["alternate_team_totals", "team_totals", "spreads_h1", "totals_h1", "alternate_spreads", "alternate_totals"]
+# Nov 10 2026 (credits): 1st-half spreads / totals dropped (2 credits a game, 0 first-half plays all season)
+ALT_MARKETS = ["alternate_team_totals", "team_totals", "alternate_spreads", "alternate_totals"]
 ALT_BOOKS = ["hardrockbet", "pinnacle"]
 ALT_HOURS = 3.5                    # pull for games kicking off within this many hours
 ALT_MIN_LEFT = 90                  # credits always left for next week's props and lines

@@ -2,6 +2,9 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-10 (by hand, owner request: NFL odds credits)
+- NFL | odds pulls trimmed: (1) the near-closing props pull asks only for the markets that hold a locked play (was all of them again), (2) completions, pass attempts and rush attempts no longer pulled (nflmodel/config.py ODDS_EXTRA_PROP_MARKETS = []), (3) 1st-half spreads / totals dropped from the alt-line pull (ALT_MARKETS) | 181 credits left on Nov 10 after 302 used since Nov 1 (about 190 per weekend). Props cost 10 credits per game and the closing re-pull another 10 for almost every game (14-16 games a week carry a prop play); the 3 count-stat markets feed no bettable leg after today's Hard Rock ladder fix; 0 first-half alt plays all season | roughly 150-180 fewer credits per weekend (closing pulls about 1-3 credits per game instead of 10, props 7 per game instead of 10, alt pull 4 per game instead of 6), so the month should finish within budget; nothing shown on the page as a play changes. The alt-leg gate's completions / attempts / carries rows stop getting new book lines (those legs are off anyway) | look again on 2026-11-17 (credits used over the week 10 weekend)
+
 ## 2026-11-10 (weekly review)
 Owner flag (alt-line parlays): see "Alt parlays" below. Bet price stays Hard Rock per RULES.md; the scheduled review prompt
 says the owner bets on DraftKings Predictions, so that conflict is raised with the owner (not changed here).
