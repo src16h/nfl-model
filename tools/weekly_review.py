@@ -121,6 +121,9 @@ def review():
             pass
         recs, svh = records(track), said_vs_hit(track)
         odds = L.get("odds") if isinstance(L.get("odds"), dict) else {}
+        if not odds and isinstance((L.get("model") or {}).get("odds"), dict):     # NFL keeps it under model.odds (Nov 10 2026)
+            mo = L["model"]["odds"]
+            odds = {"remaining": mo.get("credits_remaining"), "source": "odds_api" if mo.get("enabled") else None}
         S = {"age_h": None if age is None else round(age, 1), "credits_left": (odds or {}).get("remaining"),
              "odds_source": (odds or {}).get("source"), "records": recs, "said_vs_hit": svh,
              "gates": [{"name": g.get("name"), "label": g.get("label"), "status": g.get("status"), "record": g.get("record")} for g in gates if isinstance(g, dict)],

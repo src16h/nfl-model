@@ -158,8 +158,10 @@ def type_table(hist_dir, results_path, props_log_path, season, cal):
                         bm = mains.get((p.get("game_id"), p.get("pid"), st))
                         if not m or st not in act or bm is None or bm < C.ALT_MIN_MAIN[st]:
                             continue
-                        for L in ladder(st, bm, side):
-                            po = _p_over(m, L)
+                        # same anchor toward the book's main line as the parlay build (config.ALT_BOOK_ANCHOR, Nov 10 2026)
+                        dl = C.ALT_BOOK_ANCHOR * (bm - float(m.get("med") or bm)) if st in C.ALT_ANCHOR_STATS else 0.0
+                        for L in ladder(st, bm, side, posted=False):     # the gate grades every step (Nov 10 2026)
+                            po = _p_over(m, L - dl)
                             pc = adjust(cal, p["pos"], st, po if side == "Over" else 1 - po, side)
                             if C.ALT_LEG_RANGE[0] <= pc <= C.ALT_LEG_RANGE[1]:
                                 hit = act[st] > L if side == "Over" else act[st] < L
@@ -175,14 +177,28 @@ def type_table(hist_dir, results_path, props_log_path, season, cal):
     return out
 
 
-def ladder(st, main, side, deep=1.0):
+def ladder(st, main, side, deep=1.0, posted=True):
     """Alt lines a book offers around its main line: below it for Overs, above it for Unders.
     deep > 1 reaches further below (ladder-style tickets: books post milestone lines like 25+ or 30+ yards)."""
     main = float(np.floor(main) + 0.5)
     step = C.ALT_STEP[st]
+    if not posted:                                  # every step (the leg-type gate grades these: bigger sample)
+        if side == "Over":
+            return [L for L in (main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] * deep // step) + 1)) if L >= C.ALT_MIN_LINE[st]]
+        return [main + k * step for k in range(1, int(C.ALT_MAX_RISE.get(st, 0) // step) + 1)]
+    if side != "Over" and not getattr(C, "ALT_UNDER_LEGS", True):
+        return []                                   # Hard Rock alt ladders are Over only (Nov 10 2026)
+    if st in getattr(C, "ALT_NO_LADDER", ()):
+        return []                                   # no alt ladder posted for this stat
     if side == "Over":
+        lo = max(C.ALT_MIN_LINE[st], main - C.ALT_MAX_DROP[st] * deep)
+        rungs = getattr(C, "ALT_LADDER_RUNGS", {}).get(st)
+        if rungs:                                   # the book's fixed milestones below its main line
+            return sorted((L for L in rungs if lo <= L < main), reverse=True)
+        if st == "rec" and getattr(C, "ALT_REC_FLOOR_HALF", False):
+            lo = max(lo, float(np.ceil(main / 2 - 0.5)) + 0.5)
         out = [main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] * deep // step) + 1)]
-        return [L for L in out if L >= C.ALT_MIN_LINE[st]]
+        return [L for L in out if L >= lo]
     return [main + k * step for k in range(1, int(C.ALT_MAX_RISE.get(st, 0) // step) + 1)]
 
 

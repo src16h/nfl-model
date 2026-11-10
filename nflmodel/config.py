@@ -176,7 +176,10 @@ PROP_PLAY_STATS = ["pass_yds", "rush_yds", "rec_yds", "pass_long"]   # reception
 PROP_PLAY_SIDES = ["Under"]
 # Oct 29 2026 review (weeks 4-7, graded leans): receiving-yard Unders with a model gap of 4-10% went 51-33 (+15%),
 # 10%+ went 93-89 (-3%). Big gaps there are usually missing news (role change, injury), so they stay Watch.
-PROP_EDGE_CAP = {("rec_yds", "Under"): 0.10}
+# Nov 10 2026 review: passing-yard Unders (paused) with a model gap of 8+ went 13-24 as leans (-33.5%), 4-8 went 10-9
+# (-0.3%); the split held in the newest week (8+: 3-6). Big gaps are missing news (backup QB, role), so the gate's
+# shadow plays now test only gaps under 8 before the type can come back.
+PROP_EDGE_CAP = {("rec_yds", "Under"): 0.10, ("pass_yds", "Under"): 0.08}
 # Paused prop types (gates.py tracks them as shadow plays and brings them back once they earn it).
 # Passing-yard Unders: 13-20 (-25%) as leans; back after 60 graded shadow plays at +3% or better.
 PROP_PAUSED_TYPES = {("pass_yds", "Under"): "nfl_prop_pass_under",
@@ -292,6 +295,14 @@ ALT_NO_QUESTIONABLE = True         # Questionable players: 56% real vs 80% model
 ALT_BOOK_MAIN_ONLY = True          # legs only for players with a posted book line (model-only lines: 65% vs 77%)
 ALT_BET_CUSHION = 0.07             # "bet at": the book must pay enough for +7% at the model's chance (estimation error)
 ALT_LEG_RANGE = (0.70, 0.92)       # single-leg chance window ("alt down" lines), after calibration
+# Nov 10 2026 (weekly review): yardage alt legs read off a player's simulated range moved halfway toward Hard Rock's
+# main line. When the model's middle number sat 1+ rung above the book's main, Over legs below the main hit far less than
+# said (QB passing 66% vs 80% said over 124 lines, RB rushing 69% vs 81% over 170, WR yards 71% vs 80% over 146), while
+# legs where the model agreed with the book hit on target. Walk-forward weeks 6-9 (leg calibration fit on earlier weeks
+# only), yardage legs in the 70-92% window: log loss 0.627 -> 0.583, said 78.7 / hit 71.3 -> said 76.8 / hit 73.4;
+# QB passing gap -11.4 -> -6.8 points, RB rushing -14.9 -> -9.2. 0.75 tested better still (0.562); halfway is the step.
+ALT_BOOK_ANCHOR = 0.5
+ALT_ANCHOR_STATS = ("pass_yds", "rush_yds", "rec_yds")
 ALT_CAL_K = 60                     # leg calibration counts half after this many graded player-games per leg type
 ALT_MAX_YARD_LEGS = 3              # at most 3 yardage legs (pass/rush/rec yds); catches fill the rest
 ALT_MAX_RUSH_LEGS = 1              # at most 1 RB rushing leg while the leg calibration is still learning
@@ -300,6 +311,16 @@ ALT_MAX_DROP = {"pass_yds": 50, "rush_yds": 25, "rec_yds": 25, "rec": 2, "pass_c
 ALT_MAX_RISE = {"rec": 3, "pass_cmp": 5, "pass_att": 5, "carries": 4}      # Under legs: how far ABOVE the main line (alt up)
 ALT_MIN_MAIN = {"pass_yds": 149.5, "rush_yds": 29.5, "rec_yds": 24.5, "rec": 3.5, "pass_cmp": 14.5, "pass_att": 22.5, "carries": 9.5}  # skip players books rarely post
 ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5, "pass_cmp": 10.5, "pass_att": 15.5, "carries": 4.5}  # lowest alt line books offer
+# Nov 10 2026 (weekly review, "nflalt" / "nflyds" probes): Hard Rock's NFL alt ladders are Over-only milestones.
+#   passing yards 149.5, 174.5, 199.5 ... (25s); rushing and receiving yards 24.5, 39.5, 49.5, 64.5, 79.5, 99.5;
+#   receptions every x.5 down to about half the main line (main 5.5 -> 3.5, 4.5 -> 2.5, 3.5 -> 2.5, 2.5 -> 1.5);
+#   no alt ladder at all for completions or pass attempts, and no alt Unders. Of 312 graded alt legs only 46 sat on
+#   such a rung; every past ticket had at least one leg Hard Rock doesn't list. Legs are held to these rungs.
+ALT_LADDER_RUNGS = {"pass_yds": (149.5, 174.5, 199.5, 224.5, 249.5, 274.5, 299.5, 324.5),
+                    "rush_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5), "rec_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5)}
+ALT_REC_FLOOR_HALF = True          # receptions: lowest rung is the first x.5 at or above half the main line
+ALT_NO_LADDER = ("pass_cmp", "pass_att", "carries")   # Hard Rock posts only the main line for these
+ALT_UNDER_LEGS = False             # Hard Rock alt ladders are Over only
 
 # 6-point teasers (model only, no extra odds calls)
 TEASER_POINTS = 6

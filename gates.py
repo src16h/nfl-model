@@ -30,7 +30,9 @@ GATES = {
     # NHL
     "nhl_points": {"label": "NHL points props (Unders)", "min_n": 40, "min_roi": 3.0, "repause_roi": -5.0, "since": "2026-10-21",
                    "why": "Paused Oct 21: points props went 111-121 (-17u). Book lines are pulled only when the day's credits allow"},
-    "nhl_edge": {"label": "NHL edge parlays", "min_n": 20, "min_roi": 5.0, "repause_roi": -10.0, "since": "2026-10-21", "hit_check": True,
+    # restore_n (Nov 10 2026 review): coming back needs 40 graded shadow tickets (docs/review/RULES.md: un-pause only
+    # with 40+ graded results); min_n still governs re-pausing. Shadow record then: 6-11, +10.5% over 17.
+    "nhl_edge": {"label": "NHL edge parlays", "min_n": 20, "restore_n": 40, "min_roi": 5.0, "repause_roi": -10.0, "since": "2026-10-21", "hit_check": True,
                  "why": "Paused Oct 21: 6-12 (-4.9u) when the model expected about 46%"},
     # NBA (Oct 30 2026)
     "nba_edge": {"label": "NBA edge parlays", "min_n": 20, "min_roi": 5.0, "repause_roi": -10.0, "since": "2026-10-30", "hit_check": True,
@@ -176,7 +178,7 @@ def update(path, st, name, shadow_rows, play_rows, today):
         if cfg.get("clv_gate"):
             clv_ok = clv_ok and (rec["ev_n"] < CLV_MIN_N or (rec["ev_close"] or 0) >= 0)
         hit_ok = not cfg.get("hit_check") or rec.get("hit") is None or rec["hit"] >= rec.get("model", 0) - 3
-        if rec["n"] >= cfg["min_n"] and (rec["roi"] or -99) >= cfg["min_roi"] and clv_ok and hit_ok:
+        if rec["n"] >= max(cfg["min_n"], cfg.get("restore_n", 0)) and (rec["roi"] or -99) >= cfg["min_roi"] and clv_ok and hit_ok:
             g["history"].append({"date": today, "to": "active", "record": rec})
             g.update({"status": "active", "since": today})
     else:
@@ -191,6 +193,6 @@ def update(path, st, name, shadow_rows, play_rows, today):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     Path(path).write_text(json.dumps(st, indent=1))
     return {"name": name, "label": cfg["label"], "why": cfg["why"], "status": g["status"], "since": g["since"],
-            "min_n": cfg["min_n"], "min_roi": cfg["min_roi"], "repause_roi": cfg["repause_roi"], "record": rec,
+            "min_n": max(cfg["min_n"], cfg.get("restore_n", 0)) if g["status"] == "paused" else cfg["min_n"], "min_roi": cfg["min_roi"], "repause_roi": cfg["repause_roi"], "record": rec,
             "clv_gate": bool(cfg.get("clv_gate")), "clv_pause_n": CLV_PAUSE_N,
             "history": g["history"][-4:]}

@@ -23,9 +23,12 @@ COUNT_MAX = {"pass_td": 7, "rec": 14, "td": 4}
 QS = np.round(np.arange(0.025, 0.99, 0.025), 3)          # stored percentiles for yardage stats
 CARRY_CONC, REC_CONC = 22.0, 16.0                        # how steady carry and catch shares are game to game
 CARRY_SD, CATCH_SHAPE = 6.0, 1.15                        # yards spread per carry, shape of yards per catch
-ALT_LADDER = {"pass_yds": [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350],
-              "rush_yds": [10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 125, 150],
-              "rec_yds": [10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 125, 150],
+# Nov 10 2026 (weekly review, "cfbyds" probe, 2 games): Hard Rock's college alt ladders are the same milestones as its
+# NFL ones: rushing / receiving 25+, 40+, 50+, 65+, 80+, 100+ and passing 150+, 175+, 200+ ... (25s), Over only.
+# The old 10 / 15 / 20 / 30 / 60 / 70 / 90 / 110 rungs (and 100+ / 125+ passing) aren't posted there.
+ALT_LADDER = {"pass_yds": [150, 175, 200, 225, 250, 275, 300, 325, 350],
+              "rush_yds": [25, 40, 50, 65, 80, 100],
+              "rec_yds": [25, 40, 50, 65, 80, 100],
               "rec": [2, 3, 4, 5, 6, 7, 8]}
 LABEL = {"pass_yds": "passing yards", "rush_yds": "rushing yards", "rec_yds": "receiving yards", "rec": "receptions",
          "pass_td": "passing TDs", "td": "touchdown"}
@@ -210,11 +213,17 @@ def summarize(arrs, info, book):
                 edge = (po - bo) if side == "Over" else (bo - po)
                 m["book"] = {"line": L, "over": b["over"], "under": b.get("under"), "book_over": r(100 * bo), "model_over": r(100 * po),
                              "side": side, "edge": r(100 * edge), "odds": b["over"] if side == "Over" else b["under"], "src": b.get("book"),
-                             "play": C.PROP_PLAY_MIN * 100 <= 100 * edge <= C.PROP_PLAY_MAX * 100}
+                             "play": C.PROP_PLAY_MIN * 100 <= 100 * edge <= C.PROP_PLAY_MAX * 100 and _is_hr(b)}
             rec["m"][st] = m
         if rec["m"]:
             rows.append(rec)
     return rows
+
+
+def _is_hr(b):
+    """Line posted by Hard Rock (Nov 10 2026): the odds pull falls back to FanDuel / BetOnline when Hard Rock has
+    nothing up, and about half of the Nov 7 prop markets came from those books. Plays and alt legs need Hard Rock."""
+    return bool(b) and "hard rock" in str(b.get("book") or "").lower()
 
 
 def alt_parlay(arrs, info, book, need_teams=2):
@@ -228,7 +237,7 @@ def alt_parlay(arrs, info, book, need_teams=2):
                 continue
             b = (book or {}).get(norm_name(p["name"]), {}).get(st)
             main = float(b["line"]) if b and b.get("line") is not None else (float(np.floor(np.median(x)) + 0.5))
-            src = "book" if b and b.get("line") is not None else "model"
+            src = ("book" if _is_hr(b) else "other") if b and b.get("line") is not None else "model"
             floor_ = main * 0.5 if st != "rec" else main - 2
             opts = [k for k in ALT_LADDER[st] if floor_ <= k <= main]
             for k in opts[-3:]:                                # the rungs just under the main line
@@ -237,9 +246,9 @@ def alt_parlay(arrs, info, book, need_teams=2):
                 if C.ALT_LEG_RANGE[0] <= ph <= C.ALT_LEG_RANGE[1]:
                     cands.append({"pid": pid, "name": p["name"], "team": p["team"], "stat": st, "line": k - 0.5, "k": k,
                                   "p": ph, "main": main, "main_src": src, "hit": hit})
-    booked = [c for c in cands if c["main_src"] == "book"]
-    if len(booked) >= 4:
-        cands = booked
+    # Nov 10 2026 (weekly review): legs only for players Hard Rock posted a line for. Legs built off the model's own
+    # line (no posted prop) said 73.7% and hit 45.0% over 20 (z -2.9), and a player with no posted line has no alt ladder.
+    cands = [c for c in cands if c["main_src"] == "book"]
     if len(cands) < 3:
         return None
     cands.sort(key=lambda c: -c["p"])

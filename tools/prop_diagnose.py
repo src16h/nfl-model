@@ -161,9 +161,16 @@ def diagnose(sport, stat, side):
     mb = _mean([r["actual"] - r["fair"] for r in every if r["fair"] is not None])
     lb = _mean([r["actual"] - r["line"] for r in every])
     C["projection"] = {"n": len(every), "actual_minus_model": None if mb is None else round(mb, 2), "actual_minus_line": None if lb is None else round(lb, 2)}
+    # Nov 10 2026: a mean-minus-median gap shows up on skewed stats (points, yards) even when the model is right, so the
+    # level-bias cause also needs the results to land above / below the model's fair line more often than half the time
+    fx = [r["actual"] > r["fair"] for r in every if r["fair"] is not None and r["actual"] != r["fair"]]
+    ov = sum(fx) / len(fx) if fx else None
+    ovz = None if ov is None else (ov - 0.5) / math.sqrt(0.25 / len(fx))
+    C["projection"].update({"over_rate_at_fair": None if ov is None else round(100 * ov, 1), "over_rate_z": None if ovz is None else round(ovz, 2)})
     if mb is not None and lb is not None:
         sd = _mean([abs(r["actual"] - r["line"]) for r in every]) or 1
-        if abs(mb) > 0.15 * sd and abs(mb) > abs(lb) + 0.05 * sd and sgn * mb < 0:      # only when it hurts this side
+        if (abs(mb) > 0.15 * sd and abs(mb) > abs(lb) + 0.05 * sd and sgn * mb < 0      # only when it hurts this side
+                and ovz is not None and abs(ovz) >= 2 and (ovz > 0) == (mb > 0)):
             d["causes"].append((abs(mb) / sd, f"Projection bias: results ran {abs(mb):.2f} {'above' if mb > 0 else 'below'} the model's middle number "
                                 f"on {len(every)} {stat} props, while the book's line missed by only {lb:+.2f}. The model's level for {stat} is off; "
                                 f"shift it {'up' if mb > 0 else 'down'} (or let the prop bias correction learn faster)."))

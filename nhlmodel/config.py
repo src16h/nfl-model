@@ -92,7 +92,8 @@ SHADOW_PROP_MARKETS = ["player_points"]
 ALT_BOOKS = ["hardrockbet", "pinnacle"]
 ALT_HOURS = 7.0                  # pull for games starting within this many hours (the 5:12pm ET run)
 ALT_SPEC = {"spread": (-3.5, 3.5, 1.0), "total": (3.5, 9.5, 0.5), "team_total": (0.5, 5.5, 0.5)}   # price-check ladders
-ALT_LEG_SPEC = {"spread": (-1.5, 2.5, 1.0), "total": (4.5, 7.5, 1.0), "team_total": (0.5, 3.5, 1.0)}  # parlay legs
+ALT_LEG_SPEC = {"spread": (-1.5, 2.5, 1.0), "total": (4.5, 7.5, 1.0), "team_total": (1.5, 3.5, 1.0)}  # parlay legs
+# Nov 10 2026: team total Over 0.5 dropped (Hard Rock posts team totals main -1 to +1 only, lowest rung 1.5 or 2.5)
 ALT_DAILY_CAP = 4                # alt-line plays per day, best value first, one per game
 ALT_MAX_TEAM_LEGS = 2            # team legs (puck line, total, team total) per alt parlay
 # Ladder-style parlay (Nov 1 2026, same idea as the NFL's): 4-5 near-sure player legs (Over 0.5 / 1.5 shots for

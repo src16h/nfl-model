@@ -706,6 +706,10 @@ def build_alt_parlay(game, side_sims, main_lines=None, team_legs=(), need_team=F
                     main = float(book) if book is not None else float(np.floor(np.median(arr)) + 0.5)
                     if np.floor(main) + 0.5 < C.ALT_MIN_MAIN[st]:
                         continue                                            # role too small for a posted prop
+                    if book is not None and st in C.ALT_ANCHOR_STATS and C.ALT_BOOK_ANCHOR:
+                        # Nov 10 2026: yardage range moved halfway toward Hard Rock's main line (the model's middle
+                        # number sitting above the book's was where Over legs missed; walk-forward in config.py)
+                        arr = arr + C.ALT_BOOK_ANCHOR * (float(book) - float(np.median(arr)))
                     for L in altcal.ladder(st, main, side, cfg.get("deep", 1.0)):
                         hit = arr > L if side == "Over" else arr < L
                         p_raw = float(hit.mean())

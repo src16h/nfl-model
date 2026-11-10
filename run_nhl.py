@@ -695,6 +695,7 @@ def main():
             p["opp"] = a if p["team"] == h else h
         players += prows
         team_legs = AL.team_legs(mdl, mkt, h, a, C.ALT_LEG_SPEC, C.ALT_LEG_RANGE) if mkt is not None else []
+        team_legs = AL.on_book(team_legs, ba.get("book"))      # only lines Hard Rock posts (Nov 10 2026)
         if team_legs:                                    # cross-game alt parlays (crossgame.py): one leg from each of 3 games
             cross_in.append({"game_id": g["game_id"], "slate": game["date"], "start": g["start"], "matchup": f"{a} at {h}",
                              "legs": team_legs, "book_rows": ba.get("book")})

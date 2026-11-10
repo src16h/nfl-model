@@ -275,6 +275,20 @@ def label(b, home, away):
 # ---------------------------------------------------------------------
 # parlay legs from the simulated games
 # ---------------------------------------------------------------------
+def on_book(legs, book_rows):
+    """Keep only team legs the bet book really posts (Nov 10 2026, weekly review). For each market the book has
+    full-game rows for, a leg must match one of them (market, team, side, line); markets the book has no rows for
+    this run are left to the spec. NHL alt_mix had 60 'team total Over 0.5' legs; Hard Rock's team-total ladder is
+    only main -1 to +1 (lowest 1.5 or 2.5)."""
+    rows = [b for b in (book_rows or []) if not b.get("period") and b.get("odds") is not None]
+    if not rows:
+        return legs
+    have = {(b["market"], b.get("team"), b["side"], round(float(b["line"]), 2)) for b in rows}
+    mkts = {b["market"] for b in rows}
+    return [L for L in legs if L["market"] not in mkts or
+            (L["market"], L.get("team"), L["side"], round(float(L["line"]), 2)) in have]
+
+
 def team_legs(model, mkt, home, away, spec, p_range=(0.70, 0.92)):
     """'Alt down' team legs for an alt-line parlay: the safer side of alt spreads, totals and team totals.
     Each leg's chance is Pinnacle-implied (sharper than the model on team markets); the model must agree.
