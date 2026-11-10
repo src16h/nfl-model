@@ -278,8 +278,8 @@ def label(b, home, away):
 def on_book(legs, book_rows):
     """Keep only team legs the bet book really posts (Nov 10 2026, weekly review). For each market the book has
     full-game rows for, a leg must match one of them (market, team, side, line); markets the book has no rows for
-    this run are left to the spec. NHL alt_mix had 60 'team total Over 0.5' legs; Hard Rock's team-total ladder is
-    only main -1 to +1 (lowest 1.5 or 2.5)."""
+    this run are left to the spec. Not used (Nov 10 2026): the odds feed lists fewer rungs than the Hard Rock app
+    (team total Over 0.5 is bettable there but missing from the feed), so the feed can't rule a line out."""
     rows = [b for b in (book_rows or []) if not b.get("period") and b.get("odds") is not None]
     if not rows:
         return legs

@@ -2,6 +2,10 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-10 (by hand, owner correction: NHL team total Over 0.5)
+- NHL | undone: this morning's "team legs only on lines Hard Rock posts" (team total Over 0.5 restored in ALT_LEG_SPEC; the on_book check is no longer called) | owner: Hard Rock offers team total Over 0.5 in the app; the odds feed showed only main -1 to +1. Second case today (after NFL completions / attempts) of the feed listing fewer lines than the app, so the feed can't be used to rule a line out | team legs as before (said 85.8%, hit 85.3% over 156) | n/a
+- Note for future reviews: treat the odds feed as proof a line exists, never as proof it doesn't; confirm missing lines with the owner before removing them.
+
 ## 2026-11-10 (by hand, owner request: drop longest completion)
 - NFL | QB longest completion prop removed: no longer pulled from the odds feed (ODDS_PROP_MARKETS) and not a play stat (PROP_PLAY_STATS); its gates stay paused with no new shadow plays | owner request to save credits; added Nov 9, both sides still paused shadow plays with no graded record | 1 credit per game saved (about 14 a weekend, plus closing pulls) | n/a
 
