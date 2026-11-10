@@ -295,6 +295,7 @@ def grade_pick(kind, pk, g, res):
 def tracking(weeks, results):
     picks = {k: [] for k in ("spread", "total", "ml")}
     plays, prop_plays, calib, alts, daily = [], [], {}, [], {}
+    alt_void = []                             # alt tickets that can't be graded (shown, not dropped)
     early = []                                            # early totals (Oct 31 2026)
     clv_rows = []
     clv = {"spread": [], "total": []}
@@ -344,6 +345,11 @@ def tracking(weeks, results):
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
                                  "legs": len(hits), "p": ap["p"]})
+                else:                                 # Nov 10 2026: a leg player missing from the box score (didn't play,
+                    # or played with no stat): can't be graded, so it's shown as unresolved instead of silently dropped
+                    alt_void.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": None,
+                                     "legs_hit": sum(1 for h in hits if h), "legs": len(hits), "p": ap["p"],
+                                     "missing": [L.get("name") for L, h in zip(ap["legs"], hits) if h is None]})
         for p in wk.get("players", []):
             res = results.get(str(p["game_id"]))
             if not res:
@@ -393,7 +399,8 @@ def tracking(weeks, results):
             "prop_plays": rec2(prop_plays), "prop_plays_list": sorted(prop_plays, key=lambda x: x["date"], reverse=True)[:80],
             "prop_clv": CLV.prop_summary(prop_plays),
             "calibration": cal, "line_move": move, "_gate_rows": gate_rows,
-            "alt": {"n": len(alts), "hits": sum(a["hit"] for a in alts),
+            "alt": {"n": len(alts), "hits": sum(a["hit"] for a in alts), "unresolved": len(alt_void),
+                    "unresolved_list": sorted(alt_void, key=lambda x: x["date"], reverse=True)[:20],
                     "model": r(np.mean([a["p"] for a in alts])) if alts else None,
                     "recent": sorted(alts, key=lambda x: x["date"], reverse=True)[:20]},
             "teasers": TZ.tracking({w["week"]: w.get("games", []) for w in weeks}, results),

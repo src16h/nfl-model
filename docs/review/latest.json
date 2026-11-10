@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-11-10T17:52+00:00",
+ "generated_at": "2026-11-10T19:34+00:00",
  "sports": {
   "NFL": {
-   "age_h": 5.6,
+   "age_h": 0.4,
    "credits_left": 181,
    "odds_source": "odds_api",
    "records": [
@@ -484,51 +484,51 @@
     },
     {
      "what": "alt_leg_types / QB pass attempts Over",
-     "n": 89,
+     "n": 88,
      "said": 78.2,
-     "hit": 68.5,
-     "gap": -9.7,
-     "z": -2.22
+     "hit": 68.2,
+     "gap": -10.0,
+     "z": -2.27
     },
     {
      "what": "alt_leg_types / QB completions Over",
-     "n": 101,
-     "said": 79.7,
-     "hit": 77.2,
-     "gap": -2.5,
-     "z": -0.62
+     "n": 100,
+     "said": 79.4,
+     "hit": 77.0,
+     "gap": -2.4,
+     "z": -0.59
     },
     {
      "what": "alt_leg_types / QB passing yards Over",
-     "n": 137,
+     "n": 131,
      "said": 75.4,
-     "hit": 68.6,
-     "gap": -6.8,
-     "z": -1.85
+     "hit": 68.7,
+     "gap": -6.7,
+     "z": -1.78
     },
     {
      "what": "alt_leg_types / RB rushing yards Over",
-     "n": 137,
-     "said": 77.6,
-     "hit": 73.0,
-     "gap": -4.6,
-     "z": -1.29
+     "n": 135,
+     "said": 77.5,
+     "hit": 72.6,
+     "gap": -4.9,
+     "z": -1.36
     },
     {
      "what": "alt_leg_types / TE receiving yards Over",
      "n": 82,
-     "said": 75.9,
+     "said": 76.2,
      "hit": 85.4,
-     "gap": 9.5,
-     "z": 2.01
+     "gap": 9.2,
+     "z": 1.96
     },
     {
      "what": "alt_leg_types / QB pass attempts Under",
      "n": 47,
-     "said": 76.3,
+     "said": 76.5,
      "hit": 76.6,
-     "gap": 0.3,
-     "z": 0.05
+     "gap": 0.1,
+     "z": 0.02
     },
     {
      "what": "alt_leg_types / QB completions Under",
@@ -540,27 +540,27 @@
     },
     {
      "what": "alt_leg_types / RB carries Under",
-     "n": 36,
-     "said": 81.4,
-     "hit": 69.4,
-     "gap": -12.0,
-     "z": -1.85
+     "n": 37,
+     "said": 81.1,
+     "hit": 70.3,
+     "gap": -10.8,
+     "z": -1.68
     },
     {
      "what": "alt_leg_types / Receptions Under (any position)",
      "n": 396,
-     "said": 82.9,
-     "hit": 84.8,
-     "gap": 1.9,
-     "z": 1.0
+     "said": 83.0,
+     "hit": 85.1,
+     "gap": 2.1,
+     "z": 1.11
     },
     {
      "what": "alt_leg_types / WR receiving yards Over",
-     "n": 209,
+     "n": 213,
      "said": 76.4,
      "hit": 75.1,
      "gap": -1.3,
-     "z": -0.44
+     "z": -0.45
     },
     {
      "what": "alt_leg_types / Receptions Over (any position)",
@@ -736,8 +736,8 @@
    "backtest": null
   },
   "NHL": {
-   "age_h": 5.6,
-   "credits_left": 330,
+   "age_h": 1.2,
+   "credits_left": 314,
    "odds_source": "odds_api",
    "records": [
     {
@@ -1189,7 +1189,7 @@
    }
   },
   "NBA": {
-   "age_h": 9.0,
+   "age_h": 10.7,
    "credits_left": 311,
    "odds_source": "odds_api",
    "records": [
@@ -1850,8 +1850,8 @@
    }
   },
   "CFB": {
-   "age_h": 5.6,
-   "credits_left": 340,
+   "age_h": 0.4,
+   "credits_left": 337,
    "odds_source": "odds_api",
    "records": [
     {
@@ -2158,7 +2158,7 @@
    }
   },
   "Soccer": {
-   "age_h": 15.8,
+   "age_h": 17.5,
    "credits_left": 381,
    "odds_source": "odds_api",
    "records": [
@@ -2592,6 +2592,42 @@
  },
  "flags": [
   {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: cfb.yml",
+   "why": "scheduled runs fired a median 255 min late (worst 548) over 14 runs; pre-game runs may land after games start"
+  },
+  {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: nba.yml",
+   "why": "scheduled runs fired a median 187 min late (worst 429) over 28 runs; pre-game runs may land after games start"
+  },
+  {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: nhl.yml",
+   "why": "scheduled runs fired a median 216 min late (worst 346) over 21 runs; pre-game runs may land after games start"
+  },
+  {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: review.yml",
+   "why": "scheduled runs fired a median 455 min late (worst 455) over 1 runs; pre-game runs may land after games start"
+  },
+  {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: soccer.yml",
+   "why": "scheduled runs fired a median 156 min late (worst 428) over 20 runs; pre-game runs may land after games start"
+  },
+  {
+   "sport": "All",
+   "level": "high",
+   "what": "late runs: weekly.yml",
+   "why": "scheduled runs fired a median 293 min late (worst 590) over 15 runs; pre-game runs may land after games start"
+  },
+  {
    "sport": "CFB",
    "level": "high",
    "what": "losing: picks / total",
@@ -2613,13 +2649,7 @@
    "sport": "NFL",
    "level": "high",
    "what": "said vs hit: alt_leg_types / QB pass attempts Over",
-   "why": "said 78.2%, hit 68.5% over 89 (z -2.22)"
-  },
-  {
-   "sport": "NFL",
-   "level": "high",
-   "what": "said vs hit: alt_leg_types / TE receiving yards Over",
-   "why": "said 75.9%, hit 85.4% over 82 (z 2.01)"
+   "why": "said 78.2%, hit 68.2% over 88 (z -2.27)"
   },
   {
    "sport": "NFL",
@@ -2684,8 +2714,14 @@
   {
    "sport": "NFL",
    "level": "medium",
+   "what": "said vs hit: alt_leg_types / TE receiving yards Over",
+   "why": "said 76.2%, hit 85.4% over 82 (z 1.96)"
+  },
+  {
+   "sport": "NFL",
+   "level": "medium",
    "what": "said vs hit: alt_leg_types / RB carries Under",
-   "why": "said 81.4%, hit 69.4% over 36 (z -1.85)"
+   "why": "said 81.1%, hit 70.3% over 37 (z -1.68)"
   },
   {
    "sport": "NFL",
@@ -4134,5 +4170,299 @@
    ],
    "based_on": "plays"
   }
- ]
+ ],
+ "records": {
+  "sports": {
+   "NFL": {
+    "bets": {
+     "game plays": {
+      "n": 6,
+      "units": -3.09,
+      "roi": -51.5,
+      "max_drawdown": 3.09,
+      "longest_losing_run": 3,
+      "capped": false
+     },
+     "prop plays": {
+      "n": 161,
+      "units": -0.03,
+      "roi": -0.0,
+      "max_drawdown": 21.51,
+      "longest_losing_run": 7,
+      "capped": false
+     }
+    },
+    "baselines": {
+     "moneyline leans": {
+      "model": {
+       "n": 71,
+       "units": 10.81,
+       "roi": 15.2
+      },
+      "always the favorite": {
+       "n": 71,
+       "units": 4.41,
+       "roi": 6.2
+      }
+     },
+     "prop plays": {
+      "model": {
+       "n": 161,
+       "units": -0.03,
+       "roi": -0.0
+      },
+      "every lean of the same types": {
+       "n": 1893,
+       "units": -23.51,
+       "roi": -1.2
+      }
+     }
+    }
+   },
+   "NHL": {
+    "bets": {
+     "game plays": {
+      "n": 60,
+      "units": 7.02,
+      "roi": 11.7,
+      "max_drawdown": 8.0,
+      "longest_losing_run": 8,
+      "capped": true
+     },
+     "prop plays": {
+      "n": 445,
+      "units": -17.78,
+      "roi": -4.0,
+      "max_drawdown": 36.07,
+      "longest_losing_run": 6,
+      "capped": false
+     }
+    },
+    "baselines": {
+     "moneyline leans": {
+      "model": {
+       "n": 230,
+       "units": -36.86,
+       "roi": -16.0
+      },
+      "always the favorite": {
+       "n": 230,
+       "units": 4.99,
+       "roi": 2.2
+      }
+     },
+     "moneyline plays": {
+      "model": {
+       "n": 23,
+       "units": 4.47,
+       "roi": 19.4
+      },
+      "always the favorite": {
+       "n": 23,
+       "units": -3.02,
+       "roi": -13.1
+      }
+     },
+     "prop plays": {
+      "model": {
+       "n": 445,
+       "units": -17.78,
+       "roi": -4.0
+      },
+      "every lean of the same types": {
+       "n": 4556,
+       "units": -148.33,
+       "roi": -3.3
+      }
+     }
+    }
+   },
+   "NBA": {
+    "bets": {
+     "game plays": {
+      "n": 6,
+      "units": -6.0,
+      "roi": -100.0,
+      "max_drawdown": 6.0,
+      "longest_losing_run": 6,
+      "capped": false
+     },
+     "prop plays": {
+      "n": 75,
+      "units": -0.53,
+      "roi": -0.7,
+      "max_drawdown": 10.89,
+      "longest_losing_run": 6,
+      "capped": false
+     }
+    },
+    "baselines": {
+     "moneyline leans": {
+      "model": {
+       "n": 73,
+       "units": -15.97,
+       "roi": -21.9
+      },
+      "always the favorite": {
+       "n": 73,
+       "units": 7.09,
+       "roi": 9.7
+      }
+     },
+     "moneyline plays": {
+      "model": {
+       "n": 2,
+       "units": -2.0,
+       "roi": -100.0
+      },
+      "always the favorite": {
+       "n": 2,
+       "units": 0.31,
+       "roi": 15.4
+      }
+     },
+     "prop plays": {
+      "model": {
+       "n": 75,
+       "units": -0.53,
+       "roi": -0.7
+      },
+      "every lean of the same types": {
+       "n": 1043,
+       "units": -26.03,
+       "roi": -2.5
+      }
+     }
+    }
+   },
+   "CFB": {
+    "bets": {
+     "game plays": {
+      "n": 16,
+      "units": -4.57,
+      "roi": -28.6,
+      "max_drawdown": 5.0,
+      "longest_losing_run": 5,
+      "capped": false
+     },
+     "prop plays": {
+      "n": 191,
+      "units": -1.56,
+      "roi": -0.8,
+      "max_drawdown": 15.93,
+      "longest_losing_run": 6,
+      "capped": false
+     }
+    },
+    "baselines": {
+     "moneyline leans": {
+      "model": {
+       "n": 141,
+       "units": -3.95,
+       "roi": -2.8
+      },
+      "always the favorite": {
+       "n": 141,
+       "units": -16.9,
+       "roi": -12.0
+      }
+     },
+     "moneyline plays": {
+      "model": {
+       "n": 2,
+       "units": -2.0,
+       "roi": -100.0
+      },
+      "always the favorite": {
+       "n": 2,
+       "units": 0.13,
+       "roi": 6.7
+      }
+     },
+     "prop plays": {
+      "model": {
+       "n": 191,
+       "units": -1.56,
+       "roi": -0.8
+      },
+      "every lean of the same types": {
+       "n": 1396,
+       "units": -47.52,
+       "roi": -3.4
+      }
+     }
+    }
+   },
+   "Soccer": {
+    "bets": {
+     "game plays": {
+      "n": 24,
+      "units": 6.95,
+      "roi": 29.0,
+      "max_drawdown": 4.0,
+      "longest_losing_run": 4,
+      "capped": false
+     }
+    },
+    "baselines": {
+     "moneyline leans": {
+      "model": {
+       "n": 107,
+       "units": -7.91,
+       "roi": -7.4
+      },
+      "always the favorite": {
+       "n": 107,
+       "units": 0.08,
+       "roi": 0.1
+      }
+     },
+     "moneyline plays": {
+      "model": {
+       "n": 4,
+       "units": -0.4,
+       "roi": -10.0
+      },
+      "always the favorite": {
+       "n": 4,
+       "units": 1.31,
+       "roi": 32.8
+      }
+     }
+    }
+   }
+  },
+  "late_runs": {
+   "cfb.yml": {
+    "runs": 14,
+    "median_min": 255,
+    "worst_min": 548
+   },
+   "nba.yml": {
+    "runs": 28,
+    "median_min": 187,
+    "worst_min": 429
+   },
+   "nhl.yml": {
+    "runs": 21,
+    "median_min": 216,
+    "worst_min": 346
+   },
+   "review.yml": {
+    "runs": 1,
+    "median_min": 455,
+    "worst_min": 455
+   },
+   "soccer.yml": {
+    "runs": 20,
+    "median_min": 156,
+    "worst_min": 428
+   },
+   "weekly.yml": {
+    "runs": 15,
+    "median_min": 293,
+    "worst_min": 590
+   }
+  }
+ }
 }

@@ -4,11 +4,16 @@ Flags first (high, then medium, then info). Every number is a graded record from
 
 | Level | Sport | What | Why |
 |---|---|---|---|
+| high | All | late runs: cfb.yml | scheduled runs fired a median 255 min late (worst 548) over 14 runs; pre-game runs may land after games start |
+| high | All | late runs: nba.yml | scheduled runs fired a median 187 min late (worst 429) over 28 runs; pre-game runs may land after games start |
+| high | All | late runs: nhl.yml | scheduled runs fired a median 216 min late (worst 346) over 21 runs; pre-game runs may land after games start |
+| high | All | late runs: review.yml | scheduled runs fired a median 455 min late (worst 455) over 1 runs; pre-game runs may land after games start |
+| high | All | late runs: soccer.yml | scheduled runs fired a median 156 min late (worst 428) over 20 runs; pre-game runs may land after games start |
+| high | All | late runs: weekly.yml | scheduled runs fired a median 293 min late (worst 590) over 15 runs; pre-game runs may land after games start |
 | high | CFB | losing: picks / total | 49-67, -22.69u, -19.6% (z -2.22) |
 | high | CFB | said vs hit: calibration / rec | said 49.0%, hit 56.0% over 652 (z 3.58) |
 | high | CFB | said vs hit: calibration / rec_yds | said 49.6%, hit 55.3% over 450 (z 2.42) |
-| high | NFL | said vs hit: alt_leg_types / QB pass attempts Over | said 78.2%, hit 68.5% over 89 (z -2.22) |
-| high | NFL | said vs hit: alt_leg_types / TE receiving yards Over | said 75.9%, hit 85.4% over 82 (z 2.01) |
+| high | NFL | said vs hit: alt_leg_types / QB pass attempts Over | said 78.2%, hit 68.2% over 88 (z -2.27) |
 | high | NFL | said vs hit: alt_leg_types / QB completions Under | said 78.9%, hit 90.4% over 94 (z 2.73) |
 | high | NHL | losing: picks / ml | 100-130, -36.86u, -16.0% (z -2.56) |
 | high | NHL | said vs hit: calibration / saves | said 50.0%, hit 32.2% over 422 (z -7.31) |
@@ -19,7 +24,8 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | NBA | said vs hit: alt_mix (tickets) | said 52.0%, hit 60.6% over 33 (z 0.99) |
 | medium | NBA | diagnosed: pts Unders | plays 9-11 (-15.4%); top cause: No single cause stands out: the losses look like the model having no edge on this prop type rather than one fixable flaw. Keep it paused (sh |
 | medium | NFL | said vs hit: tds / 2+ TDs / bins / 2 | said 27.0%, hit 17.5% over 40 (z -1.35) |
-| medium | NFL | said vs hit: alt_leg_types / RB carries Under | said 81.4%, hit 69.4% over 36 (z -1.85) |
+| medium | NFL | said vs hit: alt_leg_types / TE receiving yards Over | said 76.2%, hit 85.4% over 82 (z 1.96) |
+| medium | NFL | said vs hit: alt_leg_types / RB carries Under | said 81.1%, hit 70.3% over 37 (z -1.68) |
 | medium | NFL | diagnosed: pass_yds Overs | plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 66.0% and it hit 48.6% over 70. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: pass_yds Unders | plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 61.3% and it hit 42.1% over 57. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Overs | plays 8-17 (-34.7%); top cause: Overconfidence: the model gave the bet side 52.3% and it hit 32.0% over 25. Shrink this prop type's chance toward the book's (betrules reali |
@@ -41,6 +47,50 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | Soccer | losing: picks_by_league / laliga / ah | 13-17, -4.85u, -16.2% (z -0.93) |
 | medium | Soccer | said vs hit: cross_parlays (legs) | said 80.4%, hit 88.9% over 36 (z 1.28) |
 | info | NFL | winning: live_record / picks / moneyline | 58-29, +10.81u, +12.4% (z 1.22) |
+
+## Drawdowns and baselines
+
+Every bet record in betting order (worst drop from a high point, longest losing run), and the model next to a dumb baseline on the same games. A record only counts as an edge if it beats the baseline.
+
+| Sport | Record | Bets | Units | Return | Max drawdown | Longest losing run |
+|---|---|---|---|---|---|---|
+| NFL | game plays | 6 | -3.09 | -51.5% | -3.09u | 3 |
+| NFL | prop plays | 161 | -0.03 | -0.0% | -21.51u | 7 |
+| NHL | game plays (recent list only) | 60 | +7.02 | 11.7% | -8.0u | 8 |
+| NHL | prop plays | 445 | -17.78 | -4.0% | -36.07u | 6 |
+| NBA | game plays | 6 | -6.0 | -100.0% | -6.0u | 6 |
+| NBA | prop plays | 75 | -0.53 | -0.7% | -10.89u | 6 |
+| CFB | game plays | 16 | -4.57 | -28.6% | -5.0u | 5 |
+| CFB | prop plays | 191 | -1.56 | -0.8% | -15.93u | 6 |
+| Soccer | game plays | 24 | +6.95 | 29.0% | -4.0u | 4 |
+
+| Sport | What | Model | Baseline |
+|---|---|---|---|
+| NFL | moneyline leans | 71 bets, +10.81u (15.2%) | always the favorite: 71 bets, +4.41u (6.2%) |
+| NFL | prop plays | 161 bets, -0.03u (-0.0%) | every lean of the same types: 1893 bets, -23.51u (-1.2%) |
+| NHL | moneyline leans | 230 bets, -36.86u (-16.0%) | always the favorite: 230 bets, +4.99u (2.2%) |
+| NHL | moneyline plays | 23 bets, +4.47u (19.4%) | always the favorite: 23 bets, -3.02u (-13.1%) |
+| NHL | prop plays | 445 bets, -17.78u (-4.0%) | every lean of the same types: 4556 bets, -148.33u (-3.3%) |
+| NBA | moneyline leans | 73 bets, -15.97u (-21.9%) | always the favorite: 73 bets, +7.09u (9.7%) |
+| NBA | moneyline plays | 2 bets, -2.0u (-100.0%) | always the favorite: 2 bets, +0.31u (15.4%) |
+| NBA | prop plays | 75 bets, -0.53u (-0.7%) | every lean of the same types: 1043 bets, -26.03u (-2.5%) |
+| CFB | moneyline leans | 141 bets, -3.95u (-2.8%) | always the favorite: 141 bets, -16.9u (-12.0%) |
+| CFB | moneyline plays | 2 bets, -2.0u (-100.0%) | always the favorite: 2 bets, +0.13u (6.7%) |
+| CFB | prop plays | 191 bets, -1.56u (-0.8%) | every lean of the same types: 1396 bets, -47.52u (-3.4%) |
+| Soccer | moneyline leans | 107 bets, -7.91u (-7.4%) | always the favorite: 107 bets, +0.08u (0.1%) |
+| Soccer | moneyline plays | 4 bets, -0.4u (-10.0%) | always the favorite: 4 bets, +1.31u (32.8%) |
+
+### Scheduled runs: how late they fired (last 7 days)
+
+| Workflow | Runs | Median delay | Worst |
+|---|---|---|---|
+| cfb.yml | 14 | 255 min | 548 min |
+| nba.yml | 28 | 187 min | 429 min |
+| nhl.yml | 21 | 216 min | 346 min |
+| review.yml | 1 | 455 min | 455 min |
+| soccer.yml | 20 | 156 min | 428 min |
+| weekly.yml | 15 | 293 min | 590 min |
+
 
 ## Prop diagnoses
 Every prop type that is losing (20+ plays, -8% or worse) or paused, with what's driving it.
@@ -1249,7 +1299,7 @@ Plays 9-11 (-3.08u, -15.4%); every Under lean 261-211 (3.2%). Checks use plays.
 
 
 ## NFL
-Updated 5.6 hours ago, odds from odds_api, credits left 181.
+Updated 0.4 hours ago, odds from odds_api, credits left 181.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1308,16 +1358,16 @@ Updated 5.6 hours ago, odds from odds_api, credits left 181.
 | alt_mix (tickets) | 9 | 47.1% | 44.4% | -2.7 | -0.16 |
 | alt_mix / by_v / 1 (tickets) | 9 | 47.1% | 44.4% | -2.7 | -0.16 |
 | alt_ladder (tickets) | 5 | 60.0% | 80.0% | +20.0 | 0.91 |
-| alt_leg_types / QB pass attempts Over | 89 | 78.2% | 68.5% | -9.7 | -2.22 |
-| alt_leg_types / QB completions Over | 101 | 79.7% | 77.2% | -2.5 | -0.62 |
-| alt_leg_types / QB passing yards Over | 137 | 75.4% | 68.6% | -6.8 | -1.85 |
-| alt_leg_types / RB rushing yards Over | 137 | 77.6% | 73.0% | -4.6 | -1.29 |
-| alt_leg_types / TE receiving yards Over | 82 | 75.9% | 85.4% | +9.5 | 2.01 |
-| alt_leg_types / QB pass attempts Under | 47 | 76.3% | 76.6% | +0.3 | 0.05 |
+| alt_leg_types / QB pass attempts Over | 88 | 78.2% | 68.2% | -10.0 | -2.27 |
+| alt_leg_types / QB completions Over | 100 | 79.4% | 77.0% | -2.4 | -0.59 |
+| alt_leg_types / QB passing yards Over | 131 | 75.4% | 68.7% | -6.7 | -1.78 |
+| alt_leg_types / RB rushing yards Over | 135 | 77.5% | 72.6% | -4.9 | -1.36 |
+| alt_leg_types / TE receiving yards Over | 82 | 76.2% | 85.4% | +9.2 | 1.96 |
+| alt_leg_types / QB pass attempts Under | 47 | 76.5% | 76.6% | +0.1 | 0.02 |
 | alt_leg_types / QB completions Under | 94 | 78.9% | 90.4% | +11.5 | 2.73 |
-| alt_leg_types / RB carries Under | 36 | 81.4% | 69.4% | -12.0 | -1.85 |
-| alt_leg_types / Receptions Under (any position) | 396 | 82.9% | 84.8% | +1.9 | 1.0 |
-| alt_leg_types / WR receiving yards Over | 209 | 76.4% | 75.1% | -1.3 | -0.44 |
+| alt_leg_types / RB carries Under | 37 | 81.1% | 70.3% | -10.8 | -1.68 |
+| alt_leg_types / Receptions Under (any position) | 396 | 83.0% | 85.1% | +2.1 | 1.11 |
+| alt_leg_types / WR receiving yards Over | 213 | 76.4% | 75.1% | -1.3 | -0.45 |
 | alt_leg_types / Receptions Over (any position) | 175 | 78.8% | 82.3% | +3.5 | 1.13 |
 | teasers (legs) | 352 | 68.6% | 68.8% | +0.2 | 0.08 |
 | weather / overs (tickets) | 113 | 47.3% | 41.6% | -5.7 | -1.21 |
@@ -1326,7 +1376,7 @@ Updated 5.6 hours ago, odds from odds_api, credits left 181.
 Gates: NFL prop Overs (yardage) paused; NFL receptions props paused; NFL passing-yard Unders paused; NFL longest completion Unders paused; NFL longest completion Overs paused; NFL spreads active; NFL totals active
 
 ## NHL
-Updated 5.6 hours ago, odds from odds_api, credits left 330.
+Updated 1.2 hours ago, odds from odds_api, credits left 314.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1367,7 +1417,7 @@ Updated 5.6 hours ago, odds from odds_api, credits left 330.
 Gates: NHL points props (Unders) paused; NHL edge parlays paused; NHL moneyline active; NHL puck line paused; NHL totals active; NHL shots on goal Overs active; NHL shots on goal Unders active; NHL goals Overs active; NHL assists Overs active; NHL assists Unders active
 
 ## NBA
-Updated 9.0 hours ago, odds from odds_api, credits left 311.
+Updated 10.7 hours ago, odds from odds_api, credits left 311.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1402,7 +1452,7 @@ Updated 9.0 hours ago, odds from odds_api, credits left 311.
 Gates: NBA edge parlays active; NBA moneyline active; NBA spreads active; NBA totals active; NBA points Overs active; NBA points Unders active; NBA rebounds Overs active; NBA rebounds Unders active; NBA assists Overs active; NBA assists Unders active; NBA threes Overs active; NBA threes Unders active; NBA pts+reb+ast Overs active; NBA pts+reb+ast Unders active
 
 ## CFB
-Updated 5.6 hours ago, odds from odds_api, credits left 340.
+Updated 0.4 hours ago, odds from odds_api, credits left 337.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1427,7 +1477,7 @@ Updated 5.6 hours ago, odds from odds_api, credits left 340.
 Gates: CFB spreads active; CFB totals active; CFB moneyline active
 
 ## Soccer
-Updated 15.8 hours ago, odds from odds_api, credits left 381.
+Updated 17.5 hours ago, odds from odds_api, credits left 381.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|

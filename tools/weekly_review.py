@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import prop_diagnose as PD  # noqa: E402
+import records_check as RC  # noqa: E402
 OUT = ROOT / "docs" / "review"
 SPORTS = {"NFL": "docs/data", "NHL": "docs/nhl/data", "NBA": "docs/nba/data", "CFB": "docs/cfb/data", "Soccer": "docs/soccer/data"}
 
@@ -165,6 +166,12 @@ def review():
                                          "why": f"plays {d['plays']['w']}-{d['plays']['l']} ({d['plays']['roi']}%); top cause: {d['causes'][0][:140]}"})
         except Exception as e:  # noqa: BLE001
             rep["flags"].append({"sport": sport, "level": "medium", "what": "prop diagnosis failed", "why": str(e)[:160]})
+    # drawdowns, baselines and late scheduled runs (tools/records_check.py, Nov 10 2026)
+    try:
+        rep["records"] = RC.report()
+        rep["flags"] += RC.flags(rep["records"])
+    except Exception as e:  # noqa: BLE001
+        rep["flags"].append({"sport": "All", "level": "medium", "what": "records check failed", "why": str(e)[:160]})
     order = {"high": 0, "medium": 1, "info": 2}
     rep["flags"].sort(key=lambda f: (order.get(f["level"], 3), f["sport"]))
     return rep
@@ -178,6 +185,8 @@ def markdown(rep):
         lines += [f"| {f['level']} | {f['sport']} | {f['what']} | {f['why']} |" for f in rep["flags"]]
     else:
         lines.append("No flags.")
+    if rep.get("records"):
+        lines += ["", RC.markdown(rep["records"])]
     if rep.get("diagnoses"):
         lines += ["", "## Prop diagnoses", "Every prop type that is losing (20+ plays, -8% or worse) or paused, with what's driving it.", ""]
         lines += [PD.markdown(d) for d in rep["diagnoses"]]

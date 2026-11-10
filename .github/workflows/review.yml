@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: read          # records_check.py: how late each scheduled run fired
 
 jobs:
   review:
@@ -20,6 +21,8 @@ jobs:
         with:
           python-version: "3.12"
       - name: Build scorecard
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python tools/weekly_review.py
       - name: Save
         run: |
