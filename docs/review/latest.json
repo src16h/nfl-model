@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-10T12:16+00:00",
+ "generated_at": "2026-11-10T17:52+00:00",
  "sports": {
   "NFL": {
-   "age_h": 7.7,
-   "credits_left": 198,
+   "age_h": 5.6,
+   "credits_left": 181,
    "odds_source": "odds_api",
    "records": [
     {
@@ -260,43 +260,43 @@
    "said_vs_hit": [
     {
      "what": "tds / Anytime TD",
-     "n": 1294,
+     "n": 1308,
      "said": 23.5,
-     "hit": 25.5,
-     "gap": 2.0,
-     "z": 1.7
+     "hit": 25.3,
+     "gap": 1.8,
+     "z": 1.54
     },
     {
      "what": "tds / Anytime TD / bins / 0",
-     "n": 228,
+     "n": 229,
      "said": 5.5,
      "hit": 11.8,
      "gap": 6.3,
-     "z": 4.17
+     "z": 4.18
     },
     {
      "what": "tds / Anytime TD / bins / 1",
-     "n": 396,
+     "n": 400,
      "said": 15.0,
-     "hit": 15.4,
-     "gap": 0.4,
-     "z": 0.22
+     "hit": 15.2,
+     "gap": 0.2,
+     "z": 0.11
     },
     {
      "what": "tds / Anytime TD / bins / 2",
-     "n": 421,
+     "n": 427,
      "said": 26.8,
-     "hit": 30.4,
-     "gap": 3.6,
-     "z": 1.67
+     "hit": 30.0,
+     "gap": 3.2,
+     "z": 1.49
     },
     {
      "what": "tds / Anytime TD / bins / 3",
-     "n": 166,
+     "n": 169,
      "said": 41.4,
-     "hit": 39.8,
-     "gap": -1.6,
-     "z": -0.42
+     "hit": 39.6,
+     "gap": -1.8,
+     "z": -0.48
     },
     {
      "what": "tds / Anytime TD / bins / 4",
@@ -316,27 +316,27 @@
     },
     {
      "what": "tds / 2+ TDs",
-     "n": 1056,
+     "n": 1070,
      "said": 4.9,
-     "hit": 3.9,
-     "gap": -1.0,
-     "z": -1.51
+     "hit": 3.8,
+     "gap": -1.1,
+     "z": -1.67
     },
     {
      "what": "tds / 2+ TDs / bins / 0",
-     "n": 913,
+     "n": 924,
      "said": 2.7,
      "hit": 2.2,
      "gap": -0.5,
-     "z": -0.93
+     "z": -0.94
     },
     {
      "what": "tds / 2+ TDs / bins / 1",
-     "n": 95,
-     "said": 13.7,
-     "hit": 12.6,
-     "gap": -1.1,
-     "z": -0.31
+     "n": 98,
+     "said": 13.6,
+     "hit": 12.2,
+     "gap": -1.4,
+     "z": -0.4
     },
     {
      "what": "tds / 2+ TDs / bins / 2",
@@ -356,59 +356,59 @@
     },
     {
      "what": "combos / QB + WR1 overs",
-     "n": 136,
+     "n": 138,
      "said": 31.6,
-     "hit": 33.1,
-     "gap": 1.5,
-     "z": 0.38
+     "hit": 33.3,
+     "gap": 1.7,
+     "z": 0.43
     },
     {
      "what": "combos / QB over + opponent team total over",
-     "n": 139,
+     "n": 141,
      "said": 25.4,
-     "hit": 25.9,
-     "gap": 0.5,
-     "z": 0.14
+     "hit": 25.5,
+     "gap": 0.1,
+     "z": 0.03
     },
     {
      "what": "combos / QB over + team covers",
-     "n": 131,
+     "n": 133,
      "said": 27.7,
-     "hit": 26.7,
-     "gap": -1.0,
-     "z": -0.26
-    },
-    {
-     "what": "combos / QB over + team total over",
-     "n": 139,
-     "said": 29.7,
-     "hit": 30.2,
-     "gap": 0.5,
-     "z": 0.13
-    },
-    {
-     "what": "combos / RB1 anytime TD + team wins",
-     "n": 138,
-     "said": 30.3,
-     "hit": 29.7,
+     "hit": 27.1,
      "gap": -0.6,
      "z": -0.15
     },
     {
+     "what": "combos / QB over + team total over",
+     "n": 141,
+     "said": 29.7,
+     "hit": 29.8,
+     "gap": 0.1,
+     "z": 0.03
+    },
+    {
+     "what": "combos / RB1 anytime TD + team wins",
+     "n": 140,
+     "said": 30.3,
+     "hit": 30.0,
+     "gap": -0.3,
+     "z": -0.08
+    },
+    {
      "what": "combos / RB1 rush over + team wins",
-     "n": 138,
-     "said": 26.9,
-     "hit": 23.2,
-     "gap": -3.7,
-     "z": -0.98
+     "n": 140,
+     "said": 27.0,
+     "hit": 23.6,
+     "gap": -3.4,
+     "z": -0.91
     },
     {
      "what": "combos / WR1 over + team total over",
-     "n": 139,
+     "n": 141,
      "said": 26.2,
-     "hit": 24.5,
-     "gap": -1.7,
-     "z": -0.46
+     "hit": 24.1,
+     "gap": -2.1,
+     "z": -0.57
     },
     {
      "what": "combos / team total over + game over",
@@ -420,7 +420,7 @@
     },
     {
      "what": "combo_total",
-     "n": 1104,
+     "n": 1118,
      "said": 29.4,
      "hit": 29.1,
      "gap": -0.3,
@@ -484,91 +484,91 @@
     },
     {
      "what": "alt_leg_types / QB pass attempts Over",
-     "n": 86,
+     "n": 89,
      "said": 78.2,
-     "hit": 70.9,
-     "gap": -7.3,
-     "z": -1.64
+     "hit": 68.5,
+     "gap": -9.7,
+     "z": -2.22
     },
     {
      "what": "alt_leg_types / QB completions Over",
-     "n": 97,
-     "said": 79.8,
-     "hit": 79.4,
-     "gap": -0.4,
-     "z": -0.1
+     "n": 101,
+     "said": 79.7,
+     "hit": 77.2,
+     "gap": -2.5,
+     "z": -0.62
     },
     {
      "what": "alt_leg_types / QB passing yards Over",
-     "n": 147,
-     "said": 78.1,
-     "hit": 65.3,
-     "gap": -12.8,
-     "z": -3.75
+     "n": 137,
+     "said": 75.4,
+     "hit": 68.6,
+     "gap": -6.8,
+     "z": -1.85
     },
     {
      "what": "alt_leg_types / RB rushing yards Over",
-     "n": 156,
-     "said": 79.9,
-     "hit": 71.8,
-     "gap": -8.1,
-     "z": -2.52
+     "n": 137,
+     "said": 77.6,
+     "hit": 73.0,
+     "gap": -4.6,
+     "z": -1.29
     },
     {
      "what": "alt_leg_types / TE receiving yards Over",
-     "n": 91,
-     "said": 77.9,
-     "hit": 84.6,
-     "gap": 6.7,
-     "z": 1.54
+     "n": 82,
+     "said": 75.9,
+     "hit": 85.4,
+     "gap": 9.5,
+     "z": 2.01
     },
     {
      "what": "alt_leg_types / QB pass attempts Under",
-     "n": 43,
-     "said": 76.1,
-     "hit": 74.4,
-     "gap": -1.7,
-     "z": -0.26
+     "n": 47,
+     "said": 76.3,
+     "hit": 76.6,
+     "gap": 0.3,
+     "z": 0.05
     },
     {
      "what": "alt_leg_types / QB completions Under",
-     "n": 87,
-     "said": 78.8,
-     "hit": 89.7,
-     "gap": 10.9,
-     "z": 2.49
+     "n": 94,
+     "said": 78.9,
+     "hit": 90.4,
+     "gap": 11.5,
+     "z": 2.73
     },
     {
      "what": "alt_leg_types / RB carries Under",
-     "n": 34,
-     "said": 81.8,
-     "hit": 73.5,
-     "gap": -8.3,
-     "z": -1.25
+     "n": 36,
+     "said": 81.4,
+     "hit": 69.4,
+     "gap": -12.0,
+     "z": -1.85
     },
     {
      "what": "alt_leg_types / Receptions Under (any position)",
-     "n": 386,
+     "n": 396,
      "said": 82.9,
-     "hit": 84.5,
-     "gap": 1.6,
-     "z": 0.83
+     "hit": 84.8,
+     "gap": 1.9,
+     "z": 1.0
     },
     {
      "what": "alt_leg_types / WR receiving yards Over",
-     "n": 196,
-     "said": 77.9,
-     "hit": 74.5,
-     "gap": -3.4,
-     "z": -1.15
+     "n": 209,
+     "said": 76.4,
+     "hit": 75.1,
+     "gap": -1.3,
+     "z": -0.44
     },
     {
      "what": "alt_leg_types / Receptions Over (any position)",
-     "n": 173,
+     "n": 175,
      "said": 78.8,
-     "hit": 82.1,
-     "gap": 3.3,
-     "z": 1.06
+     "hit": 82.3,
+     "gap": 3.5,
+     "z": 1.13
     },
     {
      "what": "teasers (legs)",
@@ -736,39 +736,39 @@
    "backtest": null
   },
   "NHL": {
-   "age_h": 7.5,
-   "credits_left": 333,
+   "age_h": 5.6,
+   "credits_left": 330,
    "odds_source": "odds_api",
    "records": [
     {
      "what": "picks / ml",
      "w": 100,
-     "l": 128,
-     "n": 228,
-     "pct": 43.9,
-     "units": -34.86,
-     "roi": -15.3,
-     "z": -2.43
+     "l": 130,
+     "n": 230,
+     "pct": 43.5,
+     "units": -36.86,
+     "roi": -16.0,
+     "z": -2.56
     },
     {
      "what": "picks / pl",
      "w": 111,
-     "l": 117,
-     "n": 228,
-     "pct": 48.7,
-     "units": -18.98,
-     "roi": -8.3,
-     "z": -1.32
+     "l": 119,
+     "n": 230,
+     "pct": 48.3,
+     "units": -20.98,
+     "roi": -9.1,
+     "z": -1.46
     },
     {
      "what": "picks / total",
-     "w": 110,
-     "l": 118,
-     "n": 228,
-     "pct": 48.2,
-     "units": -19.29,
+     "w": 111,
+     "l": 119,
+     "n": 230,
+     "pct": 48.3,
+     "units": -19.46,
      "roi": -8.5,
-     "z": -1.34
+     "z": -1.35
     },
     {
      "what": "plays",
@@ -904,15 +904,15 @@
    "said_vs_hit": [
     {
      "what": "calibration / sog",
-     "n": 7726,
+     "n": 7794,
      "said": 49.6,
-     "hit": 48.4,
-     "gap": -1.2,
-     "z": -2.11
+     "hit": 48.3,
+     "gap": -1.3,
+     "z": -2.3
     },
     {
      "what": "calibration / goals",
-     "n": 7726,
+     "n": 7794,
      "said": 15.6,
      "hit": 15.7,
      "gap": 0.1,
@@ -920,43 +920,43 @@
     },
     {
      "what": "calibration / assists",
-     "n": 7726,
-     "said": 22.8,
+     "n": 7794,
+     "said": 22.9,
      "hit": 25.1,
-     "gap": 2.3,
-     "z": 4.82
+     "gap": 2.2,
+     "z": 4.62
     },
     {
      "what": "calibration / points",
-     "n": 7726,
+     "n": 7794,
      "said": 33.2,
-     "hit": 36.1,
-     "gap": 2.9,
-     "z": 5.41
+     "hit": 36.0,
+     "gap": 2.8,
+     "z": 5.25
     },
     {
      "what": "calibration / saves",
-     "n": 418,
+     "n": 422,
      "said": 50.0,
-     "hit": 32.1,
-     "gap": -17.9,
-     "z": -7.32
+     "hit": 32.2,
+     "gap": -17.8,
+     "z": -7.31
     },
     {
      "what": "alt (tickets)",
-     "n": 127,
+     "n": 129,
      "said": 50.5,
-     "hit": 52.8,
-     "gap": 2.3,
-     "z": 0.52
+     "hit": 52.7,
+     "gap": 2.2,
+     "z": 0.5
     },
     {
      "what": "alt_mix (tickets)",
-     "n": 111,
-     "said": 49.0,
-     "hit": 53.2,
-     "gap": 4.2,
-     "z": 0.89
+     "n": 113,
+     "said": 49.1,
+     "hit": 52.2,
+     "gap": 3.1,
+     "z": 0.66
     },
     {
      "what": "alt_ladder (tickets)",
@@ -984,35 +984,35 @@
     },
     {
      "what": "cross_parlays (tickets)",
-     "n": 18,
-     "said": 49.0,
-     "hit": 61.1,
-     "gap": 12.1,
-     "z": 1.03
+     "n": 20,
+     "said": 48.8,
+     "hit": 65.0,
+     "gap": 16.2,
+     "z": 1.45
     },
     {
      "what": "cross_parlays (legs)",
-     "n": 54,
-     "said": 78.8,
-     "hit": 85.2,
-     "gap": 6.4,
-     "z": 1.15
+     "n": 60,
+     "said": 78.7,
+     "hit": 86.7,
+     "gap": 8.0,
+     "z": 1.51
     },
     {
      "what": "cross_parlays / by_style / spreads (tickets)",
-     "n": 9,
-     "said": 48.2,
-     "hit": 55.6,
-     "gap": 7.4,
-     "z": 0.44
+     "n": 10,
+     "said": 48.0,
+     "hit": 60.0,
+     "gap": 12.0,
+     "z": 0.76
     },
     {
      "what": "cross_parlays / by_style / mix (tickets)",
-     "n": 9,
-     "said": 49.7,
-     "hit": 66.7,
-     "gap": 17.0,
-     "z": 1.02
+     "n": 10,
+     "said": 49.5,
+     "hit": 70.0,
+     "gap": 20.5,
+     "z": 1.3
     }
    ],
    "gates": [
@@ -1189,7 +1189,7 @@
    }
   },
   "NBA": {
-   "age_h": 3.5,
+   "age_h": 9.0,
    "credits_left": 311,
    "odds_source": "odds_api",
    "records": [
@@ -1850,8 +1850,8 @@
    }
   },
   "CFB": {
-   "age_h": 12.8,
-   "credits_left": 350,
+   "age_h": 5.6,
+   "credits_left": 340,
    "odds_source": "odds_api",
    "records": [
     {
@@ -2158,7 +2158,7 @@
    }
   },
   "Soccer": {
-   "age_h": 10.2,
+   "age_h": 15.8,
    "credits_left": 381,
    "odds_source": "odds_api",
    "records": [
@@ -2612,32 +2612,32 @@
   {
    "sport": "NFL",
    "level": "high",
-   "what": "said vs hit: alt_leg_types / QB passing yards Over",
-   "why": "said 78.1%, hit 65.3% over 147 (z -3.75)"
+   "what": "said vs hit: alt_leg_types / QB pass attempts Over",
+   "why": "said 78.2%, hit 68.5% over 89 (z -2.22)"
   },
   {
    "sport": "NFL",
    "level": "high",
-   "what": "said vs hit: alt_leg_types / RB rushing yards Over",
-   "why": "said 79.9%, hit 71.8% over 156 (z -2.52)"
+   "what": "said vs hit: alt_leg_types / TE receiving yards Over",
+   "why": "said 75.9%, hit 85.4% over 82 (z 2.01)"
   },
   {
    "sport": "NFL",
    "level": "high",
    "what": "said vs hit: alt_leg_types / QB completions Under",
-   "why": "said 78.8%, hit 89.7% over 87 (z 2.49)"
+   "why": "said 78.9%, hit 90.4% over 94 (z 2.73)"
   },
   {
    "sport": "NHL",
    "level": "high",
    "what": "losing: picks / ml",
-   "why": "100-128, -34.86u, -15.3% (z -2.43)"
+   "why": "100-130, -36.86u, -16.0% (z -2.56)"
   },
   {
    "sport": "NHL",
    "level": "high",
    "what": "said vs hit: calibration / saves",
-   "why": "said 50.0%, hit 32.1% over 418 (z -7.32)"
+   "why": "said 50.0%, hit 32.2% over 422 (z -7.31)"
   },
   {
    "sport": "CFB",
@@ -2685,19 +2685,19 @@
    "sport": "NFL",
    "level": "medium",
    "what": "said vs hit: alt_leg_types / RB carries Under",
-   "why": "said 81.8%, hit 73.5% over 34 (z -1.25)"
+   "why": "said 81.4%, hit 69.4% over 36 (z -1.85)"
   },
   {
    "sport": "NFL",
    "level": "medium",
    "what": "diagnosed: pass_yds Overs",
-   "why": "plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 66.2% and it hit 49.3% over 69. Shrink this prop type's chance toward the book's (betrules reali"
+   "why": "plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 66.0% and it hit 48.6% over 70. Shrink this prop type's chance toward the book's (betrules reali"
   },
   {
    "sport": "NFL",
    "level": "medium",
    "what": "diagnosed: pass_yds Unders",
-   "why": "plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 61.1% and it hit 41.1% over 56. Shrink this prop type's chance toward the book's (betrules reali"
+   "why": "plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 61.3% and it hit 42.1% over 57. Shrink this prop type's chance toward the book's (betrules reali"
   },
   {
    "sport": "NFL",
@@ -2721,25 +2721,37 @@
    "sport": "NFL",
    "level": "medium",
    "what": "diagnosed: rush_yds Overs",
-   "why": "plays 2-4 (-37.5%); top cause: Overconfidence: the model gave the bet side 70.7% and it hit 43.6% over 204. Shrink this prop type's chance toward the book's (betrules real"
+   "why": "plays 2-4 (-37.5%); top cause: Overconfidence: the model gave the bet side 70.6% and it hit 43.5% over 207. Shrink this prop type's chance toward the book's (betrules real"
   },
   {
    "sport": "NHL",
    "level": "medium",
    "what": "losing: picks / pl",
-   "why": "111-117, -18.98u, -8.3% (z -1.32)"
+   "why": "111-119, -20.98u, -9.1% (z -1.46)"
   },
   {
    "sport": "NHL",
    "level": "medium",
    "what": "losing: picks / total",
-   "why": "110-118, -19.29u, -8.5% (z -1.34)"
+   "why": "111-119, -19.46u, -8.5% (z -1.35)"
   },
   {
    "sport": "NHL",
    "level": "medium",
    "what": "said vs hit: alt_hr (tickets)",
    "why": "said 66.0%, hit 56.5% over 23 (z -0.96)"
+  },
+  {
+   "sport": "NHL",
+   "level": "medium",
+   "what": "said vs hit: cross_parlays (tickets)",
+   "why": "said 48.8%, hit 65.0% over 20 (z 1.45)"
+  },
+  {
+   "sport": "NHL",
+   "level": "medium",
+   "what": "said vs hit: cross_parlays (legs)",
+   "why": "said 78.7%, hit 86.7% over 60 (z 1.51)"
   },
   {
    "sport": "NHL",
@@ -2816,40 +2828,40 @@
     "roi": -5.2
    },
    "leans_same_side": {
-    "n": 69,
+    "n": 70,
     "w": 34,
-    "l": 35,
-    "pct": 49.3,
-    "units": -4.59,
-    "roi": -6.7
+    "l": 36,
+    "pct": 48.6,
+    "units": -5.59,
+    "roi": -8.0
    },
    "checks": {
     "projection": {
-     "n": 125,
-     "actual_minus_model": -8.15,
-     "actual_minus_line": -1.14,
+     "n": 127,
+     "actual_minus_model": -8.87,
+     "actual_minus_line": -2.17,
      "over_rate_at_fair": 49.6,
      "over_rate_z": -0.09
     },
     "calibration_p_raw": {
-     "n": 69,
-     "said": 66.2,
-     "hit": 49.3
+     "n": 70,
+     "said": 66.0,
+     "hit": 48.6
     },
     "book_said": {
-     "n": 69,
+     "n": 70,
      "book": 50.0,
-     "hit": 49.3
+     "hit": 48.6
     },
     "by_edge": [
      {
       "edge": "4-8",
-      "n": 15,
+      "n": 16,
       "w": 6,
-      "l": 9,
-      "pct": 40.0,
-      "units": -3.63,
-      "roi": -24.2
+      "l": 10,
+      "pct": 37.5,
+      "units": -4.63,
+      "roi": -28.9
      },
      {
       "edge": "8-+",
@@ -2871,17 +2883,17 @@
       "roi": -5.2
      },
      "all_leans": {
-      "n": 69,
+      "n": 70,
       "w": 34,
-      "l": 35,
-      "pct": 49.3,
-      "units": -4.59,
-      "roi": -6.7
+      "l": 36,
+      "pct": 48.6,
+      "units": -5.59,
+      "roi": -8.0
      }
     },
     "price": {
      "avg_breakeven": 52.8,
-     "hit": 49.3,
+     "hit": 48.6,
      "heavy_juice_share": 0.0
     },
     "line_size": {
@@ -2894,17 +2906,17 @@
       "roi": -10.6
      },
      "> 206.5": {
-      "n": 33,
+      "n": 34,
       "w": 17,
-      "l": 16,
-      "pct": 51.5,
-      "units": -0.78,
-      "roi": -2.4
+      "l": 17,
+      "pct": 50.0,
+      "units": -1.78,
+      "roi": -5.2
      }
     },
     "zeros": {
      "n": 1,
-     "of": 69,
+     "of": 70,
      "share": 1.4
     },
     "clustering": [
@@ -2918,6 +2930,15 @@
       "roi": 1.0
      },
      {
+      "date": "w09",
+      "n": 13,
+      "w": 2,
+      "l": 11,
+      "pct": 15.4,
+      "units": -9.2,
+      "roi": -70.8
+     },
+     {
       "date": "w06",
       "n": 12,
       "w": 7,
@@ -2925,15 +2946,6 @@
       "pct": 58.3,
       "units": 1.27,
       "roi": 10.6
-     },
-     {
-      "date": "w09",
-      "n": 12,
-      "w": 2,
-      "l": 10,
-      "pct": 16.7,
-      "units": -8.2,
-      "roi": -68.3
      }
     ],
     "trend": {
@@ -2946,17 +2958,17 @@
       "roi": 7.5
      },
      "recent": {
-      "n": 32,
+      "n": 33,
       "w": 13,
-      "l": 19,
-      "pct": 40.6,
-      "units": -7.37,
-      "roi": -23.0
+      "l": 20,
+      "pct": 39.4,
+      "units": -8.37,
+      "roi": -25.4
      }
     }
    },
    "causes": [
-    "Overconfidence: the model gave the bet side 66.2% and it hit 49.3% over 69. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar."
+    "Overconfidence: the model gave the bet side 66.0% and it hit 48.6% over 70. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar."
    ],
    "based_on": "every lean on this side (too few plays)"
   },
@@ -2973,30 +2985,30 @@
     "roi": 13.9
    },
    "leans_same_side": {
-    "n": 56,
-    "w": 23,
+    "n": 57,
+    "w": 24,
     "l": 33,
-    "pct": 41.1,
-    "units": -12.46,
-    "roi": -22.2
+    "pct": 42.1,
+    "units": -11.56,
+    "roi": -20.3
    },
    "checks": {
     "projection": {
-     "n": 125,
-     "actual_minus_model": -8.15,
-     "actual_minus_line": -1.14,
+     "n": 127,
+     "actual_minus_model": -8.87,
+     "actual_minus_line": -2.17,
      "over_rate_at_fair": 49.6,
      "over_rate_z": -0.09
     },
     "calibration_p_raw": {
-     "n": 56,
-     "said": 61.1,
-     "hit": 41.1
+     "n": 57,
+     "said": 61.3,
+     "hit": 42.1
     },
     "book_said": {
-     "n": 56,
+     "n": 57,
      "book": 50.0,
-     "hit": 41.1
+     "hit": 42.1
     },
     "by_edge": [
      {
@@ -3010,12 +3022,12 @@
      },
      {
       "edge": "8-+",
-      "n": 37,
-      "w": 13,
+      "n": 38,
+      "w": 14,
       "l": 24,
-      "pct": 35.1,
-      "units": -12.4,
-      "roi": -33.5
+      "pct": 36.8,
+      "units": -11.51,
+      "roi": -30.3
      }
     ],
     "plays_vs_leans": {
@@ -3028,35 +3040,35 @@
       "roi": 13.9
      },
      "all_leans": {
-      "n": 56,
-      "w": 23,
+      "n": 57,
+      "w": 24,
       "l": 33,
-      "pct": 41.1,
-      "units": -12.46,
-      "roi": -22.2
+      "pct": 42.1,
+      "units": -11.56,
+      "roi": -20.3
      }
     },
     "price": {
      "avg_breakeven": 52.8,
-     "hit": 41.1,
+     "hit": 42.1,
      "heavy_juice_share": 0.0
     },
     "line_size": {
-     "<= 242.5": {
+     "<= 241.5": {
       "n": 29,
       "w": 13,
       "l": 16,
       "pct": 44.8,
-      "units": -4.39,
-      "roi": -15.1
+      "units": -4.4,
+      "roi": -15.2
      },
-     "> 242.5": {
-      "n": 27,
-      "w": 10,
+     "> 241.5": {
+      "n": 28,
+      "w": 11,
       "l": 17,
-      "pct": 37.0,
-      "units": -8.06,
-      "roi": -29.9
+      "pct": 39.3,
+      "units": -7.16,
+      "roi": -25.6
      }
     },
     "clustering": [
@@ -3071,12 +3083,12 @@
      },
      {
       "date": "w09",
-      "n": 11,
-      "w": 3,
+      "n": 12,
+      "w": 4,
       "l": 8,
-      "pct": 27.3,
-      "units": -5.33,
-      "roi": -48.4
+      "pct": 33.3,
+      "units": -4.44,
+      "roi": -37.0
      },
      {
       "date": "w05",
@@ -3098,18 +3110,18 @@
       "roi": -27.2
      },
      "recent": {
-      "n": 30,
-      "w": 13,
+      "n": 31,
+      "w": 14,
       "l": 17,
-      "pct": 43.3,
-      "units": -5.38,
-      "roi": -17.9
+      "pct": 45.2,
+      "units": -4.49,
+      "roi": -14.5
      }
     }
    },
    "causes": [
-    "Overconfidence: the model gave the bet side 61.1% and it hit 41.1% over 56. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.",
-    "Bigger edges did worse (35.1% at 8+ points vs 53% below): big gaps from the book usually mean news the model can't see (injury, role, lineup). Cap the edge for pass_yds lower."
+    "Overconfidence: the model gave the bet side 61.3% and it hit 42.1% over 57. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.",
+    "Bigger edges did worse (36.8% at 8+ points vs 53% below): big gaps from the book usually mean news the model can't see (injury, role, lineup). Cap the edge for pass_yds lower."
    ],
    "based_on": "every lean on this side (too few plays)"
   },
@@ -3126,20 +3138,20 @@
     "roi": -34.7
    },
    "leans_same_side": {
-    "n": 314,
-    "w": 158,
-    "l": 156,
+    "n": 316,
+    "w": 159,
+    "l": 157,
     "pct": 50.3,
-    "units": 2.19,
-    "roi": 0.7
+    "units": 2.89,
+    "roi": 0.9
    },
    "checks": {
     "projection": {
-     "n": 691,
+     "n": 698,
      "actual_minus_model": 0.37,
      "actual_minus_line": 0.07,
      "over_rate_at_fair": 55.1,
-     "over_rate_z": 2.42
+     "over_rate_z": 2.44
     },
     "calibration_p_raw": {
      "n": 25,
@@ -3172,12 +3184,12 @@
       "roi": -34.7
      },
      "all_leans": {
-      "n": 314,
-      "w": 158,
-      "l": 156,
+      "n": 316,
+      "w": 159,
+      "l": 157,
       "pct": 50.3,
-      "units": 2.19,
-      "roi": 0.7
+      "units": 2.89,
+      "roi": 0.9
      }
     },
     "price": {
@@ -3247,20 +3259,20 @@
     "roi": -13.7
    },
    "leans_same_side": {
-    "n": 377,
-    "w": 206,
-    "l": 171,
-    "pct": 54.6,
-    "units": 7.96,
-    "roi": 2.1
+    "n": 382,
+    "w": 210,
+    "l": 172,
+    "pct": 55.0,
+    "units": 10.64,
+    "roi": 2.8
    },
    "checks": {
     "projection": {
-     "n": 691,
+     "n": 698,
      "actual_minus_model": 0.37,
      "actual_minus_line": 0.07,
      "over_rate_at_fair": 55.1,
-     "over_rate_z": 2.42
+     "over_rate_z": 2.44
     },
     "calibration_p_raw": {
      "n": 21,
@@ -3302,12 +3314,12 @@
       "roi": -13.7
      },
      "all_leans": {
-      "n": 377,
-      "w": 206,
-      "l": 171,
-      "pct": 54.6,
-      "units": 7.96,
-      "roi": 2.1
+      "n": 382,
+      "w": 210,
+      "l": 172,
+      "pct": 55.0,
+      "units": 10.64,
+      "roi": 2.8
      }
     },
     "price": {
@@ -3356,7 +3368,7 @@
    },
    "causes": [
     "Role / volume: lines over 2.5 did much worse (30.0% vs 63.6%). High lines are stars the market prices sharply; the model adds little there.",
-    "Projection bias: results ran 0.37 above the model's middle number on 691 rec props, while the book's line missed by only +0.07. The model's level for rec is off; shift it up (or let the prop bias correction learn faster)."
+    "Projection bias: results ran 0.37 above the model's middle number on 698 rec props, while the book's line missed by only +0.07. The model's level for rec is off; shift it up (or let the prop bias correction learn faster)."
    ],
    "based_on": "plays"
   },
@@ -3373,20 +3385,20 @@
     "roi": 2.0
    },
    "leans_same_side": {
-    "n": 298,
+    "n": 300,
     "w": 150,
-    "l": 148,
-    "pct": 50.3,
-    "units": -14.09,
-    "roi": -4.7
+    "l": 150,
+    "pct": 50.0,
+    "units": -16.09,
+    "roi": -5.4
    },
    "checks": {
     "projection": {
-     "n": 678,
-     "actual_minus_model": 7.15,
-     "actual_minus_line": 4.62,
-     "over_rate_at_fair": 51.6,
-     "over_rate_z": 0.85
+     "n": 686,
+     "actual_minus_model": 7.06,
+     "actual_minus_line": 4.47,
+     "over_rate_at_fair": 51.3,
+     "over_rate_z": 0.69
     },
     "calibration_p_raw": {
      "n": 39,
@@ -3428,12 +3440,12 @@
       "roi": 2.0
      },
      "all_leans": {
-      "n": 298,
+      "n": 300,
       "w": 150,
-      "l": 148,
-      "pct": 50.3,
-      "units": -14.09,
-      "roi": -4.7
+      "l": 150,
+      "pct": 50.0,
+      "units": -16.09,
+      "roi": -5.4
      }
     },
     "price": {
@@ -3512,49 +3524,49 @@
     "roi": -37.5
    },
    "leans_same_side": {
-    "n": 204,
-    "w": 89,
-    "l": 115,
-    "pct": 43.6,
-    "units": -35.36,
-    "roi": -17.3
+    "n": 207,
+    "w": 90,
+    "l": 117,
+    "pct": 43.5,
+    "units": -36.45,
+    "roi": -17.6
    },
    "checks": {
     "projection": {
-     "n": 378,
-     "actual_minus_model": 1.09,
-     "actual_minus_line": 2.96,
-     "over_rate_at_fair": 41.5,
-     "over_rate_z": -3.29
+     "n": 382,
+     "actual_minus_model": 1.01,
+     "actual_minus_line": 2.9,
+     "over_rate_at_fair": 41.6,
+     "over_rate_z": -3.27
     },
     "calibration_p_raw": {
-     "n": 204,
-     "said": 70.7,
-     "hit": 43.6
+     "n": 207,
+     "said": 70.6,
+     "hit": 43.5
     },
     "book_said": {
-     "n": 204,
+     "n": 207,
      "book": 49.9,
-     "hit": 43.6
+     "hit": 43.5
     },
     "by_edge": [
      {
       "edge": "4-8",
-      "n": 36,
+      "n": 37,
       "w": 12,
-      "l": 24,
-      "pct": 33.3,
-      "units": -13.34,
-      "roi": -37.1
+      "l": 25,
+      "pct": 32.4,
+      "units": -14.34,
+      "roi": -38.8
      },
      {
       "edge": "8-+",
-      "n": 168,
-      "w": 77,
-      "l": 91,
-      "pct": 45.8,
-      "units": -22.02,
-      "roi": -13.1
+      "n": 170,
+      "w": 78,
+      "l": 92,
+      "pct": 45.9,
+      "units": -22.12,
+      "roi": -13.0
      }
     ],
     "plays_vs_leans": {
@@ -3567,41 +3579,41 @@
       "roi": -37.5
      },
      "all_leans": {
-      "n": 204,
-      "w": 89,
-      "l": 115,
-      "pct": 43.6,
-      "units": -35.36,
-      "roi": -17.3
+      "n": 207,
+      "w": 90,
+      "l": 117,
+      "pct": 43.5,
+      "units": -36.45,
+      "roi": -17.6
      }
     },
     "price": {
      "avg_breakeven": 52.7,
-     "hit": 43.6,
+     "hit": 43.5,
      "heavy_juice_share": 0.0
     },
     "line_size": {
      "<= 18.5": {
-      "n": 103,
+      "n": 104,
       "w": 43,
-      "l": 60,
-      "pct": 41.7,
-      "units": -21.52,
-      "roi": -20.9
+      "l": 61,
+      "pct": 41.3,
+      "units": -22.52,
+      "roi": -21.7
      },
      "> 18.5": {
-      "n": 101,
-      "w": 46,
-      "l": 55,
-      "pct": 45.5,
-      "units": -13.84,
-      "roi": -13.7
+      "n": 103,
+      "w": 47,
+      "l": 56,
+      "pct": 45.6,
+      "units": -13.93,
+      "roi": -13.5
      }
     },
     "zeros": {
-     "n": 14,
-     "of": 187,
-     "share": 7.5
+     "n": 15,
+     "of": 190,
+     "share": 7.9
     },
     "clustering": [
      {
@@ -3642,17 +3654,17 @@
       "roi": -10.6
      },
      "recent": {
-      "n": 98,
-      "w": 39,
-      "l": 59,
-      "pct": 39.8,
-      "units": -24.09,
-      "roi": -24.6
+      "n": 101,
+      "w": 40,
+      "l": 61,
+      "pct": 39.6,
+      "units": -25.18,
+      "roi": -24.9
      }
     }
    },
    "causes": [
-    "Overconfidence: the model gave the bet side 70.7% and it hit 43.6% over 204. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar."
+    "Overconfidence: the model gave the bet side 70.6% and it hit 43.5% over 207. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar."
    ],
    "based_on": "every lean on this side (too few plays)"
   },
