@@ -3,9 +3,9 @@ name: Weekly NFL model
 on:
   schedule:   # UTC times set for Eastern Standard Time (EST, UTC-5) until Mar 14 2027
     # Two runs a day. Times are UTC: ET is UTC minus 4 until Nov 1, then minus 5
-    # (after that, runs land an hour earlier in ET). GitHub can start runs hours late or skip them
-    # (Nov 1 2026: every Sunday run was skipped), so Claude scheduled tasks back up the Sunday runs
-    # in New York time. A scheduled run that lands within an hour of another run is skipped (guard job).
+    # (after that, runs land an hour earlier in ET). GitHub has started these runs hours late since Nov 1 2026, so the
+    # Clock workflow (tools/clock.py) starts each one on time from these same lines; these crons are the backup
+    # (the guard job skips a late one the Clock already covered).
     - cron: "7 13 * * 1-6"   # Mon to Sat, 8am ET: overnight injury news, grades finished games
     - cron: "7 23 * * 1-6"   # Mon to Sat, 6pm ET: before Thursday and Monday night games
     - cron: "45 16 * * 0"    # Sunday 11:45am ET: after inactives, before 1pm kickoffs
@@ -22,7 +22,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  guard:                    # skip a late scheduled run if the model already ran in the last hour
+  guard:                    # a late scheduled run skips itself when the Clock (or a person) already started this
+                            # workflow in the last 6 hours, or any run finished in the last hour (Nov 10 2026)
     runs-on: ubuntu-24.04
     outputs:
       skip: ${{ steps.check.outputs.skip }}
@@ -32,10 +33,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ github.event_name }}" != "schedule" ]; then echo "skip=0" >> "$GITHUB_OUTPUT"; exit 0; fi
-          recent=$(gh run list -R "$GITHUB_REPOSITORY" -w weekly.yml -L 10 --json databaseId,createdAt,status,conclusion \
-            -q '[.[] | select(.databaseId != ${{ github.run_id }}) | select(.conclusion == "success" or .status != "completed")
-                 | select((now - (.createdAt | fromdateiso8601)) < 3600)] | length' || echo 0)
-          echo "Runs in the last hour: $recent"
+          recent=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/weekly.yml/runs?per_page=30" --jq '[.workflow_runs[]
+                 | select(.id != ${{ github.run_id }})
+                 | select((.event == "workflow_dispatch" and (now - (.created_at | fromdateiso8601)) < 21600)
+                          or ((.conclusion == "success" or .status != "completed") and (now - (.created_at | fromdateiso8601)) < 3600))]
+                 | length' || echo 0)
+          echo "Recent runs that cover this slot: $recent"
           if [ "${recent:-0}" -gt 0 ]; then echo "skip=1" >> "$GITHUB_OUTPUT"; else echo "skip=0" >> "$GITHUB_OUTPUT"; fi
 
   run-model:

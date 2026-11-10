@@ -1,0 +1,45 @@
+name: Clock
+
+# Starts the model workflows on time (tools/clock.py, Nov 10 2026). GitHub's cron triggers have fired 2-10 hours late
+# since Nov 1 2026; runs started with workflow_dispatch begin within seconds. This job reads the cron lines in each
+# model workflow, starts each one at its time, and after about 5h45m starts a fresh copy of itself.
+# The hourly cron below only restarts the chain if it ever breaks (a queued copy waits, and is replaced by the
+# running clock's own hand-off). Public repo: Actions minutes are free.
+on:
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Last minute the previous clock handled (set automatically)"
+        default: ""
+  schedule:
+    - cron: "13 * * * *"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: clock
+  cancel-in-progress: false
+
+jobs:
+  clock:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Start workflows on time
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CLOCK_STATE: ${{ runner.temp }}/clock_last
+        run: python tools/clock.py 345 "${{ inputs.since }}"
+      - name: Hand off to the next clock
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          since=$(cat "${{ runner.temp }}/clock_last" 2>/dev/null || true)
+          gh api -X POST "repos/$GITHUB_REPOSITORY/actions/workflows/clock.yml/dispatches" -f ref="$GITHUB_REF_NAME" -f "inputs[since]=$since"
