@@ -10,7 +10,8 @@ import urllib.request
 BASE = "https://api.the-odds-api.com"
 import sys as _s
 SPORT = os.environ.get("PROBE_SPORT", "basketball_nba")
-KEY = "ODDS_API_KEY_NHL" if SPORT == "icehockey_nhl" else "ODDS_API_KEY_NBA"
+KEY = {"icehockey_nhl": "ODDS_API_KEY_NHL", "americanfootball_nfl": "ODDS_API_KEY",
+       "americanfootball_ncaaf": "ODDS_API_KEY_CFB"}.get(SPORT, "ODDS_API_KEY_NBA")
 MK = os.environ.get("PROBE_MARKETS") or "player_points_alternate,player_rebounds_alternate,player_assists_alternate,player_threes_alternate"
 N_EV = int(os.environ.get("PROBE_EVENTS", "2"))
 
@@ -32,7 +33,8 @@ for ev in evs[:N_EV]:
             for o in m["outcomes"]:
                 lad.setdefault(o.get("description"), []).append((o["name"][0], o.get("point"), o["price"]))
             mins = sorted({min(p for _, p, _ in v if p is not None) for v in lad.values() if any(p is not None for _, p, _ in v)})
-            print(f"  {b['key']:11s} {m['key']:28s} players {len(lad):2d}  lowest rung per player {mins[:12]}")
+            sides = {o["name"] for o in m["outcomes"]}
+            print(f"  {b['key']:11s} {m['key']:34s} players {len(lad):2d}  sides {sorted(sides)}  lowest rung per player {mins[:12]}")
             for name, v in list(lad.items())[:3]:
                 print(f"      {name}: " + ", ".join(f"{s}{p} {pr}" for s, p, pr in sorted(v, key=lambda t: (t[1] or 0))[:12]))
 
