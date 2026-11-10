@@ -8801,10 +8801,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-10T12:17+00:00",
+     "src": "feed",
+     "spread": 2.5,
+     "total": 41.5,
+     "m": 3.0,
+     "t": 41.6,
+     "edge_s": 0.5,
+     "edge_t": 0.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_NE_DET": {
    "game_id": "2026_10_NE_DET",
@@ -8829,7 +8842,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_KC_ATL": {
    "game_id": "2026_10_KC_ATL",
@@ -8854,7 +8867,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_HOU_CLE": {
    "game_id": "2026_10_HOU_CLE",
@@ -8879,7 +8892,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_MIA_IND": {
    "game_id": "2026_10_MIA_IND",
@@ -8904,7 +8917,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_CAR_NO": {
    "game_id": "2026_10_CAR_NO",
@@ -8929,7 +8942,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_JAX_TEN": {
    "game_id": "2026_10_JAX_TEN",
@@ -8951,10 +8964,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-10T12:17+00:00",
+     "src": "feed",
+     "spread": -10.5,
+     "total": 46.5,
+     "m": -10.5,
+     "t": 46.7,
+     "edge_s": 0.0,
+     "edge_t": 0.2,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_LA_ARI": {
    "game_id": "2026_10_LA_ARI",
@@ -8979,7 +9005,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_SEA_LV": {
    "game_id": "2026_10_SEA_LV",
@@ -9004,7 +9030,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_SF_DAL": {
    "game_id": "2026_10_SF_DAL",
@@ -9029,7 +9055,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_PIT_CIN": {
    "game_id": "2026_10_PIT_CIN",
@@ -9054,7 +9080,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
   },
   "2026_10_LAC_BAL": {
    "game_id": "2026_10_LAC_BAL",
@@ -9079,7 +9105,57 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-10T04:34+00:00"
+   "last_seen": "2026-11-10T12:17+00:00"
+  },
+  "2026_10_MIN_GB": {
+   "game_id": "2026_10_MIN_GB",
+   "season": 2026,
+   "week": 10,
+   "away": "MIN",
+   "home": "GB",
+   "kickoff": "2026-11-15T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-11-10T12:17+00:00",
+     "src": "feed",
+     "spread": 4.5,
+     "total": 41.5,
+     "m": 4.1,
+     "t": 41.9,
+     "edge_s": -0.4,
+     "edge_t": 0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-11-10T12:17+00:00"
+  },
+  "2026_10_BUF_NYJ": {
+   "game_id": "2026_10_BUF_NYJ",
+   "season": 2026,
+   "week": 10,
+   "away": "BUF",
+   "home": "NYJ",
+   "kickoff": "2026-11-15T13:00:00-05:00",
+   "snaps": [
+    {
+     "ts": "2026-11-10T12:17+00:00",
+     "src": "feed",
+     "spread": -8.5,
+     "total": 50.5,
+     "m": -8.6,
+     "t": 51.0,
+     "edge_s": -0.1,
+     "edge_t": 0.5,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
+    }
+   ],
+   "final": null,
+   "last_seen": "2026-11-10T12:17+00:00"
   }
  }
 }
