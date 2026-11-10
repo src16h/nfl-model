@@ -320,9 +320,10 @@ ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5
 #   receptions every x.5 down to about half the main line (main 5.5 -> 3.5, 4.5 -> 2.5, 3.5 -> 2.5, 2.5 -> 1.5);
 #   no alt ladder at all for completions or pass attempts, and no alt Unders. Of 312 graded alt legs only 46 sat on
 #   such a rung; every past ticket had at least one leg Hard Rock doesn't list. Legs are held to these rungs.
-ALT_LADDER_RUNGS = {"pass_yds": (149.5, 174.5, 199.5, 224.5, 249.5, 274.5, 299.5, 324.5),
-                    "rush_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5), "rec_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5)}
-ALT_REC_FLOOR_HALF = True          # receptions: lowest rung is the first x.5 at or above half the main line
+# Nov 10 2026 (owner): Hard Rock's app lets you pick almost any yardage line below the main (33.5, 46.5 ...), so the
+# milestone-only rungs above were too strict: back to every 5 / 10-yard step within ALT_MAX_DROP. Empty = no rung filter.
+ALT_LADDER_RUNGS = {}
+ALT_REC_FLOOR_HALF = False         # receptions: lowest rung is the first x.5 at or above half the main line
 ALT_NO_LADDER = ("carries",)       # Hard Rock posts only the main line here (carries were Under legs only)
 # Completions / pass attempts: the odds feed carries no Hard Rock ladder for them, but the owner bets them in the app
 # (e.g. J.J. McCarthy Over 12.5 completions under a 17.5 main), Over only. Every x.5 down to 5 below the main, never deeper.

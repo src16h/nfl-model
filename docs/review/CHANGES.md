@@ -2,6 +2,9 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-10 (by hand, owner correction: Hard Rock takes almost any alt line)
+- NFL / CFB | undone: this morning's milestone-only rungs (NFL ALT_LADDER_RUNGS now empty, ALT_REC_FLOOR_HALF off; CFB ALT_LADDER back to its old rungs) | owner: the Hard Rock app lets you pick almost any line a decent bit below the main (33.5, 46.5 ...); the odds feed only shows the milestone rungs. Kept from this morning: no alt Unders (owner confirmed), completions / attempts Overs no deeper than 5 below the main, the NFL book anchor (its walk-forward on every 5/10-yard step: yardage log loss 0.627 -> 0.583), CFB legs only for players Hard Rock posted (model-line legs 45.0% vs 73.7% said) and CFB plays only at Hard Rock's price | legs back to the full ladder | look again on 2026-11-17
+
 ## 2026-11-10 (by hand, owner correction: NHL team total Over 0.5)
 - NHL | undone: this morning's "team legs only on lines Hard Rock posts" (team total Over 0.5 restored in ALT_LEG_SPEC; the on_book check is no longer called) | owner: Hard Rock offers team total Over 0.5 in the app; the odds feed showed only main -1 to +1. Second case today (after NFL completions / attempts) of the feed listing fewer lines than the app, so the feed can't be used to rule a line out | team legs as before (said 85.8%, hit 85.3% over 156) | n/a
 - Note for future reviews: treat the odds feed as proof a line exists, never as proof it doesn't; confirm missing lines with the owner before removing them.

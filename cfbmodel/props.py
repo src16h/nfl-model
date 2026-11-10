@@ -23,12 +23,10 @@ COUNT_MAX = {"pass_td": 7, "rec": 14, "td": 4}
 QS = np.round(np.arange(0.025, 0.99, 0.025), 3)          # stored percentiles for yardage stats
 CARRY_CONC, REC_CONC = 22.0, 16.0                        # how steady carry and catch shares are game to game
 CARRY_SD, CATCH_SHAPE = 6.0, 1.15                        # yards spread per carry, shape of yards per catch
-# Nov 10 2026 (weekly review, "cfbyds" probe, 2 games): Hard Rock's college alt ladders are the same milestones as its
-# NFL ones: rushing / receiving 25+, 40+, 50+, 65+, 80+, 100+ and passing 150+, 175+, 200+ ... (25s), Over only.
-# The old 10 / 15 / 20 / 30 / 60 / 70 / 90 / 110 rungs (and 100+ / 125+ passing) aren't posted there.
-ALT_LADDER = {"pass_yds": [150, 175, 200, 225, 250, 275, 300, 325, 350],
-              "rush_yds": [25, 40, 50, 65, 80, 100],
-              "rec_yds": [25, 40, 50, 65, 80, 100],
+# Nov 10 2026: briefly cut to Hard Rock's feed milestones, then restored (owner: the app takes almost any line).
+ALT_LADDER = {"pass_yds": [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350],
+              "rush_yds": [10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 125, 150],
+              "rec_yds": [10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 125, 150],
               "rec": [2, 3, 4, 5, 6, 7, 8]}
 LABEL = {"pass_yds": "passing yards", "rush_yds": "rushing yards", "rec_yds": "receiving yards", "rec": "receptions",
          "pass_td": "passing TDs", "td": "touchdown"}
