@@ -35,7 +35,7 @@ for ev in evs[:N_EV]:
             mins = sorted({min(p for _, p, _ in v if p is not None) for v in lad.values() if any(p is not None for _, p, _ in v)})
             sides = {o["name"] for o in m["outcomes"]}
             print(f"  {b['key']:11s} {m['key']:34s} players {len(lad):2d}  sides {sorted(sides)}  lowest rung per player {mins[:12]}")
-            for name, v in list(lad.items())[:3]:
+            for name, v in list(lad.items())[:(40 if b["key"] == "hardrockbet" and os.environ.get("PROBE_ALL") else 3)]:
                 print(f"      {name}: " + ", ".join(f"{s}{p} {pr}" for s, p, pr in sorted(v, key=lambda t: (t[1] or 0))[:12]))
 
 # Nov 3 2026 (weekly review): Hard Rock's own ladder floor, per player. With PROBE_MAIN set (e.g.
