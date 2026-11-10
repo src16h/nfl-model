@@ -151,9 +151,9 @@ ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds
                      "player_pass_longest_completion"]   # Nov 9 2026: QB longest completion (about 1 credit per game)
 # Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
 # About 3 more credits per game, so they start with the Nov 1 credit reset.
-# Nov 10 2026 (credits): dropped. Hard Rock has no alt ladder for completions / attempts and alt Unders are off, so
-# these main lines no longer feed any bettable leg (they cost 3 credits per game, plus the closing re-pull).
-ODDS_EXTRA_PROP_MARKETS = []
+# Nov 10 2026 (credits): rush attempts dropped (only fed carries Under legs, which Hard Rock doesn't offer as alts).
+# Completions and attempts kept: their main lines anchor the completions / attempts Over legs (owner: Hard Rock has them).
+ODDS_EXTRA_PROP_MARKETS = ["player_pass_completions", "player_pass_attempts"]
 ODDS_EXTRA_FROM = "2026-11-01"
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
@@ -322,7 +322,10 @@ ALT_MIN_LINE = {"pass_yds": 149.5, "rush_yds": 14.5, "rec_yds": 14.5, "rec": 1.5
 ALT_LADDER_RUNGS = {"pass_yds": (149.5, 174.5, 199.5, 224.5, 249.5, 274.5, 299.5, 324.5),
                     "rush_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5), "rec_yds": (24.5, 39.5, 49.5, 64.5, 79.5, 99.5)}
 ALT_REC_FLOOR_HALF = True          # receptions: lowest rung is the first x.5 at or above half the main line
-ALT_NO_LADDER = ("pass_cmp", "pass_att", "carries")   # Hard Rock posts only the main line for these
+ALT_NO_LADDER = ("carries",)       # Hard Rock posts only the main line here (carries were Under legs only)
+# Completions / pass attempts: the odds feed carries no Hard Rock ladder for them, but the owner bets them in the app
+# (e.g. J.J. McCarthy Over 12.5 completions under a 17.5 main), Over only. Every x.5 down to 5 below the main, never deeper.
+ALT_COUNT_MAX_DROP = {"pass_cmp": 5, "pass_att": 5}
 ALT_UNDER_LEGS = False             # Hard Rock alt ladders are Over only
 
 # 6-point teasers (model only, no extra odds calls)

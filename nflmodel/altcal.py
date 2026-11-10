@@ -197,6 +197,8 @@ def ladder(st, main, side, deep=1.0, posted=True):
             return sorted((L for L in rungs if lo <= L < main), reverse=True)
         if st == "rec" and getattr(C, "ALT_REC_FLOOR_HALF", False):
             lo = max(lo, float(np.ceil(main / 2 - 0.5)) + 0.5)
+        if st in getattr(C, "ALT_COUNT_MAX_DROP", {}):     # never deeper than Hard Rock's ladder, even for ladder tickets
+            lo = max(lo, main - C.ALT_COUNT_MAX_DROP[st])
         out = [main - k * step for k in range(1, int(C.ALT_MAX_DROP[st] * deep // step) + 1)]
         return [L for L in out if L >= lo]
     return [main + k * step for k in range(1, int(C.ALT_MAX_RISE.get(st, 0) // step) + 1)]
