@@ -324,7 +324,8 @@ def tracking(weeks, results):
                     clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
                     daily[dt] = daily.get(dt, 0) + (u or 0)
                     if k in GT.GAME_KINDS["cfb"]:
-                        gate_rows[GT.game_gate("cfb", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
+                        gate_rows[GT.game_gate("cfb", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e,
+                                                                     "early": bool(pk.get("early"))})
                 elif pk.get("shadow") and k in GT.GAME_KINDS["cfb"]:      # paused bet type: graded, not a play
                     c, e, _ = CLV.play_clv("cfb", k, pk, g, g.get("first_book"))
                     gate_rows[GT.game_gate("cfb", k)][0].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})

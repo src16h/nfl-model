@@ -72,7 +72,11 @@ def fair_probs(*odds):
     called 69.6% won 71.9%; Shin's method called them 69.8% and they won 70.9% (log loss 0.99237 -> 0.99221; the
     power and additive methods score the same as Shin within noise). The change is small for a single price (about
     0.2 points on a longshot, a point or two on a heavy favorite) and nothing at all on an even two-way market,
-    but a longshot play is decided on gaps that size. With two sides it is the same as taking half the vig off each."""
+    but a longshot play is decided on gaps that size. With two sides it is the same as taking half the vig off each.
+
+    Two-way moneylines show it more (closing lines in data/nba/games.csv and data/cfb/games.csv): underdogs the old
+    way called 11.8% won 9.0% in the NBA (477 games) and 8.6% vs 5.9% in college football (1,757); this way calls
+    them 10.9% (won 10.95%) and 7.8% (won 6.6%). Log loss NBA 0.59042 -> 0.59017, CFB 0.50608 -> 0.50502."""
     pi = [implied(o) for o in odds]
     tot = sum(pi)
     if len(pi) < 2 or tot <= 1.0 or any(p <= 0 for p in pi):       # no vig to remove (or a bad price): just rescale
