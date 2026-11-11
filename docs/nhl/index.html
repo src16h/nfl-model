@@ -1305,7 +1305,9 @@ function ladderHTML() {
 }
 function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay), EP = edgeToday();
-  let h = `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">${D.edge_paused ? "Paused Oct 21" : "2 prop plays, 2 different games"}</span></div>
+  /* Nov 11 2026: logged Hard Rock prices (data/ticket_prices.csv) grade tickets at what Hard Rock really paid */
+  const LOGP = `<p class="sub">Bet one of these? Save Hard Rock's price for it so the record counts real money: <a href="https://github.com/src16h/nfl-model/actions/workflows/ticket_price.yml" target="_blank" rel="noopener">Log ticket price</a> (on GitHub, tap Run workflow, then pick the sport, the ticket type, one team in it and the price).</p>`;
+  let h = LOGP + `<div class="sec-head"><h2>Edge parlays</h2><span class="aside">${D.edge_paused ? "Paused Oct 21" : "2 prop plays, 2 different games"}</span></div>
     ${D.edge_paused ? `<div class="empty"><b>Paused, not plays.</b> They went 6-12 (-4.9 units) when the model expected about 46% to hit, and they're built from the prop plays that have been losing. Still built and graded below so the record keeps counting.</div>` : ""}
     <p class="sub">Built from the day's prop plays, the part of the model that has been beating the book. Each leg already has an edge on its own, and because the legs are in different games the book can't add a same-game charge. Up to ${EDGE_MAX} tickets a day, each play used once, most likely to hit first. Odds shown multiply the odds feed's prices, so enter Hard Rock's parlay price before betting.</p>`;
   h += EP.length ? `<div class="tickets">${EP.map((e, i) => `<article class="ticket"><div class="t-main"><div class="t-kind"><b>Edge parlay ${i + 1}</b><span>${n(e.p, 0)}% to hit</span></div>

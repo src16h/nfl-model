@@ -2,6 +2,25 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-11 (by hand, owner request: save Hard Rock's real ticket price)
+- All | new "Log ticket price" workflow (.github/workflows/ticket_price.yml, tools/log_ticket_price.py): sport, ticket type, one team, Hard Rock's price and the game date go into data/ticket_prices.csv. parlaymoney.attach_prices matches each logged price to one ticket (same sport and type, that team, the first such ticket on or after the date, within 7 days) and grades it at that price ("at Hard Rock" in every ticket record and in the weekly review's units table). Each sport's Parlays tab links to the form | Hard Rock's same-game price isn't in The Odds API feed, so the real return of a ticket was unknown; only 1 of all graded tickets had a real price | real units for every ticket the owner logs | look again on 2026-11-24 (how many tickets have a logged price)
+
+## 2026-11-11 (by hand, owner request: CFB parlays off; parlay tickets graded in units)
+- CFB | same-game alt parlays off (cfbmodel/config.py ALT_PARLAY_ON = False): no new tickets are built or shown; graded tickets stay on the record. Teasers are unchanged | owner request; since Oct 24 tickets said 46.0% and hit 39.2% (51), rushing legs said 79.5% and hit 62.5% (40); all 85 graded: 38-47, -10.7% at the bet-at price | n/a | n/a
+- All | every ticket record carries "money" (parlaymoney.py): units at the bet-at price (the shortest odds the page says to take, fair plus 7%), at the fair price, and at the book's real price where it was saved (cross-game tickets only). The weekly review prints a table per sport and flags tickets losing 8%+ even at the bet-at price (20+ tickets) | records only compared the model's chance with the hit rate. Hard Rock's same-game price is not in The Odds API feed, so the real return of a same-game ticket is not known | n/a | n/a
+- Units today (1 unit a ticket; n is the tickets with that price saved):
+  - NHL alt 71-65: bet-at +5.7u (+6.4%, 88), fair +5.8u (+4.3%, 136). alt_mix 62-58: bet-at +12.7u (+14.1%, 90), fair +6.6u (+5.5%, 120). alt_ladder 14-12: bet-at -0.2u (-0.7%), fair -1.9u (-7.1%).
+  - NBA alt 6-7: bet-at -0.0u, fair -0.9u. alt_mix 22-13: bet-at +10.8u (+30.7%, 35), fair +7.8u (+22.2%).
+  - NFL alt 26-32: bet-at +2.2u (+11.5%, 19 priced), fair -5.5u (-9.5%, 58). alt_mix 4-5: fair -0.5u. alt_ladder 4-1: bet-at +2.1u.
+  - Soccer same-game 29-31: bet-at +2.4u (+6.0%), fair +0.6u (+1.0%).
+  - Cross-game: NHL 13-9 bet-at +5.7u, NBA 10-8 +5.0u, Soccer 8-4 +3.7u, NFL 0-4 -4.0u. Only 1 ticket has a real Hard Rock price (Soccer, lost).
+  - CFB 38-47: bet-at -4.0u (-10.7%), fair -2.3u (-2.7%).
+  - None of these is clear of luck (largest z 1.7, NBA alt_mix). They answer "would following the page have paid, if Hard Rock offered the bet-at price", not "did it pay".
+
+Watch:
+- Real prices: the only way to know Hard Rock's same-game price is to save it when a ticket is bet (a typed price per ticket) or a paid same-game pricing feed. Until then the bet-at numbers are a best case.
+- NFL alt tickets: at the fair price -9.5% over 58 (the chances ran high, as the said-vs-hit gap showed); only 19 have a bet-at price saved.
+
 ## 2026-11-11 (by hand, owner request: the 15 review items)
 Owner asked for all 15 items of the Nov 11 review at once, so this entry is over the 3-per-sport limit on purpose.
 Each item is its own commit and can be undone alone. No new plays are created by any of it; most of it stops plays.

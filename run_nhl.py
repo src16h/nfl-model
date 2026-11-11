@@ -31,6 +31,7 @@ from nhlmodel.util import clean, norm_name, r
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
 import clv as CLV  # noqa: E402
+import parlaymoney as PM  # noqa: E402
 import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
 import carryover as CO  # noqa: E402
@@ -296,7 +297,7 @@ def tracking(history_days, results):
                                   "odds": fl.get("odds"), "edge": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
                 daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
-            for ap in (g.get("alt_parlay"), g.get("alt_mix"), g.get("alt_ladder")):
+            for akey, ap in ((k_, g.get(k_)) for k_ in ("alt_parlay", "alt_mix", "alt_ladder")):
                 if not ap:
                     continue
                 hits = []
@@ -313,7 +314,8 @@ def tracking(history_days, results):
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
                                  "legs": len(hits), "p": ap["p"], "p_raw": ap.get("p_sim", ap["p"]), "v": ap.get("v", 1),
-                                 "fair": ap.get("fair")})
+                                 "fair": ap.get("fair"), "bet_at": ap.get("bet_at"),
+                                 "sport": "nhl", "kind": "alt" if akey == "alt_parlay" else akey, "teams": [g["home"], g["away"]]})
         for e in day.get("edge", []):
             rs, dec = [], 1.0
             for L in e["legs"]:
@@ -390,6 +392,7 @@ def tracking(history_days, results):
                 "model": r(np.mean([a["p"] for a in rows])) if rows else None,
                 # the simulation's chance before the record correction: what props.alt_parlay corrects against
                 "model_raw": r(np.mean([a.get("p_raw", a["p"]) for a in rows])) if rows else None,
+                "money": PM.summary(rows),             # units at the bet-at and fair prices (parlaymoney.py, Nov 11 2026)
                 "recent": sorted(rows, key=lambda x: x["date"], reverse=True)[:20]}
     cal = {}
     for st, rows in calib.items():

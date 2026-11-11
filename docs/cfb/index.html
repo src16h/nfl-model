@@ -1186,7 +1186,7 @@ function renderParlays() {
       <div style="display:grid;gap:3px;margin:6px 0 2px">${a.legs.map(L => `<div class="stake"><b>${esc(L.name)}</b> ${esc(L.label)} <span class="dim">${n(L.p, 0)}%, main ${L.main}${L.main_src === "model" ? " (model)" : ""}</span></div>`).join("")}</div>
       <div class="t-meta">True chance ${n(a.p)}%${a.p_sim != null && Math.abs(a.p_sim - a.p) >= 0.5 ? ` after its record so far (sims said ${n(a.p_sim)}%)` : ""}, ${n(a.pi)}% if the legs were unrelated.${a.bet_at ? ` Fair odds ${esc(a.fair)}; bet it at ${esc(a.bet_at)} or better.` : ""}</div>
       <div class="t-actions">${altCheck(g)}</div></div>
-      <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : `<div class="empty">No alt-line parlays for this slate yet.</div>`;
+      <div class="t-side"><div class="t-gap">${esc(a.bet_at || a.fair)}</div><div class="t-gl">${a.bet_at ? "bet at or better" : "fair odds"}</div></div></article>`; }).join("")}</div>` : (D.tracking?.alt?.off ? `<div class="empty">CFB parlays are off (Nov 11 2026). Past tickets stay on the Record tab.</div>` : `<div class="empty">No alt-line parlays for this slate yet.</div>`);
   h += teaserHTML();
   $("#parlays").innerHTML = h;
   document.querySelectorAll(".altodds").forEach(i => i.onchange = () => { ALT[i.dataset.g] = i.value; renderParlays(); });

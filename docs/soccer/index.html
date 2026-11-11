@@ -976,7 +976,9 @@ function parlayRecordHTML() {
 }
 function renderParlays() {
   const G = (D.games || []).filter(g => g.alt_parlay && lgOk(g) && !gone(g.start)).sort((a, b) => a.start.localeCompare(b.start));
-  let h = crossHTML();
+  /* Nov 11 2026: logged Hard Rock prices (data/ticket_prices.csv) grade tickets at what Hard Rock really paid */
+  const LOGP = `<p class="sub">Bet one of these? Save Hard Rock's price for it so the record counts real money: <a href="https://github.com/src16h/nfl-model/actions/workflows/ticket_price.yml" target="_blank" rel="noopener">Log ticket price</a> (on GitHub, tap Run workflow, then pick the sport, the ticket type, one team in it and the price).</p>`;
+  let h = LOGP + crossHTML();
   h += `<div class="sec-head"><h2>Same-game alt parlays</h2><span class="aside">${G.length} matches</span></div>
     <p class="sub">One per match: 2 or 3 legs from handicaps, totals, team totals and both teams to score, each priced at <b>Pinnacle's</b> chance with the model rating it at least as high, at fair odds of about +100 to +125. The ticket's chance comes from the scoreline grid, so legs that move together (a team total and that team's handicap) are priced together. Tickets lock 3 hours before kickoff, so the graded ticket is the one you saw. <b>Bet it only at the "bet at" price or better</b>: it asks for 7% more than fair, room for the estimate being a little off.</p>
     ${G.length ? `<div class="tickets">${G.map(sgpTicket).join("")}</div>` : `<div class="empty">No same-game parlays right now. They need Pinnacle's lines for the match, posted a day or two before kickoff.</div>`}

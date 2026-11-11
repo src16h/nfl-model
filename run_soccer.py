@@ -33,6 +33,7 @@ import altlines as AL  # noqa: E402
 import gates as GT  # noqa: E402
 import carryover as CO  # noqa: E402
 import crossgame as XG  # noqa: E402
+import parlaymoney as PM  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("soccermodel")
@@ -391,7 +392,8 @@ def tracking(days, results, boxes):
             if ap and ap.get("legs"):
                 hits = [AL.grade(L, hg, ag)[0] == "W" for L in ap["legs"]]
                 parlays.append({"date": dt, "league": g["league"], "game": f"{g['home']} vs {g['away']}", "hit": all(hits),
-                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "score": f"{hg}-{ag}",
+                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at"), "sport": "soccer", "kind": "alt", "teams": [g["home"], g["away"]],
+                                "score": f"{hg}-{ag}",
                                 "leg_labels": [L.get("label") for L in ap["legs"]], "leg_p": [L.get("p") for L in ap["legs"]], "leg_hits": hits})
             flags = g.get("flags")
             if flags is None:                                   # files written before flags existed
@@ -461,6 +463,7 @@ def tracking(days, results, boxes):
     par_rec = {"n": len(parlays), "hits": sum(x["hit"] for x in parlays), "model": r(float(np.mean([x["p"] for x in parlays]))) if parlays else None,
                "legs_n": len(lp), "legs_model": r(float(np.mean([a for a, _ in lp]))) if lp else None,
                "legs_actual": r(100 * float(np.mean([b for _, b in lp]))) if lp else None,
+               "money": PM.summary(parlays),           # units at the bet-at and fair prices (parlaymoney.py, Nov 11 2026)
                "recent": sorted(parlays, key=lambda x: x["date"], reverse=True)[:20]}
     rule = [x for x in plays if not x["legacy"]]
     rcl = [x["clv"] for x in rule if x["clv"] is not None]

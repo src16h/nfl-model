@@ -92,3 +92,71 @@ def test_first_flag_is_kept_until_the_side_changes():
     assert b["ml"]["odds"] == -110 and b["ml"]["ts"] == "t1"
     c = CLV.snapshot({"ml": {"play": True, "side": "B", "odds": 115, "line": None}}, b, "t3")
     assert c["ml"]["side"] == "B" and c["ml"]["ts"] == "t3"
+
+
+# ---- parlay tickets in units ----------------------------------------------------------------------------
+import parlaymoney as PM  # noqa: E402
+
+
+def test_ticket_units_at_each_price():
+    rows = [{"hit": True, "bet_at": "+122", "fair": "+108"}, {"hit": False, "bet_at": "+122", "fair": "+108"},
+            {"hit": True, "bet_at": "-104", "fair": "-120", "book_odds": "+110"}, {"hit": None, "bet_at": "+150"}]
+    m = PM.summary(rows)
+    assert m["n"] == 3 and m["hits"] == 2
+    assert m["at_bet_at"]["units"] == pytest.approx(1.22 - 1 + 100 / 104, abs=0.01)
+    assert m["at_fair"]["units"] == pytest.approx(1.08 - 1 + 100 / 120, abs=0.01)
+    assert m["at_book"]["n"] == 1 and m["at_book"]["units"] == pytest.approx(1.10)
+    assert PM.dec(None) is None and PM.dec("abc") is None and PM.dec(50) is None and PM.dec("+100") == 2.0
+
+
+def test_ticket_units_empty():
+    assert PM.summary([])["at_bet_at"] == {"n": 0, "units": None, "roi": None}
+
+
+# ---- logged Hard Rock prices ----------------------------------------------------------------------------
+def _log(tmp_path, monkeypatch, **kw):
+    import importlib
+    L = importlib.import_module("tools.log_ticket_price")
+    env = {"SPORT": "NHL", "TICKET": "Alt parlay with a team leg", "TEAM": "TOR", "PRICE": "+135", "DATE": "2026-11-12", **kw}
+    path = tmp_path / "ticket_prices.csv"
+    monkeypatch.setattr(L, "datetime", type("D", (), {"now": staticmethod(lambda tz=None: __import__("datetime").datetime(2026, 11, 12, 15, tzinfo=tz))}))
+    L.main(env, path)
+    return path
+
+
+def test_logged_price_is_saved_and_graded(tmp_path, monkeypatch):
+    path = _log(tmp_path, monkeypatch)
+    prices = PM.load_prices(path)
+    assert prices[0]["kind"] == "alt_mix" and prices[0]["price"] == "+135" and prices[0]["team"] == "tor"
+    rows = [{"hit": True, "bet_at": "+120", "sport": "nhl", "kind": "alt_mix", "date": "2026-11-12", "teams": ["TOR", "BOS"]},
+            {"hit": False, "bet_at": "+120", "sport": "nhl", "kind": "alt", "date": "2026-11-12", "teams": ["TOR", "BOS"]},     # other type
+            {"hit": False, "bet_at": "+120", "sport": "nhl", "kind": "alt_mix", "date": "2026-11-12", "teams": ["NYR", "CGY"]}]  # other game
+    m = PM.summary(rows, prices)
+    assert m["at_book"]["n"] == 1 and m["at_book"]["units"] == pytest.approx(1.35)
+
+
+def test_logged_price_finds_the_next_game_and_is_used_once(tmp_path, monkeypatch):
+    path = _log(tmp_path, monkeypatch, SPORT="NFL", TICKET="Same-game parlay", TEAM="KC", DATE="2026-11-12", PRICE="-105")
+    rows = [{"hit": True, "sport": "nfl", "kind": "alt", "date": "2026-11-11", "teams": ["KC", "DEN"]},    # before the logged date
+            {"hit": True, "sport": "nfl", "kind": "alt", "date": "2026-11-15", "teams": ["KC", "BUF"]},    # the bet
+            {"hit": True, "sport": "nfl", "kind": "alt", "date": "2026-11-22", "teams": ["KC", "LV"]}]     # a week later: not it
+    PM.attach_prices(rows, PM.load_prices(path))
+    assert [r.get("logged_price") for r in rows] == [None, "-105", None]
+
+
+def test_soccer_names_match_loosely(tmp_path, monkeypatch):
+    path = _log(tmp_path, monkeypatch, SPORT="Soccer", TICKET="Same-game parlay", TEAM="Man City", PRICE="+150")
+    rows = [{"hit": True, "sport": "soccer", "kind": "alt", "date": "2026-11-12", "teams": ["Man City", "Fulham"]}]
+    assert PM.attach_prices(rows, PM.load_prices(path))[0]["logged_price"] == "+150"
+
+
+@pytest.mark.parametrize("bad", [{"SPORT": "CFB"}, {"TICKET": "teaser"}, {"TEAM": "x"}, {"TEAM": "TOR; rm -rf /"}, {"PRICE": "135x"},
+                                 {"PRICE": "+50"}, {"DATE": "2026-13-01"}, {"DATE": "2027-01-01"}])
+def test_bad_input_is_refused(tmp_path, monkeypatch, bad):
+    with pytest.raises(SystemExit):
+        _log(tmp_path, monkeypatch, **bad)
+    assert not (tmp_path / "ticket_prices.csv").exists()
+
+
+def test_price_without_a_sign_is_read_as_plus(tmp_path, monkeypatch):
+    assert PM.load_prices(_log(tmp_path, monkeypatch, PRICE="135"))[0]["price"] == "+135"
