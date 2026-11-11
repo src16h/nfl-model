@@ -2,6 +2,9 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-11 (by hand, owner request: save Hard Rock's real ticket price)
+- All | new "Log ticket price" workflow (.github/workflows/ticket_price.yml, tools/log_ticket_price.py): sport, ticket type, one team, Hard Rock's price and the game date go into data/ticket_prices.csv. parlaymoney.attach_prices matches each logged price to one ticket (same sport and type, that team, the first such ticket on or after the date, within 7 days) and grades it at that price ("at Hard Rock" in every ticket record and in the weekly review's units table). Each sport's Parlays tab links to the form | Hard Rock's same-game price isn't in The Odds API feed, so the real return of a ticket was unknown; only 1 of all graded tickets had a real price | real units for every ticket the owner logs | look again on 2026-11-24 (how many tickets have a logged price)
+
 ## 2026-11-11 (by hand, owner request: CFB parlays off; parlay tickets graded in units)
 - CFB | same-game alt parlays off (cfbmodel/config.py ALT_PARLAY_ON = False): no new tickets are built or shown; graded tickets stay on the record. Teasers are unchanged | owner request; since Oct 24 tickets said 46.0% and hit 39.2% (51), rushing legs said 79.5% and hit 62.5% (40); all 85 graded: 38-47, -10.7% at the bet-at price | n/a | n/a
 - All | every ticket record carries "money" (parlaymoney.py): units at the bet-at price (the shortest odds the page says to take, fair plus 7%), at the fair price, and at the book's real price where it was saved (cross-game tickets only). The weekly review prints a table per sport and flags tickets losing 8%+ even at the bet-at price (20+ tickets) | records only compared the model's chance with the hit rate. Hard Rock's same-game price is not in The Odds API feed, so the real return of a same-game ticket is not known | n/a | n/a

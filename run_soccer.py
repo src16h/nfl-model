@@ -392,7 +392,7 @@ def tracking(days, results, boxes):
             if ap and ap.get("legs"):
                 hits = [AL.grade(L, hg, ag)[0] == "W" for L in ap["legs"]]
                 parlays.append({"date": dt, "league": g["league"], "game": f"{g['home']} vs {g['away']}", "hit": all(hits),
-                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at"),
+                                "legs_hit": sum(hits), "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at"), "sport": "soccer", "kind": "alt", "teams": [g["home"], g["away"]],
                                 "score": f"{hg}-{ag}",
                                 "leg_labels": [L.get("label") for L in ap["legs"]], "leg_p": [L.get("p") for L in ap["legs"]], "leg_hits": hits})
             flags = g.get("flags")

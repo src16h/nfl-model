@@ -1,0 +1,63 @@
+name: Log ticket price
+
+# Save the price Hard Rock paid on a parlay you bet, so its record counts real money (Nov 11 2026).
+# GitHub app or site: Actions tab, "Log ticket price", Run workflow, fill in the boxes, Run.
+on:
+  workflow_dispatch:
+    inputs:
+      sport:
+        description: "Sport"
+        type: choice
+        options: [NFL, NHL, NBA, Soccer]
+      ticket:
+        description: "Ticket type (as named on the Parlays tab)"
+        type: choice
+        options: ["Same-game parlay", "Alt parlay with a team leg", "Ladder-style parlay", "Cross-game alt parlay"]
+      team:
+        description: "Any team in the ticket, as the site shows it (TOR, KC, Man City)"
+        required: true
+        type: string
+      price:
+        description: "Hard Rock's price for the ticket (+135, -110)"
+        required: true
+        type: string
+      date:
+        description: "Game date YYYY-MM-DD (leave blank for today)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ticket-price
+  cancel-in-progress: false
+
+jobs:
+  log:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Save the price
+        env:
+          SPORT: ${{ inputs.sport }}
+          TICKET: ${{ inputs.ticket }}
+          TEAM: ${{ inputs.team }}
+          PRICE: ${{ inputs.price }}
+          DATE: ${{ inputs.date }}
+        run: python tools/log_ticket_price.py
+      - name: Commit
+        run: |
+          git config user.name "ticket-price-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/ticket_prices.csv
+          git commit -m "Ticket price logged"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1

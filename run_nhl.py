@@ -297,7 +297,7 @@ def tracking(history_days, results):
                                   "odds": fl.get("odds"), "edge": fl.get("ev"), "res": rr, "units": u or 0.0, "exact": fl.get("exact")})
                 daily[dt] = daily.get(dt, 0) + (u or 0)
                 daily_t["game"][dt] = daily_t["game"].get(dt, 0) + (u or 0)
-            for ap in (g.get("alt_parlay"), g.get("alt_mix"), g.get("alt_ladder")):
+            for akey, ap in ((k_, g.get(k_)) for k_ in ("alt_parlay", "alt_mix", "alt_ladder")):
                 if not ap:
                     continue
                 hits = []
@@ -314,7 +314,8 @@ def tracking(history_days, results):
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
                                  "legs": len(hits), "p": ap["p"], "p_raw": ap.get("p_sim", ap["p"]), "v": ap.get("v", 1),
-                                 "fair": ap.get("fair"), "bet_at": ap.get("bet_at")})
+                                 "fair": ap.get("fair"), "bet_at": ap.get("bet_at"),
+                                 "sport": "nhl", "kind": "alt" if akey == "alt_parlay" else akey, "teams": [g["home"], g["away"]]})
         for e in day.get("edge", []):
             rs, dec = [], 1.0
             for L in e["legs"]:

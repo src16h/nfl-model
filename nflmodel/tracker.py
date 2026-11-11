@@ -923,20 +923,23 @@ def model_tracking(hist_dir, season, results, snaps=None):
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
                 if None not in hits:
                     alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), ap.get("v", 1),
-                                 {"hit": all(hits), "fair": ap.get("fair"), "bet_at": ap.get("bet_at")}))
+                                 {"hit": all(hits), "fair": ap.get("fair"), "bet_at": ap.get("bet_at"), "sport": "nfl", "kind": "alt",
+                                     "date": str(hg.get("kickoff") or "")[:10], "teams": [hg.get("home"), hg.get("away")]}))
             lad = hg.get("alt_ladder")                            # ladder-style tickets (Oct 30 2026): 4-5 safer legs
             if lad and lad.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in lad["legs"]]
                 if None not in hits:
                     ladders.append((week, lad["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits),
                                     [{"label": f"{L.get('name') or ''} {L.get('label', '')}".strip(), "hit": bool(h)} for L, h in zip(lad["legs"], hits)],
-                                    {"hit": all(hits), "fair": lad.get("fair"), "bet_at": lad.get("bet_at")}))
+                                    {"hit": all(hits), "fair": lad.get("fair"), "bet_at": lad.get("bet_at"), "sport": "nfl", "kind": "alt_ladder",
+                                     "date": str(hg.get("kickoff") or "")[:10], "teams": [hg.get("home"), hg.get("away")]}))
             amx = hg.get("alt_mix")                               # team-leg alt parlays (since Oct 21 2026)
             if amx and amx.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in amx["legs"]]
                 if None not in hits:
                     mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), amx.get("v", 1),
-                                  {"hit": all(hits), "fair": amx.get("fair"), "bet_at": amx.get("bet_at")}))
+                                  {"hit": all(hits), "fair": amx.get("fair"), "bet_at": amx.get("bet_at"), "sport": "nfl", "kind": "alt_mix",
+                                     "date": str(hg.get("kickoff") or "")[:10], "teams": [hg.get("home"), hg.get("away")]}))
             for fl in (hg.get("alt_flags") or {}).values():     # alt-line plays, graded at the locked price
                 import altlines as AL
                 if fl.get("period") == "h1":

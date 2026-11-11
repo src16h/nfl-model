@@ -1822,7 +1822,9 @@ function addLegForm() {
 }
 function renderParlays() {
   const up = (D.games || []).filter(onBoard);
-  let h = `<div class="sec-head" style="margin-top:26px"><h2>Same-game parlays</h2><span class="aside">${C_SGP_NOTE}</span></div>
+  /* Nov 11 2026: logged Hard Rock prices (data/ticket_prices.csv) grade tickets at what Hard Rock really paid */
+  const LOGP = `<p class="sub">Bet one of these? Save Hard Rock's price for it so the record counts real money: <a href="https://github.com/src16h/nfl-model/actions/workflows/ticket_price.yml" target="_blank" rel="noopener">Log ticket price</a> (on GitHub, tap Run workflow, then pick the sport, the ticket type, one team in it and the price).</p>`;
+  let h = LOGP + `<div class="sec-head" style="margin-top:26px"><h2>Same-game parlays</h2><span class="aside">${C_SGP_NOTE}</span></div>
     <p class="sub">Build a parlay from one game. The model plays the game ${PX.data ? PX.data.n.toLocaleString() : "1,000"} times with both teams' players and the final score linked, then counts how often every leg hits together. Enter your book's parlay odds to get the call.</p>
     <div class="controls"><select id="pxGame" aria-label="Game"><option value="">Pick a game</option>${up.map(g => `<option value="${esc(g.game_id)}" ${PX.gid === g.game_id ? "selected" : ""}>${esc(g.away)} at ${esc(g.home)}, ${esc(whenTxt(g))}</option>`).join("")}</select></div>`;
   const alts = up.filter(g => g.alt_parlay);

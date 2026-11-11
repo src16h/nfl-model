@@ -111,6 +111,10 @@ Other override options: `OUT`, `DOUBTFUL`, `QUESTIONABLE`, `ACTIVE`. Delete old 
 3. The Props tab shows the model's chance, the book's chance (vig removed), and correlated pairs
 4. After the games, the next run grades everything automatically. Your record lives in `docs/data/props_log.json` (never delete it)
 
+**Parlay prices (optional, 1 minute a ticket):** Hard Rock's price for a same-game parlay isn't in the odds feed. When you bet a ticket, open the
+**Log ticket price** link on the Parlays tab (or Actions, Log ticket price, Run workflow), pick the sport and ticket type, type one team in it and
+Hard Rock's price, and run it. The ticket's record then counts what Hard Rock really paid. Saved in `data/ticket_prices.csv`.
+
 **The two tracking files** (`docs/data/line_log.json` and `docs/data/props_log.json`) are the model's memory. The robot creates and updates them. If one ever can't be read, a `.corrupt.json` backup is saved next to it.
 
 ---

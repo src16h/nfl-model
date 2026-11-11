@@ -347,7 +347,8 @@ def tracking(weeks, results):
                     hits.append(None if st is None else st[STAT_IDX[L["stat"]]] > L["line"])
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
-                                 "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at")})
+                                 "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at"),
+                                 "sport": "cfb", "kind": "alt", "teams": [g["home"], g["away"]]})
                 else:                                 # Nov 10 2026: a leg player missing from the box score (didn't play,
                     # or played with no stat): can't be graded, so it's shown as unresolved instead of silently dropped
                     alt_void.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": None,

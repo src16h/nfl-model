@@ -26,6 +26,7 @@ import itertools
 import json
 import math
 from datetime import datetime, timezone
+from pathlib import Path
 import parlaymoney as PM
 
 PRIOR_SHIFT = -0.10            # log-odds haircut on every leg before graded results take over
@@ -204,7 +205,8 @@ def grade(state, finals):
             t["legs_hit"] = sum(1 for x in res if x)
 
 
-def tracking(state):
+def tracking(state, sport=None):
+    """sport: "nfl", "nhl", "nba" or "soccer" (lets a logged Hard Rock price find its ticket)."""
     rows = [t for t in state["tickets"].values() if t.get("result") in ("W", "L")]
     legs = [L for t in state["tickets"].values() if t.get("result") for L in t["legs"] if L.get("hit") is not None]
     out = {"n": len(rows), "hits": sum(1 for t in rows if t["result"] == "W"),
@@ -219,8 +221,10 @@ def tracking(state):
             units += (_dec(t["book_odds"]) - 1) if t["result"] == "W" else -1.0
     out["book_units"], out["book_n"] = round(units, 2), priced
     # units at the shortest price worth taking (min_odds), at the fair price, and at the book's real price where known
+    teams = lambda t: [x.strip() for L in t.get("legs", []) for x in str(L.get("matchup") or "").split(" at ")]
     out["money"] = PM.summary([{"hit": t["result"] == "W", "bet_at": t.get("min_odds"), "fair": t.get("fair"),
-                                "book_odds": t.get("book_odds")} for t in rows])
+                                "book_odds": t.get("book_odds"), "sport": sport, "kind": "cross",
+                                "date": t.get("slate"), "teams": teams(t)} for t in rows])
     by = {}
     for t in rows:
         b = by.setdefault(t["style"], {"n": 0, "hits": 0, "model": 0.0})
@@ -252,7 +256,8 @@ def run(path, games, finals, now, lock_fn, book_name=None, log=None):
         if not t.get("locked_at") and any((_ts(L.get("start")) or now) <= now for L in t["legs"]):
             t["locked_at"] = ts
     grade(state, finals)
-    track = tracking(state)
+    sport = Path(path).resolve().parent.parent.name                  # docs/nhl/data/... -> nhl; docs/data/... -> nfl
+    track = tracking(state, sport="nfl" if sport == "docs" else sport)
     shift = shift_from(track)
     slates = {}
     for g in games:
