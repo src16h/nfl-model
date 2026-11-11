@@ -2,16 +2,36 @@
  "cfb_game_spread": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": []
  },
  "cfb_game_total": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": [
+   [
+    "2026-11-07",
+    -3.51,
+    "p"
+   ]
+  ]
  },
  "cfb_game_ml": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": [
+   [
+    "2026-10-31",
+    -22.0,
+    "p"
+   ],
+   [
+    "2026-11-07",
+    -33.33,
+    "p"
+   ]
+  ]
  }
 }
