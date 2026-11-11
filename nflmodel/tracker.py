@@ -762,8 +762,15 @@ def prop_summary(lg):
     # every prop with a result: did the model's favored side hit?
     sided = [r for r in graded if r["result"]["outcome"] in ("Over", "Under") and r.get("model_over") is not None]
     hit = [int((r["model_over"] >= 50) == (r["result"]["outcome"] == "Over")) for r in sided]
-    out["model_side"] = {"w": int(sum(hit)), "l": int(len(hit) - sum(hit)),
-                         **(record_stats(sum(hit), len(hit) - sum(hit)) or {"n": 0})}
+    # Nov 11 2026: this used to carry a verdict against the 52.4% break-even ("Clear edge", at 67.7%). It is not a
+    # betting record: it counts TD props, where "No TD" is the likelier side for most players and wins most of the time
+    # at a price far shorter than -110. The fair comparison is the book's own favored side on the same props.
+    bk_ = [r for r in sided if r.get("book_over") is not None]
+    bhit = [int((r["book_over"] >= 50) == (r["result"]["outcome"] == "Over")) for r in bk_]
+    out["model_side"] = {"w": int(sum(hit)), "l": int(len(hit) - sum(hit)), "n": len(hit),
+                         "pct": fnum(100 * sum(hit) / len(hit), 1) if hit else None,
+                         "book_pct": fnum(100 * sum(bhit) / len(bhit), 1) if bhit else None, "book_n": len(bhit),
+                         "note": "How often the model's likelier side happened, next to the book's likelier side. Not a betting record."}
 
     # probability quality: lower Brier = better forecaster
     both = [r for r in sided if r.get("book_over") is not None]

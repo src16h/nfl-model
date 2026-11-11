@@ -442,8 +442,12 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                         cached += 1
                     continue
                 try:
+                    # Nov 11 2026: ask for the books by name. This call asked for regions="us", and Hard Rock Bet is in the
+                    # feed's "us2" region, so no NFL prop was ever priced at Hard Rock (weeks 8-9: 1,850 of 1,867 rows came
+                    # from DraftKings). Up to 10 named books cost the same as one region, as the game-line call already does.
                     data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=len(mk_now),
-                                      regions="us", markets=",".join(mk_now), oddsFormat="american", dateFormat="iso")
+                                      bookmakers=",".join(getattr(C, "ODDS_PROP_BOOKS", C.ODDS_BOOKS)[:10]),
+                                      markets=",".join(mk_now), oddsFormat="american", dateFormat="iso")
                 except OddsFatal:
                     raise
                 except OddsError as e:

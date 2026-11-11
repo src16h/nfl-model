@@ -216,6 +216,43 @@ def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, b
             "odds": best["odds"], "shift": shift, "play": bool(play), "pre": round(100 * pre, 1), "k": k}
 
 
+def gap_to_play(stat, side, weight=None, bias=None, real=None, odds=-115, side_k=False, max_gap=40.0):
+    """Smallest gap between the model and the book (in points, book at 50% with both sides priced at `odds`) at which
+    decide_prop calls `side` a play. None when no gap up to max_gap does.
+
+    Nov 11 2026: settings changed one at a time can add up to a rule that cannot fire. NFL receiving-yard Unders
+    needed a 14+ point gap (model weight 0.4, calibration 0.53, 2.5% at -115) while the edge cap for that type was
+    10, so the type was "on" and had no plays for three weeks. reach_table() puts this next to each type's cap."""
+    g = 0.5
+    while g <= max_gap:
+        over = 0.5 + (g if side == "Over" else -g) / 100
+        d = decide_prop(over, 0.5, odds, odds, stat, bias, weight=weight, real=real, side_k=side_k)
+        if d and d["play"] and d["side"] == side:
+            return g
+        g += 0.5
+    return None
+
+
+def reach_table(types, weight=None, bias=None, real=None, side_k=False, play_min=0.0, play_max=99.0, caps=None, off=(), paused=()):
+    """For each (stat, side): the gap it needs to be a play and the window it is allowed, with a plain status:
+    open / side off / paused / cannot qualify. play_min, play_max and caps are in points."""
+    out = []
+    for stat, side in types:
+        need = gap_to_play(stat, side, weight, bias, real, side_k=side_k)
+        cap = min(play_max, (caps or {}).get((stat, side), 99.0))
+        if (stat, side) in off:
+            status = "side off"
+        elif (stat, side) in paused:
+            status = "paused"
+        elif need is None or max(need, play_min) >= cap:
+            status = "cannot qualify"
+        else:
+            status = "open"
+        out.append({"stat": stat, "side": side, "needs": need, "from": max(need or 0, play_min) if need is not None else None,
+                    "cap": cap, "status": status})
+    return out
+
+
 def adjust_game(model_p, book_p):
     """Blended chance for one side of a game line (0-1)."""
     return clip(book_p + MODEL_WEIGHT["game"] * (model_p - book_p))
