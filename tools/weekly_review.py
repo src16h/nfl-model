@@ -102,6 +102,38 @@ def said_vs_hit(track):
     return out
 
 
+MAX_CHANGES = 3                # docs/review/RULES.md: at most 3 changes per sport per week
+_SPORT_NAMES = ("NFL", "NHL", "NBA", "CFB", "Soccer")
+
+
+def change_counts(text, today, days=7):
+    """Changes logged per sport in docs/review/CHANGES.md over the last `days` days. An entry line looks like
+    "- NHL / NBA | what changed | ..." under a "## 2026-11-10 (...)" heading. "All" counts for every sport; Tools and
+    Tests lines and "undone:" lines (taking a change back) count for none."""
+    from datetime import date, timedelta
+    start = (today - timedelta(days=days - 1)).isoformat()
+    counts, day = {s: 0 for s in _SPORT_NAMES}, None
+    for line in text.splitlines():
+        if line.startswith("## "):
+            head = line[3:13]
+            try:
+                date.fromisoformat(head)
+                day = head
+            except ValueError:
+                day = None
+            continue
+        if day is None or day < start or day > today.isoformat() or not line.startswith("- ") or " | " not in line:
+            continue
+        who, what = line[2:].split(" | ", 1)
+        if what.strip().lower().startswith("undone"):
+            continue
+        names = [w.strip().lower() for w in who.replace(",", "/").split("/")]
+        for s in _SPORT_NAMES:
+            if s.lower() in names or any(n.startswith("all") for n in names):
+                counts[s] += 1
+    return counts
+
+
 CLOSE_SINCE = "2026-11-12"     # closing pulls for prop plays were fixed on Nov 11 2026; coverage is counted from here
 
 
@@ -165,6 +197,17 @@ def review():
             if g.get("status") == "paused" and (rc.get("n") or 0) >= 25 and (num(rc.get("roi")) or 0) > 3:
                 rep["flags"].append({"sport": sport, "level": "info", "what": f"paused but winning: {g.get('label')}",
                                      "why": f"{rc.get('w')}-{rc.get('l')} as shadow plays, {rc.get('roi')}%"})
+    # the change limit (Nov 11 2026): Nov 10 logged about ten changes, three of them undone the same day
+    try:
+        cc = change_counts((ROOT.parent / "review" / "CHANGES.md").read_text() if (ROOT.parent / "review" / "CHANGES.md").exists()
+                           else (Path(__file__).resolve().parents[1] / "docs" / "review" / "CHANGES.md").read_text(), now.date())
+        rep["changes_7d"] = cc
+        for sp_, n_ in cc.items():
+            if n_ > MAX_CHANGES:
+                rep["flags"].append({"sport": sp_, "level": "medium", "what": "over the change limit",
+                                     "why": f"{n_} changes logged in the last 7 days (limit {MAX_CHANGES}): no more this week unless something is broken"})
+    except Exception:  # noqa: BLE001
+        pass
     # prop types that are losing or paused: not just paused, diagnosed (tools/prop_diagnose.py)
     rep["diagnoses"] = []
     for sport, key in (("NFL", "nfl"), ("NHL", "nhl"), ("NBA", "nba"), ("CFB", "cfb")):
