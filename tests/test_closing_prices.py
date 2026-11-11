@@ -103,7 +103,7 @@ def _setup(mod_name, tmp_path, monkeypatch, n_games, now, start_in_hours, remain
     O = importlib.import_module(f"{mod_name}.odds")
     C = importlib.import_module(f"{mod_name}.config")
     FakeClient.start, FakeClient.calls = remaining, []
-    monkeypatch.setattr(O, "Client", FakeClient)
+    monkeypatch.setattr(O.API, "Client", FakeClient)
     monkeypatch.setattr(C, "odds_key", lambda: "k")
     today = now.astimezone(O.ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
     games, lines, cache = [], {}, {}
