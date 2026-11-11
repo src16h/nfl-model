@@ -80,7 +80,7 @@ for _sp, _kinds in GAME_KINDS.items():
         GATES[game_gate(_sp, _k)] = {
             "label": f"{_sp.upper() if _sp != 'soccer' else 'Soccer'} {_KIND_LABEL[_k]}", "min_n": 25, "min_roi": 3.0,
             "repause_roi": -8.0, "since": RULES_SINCE, "start": "active", "clv_gate": True,
-            "why": "Game bet type: pauses if 30+ priced plays lose to the closing line, or the return drops to -8%"}
+            "why": "Game bet type: pauses if 30+ priced plays lose to the closing line, or on a return of -8% or worse that is too big to be luck or has lasted 150 plays"}
 GATES["nhl_game_pl"].update({
     "start": "paused", "since": "2026-10-26",
     "why": "Paused Oct 26: 1-6 (-5.1u) as plays, and both priced plays lost to the closing line"})
@@ -109,7 +109,7 @@ for _sp, _kinds in PROP_KINDS.items():
             continue
         GATES[_n] = {"label": f"{_sp.upper()} {_STAT_LABEL[_st]} {_sd}s", "min_n": 25, "min_roi": 3.0, "repause_roi": -8.0,
                      "since": RULES_SINCE, "start": "active", "clv_gate": True, "auto": True,
-                     "why": "Prop type: pauses if 30+ priced plays lose to the closing line, or the return drops to -8%"}
+                     "why": "Prop type: pauses if 30+ priced plays lose to the closing line, or on a return of -8% or worse that is too big to be luck or has lasted 150 plays"}
 
 
 _GAME_GATES = {game_gate(_sp, _k) for _sp, _kinds in GAME_KINDS.items() for _k in _kinds}

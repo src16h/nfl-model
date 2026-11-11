@@ -1493,8 +1493,8 @@ function gateCard(x) {
   const R = x.record || {}, back = x.status === "active", watch = gWatch(x);
   const pct = watch ? Math.min(100, 100 * (R.ev_n || 0) / (x.clv_pause_n || 30)) : Math.min(100, 100 * (R.n || 0) / x.min_n);
   const evTxt = R.ev_n ? `${gSgn(R.ev_close, 1)}% at the closing price over ${R.ev_n} priced` : "no closing prices yet";
-  const need = watch ? `Closing-line check: ${evTxt}. Pauses at ${x.clv_pause_n || 30}+ priced plays if that stays below 0%, or if the return reaches ${x.repause_roi}%.`
-    : back ? `Back since ${esc(String(x.since).slice(5))}. Paused again if it returns ${x.repause_roi}% or worse over its next ${x.min_n}${x.clv_gate ? ", or loses to the closing line" : ""}.`
+  const need = watch ? `Closing-line check: ${evTxt}. Pauses at ${x.clv_pause_n || 30}+ priced plays if that stays below 0%, or on a return of ${x.repause_roi}% or worse that is too big to be luck or has lasted ${x.roi_backstop_n || 150} plays.`
+    : back ? `Back since ${esc(String(x.since).slice(5))}. Paused again if it loses to the closing line${x.clv_gate ? "" : " (where priced)"}, or returns ${x.repause_roi}% or worse by more than luck explains.`
     : `${R.n || 0} of ${x.min_n} graded. Needs a +${x.min_roi}% return${x.clv_gate ? " and 0% or better at the closing price" : ""} to come back${R.ev_n ? ` (now ${gSgn(R.ev_close, 1)}%)` : R.clv_n >= 15 ? ` (closing value so far ${gSgn(R.clv, 2)})` : ""}.`;
   const tag = watch ? `<span class="vt thin">On watch</span>` : back ? `<span class="tag">Back in plays</span>` : `<span class="vt">Paused</span>`;
   return `<div class="gate"><div class="gh"><b>${esc(x.label)}</b>${tag}</div>
