@@ -595,9 +595,12 @@ def main():
         g["today_et"] = today.isoformat()
     log.info(f"{len(upcoming)} upcoming games")
     # games and markets with a locked prop play (or shadow play): one more props pull near the start (closing price)
-    close_games, shadow_games = CLV.close_wanted(load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []))
+    hist_today = load_json(HIST / f"{today.isoformat()}.json", {})
+    close_games, shadow_games = CLV.close_wanted(hist_today.get("players", []))
+    # games with a locked game play or shadow play: the late run refreshes the game lines only for these (closing price)
+    line_games = {g_["game_id"] for g_ in hist_today.get("games", []) if g_.get("flags") or g_.get("shadow_flags") or g_.get("play_at")}
     book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games,
-                                    shadow_games=shadow_games)
+                                    shadow_games=shadow_games, line_games=line_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
     cross_in, cross_book = [], None

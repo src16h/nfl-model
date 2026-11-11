@@ -145,10 +145,11 @@ def make(C, norm_name, sport, prop_stat, label, key_env, line_keys, gid_type, fa
         return rec
 
 
-    def run(games, state_path, cache_path, now, close_games=(), shadow_games=()):
+    def run(games, state_path, cache_path, now, close_games=(), shadow_games=(), line_games=None):
         """Fills game['book'] with lines and returns {(game_id): {pid-name-key: {stat: {...}}}} props.
-        close_games: games with a locked prop play; their props get one more pull near puck drop, so the
-        play can be checked against the closing line (clv.prop_clv)."""
+        close_games / shadow_games: {game_id: {stats}} with a locked prop play / shadow play; those markets get one
+        more pull near the start, so the play can be checked against the closing line (clv.prop_clv).
+        line_games: game ids with a locked game play or shadow play (only used by a late-evening run)."""
         state = _load(state_path, {})
         cache = _load(cache_path, {})
         today = now.astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")   # ET day: a 9pm run must not spend tomorrow's budget (Nov 5 2026)
@@ -175,7 +176,14 @@ def make(C, norm_name, sport, prop_stat, label, key_env, line_keys, gid_type, fa
             lines = state.get("lines") or {}
             soon = [g for g in games if 0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
                     <= C.ODDS_PREKO_HOURS]
-            due = hours >= C.ODDS_LINES_EVERY_HOURS or not lines or (soon and hours >= 1.0)    # near puck drop: near-closing prices
+            near = bool(soon) and hours >= 1.0                # near the start: near-closing prices
+            # A late-evening run (C.LATE_LINES_HOUR, ET) exists for closing prices, so it only refreshes the game lines
+            # (3 credits) when a game about to start has a locked game play or shadow play to price (line_games).
+            late = getattr(C, "LATE_LINES_HOUR", None)
+            if near and late is not None and line_games is not None and now.astimezone(ZoneInfo("America/New_York")).hour >= late:
+                want = {str(x) for x in line_games}
+                near = any(str(g["game_id"]) in want for g in soon)
+            due = hours >= C.ODDS_LINES_EVERY_HOURS or not lines or near
             if due:
                 # one call, up to 10 books = same credits as one book: Hard Rock (where you bet) first, Pinnacle kept as the referee
                 data = cl.get(f"/v4/sports/{SPORT}/odds", markets="h2h,spreads,totals", oddsFormat="american",
