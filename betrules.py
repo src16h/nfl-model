@@ -64,6 +64,38 @@ def implied(odds):
     return 100 / (o + 100) if o > 0 else -o / (-o + 100)
 
 
+def fair_probs(*odds):
+    """The book's fair (no-vig) chances for every side of one market, from its American prices, by Shin's method.
+
+    Nov 11 2026: the old way split the vig in proportion to each price, which leaves longshots a little too likely
+    and favorites not likely enough. On 7,227 Pinnacle closing 1X2 lines (data/soccer/fd, 2020-26): favorites it
+    called 69.6% won 71.9%; Shin's method called them 69.8% and they won 70.9% (log loss 0.99237 -> 0.99221; the
+    power and additive methods score the same as Shin within noise). The change is small for a single price (about
+    0.2 points on a longshot, a point or two on a heavy favorite) and nothing at all on an even two-way market,
+    but a longshot play is decided on gaps that size. With two sides it is the same as taking half the vig off each.
+
+    Two-way moneylines show it more (closing lines in data/nba/games.csv and data/cfb/games.csv): underdogs the old
+    way called 11.8% won 9.0% in the NBA (477 games) and 8.6% vs 5.9% in college football (1,757); this way calls
+    them 10.9% (won 10.95%) and 7.8% (won 6.6%). Log loss NBA 0.59042 -> 0.59017, CFB 0.50608 -> 0.50502."""
+    pi = [implied(o) for o in odds]
+    tot = sum(pi)
+    if len(pi) < 2 or tot <= 1.0 or any(p <= 0 for p in pi):       # no vig to remove (or a bad price): just rescale
+        return [p / tot for p in pi] if tot > 0 else pi
+
+    def shares(z):
+        return [(math.sqrt(z * z + 4 * (1 - z) * p * p / tot) - z) / (2 * (1 - z)) for p in pi]
+    lo, hi = 0.0, 0.5
+    for _ in range(60):                                            # sum of shares falls as z rises: bisect to 1
+        z = (lo + hi) / 2
+        if sum(shares(z)) > 1:
+            lo = z
+        else:
+            hi = z
+    out = shares((lo + hi) / 2)
+    t = sum(out)
+    return [clip(x / t, 1e-6, 1 - 1e-6) for x in out]
+
+
 def no_vig_from_one(odds, hold=0.045):
     """Book's fair chance when only one side's price is known (typical prop hold)."""
     return clip(implied(odds) / (1 + hold))
@@ -184,6 +216,43 @@ def decide_prop(model_over, book_over, over_odds, under_odds, stat, bias=None, b
             "odds": best["odds"], "shift": shift, "play": bool(play), "pre": round(100 * pre, 1), "k": k}
 
 
+def gap_to_play(stat, side, weight=None, bias=None, real=None, odds=-115, side_k=False, max_gap=40.0):
+    """Smallest gap between the model and the book (in points, book at 50% with both sides priced at `odds`) at which
+    decide_prop calls `side` a play. None when no gap up to max_gap does.
+
+    Nov 11 2026: settings changed one at a time can add up to a rule that cannot fire. NFL receiving-yard Unders
+    needed a 14+ point gap (model weight 0.4, calibration 0.53, 2.5% at -115) while the edge cap for that type was
+    10, so the type was "on" and had no plays for three weeks. reach_table() puts this next to each type's cap."""
+    g = 0.5
+    while g <= max_gap:
+        over = 0.5 + (g if side == "Over" else -g) / 100
+        d = decide_prop(over, 0.5, odds, odds, stat, bias, weight=weight, real=real, side_k=side_k)
+        if d and d["play"] and d["side"] == side:
+            return g
+        g += 0.5
+    return None
+
+
+def reach_table(types, weight=None, bias=None, real=None, side_k=False, play_min=0.0, play_max=99.0, caps=None, off=(), paused=()):
+    """For each (stat, side): the gap it needs to be a play and the window it is allowed, with a plain status:
+    open / side off / paused / cannot qualify. play_min, play_max and caps are in points."""
+    out = []
+    for stat, side in types:
+        need = gap_to_play(stat, side, weight, bias, real, side_k=side_k)
+        cap = min(play_max, (caps or {}).get((stat, side), 99.0))
+        if (stat, side) in off:
+            status = "side off"
+        elif (stat, side) in paused:
+            status = "paused"
+        elif need is None or max(need, play_min) >= cap:
+            status = "cannot qualify"
+        else:
+            status = "open"
+        out.append({"stat": stat, "side": side, "needs": need, "from": max(need or 0, play_min) if need is not None else None,
+                    "cap": cap, "status": status})
+    return out
+
+
 def adjust_game(model_p, book_p):
     """Blended chance for one side of a game line (0-1)."""
     return clip(book_p + MODEL_WEIGHT["game"] * (model_p - book_p))
@@ -222,24 +291,51 @@ def final_over_from(bk):
 # ---------------------------------------------------------------------------
 SHARP_MIN_EV = 1.5
 SHARP_MAX_EV = 8.0
+# Nov 11 2026, three more conditions. Under the rule above, 50 priced game plays across the five sports averaged -3.2%
+# at the closing fair price (a bet with no edge scores about -2 to -4.5), and the plays leaned to longshots: NBA
+# moneyline plays 0-8, all at +180 to +850; 11 of 19 soccer 1X2 plays at +260 or longer (those averaged -5.8% at close).
+#   3. the model must be close to Pinnacle, not just above the bet book. "Model at least the book's chance" let every
+#      underdog through in the NBA, where the model gives underdogs 37.6% against Pinnacle's 28.7% (underdog leans
+#      8-32): a model that far from the sharp price is disagreeing with it, not confirming it.
+#   4. no plays longer than SHARP_MAX_ODDS. A fair chance that is off by half a point is 1% of value at -110 and
+#      4% at +700, so the same small error clears the bar far more easily on a longshot. Raise it only once
+#      longshot shadow results show closing value of 0 or better.
+#   5. fair chances come from fair_probs (Shin's method), for Pinnacle and for the bet book.
+MODEL_MAX_GAP = 0.06        # the model's chance may sit at most this far from Pinnacle's (either way)
+SHARP_MAX_ODDS = 250        # longest American price that can be a play
 
 
-def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=None):
+def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=None, extra=(), sharp_extra=()):
     """Chances 0-1. odds/other_odds: the bet book's prices for this side and the other side (American).
     sharp_*: Pinnacle's prices for the same side and line (None when it has no matching line).
     sharp_p: Pinnacle's fair chance already converted to the bet line (used instead of sharp_* when given).
-    Returns {"play", "sharp", "book", "ev"} with chances in % and ev in % at the bet price."""
+    extra / sharp_extra: prices of any further sides of the same market (the draw in a 3-way market).
+    Returns {"play", "sharp", "book", "ev", "why"} with chances in % and ev in % at the bet price; "why" names the
+    first condition a non-play failed (None for a play)."""
     if odds is None or other_odds is None:
-        return {"play": False, "sharp": None, "book": None, "ev": None}
-    pa, pb = implied(odds), implied(other_odds)
-    book = pa / (pa + pb)
+        return {"play": False, "sharp": None, "book": None, "ev": None, "why": "no price"}
+    book = fair_probs(odds, other_odds, *extra)[0]
     if sharp_p is not None:                     # sharp chance already moved to the bet book's line (key numbers)
         sharp = sharp_p
     elif sharp_odds is None or sharp_other is None:
-        return {"play": False, "sharp": None, "book": round(100 * book, 1), "ev": None}
+        return {"play": False, "sharp": None, "book": round(100 * book, 1), "ev": None, "why": "no sharp price"}
     else:
-        sa, sb = implied(sharp_odds), implied(sharp_other)
-        sharp = sa / (sa + sb)
+        sharp = fair_probs(sharp_odds, sharp_other, *sharp_extra)[0]
     ev = 100 * (sharp * (1 + payout(odds)) - 1)
-    play = SHARP_MIN_EV <= ev <= SHARP_MAX_EV and model_p is not None and model_p >= book
-    return {"play": bool(play), "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1)}
+    why = sharp_why(model_p, book, sharp, ev, odds)
+    return {"play": why is None, "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1), "why": why}
+
+
+def sharp_why(model_p, book, sharp, ev, odds):
+    """Why a side is not a play under the sharp-referee rule, or None when it is one. Chances 0-1, ev in %."""
+    if ev < SHARP_MIN_EV:
+        return "price not good enough at Pinnacle's chance"
+    if ev > SHARP_MAX_EV:
+        return "gap too big (stale or wrong line)"
+    if model_p is None or model_p < book:
+        return "model disagrees"
+    if abs(model_p - sharp) > MODEL_MAX_GAP:
+        return "model too far from Pinnacle"
+    if float(odds) > SHARP_MAX_ODDS:
+        return "longshot (over the odds cap)"
+    return None

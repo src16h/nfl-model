@@ -102,6 +102,41 @@ def said_vs_hit(track):
     return out
 
 
+MAX_CHANGES = 3                # docs/review/RULES.md: at most 3 changes per sport per week
+_SPORT_NAMES = ("NFL", "NHL", "NBA", "CFB", "Soccer")
+
+
+def change_counts(text, today, days=7):
+    """Changes logged per sport in docs/review/CHANGES.md over the last `days` days. An entry line looks like
+    "- NHL / NBA | what changed | ..." under a "## 2026-11-10 (...)" heading. "All" counts for every sport; Tools and
+    Tests lines and "undone:" lines (taking a change back) count for none."""
+    from datetime import date, timedelta
+    start = (today - timedelta(days=days - 1)).isoformat()
+    counts, day = {s: 0 for s in _SPORT_NAMES}, None
+    for line in text.splitlines():
+        if line.startswith("## "):
+            head = line[3:13]
+            try:
+                date.fromisoformat(head)
+                day = head
+            except ValueError:
+                day = None
+            continue
+        if day is None or day < start or day > today.isoformat() or not line.startswith("- ") or " | " not in line:
+            continue
+        who, what = line[2:].split(" | ", 1)
+        if what.strip().lower().startswith("undone"):
+            continue
+        names = [w.strip().lower() for w in who.replace(",", "/").split("/")]
+        for s in _SPORT_NAMES:
+            if s.lower() in names or any(n.startswith("all") for n in names):
+                counts[s] += 1
+    return counts
+
+
+CLOSE_SINCE = "2026-11-12"     # closing pulls for prop plays were fixed on Nov 11 2026; coverage is counted from here
+
+
 def review():
     now = datetime.now(timezone.utc)
     rep = {"generated_at": now.isoformat(timespec="minutes"), "sports": {}, "flags": []}
@@ -148,11 +183,31 @@ def review():
             if r["n"] >= n_min and abs(r["gap"]) >= pts:
                 rep["flags"].append({"sport": sport, "level": "high" if abs(r["z"] or 0) >= 2 else "medium",
                                      "what": f"said vs hit: {r['what']}", "why": f"said {r['said']}%, hit {r['hit']}% over {r['n']} (z {r['z']})"})
+        # closing prices on prop plays (Nov 11 2026): how many plays since the fix got a later price to be judged against.
+        # Without one the closing-line gates (gates.py) never see a prop type.
+        pl = [x for x in (track.get("prop_plays_list") or []) if isinstance(x, dict) and str(x.get("date") or "") >= CLOSE_SINCE]
+        priced = [x for x in pl if x.get("clv") is not None or x.get("move") in (1, -1)]
+        S["prop_close"] = {"since": CLOSE_SINCE, "plays": len(pl), "priced": len(priced),
+                           "missed_last_run": (odds or {}).get("close_missed"), "owed": (odds or {}).get("close_debt")}
+        if len(pl) >= 10 and len(priced) < 0.6 * len(pl):
+            rep["flags"].append({"sport": sport, "level": "high", "what": "prop plays without a closing price",
+                                 "why": f"{len(priced)} of {len(pl)} plays since {CLOSE_SINCE} have one; check the odds status (close_pulls, close_missed) and the run times"})
         for g in S["gates"]:
             rc = g.get("record") or {}
             if g.get("status") == "paused" and (rc.get("n") or 0) >= 25 and (num(rc.get("roi")) or 0) > 3:
                 rep["flags"].append({"sport": sport, "level": "info", "what": f"paused but winning: {g.get('label')}",
                                      "why": f"{rc.get('w')}-{rc.get('l')} as shadow plays, {rc.get('roi')}%"})
+    # the change limit (Nov 11 2026): Nov 10 logged about ten changes, three of them undone the same day
+    try:
+        cc = change_counts((ROOT.parent / "review" / "CHANGES.md").read_text() if (ROOT.parent / "review" / "CHANGES.md").exists()
+                           else (Path(__file__).resolve().parents[1] / "docs" / "review" / "CHANGES.md").read_text(), now.date())
+        rep["changes_7d"] = cc
+        for sp_, n_ in cc.items():
+            if n_ > MAX_CHANGES:
+                rep["flags"].append({"sport": sp_, "level": "medium", "what": "over the change limit",
+                                     "why": f"{n_} changes logged in the last 7 days (limit {MAX_CHANGES}): no more this week unless something is broken"})
+    except Exception:  # noqa: BLE001
+        pass
     # prop types that are losing or paused: not just paused, diagnosed (tools/prop_diagnose.py)
     rep["diagnoses"] = []
     for sport, key in (("NFL", "nfl"), ("NHL", "nhl"), ("NBA", "nba"), ("CFB", "cfb")):
@@ -192,6 +247,10 @@ def markdown(rep):
         lines += [PD.markdown(d) for d in rep["diagnoses"]]
     for sport, S in rep["sports"].items():
         lines += ["", f"## {sport}", f"Updated {S['age_h']} hours ago, odds from {S['odds_source']}, credits left {S['credits_left']}.", ""]
+        pc = S.get("prop_close") or {}
+        if pc.get("plays"):
+            lines += [f"Prop plays with a closing price since {pc['since']}: {pc['priced']} of {pc['plays']}"
+                      + (f" (closing pulls owed to alt lines: {pc['owed']})" if pc.get("owed") else "") + ".", ""]
         rs = sorted([r for r in S["records"] if r["n"] >= 5], key=lambda r: -r["n"])[:40]
         if rs:
             lines += ["| Record | W-L | Hit | Units | Return | z |", "|---|---|---|---|---|---|"]

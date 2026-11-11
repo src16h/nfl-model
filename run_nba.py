@@ -146,6 +146,7 @@ def game_picks(g, sim):
             s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
         dec = BR.decide_sharp(v["model"] / 100, mine, other, s1, s2)
         v["sharp"], v["ev"], v["play"] = dec["sharp"], dec["ev"], dec["play"]
+        v["why"] = dec.get("why")                # which condition a non-play failed (Nov 11 2026)
     GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     plays = [x for x in out.values() if x.get("play")]
     if len(plays) > 1:                                  # one play per game: the best value
@@ -626,11 +627,10 @@ def main():
         g["espn"] = espn_lines(g.get("odds"))
     upcoming = [g for g in sched if g["state"] == "pre" and datetime.fromisoformat(g["start"].replace("Z", "+00:00")) > now]
     log.info(f"{len(upcoming)} upcoming games")
-    close_games = set()
-    for p_ in load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []):
-        if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
-            close_games.add(p_["game_id"])
-    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
+    # games and markets with a locked prop play (or shadow play): one more props pull near the start (closing price)
+    close_games, shadow_games = CLV.close_wanted(load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []))
+    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games,
+                                    shadow_games=shadow_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
     cross_in, cross_book = [], None

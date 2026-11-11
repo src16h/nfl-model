@@ -25,9 +25,15 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
 ## What counts as evidence
 - **Plays vs leans.** "Every pick" records are leans on every game, not bets. A losing lean record is a reason to
   look, never by itself a reason to change a play rule.
-- **Pause a bet type** (or tighten it): 25+ graded plays, return -8% or worse, and either z <= -1.5 or closing-line
-  value negative over 30+ priced plays. Prefer the gates in `gates.py` (they pause and restore on their own); check they
-  are doing it before adding a manual rule.
+- **Pause a bet type** (or tighten it): closing-line value negative over 30+ priced plays; or 25+ graded plays at a
+  return of -8% or worse that is too big to be luck (z <= -2) or has lasted 150 plays. Prefer the gates in `gates.py`
+  (they pause and restore on their own, on exactly these bars since Nov 11 2026); check they are doing it before adding
+  a manual rule.
+- **Game plays are judged together.** Every sport's game plays come from one rule (Pinnacle calls the price value, the
+  model agrees), so `gates.pooled` pools their priced plays: 30+ averaging below 0 at the close (z <= -1.5) pauses game
+  plays in every sport, and 40 priced shadow plays averaging 0 or better bring them back. Don't override it by hand.
+- **Closing prices come first.** A bet type without closing prices can't be judged in weeks. The scorecard prints
+  "prop plays with a closing price: x of y" per sport; under 60% is a pipes problem to fix before anything else.
 - **Never just pause a prop type.** Every prop type that is losing (20+ plays, -8% or worse) or paused gets a
   diagnosis (`tools/prop_diagnose.py`, included in the scorecard): projection bias, calibration, edge size, plays vs
   all leans, price paid, line movement, line size / role, zeros, clustering, trend. Read the causes and check them
@@ -40,12 +46,15 @@ makes only the adjustments the evidence supports. This file is the rulebook. Cha
 - **Recalibrate** a probability (props, parlay legs, a leg type): said vs hit gap of 5+ points over 100+ graded, or 8+
   points over 20+ tickets. Move halfway toward the real rate, not all the way.
 - **Loosen a rule or un-pause:** only with 40+ graded results over 3+ weeks, return positive, and closing-line value
-  not negative. Never on one good week.
+  not negative over 15+ priced plays (no closing prices, no comeback). Never on one good week.
 - **Model changes** (features, weights, simulation settings): only with a walk-forward test on past seasons that beats
   the current setting out of sample. Write the before / after numbers in CHANGES.md.
 
 ## Limits
-- At most 3 changes per sport per week. Small steps.
+- At most 3 changes per sport per week. Small steps. The scorecard counts the entries in CHANGES.md and flags a sport
+  that is over.
+- Code changes: `python -m pytest tests -q` must pass (the Tests workflow runs it on every pull request), and library
+  versions in `requirements.txt` are exact; change one on purpose, never by accident.
 - No change to secrets, to odds-credit budgets beyond what the month allows, or to workflow schedules unless a run is
   failing or credits run out.
 - Hard Rock as the bet price (`standin.py`, no prediction markets) and Pinnacle as the referee stay. The owner bets on

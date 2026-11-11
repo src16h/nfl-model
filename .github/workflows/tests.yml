@@ -1,0 +1,28 @@
+name: Tests
+
+# Runs the checks in tests/ whenever code changes (Nov 11 2026). No odds key and no network: the odds feed is faked.
+on:
+  pull_request:
+    paths: ["**.py", "requirements*.txt", ".github/workflows/tests.yml"]
+  push:
+    branches: [main]
+    paths: ["**.py", "requirements*.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-dev.txt
+      - name: Run tests
+        run: python -m pytest tests -q

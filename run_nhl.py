@@ -147,6 +147,7 @@ def game_picks(g, sim):
             s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
         dec = BR.decide_sharp(v["model"] / 100, mine, other, s1, s2)
         v["sharp"], v["ev"], v["play"] = dec["sharp"], dec["ev"], dec["play"]
+        v["why"] = dec.get("why")                # which condition a non-play failed (Nov 11 2026)
     GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     ml, pl = out.get("ml"), out.get("pl")
     plays = [x for x in out.values() if x.get("play")]
@@ -593,11 +594,13 @@ def main():
         g["date_et"] = datetime.fromisoformat(g["start"].replace("Z", "+00:00")).astimezone(ET).date().isoformat()
         g["today_et"] = today.isoformat()
     log.info(f"{len(upcoming)} upcoming games")
-    close_games = set()                                  # games with a locked prop play: one near-puck-drop props pull (CLV)
-    for p_ in load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []):
-        if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
-            close_games.add(p_["game_id"])
-    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
+    # games and markets with a locked prop play (or shadow play): one more props pull near the start (closing price)
+    hist_today = load_json(HIST / f"{today.isoformat()}.json", {})
+    close_games, shadow_games = CLV.close_wanted(hist_today.get("players", []))
+    # games with a locked game play or shadow play: the late run refreshes the game lines only for these (closing price)
+    line_games = {g_["game_id"] for g_ in hist_today.get("games", []) if g_.get("flags") or g_.get("shadow_flags") or g_.get("play_at")}
+    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games,
+                                    shadow_games=shadow_games, line_games=line_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
     cross_in, cross_book = [], None

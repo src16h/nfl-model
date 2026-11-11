@@ -67,9 +67,8 @@ def imp(o):
 
 
 def nv(*odds):
-    ps = [imp(o) for o in odds]
-    s = sum(ps)
-    return [p / s for p in ps]
+    """A book's fair chances for every side of one market (Nov 11 2026: Shin's method, betrules.fair_probs)."""
+    return BR.fair_probs(*odds)
 
 
 # ---------------------------------------------------------------------
@@ -112,7 +111,11 @@ def _side_rows(g, G, b):
         x["gap"] = 100 * (x["pm"] - x["pb"])                       # model vs the bet book
         x["sev"] = None if x["ps"] is None else 100 * (x["ps"] * dec(x["odds"]) - 1)   # value by Pinnacle's fair price
         # play rule (Oct 20 2026 backtest): Pinnacle says the price is value AND the model agrees with the side
-        x["play"] = bool(x["sev"] is not None and C.SHARP_MIN_EV <= x["sev"] <= C.SHARP_MAX_EV and x["gap"] >= C.MODEL_AGREE)
+        # Nov 11 2026: the model must also be near Pinnacle (not just above the bet book) and the price no longer than
+        # the odds cap (betrules.py: 11 of 19 graded 1X2 plays were +260 or longer and averaged -5.8% at the close)
+        x["why"] = None if x["sev"] is None else BR.sharp_why(
+            x["pm"] if x["gap"] >= C.MODEL_AGREE else None, x["pb"], x["ps"], x["sev"], x["odds"])
+        x["play"] = bool(x["sev"] is not None and x["why"] is None)
     return rows
 
 
@@ -132,7 +135,7 @@ def picks(g, G, mk=None):
         x = max(plays, key=lambda y: y["sev"]) if plays else max([y for y in rs if y["who"] != "draw"] or rs, key=lambda y: y["gap"])
         out[mkt] = {"side": x["side"], "who": x["who"], "line": x["line"], "odds": fmt_odds(x["odds"]), "model": r(100 * x["pm"]),
                     "book": r(100 * x["pb"]), "sharp": None if x["ps"] is None else r(100 * x["ps"]), "edge": r(x["gap"]),
-                    "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"]}
+                    "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"], "why": x.get("why")}
         if mkt == "total" and x["ps"] is None and mk is not None:
             # Pinnacle posted a different total: convert its price to the bet book's line (approximate, never a play)
             po = M.cover(M.total(mk["G"], x["line"]))
@@ -729,7 +732,7 @@ def main():
                "model": {lg: {"home": r(ratings[lg].home, 3) if ratings[lg] else None, "rho": rho[lg],
                               "base": r(math.exp(ratings[lg].intercept), 2) if ratings[lg] else None} for lg in C.LEAGUES},
                "alt_rules": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "daily_cap": C.ALT_DAILY_CAP},
-               "rules": {"sharp_min_ev": C.SHARP_MIN_EV, "sharp_max_ev": C.SHARP_MAX_EV, "model_agree": C.MODEL_AGREE,
+               "rules": {"sharp_min_ev": C.SHARP_MIN_EV, "sharp_max_ev": C.SHARP_MAX_EV, "model_agree": C.MODEL_AGREE, "max_odds": BR.SHARP_MAX_ODDS, "model_max_gap": 100 * BR.MODEL_MAX_GAP,
                          "daily_cap": C.DAILY_CAP, "provisional_n": C.PROVISIONAL_N, "fatigue": fat_coef}}
     (OUT / "latest.json").write_text(json.dumps(clean(payload), separators=(",", ":")))
     log.info(f"wrote {len(games)} matches, {len(players)} players")

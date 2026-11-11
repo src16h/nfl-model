@@ -6,6 +6,7 @@ on:
     - cron: "12 16 * * *"   # 11:12am ET: grades last night, morning lines
     - cron: "12 22 * * *"   # 5:12pm ET: fresh lines and player props before 7pm puck drops
     - cron: "35 23 * * *"   # 6:35pm ET: near-closing lines (CLV) and late goalie news before 7pm puck drops
+    - cron: "15 2 * * *"    # 9:15pm ET: closing prices for the 9:30pm-and-later puck drops (Nov 11 2026)
   workflow_dispatch:
 
 permissions:

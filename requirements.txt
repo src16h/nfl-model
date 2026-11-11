@@ -1,7 +1,11 @@
-nflreadpy>=0.1.0
-polars>=1.0
-pyarrow>=14.0
-pandas>=2.1
-numpy>=1.26
-scipy>=1.11
-scikit-learn>=1.3
+# Exact versions (Nov 11 2026): the ones the Nov 11 2026 runs installed and passed with. Before this the file only
+# set minimums, so every run took whatever was newest that day and a library release could change results or break
+# a run with no change on our side. To upgrade: change a line, run the tests (python -m pytest tests -q) and one
+# workflow by hand, and note it in docs/review/CHANGES.md.
+nflreadpy==0.1.5
+polars==2.1.0
+pyarrow==26.0.1
+pandas==3.1.1
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1

@@ -77,6 +77,19 @@ ODDS_BOOKS = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us"
 SHARP_BOOKS = ["pinnacle"]       # referee price for plays (rides along in the same call, no extra credits)
 PROP_BOOKS = ["hardrockbet", "draftkings"]
 ODDS_PREKO_HOURS = 2.0           # games starting this soon get a fresh line pull (near-closing prices for CLV)
+# Closing prices for prop plays (Nov 11 2026). A game with a locked prop play gets one more pull of that play's market
+# inside PROP_CLOSE_HOURS of the start (the 6:35pm ET run covers games up to about 9pm ET, the 9:15pm run the rest).
+# These pulls come before everything else. When the day's allowance is used up they are taken anyway and paid back by
+# skipping alt-line pulls on later runs: at most ALT_CUT_SHARE of a run's main alt pulls (latest games first), and no
+# more than CLOSE_DEBT_MAX credits owed at once (past that, closing pulls wait for the day's allowance).
+PROP_CLOSE_PULL = True
+PROP_CLOSE_HOURS = 2.5
+# Late run (Nov 11 2026, .github/workflows/nhl.yml 9:15pm ET): gives 9:30pm-and-later puck drops a real closing price
+# (the 6:35pm run priced them about 3.5 hours early). To keep it cheap it refreshes the game lines only when one of
+# those games has a locked game play or shadow play; closing pulls for prop plays follow the usual rules.
+LATE_LINES_HOUR = 20
+ALT_CUT_SHARE = 0.5
+CLOSE_DEBT_MAX = 6
 ODDS_REGION = "us"
 ODDS_RESERVE = 15                # never spend the last credits of the month
 # Oct 21 2026: player points pulls dropped (111-121 and -17 units on 232 plays, Overs 5-17). Their credits now pay for

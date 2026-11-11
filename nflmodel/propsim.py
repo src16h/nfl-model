@@ -284,7 +284,8 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         clean = lambda v: None if v is None or (isinstance(v, float) and np.isnan(v)) or str(v).strip() == "" else str(v).strip()
         row = {"player": r["player"], "stat": r["stat"], "line": clean(r.get("line")),
                "over_odds": clean(r.get("over_odds")), "under_odds": clean(r.get("under_odds")),
-               "source": clean(r.get("source")) or "manual", "book": clean(r.get("book"))}
+               "source": clean(r.get("source")) or "manual", "book": clean(r.get("book")),
+               "pulled": clean(r.get("pulled"))}       # when the book's price was fetched (None for typed-in lines)
         if stat is None or not cands:
             row["error"] = "stat not recognized" if stat is None else "player not in this week's projections"
             out.append(row)
@@ -387,6 +388,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         row.update({"model_over": fnum(adj * 100, 1), "model_over_raw": fnum(p_over * 100, 1),
                     "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
                     "ev": dec["ev"] if dec else None, "tier": tier,
+                    "bet_pct": dec["p"] if dec and dec["side"] == side else None,
                     "pre": dec["pre"] if dec else None, "cal_k": dec["k"] if dec else None})
         if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))

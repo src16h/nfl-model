@@ -193,6 +193,7 @@ def plays_v2(g, b, out):
             continue
         dec = BR.decide_sharp(pk["model"] / 100, mine, other, s1, s2)
         pk["sharp"], pk["ev"], pk["play"] = dec["sharp"], dec["ev"], dec["play"]
+        pk["why"] = dec.get("why")                # which condition a non-play failed (Nov 11 2026)
     plays = [x for x in out.values() if x.get("play") and not x.get("early")]
     if len(plays) > 1:                                    # one Pinnacle play per game: the best value
         best = max(plays, key=lambda x: x.get("ev") or 0)
@@ -323,7 +324,8 @@ def tracking(weeks, results):
                     clv_rows.append({"kind": k, "clv": c, "ev": e, "exact": exact})
                     daily[dt] = daily.get(dt, 0) + (u or 0)
                     if k in GT.GAME_KINDS["cfb"]:
-                        gate_rows[GT.game_gate("cfb", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
+                        gate_rows[GT.game_gate("cfb", k)][1].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e,
+                                                                     "early": bool(pk.get("early"))})
                 elif pk.get("shadow") and k in GT.GAME_KINDS["cfb"]:      # paused bet type: graded, not a play
                     c, e, _ = CLV.play_clv("cfb", k, pk, g, g.get("first_book"))
                     gate_rows[GT.game_gate("cfb", k)][0].append({"date": dt, "res": rr, "units": u, "clv": c, "ev": e})
@@ -477,11 +479,11 @@ def main():
         g["home_full"] = f"{g['home']['name']} {g['home']['nick']}"
         g["away_full"] = f"{g['away']['name']} {g['away']['nick']}"
         g["p4_home"], g["p4_away"] = g["home"]["id"] in p4, g["away"]["id"] in p4
-    close_games = set()                                  # games with a locked prop play: one near-kickoff props pull (CLV)
+    # games and markets with a locked prop play: one more props pull near kickoff (closing price)
+    close_games = {}
     for f_ in sorted(HIST.glob("*.json"))[-2:]:
-        for p_ in load_json(f_, {}).get("players", []):
-            if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
-                close_games.add(p_["game_id"])
+        for gid_, sts_ in CLV.close_wanted(load_json(f_, {}).get("players", []))[0].items():
+            close_games.setdefault(gid_, set()).update(sts_)
     book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
     with ThreadPoolExecutor(6) as ex:
         ids = sorted({g[s]["id"] for g in upcoming for s in ("home", "away") if g[s]["id"] in p4})
@@ -630,7 +632,7 @@ def main():
             else:
                 pf = float(np.interp(m["fair"], m["q"], 1 - P.QS)) if m["q"][-1] > m["q"][0] else 0.5
             lite["m"][st] = {"fair": m["fair"], "pf": round(float(pf), 3),
-                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev", "pre", "k")}} if m.get("book") else {})}
+                             **({"book": {x: m["book"].get(x) for x in ("line", "side", "odds", "edge", "play", "book_over", "ev", "pre", "k", "pulled")}} if m.get("book") else {})}
         by_wk[gwk[p["game_id"]]]["players"].append(lite)
     for wk, v in by_wk.items():
         path = HIST / f"{wk}.json"
@@ -645,7 +647,7 @@ def main():
                 bk_ = m_.get("book") or {}
                 fl_ = pm_.get("flag")
                 if fl_ is None and bk_.get("play"):
-                    fl_ = {x: bk_.get(x) for x in ("line", "side", "odds", "book_over", "edge", "ev", "pre")}
+                    fl_ = {x: bk_.get(x) for x in ("line", "side", "odds", "book_over", "edge", "ev", "pre", "pulled")}
                     fl_["at"] = stamp
                 if fl_ is not None:
                     m_["flag"] = fl_

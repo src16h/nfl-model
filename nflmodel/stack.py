@@ -169,6 +169,16 @@ def _wf_predictions(rows, name, test_seasons):
     return {w: np.concatenate(v) for w, v in preds.items()}
 
 
+def _nested_blend(preds, actual, seasons, test):
+    """Predictions for each test season from the blend share that had the lowest error on the earlier test seasons."""
+    out = np.array(preds[min(preds)], dtype=float).copy()
+    for s in test:
+        cur, prior = seasons == s, seasons < s
+        w = min(preds, key=lambda k: np.nanmean(np.abs(preds[k][prior] - actual[prior]))) if prior.any() else min(preds)
+        out[cur] = preds[w][cur]
+    return out
+
+
 def lean_thresholds(engine):
     if engine == "anchored":
         return C.ANCHOR_LEAN_SPREAD, C.ANCHOR_LEAN_TOTAL
@@ -186,9 +196,13 @@ def walk_forward(rows: pd.DataFrame, engine: str):
     pre = "ind" if engine == "independent" else "anc"
     pm_all = _wf_predictions(rows, f"{pre}_margin", test)
     pt_all = _wf_predictions(rows, f"{pre}_total", test)
-    wm = min(pm_all, key=lambda w: np.nanmean(np.abs(pm_all[w] - am)))
+    wm = min(pm_all, key=lambda w: np.nanmean(np.abs(pm_all[w] - am)))      # the share the live model uses: best over every graded season
     wt = min(pt_all, key=lambda w: np.nanmean(np.abs(pt_all[w] - at)))
-    te = te.assign(pm=pm_all[wm], pt=pt_all[wt])
+    # Nov 11 2026: the report used those same shares, so each season was graded with a blend that had been chosen
+    # knowing that season's results. Each season is now graded with the share that was best on the seasons before it
+    # (the first one with 0, plain ridge), which is what would really have been in use.
+    ssn = te["season"].to_numpy()
+    te = te.assign(pm=_nested_blend(pm_all, am, ssn, test), pt=_nested_blend(pt_all, at, ssn, test))
 
     lean_s, lean_t = lean_thresholds(engine)
     b = BUCKETS[engine]

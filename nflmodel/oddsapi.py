@@ -398,12 +398,16 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
     order = todo.assign(_ko=todo["ko"]).sort_values("_ko", na_position="last")
     try:                                                   # games with a locked prop play: refreshed near kickoff (CLV)
         plg = json.loads((Path(cache_path).parent / "props_log.json").read_text()).get("props", {})
-        play_games = {r.get("game_id") for r in plg.values() if r.get("flag") and not r.get("result")}
+        # Nov 11 2026: shadow plays (paused types, gates.py) count too. Their comeback bar includes "not losing to the
+        # closing line", but only games with a real play were re-pulled, so a shadow play's "close" was the price it
+        # was flagged at.
+        locked = lambda r: ((r.get("flag") or {}).get("at") or (r.get("shadow_flag") or {}).get("at")) and not r.get("result")
+        play_games = {r.get("game_id") for r in plg.values() if locked(r)}
         # Nov 10 2026 (credits): the near-closing pull asks only for the markets that hold a locked play, not all of them
         stat_mkt = {v: k for k, v in MARKETS.items()}
         play_mkts = {}
         for r in plg.values():
-            if r.get("flag") and not r.get("result") and stat_mkt.get(r.get("stat")) in markets:
+            if locked(r) and stat_mkt.get(r.get("stat")) in markets:
                 play_mkts.setdefault(r.get("game_id"), set()).add(stat_mkt[r.get("stat")])
     except Exception:  # noqa: BLE001
         play_games, play_mkts = set(), {}
@@ -438,8 +442,12 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                         cached += 1
                     continue
                 try:
+                    # Nov 11 2026: ask for the books by name. This call asked for regions="us", and Hard Rock Bet is in the
+                    # feed's "us2" region, so no NFL prop was ever priced at Hard Rock (weeks 8-9: 1,850 of 1,867 rows came
+                    # from DraftKings). Up to 10 named books cost the same as one region, as the game-line call already does.
                     data = client.get(f"/v4/sports/{SPORT}/events/{ev['id']}/odds", est_cost=len(mk_now),
-                                      regions="us", markets=",".join(mk_now), oddsFormat="american", dateFormat="iso")
+                                      bookmakers=",".join(getattr(C, "ODDS_PROP_BOOKS", C.ODDS_BOOKS)[:10]),
+                                      markets=",".join(mk_now), oddsFormat="american", dateFormat="iso")
                 except OddsFatal:
                     raise
                 except OddsError as e:
@@ -448,6 +456,8 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                         cached += 1
                     continue
                 new_rows = parse_props(data if isinstance(data, dict) else {}, gid)
+                for r_ in new_rows:                # when this price was fetched: a prop play's closing price must be a later one
+                    r_["pulled"] = now.isoformat(timespec="seconds")
                 if closing_only:                   # keep the other markets' rows from the earlier full pull
                     got = {MARKETS[m] for m in mk_now}
                     new_rows = [r for r in ent.get("rows", []) if r.get("stat") not in got] + new_rows
@@ -459,7 +469,7 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
     finally:
         Path(cache_path).parent.mkdir(parents=True, exist_ok=True)
         Path(cache_path).write_text(json.dumps(clean_json(cache), indent=1, allow_nan=False))
-    rows = [r for ent in cache["games"].values() for r in ent.get("rows", [])]
+    rows = [dict(r, pulled=r.get("pulled") or ent.get("fetched_at")) for ent in cache["games"].values() for r in ent.get("rows", [])]
     return rows, {"fetched": fetched, "cached": cached, "skipped": skipped_budget, "budget_note": budget_note}
 
 

@@ -977,7 +977,9 @@ def build_plays(games, props, model_info):
                     "bet": {"kind": "prop", "game_id": p["game_id"], "pid": p.get("pid"), "player": p["player"],
                             "stat": p.get("stat_key") or p.get("stat"), "label": p.get("label"), "side": p["lean"],
                             "line": 0.5 if (p.get("stat_key") or p.get("stat")) == "anytime_td" else float(p["line"]),
-                            "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"])}})
+                            "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"]),
+                            # the chance the play was decided on (blended with the book, calibrated): what the stake is sized on
+                            "stake_pct": p.get("bet_pct")}})
     for x in out:                                         # started games: locked at their last pre-kickoff numbers
         if st.get(x["game_id"]) == "locked":
             x["started"] = True
@@ -1450,7 +1452,8 @@ def main():
         "prop_play": [round(100 * C.PROP_PLAY_MIN), round(100 * C.PROP_PLAY_MAX)],
         "prop_watch_max": round(100 * C.PROP_WATCH_MAX),
         "prop_play_stats": [stat_label(x) for x in C.PROP_PLAY_STATS], "prop_play_sides": list(getattr(C, "PROP_PLAY_SIDES", ["Over", "Under"])),
-        "spread_gap": None, "total_gap": None, "sharp_rule": {"min_ev": BR.SHARP_MIN_EV, "max_ev": BR.SHARP_MAX_EV},
+        "spread_gap": None, "total_gap": None, "sharp_rule": {"min_ev": BR.SHARP_MIN_EV, "max_ev": BR.SHARP_MAX_EV, "max_odds": BR.SHARP_MAX_ODDS,
+                                                              "model_max_gap": 100 * BR.MODEL_MAX_GAP},
         "alt_rule": {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "cap": C.ALT_PLAY_CAP},
         "game_plays": live.get("game_plays"),
         "spread_backtest": bucket_record(ab, "spread_buckets", C.GAME_PLAY_SPREAD),
@@ -1458,6 +1461,22 @@ def main():
         **BR.summary(), **dict(zip(("bias", "calibration"), prop_bias(OUT / "props_log.json", with_real=True))),
         "model_weight": {**BR.MODEL_WEIGHT, "prop": C.PROP_MODEL_WEIGHT}, "td_scale": C.TD_PROB_SCALE, "td_curve": list(C.TD_CURVE),
     }
+    # which prop types can actually become plays under today's settings (Nov 11 2026, betrules.reach_table)
+    try:
+        pr_ = payload["plays_rules"]
+        types_ = [(st_, sd_) for st_ in ("pass_yds", "rush_yds", "rec_yds") for sd_ in ("Over", "Under")]
+        sides_ = set(getattr(C, "PROP_PLAY_SIDES", ("Over", "Under")))
+        pr_["reach"] = BR.reach_table(
+            types_, weight=C.PROP_MODEL_WEIGHT, bias=pr_.get("bias"), real=pr_.get("calibration"), side_k=True,
+            play_min=100 * C.PROP_PLAY_MIN, play_max=100 * C.PROP_PLAY_MAX,
+            caps={k_: 100 * v_ for k_, v_ in getattr(C, "PROP_EDGE_CAP", {}).items()},
+            off={t_ for t_ in types_ if t_[0] not in C.PROP_PLAY_STATS or (t_[1] not in sides_ and t_ not in getattr(C, "PROP_EXTRA_OK", ()))},
+            paused=set(getattr(C, "PROP_PAUSED_TYPES", {})))
+        for x_ in pr_["reach"]:
+            if x_["status"] == "cannot qualify":
+                log.warning(f"prop rule that cannot fire: {x_['stat']} {x_['side']} needs a {x_['needs']} point gap, cap is {x_['cap']:g}")
+    except Exception as e:  # noqa: BLE001
+        log.warning(f"prop reach table skipped: {e}")
     payload["alt_rules"] = {"min_ev": AL.SHARP_MIN_EV, "max_ev": AL.SHARP_MAX_EV, "converted_extra": AL.ALT_CONVERTED_EXTRA, "daily_cap": C.ALT_PLAY_CAP}
     payload.update({
         "model": model_info,
