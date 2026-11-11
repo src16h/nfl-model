@@ -15,6 +15,8 @@ Beating the close regularly is the best early sign an edge is real, long before
 wins and losses settle down. Plays saved before play_at existed are measured
 from the first line the model saw for that game.
 """
+from datetime import datetime, timedelta, timezone
+
 import betrules as BR
 
 # win chance per point (CFB) or per goal (NHL total) when the line itself moved; NHL is about how often
@@ -175,6 +177,51 @@ def close_snap(book, prev, ts):
     return prev
 
 
+def _when(t):
+    """A saved time as a datetime in UTC (times are saved with and without seconds, so text can't be compared)."""
+    try:
+        d = datetime.fromisoformat(str(t).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
+def fetched_after(flag, close):
+    """True when the closing price was fetched after the play was flagged."""
+    flag, close = flag or {}, close or {}
+    a, b = _when(flag.get("pulled")), _when(close.get("pulled"))
+    if a is None and flag.get("at"):
+        # no fetch time on the flag: use when it was flagged. That stamp is cut to the minute and the price may
+        # have been fetched seconds later in the same run, so the close must be clearly later (runs are 1h+ apart).
+        a = _when(flag["at"])
+        a = a + timedelta(minutes=5) if a is not None else None
+    return a is not None and b is not None and b > a
+
+
+def close_wanted(players):
+    """({game_id: {stat, ...}}, same for shadow plays): the prop markets that hold a locked play and so need a
+    closing price, from a saved history file's players. Each runner hands both to its odds module, which pulls
+    only those markets near the start (real plays first; shadow plays only when the day's credits allow)."""
+    plays, shadow = {}, {}
+    for p in players or []:
+        for st, m in (p.get("m") or {}).items():
+            if (m.get("flag") or {}).get("at"):
+                plays.setdefault(p.get("game_id"), set()).add(st)
+            elif (m.get("shadow_flag") or {}).get("at"):
+                shadow.setdefault(p.get("game_id"), set()).add(st)
+    return plays, shadow
+
+
+def wants_close(want, game_id, stat):
+    """Does this game's market hold a locked play? want: {game_id: {stats}} (or a plain set of game ids = every market)."""
+    if not want:
+        return False
+    if isinstance(want, dict):
+        stats = want.get(game_id) or want.get(str(game_id)) or next((v for k, v in want.items() if str(k) == str(game_id)), None)
+        return bool(stats) and stat in stats
+    return str(game_id) in {str(x) for x in want}
+
+
 def prop_clv(flag, close):
     """(clv in points of no-vig chance, ev at close %, line move) for a locked prop play.
     Same line: compares the no-vig chance of our side at close vs when flagged. Line moved: clv and ev
@@ -183,7 +230,10 @@ def prop_clv(flag, close):
         return None, None, None
     # Oct 30 2026: only a price fetched AFTER the flag counts as a close. Until then the "close" was often the
     # same cached price saved again (0 of 55 NHL closes differed), which reads as losing the vig to the close.
-    if not close.get("pulled") or not flag.get("pulled") or str(close["pulled"]) <= str(flag["pulled"]):
+    # Nov 11 2026: a flag saved without its fetch time (CFB never saved one; 0 of 191 CFB plays had a closing price)
+    # falls back to when it was flagged. The flagged price was fetched at or before that run, so a close fetched
+    # after it is still a later price.
+    if not fetched_after(flag, close):
         return None, None, None
     try:
         l0, l1 = float(flag["line"]), float(close["line"])
@@ -205,6 +255,7 @@ def prop_summary(rows):
     moved = [x for x in rows if x.get("move") in (1, -1)]
     ev = [x["ev"] for x in same if x.get("ev") is not None]
     return {"n": len(same) + len(moved), "same_line": len(same),
+            "plays": len(rows),                       # every graded play, priced or not: n / plays is the coverage
             "avg": round(sum(x["clv"] for x in same) / len(same), 2) if same else None,
             "beat": sum(1 for x in same if x["clv"] > 0.05) + sum(1 for x in moved if x["move"] > 0),
             "worse": sum(1 for x in same if x["clv"] < -0.05) + sum(1 for x in moved if x["move"] < 0),

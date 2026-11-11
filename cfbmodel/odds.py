@@ -35,6 +35,7 @@ BOOK_ORDER = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us"
 import sys as _sys  # noqa: E402
 _sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import standin as SI  # noqa: E402
+import clv as CLV  # noqa: E402
 
 GAME_BOOKS = ["hardrockbet", "pinnacle"]      # Hard Rock (the bet price), Pinnacle the referee (Nov 3 2026: Kalshi dropped)
 
@@ -157,17 +158,17 @@ def run(games, state_path, cache_path, now, close_games=()):
         except Exception as e:  # noqa: BLE001
             log.warning(f"CFB game lines (Hard Rock) skipped: {e}")
         soon = [g for g in games if 0 < (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= C.ODDS_PROP_HOURS]
-        closeset = {str(x) for x in close_games}
-
         def due(g, m):                                  # never pulled, or one closing pull for a locked play
             ent = cache.get(f"{g['game_id']}|{m}")
             if ent is None:
                 return True
-            if str(g["game_id"]) not in closeset or ent.get("closed") or not ent.get("at"):
+            # Nov 11 2026: only the markets that hold a locked play get the closing pull (was every market of the game),
+            # and the saved price only has to be an hour old (was 6: a game first pulled Saturday morning never closed)
+            if not CLV.wants_close(close_games, g["game_id"], PROP_STAT[m]) or ent.get("closed") or not ent.get("at"):
                 return False
             to_ko = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
             age = (now - datetime.fromisoformat(ent["at"])).total_seconds() / 3600
-            return 0 < to_ko <= C.ODDS_PROP_CLOSE_HOURS and age >= 6
+            return 0 < to_ko <= C.ODDS_PROP_CLOSE_HOURS and age >= 1.0
 
         need = [g for g in soon if any(due(g, m) for m in C.ODDS_PROP_MARKETS)]
         if need:
@@ -189,8 +190,15 @@ def run(games, state_path, cache_path, now, close_games=()):
                 eid = by.get((norm_name(g["home_full"]), norm_name(g["away_full"])))
                 mk = [m for m in C.ODDS_PROP_MARKETS if due(g, m)]
                 closing = {m for m in mk if f"{g['game_id']}|{m}" in cache}
-                if not eid or allowance < len(mk):
+                if not eid:
                     continue
+                if allowance < len(mk):
+                    # closing pulls don't wait for the week's allowance (Nov 11 2026): they go as long as the month's
+                    # reserve holds. First pulls of a market still do wait.
+                    mk = [m for m in mk if m in closing]
+                    left = (cl.remaining if cl.remaining is not None else rem) - C.ODDS_RESERVE
+                    if not mk or left < len(mk):
+                        continue
                 before = cl.spent
                 ev = cl.get(f"/v4/sports/{SPORT}/events/{eid}/odds", regions=C.ODDS_REGION, markets=",".join(mk),
                             oddsFormat="american", bookmakers=C.ODDS_BOOK)
@@ -210,6 +218,8 @@ def run(games, state_path, cache_path, now, close_games=()):
                             rr = rows.setdefault(nm, {"line": 0.5 if m == "player_anytime_td" else o.get("point")})
                             rr["over" if o["name"] in ("Over", "Yes") else "under"] = o["price"]
                         cache[f"{g['game_id']}|{m}"] = {"rows": rows, "book": b.get("title"), "at": now.isoformat(), "closed": m in closing}
+                        if m in closing:
+                            status["close_pulls"] = status.get("close_pulls", 0) + 1
                         break
                 used = cl.spent - before
                 allowance -= used
@@ -235,5 +245,7 @@ def _props(cache):
         for nm, rr in v["rows"].items():
             if rr.get("line") is None:
                 continue
-            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(rr, book=v.get("book"))
+            # pulled = when this price was fetched. Nov 11 2026: it was never passed on, so no CFB prop play could be
+            # checked against a later price (clv.prop_clv needs it): 0 of 191 plays had a closing price.
+            props.setdefault(int(gid), {}).setdefault(nm, {})[PROP_STAT[mkt]] = dict(rr, book=v.get("book"), pulled=v.get("at"))
     return props

@@ -25,6 +25,9 @@ import pandas as pd
 
 from . import config as C
 from .util import clean_json, fnum, norm_name, record_stats
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import clv as _CLV  # noqa: E402
 from .propsim import prop_tier, stat_label
 
 log = logging.getLogger("nflmodel")
@@ -350,14 +353,15 @@ def update_props_log(path, rows, season, week, now):
             "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
             "lean": r.get("lean"), "tier": r.get("tier"), "median": r.get("median"),
             "pre": r.get("pre"), "ev": r.get("ev"), "cons_over": r.get("cons_over"), "cons_ev": r.get("cons_ev"),
-            "source": r.get("source") or "manual", "book": r.get("book"),
+            "source": r.get("source") or "manual", "book": r.get("book"), "pulled": r.get("pulled"),
             "first_line": first_line, "first_lean": first_lean,
             "logged_at": old["logged_at"] if old else ts, "updated_at": ts, "result": None,
             # locked the first time it's a play (Oct 20 2026): graded at that line and price even if it later drops off
             "flag": (old or {}).get("flag") or ({"line": r.get("line"), "lean": r.get("lean"),
                                                  "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
                                                  "model_over": r["model_over"], "book_over": r["book_over"], "edge": r["edge"],
-                                                 "book": r.get("book"), "cons_ev": r.get("cons_ev"), "at": ts}
+                                                 "book": r.get("book"), "cons_ev": r.get("cons_ev"), "at": ts,
+                                                 "pulled": r.get("pulled")}
                                                 if r.get("tier") == "play" else None),
             # Anytime TD play (Nov 1 2026): locked the first time the book posts a Yes price and the model's
             # chance beats the book's, so the TD history shows the price when it was suggested, not the close
@@ -366,7 +370,8 @@ def update_props_log(path, rows, season, week, now):
             "shadow": (old or {}).get("shadow") or r.get("shadow"),
             "shadow_flag": (old or {}).get("shadow_flag") or ({"line": r.get("line"), "lean": r.get("lean"),
                                                                "odds": r.get("over_odds") if r.get("lean") == "Over" else r.get("under_odds"),
-                                                               "edge": r["edge"], "book": r.get("book"), "at": ts}
+                                                               "edge": r["edge"], "book": r.get("book"), "at": ts,
+                                                               "pulled": r.get("pulled")}
                                                               if r.get("shadow") and r.get("tier") != "play" else None),
             # weather hold (Nov 5 2026): an Over that would have been a play, held for rough weather; graded as if bet
             "wx_hold": (old or {}).get("wx_hold") or ({"line": r.get("line"), "odds": r.get("over_odds"), "edge": r["edge"],
@@ -537,6 +542,10 @@ def prop_clv(r, fl):
     (the last line saved before kickoff, same line only). None when the line moved or a side's price is missing."""
     try:
         if fl.get("odds") in (None, "") or r.get("over_odds") in (None, "") or r.get("under_odds") in (None, ""):
+            return None
+        # Nov 11 2026: only a price fetched after the flag is a closing price. The saved line is often the same cached
+        # pull the play was flagged on, which scored as "lost the vig to the close" (same fix as NHL, Oct 30 2026).
+        if not _CLV.fetched_after(fl, {"pulled": r.get("pulled")}):
             return None
         if fl.get("line") is not None and r.get("line") is not None and abs(float(fl["line"]) - float(r["line"])) > 1e-9:
             return None

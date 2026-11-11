@@ -284,7 +284,8 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         clean = lambda v: None if v is None or (isinstance(v, float) and np.isnan(v)) or str(v).strip() == "" else str(v).strip()
         row = {"player": r["player"], "stat": r["stat"], "line": clean(r.get("line")),
                "over_odds": clean(r.get("over_odds")), "under_odds": clean(r.get("under_odds")),
-               "source": clean(r.get("source")) or "manual", "book": clean(r.get("book"))}
+               "source": clean(r.get("source")) or "manual", "book": clean(r.get("book")),
+               "pulled": clean(r.get("pulled"))}       # when the book's price was fetched (None for typed-in lines)
         if stat is None or not cands:
             row["error"] = "stat not recognized" if stat is None else "player not in this week's projections"
             out.append(row)

@@ -210,7 +210,7 @@ def summarize(arrs, info, book):
                 side = "Over" if po - bo >= (1 - po) - (1 - bo) or not b.get("under") else "Under"
                 edge = (po - bo) if side == "Over" else (bo - po)
                 m["book"] = {"line": L, "over": b["over"], "under": b.get("under"), "book_over": r(100 * bo), "model_over": r(100 * po),
-                             "side": side, "edge": r(100 * edge), "odds": b["over"] if side == "Over" else b["under"], "src": b.get("book"),
+                             "side": side, "edge": r(100 * edge), "odds": b["over"] if side == "Over" else b["under"], "src": b.get("book"), "pulled": b.get("pulled"),
                              "play": C.PROP_PLAY_MIN * 100 <= 100 * edge <= C.PROP_PLAY_MAX * 100 and _is_hr(b)}
             rec["m"][st] = m
         if rec["m"]:
