@@ -323,8 +323,7 @@ def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=Non
         sharp = fair_probs(sharp_odds, sharp_other, *sharp_extra)[0]
     ev = 100 * (sharp * (1 + payout(odds)) - 1)
     why = sharp_why(model_p, book, sharp, ev, odds)
-    return {"play": why is None, "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1), "why": why,
-            "stake": stake_units(sharp, odds) if why is None else None}
+    return {"play": why is None, "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1), "why": why}
 
 
 def sharp_why(model_p, book, sharp, ev, odds):
@@ -340,25 +339,3 @@ def sharp_why(model_p, book, sharp, ev, odds):
     if float(odds) > SHARP_MAX_ODDS:
         return "longshot (over the odds cap)"
     return None
-
-
-# ---------------------------------------------------------------------------
-# Suggested stake (Nov 11 2026). Every play was 1 unit whatever its price, so a +700 longshot risked as much as a
-# -110 side. This is quarter Kelly with 1 unit = 1% of bankroll: stake = 25 x (edge / payout), between STAKE_MIN and
-# STAKE_MAX. It is advice shown next to a play. Records are still graded at a flat 1 unit so old and new results
-# compare, and no bet type has shown an edge yet, so the cap is 1 unit.
-# ---------------------------------------------------------------------------
-KELLY_FRACTION = 0.25
-STAKE_MIN, STAKE_MAX = 0.25, 1.0
-
-
-def stake_units(p, odds, cap=None):
-    """Suggested stake in units for a bet with fair win chance p (0-1) at American odds. 0 when there is no edge."""
-    if p is None or odds is None:
-        return None
-    b = payout(odds)
-    f = (p * (b + 1) - 1) / b                    # full Kelly share of bankroll
-    if f <= 0:
-        return 0.0
-    u = 100 * KELLY_FRACTION * f
-    return round(min(max(u, STAKE_MIN), STAKE_MAX if cap is None else cap) * 4) / 4      # to the nearest quarter unit

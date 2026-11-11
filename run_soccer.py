@@ -116,7 +116,6 @@ def _side_rows(g, G, b):
         x["why"] = None if x["sev"] is None else BR.sharp_why(
             x["pm"] if x["gap"] >= C.MODEL_AGREE else None, x["pb"], x["ps"], x["sev"], x["odds"])
         x["play"] = bool(x["sev"] is not None and x["why"] is None)
-        x["stake"] = BR.stake_units(x["ps"], x["odds"]) if x["play"] else None
     return rows
 
 
@@ -136,8 +135,7 @@ def picks(g, G, mk=None):
         x = max(plays, key=lambda y: y["sev"]) if plays else max([y for y in rs if y["who"] != "draw"] or rs, key=lambda y: y["gap"])
         out[mkt] = {"side": x["side"], "who": x["who"], "line": x["line"], "odds": fmt_odds(x["odds"]), "model": r(100 * x["pm"]),
                     "book": r(100 * x["pb"]), "sharp": None if x["ps"] is None else r(100 * x["ps"]), "edge": r(x["gap"]),
-                    "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"], "why": x.get("why"),
-                    "stake": x.get("stake")}
+                    "ev": None if x["sev"] is None else r(x["sev"]), "play": x["play"], "why": x.get("why")}
         if mkt == "total" and x["ps"] is None and mk is not None:
             # Pinnacle posted a different total: convert its price to the bet book's line (approximate, never a play)
             po = M.cover(M.total(mk["G"], x["line"]))

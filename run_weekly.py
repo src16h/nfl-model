@@ -977,7 +977,9 @@ def build_plays(games, props, model_info):
                     "bet": {"kind": "prop", "game_id": p["game_id"], "pid": p.get("pid"), "player": p["player"],
                             "stat": p.get("stat_key") or p.get("stat"), "label": p.get("label"), "side": p["lean"],
                             "line": 0.5 if (p.get("stat_key") or p.get("stat")) == "anytime_td" else float(p["line"]),
-                            "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"])}})
+                            "odds": odds or "-110", "model_pct": _pct_side(p["model_over"], p["lean"]),
+                            # the chance the play was decided on (blended with the book, calibrated): what the stake is sized on
+                            "stake_pct": p.get("bet_pct")}})
     for x in out:                                         # started games: locked at their last pre-kickoff numbers
         if st.get(x["game_id"]) == "locked":
             x["started"] = True

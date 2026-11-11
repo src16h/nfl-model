@@ -42,7 +42,7 @@ def test_fair_probs_without_vig_just_rescales():
 # ---- the sharp-referee play rule ------------------------------------------------------------------------
 def test_a_good_price_with_the_model_on_side_is_a_play():
     d = BR.decide_sharp(0.53, 100, -120, -112, -104)          # Pinnacle makes this side about 51.9%: +3.8% at +100
-    assert d["play"] and d["why"] is None and 1.5 <= d["ev"] <= 8 and d["stake"] > 0
+    assert d["play"] and d["why"] is None and 1.5 <= d["ev"] <= 8
 
 
 def test_not_enough_value_is_not_a_play():
@@ -126,12 +126,3 @@ def test_gap_to_play_and_reach_table():
                           caps={("x", "Under"): need}, off={("x", "Over")}, paused={("y", "Under")})
     assert [r["status"] for r in rows] == ["cannot qualify", "side off", "paused"]
     assert BR.reach_table([("x", "Under")], weight=0.5, play_min=4, play_max=15)[0]["status"] == "open"
-
-
-# ---- stakes -------------------------------------------------------------------------------------------
-def test_stake_is_quarter_kelly_in_quarter_units_with_a_cap():
-    assert BR.stake_units(0.50, -110) == 0.0                                  # no edge, no bet
-    assert BR.stake_units(0.54, -110) == 0.75                                 # f = 3.4% of bankroll, a quarter of it = 0.85u
-    assert BR.stake_units(0.70, -110) == BR.STAKE_MAX
-    assert BR.stake_units(0.14, 700) < BR.stake_units(0.56, -110)             # same sort of edge, longshot stakes less
-    assert BR.stake_units(None, -110) is None

@@ -388,6 +388,7 @@ def evaluate_props(props: pd.DataFrame, players: list, sims: dict, bias: dict = 
         row.update({"model_over": fnum(adj * 100, 1), "model_over_raw": fnum(p_over * 100, 1),
                     "book_over": fnum(book_over * 100, 1), "edge": fnum(edge * 100, 1), "lean": side,
                     "ev": dec["ev"] if dec else None, "tier": tier,
+                    "bet_pct": dec["p"] if dec and dec["side"] == side else None,
                     "pre": dec["pre"] if dec else None, "cal_k": dec["k"] if dec else None})
         if tier == "play":
             keep.append((row, (arr > line) if side == "Over" else (arr < line), p["team"]))

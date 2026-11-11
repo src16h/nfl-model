@@ -1154,7 +1154,7 @@ function nflPlays() {
   return [...(D.plays || []), ...mine];
 }
 const kindLabel = p => p.kind === "prop" ? (p.label || "Prop") : p.kind === "alt" ? altMkName(p) || "Alt line" : p.kind === "spread" ? "Spread" : "Total";
-const stakeFor = p => p.kind === "alt" ? altStakeTxt(p.bet.model_pct, p.bet.odds) : stakeTxt(p.bet.model_pct, p.bet.odds);
+const stakeFor = p => p.kind === "alt" ? altStakeTxt(p.bet.model_pct, p.bet.odds) : stakeTxt(p.bet.stake_pct ?? p.bet.model_pct, p.bet.odds);   /* Nov 11 2026: prop plays sized on the blended chance */
 
 /* ---------------- Home dashboard ---------------- */
 function sparkSVG(vals, labels) {

@@ -1107,7 +1107,11 @@ function allPlays() {
       title: pickText(k, p), sub: `${PK_NAME[k]}, ${g.away} at ${g.home}`});
   for (const pl of D.players || []) for (const [st, m] of Object.entries(pl.m)) if (m.book?.play) {
     const g = (D.games || []).find(x => x.game_id === pl.game_id);
+    /* Nov 11 2026: the stake is sized on the chance the play was decided on (model blended with the book and scaled by
+       what has really shown up), read back from the expected return at the price. It was sized on the model's own
+       chance, which overstates the edge. */
     out.push({type: "prop", stat: st, pl, m, g, edge: m.book.edge, model: m.book.side === "Over" ? m.book.model_over : 100 - m.book.model_over,
+      stakeP: m.book.ev != null && isFinite(payout(m.book.odds)) ? 100 * (1 + m.book.ev / 100) / (1 + payout(m.book.odds)) : null,
       book: m.book.side === "Over" ? m.book.book_over : 100 - m.book.book_over, odds: (m.book.odds > 0 ? "+" : "") + m.book.odds,
       title: `${pl.name} ${m.book.side} ${m.book.line} ${SHORT[st]}`, sub: `${STAT[st]}, ${pl.team} vs ${pl.opp}`});
   }
@@ -1125,7 +1129,7 @@ function ticket(x) {
     <div class="t-pick">${esc(x.type === "prop" ? `${x.m.book.side} ${x.m.book.line}` : x.title)}<small>${esc(x.odds || "")}</small>${x.mine ? `<span class="mine">your price</span>` : ""}</div>
     <div class="t-who">${x.type === "prop" ? `${esc(x.pl.name)} <span>${esc(x.pl.team)} vs ${esc(x.pl.opp)}</span>` : `${esc(x.g.away)} at ${esc(x.g.home)}`}</div>
     ${meterHTML(x.model, x.book)}${x.type === "game" ? moveNote(x.p) : ""}${payUpTo(x.type === "prop" ? (x.m?.book?.adj ?? x.model) : (x.p?.sharp ?? x.model))}
-    <div class="t-actions"><span class="stake">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.model, x.odds))}</span>${logBtn(playBet(x))}</div></div>
+    <div class="t-actions"><span class="stake">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.stakeP ?? x.model, x.odds))}</span>${logBtn(playBet(x))}</div></div>
     <div class="t-side"><div class="t-gap">${n(x.edge)}<small>%</small></div><div class="t-gl">${x.type === "alt" || (x.type === "game" && x.p.sharp != null) ? "value vs Pinnacle" : "gap vs book"}</div></div></article>`;
 }
 
@@ -1143,7 +1147,7 @@ function renderHome() {
       <div class="hs"><b>${w}–${l}</b><span>All plays</span></div><div class="hs"><b class="${uc(u)}">${units(w + l ? u : null)}</b><span>Units</span></div></div></div>`;
   const top = plays.slice(0, 6).map(x => `<div class="bet"><span class="icon">${ico(x.type === "prop" ? "props" : "games")}</span>
       <div><div class="k">${esc(x.sub)}, ${esc(when(x.g?.start))}</div><div class="bpk">${esc(x.title)}<small>${esc(x.odds || "")}</small></div>
-      <div class="who">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.model, x.odds))}</div></div>
+      <div class="who">${(x.type === "alt" ? altStakeTxt(x.model, x.odds) : stakeTxt(x.stakeP ?? x.model, x.odds))}</div></div>
       <div class="gapv">+${n(x.edge)}%<small>edge</small></div>${meterHTML(x.model, x.book)}</div>`).join("");
   h += `<div class="dash"><div class="panel span-8"><h3>Best bets right now <button data-go="games">All plays</button></h3><p class="pmuted">Orange on the meter is the model's edge over the book.${gatesNote()}</p>
       <div class="bets-list">${top || `<div class="empty">No plays right now. ${D.odds?.source === "odds_api" ? "The model agrees with the book on everything posted." : "Pinnacle's price, props and alt lines arrive with the NBA odds key."}</div>`}</div></div>
