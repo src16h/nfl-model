@@ -28,6 +28,7 @@ from .util import clean_json, fnum, norm_name, record_stats
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import clv as _CLV  # noqa: E402
+import parlaymoney as _PM  # noqa: E402
 from .propsim import prop_tier, stat_label
 
 log = logging.getLogger("nflmodel")
@@ -921,18 +922,21 @@ def model_tracking(hist_dir, season, results, snaps=None):
                     if hh is not None:
                         alt_legs.append((L.get("label", ""), week, L["p"] / 100, hh))
                 if None not in hits:
-                    alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), ap.get("v", 1)))
+                    alts.append((week, ap["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), ap.get("v", 1),
+                                 {"hit": all(hits), "fair": ap.get("fair"), "bet_at": ap.get("bet_at")}))
             lad = hg.get("alt_ladder")                            # ladder-style tickets (Oct 30 2026): 4-5 safer legs
             if lad and lad.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in lad["legs"]]
                 if None not in hits:
                     ladders.append((week, lad["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits),
-                                    [{"label": f"{L.get('name') or ''} {L.get('label', '')}".strip(), "hit": bool(h)} for L, h in zip(lad["legs"], hits)]))
+                                    [{"label": f"{L.get('name') or ''} {L.get('label', '')}".strip(), "hit": bool(h)} for L, h in zip(lad["legs"], hits)],
+                                    {"hit": all(hits), "fair": lad.get("fair"), "bet_at": lad.get("bet_at")}))
             amx = hg.get("alt_mix")                               # team-leg alt parlays (since Oct 21 2026)
             if amx and amx.get("legs"):
                 hits = [_leg_hit(L, g, pl, cols, played, gid) for L in amx["legs"]]
                 if None not in hits:
-                    mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), amx.get("v", 1)))
+                    mixes.append((week, amx["p"] / 100, all(hits), hg.get("away"), hg.get("home"), sum(hits), len(hits), amx.get("v", 1),
+                                  {"hit": all(hits), "fair": amx.get("fair"), "bet_at": amx.get("bet_at")}))
             for fl in (hg.get("alt_flags") or {}).values():     # alt-line plays, graded at the locked price
                 import altlines as AL
                 if fl.get("period") == "h1":
@@ -1028,6 +1032,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
                                      "model": fnum(100 * np.mean([a[1] for a in alts if a[7] == v]), 1),
                                      "actual": fnum(100 * np.mean([a[2] for a in alts if a[7] == v]), 1)}
                             for v in sorted({a[7] for a in alts})},
+                   "money": _PM.summary([a[8] for a in alts]),      # units at the bet-at and fair prices (parlaymoney.py)
                    "recent": [{"week": a[0], "game": f"{a[3]} at {a[4]}", "hit": bool(a[2]), "legs_hit": int(a[5]), "legs": int(a[6])}
                               for a in sorted(alts, key=lambda a: -a[0])[:16]]}
     mix_out = {"n": len(mixes), "hits": int(sum(m[2] for m in mixes)), "model": fnum(100 * np.mean([m[1] for m in mixes]), 1) if mixes else None,
@@ -1035,6 +1040,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
                                  "model": fnum(100 * np.mean([m[1] for m in mixes if m[7] == v]), 1),
                                  "actual": fnum(100 * np.mean([m[2] for m in mixes if m[7] == v]), 1)}
                         for v in sorted({m[7] for m in mixes})},
+               "money": _PM.summary([m[8] for m in mixes]),
                "recent": [{"week": m[0], "game": f"{m[3]} at {m[4]}", "hit": bool(m[2]), "legs_hit": int(m[5]), "legs": int(m[6])}
                           for m in sorted(mixes, key=lambda m: -m[0])[:16]]}
     lad_out = None
@@ -1048,6 +1054,7 @@ def model_tracking(hist_dir, season, results, snaps=None):
                    "model": fnum(100 * np.mean([x[1] for x in ladders]), 1), "actual": fnum(100 * np.mean([x[2] for x in ladders]), 1),
                    "legs_n": int(sum(x[6] for x in ladders)), "legs_hit": int(sum(x[5] for x in ladders)),
                    "one_short": int(sum(1 for x in ladders if x[5] == x[6] - 1)), "streak": cur, "best_streak": best,
+                   "money": _PM.summary([x[8] for x in ladders]),
                    "recent": [{"week": x[0], "game": f"{x[3]} at {x[4]}", "hit": bool(x[2]), "legs_hit": int(x[5]), "legs": int(x[6]), "detail": x[7]}
                               for x in sorted(ladders, key=lambda x: -x[0])[:16]]}
 

@@ -32,6 +32,9 @@ MIN_SHOW = {"pass_yds": 60.0, "rush_yds": 12.0, "rec_yds": 12.0}      # projecti
 
 # alt-line parlays
 ALT_PARLAY_ODDS = (100, 125)
+# Nov 11 2026 (owner): no more CFB parlays. Since Oct 24 tickets said 46.0% and hit 39.2% (51), rushing legs said 79.5% and hit
+# 62.5% (40). New tickets are no longer built or shown; graded past tickets stay on the record. True brings them back.
+ALT_PARLAY_ON = False
 ALT_PARLAY_LEGS = 4
 ALT_TICKET_K = 30                # ticket record counts half after this many graded tickets
 ALT_BET_CUSHION = 0.07           # 'bet at': the book must pay enough for +7% at the model's chance

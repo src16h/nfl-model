@@ -187,6 +187,15 @@ def review():
         # Without one the closing-line gates (gates.py) never see a prop type.
         pl = [x for x in (track.get("prop_plays_list") or []) if isinstance(x, dict) and str(x.get("date") or "") >= CLOSE_SINCE]
         priced = [x for x in pl if x.get("clv") is not None or x.get("move") in (1, -1)]
+        # parlay tickets in units (parlaymoney.py, Nov 11 2026): every ticket record that carries "money"
+        S["parlay_money"] = [{"what": " / ".join(pth) or "tickets", **x["money"]} for pth, x in walk(track)
+                             if isinstance(x.get("money"), dict) and x["money"].get("n")]
+        for m in S["parlay_money"]:
+            b = m.get("at_bet_at") or {}
+            if (b.get("n") or 0) >= 20 and (b.get("roi") or 0) <= -8:
+                rep["flags"].append({"sport": sport, "level": "high" if (b.get("z") or 0) <= -2 else "medium",
+                                     "what": f"parlays losing even at the bet-at price: {m['what']}",
+                                     "why": f"{b['hits']}-{b['n'] - b['hits']}, {b['units']:+}u ({b['roi']:+}%) at the shortest price the page says to take"})
         S["prop_close"] = {"since": CLOSE_SINCE, "plays": len(pl), "priced": len(priced),
                            "missed_last_run": (odds or {}).get("close_missed"), "owed": (odds or {}).get("close_debt")}
         if len(pl) >= 10 and len(priced) < 0.6 * len(pl):
@@ -259,6 +268,14 @@ def markdown(rep):
         if sv:
             lines += ["", "| Said vs hit | n | Said | Hit | Gap | z |", "|---|---|---|---|---|---|"]
             lines += [f"| {r['what']} | {r['n']} | {r['said']}% | {r['hit']}% | {r['gap']:+} | {r['z']} |" for r in sv]
+        pm = S.get("parlay_money") or []
+        if pm:
+            lines += ["", "Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page says to take, so it is the "
+                      "best case for following the page. Hard Rock's own same-game price isn't in the odds feed.", "",
+                      "| Tickets | W-L | At bet-at price | At fair price | At Hard Rock's price |", "|---|---|---|---|---|"]
+            fmt = lambda x: f"{x['units']:+}u ({x['roi']:+}%) over {x['n']}" if x and x.get("n") else "n/a"
+            lines += [f"| {m['what']} | {m['hits']}-{m['n'] - m['hits']} | {fmt(m.get('at_bet_at'))} | {fmt(m.get('at_fair'))} | {fmt(m.get('at_book'))} |"
+                      for m in pm]
         if S["gates"]:
             lines += ["", "Gates: " + "; ".join(f"{g['label']} {g['status']}" for g in S["gates"])]
     return "\n".join(lines) + "\n"

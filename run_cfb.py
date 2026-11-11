@@ -33,6 +33,7 @@ from cfbmodel.util import clean, r
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import betrules as BR  # noqa: E402
+import parlaymoney as PM  # noqa: E402
 import clv as CLV  # noqa: E402
 import gates as GT  # noqa: E402
 import carryover as CO  # noqa: E402
@@ -346,7 +347,7 @@ def tracking(weeks, results):
                     hits.append(None if st is None else st[STAT_IDX[L["stat"]]] > L["line"])
                 if None not in hits:
                     alts.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": all(hits), "legs_hit": sum(hits),
-                                 "legs": len(hits), "p": ap["p"]})
+                                 "legs": len(hits), "p": ap["p"], "fair": ap.get("fair"), "bet_at": ap.get("bet_at")})
                 else:                                 # Nov 10 2026: a leg player missing from the box score (didn't play,
                     # or played with no stat): can't be graded, so it's shown as unresolved instead of silently dropped
                     alt_void.append({"date": dt, "game": f"{g['away']} at {g['home']}", "hit": None,
@@ -404,6 +405,8 @@ def tracking(weeks, results):
             "alt": {"n": len(alts), "hits": sum(a["hit"] for a in alts), "unresolved": len(alt_void),
                     "unresolved_list": sorted(alt_void, key=lambda x: x["date"], reverse=True)[:20],
                     "model": r(np.mean([a["p"] for a in alts])) if alts else None,
+                    "money": PM.summary(alts),       # units at the bet-at and fair prices (parlaymoney.py, Nov 11 2026)
+                    "off": not getattr(C, "ALT_PARLAY_ON", True),
                     "recent": sorted(alts, key=lambda x: x["date"], reverse=True)[:20]},
             "teasers": TZ.tracking({w["week"]: w.get("games", []) for w in weeks}, results),
             "series": series}
@@ -586,7 +589,9 @@ def main():
             p["game_id"], p["date"] = g["game_id"], game["date"]
             p["opp"] = a["abbr"] if p["team"] == h["abbr"] else h["abbr"]
         players += prows
-        game["alt_parlay"] = P.alt_parlay(arrs, info, bp, need_teams=2 if (g["p4_home"] and g["p4_away"]) else 1) if arrs else None
+        # Nov 11 2026 (owner): CFB parlays off (config ALT_PARLAY_ON). Past tickets keep their record on the page.
+        game["alt_parlay"] = (P.alt_parlay(arrs, info, bp, need_teams=2 if (g["p4_home"] and g["p4_away"]) else 1)
+                              if arrs and getattr(C, "ALT_PARLAY_ON", True) else None)
         games.append(game)
         log.info(f"{a['abbr']}@{h['abbr']}: model {(et - em) / 2:.1f}-{(et + em) / 2:.1f}, book {book['spread']} / {book['total']}, "
                  f"gap {gap_s:+.1f} / {gap_t:+.1f}")

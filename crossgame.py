@@ -26,6 +26,7 @@ import itertools
 import json
 import math
 from datetime import datetime, timezone
+import parlaymoney as PM
 
 PRIOR_SHIFT = -0.10            # log-odds haircut on every leg before graded results take over
 LEG_K = 60                     # graded legs at which the learned shift gets half the weight
@@ -217,6 +218,9 @@ def tracking(state):
             priced += 1
             units += (_dec(t["book_odds"]) - 1) if t["result"] == "W" else -1.0
     out["book_units"], out["book_n"] = round(units, 2), priced
+    # units at the shortest price worth taking (min_odds), at the fair price, and at the book's real price where known
+    out["money"] = PM.summary([{"hit": t["result"] == "W", "bet_at": t.get("min_odds"), "fair": t.get("fair"),
+                                "book_odds": t.get("book_odds")} for t in rows])
     by = {}
     for t in rows:
         b = by.setdefault(t["style"], {"n": 0, "hits": 0, "model": 0.0})

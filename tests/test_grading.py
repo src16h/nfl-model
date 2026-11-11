@@ -92,3 +92,22 @@ def test_first_flag_is_kept_until_the_side_changes():
     assert b["ml"]["odds"] == -110 and b["ml"]["ts"] == "t1"
     c = CLV.snapshot({"ml": {"play": True, "side": "B", "odds": 115, "line": None}}, b, "t3")
     assert c["ml"]["side"] == "B" and c["ml"]["ts"] == "t3"
+
+
+# ---- parlay tickets in units ----------------------------------------------------------------------------
+import parlaymoney as PM  # noqa: E402
+
+
+def test_ticket_units_at_each_price():
+    rows = [{"hit": True, "bet_at": "+122", "fair": "+108"}, {"hit": False, "bet_at": "+122", "fair": "+108"},
+            {"hit": True, "bet_at": "-104", "fair": "-120", "book_odds": "+110"}, {"hit": None, "bet_at": "+150"}]
+    m = PM.summary(rows)
+    assert m["n"] == 3 and m["hits"] == 2
+    assert m["at_bet_at"]["units"] == pytest.approx(1.22 - 1 + 100 / 104, abs=0.01)
+    assert m["at_fair"]["units"] == pytest.approx(1.08 - 1 + 100 / 120, abs=0.01)
+    assert m["at_book"]["n"] == 1 and m["at_book"]["units"] == pytest.approx(1.10)
+    assert PM.dec(None) is None and PM.dec("abc") is None and PM.dec(50) is None and PM.dec("+100") == 2.0
+
+
+def test_ticket_units_empty():
+    assert PM.summary([])["at_bet_at"] == {"n": 0, "units": None, "roi": None}
