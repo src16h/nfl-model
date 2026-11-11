@@ -626,11 +626,10 @@ def main():
         g["espn"] = espn_lines(g.get("odds"))
     upcoming = [g for g in sched if g["state"] == "pre" and datetime.fromisoformat(g["start"].replace("Z", "+00:00")) > now]
     log.info(f"{len(upcoming)} upcoming games")
-    close_games = set()
-    for p_ in load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []):
-        if any((m_.get("flag") or {}).get("at") for m_ in (p_.get("m") or {}).values()):
-            close_games.add(p_["game_id"])
-    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games)
+    # games and markets with a locked prop play (or shadow play): one more props pull near the start (closing price)
+    close_games, shadow_games = CLV.close_wanted(load_json(HIST / f"{today.isoformat()}.json", {}).get("players", []))
+    book_props, odds_status = O.run(upcoming, OUT / "odds_state.json", OUT / "props_cache.json", now, close_games=close_games,
+                                    shadow_games=shadow_games)
     book_alt = O.alt_lines(load_json(OUT / "props_cache.json", {}))
     alt_rows, conv_errs = [], []
     cross_in, cross_book = [], None

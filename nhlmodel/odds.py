@@ -24,6 +24,7 @@ from .util import norm_name
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import standin as SI  # noqa: E402
+import clv as CLV  # noqa: E402
 
 log = logging.getLogger("nhlmodel")
 BASE = "https://api.the-odds-api.com"
@@ -133,7 +134,7 @@ def _load(p, default):
         return default
 
 
-def run(games, state_path, cache_path, now, close_games=()):
+def run(games, state_path, cache_path, now, close_games=(), shadow_games=()):
     """Fills game['book'] with lines and returns {(game_id): {pid-name-key: {stat: {...}}}} props.
     close_games: games with a locked prop play; their props get one more pull near puck drop, so the
     play can be checked against the closing line (clv.prop_clv)."""
@@ -199,49 +200,78 @@ def run(games, state_path, cache_path, now, close_games=()):
         et_hour = now.astimezone(ZoneInfo("America/New_York")).hour
         _st = lambda g: datetime.fromisoformat(g["start"].replace("Z", "+00:00"))
         todo = [g for g in games if g.get("book", {}).get("event") and g["date_et"] == g["today_et"] and _st(g) > now]   # started games: no pulls
+        # Closing prices first (Nov 11 2026). A locked prop play gets one more pull of its own market near the start,
+        # so it can be checked against the closing line (clv.prop_clv). Before this, a closing pull needed the
+        # day's allowance to still have a credit by the evening run, after the afternoon's props and alt lines
+        # (NHL: 2 of 102 plays ended up priced, NBA: 6 of 75). Now: paid from the day's allowance when it has room; otherwise taken anyway
+        # (down to the month's reserve) and written down as a debt that the alt-line pulls below pay back, one
+        # skipped alt pull per closing pull (at most ALT_CUT_SHARE of a run's alt pulls, and no more closing pulls on
+        # credit once CLOSE_DEBT_MAX is owed). Shadow plays (paused types) get theirs only from the day's allowance.
+        debt = int(state.get("close_debt", 0) or 0)
+        left = lambda: (cl.remaining if cl.remaining is not None else rem) - C.ODDS_RESERVE
+        for g in sorted(todo, key=lambda x: x["start"]):
+            for mkt in list(C.ODDS_PROP_MARKETS) + [m for m in getattr(C, "SHADOW_PROP_MARKETS", []) if m not in C.ODDS_PROP_MARKETS]:
+                ck = f"{g['game_id']}|{mkt}"
+                if ck not in cache or not _close_due(cache[ck], g, now):
+                    continue
+                real = CLV.wants_close(close_games, g["game_id"], PROP_STAT[mkt])
+                if not real and not CLV.wants_close(shadow_games, g["game_id"], PROP_STAT[mkt]):
+                    continue
+                owed = allowance < 1
+                if owed and (not real or left() < 1 or debt >= getattr(C, "CLOSE_DEBT_MAX", 6)):
+                    status["close_missed"] = status.get("close_missed", 0) + 1
+                    continue
+                rows, used = _pull_props(cl, g, mkt)
+                cache[ck] = {"day": today, "rows": rows, "book": used, "at": now.isoformat(), "closed": True}
+                state["spent_today"] = state.get("spent_today", 0) + 1
+                status["close_pulls"] = status.get("close_pulls", 0) + 1
+                if owed:
+                    debt += 1
+                else:
+                    allowance -= 1
         # floor (Nov 5 2026): every game still to play gets its main prop market and its main alt market, even when the
         # daily share is used up, as long as the month's reserve holds. Those two come first; the rest gets what's left.
+        # Nov 11 2026: the alt half of the floor shrinks by the closing-pull debt (latest games lose their alt pull first).
+        skip = state.get("alt_skip") or {}
+        skipped = set(skip.get("ids", [])) if skip.get("day") == today else set()
         need_p = [g for g in todo if f"{g['game_id']}|{C.ODDS_PROP_MARKETS[0]}" not in cache]
-        need_a = [g for g in todo if (_st(g) - now).total_seconds() / 3600 <= C.ALT_HOURS and f"alt:{g['game_id']}:{C.ALT_MARKETS[0]}" not in cache]
-        spare = max(0, rem - C.ODDS_RESERVE - 6)
-        floor = min(len(need_p) + len(need_a), spare)
+        need_a = [g for g in todo if (_st(g) - now).total_seconds() / 3600 <= C.ALT_HOURS and f"alt:{g['game_id']}:{C.ALT_MARKETS[0]}" not in cache and g['game_id'] not in skipped]
+        spare = max(0, left() - 6)
+        alt_floor = len(need_a) - min(max(debt, 0), int(len(need_a) * getattr(C, "ALT_CUT_SHARE", 0.5) + 0.5))
+        floor = min(len(need_p) + alt_floor, spare)
         if allowance < floor:
             status["floor"] = {"allowance": allowance, "raised_to": floor}
             allowance = floor
-        hold = len(need_a)                                 # kept for main alt lines while the other prop markets pull
+            cut = sorted(need_a, key=lambda x: x["start"])[alt_floor:]
+            if cut:
+                debt -= len(cut)
+                skipped |= {g["game_id"] for g in cut}
+                status["alt_skipped"] = len(cut)
+        elif debt:                                         # room to spare: pay the debt out of what the extra alt markets would get
+            pay = max(0, min(debt, allowance - len(need_p) - len(need_a)))
+            allowance -= pay
+            debt -= pay
+        state["close_debt"], state["alt_skip"] = debt, {"day": today, "ids": sorted(skipped)}
+        status["close_debt"] = debt
+        hold = len([g for g in need_a if g["game_id"] not in skipped])   # kept for main alt lines while the other prop markets pull
         soon_start = any(0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600 <= 4 for g in todo)
         if et_hour >= 13 or soon_start:                    # props are posted by early afternoon; matinees need them sooner (Oct 31 2026)
             for mkt in C.ODDS_PROP_MARKETS:
                 for g in sorted(todo, key=lambda x: x["start"]):
                     ck = f"{g['game_id']}|{mkt}"
-                    closing = ck in cache and _close_due(cache[ck], g, close_games, now)
-                    if (ck in cache and not closing) or allowance - (0 if mkt == C.ODDS_PROP_MARKETS[0] else hold) < 1:
+                    if ck in cache or allowance - (0 if mkt == C.ODDS_PROP_MARKETS[0] else hold) < 1:
                         continue
-                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
-                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
-                    rows, used = {}, None
-                    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
-                    for k in [k for k in C.PROP_BOOKS if k in bks]:          # Hard Rock first; a player missing there
-                        for m in bks[k].get("markets", []):                  # is filled from the next book
-                            for o in m.get("outcomes", []):
-                                nm = norm_name(o.get("description", ""))
-                                if nm in rows and rows[nm].get("bk") != k:
-                                    continue
-                                r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
-                                r["over" if o["name"] == "Over" else "under"] = o["price"]
-                        used = used or bks[k].get("title")
-                    cache[ck] = {"day": today, "rows": rows, "book": used, "at": now.isoformat(), "closed": closing}
+                    rows, used = _pull_props(cl, g, mkt)
+                    cache[ck] = {"day": today, "rows": rows, "book": used, "at": now.isoformat(), "closed": False}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
-                    if closing:
-                        status["close_pulls"] = status.get("close_pulls", 0) + 1
             # alt lines and team totals: whatever today's allowance has left, soonest games first (altlines.py)
             alt_todo = [g for g in todo if 0 <= (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
                         <= C.ALT_HOURS]
             for mkt in C.ALT_MARKETS:
                 for g in sorted(alt_todo, key=lambda x: x["start"]):
                     ck = f"alt:{g['game_id']}:{mkt}"
-                    if ck in cache or allowance < 1:
+                    if ck in cache or allowance < 1 or g["game_id"] in skipped:
                         continue
                     ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
                                 markets=mkt, oddsFormat="american", bookmakers=",".join(C.ALT_BOOKS))
@@ -262,20 +292,8 @@ def run(games, state_path, cache_path, now, close_games=()):
                     ck = f"{g['game_id']}|{mkt}"
                     if ck in cache or allowance < 1:
                         continue
-                    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
-                                markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
-                    rows, used = {}, None
-                    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
-                    for k in [k for k in C.PROP_BOOKS if k in bks]:
-                        for m in bks[k].get("markets", []):
-                            for o in m.get("outcomes", []):
-                                nm = norm_name(o.get("description", ""))
-                                if nm in rows and rows[nm].get("bk") != k:
-                                    continue
-                                r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
-                                r["over" if o["name"] == "Over" else "under"] = o["price"]
-                        used = used or bks[k].get("title")
-                    cache[ck] = {"day": today, "rows": rows, "book": used}
+                    rows, used = _pull_props(cl, g, mkt)
+                    cache[ck] = {"day": today, "rows": rows, "book": used, "at": now.isoformat(), "closed": False}
                     allowance -= 1
                     state["spent_today"] = state.get("spent_today", 0) + 1
                     status["shadow_pulls"] = status.get("shadow_pulls", 0) + 1
@@ -314,16 +332,36 @@ def _alt_rows(ev, b, mkt):
     return rows
 
 
-def _close_due(ent, g, close_games, now):
-    """One near-puck-drop pull for a game with a locked prop play, if its props are an hour old or more."""
-    if not getattr(C, "PROP_CLOSE_PULL", True) or str(g["game_id"]) not in {str(x) for x in close_games} or ent.get("closed"):
+def _pull_props(cl, g, mkt):
+    """One prop market for one game: ({player name key: {line, over, under, bk, book}}, first book used).
+    Hard Rock first; a player missing there is filled from the next book."""
+    ev = cl.get(f"/v4/sports/{SPORT}/events/{g['book']['event']}/odds",
+                markets=mkt, oddsFormat="american", bookmakers=",".join(C.PROP_BOOKS))
+    rows, used = {}, None
+    bks = {b["key"]: b for b in ev.get("bookmakers", [])}
+    for k in [k for k in C.PROP_BOOKS if k in bks]:
+        for m in bks[k].get("markets", []):
+            for o in m.get("outcomes", []):
+                nm = norm_name(o.get("description", ""))
+                if nm in rows and rows[nm].get("bk") != k:
+                    continue
+                r = rows.setdefault(nm, {"line": o.get("point"), "bk": k, "book": bks[k].get("title")})
+                r["over" if o["name"] == "Over" else "under"] = o["price"]
+        used = used or bks[k].get("title")
+    return rows, used
+
+
+def _close_due(ent, g, now):
+    """Is this game's saved prop market due its one closing pull? Inside PROP_CLOSE_HOURS of the start, and the saved
+    price an hour old or more. (Whether the market holds a locked play is checked by the caller.)"""
+    if not getattr(C, "PROP_CLOSE_PULL", True) or ent.get("closed"):
         return False
     try:
         to_start = (datetime.fromisoformat(g["start"].replace("Z", "+00:00")) - now).total_seconds() / 3600
         age = (now - datetime.fromisoformat(ent["at"])).total_seconds() / 3600 if ent.get("at") else 99
     except (ValueError, KeyError):
         return False
-    return 0 < to_start <= C.ODDS_PREKO_HOURS + 0.5 and age >= 1.0
+    return 0 < to_start <= getattr(C, "PROP_CLOSE_HOURS", C.ODDS_PREKO_HOURS + 0.5) and age >= 1.0
 
 
 def alt_lines(cache):

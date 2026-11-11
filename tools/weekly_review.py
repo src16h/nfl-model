@@ -102,6 +102,9 @@ def said_vs_hit(track):
     return out
 
 
+CLOSE_SINCE = "2026-11-12"     # closing pulls for prop plays were fixed on Nov 11 2026; coverage is counted from here
+
+
 def review():
     now = datetime.now(timezone.utc)
     rep = {"generated_at": now.isoformat(timespec="minutes"), "sports": {}, "flags": []}
@@ -148,6 +151,15 @@ def review():
             if r["n"] >= n_min and abs(r["gap"]) >= pts:
                 rep["flags"].append({"sport": sport, "level": "high" if abs(r["z"] or 0) >= 2 else "medium",
                                      "what": f"said vs hit: {r['what']}", "why": f"said {r['said']}%, hit {r['hit']}% over {r['n']} (z {r['z']})"})
+        # closing prices on prop plays (Nov 11 2026): how many plays since the fix got a later price to be judged against.
+        # Without one the closing-line gates (gates.py) never see a prop type.
+        pl = [x for x in (track.get("prop_plays_list") or []) if isinstance(x, dict) and str(x.get("date") or "") >= CLOSE_SINCE]
+        priced = [x for x in pl if x.get("clv") is not None or x.get("move") in (1, -1)]
+        S["prop_close"] = {"since": CLOSE_SINCE, "plays": len(pl), "priced": len(priced),
+                           "missed_last_run": (odds or {}).get("close_missed"), "owed": (odds or {}).get("close_debt")}
+        if len(pl) >= 10 and len(priced) < 0.6 * len(pl):
+            rep["flags"].append({"sport": sport, "level": "high", "what": "prop plays without a closing price",
+                                 "why": f"{len(priced)} of {len(pl)} plays since {CLOSE_SINCE} have one; check the odds status (close_pulls, close_missed) and the run times"})
         for g in S["gates"]:
             rc = g.get("record") or {}
             if g.get("status") == "paused" and (rc.get("n") or 0) >= 25 and (num(rc.get("roi")) or 0) > 3:
@@ -192,6 +204,10 @@ def markdown(rep):
         lines += [PD.markdown(d) for d in rep["diagnoses"]]
     for sport, S in rep["sports"].items():
         lines += ["", f"## {sport}", f"Updated {S['age_h']} hours ago, odds from {S['odds_source']}, credits left {S['credits_left']}.", ""]
+        pc = S.get("prop_close") or {}
+        if pc.get("plays"):
+            lines += [f"Prop plays with a closing price since {pc['since']}: {pc['priced']} of {pc['plays']}"
+                      + (f" (closing pulls owed to alt lines: {pc['owed']})" if pc.get("owed") else "") + ".", ""]
         rs = sorted([r for r in S["records"] if r["n"] >= 5], key=lambda r: -r["n"])[:40]
         if rs:
             lines += ["| Record | W-L | Hit | Units | Return | z |", "|---|---|---|---|---|---|"]

@@ -28,6 +28,15 @@ PROP_BOOKS = ["hardrockbet", "draftkings"]
 ODDS_RESERVE = 20
 ODDS_LINES_EVERY_HOURS = 6
 ODDS_PREKO_HOURS = 1.5
+# Closing prices for prop plays (Nov 11 2026). A game with a locked prop play gets one more pull of that play's market
+# inside PROP_CLOSE_HOURS of the start: same reach as before (the 6:45pm and 8:40pm ET runs cover every tip).
+# These pulls come before everything else. When the day's allowance is used up they are taken anyway and paid back by
+# skipping alt-line pulls on later runs: at most ALT_CUT_SHARE of a run's main alt pulls (latest games first), and no
+# more than CLOSE_DEBT_MAX credits owed at once (past that, closing pulls wait for the day's allowance).
+PROP_CLOSE_PULL = True
+PROP_CLOSE_HOURS = 2.0
+ALT_CUT_SHARE = 0.5
+CLOSE_DEBT_MAX = 6
 ODDS_PROP_MARKETS = ["player_points", "player_rebounds", "player_assists", "player_threes", "player_points_rebounds_assists"]
 ALT_MARKETS = ["team_totals", "alternate_spreads", "alternate_totals"]
 ALT_BOOKS = ["hardrockbet", "pinnacle"]
