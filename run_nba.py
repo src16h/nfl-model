@@ -146,6 +146,7 @@ def game_picks(g, sim):
             s1, s2 = ((sh.get("over_odds"), sh.get("under_odds")) if over else (sh.get("under_odds"), sh.get("over_odds"))) if same else (None, None)
         dec = BR.decide_sharp(v["model"] / 100, mine, other, s1, s2)
         v["sharp"], v["ev"], v["play"] = dec["sharp"], dec["ev"], dec["play"]
+        v["why"], v["stake"] = dec.get("why"), dec.get("stake")     # why not a play / suggested units (Nov 11 2026)
     GT.hold_back(out, getattr(C, "GAME_PAUSED", set()))   # paused bet types (gates.py) become shadow picks
     plays = [x for x in out.values() if x.get("play")]
     if len(plays) > 1:                                  # one play per game: the best value

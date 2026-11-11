@@ -38,8 +38,8 @@ def _pair(book, a_key, b_key, use_a):
     if a is None or b is None:
         return None
     pa, pb = BR.implied(a), BR.implied(b)
-    mine = pa if use_a else pb
-    return {"novig": mine / (pa + pb), "vig": mine}
+    fa, fb = BR.fair_probs(a, b)                       # Nov 11 2026: Shin's method, as in the play rule (betrules.fair_probs)
+    return {"novig": fa if use_a else fb, "vig": pa if use_a else pb}
 
 
 def _shift(c, d):

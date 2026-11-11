@@ -193,6 +193,7 @@ def plays_v2(g, b, out):
             continue
         dec = BR.decide_sharp(pk["model"] / 100, mine, other, s1, s2)
         pk["sharp"], pk["ev"], pk["play"] = dec["sharp"], dec["ev"], dec["play"]
+        pk["why"], pk["stake"] = dec.get("why"), dec.get("stake")     # why not a play / suggested units (Nov 11 2026)
     plays = [x for x in out.values() if x.get("play") and not x.get("early")]
     if len(plays) > 1:                                    # one Pinnacle play per game: the best value
         best = max(plays, key=lambda x: x.get("ev") or 0)

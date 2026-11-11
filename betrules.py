@@ -64,6 +64,34 @@ def implied(odds):
     return 100 / (o + 100) if o > 0 else -o / (-o + 100)
 
 
+def fair_probs(*odds):
+    """The book's fair (no-vig) chances for every side of one market, from its American prices, by Shin's method.
+
+    Nov 11 2026: the old way split the vig in proportion to each price, which leaves longshots a little too likely
+    and favorites not likely enough. On 7,227 Pinnacle closing 1X2 lines (data/soccer/fd, 2020-26): favorites it
+    called 69.6% won 71.9%; Shin's method called them 69.8% and they won 70.9% (log loss 0.99237 -> 0.99221; the
+    power and additive methods score the same as Shin within noise). The change is small for a single price (about
+    0.2 points on a longshot, a point or two on a heavy favorite) and nothing at all on an even two-way market,
+    but a longshot play is decided on gaps that size. With two sides it is the same as taking half the vig off each."""
+    pi = [implied(o) for o in odds]
+    tot = sum(pi)
+    if len(pi) < 2 or tot <= 1.0 or any(p <= 0 for p in pi):       # no vig to remove (or a bad price): just rescale
+        return [p / tot for p in pi] if tot > 0 else pi
+
+    def shares(z):
+        return [(math.sqrt(z * z + 4 * (1 - z) * p * p / tot) - z) / (2 * (1 - z)) for p in pi]
+    lo, hi = 0.0, 0.5
+    for _ in range(60):                                            # sum of shares falls as z rises: bisect to 1
+        z = (lo + hi) / 2
+        if sum(shares(z)) > 1:
+            lo = z
+        else:
+            hi = z
+    out = shares((lo + hi) / 2)
+    t = sum(out)
+    return [clip(x / t, 1e-6, 1 - 1e-6) for x in out]
+
+
 def no_vig_from_one(odds, hold=0.045):
     """Book's fair chance when only one side's price is known (typical prop hold)."""
     return clip(implied(odds) / (1 + hold))
@@ -222,24 +250,74 @@ def final_over_from(bk):
 # ---------------------------------------------------------------------------
 SHARP_MIN_EV = 1.5
 SHARP_MAX_EV = 8.0
+# Nov 11 2026, three more conditions. Under the rule above, 50 priced game plays across the five sports averaged -3.2%
+# at the closing fair price (a bet with no edge scores about -2 to -4.5), and the plays leaned to longshots: NBA
+# moneyline plays 0-8, all at +180 to +850; 11 of 19 soccer 1X2 plays at +260 or longer (those averaged -5.8% at close).
+#   3. the model must be close to Pinnacle, not just above the bet book. "Model at least the book's chance" let every
+#      underdog through in the NBA, where the model gives underdogs 37.6% against Pinnacle's 28.7% (underdog leans
+#      8-32): a model that far from the sharp price is disagreeing with it, not confirming it.
+#   4. no plays longer than SHARP_MAX_ODDS. A fair chance that is off by half a point is 1% of value at -110 and
+#      4% at +700, so the same small error clears the bar far more easily on a longshot. Raise it only once
+#      longshot shadow results show closing value of 0 or better.
+#   5. fair chances come from fair_probs (Shin's method), for Pinnacle and for the bet book.
+MODEL_MAX_GAP = 0.06        # the model's chance may sit at most this far from Pinnacle's (either way)
+SHARP_MAX_ODDS = 250        # longest American price that can be a play
 
 
-def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=None):
+def decide_sharp(model_p, odds, other_odds, sharp_odds, sharp_other, sharp_p=None, extra=(), sharp_extra=()):
     """Chances 0-1. odds/other_odds: the bet book's prices for this side and the other side (American).
     sharp_*: Pinnacle's prices for the same side and line (None when it has no matching line).
     sharp_p: Pinnacle's fair chance already converted to the bet line (used instead of sharp_* when given).
-    Returns {"play", "sharp", "book", "ev"} with chances in % and ev in % at the bet price."""
+    extra / sharp_extra: prices of any further sides of the same market (the draw in a 3-way market).
+    Returns {"play", "sharp", "book", "ev", "why"} with chances in % and ev in % at the bet price; "why" names the
+    first condition a non-play failed (None for a play)."""
     if odds is None or other_odds is None:
-        return {"play": False, "sharp": None, "book": None, "ev": None}
-    pa, pb = implied(odds), implied(other_odds)
-    book = pa / (pa + pb)
+        return {"play": False, "sharp": None, "book": None, "ev": None, "why": "no price"}
+    book = fair_probs(odds, other_odds, *extra)[0]
     if sharp_p is not None:                     # sharp chance already moved to the bet book's line (key numbers)
         sharp = sharp_p
     elif sharp_odds is None or sharp_other is None:
-        return {"play": False, "sharp": None, "book": round(100 * book, 1), "ev": None}
+        return {"play": False, "sharp": None, "book": round(100 * book, 1), "ev": None, "why": "no sharp price"}
     else:
-        sa, sb = implied(sharp_odds), implied(sharp_other)
-        sharp = sa / (sa + sb)
+        sharp = fair_probs(sharp_odds, sharp_other, *sharp_extra)[0]
     ev = 100 * (sharp * (1 + payout(odds)) - 1)
-    play = SHARP_MIN_EV <= ev <= SHARP_MAX_EV and model_p is not None and model_p >= book
-    return {"play": bool(play), "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1)}
+    why = sharp_why(model_p, book, sharp, ev, odds)
+    return {"play": why is None, "sharp": round(100 * sharp, 1), "book": round(100 * book, 1), "ev": round(ev, 1), "why": why,
+            "stake": stake_units(sharp, odds) if why is None else None}
+
+
+def sharp_why(model_p, book, sharp, ev, odds):
+    """Why a side is not a play under the sharp-referee rule, or None when it is one. Chances 0-1, ev in %."""
+    if ev < SHARP_MIN_EV:
+        return "price not good enough at Pinnacle's chance"
+    if ev > SHARP_MAX_EV:
+        return "gap too big (stale or wrong line)"
+    if model_p is None or model_p < book:
+        return "model disagrees"
+    if abs(model_p - sharp) > MODEL_MAX_GAP:
+        return "model too far from Pinnacle"
+    if float(odds) > SHARP_MAX_ODDS:
+        return "longshot (over the odds cap)"
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Suggested stake (Nov 11 2026). Every play was 1 unit whatever its price, so a +700 longshot risked as much as a
+# -110 side. This is quarter Kelly with 1 unit = 1% of bankroll: stake = 25 x (edge / payout), between STAKE_MIN and
+# STAKE_MAX. It is advice shown next to a play. Records are still graded at a flat 1 unit so old and new results
+# compare, and no bet type has shown an edge yet, so the cap is 1 unit.
+# ---------------------------------------------------------------------------
+KELLY_FRACTION = 0.25
+STAKE_MIN, STAKE_MAX = 0.25, 1.0
+
+
+def stake_units(p, odds, cap=None):
+    """Suggested stake in units for a bet with fair win chance p (0-1) at American odds. 0 when there is no edge."""
+    if p is None or odds is None:
+        return None
+    b = payout(odds)
+    f = (p * (b + 1) - 1) / b                    # full Kelly share of bankroll
+    if f <= 0:
+        return 0.0
+    u = 100 * KELLY_FRACTION * f
+    return round(min(max(u, STAKE_MIN), STAKE_MAX if cap is None else cap) * 4) / 4      # to the nearest quarter unit
