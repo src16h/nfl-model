@@ -12,17 +12,52 @@
  "nhl_game_ml": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": [
+   [
+    "2026-10-20",
+    -4.0,
+    "p"
+   ],
+   [
+    "2026-10-20",
+    0.17,
+    "p"
+   ],
+   [
+    "2026-10-21",
+    -7.61,
+    "p"
+   ],
+   [
+    "2026-10-31",
+    -3.45,
+    "p"
+   ],
+   [
+    "2026-11-07",
+    -0.97,
+    "p"
+   ]
+  ]
  },
  "nhl_game_pl": {
   "status": "paused",
   "since": "2026-10-26",
-  "history": []
+  "history": [],
+  "ev_rows": [
+   [
+    "2026-11-07",
+    2.27,
+    "s"
+   ]
+  ]
  },
  "nhl_game_total": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": []
  },
  "nhl_prop_sog_Over": {
   "status": "active",
