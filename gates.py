@@ -267,6 +267,7 @@ def update(path, st, name, shadow_rows, play_rows, today):
 POOL_PAUSE_N = 30
 POOL_RESTORE_N = 40
 POOL_Z = -1.5
+POOL_FRESH_FROM = "2026-11-12"   # a comeback is judged on plays found under the Nov 11 conditions (odds cap, model near Pinnacle)
 POOL_FILES = {"nfl": "data/gates.json", "nhl": "nhl/data/gates.json", "nba": "nba/data/gates.json", "cfb": "cfb/data/gates.json",
               "soccer": "soccer/data/gates.json"}
 
@@ -286,7 +287,8 @@ def pooled_state(rows):
     cur, hist = [], []
     for day in sorted({r[0] for r in rows}):
         want = ("p",) if status == "active" else ("p", "s")     # paused: plays already locked before the pause count too
-        cur += [r[1] for r in rows if r[0] == day and r[2] in want and r[0] >= since]
+        start = since if status == "active" else max(since, POOL_FRESH_FROM)
+        cur += [r[1] for r in rows if r[0] == day and r[2] in want and r[0] >= start]
         n, m, z = _stats(cur)
         if status == "active" and n >= POOL_PAUSE_N and m < 0 and z is not None and z <= POOL_Z:
             hist.append({"date": day, "to": "paused", "n": n, "ev": round(m, 2), "z": round(z, 2)})
