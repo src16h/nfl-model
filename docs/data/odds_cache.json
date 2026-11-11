@@ -1360,7 +1360,7 @@
   }
  },
  "lines": {
-  "fetched_at": "2026-11-10T23:07+00:00",
+  "fetched_at": "2026-11-11T23:07+00:00",
   "data": {
    "2026_10_WAS_NYG": {
     "spread_line": 2.5,
@@ -1375,15 +1375,15 @@
     "book": "hardrockbet",
     "sharp": {
      "spread_line": 2.5,
-     "spread_home_odds": -105.0,
-     "spread_away_odds": -107.0,
+     "spread_home_odds": -106.0,
+     "spread_away_odds": -106.0,
      "total_line": 41.0,
      "over_odds": -108.0,
      "under_odds": -108.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_NE_DET": {
     "spread_line": 3.0,
@@ -1392,67 +1392,67 @@
     "ml_away": null,
     "spread_home_odds": -105.0,
     "spread_away_odds": -115.0,
-    "over_odds": -115.0,
-    "under_odds": -105.0,
+    "over_odds": -110.0,
+    "under_odds": -110.0,
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
      "spread_line": 2.5,
-     "spread_home_odds": -123.0,
-     "spread_away_odds": 109.0,
+     "spread_home_odds": -121.0,
+     "spread_away_odds": 108.0,
      "total_line": 51.0,
      "over_odds": -105.0,
      "under_odds": -111.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_KC_ATL": {
-    "spread_line": -3.0,
-    "total_line": 45.0,
+    "spread_line": -3.5,
+    "total_line": 46.0,
     "ml_home": null,
     "ml_away": null,
-    "spread_home_odds": 100.0,
-    "spread_away_odds": -120.0,
+    "spread_home_odds": -115.0,
+    "spread_away_odds": -105.0,
     "over_odds": -110.0,
     "under_odds": -110.0,
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
      "spread_line": -3.5,
-     "spread_home_odds": -119.0,
-     "spread_away_odds": 106.0,
+     "spread_home_odds": -117.0,
+     "spread_away_odds": 104.0,
      "total_line": 45.5,
-     "over_odds": -104.0,
-     "under_odds": -112.0
+     "over_odds": -121.0,
+     "under_odds": 104.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_BUF_NYJ": {
     "spread_line": -8.0,
     "total_line": 51.0,
     "ml_home": null,
     "ml_away": null,
-    "spread_home_odds": -110.0,
-    "spread_away_odds": -110.0,
+    "spread_home_odds": -105.0,
+    "spread_away_odds": -115.0,
     "over_odds": -110.0,
     "under_odds": -110.0,
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
-     "spread_line": -7.5,
-     "spread_home_odds": 102.0,
-     "spread_away_odds": -115.0,
+     "spread_line": -8.5,
+     "spread_home_odds": -114.0,
+     "spread_away_odds": 101.0,
      "total_line": 51.0,
-     "over_odds": -108.0,
-     "under_odds": -108.0
+     "over_odds": -107.0,
+     "under_odds": -109.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_CAR_NO": {
     "spread_line": 2.0,
@@ -1466,43 +1466,66 @@
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
-     "spread_line": 1.0,
-     "spread_home_odds": -122.0,
-     "spread_away_odds": 109.0,
+     "spread_line": 2.0,
+     "spread_home_odds": -114.0,
+     "spread_away_odds": 101.0,
      "total_line": 48.5,
      "over_odds": -113.0,
      "under_odds": -103.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_HOU_CLE": {
-    "spread_line": -4.5,
-    "total_line": 39.5,
+    "spread_line": -5.0,
+    "total_line": 41.0,
     "ml_home": null,
     "ml_away": null,
     "spread_home_odds": -110.0,
     "spread_away_odds": -110.0,
-    "over_odds": -115.0,
-    "under_odds": -105.0,
+    "over_odds": -110.0,
+    "under_odds": -110.0,
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
      "spread_line": -5.0,
-     "spread_home_odds": -111.0,
-     "spread_away_odds": -101.0,
-     "total_line": 39.5,
-     "over_odds": -116.0,
-     "under_odds": -101.0
+     "spread_home_odds": -110.0,
+     "spread_away_odds": -102.0,
+     "total_line": 40.5,
+     "over_odds": -111.0,
+     "under_odds": -105.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_MIN_GB": {
-    "spread_line": 3.5,
+    "spread_line": 3.0,
     "total_line": 41.5,
+    "ml_home": null,
+    "ml_away": null,
+    "spread_home_odds": -120.0,
+    "spread_away_odds": -105.0,
+    "over_odds": -110.0,
+    "under_odds": -110.0,
+    "standin": {},
+    "book": "hardrockbet",
+    "sharp": {
+     "spread_line": 3.0,
+     "spread_home_odds": -111.0,
+     "spread_away_odds": -101.0,
+     "total_line": 42.0,
+     "over_odds": -111.0,
+     "under_odds": -105.0
+    },
+    "hr_book": "Hard Rock Bet",
+    "book_title": "Hard Rock Bet",
+    "updated": "2026-11-11T23:07:21Z"
+   },
+   "2026_10_MIA_IND": {
+    "spread_line": 3.5,
+    "total_line": 38.5,
     "ml_home": null,
     "ml_away": null,
     "spread_home_odds": -110.0,
@@ -1512,42 +1535,19 @@
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
-     "spread_line": 3.5,
-     "spread_home_odds": 100.0,
-     "spread_away_odds": -112.0,
-     "total_line": 42.0,
-     "over_odds": -101.0,
-     "under_odds": -115.0
+     "spread_line": 4.0,
+     "spread_home_odds": -106.0,
+     "spread_away_odds": -106.0,
+     "total_line": 38.0,
+     "over_odds": -109.0,
+     "under_odds": -107.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
-   },
-   "2026_10_MIA_IND": {
-    "spread_line": 3.0,
-    "total_line": 38.5,
-    "ml_home": null,
-    "ml_away": null,
-    "spread_home_odds": -120.0,
-    "spread_away_odds": 100.0,
-    "over_odds": -110.0,
-    "under_odds": -110.0,
-    "standin": {},
-    "book": "hardrockbet",
-    "sharp": {
-     "spread_line": 3.5,
-     "spread_home_odds": -103.0,
-     "spread_away_odds": -110.0,
-     "total_line": 39.0,
-     "over_odds": 101.0,
-     "under_odds": -118.0
-    },
-    "hr_book": "Hard Rock Bet",
-    "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_JAX_TEN": {
-    "spread_line": -10.5,
+    "spread_line": -11.0,
     "total_line": 46.5,
     "ml_home": null,
     "ml_away": null,
@@ -1559,19 +1559,19 @@
     "book": "hardrockbet",
     "sharp": {
      "spread_line": -10.5,
-     "spread_home_odds": -103.0,
-     "spread_away_odds": -109.0,
+     "spread_home_odds": -102.0,
+     "spread_away_odds": -110.0,
      "total_line": 46.5,
-     "over_odds": -103.0,
-     "under_odds": -114.0
+     "over_odds": -102.0,
+     "under_odds": -115.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_LA_ARI": {
     "spread_line": -9.0,
-    "total_line": 39.5,
+    "total_line": 39.0,
     "ml_home": null,
     "ml_away": null,
     "spread_home_odds": -105.0,
@@ -1585,35 +1585,35 @@
      "spread_home_odds": -110.0,
      "spread_away_odds": -102.0,
      "total_line": 39.5,
-     "over_odds": -104.0,
-     "under_odds": -112.0
+     "over_odds": -102.0,
+     "under_odds": -115.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_SEA_LV": {
-    "spread_line": -6.0,
-    "total_line": 41.0,
+    "spread_line": -6.5,
+    "total_line": 40.5,
     "ml_home": null,
     "ml_away": null,
-    "spread_home_odds": -105.0,
-    "spread_away_odds": -115.0,
+    "spread_home_odds": -110.0,
+    "spread_away_odds": -110.0,
     "over_odds": -110.0,
     "under_odds": -110.0,
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
      "spread_line": -6.5,
-     "spread_home_odds": -109.0,
-     "spread_away_odds": -103.0,
+     "spread_home_odds": -103.0,
+     "spread_away_odds": -109.0,
      "total_line": 40.5,
-     "over_odds": -109.0,
-     "under_odds": -107.0
+     "over_odds": -107.0,
+     "under_odds": -109.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_SF_DAL": {
     "spread_line": -4.0,
@@ -1628,15 +1628,15 @@
     "book": "hardrockbet",
     "sharp": {
      "spread_line": -4.0,
-     "spread_home_odds": -109.0,
-     "spread_away_odds": -103.0,
+     "spread_home_odds": -108.0,
+     "spread_away_odds": -104.0,
      "total_line": 56.0,
      "over_odds": 100.0,
-     "under_odds": -117.0
+     "under_odds": -116.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_PIT_CIN": {
     "spread_line": 3.5,
@@ -1651,18 +1651,18 @@
     "book": "hardrockbet",
     "sharp": {
      "spread_line": 3.5,
-     "spread_home_odds": 100.0,
-     "spread_away_odds": -112.0,
+     "spread_home_odds": -104.0,
+     "spread_away_odds": -108.0,
      "total_line": 48.5,
      "over_odds": -117.0,
      "under_odds": 100.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    },
    "2026_10_LAC_BAL": {
-    "spread_line": 4.5,
+    "spread_line": 4.0,
     "total_line": 38.5,
     "ml_home": null,
     "ml_away": null,
@@ -1673,16 +1673,16 @@
     "standin": {},
     "book": "hardrockbet",
     "sharp": {
-     "spread_line": 5.0,
-     "spread_home_odds": 107.0,
-     "spread_away_odds": -120.0,
+     "spread_line": 4.5,
+     "spread_home_odds": 100.0,
+     "spread_away_odds": -113.0,
      "total_line": 38.5,
-     "over_odds": -108.0,
-     "under_odds": -108.0
+     "over_odds": -111.0,
+     "under_odds": -105.0
     },
     "hr_book": "Hard Rock Bet",
     "book_title": "Hard Rock Bet",
-    "updated": "2026-11-10T23:07:15Z"
+    "updated": "2026-11-11T23:07:21Z"
    }
   }
  },

@@ -12,12 +12,30 @@
  "nfl_game_spread": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": [
+   [
+    "2026-10-25",
+    -1.68,
+    "p"
+   ],
+   [
+    "2026-10-25",
+    0.0,
+    "p"
+   ],
+   [
+    "2026-10-25",
+    0.0,
+    "p"
+   ]
+  ]
  },
  "nfl_game_total": {
   "status": "active",
   "since": "2026-10-20",
-  "history": []
+  "history": [],
+  "ev_rows": []
  },
  "nfl_prop_pass_under": {
   "status": "paused",
