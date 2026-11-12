@@ -8840,10 +8840,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-12T20:45+00:00",
+     "src": "live:hardrockbet",
+     "spread": 2.0,
+     "total": 41.0,
+     "m": 2.6,
+     "t": 41.1,
+     "edge_s": 0.6,
+     "edge_t": 0.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_NE_DET": {
    "game_id": "2026_10_NE_DET",
@@ -8894,7 +8907,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_KC_ATL": {
    "game_id": "2026_10_KC_ATL",
@@ -8942,10 +8955,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-12T20:45+00:00",
+     "src": "live:hardrockbet",
+     "spread": -3.5,
+     "total": 47.0,
+     "m": -3.4,
+     "t": 48.1,
+     "edge_s": 0.1,
+     "edge_t": 1.1,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_HOU_CLE": {
    "game_id": "2026_10_HOU_CLE",
@@ -9045,10 +9071,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-12T20:45+00:00",
+     "src": "live:hardrockbet",
+     "spread": -5.0,
+     "total": 40.5,
+     "m": -5.1,
+     "t": 40.9,
+     "edge_s": -0.1,
+     "edge_t": 0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_MIA_IND": {
    "game_id": "2026_10_MIA_IND",
@@ -9109,10 +9148,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-12T20:45+00:00",
+     "src": "live:hardrockbet",
+     "spread": 3.5,
+     "total": 38.0,
+     "m": 3.5,
+     "t": 39.5,
+     "edge_s": 0.0,
+     "edge_t": 1.5,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_CAR_NO": {
    "game_id": "2026_10_CAR_NO",
@@ -9163,7 +9215,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_JAX_TEN": {
    "game_id": "2026_10_JAX_TEN",
@@ -9227,7 +9279,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_LA_ARI": {
    "game_id": "2026_10_LA_ARI",
@@ -9291,7 +9343,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_SEA_LV": {
    "game_id": "2026_10_SEA_LV",
@@ -9355,7 +9407,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_SF_DAL": {
    "game_id": "2026_10_SF_DAL",
@@ -9406,7 +9458,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_PIT_CIN": {
    "game_id": "2026_10_PIT_CIN",
@@ -9496,7 +9548,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_LAC_BAL": {
    "game_id": "2026_10_LAC_BAL",
@@ -9547,7 +9599,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_MIN_GB": {
    "game_id": "2026_10_MIN_GB",
@@ -9637,7 +9689,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   },
   "2026_10_BUF_NYJ": {
    "game_id": "2026_10_BUF_NYJ",
@@ -9724,10 +9776,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-12T20:45+00:00",
+     "src": "live:hardrockbet",
+     "spread": -8.0,
+     "total": 51.0,
+     "m": -8.0,
+     "t": 51.3,
+     "edge_s": -0.0,
+     "edge_t": 0.3,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-12T13:07+00:00"
+   "last_seen": "2026-11-12T20:45+00:00"
   }
  }
 }
