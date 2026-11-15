@@ -8950,7 +8950,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 2.5,
+    "total": 50.5,
+    "margin": 25.0,
+    "points": 45.0
+   },
    "last_seen": "2026-11-14T23:07+00:00"
   },
   "2026_10_KC_ATL": {
@@ -9556,7 +9561,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-15T16:45+00:00"
+   "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_SEA_LV": {
    "game_id": "2026_10_SEA_LV",
@@ -9633,7 +9638,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-15T16:45+00:00"
+   "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_SF_DAL": {
    "game_id": "2026_10_SF_DAL",
@@ -9684,7 +9689,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-15T16:45+00:00"
+   "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_PIT_CIN": {
    "game_id": "2026_10_PIT_CIN",
@@ -9813,7 +9818,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-15T16:45+00:00"
+   "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_LAC_BAL": {
    "game_id": "2026_10_LAC_BAL",
@@ -9900,10 +9905,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-15T19:40+00:00",
+     "src": "live:hardrockbet",
+     "spread": 4.0,
+     "total": 39.0,
+     "m": 3.8,
+     "t": 39.0,
+     "edge_s": -0.2,
+     "edge_t": -0.0,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-15T16:45+00:00"
+   "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_MIN_GB": {
    "game_id": "2026_10_MIN_GB",
