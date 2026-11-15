@@ -3,7 +3,13 @@
   "status": "active",
   "since": "2026-10-20",
   "history": [],
-  "ev_rows": []
+  "ev_rows": [
+   [
+    "2026-11-14",
+    -7.25,
+    "s"
+   ]
+  ]
  },
  "cfb_game_total": {
   "status": "active",
