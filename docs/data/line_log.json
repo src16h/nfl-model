@@ -9723,7 +9723,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.5,
+    "total": 55.5,
+    "margin": -6.0,
+    "points": 86.0
+   },
    "last_seen": "2026-11-15T19:40+00:00"
   },
   "2026_10_PIT_CIN": {
@@ -9852,7 +9857,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 4.5,
+    "total": 49.5,
+    "margin": 20.0,
+    "points": 56.0
+   },
    "last_seen": "2026-11-16T00:07+00:00"
   },
   "2026_10_LAC_BAL": {
@@ -9969,7 +9979,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-16T00:07+00:00"
+   "last_seen": "2026-11-16T06:10+00:00"
   },
   "2026_10_MIN_GB": {
    "game_id": "2026_10_MIN_GB",
