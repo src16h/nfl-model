@@ -209,9 +209,9 @@ def _last_fire(crons, t):
     return None
 
 
-def _gh_runs(path):
+def _gh_runs(path, event=None):
     repo = os.environ.get("GITHUB_REPOSITORY", "src16h/nfl-model")
-    url = f"repos/{repo}/actions/workflows/{path}/runs?per_page=60&event=schedule"
+    url = f"repos/{repo}/actions/workflows/{path}/runs?per_page=100" + (f"&event={event}" if event else "")
     tok = os.environ.get("GITHUB_TOKEN")
     if tok:
         req = urllib.request.Request("https://api.github.com/" + url, headers={"Authorization": f"Bearer {tok}",
@@ -224,28 +224,61 @@ def _gh_runs(path):
     return json.loads(out.stdout)["workflow_runs"]
 
 
+def _ts(x):
+    return datetime.fromisoformat(x.replace("Z", "+00:00")) if x else None
+
+
+def _fires(crons, start, end):
+    x = start.replace(second=0, microsecond=0)
+    out = []
+    while x <= end:
+        if any(_cron_hit(c, x) for c in crons):
+            out.append(x)
+        x += timedelta(minutes=1)
+    return out
+
+
+SKIP_SECONDS = 40     # a scheduled run shorter than this was skipped by the guard
+
+
 def late_runs(days=7):
+    """Since the Clock (Nov 10 2026) every slot is started by workflow_dispatch and the cron triggers are only backups,
+    so lateness is measured per slot: how long after each cron time the first run of that workflow (any trigger)
+    started, and how many slots had no run before the next one. Backups that ran the model anyway (longer than
+    SKIP_SECONDS) are counted: they re-run a slot that was already covered and spend odds credits (Nov 17 2026)."""
     now = datetime.now(timezone.utc)
+    start = now - timedelta(days=days)
     out = {}
     for y in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
         crons = re.findall(r'cron:\s*"([^"]+)"', y.read_text())
-        if not crons or y.name == "train.yml":
+        if not crons or y.name in ("train.yml", "clock.yml"):
             continue
         try:
             runs = _gh_runs(y.name)
         except Exception as e:  # noqa: BLE001
             return {"error": f"not checked ({str(e)[:80]})"}
-        delays = []
+        runs = [r for r in runs if _ts(r["created_at"]) >= start - timedelta(hours=1)]
+        starts = sorted(_ts(r["created_at"]) for r in runs if r["event"] in ("workflow_dispatch", "schedule"))
+        fires = [f for f in _fires(crons, start, now - timedelta(minutes=30))]
+        delays, missed = [], []
+        for i, f in enumerate(fires):
+            nxt = fires[i + 1] if i + 1 < len(fires) else now
+            hit = [t for t in starts if f - timedelta(minutes=2) <= t < nxt]
+            if hit:
+                delays.append(round((hit[0] - f).total_seconds() / 60))
+            else:
+                missed.append(f.strftime("%m-%d %H:%M"))
+        backups_ran = []
         for r in runs:
-            t = datetime.fromisoformat(r["created_at"].replace("Z", "+00:00"))
-            if now - t > timedelta(days=days):
+            if r["event"] != "schedule" or r.get("conclusion") != "success" or _ts(r["created_at"]) < start:
                 continue
-            f = _last_fire(crons, t)
-            if f is not None:
-                delays.append(round((t - f).total_seconds() / 60))
-        if delays:
-            s = sorted(delays)
-            out[y.name] = {"runs": len(s), "median_min": s[len(s) // 2], "worst_min": s[-1]}
+            a, b = _ts(r.get("run_started_at") or r["created_at"]), _ts(r["updated_at"])
+            if (b - a).total_seconds() > SKIP_SECONDS:
+                backups_ran.append(r["created_at"][5:16].replace("T", " "))
+        if fires:
+            s = sorted(delays) or [0]
+            out[y.name] = {"slots": len(fires), "median_min": s[len(s) // 2], "worst_min": s[-1],
+                           "missed": missed, "backups_ran": backups_ran}
     return out
 
 
@@ -276,12 +309,16 @@ def markdown(rep):
             (mn, m), (bn, b) = list(v.items())[0], list(v.items())[1]
             L.append(f"| {sp} | {k} | {m['n']} bets, {m['units']:+}u ({m['roi']}%) | {bn}: {b['n']} bets, {b['units']:+}u ({b['roi']}%) |")
     lr = rep["late_runs"]
-    L += ["", "### Scheduled runs: how late they fired (last 7 days)", ""]
+    L += ["", "### Scheduled runs: how late each slot started (last 7 days)", "",
+          "First run of the workflow after each cron time (the Clock's dispatch, or a backup cron run). "
+          "\"Backups that ran\" are late cron runs the guard let through: they re-run a covered slot and spend credits.", ""]
     if "error" in lr:
         L.append(lr["error"])
     else:
-        L += ["| Workflow | Runs | Median delay | Worst |", "|---|---|---|---|"]
-        L += [f"| {k} | {v['runs']} | {v['median_min']} min | {v['worst_min']} min |" for k, v in lr.items()]
+        L += ["| Workflow | Slots | Median delay | Worst | Missed slots | Backups that ran |", "|---|---|---|---|---|---|"]
+        L += [f"| {k} | {v['slots']} | {v['median_min']} min | {v['worst_min']} min | {len(v['missed'])}"
+              f"{' (' + ', '.join(v['missed'][:4]) + ')' if v['missed'] else ''} | {len(v['backups_ran'])}"
+              f"{' (' + ', '.join(v['backups_ran'][:4]) + ')' if v['backups_ran'] else ''} |" for k, v in lr.items()]
     return "\n".join(L) + "\n"
 
 
@@ -289,9 +326,13 @@ def flags(rep):
     out = []
     lr = rep["late_runs"]
     for k, v in (lr.items() if "error" not in lr else []):
-        if v["median_min"] > LATE_MIN:
+        if v["median_min"] > LATE_MIN or v["missed"]:
             out.append({"sport": "All", "level": "high", "what": f"late runs: {k}",
-                        "why": f"scheduled runs fired a median {v['median_min']} min late (worst {v['worst_min']}) over {v['runs']} runs; pre-game runs may land after games start"})
+                        "why": f"slots started a median {v['median_min']} min late (worst {v['worst_min']}) over {v['slots']} slots, "
+                               f"{len(v['missed'])} missed; pre-game runs may land after games start"})
+        if len(v["backups_ran"]) >= 3:
+            out.append({"sport": "All", "level": "medium", "what": f"backup runs re-ran: {k}",
+                        "why": f"{len(v['backups_ran'])} late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"})
     for sp, S in rep["sports"].items():
         for k, v in S["baselines"].items():
             if "error" in v or len(v) < 2:

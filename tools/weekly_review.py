@@ -196,7 +196,10 @@ def review():
                 rep["flags"].append({"sport": sport, "level": "high" if (b.get("z") or 0) <= -2 else "medium",
                                      "what": f"parlays losing even at the bet-at price: {m['what']}",
                                      "why": f"{b['hits']}-{b['n'] - b['hits']}, {b['units']:+}u ({b['roi']:+}%) at the shortest price the page says to take"})
-        S["prop_close"] = {"since": CLOSE_SINCE, "plays": len(pl), "priced": len(priced),
+        # Nov 17 2026: a moved line only says which way it went (clv.prop_clv gives no closing value), so the
+        # closing-value gates only see same-line closes. Report those separately.
+        same = [x for x in pl if x.get("clv") is not None]
+        S["prop_close"] = {"since": CLOSE_SINCE, "plays": len(pl), "priced": len(priced), "same_line": len(same),
                            "missed_last_run": (odds or {}).get("close_missed"), "owed": (odds or {}).get("close_debt")}
         if len(pl) >= 10 and len(priced) < 0.6 * len(pl):
             rep["flags"].append({"sport": sport, "level": "high", "what": "prop plays without a closing price",
@@ -259,6 +262,7 @@ def markdown(rep):
         pc = S.get("prop_close") or {}
         if pc.get("plays"):
             lines += [f"Prop plays with a closing price since {pc['since']}: {pc['priced']} of {pc['plays']}"
+                      + (f", {pc['same_line']} at the same line (the only ones with a closing value)" if pc.get("same_line") is not None else "")
                       + (f" (closing pulls owed to alt lines: {pc['owed']})" if pc.get("owed") else "") + ".", ""]
         rs = sorted([r for r in S["records"] if r["n"] >= 5], key=lambda r: -r["n"])[:40]
         if rs:
