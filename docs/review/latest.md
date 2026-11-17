@@ -4,12 +4,11 @@ Flags first (high, then medium, then info). Every number is a graded record from
 
 | Level | Sport | What | Why |
 |---|---|---|---|
-| high | All | late runs: soccer.yml | slots started a median 0 min late (worst 75) over 20 slots, 2 missed; pre-game runs may land after games start |
 | high | CFB | losing: picks / total | 49-67, -22.69u, -19.6% (z -2.22) |
 | high | CFB | said vs hit: calibration / rec | said 49.2%, hit 55.3% over 804 (z 3.46) |
 | high | NBA | losing: picks / ml | 55-69, -25.5u, -20.6% (z -2.41) |
-| high | NFL | said vs hit: alt_leg_types / QB pass attempts Over | said 77.1%, hit 64.0% over 125 (z -3.49) |
-| high | NFL | said vs hit: alt_leg_types / QB completions Over | said 78.2%, hit 70.1% over 157 (z -2.46) |
+| high | NFL | said vs hit: alt_leg_types / QB pass attempts Over | said 77.0%, hit 63.0% over 127 (z -3.75) |
+| high | NFL | said vs hit: alt_leg_types / QB completions Over | said 78.2%, hit 69.4% over 160 (z -2.7) |
 | high | NHL | losing: picks / ml | 116-161, -49.65u, -17.9% (z -3.14) |
 | high | NHL | said vs hit: calibration / saves | said 50.0%, hit 32.9% over 513 (z -7.75) |
 | medium | All | backup runs re-ran: cfb.yml | 4 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
@@ -26,14 +25,16 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | NBA | diagnosed: pts Unders | plays 9-11 (-15.4%); top cause: Projection bias: results ran 1.69 above the model's middle number on 1167 pts props, while the book's line missed by only +0.10. The model's |
 | medium | NFL | odds credits low | 57 left this month |
 | medium | NFL | said vs hit: tds / Anytime TD / bins / 5 | said 69.8%, hit 77.8% over 27 (z 0.91) |
+| medium | NFL | said vs hit: alt_parlays / by_v / 2 (tickets) | said 55.2%, hit 47.1% over 34 (z -0.95) |
 | medium | NFL | said vs hit: alt_leg_types / RB carries Under | said 81.5%, hit 71.1% over 38 (z -1.65) |
+| medium | NFL | parlays losing even at the bet-at price: alt_parlays | 16-18, -3.01u (-8.9%) at the shortest price the page says to take |
 | medium | NFL | over the change limit | 16 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
-| medium | NFL | diagnosed: pass_yds Overs | plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 65.8% and it hit 51.2% over 80. Shrink this prop type's chance toward the book's (betrules reali |
-| medium | NFL | diagnosed: pass_yds Unders | plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 60.9% and it hit 43.9% over 66. Shrink this prop type's chance toward the book's (betrules reali |
+| medium | NFL | diagnosed: pass_yds Overs | plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 65.8% and it hit 50.6% over 81. Shrink this prop type's chance toward the book's (betrules reali |
+| medium | NFL | diagnosed: pass_yds Unders | plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 60.9% and it hit 43.3% over 67. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Overs | plays 8-17 (-34.7%); top cause: Overconfidence: the model gave the bet side 52.3% and it hit 32.0% over 25. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Unders | plays 10-11 (-13.7%); top cause: Role / volume: lines over 2.5 did much worse (30.0% vs 63.6%). High lines are stars the market prices sharply; the model adds little there. |
 | medium | NFL | diagnosed: rec_yds Overs | plays 21-18 (2.0%); top cause: No flaw found, and the plays are at break-even or better. If this type is paused, the gate's shadow record decides when it comes back (40+ g |
-| medium | NFL | diagnosed: rush_yds Overs | plays 2-4 (-37.5%); top cause: Overconfidence: the model gave the bet side 70.8% and it hit 44.6% over 231. Shrink this prop type's chance toward the book's (betrules real |
+| medium | NFL | diagnosed: rush_yds Overs | plays 2-4 (-37.5%); top cause: Overconfidence: the model gave the bet side 70.7% and it hit 44.1% over 236. Shrink this prop type's chance toward the book's (betrules real |
 | medium | NHL | losing: picks / pl | 134-143, -28.65u, -10.3% (z -1.81) |
 | medium | NHL | losing: picks / total | 131-146, -28.1u, -10.1% (z -1.78) |
 | medium | NHL | said vs hit: alt_ladder (tickets) | said 57.8%, hit 65.9% over 44 (z 1.09) |
@@ -49,7 +50,7 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | Soccer | losing: picks_by_league / laliga / ah | 13-17, -4.85u, -16.2% (z -0.93) |
 | medium | Soccer | said vs hit: cross_parlays (legs) | said 80.4%, hit 88.9% over 36 (z 1.28) |
 | medium | Soccer | over the change limit | 9 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
-| info | NFL | winning: live_record / picks / moneyline | 64-36, +8.14u, +8.1% (z 0.86) |
+| info | NFL | winning: live_record / picks / moneyline | 65-36, +9.99u, +9.9% (z 1.05) |
 
 ## Drawdowns and baselines
 
@@ -69,8 +70,8 @@ Every bet record in betting order (worst drop from a high point, longest losing 
 
 | Sport | What | Model | Baseline |
 |---|---|---|---|
-| NFL | moneyline leans | 84 bets, +8.14u (9.7%) | always the favorite: 84 bets, +3.97u (4.7%) |
-| NFL | prop plays | 161 bets, -0.03u (-0.0%) | every lean of the same types: 2163 bets, -47.71u (-2.2%) |
+| NFL | moneyline leans | 85 bets, +9.99u (11.7%) | always the favorite: 85 bets, +2.97u (3.5%) |
+| NFL | prop plays | 161 bets, -0.03u (-0.0%) | every lean of the same types: 2183 bets, -60.41u (-2.8%) |
 | NHL | moneyline leans | 277 bets, -49.65u (-17.9%) | always the favorite: 277 bets, +5.23u (1.9%) |
 | NHL | moneyline plays | 23 bets, +4.47u (19.4%) | always the favorite: 23 bets, -3.02u (-13.1%) |
 | NHL | prop plays | 446 bets, -16.43u (-3.7%) | every lean of the same types: 5315 bets, -181.66u (-3.4%) |
@@ -89,43 +90,43 @@ First run of the workflow after each cron time (the Clock's dispatch, or a backu
 
 | Workflow | Slots | Median delay | Worst | Missed slots | Backups that ran |
 |---|---|---|---|---|---|
-| cfb.yml | 14 | 0 min | 288 min | 0 | 4 (11-16 23:26, 11-13 20:56, 11-12 21:29, 11-11 21:27) |
-| nba.yml | 28 | 0 min | 329 min | 0 | 8 (11-17 09:42, 11-16 08:32, 11-15 08:24, 11-14 07:58) |
-| nhl.yml | 28 | 0 min | 132 min | 0 | 6 (11-17 10:39, 11-16 09:34, 11-15 09:18, 11-14 08:56) |
+| cfb.yml | 14 | 0 min | 0 min | 0 | 4 (11-16 23:26, 11-13 20:56, 11-12 21:29, 11-11 21:27) |
+| nba.yml | 28 | 0 min | 0 min | 0 | 8 (11-17 09:42, 11-16 08:32, 11-15 08:24, 11-14 07:58) |
+| nhl.yml | 28 | 0 min | 43 min | 0 | 6 (11-17 10:39, 11-16 09:34, 11-15 09:18, 11-14 08:56) |
 | review.yml | 1 | 0 min | 0 min | 0 | 0 |
-| soccer.yml | 20 | 0 min | 75 min | 2 (11-10 13:40, 11-10 18:55) | 4 (11-17 02:26, 11-12 21:03, 11-10 23:49, 11-10 20:34) |
-| weekly.yml | 15 | 0 min | 290 min | 0 | 5 (11-16 22:50, 11-16 06:09, 11-13 20:26, 11-12 20:44) |
+| soccer.yml | 19 | 0 min | 75 min | 0 | 4 (11-17 02:26, 11-12 21:03, 11-10 23:49, 11-10 20:34) |
+| weekly.yml | 15 | 0 min | 0 min | 0 | 5 (11-16 22:50, 11-16 06:09, 11-13 20:26, 11-12 20:44) |
 
 
 ## Prop diagnoses
 Every prop type that is losing (20+ plays, -8% or worse) or paused, with what's driving it.
 
 ### NFL pass_yds Overs
-Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean on this side (too few plays).
+Plays 3-3 (-0.31u, -5.2%); every Over lean 41-40 (-4.3%). Checks use every lean on this side (too few plays).
 
 **Likely causes, most likely first:**
-1. Overconfidence: the model gave the bet side 65.8% and it hit 51.2% over 80. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
+1. Overconfidence: the model gave the bet side 65.8% and it hit 50.6% over 81. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
 
 <details><summary>All checks</summary>
 
 ```
 {
  "projection": {
-  "n": 146,
-  "actual_minus_model": -5.23,
-  "actual_minus_line": 0.93,
+  "n": 148,
+  "actual_minus_model": -4.82,
+  "actual_minus_line": 1.26,
   "over_rate_at_fair": 50.0,
   "over_rate_z": 0.0
  },
  "calibration_p_raw": {
-  "n": 80,
+  "n": 81,
   "said": 65.8,
-  "hit": 51.2
+  "hit": 50.6
  },
  "book_said": {
-  "n": 80,
+  "n": 81,
   "book": 50.0,
-  "hit": 51.2
+  "hit": 50.6
  },
  "by_edge": [
   {
@@ -139,12 +140,12 @@ Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean 
   },
   {
    "edge": "8-+",
-   "n": 61,
+   "n": 62,
    "w": 33,
-   "l": 28,
-   "pct": 54.1,
-   "units": 1.4,
-   "roi": 2.3
+   "l": 29,
+   "pct": 53.2,
+   "units": 0.4,
+   "roi": 0.7
   }
  ],
  "plays_vs_leans": {
@@ -157,27 +158,27 @@ Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean 
    "roi": -5.2
   },
   "all_leans": {
-   "n": 80,
+   "n": 81,
    "w": 41,
-   "l": 39,
-   "pct": 51.2,
-   "units": -2.48,
-   "roi": -3.1
+   "l": 40,
+   "pct": 50.6,
+   "units": -3.48,
+   "roi": -4.3
   }
  },
  "price": {
   "avg_breakeven": 52.9,
-  "hit": 51.2,
+  "hit": 50.6,
   "heavy_juice_share": 0.0
  },
  "line_size": {
   "<= 207.5": {
-   "n": 41,
+   "n": 42,
    "w": 20,
-   "l": 21,
-   "pct": 48.8,
-   "units": -3.19,
-   "roi": -7.8
+   "l": 22,
+   "pct": 47.6,
+   "units": -4.19,
+   "roi": -10.0
   },
   "> 207.5": {
    "n": 39,
@@ -190,7 +191,7 @@ Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean 
  },
  "zeros": {
   "n": 1,
-  "of": 80,
+  "of": 81,
   "share": 1.2
  },
  "clustering": [
@@ -232,12 +233,12 @@ Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean 
    "roi": 7.5
   },
   "recent": {
-   "n": 43,
+   "n": 44,
    "w": 20,
-   "l": 23,
-   "pct": 46.5,
-   "units": -5.26,
-   "roi": -12.2
+   "l": 24,
+   "pct": 45.5,
+   "units": -6.26,
+   "roi": -14.2
   }
  }
 }
@@ -245,33 +246,32 @@ Plays 3-3 (-0.31u, -5.2%); every Over lean 41-39 (-3.1%). Checks use every lean 
 </details>
 
 ### NFL pass_yds Unders
-Plays 3-2 (+0.69u, 13.9%); every Under lean 29-37 (-17.0%). Checks use every lean on this side (too few plays).
+Plays 3-2 (+0.69u, 13.9%); every Under lean 29-38 (-18.2%). Checks use every lean on this side (too few plays).
 
 **Likely causes, most likely first:**
-1. Overconfidence: the model gave the bet side 60.9% and it hit 43.9% over 66. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
-2. Bigger edges did worse (37.2% at 8+ points vs 57% below): big gaps from the book usually mean news the model can't see (injury, role, lineup). Cap the edge for pass_yds lower.
-3. Role / volume: lines over 244.5 did much worse (37.5% vs 50.0%). High lines are stars the market prices sharply; the model adds little there.
+1. Overconfidence: the model gave the bet side 60.9% and it hit 43.3% over 67. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
+2. Bigger edges did worse (36.4% at 8+ points vs 57% below): big gaps from the book usually mean news the model can't see (injury, role, lineup). Cap the edge for pass_yds lower.
 
 <details><summary>All checks</summary>
 
 ```
 {
  "projection": {
-  "n": 146,
-  "actual_minus_model": -5.23,
-  "actual_minus_line": 0.93,
+  "n": 148,
+  "actual_minus_model": -4.82,
+  "actual_minus_line": 1.26,
   "over_rate_at_fair": 50.0,
   "over_rate_z": 0.0
  },
  "calibration_p_raw": {
-  "n": 66,
+  "n": 67,
   "said": 60.9,
-  "hit": 43.9
+  "hit": 43.3
  },
  "book_said": {
-  "n": 66,
+  "n": 67,
   "book": 50.0,
-  "hit": 43.9
+  "hit": 43.3
  },
  "by_edge": [
   {
@@ -285,12 +285,12 @@ Plays 3-2 (+0.69u, 13.9%); every Under lean 29-37 (-17.0%). Checks use every lea
   },
   {
    "edge": "8-+",
-   "n": 43,
+   "n": 44,
    "w": 16,
-   "l": 27,
-   "pct": 37.2,
-   "units": -12.77,
-   "roi": -29.7
+   "l": 28,
+   "pct": 36.4,
+   "units": -13.77,
+   "roi": -31.3
   }
  ],
  "plays_vs_leans": {
@@ -303,27 +303,27 @@ Plays 3-2 (+0.69u, 13.9%); every Under lean 29-37 (-17.0%). Checks use every lea
    "roi": 13.9
   },
   "all_leans": {
-   "n": 66,
+   "n": 67,
    "w": 29,
-   "l": 37,
-   "pct": 43.9,
-   "units": -11.21,
-   "roi": -17.0
+   "l": 38,
+   "pct": 43.3,
+   "units": -12.21,
+   "roi": -18.2
   }
  },
  "price": {
   "avg_breakeven": 52.9,
-  "hit": 43.9,
+  "hit": 43.3,
   "heavy_juice_share": 0.0
  },
  "line_size": {
   "<= 244.5": {
-   "n": 34,
+   "n": 35,
    "w": 17,
-   "l": 17,
-   "pct": 50.0,
-   "units": -1.89,
-   "roi": -5.6
+   "l": 18,
+   "pct": 48.6,
+   "units": -2.89,
+   "roi": -8.3
   },
   "> 244.5": {
    "n": 32,
@@ -354,13 +354,13 @@ Plays 3-2 (+0.69u, 13.9%); every Under lean 29-37 (-17.0%). Checks use every lea
    "roi": -37.0
   },
   {
-   "date": "w05",
-   "n": 9,
-   "w": 4,
+   "date": "w10",
+   "n": 10,
+   "w": 5,
    "l": 5,
-   "pct": 44.4,
-   "units": -1.44,
-   "roi": -16.0
+   "pct": 50.0,
+   "units": -0.65,
+   "roi": -6.5
   }
  ],
  "trend": {
@@ -373,12 +373,12 @@ Plays 3-2 (+0.69u, 13.9%); every Under lean 29-37 (-17.0%). Checks use every lea
    "roi": -27.2
   },
   "recent": {
-   "n": 40,
+   "n": 41,
    "w": 19,
-   "l": 21,
-   "pct": 47.5,
-   "units": -4.14,
-   "roi": -10.4
+   "l": 22,
+   "pct": 46.3,
+   "units": -5.14,
+   "roi": -12.5
   }
  }
 }
@@ -396,11 +396,11 @@ Plays 8-17 (-8.68u, -34.7%); every Over lean 176-185 (-2.1%). Checks use plays.
 ```
 {
  "projection": {
-  "n": 795,
-  "actual_minus_model": 0.33,
+  "n": 801,
+  "actual_minus_model": 0.34,
   "actual_minus_line": 0.03,
-  "over_rate_at_fair": 54.6,
-  "over_rate_z": 2.36
+  "over_rate_at_fair": 54.9,
+  "over_rate_z": 2.5
  },
  "calibration_p_raw": {
   "n": 25,
@@ -494,22 +494,22 @@ Plays 8-17 (-8.68u, -34.7%); every Over lean 176-185 (-2.1%). Checks use plays.
 </details>
 
 ### NFL rec Unders
-Plays 10-11 (-2.87u, -13.7%); every Under lean 241-193 (4.2%). Checks use plays.
+Plays 10-11 (-2.87u, -13.7%); every Under lean 242-198 (3.1%). Checks use plays.
 
 **Likely causes, most likely first:**
 1. Role / volume: lines over 2.5 did much worse (30.0% vs 63.6%). High lines are stars the market prices sharply; the model adds little there.
-2. Projection bias: results ran 0.33 above the model's middle number on 795 rec props, while the book's line missed by only +0.03. The model's level for rec is off; shift it up (or let the prop bias correction learn faster).
+2. Projection bias: results ran 0.34 above the model's middle number on 801 rec props, while the book's line missed by only +0.03. The model's level for rec is off; shift it up (or let the prop bias correction learn faster).
 
 <details><summary>All checks</summary>
 
 ```
 {
  "projection": {
-  "n": 795,
-  "actual_minus_model": 0.33,
+  "n": 801,
+  "actual_minus_model": 0.34,
   "actual_minus_line": 0.03,
-  "over_rate_at_fair": 54.6,
-  "over_rate_z": 2.36
+  "over_rate_at_fair": 54.9,
+  "over_rate_z": 2.5
  },
  "calibration_p_raw": {
   "n": 21,
@@ -551,12 +551,12 @@ Plays 10-11 (-2.87u, -13.7%); every Under lean 241-193 (4.2%). Checks use plays.
    "roi": -13.7
   },
   "all_leans": {
-   "n": 434,
-   "w": 241,
-   "l": 193,
-   "pct": 55.5,
-   "units": 18.04,
-   "roi": 4.2
+   "n": 440,
+   "w": 242,
+   "l": 198,
+   "pct": 55.0,
+   "units": 13.64,
+   "roi": 3.1
   }
  },
  "price": {
@@ -617,11 +617,11 @@ Plays 21-18 (+0.78u, 2.0%); every Over lean 170-186 (-9.7%). Checks use plays.
 ```
 {
  "projection": {
-  "n": 792,
-  "actual_minus_model": 6.85,
-  "actual_minus_line": 4.35,
-  "over_rate_at_fair": 50.5,
-  "over_rate_z": 0.28
+  "n": 798,
+  "actual_minus_model": 6.94,
+  "actual_minus_line": 4.43,
+  "over_rate_at_fair": 50.8,
+  "over_rate_z": 0.43
  },
  "calibration_p_raw": {
   "n": 39,
@@ -733,31 +733,31 @@ Plays 21-18 (+0.78u, 2.0%); every Over lean 170-186 (-9.7%). Checks use plays.
 </details>
 
 ### NFL rush_yds Overs
-Plays 2-4 (-2.25u, -37.5%); every Over lean 103-128 (-15.6%). Checks use every lean on this side (too few plays).
+Plays 2-4 (-2.25u, -37.5%); every Over lean 104-132 (-16.6%). Checks use every lean on this side (too few plays).
 
 **Likely causes, most likely first:**
-1. Overconfidence: the model gave the bet side 70.8% and it hit 44.6% over 231. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
+1. Overconfidence: the model gave the bet side 70.7% and it hit 44.1% over 236. Shrink this prop type's chance toward the book's (betrules realization k) or raise its edge bar.
 
 <details><summary>All checks</summary>
 
 ```
 {
  "projection": {
-  "n": 430,
-  "actual_minus_model": 1.3,
-  "actual_minus_line": 3.07,
-  "over_rate_at_fair": 41.9,
-  "over_rate_z": -3.38
+  "n": 436,
+  "actual_minus_model": 1.13,
+  "actual_minus_line": 2.94,
+  "over_rate_at_fair": 41.5,
+  "over_rate_z": -3.54
  },
  "calibration_p_raw": {
-  "n": 231,
-  "said": 70.8,
-  "hit": 44.6
+  "n": 236,
+  "said": 70.7,
+  "hit": 44.1
  },
  "book_said": {
-  "n": 231,
+  "n": 236,
   "book": 49.8,
-  "hit": 44.6
+  "hit": 44.1
  },
  "by_edge": [
   {
@@ -771,12 +771,12 @@ Plays 2-4 (-2.25u, -37.5%); every Over lean 103-128 (-15.6%). Checks use every l
   },
   {
    "edge": "8-+",
-   "n": 191,
-   "w": 91,
-   "l": 100,
-   "pct": 47.6,
-   "units": -18.73,
-   "roi": -9.8
+   "n": 196,
+   "w": 92,
+   "l": 104,
+   "pct": 46.9,
+   "units": -21.86,
+   "roi": -11.2
   }
  ],
  "plays_vs_leans": {
@@ -789,41 +789,41 @@ Plays 2-4 (-2.25u, -37.5%); every Over lean 103-128 (-15.6%). Checks use every l
    "roi": -37.5
   },
   "all_leans": {
-   "n": 231,
-   "w": 103,
-   "l": 128,
-   "pct": 44.6,
-   "units": -36.07,
-   "roi": -15.6
+   "n": 236,
+   "w": 104,
+   "l": 132,
+   "pct": 44.1,
+   "units": -39.2,
+   "roi": -16.6
   }
  },
  "price": {
   "avg_breakeven": 52.7,
-  "hit": 44.6,
+  "hit": 44.1,
   "heavy_juice_share": 0.0
  },
  "line_size": {
   "<= 18.5": {
-   "n": 118,
+   "n": 120,
    "w": 51,
-   "l": 67,
-   "pct": 43.2,
-   "units": -21.54,
-   "roi": -18.3
+   "l": 69,
+   "pct": 42.5,
+   "units": -23.54,
+   "roi": -19.6
   },
   "> 18.5": {
-   "n": 113,
-   "w": 52,
-   "l": 61,
-   "pct": 46.0,
-   "units": -14.53,
-   "roi": -12.9
+   "n": 116,
+   "w": 53,
+   "l": 63,
+   "pct": 45.7,
+   "units": -15.66,
+   "roi": -13.5
   }
  },
  "zeros": {
-  "n": 17,
-  "of": 210,
-  "share": 8.1
+  "n": 18,
+  "of": 215,
+  "share": 8.4
  },
  "clustering": [
   {
@@ -864,12 +864,12 @@ Plays 2-4 (-2.25u, -37.5%); every Over lean 103-128 (-15.6%). Checks use every l
    "roi": -10.6
   },
   "recent": {
-   "n": 125,
-   "w": 53,
-   "l": 72,
-   "pct": 42.4,
-   "units": -24.79,
-   "roi": -19.8
+   "n": 130,
+   "w": 54,
+   "l": 76,
+   "pct": 41.5,
+   "units": -27.92,
+   "roi": -21.5
   }
  }
 }
@@ -1305,14 +1305,14 @@ Plays 9-11 (-3.08u, -15.4%); every Under lean 483-420 (-0.1%). Checks use plays.
 
 
 ## NFL
-Updated 13.0 hours ago, odds from odds_api, credits left 57.
+Updated 6.1 hours ago, odds from odds_api, credits left 57.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
 | plays_record / props | 85-76 | 52.8% | -0.03 | -0.0% | -0.0 |
-| live_record / picks / total | 52-49 | 51.5% | -1.73 | -1.7% | -0.18 |
-| live_record / picks / moneyline | 64-36 | 64.0% | 8.14 | 8.1% | 0.86 |
-| live_record / picks / spread | 51-44 | 53.7% | 2.36 | 2.5% | 0.25 |
+| live_record / picks / total | 52-50 | 51.0% | -2.73 | -2.7% | -0.28 |
+| live_record / picks / moneyline | 65-36 | 64.4% | 9.99 | 9.9% | 1.05 |
+| live_record / picks / spread | 52-44 | 54.2% | 3.27 | 3.4% | 0.35 |
 | live_record / picks_by_week / 4 / total | 6-10 | 37.5% | -4.55 | -28.4% | -1.2 |
 | live_record / picks_by_week / 4 / moneyline | 9-7 | 56.2% | None | None% | None |
 | live_record / picks_by_week / 5 / total | 8-7 | 53.3% | 0.27 | 1.8% | 0.07 |
@@ -1330,56 +1330,56 @@ Updated 13.0 hours ago, odds from odds_api, credits left 57.
 | live_record / picks_by_week / 8 / total | 9-5 | 64.3% | 3.18 | 22.7% | 0.89 |
 | live_record / picks_by_week / 8 / moneyline | 11-3 | 78.6% | 3.39 | 24.2% | 0.95 |
 | live_record / picks_by_week / 9 / spread | 9-5 | 64.3% | 3.18 | 22.7% | 0.89 |
+| live_record / picks_by_week / 10 / spread | 8-6 | 57.1% | 1.27 | 9.1% | 0.36 |
+| live_record / picks_by_week / 10 / total | 8-6 | 57.1% | 1.27 | 9.1% | 0.36 |
+| live_record / picks_by_week / 10 / moneyline | 7-7 | 50.0% | -0.82 | -5.9% | -0.23 |
 | alt_plays | 3-10 | 23.1% | -1.12 | -8.6% | -0.33 |
-| live_record / picks_by_week / 10 / spread | 7-6 | 53.8% | 0.36 | 2.8% | 0.11 |
-| live_record / picks_by_week / 10 / total | 8-5 | 61.5% | 2.27 | 17.5% | 0.66 |
-| live_record / picks_by_week / 10 / moneyline | 6-7 | 46.2% | -2.67 | -20.5% | -0.78 |
 | live_record / picks_by_week / 7 / spread | 8-4 | 66.7% | 3.27 | 27.2% | 0.99 |
 | alt_plays / by_market / spread | 3-8 | 27.3% | 0.88 | 8.0% | 0.28 |
 
 | Said vs hit | n | Said | Hit | Gap | z |
 |---|---|---|---|---|---|
-| tds / Anytime TD | 1501 | 23.6% | 25.2% | +1.6 | 1.46 |
-| tds / Anytime TD / bins / 0 | 243 | 5.6% | 11.5% | +5.9 | 4.0 |
-| tds / Anytime TD / bins / 1 | 467 | 14.9% | 15.6% | +0.7 | 0.42 |
-| tds / Anytime TD / bins / 2 | 500 | 26.6% | 28.8% | +2.2 | 1.11 |
+| tds / Anytime TD | 1518 | 23.6% | 25.1% | +1.5 | 1.38 |
+| tds / Anytime TD / bins / 0 | 246 | 5.6% | 11.4% | +5.8 | 3.96 |
+| tds / Anytime TD / bins / 1 | 474 | 14.9% | 15.6% | +0.7 | 0.43 |
+| tds / Anytime TD / bins / 2 | 506 | 26.6% | 28.7% | +2.1 | 1.07 |
 | tds / Anytime TD / bins / 3 | 200 | 41.2% | 40.0% | -1.2 | -0.34 |
-| tds / Anytime TD / bins / 4 | 64 | 57.0% | 50.0% | -7.0 | -1.13 |
+| tds / Anytime TD / bins / 4 | 65 | 57.0% | 50.8% | -6.2 | -1.01 |
 | tds / Anytime TD / bins / 5 | 27 | 69.8% | 77.8% | +8.0 | 0.91 |
-| tds / 2+ TDs | 1263 | 4.9% | 4.1% | -0.8 | -1.32 |
-| tds / 2+ TDs / bins / 0 | 1093 | 2.8% | 2.4% | -0.4 | -0.8 |
-| tds / 2+ TDs / bins / 1 | 116 | 13.4% | 12.9% | -0.5 | -0.16 |
+| tds / 2+ TDs | 1280 | 4.8% | 4.1% | -0.7 | -1.17 |
+| tds / 2+ TDs / bins / 0 | 1109 | 2.8% | 2.3% | -0.5 | -1.01 |
+| tds / 2+ TDs / bins / 1 | 117 | 13.4% | 13.7% | +0.3 | 0.1 |
 | tds / 2+ TDs / bins / 2 | 46 | 26.8% | 19.6% | -7.2 | -1.1 |
 | tds / 2+ TDs / bins / 3 | 8 | 40.2% | 25.0% | -15.2 | -0.88 |
-| combos / QB + WR1 overs | 161 | 31.6% | 32.9% | +1.3 | 0.35 |
-| combos / QB over + opponent team total over | 164 | 25.3% | 26.2% | +0.9 | 0.27 |
-| combos / QB over + team covers | 156 | 27.7% | 28.2% | +0.5 | 0.14 |
-| combos / QB over + team total over | 164 | 29.6% | 31.1% | +1.5 | 0.42 |
-| combos / RB1 anytime TD + team wins | 164 | 29.9% | 30.5% | +0.6 | 0.17 |
-| combos / RB1 rush over + team wins | 164 | 26.9% | 23.8% | -3.1 | -0.9 |
-| combos / WR1 over + team total over | 167 | 26.2% | 24.0% | -2.2 | -0.65 |
-| combos / team total over + game over | 170 | 37.3% | 40.0% | +2.7 | 0.73 |
-| combo_total | 1310 | 29.3% | 29.6% | +0.3 | 0.24 |
-| alt_parlays (tickets) | 72 | 50.4% | 43.1% | -7.3 | -1.24 |
-| alt_parlays (legs) | 279 | 82.5% | 77.8% | -4.7 | -2.07 |
+| combos / QB + WR1 overs | 163 | 31.6% | 33.1% | +1.5 | 0.41 |
+| combos / QB over + opponent team total over | 166 | 25.4% | 26.5% | +1.1 | 0.33 |
+| combos / QB over + team covers | 158 | 27.7% | 27.8% | +0.1 | 0.03 |
+| combos / QB over + team total over | 166 | 29.6% | 30.7% | +1.1 | 0.31 |
+| combos / RB1 anytime TD + team wins | 166 | 29.8% | 30.7% | +0.9 | 0.25 |
+| combos / RB1 rush over + team wins | 166 | 26.9% | 24.1% | -2.8 | -0.81 |
+| combos / WR1 over + team total over | 169 | 26.2% | 24.3% | -1.9 | -0.56 |
+| combos / team total over + game over | 172 | 37.3% | 40.1% | +2.8 | 0.76 |
+| combo_total | 1326 | 29.3% | 29.7% | +0.4 | 0.32 |
+| alt_parlays (tickets) | 73 | 50.4% | 42.5% | -7.9 | -1.35 |
+| alt_parlays (legs) | 282 | 82.4% | 77.7% | -4.7 | -2.07 |
 | alt_parlays / by_v / 1 (tickets) | 39 | 46.3% | 38.5% | -7.8 | -0.98 |
-| alt_parlays / by_v / 2 (tickets) | 33 | 55.4% | 48.5% | -6.9 | -0.8 |
-| alt_mix (tickets) | 18 | 50.9% | 33.3% | -17.6 | -1.49 |
+| alt_parlays / by_v / 2 (tickets) | 34 | 55.2% | 47.1% | -8.1 | -0.95 |
+| alt_mix (tickets) | 19 | 51.0% | 36.8% | -14.2 | -1.24 |
 | alt_mix / by_v / 1 (tickets) | 9 | 47.1% | 44.4% | -2.7 | -0.16 |
-| alt_mix / by_v / 2 (tickets) | 9 | 54.7% | 22.2% | -32.5 | -1.96 |
+| alt_mix / by_v / 2 (tickets) | 10 | 54.6% | 30.0% | -24.6 | -1.56 |
 | alt_ladder (tickets) | 5 | 60.0% | 80.0% | +20.0 | 0.91 |
-| alt_leg_types / QB pass attempts Over | 125 | 77.1% | 64.0% | -13.1 | -3.49 |
-| alt_leg_types / QB completions Over | 157 | 78.2% | 70.1% | -8.1 | -2.46 |
-| alt_leg_types / QB passing yards Over | 177 | 75.2% | 70.1% | -5.1 | -1.57 |
-| alt_leg_types / RB rushing yards Over | 163 | 77.0% | 72.4% | -4.6 | -1.4 |
-| alt_leg_types / TE receiving yards Over | 93 | 75.5% | 74.2% | -1.3 | -0.29 |
-| alt_leg_types / QB pass attempts Under | 83 | 76.4% | 72.3% | -4.1 | -0.88 |
-| alt_leg_types / QB completions Under | 155 | 78.8% | 82.6% | +3.8 | 1.16 |
+| alt_leg_types / QB pass attempts Over | 127 | 77.0% | 63.0% | -14.0 | -3.75 |
+| alt_leg_types / QB completions Over | 160 | 78.2% | 69.4% | -8.8 | -2.7 |
+| alt_leg_types / QB passing yards Over | 137 | 75.5% | 68.6% | -6.9 | -1.88 |
+| alt_leg_types / RB rushing yards Over | 121 | 76.9% | 71.9% | -5.0 | -1.3 |
+| alt_leg_types / TE receiving yards Over | 74 | 75.5% | 74.3% | -1.2 | -0.24 |
+| alt_leg_types / QB pass attempts Under | 90 | 76.5% | 68.9% | -7.6 | -1.7 |
+| alt_leg_types / QB completions Under | 163 | 78.9% | 80.4% | +1.5 | 0.47 |
 | alt_leg_types / RB carries Under | 38 | 81.5% | 71.1% | -10.4 | -1.65 |
-| alt_leg_types / Receptions Under (any position) | 519 | 83.0% | 83.4% | +0.4 | 0.24 |
-| alt_leg_types / WR receiving yards Over | 250 | 75.8% | 75.2% | -0.6 | -0.22 |
-| alt_leg_types / Receptions Over (any position) | 206 | 78.1% | 80.6% | +2.5 | 0.87 |
-| teasers (legs) | 404 | 68.5% | 68.8% | +0.3 | 0.13 |
+| alt_leg_types / Receptions Under (any position) | 400 | 83.1% | 82.0% | -1.1 | -0.59 |
+| alt_leg_types / WR receiving yards Over | 194 | 75.7% | 76.3% | +0.6 | 0.19 |
+| alt_leg_types / Receptions Over (any position) | 153 | 77.6% | 79.7% | +2.1 | 0.62 |
+| teasers (legs) | 408 | 68.5% | 68.9% | +0.4 | 0.17 |
 | weather / overs (tickets) | 113 | 47.3% | 41.6% | -5.7 | -1.21 |
 | cross_parlays (tickets) | 6 | 45.0% | 33.3% | -11.7 | -0.58 |
 | cross_parlays (legs) | 18 | 76.7% | 72.2% | -4.5 | -0.45 |
@@ -1388,15 +1388,15 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 
 | Tickets | W-L | At bet-at price | At fair price | At Hard Rock's price |
 |---|---|---|---|---|
-| alt_parlays | 31-41 | -2.01u (-6.1%) over 33 | -10.32u (-14.3%) over 72 | n/a |
-| alt_mix | 6-12 | -5.1u (-56.6%) over 9 | -5.87u (-32.6%) over 18 | n/a |
+| alt_parlays | 31-42 | -3.01u (-8.9%) over 34 | -11.32u (-15.5%) over 73 | n/a |
+| alt_mix | 7-12 | -4.09u (-40.9%) over 10 | -4.99u (-26.3%) over 19 | n/a |
 | alt_ladder | 4-1 | +2.13u (+42.6%) over 5 | +1.67u (+33.3%) over 5 | n/a |
 | cross_parlays | 2-4 | -1.41u (-23.5%) over 6 | -1.53u (-25.5%) over 6 | n/a |
 
 Gates: NFL prop Overs (yardage) paused; NFL receptions props paused; NFL passing-yard Unders paused; NFL longest completion Unders paused; NFL longest completion Overs paused; NFL spreads paused; NFL totals paused
 
 ## NHL
-Updated 1.4 hours ago, odds from odds_api, credits left 155.
+Updated 3.0 hours ago, odds from odds_api, credits left 152.
 
 Prop plays with a closing price since 2026-11-12: 1 of 1, 1 at the same line (the only ones with a closing value).
 
@@ -1450,7 +1450,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NHL points props (Unders) paused; NHL edge parlays paused; NHL moneyline paused; NHL puck line paused; NHL totals paused; NHL shots on goal Overs active; NHL shots on goal Unders active; NHL goals Overs active; NHL assists Overs active; NHL assists Unders active
 
 ## NBA
-Updated 2.4 hours ago, odds from odds_api, credits left 120.
+Updated 2.8 hours ago, odds from odds_api, credits left 113.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1493,7 +1493,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NBA edge parlays active; NBA moneyline paused; NBA spreads paused; NBA totals paused; NBA points Overs active; NBA points Unders active; NBA rebounds Overs active; NBA rebounds Unders active; NBA assists Overs active; NBA assists Unders active; NBA threes Overs active; NBA threes Unders active; NBA pts+reb+ast Overs active; NBA pts+reb+ast Unders active
 
 ## CFB
-Updated 12.7 hours ago, odds from odds_api, credits left 178.
+Updated 4.9 hours ago, odds from odds_api, credits left 175.
 
 Prop plays with a closing price since 2026-11-12: 23 of 37, 8 at the same line (the only ones with a closing value).
 
@@ -1526,7 +1526,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: CFB spreads paused; CFB totals paused; CFB moneyline paused
 
 ## Soccer
-Updated 9.7 hours ago, odds from odds_api, credits left 381.
+Updated 0.3 hours ago, odds from odds_api, credits left 381.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
