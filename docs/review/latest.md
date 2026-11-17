@@ -4,41 +4,41 @@ Flags first (high, then medium, then info). Every number is a graded record from
 
 | Level | Sport | What | Why |
 |---|---|---|---|
-| high | All | late runs: cfb.yml | scheduled runs fired a median 288 min late (worst 546) over 14 runs; pre-game runs may land after games start |
-| high | All | late runs: nba.yml | scheduled runs fired a median 177 min late (worst 483) over 28 runs; pre-game runs may land after games start |
-| high | All | late runs: nhl.yml | scheduled runs fired a median 138 min late (worst 451) over 26 runs; pre-game runs may land after games start |
-| high | All | late runs: review.yml | scheduled runs fired a median 455 min late (worst 455) over 1 runs; pre-game runs may land after games start |
-| high | All | late runs: soccer.yml | scheduled runs fired a median 223 min late (worst 443) over 20 runs; pre-game runs may land after games start |
-| high | All | late runs: weekly.yml | scheduled runs fired a median 335 min late (worst 583) over 15 runs; pre-game runs may land after games start |
+| high | All | late runs: soccer.yml | slots started a median 0 min late (worst 75) over 20 slots, 2 missed; pre-game runs may land after games start |
 | high | CFB | losing: picks / total | 49-67, -22.69u, -19.6% (z -2.22) |
 | high | CFB | said vs hit: calibration / rec | said 49.2%, hit 55.3% over 804 (z 3.46) |
 | high | NBA | losing: picks / ml | 55-69, -25.5u, -20.6% (z -2.41) |
 | high | NFL | said vs hit: alt_leg_types / QB pass attempts Over | said 77.1%, hit 64.0% over 125 (z -3.49) |
 | high | NFL | said vs hit: alt_leg_types / QB completions Over | said 78.2%, hit 70.1% over 157 (z -2.46) |
-| high | NHL | losing: picks / ml | 115-160, -49.56u, -18.0% (z -3.15) |
-| high | NHL | said vs hit: calibration / saves | said 50.0%, hit 33.1% over 510 (z -7.63) |
+| high | NHL | losing: picks / ml | 116-161, -49.65u, -17.9% (z -3.14) |
+| high | NHL | said vs hit: calibration / saves | said 50.0%, hit 32.9% over 513 (z -7.75) |
+| medium | All | backup runs re-ran: cfb.yml | 4 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
+| medium | All | backup runs re-ran: nba.yml | 8 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
+| medium | All | backup runs re-ran: nhl.yml | 6 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
+| medium | All | backup runs re-ran: soccer.yml | 4 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
+| medium | All | backup runs re-ran: weekly.yml | 5 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits |
 | medium | CFB | losing: picks / spread | 50-65, -19.61u, -17.1% (z -1.92) |
 | medium | CFB | losing: picks / ml | 53-57, -10.01u, -9.1% (z -1.0) |
 | medium | CFB | losing: plays | 10-15, -5.97u, -23.9% (z -1.26) |
 | medium | CFB | parlays losing even at the bet-at price: alt | 14-23, -3.97u (-10.7%) at the shortest price the page says to take |
-| medium | CFB | over the change limit | 11 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
-| medium | NBA | over the change limit | 11 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
+| medium | CFB | over the change limit | 12 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
+| medium | NBA | over the change limit | 12 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
 | medium | NBA | diagnosed: pts Unders | plays 9-11 (-15.4%); top cause: Projection bias: results ran 1.69 above the model's middle number on 1167 pts props, while the book's line missed by only +0.10. The model's |
 | medium | NFL | odds credits low | 57 left this month |
 | medium | NFL | said vs hit: tds / Anytime TD / bins / 5 | said 69.8%, hit 77.8% over 27 (z 0.91) |
 | medium | NFL | said vs hit: alt_leg_types / RB carries Under | said 81.5%, hit 71.1% over 38 (z -1.65) |
-| medium | NFL | over the change limit | 15 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
+| medium | NFL | over the change limit | 16 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
 | medium | NFL | diagnosed: pass_yds Overs | plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 65.8% and it hit 51.2% over 80. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: pass_yds Unders | plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 60.9% and it hit 43.9% over 66. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Overs | plays 8-17 (-34.7%); top cause: Overconfidence: the model gave the bet side 52.3% and it hit 32.0% over 25. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Unders | plays 10-11 (-13.7%); top cause: Role / volume: lines over 2.5 did much worse (30.0% vs 63.6%). High lines are stars the market prices sharply; the model adds little there. |
 | medium | NFL | diagnosed: rec_yds Overs | plays 21-18 (2.0%); top cause: No flaw found, and the plays are at break-even or better. If this type is paused, the gate's shadow record decides when it comes back (40+ g |
 | medium | NFL | diagnosed: rush_yds Overs | plays 2-4 (-37.5%); top cause: Overconfidence: the model gave the bet side 70.8% and it hit 44.6% over 231. Shrink this prop type's chance toward the book's (betrules real |
-| medium | NHL | losing: picks / pl | 133-142, -27.99u, -10.2% (z -1.78) |
-| medium | NHL | losing: picks / total | 131-144, -26.1u, -9.5% (z -1.66) |
+| medium | NHL | losing: picks / pl | 134-143, -28.65u, -10.3% (z -1.81) |
+| medium | NHL | losing: picks / total | 131-146, -28.1u, -10.1% (z -1.78) |
 | medium | NHL | said vs hit: alt_ladder (tickets) | said 57.8%, hit 65.9% over 44 (z 1.09) |
 | medium | NHL | said vs hit: alt_hr (tickets) | said 66.0%, hit 56.5% over 23 (z -0.96) |
-| medium | NHL | over the change limit | 12 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
+| medium | NHL | over the change limit | 13 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
 | medium | NHL | diagnosed: points Overs | plays 5-17 (-32.7%); top cause: No single cause stands out: the losses look like the model having no edge on this prop type rather than one fixable flaw. Keep it paused (sh |
 | medium | NHL | diagnosed: points Unders | plays 106-104 (-4.8%); top cause: Overconfidence: the model gave the bet side 55.7% and it hit 34.2% over 38. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | Soccer | losing: picks / total | 51-59, -17.2u, -15.6% (z -1.73) |
@@ -48,7 +48,7 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | Soccer | losing: picks_by_league / champ / total | 19-30, -12.71u, -25.9% (z -1.91) |
 | medium | Soccer | losing: picks_by_league / laliga / ah | 13-17, -4.85u, -16.2% (z -0.93) |
 | medium | Soccer | said vs hit: cross_parlays (legs) | said 80.4%, hit 88.9% over 36 (z 1.28) |
-| medium | Soccer | over the change limit | 8 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
+| medium | Soccer | over the change limit | 9 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
 | info | NFL | winning: live_record / picks / moneyline | 64-36, +8.14u, +8.1% (z 0.86) |
 
 ## Drawdowns and baselines
@@ -71,9 +71,9 @@ Every bet record in betting order (worst drop from a high point, longest losing 
 |---|---|---|---|
 | NFL | moneyline leans | 84 bets, +8.14u (9.7%) | always the favorite: 84 bets, +3.97u (4.7%) |
 | NFL | prop plays | 161 bets, -0.03u (-0.0%) | every lean of the same types: 2163 bets, -47.71u (-2.2%) |
-| NHL | moneyline leans | 275 bets, -49.56u (-18.0%) | always the favorite: 275 bets, +7.23u (2.6%) |
+| NHL | moneyline leans | 277 bets, -49.65u (-17.9%) | always the favorite: 277 bets, +5.23u (1.9%) |
 | NHL | moneyline plays | 23 bets, +4.47u (19.4%) | always the favorite: 23 bets, -3.02u (-13.1%) |
-| NHL | prop plays | 446 bets, -16.43u (-3.7%) | every lean of the same types: 5281 bets, -181.68u (-3.4%) |
+| NHL | prop plays | 446 bets, -16.43u (-3.7%) | every lean of the same types: 5315 bets, -181.66u (-3.4%) |
 | NBA | moneyline leans | 124 bets, -25.5u (-20.6%) | always the favorite: 124 bets, +7.33u (5.9%) |
 | NBA | moneyline plays | 3 bets, -3.0u (-100.0%) | always the favorite: 3 bets, +0.38u (12.8%) |
 | NBA | prop plays | 75 bets, -0.53u (-0.7%) | every lean of the same types: 1623 bets, -35.41u (-2.2%) |
@@ -83,17 +83,18 @@ Every bet record in betting order (worst drop from a high point, longest losing 
 | Soccer | moneyline leans | 107 bets, -7.91u (-7.4%) | always the favorite: 107 bets, +0.08u (0.1%) |
 | Soccer | moneyline plays | 4 bets, -0.4u (-10.0%) | always the favorite: 4 bets, +1.31u (32.8%) |
 
-### Scheduled runs: how late they fired (last 7 days)
+### Scheduled runs: how late each slot started (last 7 days)
 
-| Workflow | Runs | Median delay | Worst |
-|---|---|---|---|
-| cfb.yml | 14 | 288 min | 546 min |
-| clock.yml | 23 | 33 min | 57 min |
-| nba.yml | 28 | 177 min | 483 min |
-| nhl.yml | 26 | 138 min | 451 min |
-| review.yml | 1 | 455 min | 455 min |
-| soccer.yml | 20 | 223 min | 443 min |
-| weekly.yml | 15 | 335 min | 583 min |
+First run of the workflow after each cron time (the Clock's dispatch, or a backup cron run). "Backups that ran" are late cron runs the guard let through: they re-run a covered slot and spend credits.
+
+| Workflow | Slots | Median delay | Worst | Missed slots | Backups that ran |
+|---|---|---|---|---|---|
+| cfb.yml | 14 | 0 min | 288 min | 0 | 4 (11-16 23:26, 11-13 20:56, 11-12 21:29, 11-11 21:27) |
+| nba.yml | 28 | 0 min | 329 min | 0 | 8 (11-17 09:42, 11-16 08:32, 11-15 08:24, 11-14 07:58) |
+| nhl.yml | 28 | 0 min | 132 min | 0 | 6 (11-17 10:39, 11-16 09:34, 11-15 09:18, 11-14 08:56) |
+| review.yml | 1 | 0 min | 0 min | 0 | 0 |
+| soccer.yml | 20 | 0 min | 75 min | 2 (11-10 13:40, 11-10 18:55) | 4 (11-17 02:26, 11-12 21:03, 11-10 23:49, 11-10 20:34) |
+| weekly.yml | 15 | 0 min | 290 min | 0 | 5 (11-16 22:50, 11-16 06:09, 11-13 20:26, 11-12 20:44) |
 
 
 ## Prop diagnoses
@@ -1304,7 +1305,7 @@ Plays 9-11 (-3.08u, -15.4%); every Under lean 483-420 (-0.1%). Checks use plays.
 
 
 ## NFL
-Updated 11.2 hours ago, odds from odds_api, credits left 57.
+Updated 13.0 hours ago, odds from odds_api, credits left 57.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1395,16 +1396,16 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NFL prop Overs (yardage) paused; NFL receptions props paused; NFL passing-yard Unders paused; NFL longest completion Unders paused; NFL longest completion Overs paused; NFL spreads paused; NFL totals paused
 
 ## NHL
-Updated 8.0 hours ago, odds from odds_api, credits left 158.
+Updated 1.4 hours ago, odds from odds_api, credits left 155.
 
-Prop plays with a closing price since 2026-11-12: 1 of 1.
+Prop plays with a closing price since 2026-11-12: 1 of 1, 1 at the same line (the only ones with a closing value).
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
 | prop_plays | 225-221 | 50.4% | -16.43 | -3.7% | -0.82 |
-| picks / ml | 115-160 | 41.8% | -49.56 | -18.0% | -3.15 |
-| picks / pl | 133-142 | 48.4% | -27.99 | -10.2% | -1.78 |
-| picks / total | 131-144 | 47.6% | -26.1 | -9.5% | -1.66 |
+| picks / ml | 116-161 | 41.9% | -49.65 | -17.9% | -3.14 |
+| picks / pl | 134-143 | 48.4% | -28.65 | -10.3% | -1.81 |
+| picks / total | 131-146 | 47.3% | -28.1 | -10.1% | -1.78 |
 | by_type / prop / points|Under | 106-104 | 50.5% | -10.14 | -4.8% | -0.73 |
 | by_type / prop / sog|Under | 92-86 | 51.7% | -3.87 | -2.2% | -0.31 |
 | plays | 32-31 | 50.8% | 4.02 | 6.4% | 0.53 |
@@ -1420,13 +1421,13 @@ Prop plays with a closing price since 2026-11-12: 1 of 1.
 
 | Said vs hit | n | Said | Hit | Gap | z |
 |---|---|---|---|---|---|
-| calibration / sog | 9310 | 49.7% | 48.6% | -1.1 | -2.12 |
-| calibration / goals | 9310 | 15.6% | 15.5% | -0.1 | -0.27 |
-| calibration / assists | 9310 | 22.8% | 24.9% | +2.1 | 4.83 |
-| calibration / points | 9310 | 33.2% | 35.7% | +2.5 | 5.12 |
-| calibration / saves | 510 | 50.0% | 33.1% | -16.9 | -7.63 |
-| alt (tickets) | 172 | 50.3% | 51.7% | +1.4 | 0.37 |
-| alt_mix (tickets) | 158 | 49.3% | 51.3% | +2.0 | 0.5 |
+| calibration / sog | 9378 | 49.7% | 48.6% | -1.1 | -2.13 |
+| calibration / goals | 9378 | 15.6% | 15.5% | -0.1 | -0.27 |
+| calibration / assists | 9378 | 22.8% | 24.9% | +2.1 | 4.85 |
+| calibration / points | 9378 | 33.2% | 35.6% | +2.4 | 4.94 |
+| calibration / saves | 513 | 50.0% | 32.9% | -17.1 | -7.75 |
+| alt (tickets) | 174 | 50.3% | 52.3% | +2.0 | 0.53 |
+| alt_mix (tickets) | 160 | 49.3% | 51.2% | +1.9 | 0.48 |
 | alt_ladder (tickets) | 44 | 57.8% | 65.9% | +8.1 | 1.09 |
 | alt_hr (tickets) | 23 | 66.0% | 56.5% | -9.5 | -0.96 |
 | alt_old (tickets) | 48 | 46.2% | 39.6% | -6.6 | -0.92 |
@@ -1439,8 +1440,8 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 
 | Tickets | W-L | At bet-at price | At fair price | At Hard Rock's price |
 |---|---|---|---|---|
-| alt | 89-83 | +8.44u (+6.8%) over 124 | +6.04u (+3.5%) over 172 | n/a |
-| alt_mix | 81-77 | +15.53u (+12.1%) over 128 | +6.76u (+4.3%) over 158 | n/a |
+| alt | 91-83 | +10.72u (+8.5%) over 126 | +8.04u (+4.6%) over 174 | n/a |
+| alt_mix | 82-78 | +15.64u (+12.0%) over 130 | +6.73u (+4.2%) over 160 | n/a |
 | alt_ladder | 29-15 | +9.72u (+22.1%) over 44 | +6.23u (+14.2%) over 44 | n/a |
 | alt_hr | 13-10 | n/a | -3.1u (-13.5%) over 23 | n/a |
 | alt_old | 19-29 | n/a | -6.7u (-14.0%) over 48 | n/a |
@@ -1449,7 +1450,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NHL points props (Unders) paused; NHL edge parlays paused; NHL moneyline paused; NHL puck line paused; NHL totals paused; NHL shots on goal Overs active; NHL shots on goal Unders active; NHL goals Overs active; NHL assists Overs active; NHL assists Unders active
 
 ## NBA
-Updated 0.6 hours ago, odds from odds_api, credits left 120.
+Updated 2.4 hours ago, odds from odds_api, credits left 120.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1492,9 +1493,9 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NBA edge parlays active; NBA moneyline paused; NBA spreads paused; NBA totals paused; NBA points Overs active; NBA points Unders active; NBA rebounds Overs active; NBA rebounds Unders active; NBA assists Overs active; NBA assists Unders active; NBA threes Overs active; NBA threes Unders active; NBA pts+reb+ast Overs active; NBA pts+reb+ast Unders active
 
 ## CFB
-Updated 10.8 hours ago, odds from odds_api, credits left 178.
+Updated 12.7 hours ago, odds from odds_api, credits left 178.
 
-Prop plays with a closing price since 2026-11-12: 23 of 37.
+Prop plays with a closing price since 2026-11-12: 23 of 37, 8 at the same line (the only ones with a closing value).
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1525,7 +1526,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: CFB spreads paused; CFB totals paused; CFB moneyline paused
 
 ## Soccer
-Updated 7.8 hours ago, odds from odds_api, credits left 381.
+Updated 9.7 hours ago, odds from odds_api, credits left 381.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|

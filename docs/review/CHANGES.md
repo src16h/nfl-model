@@ -2,6 +2,63 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-17 (weekly review)
+Every sport was over the 3-change limit from the Nov 10-11 by-hand changes (NFL 15, NHL 12, CFB 11, NBA 11, Soccer 8),
+so this week changes only what was broken (pipes and the scorecard). Everything else found is under Watch with numbers.
+Bet price stays Hard Rock per RULES.md; the scheduled review prompt still says DraftKings Predictions (raised again).
+
+Changes:
+- All (pipes) | the guard job in nfl / nhl / nba / cfb / soccer workflows also skips a scheduled (backup) run while the Clock chain is alive (a clock.yml dispatch run in progress, or one that succeeded in the last 30 minutes) | GitHub's cron fired 6.0-9.7 hours late all week, past the guard's 6-hour window, so 27 backups re-ran a slot the Clock had already run (NHL 6, NBA 8, NFL 5, CFB 4, Soccer 2; each committed and pulled odds); the Clock itself started 98 slots 2-3 seconds late with none missed since Nov 11 and no gap in its chain | no duplicate runs, fewer odds credits spent; if the Clock chain breaks, the old 6-hour / 1-hour checks still apply | look again on 2026-11-24 (scorecard column "Backups that ran" should read 0 after today)
+- Tools | scorecard: lateness measured per slot (first run of any trigger after each cron time, missed slots, backups that ran the model) instead of cron runs only; prop closing prices show how many closed at the same line (tools/records_check.py, tools/weekly_review.py) | the "late runs" high flags (median 138-335 min) measured only the backup cron runs, which since Nov 10 are meant to be late and skipped; CFB's "23 of 37 priced" counted 15 line moves, which carry no closing value (clv.prop_clv), so only 8 of 37 can feed a closing-value gate | honest pipes numbers | n/a
+
+Alt parlays (owner flag), updated with this week's results (raw history, the site's own grading):
+- NFL alt_parlay tickets 71 graded: said 50.4, hit 43.7 (z -1.1); v2 (gate on) 32: 55.4 / 50.0; week 10: 13 tickets, said 54.0, hit 38.5. alt_mix 18: 50.9 / 33.3 (week 10 2 of 9). alt_ladder 5: 60.0 / 80.0. Units at the fair price: alt_parlay -14.3% (72), at the bet-at price -6.1% (33).
+- NFL ticket legs 365: alt_parlay 264 legs said 82.6 hit 79.5. By type: RB rushing yds Over 88.1 / 74.4 (39), QB completions Over 82.5 / 65.7 (35; week 10 alone 80.3 / 54.2 over 24), TE rec yds 81.8 / 68.8 (16), QB pass yds Over 81.4 / 78.6 (42), WR rec yds 81.2 / 83.6 (61), receptions Over WR 82.9 / 81.8 (44), TE 83.7 / 83.8 (37), WR receptions Under 85.5 / 95.5 (22).
+- NFL by leg chance: 85-90% legs said 87.3, hit 77.4 (124, z -3.3; RB rushing 88.1/72.7, QB completions 87.1/45.5); other bands within 3.5 points. By line vs the player's median: lines at 0.5-0.8 of the median said 82, hit 71 (157); below 0.5 on target (86.2 vs 85.7, 116). By leg count (all kinds): 3 legs 53.5 / 50.0 (26), 4 legs 49.7 / 41.5 (53), 5 legs 51.4 / 40.0 (15); 4+ legs together said 50.1, hit 41.2 over 68 (meets the 8-point / 20-ticket bar; NFL is over the change limit, so Watch, first in line next week). By ticket price: no pattern.
+- NFL correlation: tickets hit 43.7% vs 44.9% from the product of the leg types' real hit rates; misses per ticket 31/26/14 vs 31.9/27.7/9.8/1.5 if independent. A few more two-miss tickets than independence, but the ticket rate matches the real leg rates: the shortfall is overconfident leg types, not legs failing together.
+- NFL out of sample (walk-forward by week, types judged on earlier weeks only): tickets of only on-target types vs the rest flip sign with the settings (on-target -15.9% / -9.2% / -19.5% at fair odds vs -10.0% / -21.7% / -3.3%), so no evidence that filter helps. 3-leg cap: 26 tickets 50.0% (-5.3%) vs 4+ legs 55 tickets 41.8% (-18.5%).
+- NFL QB passing / RB rushing Over (owner's (d)): the Nov 10 book anchor is the fix and its first out-of-sample week held: eligible lines in week 10 QB pass yds said 75.1, hit 75.7 (37), RB rushing said 76.7, hit 75.8 (33) (weeks 7-9: QB about 75 / 68.7, RB 77 / 71.5). Both stay off until the gate's restore bar; one good week loosens nothing.
+- NFL QB completions Over (back Nov 10 by owner correction): same cause as yardage before the anchor: the model's completions median sat above Hard Rock's main line on 20 of 24 week-10 ticket legs (+1.0 on average) while results landed 1.5 below the main. The leg-type gate turned the type off by itself (157 lines: said 78.2, hit 70.1). Attempts Over stay off (64.0 vs 77.1 over 125).
+- NHL (subagent re-grade matched latest.json exactly): alt 174: 50.3 / 52.3 (Nov 10-16: 45, 49.7 / 51.1); alt_mix 160: 49.3 / 51.2; alt_ladder 44: 57.8 / 65.9 (Nov 10-16: 24, 57.6 / 75.0; meets the 8-point bar the safe way: hits more than said); alt_hr (retired) 23: 66.0 / 56.5; alt_old (retired) 48: 46.2 / 39.6; cross 30: 48.4 / 50.0. Legs pooled 1,458: 83.3 / 83.6. Correlation: alt 52.3 hit vs 51.6 from real leg rates; misses 91/65/16/2 vs 84/68/20/2.5. Out of sample, on-target-only and 3-leg cap both did worse (126 tickets 50.0% vs 52.3%; 37 tickets 45.9% vs 54.0% for 4+), because the types they drop hit more than said.
+- NBA: player-only 15: 49.4 / 46.7; alt_mix 67: 53.5 / 58.2 (legs 246: 81.8 / 84.6); cross 30: 44.7 / 43.3 (legs 90: 76.5 / 73.3; Nov 10-16 14 tickets 35.7%).
+- CFB (alt tickets off since Nov 11): 85: 46.2 / 44.7, -2.3u fair; rushing legs 79.6 / 63.2 (38). Teaser legs 728: 65.6 / 66.8.
+- Soccer: same-game 60: 47.7 / 48.3 (legs 74.2 / 73.9); cross 12: 51.8 / 66.7. No tickets graded this week (international break; next Nov 21-23).
+- Bettability: NBA legs since Nov 10 within ALT_MAX_DROP and the posted ladders (0 violations; one leg's player averaged 18.7 minutes over 10 games vs the 20-minute rule). NHL: 107 legs are shots Over 0.5 under a 2.5 main and 26 are +2.5 puck lines, neither confirmed at Hard Rock; none of the 36 NHL or 48 NBA cross-game legs has a Hard Rock price in the feed; soccer legs (totals, team totals, handicaps) still unconfirmed at Hard Rock. Needs the owner (see the report).
+
+Diagnosed (no change):
+- NFL Anytime TD list (the Touchdowns tab's "Anytime TD plays", marked "Not official Plays" but shown with stakes and a log button): locked since week 8, 23-137 (14.4%) vs model 24.4% and book 20.6%, -29.9u (-18.7%, return z -0.94) over 160. Past the 150-play backstop and overconfident (hit-rate z -2.9), worst on RBs (6-28, -53.9%). The wider set judged at the last logged price (weeks 4-10, model above book) is 108-383, +6.0% over 491, so the loss is recent and partly luck at long odds. Not plays, no gate, NFL over the change limit: Watch, and the owner is told not to treat the list as bets. Fix to test next week: shrink the TD chance toward the book before the list is built (winner's curse: the model is above the book where it is most wrong), with a walk-forward on weeks 4-10.
+- NBA points Unders (plays 9-11, none since Nov 5): results land above the model's fair line 56.1% of the time over 1,167 (z 4.2), +1.69 points, while the book's line is level (+0.10). In 2025 (nba_props_check) the model ran the other way (Overs at fair 47.8%), so this is an early-2026 level shift, not a standing bias. Every Under lean is break-even (483-420, -0.1%). Fixing the level is a model change (walk-forward needed, NBA over the limit). Watch.
+- NHL prop plays nearly stopped (2 since Nov 6): the realization factor (claimed vs realized edge on leans) fell from about 0.76-0.95 in late October to 0.55-0.68 since Nov 7, so edges in the 7-12 window now read -2 to -3% at Hard Rock's price (1 a night clears 2.5%). That is the self-calibration saying the edges aren't real; working as designed. Points props stay paused (0 shadow plays since Oct 21; no edge).
+- NFL rushing / passing / receptions prop types: unchanged from Nov 10 (no new plays; paused gates have 0-1 shadow plays).
+- Pooled game-play gate: paused since Nov 7 (31 priced, -5.9%, z -3.05); 5 of 40 priced shadow plays since Nov 12, -0.89%. The NFL IND -3.5 play locked Nov 12 13:07 is not a leak: at that run the pooled rows held 20 plays (soccer's were added later), so the pause date is set after the fact.
+
+Last week's changes:
+- Nov 10 Clock: kept. 98 slots started 2-3 seconds after their cron time, no missed slot since Nov 11, no gap in the chain; the duplicate backups it left are fixed above.
+- Nov 11 NHL 9:15pm ET run (item 14): kept; the 02:15 UTC slot ran every day from Nov 12.
+- Nov 11 CFB prop fetch times: kept. 23 of 37 CFB prop plays since Nov 12 got a later price (was 0 of 191), but 15 are line moves; 8 same-line closes average -6.1% at the close. Watch.
+- Nov 11 NHL / NBA closing pulls first: kept. NHL 1 of 1 since Nov 12 (+3.3 points), no debt owed; NBA has had no prop play since Nov 5, so nothing to price. Can't be judged on this sample.
+- Nov 10 NFL odds credits: adjusted by circumstance, not by code. 181 -> 57 credits over week 10 (124 used, including 5 duplicate backup runs, now fixed). Lines stop below 120 and alt pulls below 90, so live lines and alt pulls are already off for the month; props get about 30 more credits before the 25 reserve. Needs the owner.
+- Nov 10 NFL completions / attempts legs back (owner correction): kept as bettable; completions Over turned off by the gate after week 10 (above). 
+- Nov 10 NFL full alt ladder back (owner correction): kept.
+- Nov 10 CFB props only where Hard Rock posted the player's line: kept; CFB props 27-10 (+37.7%) since Nov 12 (thin, no closing value on most).
+- Nov 3 NHL 16+ minute forwards: kept. Shot legs: under 14 min 78.6 / 75.9 (54), 14-17 82.7 / 82.0 (339), 20+ 87.9 / 94.1 (85); NHL alt legs Nov 10-16 82.0 / 85.5 (165).
+- Oct 31 cross-game parlays (legs shaded -0.10): kept. All cross legs about 78.0 said / 77.8 hit over 234; NHL cross legs Nov 10-16 78.2 / 63.3 (30) is the one soft spot.
+- Oct 31 CFB play rules: kept. Early totals 8-11 (-20.4%, z -0.9), 19 of 19 priced, +0.48 points at the close but -3.4% value; backtest 4+ gap 246-176 (58.3%). Its gate decides at 30 priced.
+
+Watch:
+- Credits (Nov 17): NFL 57 (props only, about 4 games' worth until Dec 1), NBA 120 (191 used last week, ~9 a day left), NHL 155 (178 used last week), CFB 178 (165 used last week), Soccer 381 (no pulls during the break; lines last pulled Nov 6-8).
+- NFL 4+ leg alt tickets: said 50.1, hit 41.2 over 68 (bar met); recalibrate the ticket chance halfway or cap at 3 legs next week if it holds.
+- NFL alt_mix: 18 tickets 50.9 / 33.3; legs 84.2 / 73.7 (76).
+- NFL QB completions Over alt legs: extend the book anchor (ALT_ANCHOR_STATS) to completions with a walk-forward before the gate brings them back.
+- NFL Anytime TD list: above. NFL TD plays never get a closing price (0 of 160).
+- NHL alt_ladder tickets hit more than said (65.9 vs 57.8, 44); harmless to the bettor; recalibrate up only if it holds past 60 tickets.
+- NBA points level (+1.69, above); rebounds / assists fair-line calibration +4.4 to +4.5; NBA ML plays 0-8 (-11.4% at the close), now blocked by the +250 cap and the 6-point Pinnacle rule.
+- NHL saves calibration said 50.0, hit 32.9 (513), blocked from plays and legs.
+- CFB receptions calibration said 49.2, hit 55.3 (804): known zero-catch gap. CFB early totals gate at 20 priced, -3.4%.
+- Soccer: Understat (xG feed) has shown a maintenance page since at least Nov 16; the model falls back to shot-based xG for matches after Nov 1. Recheck before the Nov 21 fixtures. 1X2 plays 19 priced at -5.7% at the close.
+- NHL roster warning for ARI (old team code kept for past seasons): harmless.
+- Tests workflow: three runs from Nov 11 still "queued" with no jobs (GitHub ghosts); cancel them by hand if they ever block.
+
 ## 2026-11-11 (by hand, owner request: save Hard Rock's real ticket price)
 - All | new "Log ticket price" workflow (.github/workflows/ticket_price.yml, tools/log_ticket_price.py): sport, ticket type, one team, Hard Rock's price and the game date go into data/ticket_prices.csv. parlaymoney.attach_prices matches each logged price to one ticket (same sport and type, that team, the first such ticket on or after the date, within 7 days) and grades it at that price ("at Hard Rock" in every ticket record and in the weekly review's units table). Each sport's Parlays tab links to the form | Hard Rock's same-game price isn't in The Odds API feed, so the real return of a ticket was unknown; only 1 of all graded tickets had a real price | real units for every ticket the owner logs | look again on 2026-11-24 (how many tickets have a logged price)
 

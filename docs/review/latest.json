@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-11-17T10:17+00:00",
+ "generated_at": "2026-11-17T12:06+00:00",
  "sports": {
   "NFL": {
-   "age_h": 11.2,
+   "age_h": 13.0,
    "credits_left": 57,
    "odds_source": "odds_api",
    "records": [
@@ -889,44 +889,45 @@
     "since": "2026-11-12",
     "plays": 0,
     "priced": 0,
+    "same_line": 0,
     "missed_last_run": null,
     "owed": null
    }
   },
   "NHL": {
-   "age_h": 8.0,
-   "credits_left": 158,
+   "age_h": 1.4,
+   "credits_left": 155,
    "odds_source": "odds_api",
    "records": [
     {
      "what": "picks / ml",
-     "w": 115,
-     "l": 160,
-     "n": 275,
-     "pct": 41.8,
-     "units": -49.56,
-     "roi": -18.0,
-     "z": -3.15
+     "w": 116,
+     "l": 161,
+     "n": 277,
+     "pct": 41.9,
+     "units": -49.65,
+     "roi": -17.9,
+     "z": -3.14
     },
     {
      "what": "picks / pl",
-     "w": 133,
-     "l": 142,
-     "n": 275,
+     "w": 134,
+     "l": 143,
+     "n": 277,
      "pct": 48.4,
-     "units": -27.99,
-     "roi": -10.2,
-     "z": -1.78
+     "units": -28.65,
+     "roi": -10.3,
+     "z": -1.81
     },
     {
      "what": "picks / total",
      "w": 131,
-     "l": 144,
-     "n": 275,
-     "pct": 47.6,
-     "units": -26.1,
-     "roi": -9.5,
-     "z": -1.66
+     "l": 146,
+     "n": 277,
+     "pct": 47.3,
+     "units": -28.1,
+     "roi": -10.1,
+     "z": -1.78
     },
     {
      "what": "plays",
@@ -1062,15 +1063,15 @@
    "said_vs_hit": [
     {
      "what": "calibration / sog",
-     "n": 9310,
+     "n": 9378,
      "said": 49.7,
      "hit": 48.6,
      "gap": -1.1,
-     "z": -2.12
+     "z": -2.13
     },
     {
      "what": "calibration / goals",
-     "n": 9310,
+     "n": 9378,
      "said": 15.6,
      "hit": 15.5,
      "gap": -0.1,
@@ -1078,43 +1079,43 @@
     },
     {
      "what": "calibration / assists",
-     "n": 9310,
+     "n": 9378,
      "said": 22.8,
      "hit": 24.9,
      "gap": 2.1,
-     "z": 4.83
+     "z": 4.85
     },
     {
      "what": "calibration / points",
-     "n": 9310,
+     "n": 9378,
      "said": 33.2,
-     "hit": 35.7,
-     "gap": 2.5,
-     "z": 5.12
+     "hit": 35.6,
+     "gap": 2.4,
+     "z": 4.94
     },
     {
      "what": "calibration / saves",
-     "n": 510,
+     "n": 513,
      "said": 50.0,
-     "hit": 33.1,
-     "gap": -16.9,
-     "z": -7.63
+     "hit": 32.9,
+     "gap": -17.1,
+     "z": -7.75
     },
     {
      "what": "alt (tickets)",
-     "n": 172,
+     "n": 174,
      "said": 50.3,
-     "hit": 51.7,
-     "gap": 1.4,
-     "z": 0.37
+     "hit": 52.3,
+     "gap": 2.0,
+     "z": 0.53
     },
     {
      "what": "alt_mix (tickets)",
-     "n": 158,
+     "n": 160,
      "said": 49.3,
-     "hit": 51.3,
-     "gap": 2.0,
-     "z": 0.5
+     "hit": 51.2,
+     "gap": 1.9,
+     "z": 0.48
     },
     {
      "what": "alt_ladder (tickets)",
@@ -1358,22 +1359,22 @@
    "parlay_money": [
     {
      "what": "alt",
-     "n": 172,
-     "hits": 89,
+     "n": 174,
+     "hits": 91,
      "at_bet_at": {
-      "n": 124,
-      "hits": 63,
-      "units": 8.44,
-      "roi": 6.8,
-      "z": 0.72,
+      "n": 126,
+      "hits": 65,
+      "units": 10.72,
+      "roi": 8.5,
+      "z": 0.9,
       "breakeven": 47.7
      },
      "at_fair": {
-      "n": 172,
-      "hits": 89,
-      "units": 6.04,
-      "roi": 3.5,
-      "z": 0.46,
+      "n": 174,
+      "hits": 91,
+      "units": 8.04,
+      "roi": 4.6,
+      "z": 0.61,
       "breakeven": 50.3
      },
      "at_book": {
@@ -1384,22 +1385,22 @@
     },
     {
      "what": "alt_mix",
-     "n": 158,
-     "hits": 81,
+     "n": 160,
+     "hits": 82,
      "at_bet_at": {
-      "n": 128,
-      "hits": 66,
-      "units": 15.53,
-      "roi": 12.1,
+      "n": 130,
+      "hits": 67,
+      "units": 15.64,
+      "roi": 12.0,
       "z": 1.25,
-      "breakeven": 46.1
+      "breakeven": 46.2
      },
      "at_fair": {
-      "n": 158,
-      "hits": 81,
-      "units": 6.76,
-      "roi": 4.3,
-      "z": 0.53,
+      "n": 160,
+      "hits": 82,
+      "units": 6.73,
+      "roi": 4.2,
+      "z": 0.52,
       "breakeven": 49.3
      },
      "at_book": {
@@ -1511,12 +1512,13 @@
     "since": "2026-11-12",
     "plays": 1,
     "priced": 1,
+    "same_line": 1,
     "missed_last_run": null,
     "owed": 0
    }
   },
   "NBA": {
-   "age_h": 0.6,
+   "age_h": 2.4,
    "credits_left": 120,
    "odds_source": "odds_api",
    "records": [
@@ -2273,12 +2275,13 @@
     "since": "2026-11-12",
     "plays": 0,
     "priced": 0,
+    "same_line": 0,
     "missed_last_run": null,
     "owed": 0
    }
   },
   "CFB": {
-   "age_h": 10.8,
+   "age_h": 12.7,
    "credits_left": 178,
    "odds_source": "odds_api",
    "records": [
@@ -2619,12 +2622,13 @@
     "since": "2026-11-12",
     "plays": 37,
     "priced": 23,
+    "same_line": 8,
     "missed_last_run": null,
     "owed": null
    }
   },
   "Soccer": {
-   "age_h": 7.8,
+   "age_h": 9.7,
    "credits_left": 381,
    "odds_source": "odds_api",
    "records": [
@@ -3118,6 +3122,7 @@
     "since": "2026-11-12",
     "plays": 0,
     "priced": 0,
+    "same_line": 0,
     "missed_last_run": null,
     "owed": null
    }
@@ -3127,38 +3132,8 @@
   {
    "sport": "All",
    "level": "high",
-   "what": "late runs: cfb.yml",
-   "why": "scheduled runs fired a median 288 min late (worst 546) over 14 runs; pre-game runs may land after games start"
-  },
-  {
-   "sport": "All",
-   "level": "high",
-   "what": "late runs: nba.yml",
-   "why": "scheduled runs fired a median 177 min late (worst 483) over 28 runs; pre-game runs may land after games start"
-  },
-  {
-   "sport": "All",
-   "level": "high",
-   "what": "late runs: nhl.yml",
-   "why": "scheduled runs fired a median 138 min late (worst 451) over 26 runs; pre-game runs may land after games start"
-  },
-  {
-   "sport": "All",
-   "level": "high",
-   "what": "late runs: review.yml",
-   "why": "scheduled runs fired a median 455 min late (worst 455) over 1 runs; pre-game runs may land after games start"
-  },
-  {
-   "sport": "All",
-   "level": "high",
    "what": "late runs: soccer.yml",
-   "why": "scheduled runs fired a median 223 min late (worst 443) over 20 runs; pre-game runs may land after games start"
-  },
-  {
-   "sport": "All",
-   "level": "high",
-   "what": "late runs: weekly.yml",
-   "why": "scheduled runs fired a median 335 min late (worst 583) over 15 runs; pre-game runs may land after games start"
+   "why": "slots started a median 0 min late (worst 75) over 20 slots, 2 missed; pre-game runs may land after games start"
   },
   {
    "sport": "CFB",
@@ -3194,13 +3169,43 @@
    "sport": "NHL",
    "level": "high",
    "what": "losing: picks / ml",
-   "why": "115-160, -49.56u, -18.0% (z -3.15)"
+   "why": "116-161, -49.65u, -17.9% (z -3.14)"
   },
   {
    "sport": "NHL",
    "level": "high",
    "what": "said vs hit: calibration / saves",
-   "why": "said 50.0%, hit 33.1% over 510 (z -7.63)"
+   "why": "said 50.0%, hit 32.9% over 513 (z -7.75)"
+  },
+  {
+   "sport": "All",
+   "level": "medium",
+   "what": "backup runs re-ran: cfb.yml",
+   "why": "4 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"
+  },
+  {
+   "sport": "All",
+   "level": "medium",
+   "what": "backup runs re-ran: nba.yml",
+   "why": "8 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"
+  },
+  {
+   "sport": "All",
+   "level": "medium",
+   "what": "backup runs re-ran: nhl.yml",
+   "why": "6 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"
+  },
+  {
+   "sport": "All",
+   "level": "medium",
+   "what": "backup runs re-ran: soccer.yml",
+   "why": "4 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"
+  },
+  {
+   "sport": "All",
+   "level": "medium",
+   "what": "backup runs re-ran: weekly.yml",
+   "why": "5 late cron runs ran the model; when the Clock already ran that slot this is a duplicate that spends odds credits"
   },
   {
    "sport": "CFB",
@@ -3230,13 +3235,13 @@
    "sport": "CFB",
    "level": "medium",
    "what": "over the change limit",
-   "why": "11 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+   "why": "12 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
   },
   {
    "sport": "NBA",
    "level": "medium",
    "what": "over the change limit",
-   "why": "11 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+   "why": "12 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
   },
   {
    "sport": "NBA",
@@ -3266,7 +3271,7 @@
    "sport": "NFL",
    "level": "medium",
    "what": "over the change limit",
-   "why": "15 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+   "why": "16 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
   },
   {
    "sport": "NFL",
@@ -3308,13 +3313,13 @@
    "sport": "NHL",
    "level": "medium",
    "what": "losing: picks / pl",
-   "why": "133-142, -27.99u, -10.2% (z -1.78)"
+   "why": "134-143, -28.65u, -10.3% (z -1.81)"
   },
   {
    "sport": "NHL",
    "level": "medium",
    "what": "losing: picks / total",
-   "why": "131-144, -26.1u, -9.5% (z -1.66)"
+   "why": "131-146, -28.1u, -10.1% (z -1.78)"
   },
   {
    "sport": "NHL",
@@ -3332,7 +3337,7 @@
    "sport": "NHL",
    "level": "medium",
    "what": "over the change limit",
-   "why": "12 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+   "why": "13 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
   },
   {
    "sport": "NHL",
@@ -3392,7 +3397,7 @@
    "sport": "Soccer",
    "level": "medium",
    "what": "over the change limit",
-   "why": "8 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+   "why": "9 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
   },
   {
    "sport": "NFL",
@@ -3402,11 +3407,11 @@
   }
  ],
  "changes_7d": {
-  "NFL": 15,
-  "NHL": 12,
-  "NBA": 11,
-  "CFB": 11,
-  "Soccer": 8
+  "NFL": 16,
+  "NHL": 13,
+  "NBA": 12,
+  "CFB": 12,
+  "Soccer": 9
  },
  "diagnoses": [
   {
@@ -4800,14 +4805,14 @@
     "baselines": {
      "moneyline leans": {
       "model": {
-       "n": 275,
-       "units": -49.56,
-       "roi": -18.0
+       "n": 277,
+       "units": -49.65,
+       "roi": -17.9
       },
       "always the favorite": {
-       "n": 275,
-       "units": 7.23,
-       "roi": 2.6
+       "n": 277,
+       "units": 5.23,
+       "roi": 1.9
       }
      },
      "moneyline plays": {
@@ -4829,8 +4834,8 @@
        "roi": -3.7
       },
       "every lean of the same types": {
-       "n": 5281,
-       "units": -181.68,
+       "n": 5315,
+       "units": -181.66,
        "roi": -3.4
       }
      }
@@ -4993,39 +4998,81 @@
   },
   "late_runs": {
    "cfb.yml": {
-    "runs": 14,
-    "median_min": 288,
-    "worst_min": 546
-   },
-   "clock.yml": {
-    "runs": 23,
-    "median_min": 33,
-    "worst_min": 57
+    "slots": 14,
+    "median_min": 0,
+    "worst_min": 288,
+    "missed": [],
+    "backups_ran": [
+     "11-16 23:26",
+     "11-13 20:56",
+     "11-12 21:29",
+     "11-11 21:27"
+    ]
    },
    "nba.yml": {
-    "runs": 28,
-    "median_min": 177,
-    "worst_min": 483
+    "slots": 28,
+    "median_min": 0,
+    "worst_min": 329,
+    "missed": [],
+    "backups_ran": [
+     "11-17 09:42",
+     "11-16 08:32",
+     "11-15 08:24",
+     "11-14 07:58",
+     "11-13 08:42",
+     "11-12 08:48",
+     "11-11 08:20",
+     "11-10 21:51"
+    ]
    },
    "nhl.yml": {
-    "runs": 26,
-    "median_min": 138,
-    "worst_min": 451
+    "slots": 28,
+    "median_min": 0,
+    "worst_min": 132,
+    "missed": [],
+    "backups_ran": [
+     "11-17 10:39",
+     "11-16 09:34",
+     "11-15 09:18",
+     "11-14 08:56",
+     "11-13 09:28",
+     "11-12 09:46"
+    ]
    },
    "review.yml": {
-    "runs": 1,
-    "median_min": 455,
-    "worst_min": 455
+    "slots": 1,
+    "median_min": 0,
+    "worst_min": 0,
+    "missed": [],
+    "backups_ran": []
    },
    "soccer.yml": {
-    "runs": 20,
-    "median_min": 223,
-    "worst_min": 443
+    "slots": 20,
+    "median_min": 0,
+    "worst_min": 75,
+    "missed": [
+     "11-10 13:40",
+     "11-10 18:55"
+    ],
+    "backups_ran": [
+     "11-17 02:26",
+     "11-12 21:03",
+     "11-10 23:49",
+     "11-10 20:34"
+    ]
    },
    "weekly.yml": {
-    "runs": 15,
-    "median_min": 335,
-    "worst_min": 583
+    "slots": 15,
+    "median_min": 0,
+    "worst_min": 290,
+    "missed": [],
+    "backups_ran": [
+     "11-16 22:50",
+     "11-16 06:09",
+     "11-13 20:26",
+     "11-12 20:44",
+     "11-11 20:08"
+    ]
    }
   }
  }
