@@ -232733,7 +232733,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -232771,7 +232777,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -232809,7 +232821,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -232847,7 +232865,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+500",
@@ -232892,7 +232916,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -232930,7 +232960,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -232968,7 +233004,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233006,7 +233048,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+525",
@@ -233051,7 +233099,14 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00",
+    "snap_checked": true
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233089,7 +233144,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+425",
@@ -233134,7 +233195,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233172,7 +233239,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233210,7 +233283,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+450",
@@ -233255,7 +233334,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233293,7 +233378,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233331,7 +233422,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233369,7 +233466,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 3.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+300",
@@ -233414,7 +233517,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": {
     "odds": "+325",
@@ -233459,7 +233568,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 49.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233497,7 +233612,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 18.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233535,7 +233656,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 33.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233573,7 +233700,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 12.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233611,7 +233744,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 340.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233649,7 +233788,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 129.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233687,7 +233832,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 82.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233725,7 +233876,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 42.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233763,7 +233920,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 34.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233801,7 +233964,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233839,7 +234008,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 14.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233877,7 +234052,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233915,7 +234096,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 37.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233953,7 +234140,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 74.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -233991,7 +234184,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 61.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234029,7 +234228,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 10.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234067,7 +234272,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 8.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234105,7 +234316,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234143,7 +234360,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 6.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234181,7 +234404,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234219,7 +234448,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 5.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234257,7 +234492,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234295,7 +234536,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.606,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234333,7 +234580,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234371,7 +234624,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234409,7 +234668,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 3.0,
+    "outcome": "Over",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234447,7 +234712,13 @@
    "first_lean": "Under",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "win",
+    "profit": 0.909,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234485,7 +234756,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 2.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234523,7 +234800,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 51.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234561,7 +234844,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 10.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234599,7 +234888,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234637,7 +234932,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 4.0,
+    "outcome": "Under",
+    "lean_result": "loss",
+    "profit": -1.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234675,7 +234976,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234713,7 +235020,13 @@
    "first_lean": "Over",
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 105.0,
+    "outcome": "Over",
+    "lean_result": "win",
+    "profit": 0.87,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234751,7 +235064,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 2.0,
+    "outcome": "Over",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234789,7 +235108,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234827,7 +235152,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234865,7 +235196,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234903,7 +235240,14 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": null,
+    "outcome": "Void",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00",
+    "snap_checked": true
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234941,7 +235285,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -234979,7 +235329,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235017,7 +235373,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235055,7 +235417,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235093,7 +235461,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235131,7 +235505,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235169,7 +235549,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235207,7 +235593,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235245,7 +235637,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235283,7 +235681,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 1.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235321,7 +235725,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235359,7 +235769,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
@@ -235397,7 +235813,13 @@
    "first_lean": null,
    "logged_at": "2026-11-15T19:40+00:00",
    "updated_at": "2026-11-16T23:07+00:00",
-   "result": null,
+   "result": {
+    "actual": 0.0,
+    "outcome": "Under",
+    "lean_result": null,
+    "profit": 0.0,
+    "graded_at": "2026-11-17T13:07+00:00"
+   },
    "flag": null,
    "td_flag": null,
    "shadow": null,
