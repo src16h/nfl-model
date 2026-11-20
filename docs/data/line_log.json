@@ -10328,7 +10328,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 12.5,
+    "total": 44.5,
+    "margin": 23.0,
+    "points": 29.0
+   },
    "last_seen": "2026-11-19T23:07+00:00"
   },
   "2026_11_MIA_BUF": {
@@ -10367,7 +10372,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_BAL_CAR": {
    "game_id": "2026_11_BAL_CAR",
@@ -10431,7 +10436,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_NO_CHI": {
    "game_id": "2026_11_NO_CHI",
@@ -10492,10 +10497,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-20T13:07+00:00",
+     "src": "feed",
+     "spread": 11.5,
+     "total": 48.5,
+     "m": 12.2,
+     "t": 48.8,
+     "edge_s": 0.7,
+     "edge_t": 0.3,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_TEN_DAL": {
    "game_id": "2026_11_TEN_DAL",
@@ -10569,10 +10587,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-20T13:07+00:00",
+     "src": "feed",
+     "spread": 8.5,
+     "total": 54.5,
+     "m": 8.9,
+     "t": 55.5,
+     "edge_s": 0.4,
+     "edge_t": 1.0,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_TB_DET": {
    "game_id": "2026_11_TB_DET",
@@ -10649,7 +10680,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_ARI_KC": {
    "game_id": "2026_11_ARI_KC",
@@ -10736,10 +10767,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-20T13:07+00:00",
+     "src": "feed",
+     "spread": 16.5,
+     "total": 40.5,
+     "m": 17.2,
+     "t": 40.8,
+     "edge_s": 0.7,
+     "edge_t": 0.3,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_JAX_NYG": {
    "game_id": "2026_11_JAX_NYG",
@@ -10803,7 +10847,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_NYJ_LAC": {
    "game_id": "2026_11_NYJ_LAC",
@@ -10854,7 +10898,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_LV_DEN": {
    "game_id": "2026_11_LV_DEN",
@@ -10889,10 +10933,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-20T13:07+00:00",
+     "src": "feed",
+     "spread": 10.5,
+     "total": 40.5,
+     "m": 10.8,
+     "t": 41.0,
+     "edge_s": 0.3,
+     "edge_t": 0.5,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_PIT_PHI": {
    "game_id": "2026_11_PIT_PHI",
@@ -10953,10 +11010,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-20T13:07+00:00",
+     "src": "feed",
+     "spread": -3.5,
+     "total": 38.5,
+     "m": -3.2,
+     "t": 39.1,
+     "edge_s": 0.3,
+     "edge_t": 0.6,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_MIN_SF": {
    "game_id": "2026_11_MIN_SF",
@@ -11020,7 +11090,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   },
   "2026_11_CIN_WAS": {
    "game_id": "2026_11_CIN_WAS",
@@ -11097,7 +11167,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-19T23:07+00:00"
+   "last_seen": "2026-11-20T13:07+00:00"
   }
  }
 }
