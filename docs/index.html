@@ -1514,7 +1514,7 @@ function renderTD() {
   h += `<div class="sec-head" style="margin-top:22px"><h3 style="margin:0">Anytime TD plays</h3><span class="aside">${atd.length} of ${atdAll.length}</span></div>
     <p class="sub">Every player whose model chance to score beats the book's. Grouped by game, biggest gap first.</p>
     <div class="seg" id="tdMin" role="group" aria-label="Minimum gap" style="margin-bottom:12px">${[[0, "Any gap"], [2, "2%+"], [5, "5%+"]].map(([v, l]) => `<button aria-pressed="${tdUI.min === v}" data-v="${v}">${l}</button>`).join("")}</div>`;
-  if (!atdAll.length) h += `<div class="empty"><b>No Anytime TD odds yet.</b> Book odds load about a day before each game. The board below has every player's fair odds until then.</div>`;
+  if (!atdAll.length) h += `<div class="empty"><b>No Anytime TD book odds.</b> Since Nov 21 Anytime TD prices aren't pulled, to save odds credits. The board below has every player's fair odds: compare them with the app's price.</div>`;
   else if (!atd.length) h += `<p class="sub">No Anytime TD plays match these filters.</p>`;
   else {
     const byGame = new Map();

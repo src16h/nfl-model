@@ -391,9 +391,11 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
     markets = list(C.ODDS_PROP_MARKETS)
     if now.date().isoformat() >= getattr(C, "ODDS_EXTRA_FROM", "9999"):      # count-stat legs (alt parlays)
         markets += [m for m in getattr(C, "ODDS_EXTRA_PROP_MARKETS", []) if m not in markets]
+    reserve = reserve_for(now)
+    core = [m for m in getattr(C, "ODDS_CORE_MARKETS", markets) if m in markets] or markets
     cache = _load_cache(cache_path)
     cache["games"] = {k: v for k, v in cache.get("games", {}).items() if k in set(todo["game_id"])}
-    fetched = cached = skipped_budget = 0
+    fetched = cached = skipped_budget = core_only = 0
     budget_note = None
     order = todo.assign(_ko=todo["ko"]).sort_values("_ko", na_position="last")
     try:                                                   # games with a locked prop play: refreshed near kickoff (CLV)
@@ -432,12 +434,14 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                     stale = True
             if in_window and stale:
                 mk_now = sorted(play_mkts[gid]) if closing_only else markets
+                if not closing_only and len(core) < len(markets) and tight(client.remaining, len(markets), now):
+                    mk_now = core                          # behind the month's pace or into the reserve: core types only
                 over_cap = client.spent + len(mk_now) > C.ODDS_MAX_CREDITS_PER_RUN
-                below_reserve = client.remaining is not None and client.remaining - len(mk_now) < C.ODDS_CREDIT_RESERVE
+                below_reserve = client.remaining is not None and client.remaining - len(mk_now) < reserve
                 if over_cap or below_reserve:
                     skipped_budget += 1
                     budget_note = ("stopped at this run's credit limit" if over_cap
-                                   else f"kept a reserve of {C.ODDS_CREDIT_RESERVE} credits")
+                                   else f"kept a reserve of {reserve} credits")
                     if ent:
                         cached += 1
                     continue
@@ -464,13 +468,33 @@ def fetch_all_props(client: Client, todo: pd.DataFrame, matched: dict, now: date
                 cache["games"][gid] = {"fetched_at": now.isoformat(timespec="minutes"), "event_id": ev["id"],
                                        "rows": new_rows}
                 fetched += 1
+                core_only += mk_now is core
             elif ent:
                 cached += 1
     finally:
         Path(cache_path).parent.mkdir(parents=True, exist_ok=True)
         Path(cache_path).write_text(json.dumps(clean_json(cache), indent=1, allow_nan=False))
     rows = [dict(r, pulled=r.get("pulled") or ent.get("fetched_at")) for ent in cache["games"].values() for r in ent.get("rows", [])]
-    return rows, {"fetched": fetched, "cached": cached, "skipped": skipped_budget, "budget_note": budget_note}
+    return rows, {"fetched": fetched, "cached": cached, "skipped": skipped_budget, "budget_note": budget_note,
+                  "core_only": core_only}
+
+
+def reserve_for(now: datetime) -> int:
+    """Credits never spent this month (ODDS_RESERVE_BY_MONTH overrides ODDS_CREDIT_RESERVE for one month)."""
+    return int(getattr(C, "ODDS_RESERVE_BY_MONTH", {}).get(now.strftime("%Y-%m"), C.ODDS_CREDIT_RESERVE))
+
+
+def tight(remaining, cost: int, now: datetime) -> bool:
+    """Nov 21 2026: True when a full props pull would leave fewer credits than the month still needs, i.e. below
+    ODDS_PACE_SHARE of the allowance for the days left (today included), or inside the normal reserve. November ran
+    dry on the 21st at 8 credits a game; this keeps the last weeks of a month from going without prop prices."""
+    if remaining is None:
+        return False
+    import calendar
+    days = calendar.monthrange(now.year, now.month)[1]
+    left = days - now.day + 1
+    pace = C.ODDS_MONTH_CREDITS * C.ODDS_PACE_SHARE * left / days
+    return remaining - cost < max(pace, C.ODDS_CREDIT_RESERVE)
 
 
 # ---------------------------------------------------------------------
@@ -599,6 +623,8 @@ def pull(todo: pd.DataFrame, now: datetime, cache_path) -> dict:
             status.update(games_fetched=info["fetched"], games_cached=info["cached"])
             if info["budget_note"]:
                 notes.append(f"{info['skipped']} games not refreshed ({info['budget_note']})")
+            if info.get("core_only"):
+                notes.append(f"{info['core_only']} games got yardage and receptions props only (saving credits for the rest of the month)")
         if matched and getattr(C, "ALT_MARKETS", None):
             try:
                 out["alt"], status["alt_spent"] = fetch_alts(client, todo, matched, now, cache_path)

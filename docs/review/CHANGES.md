@@ -2,6 +2,18 @@
 
 Every adjustment from the weekly review (and big fixes made by hand), newest first. Rules: docs/review/RULES.md.
 
+## 2026-11-21 (by hand, owner request: NFL odds credits)
+Where November's 475 NFL credits went (credits left after each run, Nov 1-21): first props pull per game 321 (68%; 8-9
+credits a game, week 11 alone 104 for 13 games), near-kickoff re-pulls 119 (25%; 115 of them Nov 1-9, before the Nov 10
+trim), game lines 18, probes 17 (Nov 10). The duplicate backup runs fixed on Nov 17 cost about 4. Cause: 8 prop types a
+game is about 120 credits a week, more than the key's 500 a month; the Nov 10 trim fixed the re-pulls, but the same day
+completions and attempts came back (owner correction), so a game still cost 8.
+- NFL | prop types pulled cut from 8 to 5 a game: Anytime TD, completions and pass attempts dropped (owner's choice; nflmodel/config.py ODDS_PROP_MARKETS, ODDS_EXTRA_PROP_MARKETS). The Touchdowns tab keeps the model's fair odds without a book price (so no Anytime TD list); completions / attempts alt legs were already off by their gate and need a posted main line | credits above | about 75 credits a week instead of 120 | look again on 2026-12-08 (credits left after the first December weekend)
+- NFL | pacing: when a full props pull would leave fewer credits than 80% of the month's allowance still to come (or less than the normal 25 reserve), only the core types are pulled (passing, rushing, receiving yards, receptions; oddsapi.tight, ODDS_CORE_MARKETS); the run log says how many games got core types only | November ran dry on the 21st with two NFL weekends left | the last weeks of a month keep prop prices for plays and alt legs | look again on 2026-12-15
+- NFL | November's reserve lowered from 25 to 5 (ODDS_RESERVE_BY_MONTH, owner's choice); back to 25 on Dec 1 | 25 left on Nov 21 was exactly the reserve, so Sunday Nov 22 and Thanksgiving week would get no props | about 5 more Sunday games (the earliest kickoffs not yet priced) get core props on Saturday evening; Thanksgiving week gets none | n/a
+- Correction to the Nov 17 entry: the duplicate backup runs were not a real part of the NFL spend (about 4 credits).
+- Tests | tests/test_nfl_credits.py (5 checks: markets, full pull early in a month, core types behind pace, November reserve, December reserve).
+
 ## 2026-11-17 (weekly review)
 Every sport was over the 3-change limit from the Nov 10-11 by-hand changes (NFL 15, NHL 12, CFB 11, NBA 11, Soccer 8),
 so this week changes only what was broken (pipes and the scorecard). Everything else found is under Watch with numbers.

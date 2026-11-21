@@ -146,21 +146,33 @@ ODDS_BOOKS = ["hardrockbet", "draftkings", "fanduel", "betmgm", "williamhill_us"
 SHARP_BOOKS = ["pinnacle"]   # referee price for game plays; rides in the same call (10 books = 1 region of credits)
 # Which prop types to load. Each one costs about 1 credit per game. Add more from
 # nflmodel/oddsapi.py (MARKETS), for example "player_pass_tds" or "player_rush_attempts".
+# Nov 21 2026 (owner, credits): Anytime TD no longer pulled (the Touchdowns tab keeps the model's fair odds; no book
+# price, so no TD list). The month ran dry on Nov 21: 8 prop types a game cost about 8 credits a game, about 120 a week,
+# more than the key's 500 a month allows. Now 5 a game. Add "player_anytime_td" back here to restore TD prices.
 ODDS_PROP_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds",
-                     "player_receptions", "player_anytime_td", "player_tds_over"]   # tds_over = 2+ TDs
+                     "player_receptions", "player_tds_over"]   # tds_over = 2+ TDs
+# The prop types plays and alt legs depend on. When credits run behind the month's pace (ODDS_PACE_SHARE) or below
+# ODDS_CREDIT_RESERVE, only these are pulled (Nov 21 2026).
+ODDS_CORE_MARKETS = ["player_pass_yds", "player_rush_yds", "player_reception_yds", "player_receptions"]
 # Nov 10 2026 (owner, credits): QB longest completion (added Nov 9) no longer pulled or played; its two gates stay
 # paused with no new shadow plays. Add "player_pass_longest_completion" back here and "pass_long" to PROP_PLAY_STATS.
 # Oct 26 2026: completions, attempts and carries give the alt parlays their count-stat legs (book main lines).
 # About 3 more credits per game, so they start with the Nov 1 credit reset.
 # Nov 10 2026 (credits): rush attempts dropped (only fed carries Under legs, which Hard Rock doesn't offer as alts).
 # Completions and attempts kept: their main lines anchor the completions / attempts Over legs (owner: Hard Rock has them).
-ODDS_EXTRA_PROP_MARKETS = ["player_pass_completions", "player_pass_attempts"]
+# Nov 21 2026 (owner, credits): completions and attempts no longer pulled (2 credits a game). Both alt-leg types were
+# off by their gate (completions Over 70.1% vs 78.2% said over 157, attempts Over 64.0% vs 77.1% over 125), and with
+# no posted main line (ALT_BOOK_MAIN_ONLY) no completions / attempts leg is built. Put them back here to restore.
+ODDS_EXTRA_PROP_MARKETS = []
 ODDS_EXTRA_FROM = "2026-11-01"
 ODDS_HOURS_AHEAD = 30        # only load props for games starting within this many hours
 ODDS_REFRESH_HOURS = 72      # load each game's props once per week (about 5 credits per game)
 ODDS_PROPS_CLOSE_HOURS = 3.5 # games with a locked prop play get one more props pull this close to kickoff (closing price)
 ODDS_MAX_CREDITS_PER_RUN = 100   # hard stop for one run
 ODDS_CREDIT_RESERVE = 25     # never spend the last credits of your month
+ODDS_RESERVE_BY_MONTH = {"2026-11": 5}   # owner, Nov 21 2026: spend most of November's reserve on core props
+ODDS_MONTH_CREDITS = 500     # the key's monthly allowance
+ODDS_PACE_SHARE = 0.8        # behind pace = fewer credits left than this share of the month's allowance still to come
 
 # ---------------------------------------------------------------
 # v6: BEST PLAYS AND FASTER UPDATES
