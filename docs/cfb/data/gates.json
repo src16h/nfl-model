@@ -12,9 +12,27 @@
   ]
  },
  "cfb_game_total": {
-  "status": "active",
-  "since": "2026-10-20",
-  "history": [],
+  "status": "paused",
+  "since": "2026-11-22",
+  "history": [
+   {
+    "date": "2026-11-22",
+    "to": "paused",
+    "record": {
+     "n": 32,
+     "w": 15,
+     "l": 17,
+     "units": -3.66,
+     "roi": -11.4,
+     "z": -0.68,
+     "clv_n": 32,
+     "clv": 0.32,
+     "ev_n": 32,
+     "ev_close": -3.75
+    },
+    "reason": "lost to the closing line"
+   }
+  ],
   "ev_rows": [
    [
     "2026-11-07",
