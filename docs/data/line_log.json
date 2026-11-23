@@ -10410,7 +10410,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 16.5,
+    "total": 45.5,
+    "margin": 17.0,
+    "points": 35.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_BAL_CAR": {
@@ -10500,7 +10505,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 2.5,
+    "total": 44.5,
+    "margin": 2.0,
+    "points": 68.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_NO_CHI": {
@@ -10629,7 +10639,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 11.5,
+    "total": 47.5,
+    "margin": 8.0,
+    "points": 34.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_TEN_DAL": {
@@ -10732,7 +10747,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 7.5,
+    "total": 55.5,
+    "margin": 21.0,
+    "points": 81.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_TB_DET": {
@@ -10861,7 +10881,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.5,
+    "total": 48.5,
+    "margin": 10.0,
+    "points": 52.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_ARI_KC": {
@@ -11016,7 +11041,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 15.5,
+    "total": 40.5,
+    "margin": 27.0,
+    "points": 41.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_JAX_NYG": {
@@ -11183,7 +11213,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": 3.0,
+    "total": 43.5,
+    "margin": -3.0,
+    "points": 51.0
+   },
    "last_seen": "2026-11-22T19:40+00:00"
   },
   "2026_11_LV_DEN": {
@@ -11337,7 +11372,12 @@
      "th_t": 1.5
     }
    ],
-   "final": null,
+   "final": {
+    "spread": -3.5,
+    "total": 37.5,
+    "margin": 3.0,
+    "points": 35.0
+   },
    "last_seen": "2026-11-22T16:45+00:00"
   },
   "2026_11_MIN_SF": {
@@ -11438,10 +11478,23 @@
      "engine": "anchored",
      "th_s": 1.0,
      "th_t": 1.5
+    },
+    {
+     "ts": "2026-11-23T00:07+00:00",
+     "src": "feed",
+     "spread": 4.5,
+     "total": 44.5,
+     "m": 4.8,
+     "t": 44.9,
+     "edge_s": 0.3,
+     "edge_t": 0.4,
+     "engine": "anchored",
+     "th_s": 1.0,
+     "th_t": 1.5
     }
    ],
    "final": null,
-   "last_seen": "2026-11-22T19:40+00:00"
+   "last_seen": "2026-11-23T00:07+00:00"
   },
   "2026_11_CIN_WAS": {
    "game_id": "2026_11_CIN_WAS",
@@ -11544,7 +11597,7 @@
     }
    ],
    "final": null,
-   "last_seen": "2026-11-22T19:40+00:00"
+   "last_seen": "2026-11-23T00:07+00:00"
   }
  }
 }
