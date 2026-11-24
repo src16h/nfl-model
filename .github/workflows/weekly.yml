@@ -41,7 +41,9 @@ jobs:
           echo "Recent runs that cover this slot: $recent"
           # Nov 17 2026: GitHub's cron fired 6-10 hours late all week, past the 6-hour window, so 27 backups re-ran a slot
           # the Clock had already run (odds credits). While the Clock chain is alive it covers every slot: skip.
-          clock=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/clock.yml/runs?per_page=10&event=workflow_dispatch" --jq '[.workflow_runs[]
+          # Nov 24 2026: any running Clock counts, whatever started it. On Nov 18 the hourly restart (a schedule run) was the
+          # live clock for about 6 hours; the old filter (workflow_dispatch only) missed it and 2 backups (NFL, CFB) re-ran a slot.
+          clock=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/clock.yml/runs?per_page=30" --jq '[.workflow_runs[]
                  | select(.status == "in_progress" or (.conclusion == "success" and (now - (.updated_at | fromdateiso8601)) < 1800))]
                  | length' || echo 0)
           echo "Clock runs alive: $clock"

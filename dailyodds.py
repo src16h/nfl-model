@@ -45,13 +45,21 @@ class Client:
             with urllib.request.urlopen(req, timeout=25) as r:
                 status, headers, body = r.status, {k.lower(): v for k, v in r.headers.items()}, r.read().decode()
         except urllib.error.HTTPError as e:
-            status, headers, body = e.code, {k.lower(): v for k, v in (e.headers or {}).items()}, ""
+            status, headers = e.code, {k.lower(): v for k, v in (e.headers or {}).items()}
+            try:
+                body = e.read().decode(errors="ignore")
+            except Exception:  # noqa: BLE001
+                body = ""
         except Exception as e:  # noqa: BLE001
             raise Fatal(f"could not reach The Odds API ({type(e).__name__})")
         if headers.get("x-requests-remaining") is not None:
             self.remaining = int(float(headers["x-requests-remaining"]))
         if headers.get("x-requests-last") is not None:
             self.spent += int(float(headers["x-requests-last"]))
+        # Nov 24 2026: a used-up month comes back as 401 too (error_code OUT_OF_USAGE_CREDITS). The NBA log said
+        # "key was rejected, check the secret" on Nov 24 with 1 credit left: the key was fine, the month was spent.
+        if status in (401, 429) and ("usage" in body.lower() or "quota" in body.lower()):
+            raise Fatal(f"out of {self.label} odds credits for this month (they reset on the 1st)")
         if status == 401:
             raise Fatal(f"the {self.label} odds key was rejected. Check the {self.key_env} secret")
         if status == 429:
