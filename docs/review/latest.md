@@ -27,6 +27,7 @@ Flags first (high, then medium, then info). Every number is a graded record from
 | medium | NFL | odds credits low | 5 left this month |
 | medium | NFL | said vs hit: tds / Anytime TD / bins / 5 | said 69.7%, hit 78.6% over 28 (z 1.02) |
 | medium | NFL | said vs hit: alt_leg_types / RB carries Under | said 81.3%, hit 71.8% over 39 (z -1.52) |
+| medium | NFL | over the change limit | 4 changes logged in the last 7 days (limit 3): no more this week unless something is broken |
 | medium | NFL | diagnosed: pass_yds Overs | plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 65.9% and it hit 48.9% over 88. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: pass_yds Unders | plays 3-2 (13.9%); top cause: Overconfidence: the model gave the bet side 60.8% and it hit 42.7% over 75. Shrink this prop type's chance toward the book's (betrules reali |
 | medium | NFL | diagnosed: rec Overs | plays 8-17 (-34.7%); top cause: Overconfidence: the model gave the bet side 52.3% and it hit 32.0% over 25. Shrink this prop type's chance toward the book's (betrules reali |
@@ -85,7 +86,7 @@ First run of the workflow after each cron time (the Clock's dispatch, or a backu
 |---|---|---|---|---|---|
 | cfb.yml | 14 | 0 min | 0 min | 0 | 1 (11-18 22:08) |
 | nba.yml | 28 | 0 min | 0 min | 0 | 0 |
-| nhl.yml | 28 | 0 min | 0 min | 0 | 1 (11-17 10:39) |
+| nhl.yml | 28 | 0 min | 0 min | 0 | 0 |
 | review.yml | 1 | 0 min | 0 min | 0 | 0 |
 | soccer.yml | 20 | 0 min | 0 min | 0 | 0 |
 | weekly.yml | 15 | 0 min | 0 min | 0 | 1 (11-18 21:20) |
@@ -1298,7 +1299,7 @@ Plays 9-11 (-3.08u, -15.4%); every Under lean 595-518 (-0.1%). Checks use plays.
 
 
 ## NFL
-Updated 11.2 hours ago, odds from odds_api, credits left 5.
+Updated 12.9 hours ago, odds from odds_api, credits left 5.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1392,7 +1393,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NFL prop Overs (yardage) paused; NFL receptions props paused; NFL passing-yard Unders paused; NFL longest completion Unders paused; NFL longest completion Overs paused; NFL spreads paused; NFL totals paused
 
 ## NHL
-Updated 8.0 hours ago, odds from odds_api, credits left 6.
+Updated 9.7 hours ago, odds from odds_api, credits left 6.
 
 Prop plays with a closing price since 2026-11-12: 2 of 2, 2 at the same line (the only ones with a closing value).
 
@@ -1446,7 +1447,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NHL points props (Unders) paused; NHL edge parlays paused; NHL moneyline paused; NHL puck line paused; NHL totals paused; NHL shots on goal Overs active; NHL shots on goal Unders active; NHL goals Overs active; NHL assists Overs active; NHL assists Unders active
 
 ## NBA
-Updated 8.6 hours ago, odds from espn, credits left 1.
+Updated 10.3 hours ago, odds from espn, credits left 1.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|
@@ -1489,7 +1490,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: NBA edge parlays active; NBA moneyline paused; NBA spreads paused; NBA totals paused; NBA points Overs active; NBA points Unders active; NBA rebounds Overs active; NBA rebounds Unders active; NBA assists Overs active; NBA assists Unders active; NBA threes Overs active; NBA threes Unders active; NBA pts+reb+ast Overs active; NBA pts+reb+ast Unders active
 
 ## CFB
-Updated 19.9 hours ago, odds from odds_api, credits left 76.
+Updated 21.6 hours ago, odds from odds_api, credits left 76.
 
 Prop plays with a closing price since 2026-11-12: 29 of 45, 10 at the same line (the only ones with a closing value).
 
@@ -1522,7 +1523,7 @@ Parlay tickets in units (1 unit a ticket). Bet-at = the shortest price the page 
 Gates: CFB spreads paused; CFB totals paused; CFB moneyline paused
 
 ## Soccer
-Updated 15.0 hours ago, odds from odds_api, credits left 240.
+Updated 16.7 hours ago, odds from odds_api, credits left 240.
 
 | Record | W-L | Hit | Units | Return | z |
 |---|---|---|---|---|---|

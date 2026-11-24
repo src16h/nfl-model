@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-11-24T10:17+00:00",
+ "generated_at": "2026-11-24T11:59+00:00",
  "sports": {
   "NFL": {
-   "age_h": 11.2,
+   "age_h": 12.9,
    "credits_left": 5,
    "odds_source": "odds_api",
    "records": [
@@ -925,7 +925,7 @@
    }
   },
   "NHL": {
-   "age_h": 8.0,
+   "age_h": 9.7,
    "credits_left": 6,
    "odds_source": "odds_api",
    "records": [
@@ -1548,7 +1548,7 @@
    }
   },
   "NBA": {
-   "age_h": 8.6,
+   "age_h": 10.3,
    "credits_left": 1,
    "odds_source": "espn",
    "records": [
@@ -2311,7 +2311,7 @@
    }
   },
   "CFB": {
-   "age_h": 19.9,
+   "age_h": 21.6,
    "credits_left": 76,
    "odds_source": "odds_api",
    "records": [
@@ -2658,7 +2658,7 @@
    }
   },
   "Soccer": {
-   "age_h": 15.0,
+   "age_h": 16.7,
    "credits_left": 240,
    "odds_source": "odds_api",
    "records": [
@@ -3300,6 +3300,12 @@
   {
    "sport": "NFL",
    "level": "medium",
+   "what": "over the change limit",
+   "why": "4 changes logged in the last 7 days (limit 3): no more this week unless something is broken"
+  },
+  {
+   "sport": "NFL",
+   "level": "medium",
    "what": "diagnosed: pass_yds Overs",
    "why": "plays 3-3 (-5.2%); top cause: Overconfidence: the model gave the bet side 65.9% and it hit 48.9% over 88. Shrink this prop type's chance toward the book's (betrules reali"
   },
@@ -3401,11 +3407,11 @@
   }
  ],
  "changes_7d": {
-  "NFL": 3,
-  "NHL": 0,
-  "NBA": 0,
-  "CFB": 0,
-  "Soccer": 0
+  "NFL": 4,
+  "NHL": 2,
+  "NBA": 2,
+  "CFB": 1,
+  "Soccer": 1
  },
  "diagnoses": [
   {
@@ -5011,9 +5017,7 @@
     "median_min": 0,
     "worst_min": 0,
     "missed": [],
-    "backups_ran": [
-     "11-17 10:39"
-    ]
+    "backups_ran": []
    },
    "review.yml": {
     "slots": 1,
